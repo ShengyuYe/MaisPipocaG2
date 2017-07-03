@@ -1,0 +1,13 @@
+Change Component Footprint: Designator=U1 Old Footprint=TO-92AA New Footprint=SIP-3PINOS
+Change Component Comment : Designator=C1 Old Comment=100nF/50-0805-NPO New Comment=100nF/50V-0805
+Added Component: Designator=L1'(LED100)
+Added Component: Designator=U1'(SOT23 - REVISADO ONDA)
+Added Pin To Net: NetName=NetL1_1 Pin=L1'-1
+Added Pin To Net: NetName=GND Pin=L1'-2
+Added Pin To Net: NetName=NetC1_2 Pin=U1'-1
+Added Pin To Net: NetName=GND Pin=U1'-2
+Added Pin To Net: NetName=NetP1_1 Pin=U1'-3
+Change Net Name : Old Net Name=NetL1_1 New Net Name=NetL1'_1
+Added Member To Class: ClassName=SensorRotacaoMotor Member=Component L1' LED VERMELHO 5mm
+Added Member To Class: ClassName=SensorRotacaoMotor Member=Component U1' A1120
+Added Room: Name=SensorRotacaoMotor

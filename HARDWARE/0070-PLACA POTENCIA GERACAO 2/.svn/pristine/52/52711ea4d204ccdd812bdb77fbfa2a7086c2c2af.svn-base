@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=NetJ7_3 Pin=Q3-3
+Removed Pin From Net: NetName=NetJ7_4 Pin=R8-1
+Change Component Footprint: Designator=R5 Old Footprint=1206-REVISADO ONDA New Footprint=0805-REVISADO ONDA
+Added Pin To Net: NetName=NetJ7_4 Pin=Q3-3
+Added Pin To Net: NetName=NetJ7_3 Pin=R8-1

@@ -1,0 +1,8 @@
+Added Component: Designator=JP1(1206-REVISADO ONDA)
+Added Component: Designator=JP2(1206-REVISADO ONDA)
+Added Pin To Net: NetName=GND Pin=JP1-1
+Added Pin To Net: NetName=GND Pin=JP1-2
+Added Pin To Net: NetName=11V Pin=JP2-1
+Added Pin To Net: NetName=11V Pin=JP2-2
+Added Member To Class: ClassName=Regulador Member=Component JP1 0R-1206-5%
+Added Member To Class: ClassName=Regulador Member=Component JP2 0R-1206-5%

@@ -1,0 +1,7 @@
+Removed Pin From Net: NetName=NetD1_1 Pin=K1-1
+Removed Pin From Net: NetName=11V Pin=K1-2
+Removed Pin From Net: NetName=NEUTRO Pin=K1-3
+Removed Pin From Net: NetName=NEUTRO_GERAL Pin=K1-5
+Added Pin To Net: NetName=11V Pin=K1-1
+Added Pin To Net: NetName=NetD1_1 Pin=K1-2
+Added Pin To Net: NetName=NEUTRO_GERAL Pin=K1-3

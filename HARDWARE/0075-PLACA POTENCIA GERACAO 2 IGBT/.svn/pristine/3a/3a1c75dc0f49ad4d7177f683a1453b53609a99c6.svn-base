@@ -1,0 +1,42 @@
+Removed Pin From Net: NetName=NetC3_1 Pin=C3-1
+Removed Pin From Net: NetName=ENTRADA_FASE Pin=C3-2
+Removed Pin From Net: NetName=NetF2_2 Pin=Q4-1
+Removed Pin From Net: NetName=ENTRADA_FASE Pin=Q4-2
+Removed Pin From Net: NetName=NetF2_2 Pin=R9-1
+Removed Pin From Net: NetName=NetC3_1 Pin=R11-1
+Removed Pin From Net: NetName=NetF2_2 Pin=R11-2
+Removed Pin From Net: NetName=ENTRADA_FASE Pin=R13-2
+Removed Pin From Net: NetName=NetQ3_3 Pin=U1-2
+Removed Member From Class: ClassName=Potencia Member=C3
+Removed Member From Class: ClassName=Potencia Member=HS1
+Removed Member From Class: ClassName=Potencia Member=Q4
+Removed Member From Class: ClassName=Potencia Member=R9
+Removed Member From Class: ClassName=Potencia Member=R11
+Removed Member From Class: ClassName=Potencia Member=R13
+Removed Member From Class: ClassName=Potencia Member=U1
+Change Component Comment : Designator=L2 Old Comment=1mH-CNF15-26 AWG New Comment=ferrite-CNF15+fio
+Change Component Comment : Designator=D1 Old Comment=1N4007 New Comment=1N4007-SMA
+Change Component Comment : Designator=D2 Old Comment=1N4007 New Comment=1N4007-SMA
+Change Component Comment : Designator=R17 Old Comment=22K-10W New Comment=22K-10W-5%
+Change Component Comment : Designator=R18 Old Comment=22K-10W New Comment=22K-10W-5%
+Change Component Comment : Designator=R1 Old Comment=22K-0805 New Comment=22K-0805-5%
+Change Component Comment : Designator=C6 Old Comment=100nF/50-0805-NPO New Comment=100nF/50V-080
+Change Component Comment : Designator=C4 Old Comment=220uF/50V New Comment=220uF/35V
+Change Component Comment : Designator=C5 Old Comment=470uF/50V New Comment=470uF/35V
+Change Component Comment : Designator=K1 Old Comment=AT1RC2 New Comment=RELE SLA-1-D-12
+Change Component Comment : Designator=Q1 Old Comment=BC846L New Comment=BC846
+Change Component Comment : Designator=Q2 Old Comment=BC846L New Comment=BC846
+Change Component Comment : Designator=Q3 Old Comment=BC846L New Comment=BC846
+Change Component Comment : Designator=U2 Old Comment=LM2596S-ADJ New Comment=LM2596S-ADJ(TO-263-5)
+Change Component Comment : Designator=J4 Old Comment=PCMC2-2 New Comment=HYLOCK 2 VIAS FÊMEA P/ PCB
+Change Component Comment : Designator=J1 Old Comment=PCMC2-3 New Comment=HYLOCK FÊMEA 3 VIAS PARA PCB
+Change Component Comment : Designator=J3 Old Comment=PCMC2-4 New Comment=HYLOCK-FÊMEA 4 VIAS PARA PCB
+Added Pin To Net: NetName=ENTRADA_FASE Pin=J1-2
+Added Pin To Net: NetName=NetC3_1 Pin=R8-1
+Change Net Name : Old Net Name=NetC3_1 New Net Name=NetJ7_1
+Change Net Name : Old Net Name=NetQ3_3 New Net Name=NetJ7_2
+Added Member To Class: ClassName=Regulador Member=Component C4 220uF/35V
+Added Room: Name=Conectores
+Added Room: Name=Potencia
+Added Room: Name=Regulador
+Added Room: Name=Sincronismo

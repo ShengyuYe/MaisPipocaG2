@@ -1,0 +1,6 @@
+Added Component: Designator=J7(CONECTOR HYLOK 4 VIAS)
+Added Pin To Net: NetName=NetJ7_1 Pin=J7-1
+Added Pin To Net: NetName=NetJ7_2 Pin=J7-2
+Added Pin To Net: NetName=ENTRADA_FASE Pin=J7-3
+Added Pin To Net: NetName=NetF2_2 Pin=J7-4
+Added Member To Class: ClassName=Potencia Member=Component J7 HYLOCK 4 VIAS PCB

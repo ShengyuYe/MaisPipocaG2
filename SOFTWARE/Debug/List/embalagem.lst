@@ -1,0 +1,248 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:58:22 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Aplicacao\embalagem.c      #
+#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\embalagem.c"    #
+#                    -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_m #
+#                    ais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA      #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o           #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --no_clustering --no_scheduling --debug --endian=little  #
+#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
+#                    Files (x86)\IAR Systems\Embedded Workbench               #
+#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
+#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\embalagem.lst   #
+#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\embalagem.o      #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\embalagem.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  embalagem.c
+     18          | 
+     19          |       Autor              :  Marcos Aquino
+     20          |       Data criação       :  22/04/2017
+     21          |
+     22          |       Revisões           :  001
+     23          |
+     24          |                             (22/04/2017) - Criação do módulo de controle do dispensador 
+     25          |                             da embalagem (Marcos)
+     26          |
+     27          |
+     28          | __________________________________________________________________________________
+     29          */
+     30          
+     31          /***********************************************************************************
+     32          *       Includes
+     33          ***********************************************************************************/
+     34          #include <stdio.h>
+     35          #include <stdlib.h>
+     36          #include <string.h>
+     37          #include "..\includes.h"
+     38          #include "embalagem.h"
+     39          /***********************************************************************************
+     40          *       Definições
+     41          ***********************************************************************************/
+     42          #define THRESOLD_NIVEL_PAPEL                    3800
+     43          
+     44          /***********************************************************************************
+     45          *       Constantes
+     46          ***********************************************************************************/
+     47          
+     48          
+     49          /***********************************************************************************
+     50          *       Variaveis 
+     51          ***********************************************************************************/
+     52          
+     53          
+     54          /***********************************************************************************
+     55          *       Funções
+     56          ***********************************************************************************/
+     57          
+     58          
+     59          /***********************************************************************************
+     60          *       Tabelas de função
+     61          ***********************************************************************************/
+     62          
+     63          
+     64          /***********************************************************************************
+     65          *       Implementação das funções
+     66          ***********************************************************************************/
+     67          
+     68          /***********************************************************************************
+     69          *       Descrição       :       Libera uma embalagem 
+     70          *       Parametros      :       nenhum
+     71          *       Retorno         :       (eEMBALAGEM_RESULT) resultado da operação
+     72          *                                                   de liberação da embalagem
+     73          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     74          eEMBALAGEM_RESULT EMBALAGEM_libera_pacote(unsigned int tempo){
+   \                     EMBALAGEM_libera_pacote:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+     75            unsigned char automatico = GET_BARREIRA_SAIDA_PAPEL();
+   \   00000004   0x2000             MOVS     R0,#+0
+   \   00000006   0x.... 0x....      BL       BOARD_get_sinal
+   \   0000000A   0x0005             MOVS     R5,R0
+     76            unsigned int timeout=2500;
+   \   0000000C   0xF640 0x16C4      MOVW     R6,#+2500
+     77            
+     78            // Se não houver papel refletindo no sensor
+     79            // nem chega a ligar o motor do dispensador
+     80            if(AA_mediaMovelPapel()>THRESOLD_NIVEL_PAPEL){
+   \   00000010   0x.... 0x....      BL       AA_mediaMovelPapel
+   \   00000014   0xF640 0x61D9      MOVW     R1,#+3801
+   \   00000018   0x4288             CMP      R0,R1
+   \   0000001A   0xDB01             BLT.N    ??EMBALAGEM_libera_pacote_0
+     81              return EMBALAGEM_SEM_ESTOQUE; 
+   \   0000001C   0x2001             MOVS     R0,#+1
+   \   0000001E   0xE023             B.N      ??EMBALAGEM_libera_pacote_1
+     82            }
+     83            
+     84            BOARD_set_motor_embalagem(1);
+   \                     ??EMBALAGEM_libera_pacote_0:
+   \   00000020   0x2001             MOVS     R0,#+1
+   \   00000022   0x.... 0x....      BL       BOARD_set_motor_embalagem
+     85            BOARD_setter_general_purpose_counter(tempo);         
+   \   00000026   0x0020             MOVS     R0,R4
+   \   00000028   0x.... 0x....      BL       BOARD_setter_general_purpose_counter
+     86            
+     87            for(;BOARD_getter_general_purpose_counter();){
+   \                     ??EMBALAGEM_libera_pacote_2:
+   \   0000002C   0x.... 0x....      BL       BOARD_getter_general_purpose_counter
+   \   00000030   0x2800             CMP      R0,#+0
+   \   00000032   0xD1FB             BNE.N    ??EMBALAGEM_libera_pacote_2
+     88                  
+     89              //if(!GET_BARREIRA_SAIDA_PAPEL()){
+     90              //  vTaskDelay(tempo);
+     91              //  BOARD_set_motor_embalagem(0);
+     92              //  return EMBALAGEM_LIBERADA;
+     93             // }
+     94            }
+     95          
+     96            while(AA_mediaMovelPapel()>THRESOLD_NIVEL_PAPEL && timeout--)
+   \                     ??EMBALAGEM_libera_pacote_3:
+   \   00000034   0x.... 0x....      BL       AA_mediaMovelPapel
+   \   00000038   0xF640 0x61D9      MOVW     R1,#+3801
+   \   0000003C   0x4288             CMP      R0,R1
+   \   0000003E   0xDB07             BLT.N    ??EMBALAGEM_libera_pacote_4
+   \   00000040   0x0030             MOVS     R0,R6
+   \   00000042   0x1E46             SUBS     R6,R0,#+1
+   \   00000044   0x2800             CMP      R0,#+0
+   \   00000046   0xD003             BEQ.N    ??EMBALAGEM_libera_pacote_4
+     97              vTaskDelay(1);
+   \   00000048   0x2001             MOVS     R0,#+1
+   \   0000004A   0x.... 0x....      BL       vTaskDelay
+   \   0000004E   0xE7F1             B.N      ??EMBALAGEM_libera_pacote_3
+     98            
+     99            BOARD_set_motor_embalagem(0);
+   \                     ??EMBALAGEM_libera_pacote_4:
+   \   00000050   0x2000             MOVS     R0,#+0
+   \   00000052   0x.... 0x....      BL       BOARD_set_motor_embalagem
+    100            
+    101            if(AA_mediaMovelPapel()<THRESOLD_NIVEL_PAPEL)
+   \   00000056   0x.... 0x....      BL       AA_mediaMovelPapel
+   \   0000005A   0xF640 0x61D8      MOVW     R1,#+3800
+   \   0000005E   0x4288             CMP      R0,R1
+   \   00000060   0xDA01             BGE.N    ??EMBALAGEM_libera_pacote_5
+    102              return EMBALAGEM_LIBERADA;    
+   \   00000062   0x2000             MOVS     R0,#+0
+   \   00000064   0xE000             B.N      ??EMBALAGEM_libera_pacote_1
+    103              
+    104            return EMBALAGEM_FALHA_LIBERACAO;
+   \                     ??EMBALAGEM_libera_pacote_5:
+   \   00000066   0x2002             MOVS     R0,#+2
+   \                     ??EMBALAGEM_libera_pacote_1:
+   \   00000068   0xBD70             POP      {R4-R6,PC}       ;; return
+    105          }
+    106          /***********************************************************************************
+    107          *       Descrição       :       Verifica o estoque de embalagens
+    108          *       Parametros      :       nenhum
+    109          *       Retorno         :       (eEMBALAGEM_ESTOQUE_RESULT) resultado
+    110          *                               da verificação do estoque
+    111          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    112          eEMBALAGEM_ESTOQUE_RESULT EMBALAGEM_verifica_estoque(void){
+   \                     EMBALAGEM_verifica_estoque:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    113            
+    114            // Se não houver papel refletindo no sensor
+    115            // nem chega a ligar o motor do dispensador
+    116            if(AA_mediaMovelPapel()>THRESOLD_NIVEL_PAPEL){
+   \   00000002   0x.... 0x....      BL       AA_mediaMovelPapel
+   \   00000006   0xF640 0x61D9      MOVW     R1,#+3801
+   \   0000000A   0x4288             CMP      R0,R1
+   \   0000000C   0xDB01             BLT.N    ??EMBALAGEM_verifica_estoque_0
+    117              return EMBALAGEM_SEM_PACOTES; 
+   \   0000000E   0x2000             MOVS     R0,#+0
+   \   00000010   0xE000             B.N      ??EMBALAGEM_verifica_estoque_1
+    118            }
+    119            
+    120            return EMBALAGEM_DETECTADA;
+   \                     ??EMBALAGEM_verifica_estoque_0:
+   \   00000012   0x2001             MOVS     R0,#+1
+   \                     ??EMBALAGEM_verifica_estoque_1:
+   \   00000014   0xBD02             POP      {R1,PC}          ;; return
+    121          }
+    122          /***********************************************************************************
+    123          *       Fim do arquivo
+    124          ***********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   EMBALAGEM_libera_pacote
+        16   -> AA_mediaMovelPapel
+        16   -> BOARD_get_sinal
+        16   -> BOARD_getter_general_purpose_counter
+        16   -> BOARD_set_motor_embalagem
+        16   -> BOARD_setter_general_purpose_counter
+        16   -> vTaskDelay
+       8   EMBALAGEM_verifica_estoque
+         8   -> AA_mediaMovelPapel
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+     106  EMBALAGEM_libera_pacote
+      22  EMBALAGEM_verifica_estoque
+
+ 
+ 128 bytes in section .text
+ 
+ 128 bytes of CODE memory
+
+Errors: none
+Warnings: none

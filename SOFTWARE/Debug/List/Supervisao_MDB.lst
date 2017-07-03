@@ -1,0 +1,328 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:58:19 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Supervi #
+#                    sao_MDB.c                                                #
+#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Superv #
+#                    isao_MDB.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-F #
+#                    irmware\01_mais_pipoca_exp\MaisPipoca -                  #
+#                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Alm #
+#                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -          #
+#                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\AlmT #
+#                    ec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -           #
+#                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline      #
+#                    --no_code_motion --no_tbaa --no_clustering               #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\Supervisao_MDB. #
+#                    lst                                                      #
+#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\Supervisao_MDB.o #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Supervisao_MDB.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  Supervisao_MDB.c
+     18          |       Descrição          :  Biblioteca para controle dos meios de pagamento
+     19          | 
+     20          |       Autor              :  Marcos Aquino
+     21          |       Data criação       :  28/02/2017
+     22          |
+     23          |       Revisões           :  1.0.0.0
+     24          |
+     25          |
+     26          | __________________________________________________________________________________
+     27          */
+     28          
+     29          /***********************************************************************************
+     30          *       Includes
+     31          ***********************************************************************************/
+     32          #include <stdio.h>
+     33          #include <stdlib.h>
+     34          #include <string.h>
+     35          #include "..\..\includes.h"
+     36          #include "supervisao_mdb.h"
+     37          #include "supervisao_mdb_bill.h"
+     38          #include "supervisao_mdb_coin.h"
+     39          #include "supervisao_mdb_cashless.h"
+     40          /***********************************************************************************
+     41          *       Definições
+     42          ***********************************************************************************/
+     43          
+     44          
+     45          /***********************************************************************************
+     46          *       Variaveis locais
+     47          ***********************************************************************************/
+
+   \                                 In section .bss, align 4
+     48          xSemaphoreHandle SMDB_semaforo_barramento;
+   \                     SMDB_semaforo_barramento:
+   \   00000000                      DS8 4
+     49          
+     50          /***********************************************************************************
+     51          *       Funções locais
+     52          ***********************************************************************************/
+     53          
+     54          
+     55          /***********************************************************************************
+     56          *       Implementação das funções
+     57          ***********************************************************************************/
+     58          
+     59          /***********************************************************************************
+     60          *       Descrição       :       Inicialização do módulo de supervisão
+     61          *                               dos dispositivos MDB
+     62          *       Parametros      :       nenhum
+     63          *       Retorno         :       nenhum
+     64          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     65          void SMDB_ini(void){
+   \                     SMDB_ini:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     66            
+     67            SMDBILL_set_bloqueio(0);  
+   \   00000002   0x2000             MOVS     R0,#+0
+   \   00000004   0x.... 0x....      BL       SMDBILL_set_bloqueio
+     68            SMC_ini();
+   \   00000008   0x.... 0x....      BL       SMC_ini
+     69            vSemaphoreCreateBinary(SMDB_semaforo_barramento);
+   \   0000000C   0x2100             MOVS     R1,#+0
+   \   0000000E   0x2001             MOVS     R0,#+1
+   \   00000010   0x.... 0x....      BL       xQueueCreate
+   \   00000014   0x....             LDR.N    R1,??DataTable3
+   \   00000016   0x6008             STR      R0,[R1, #+0]
+   \   00000018   0x....             LDR.N    R0,??DataTable3
+   \   0000001A   0x6800             LDR      R0,[R0, #+0]
+   \   0000001C   0x2800             CMP      R0,#+0
+   \   0000001E   0xD006             BEQ.N    ??SMDB_ini_0
+   \   00000020   0x2300             MOVS     R3,#+0
+   \   00000022   0x2200             MOVS     R2,#+0
+   \   00000024   0x2100             MOVS     R1,#+0
+   \   00000026   0x....             LDR.N    R0,??DataTable3
+   \   00000028   0x6800             LDR      R0,[R0, #+0]
+   \   0000002A   0x.... 0x....      BL       xQueueGenericSend
+     70          }
+   \                     ??SMDB_ini_0:
+   \   0000002E   0xBD01             POP      {R0,PC}          ;; return
+     71          /***********************************************************************************
+     72          *       Descrição       :       Ponto de entrada da máquina de estados 
+     73          *                               que faz a supervisão dos dispositivos MDB
+     74          *       Parametros      :       nenhum
+     75          *       Retorno         :       nenhum
+     76          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     77          void SMDB_tick(void){
+   \                     SMDB_tick:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     78            //unsigned char bill;  
+     79            
+     80            while(!xSemaphoreTake(SMDB_semaforo_barramento,portTICK_RATE_MS*1));     
+   \                     ??SMDB_tick_0:
+   \   00000002   0x2300             MOVS     R3,#+0
+   \   00000004   0x2201             MOVS     R2,#+1
+   \   00000006   0x2100             MOVS     R1,#+0
+   \   00000008   0x....             LDR.N    R0,??DataTable3
+   \   0000000A   0x6800             LDR      R0,[R0, #+0]
+   \   0000000C   0x.... 0x....      BL       xQueueGenericReceive
+   \   00000010   0x2800             CMP      R0,#+0
+   \   00000012   0xD0F6             BEQ.N    ??SMDB_tick_0
+     81             
+     82            vTaskDelay(5);  
+   \   00000014   0x2005             MOVS     R0,#+5
+   \   00000016   0x.... 0x....      BL       vTaskDelay
+     83            SMDBILL_tick(); // dentro do módulo ele verifica o bloqueio e habilitação do periférico
+   \   0000001A   0x.... 0x....      BL       SMDBILL_tick
+     84            SMDBCOIN_tick(); // 
+   \   0000001E   0x.... 0x....      BL       SMDBCOIN_tick
+     85            //SMC_tick(); // Dentro do módulo ele verifica o bloqueio e habilitação do cartão
+     86             
+     87            xSemaphoreGive(SMDB_semaforo_barramento); 
+   \   00000022   0x2300             MOVS     R3,#+0
+   \   00000024   0x2200             MOVS     R2,#+0
+   \   00000026   0x2100             MOVS     R1,#+0
+   \   00000028   0x....             LDR.N    R0,??DataTable3
+   \   0000002A   0x6800             LDR      R0,[R0, #+0]
+   \   0000002C   0x.... 0x....      BL       xQueueGenericSend
+     88          }
+   \   00000030   0xBD01             POP      {R0,PC}          ;; return
+     89          /***********************************************************************************
+     90          *       Descrição       :       Wait para o barramento MDB
+     91          *       Parametros      :       nenhum
+     92          *       Retorno         :       nenhum
+     93          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     94          void SMDB_wait(void){
+   \                     SMDB_wait:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     95            
+     96            while(!xSemaphoreTake(SMDB_semaforo_barramento,portTICK_RATE_MS*1));    
+   \                     ??SMDB_wait_0:
+   \   00000002   0x2300             MOVS     R3,#+0
+   \   00000004   0x2201             MOVS     R2,#+1
+   \   00000006   0x2100             MOVS     R1,#+0
+   \   00000008   0x....             LDR.N    R0,??DataTable3
+   \   0000000A   0x6800             LDR      R0,[R0, #+0]
+   \   0000000C   0x.... 0x....      BL       xQueueGenericReceive
+   \   00000010   0x2800             CMP      R0,#+0
+   \   00000012   0xD0F6             BEQ.N    ??SMDB_wait_0
+     97          }
+   \   00000014   0xBD01             POP      {R0,PC}          ;; return
+     98          /***********************************************************************************
+     99          *       Descrição       :       Release para o barramento
+    100          *       Parametros      :       nenhum
+    101          *       Retorno         :       nenhum
+    102          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    103          void SMDB_release(void){
+   \                     SMDB_release:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    104            
+    105            xSemaphoreGive(SMDB_semaforo_barramento); 
+   \   00000002   0x2300             MOVS     R3,#+0
+   \   00000004   0x2200             MOVS     R2,#+0
+   \   00000006   0x2100             MOVS     R1,#+0
+   \   00000008   0x....             LDR.N    R0,??DataTable3
+   \   0000000A   0x6800             LDR      R0,[R0, #+0]
+   \   0000000C   0x.... 0x....      BL       xQueueGenericSend
+    106          }
+   \   00000010   0xBD01             POP      {R0,PC}          ;; return
+    107          /***********************************************************************************
+    108          *       Descrição       :       Inicia uma venda
+    109          *       Parametros      :       nenhum
+    110          *       Retorno         :       (unsigned char) maior do que zero
+    111          *                                               se a venda for iniciada
+    112          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    113          unsigned char SMDB_cashless_vend(unsigned short int valor,
+    114                                           unsigned short int item){
+   \                     SMDB_cashless_vend:
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    115             unsigned char tentativas=10;
+   \   00000006   0x260A             MOVS     R6,#+10
+    116             unsigned char res=0;
+   \   00000008   0x2700             MOVS     R7,#+0
+    117             eMDB_reply flag;
+    118                                             
+    119             SMDB_wait();
+   \   0000000A   0x.... 0x....      BL       SMDB_wait
+    120             
+    121             do flag = MDBCASHLESS_start_vend(valor,item);
+   \                     ??SMDB_cashless_vend_0:
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000016   0x.... 0x....      BL       MDBCASHLESS_start_vend
+    122             while(flag!=MDB_OK && tentativas--);
+   \   0000001A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001C   0x2800             CMP      R0,#+0
+   \   0000001E   0xD004             BEQ.N    ??SMDB_cashless_vend_1
+   \   00000020   0x0031             MOVS     R1,R6
+   \   00000022   0x1E4E             SUBS     R6,R1,#+1
+   \   00000024   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000026   0x2900             CMP      R1,#+0
+   \   00000028   0xD1F1             BNE.N    ??SMDB_cashless_vend_0
+    123             
+    124             if(flag==MDB_OK)
+   \                     ??SMDB_cashless_vend_1:
+   \   0000002A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000002C   0x2800             CMP      R0,#+0
+   \   0000002E   0xD100             BNE.N    ??SMDB_cashless_vend_2
+    125               res = 1;   
+   \   00000030   0x2701             MOVS     R7,#+1
+    126             
+    127             SMDB_release();      
+   \                     ??SMDB_cashless_vend_2:
+   \   00000032   0x.... 0x....      BL       SMDB_release
+    128             
+    129             return res;
+   \   00000036   0x0038             MOVS     R0,R7
+   \   00000038   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000003A   0xBDF2             POP      {R1,R4-R7,PC}    ;; return
+    130          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3:
+   \   00000000   0x........         DC32     SMDB_semaforo_barramento
+    131          /***********************************************************************************
+    132          *       Fim do arquivo
+    133          ***********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      24   SMDB_cashless_vend
+        24   -> MDBCASHLESS_start_vend
+        24   -> SMDB_release
+        24   -> SMDB_wait
+       8   SMDB_ini
+         8   -> SMC_ini
+         8   -> SMDBILL_set_bloqueio
+         8   -> xQueueCreate
+         8   -> xQueueGenericSend
+       8   SMDB_release
+         8   -> xQueueGenericSend
+       8   SMDB_tick
+         8   -> SMDBCOIN_tick
+         8   -> SMDBILL_tick
+         8   -> vTaskDelay
+         8   -> xQueueGenericReceive
+         8   -> xQueueGenericSend
+       8   SMDB_wait
+         8   -> xQueueGenericReceive
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable3
+      60  SMDB_cashless_vend
+      48  SMDB_ini
+      18  SMDB_release
+       4  SMDB_semaforo_barramento
+      50  SMDB_tick
+      22  SMDB_wait
+
+ 
+   4 bytes in section .bss
+ 202 bytes in section .text
+ 
+ 202 bytes of CODE memory
+   4 bytes of DATA memory
+
+Errors: none
+Warnings: none

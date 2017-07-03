@@ -1,0 +1,150 @@
+ Descritivo do protocolo de configuração da controladora
+ airpopcorn
+ 
+ O protocolo é baseado na utilização do caracter de transparência DLE para
+ utilizar os caracteres STX e ETX no buffer de dados.
+ O caracter STX marca o início de um novo pacote de dados, já o ETX marca
+ o final de um.
+ Dentro de um pacote, caso seja necessário enviar o dado que equivalha a DLE,
+ ele deve ser precedido do marcador, ficando então DLE+DLE.
+ 
+ Consistência dos dados
+ 
+ A verificação da consistência dos dados enviados é feita através do checksum
+ de 8 bits que é feito pela forma 256-(somatório 8 bits dos dados)
+ 
+ -------------------------------------------------------------------------------
+ Formato do datagrama
+ 
+ [Função][tamanho][data][checksum]
+ 
+ Funções da versão 1.0
+ 
+ 
+<<READ_DATA_FLASH_BLOCK>> - Faz a leitura de um bloco de dados a partir da 
+                            flash de dados da placa
+                         
+   Formato do pacote
+  
+   Requisição:
+   [1][tamanho][end>>24][end>>16][end>>8][end][tamanho][checksum]
+   
+   Resposta:
+   [1][tamanho][end>>24][end>>16][end>>8][end][tamanho][dados(1..128)][checksum]
+ 
+   exceção
+   [1][tamanho][1][checksum]
+   
+   1-> tamanho do bloco inválido
+   
+   
+ <<WRITE_DATA_FLASH_BLOCK>> - Faz a escrita de um bloco de dados na memória flash
+   
+   Formato do pacote
+   
+   Requisição
+   [2][tamanho][end>>24][end>>16][end>>8][end][tamanho][dados(1..128][checksum]
+   
+   Resposta:
+   [2][tamanho][end>>24][end>>16][end>>8][end][tamanho][checksum]
+   
+   Exceção
+   [2][tamanho][1][checksum]
+   
+   1-> tamanho do bloco inválido
+   
+  <<FORMATA_AUDIO_FLASH>> - Apaga a área de dados da dataflash
+  
+  Formato do pacote
+  
+  Requisição
+  [3][tamanho][crc]
+  
+  Resposta
+  [3][tamanho][crc]
+  
+  ***Observação: Para o protocolo a região da área de músicas começa em 0x00000
+  dentro da stack do protocolo é que deve ser somado esse offset do inicio, para o 
+  cliente fica transparente....
+  
+  <ESCREVE_TABELA_MUSICAS> - Escreve os dados de indexação da tabela
+                             de músicas
+                             
+   Formato do pacote
+   
+   Requisição
+   [4][tamanho][musica][end>>16][end>>8][end][size>>16][size>>8][size][checksum]
+   
+   Resposta
+   [4][tamanho][musica][end>>16][end>>8][end][size>>16][size>>8][size][checksum]
+   
+   Exceção
+   [4][tamanho][1][checksum]
+   
+   1-> indice de música fora do limite válido
+   
+  <LE_TABELA_MUSICAS> - Lê os dados de indexação das tabelas de música
+  
+  Formato do pacote
+  
+  Requisição
+  [5][tamanho][musica][checksum]
+  
+  Resposta
+  [5][tamanho][musica][end>>16][end>>8][end][size>>16][size>>8][size][checksum]
+  
+  Exceção
+  [5][tamanho][1][checksum]
+  
+  1-> indice da música fora do limite válido
+   
+   
+   
+  <ESCREVE_PARAMETRO>   Escreve um valor de 16 bits em um dos parametros do 
+                        sistema
+                        
+   Formato do pacote
+   
+   Requisição
+   [5][tamanho][indice][valor high][valor low][checksum]
+   
+   Resposta
+   [5][tamanho][indice][valor high][valor low][checksum]
+   
+   Exceção
+   [5][tamanho][1][checksum]
+   
+   1-> Indice do parametro inválido
+   2-> valor fora dos limites 
+   
+   <LE_PARAMETRO>    Lê um valor de 16 bits de um dos parametros do sistema
+   
+   Formato do pacote
+   
+   Requisição
+   [6][tamanho][indice][checksum]
+   
+   Resposta
+   [6][tamanho][indice][valor high][valor low][checksum]
+   
+   Exceção
+   [6][tamanho][1][checksum]
+   
+   1-> Indice do parametro inválido
+   
+   <ESCREVE_MENSAGEM_USUARIO> Escreve em uma das mensagens de usuários, que
+                              são exibidas no LCD
+                              
+   Formato do pacote
+   
+   Requisicao
+   [6][tamanho][indice][mensagem[char*16]][checksum]
+   
+   Resposta
+   [6][tamanho][indice][checksum]
+   
+   Exceção
+   [6][tamanho][1]
+   
+   
+   

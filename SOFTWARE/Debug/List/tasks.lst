@@ -1,0 +1,3065 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jun/2017  11:11:54 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Kernel\tasks.c             #
+#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Kernel\tasks.c" -lC       #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA          #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o           #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --no_clustering --no_scheduling --debug --endian=little  #
+#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
+#                    Files (x86)\IAR Systems\Embedded Workbench               #
+#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
+#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\tasks.lst       #
+#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\tasks.o          #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Kernel\tasks.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :
+     18          |       Descrição          :
+     19          | 
+     20          |       Autor              :
+     21          |       Data criação       :
+     22          |
+     23          |       Revisões           :
+     24          |
+     25          |
+     26          | __________________________________________________________________________________
+     27          */
+     28          
+     29          /********************************************************************************
+     30          *   Includes
+     31          ********************************************************************************/
+     32          #include <stdio.h>
+     33          #include <stdlib.h>
+     34          #include <string.h>
+
+   \                                 In section .text, align 2
+   \   __intrinsic __nounwind __interwork __softfp void *memset(void *, int, size_t)
+   \                     memset:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x0010             MOVS     R0,R2
+   \   00000006   0x000A             MOVS     R2,R1
+   \   00000008   0x0001             MOVS     R1,R0
+   \   0000000A   0x0020             MOVS     R0,R4
+   \   0000000C   0x.... 0x....      BL       __aeabi_memset
+   \   00000010   0x0020             MOVS     R0,R4
+   \   00000012   0xBD10             POP      {R4,PC}          ;; return
+     35          #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+     36            #include "FreeRTOS.h"
+     37            #include "task.h"
+     38            #include "StackMacros.h"
+     39          #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+     40          
+     41          /********************************************************************************
+     42          *   Definições
+     43          ********************************************************************************/
+     44          #define tskIDLE_STACK_SIZE	configMINIMAL_STACK_SIZE
+     45          #define tskSTACK_FILL_BYTE	( 0xa5 )
+     46          #define tskBLOCKED_CHAR		( ( signed char ) 'B' )
+     47          #define tskREADY_CHAR		( ( signed char ) 'R' )
+     48          #define tskDELETED_CHAR		( ( signed char ) 'D' )
+     49          #define tskSUSPENDED_CHAR	( ( signed char ) 'S' )
+     50          #define vWriteTraceToBuffer()
+     51          
+     52          /********************************************************************************
+     53          *   Estruturas
+     54          ********************************************************************************/
+     55          typedef struct tskTaskControlBlock
+     56          {
+     57          	volatile portSTACK_TYPE	*pxTopOfStack;	
+     58          	xListItem xGenericListItem;
+     59          	xListItem xEventListItem;
+     60          	unsigned portBASE_TYPE	uxPriority;
+     61          	portSTACK_TYPE *pxStack;
+     62          	signed char pcTaskName[ configMAX_TASK_NAME_LEN ];        
+     63          	portSTACK_TYPE *pxEndOfStack;	
+     64          	unsigned portBASE_TYPE uxCriticalNesting;
+     65          	unsigned portBASE_TYPE uxBasePriority;	
+     66          } tskTCB;
+     67          
+     68          /********************************************************************************
+     69          *   Variaveis locais
+     70          ********************************************************************************/
+
+   \                                 In section .bss, align 4
+     71          tskTCB *  pxCurrentTCB = NULL;
+   \                     pxCurrentTCB:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     72          xList pxReadyTasksLists[ configMAX_PRIORITIES ];
+   \                     pxReadyTasksLists:
+   \   00000000                      DS8 100
+
+   \                                 In section .bss, align 4
+     73          xList xDelayedTaskList1;	
+   \                     xDelayedTaskList1:
+   \   00000000                      DS8 20
+
+   \                                 In section .bss, align 4
+     74          xList xDelayedTaskList2;	
+   \                     xDelayedTaskList2:
+   \   00000000                      DS8 20
+
+   \                                 In section .bss, align 4
+     75          xList *  pxDelayedTaskList ;
+   \                     pxDelayedTaskList:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     76          xList *  pxOverflowDelayedTaskList;
+   \                     pxOverflowDelayedTaskList:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     77          xList xPendingReadyList;			
+   \                     xPendingReadyList:
+   \   00000000                      DS8 20
+
+   \                                 In section .bss, align 4
+     78          xList xTasksWaitingTermination;	
+   \                     xTasksWaitingTermination:
+   \   00000000                      DS8 20
+
+   \                                 In section .bss, align 4
+     79          unsigned portBASE_TYPE uxTasksDeleted = ( unsigned portBASE_TYPE ) 0;
+   \                     uxTasksDeleted:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     80          xList xSuspendedTaskList;
+   \                     xSuspendedTaskList:
+   \   00000000                      DS8 20
+
+   \                                 In section .bss, align 4
+     81          unsigned portBASE_TYPE uxCurrentNumberOfTasks 	= ( unsigned portBASE_TYPE ) 0;
+   \                     uxCurrentNumberOfTasks:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     82          portTickType xTickCount = ( portTickType ) 0;
+   \                     xTickCount:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     83          unsigned portBASE_TYPE uxTopUsedPriority = tskIDLE_PRIORITY;
+   \                     uxTopUsedPriority:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     84          unsigned portBASE_TYPE uxTopReadyPriority = tskIDLE_PRIORITY;
+   \                     uxTopReadyPriority:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     85          signed portBASE_TYPE xSchedulerRunning	= pdFALSE;
+   \                     xSchedulerRunning:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     86          unsigned portBASE_TYPE uxSchedulerSuspended = ( unsigned portBASE_TYPE ) pdFALSE;
+   \                     uxSchedulerSuspended:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     87          unsigned portBASE_TYPE uxMissedTicks = ( unsigned portBASE_TYPE ) 0;
+   \                     uxMissedTicks:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     88          portBASE_TYPE xMissedYield = ( portBASE_TYPE ) pdFALSE;
+   \                     xMissedYield:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     89          portBASE_TYPE xNumOfOverflows = ( portBASE_TYPE ) 0;
+   \                     xNumOfOverflows:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     90          unsigned portBASE_TYPE uxTaskNumber = ( unsigned portBASE_TYPE ) 0;
+   \                     uxTaskNumber:
+   \   00000000                      DS8 4
+     91          
+     92          /********************************************************************************
+     93          *   Macros
+     94          ********************************************************************************/
+     95          #define prvAddTaskToReadyQueue( pxTCB )																			\
+     96          {																												\
+     97          	if( pxTCB->uxPriority > uxTopReadyPriority )																\
+     98          	{																											\
+     99          		uxTopReadyPriority = pxTCB->uxPriority;																	\
+    100          	}																											\
+    101          	vListInsertEnd( ( xList * ) &( pxReadyTasksLists[ pxTCB->uxPriority ] ), &( pxTCB->xGenericListItem ) );	\
+    102          }
+    103          
+    104          #define prvCheckDelayedTasks()																						\
+    105          {																													\
+    106          register tskTCB *pxTCB;																								\
+    107          																													\
+    108          	while( ( pxTCB = ( tskTCB * ) listGET_OWNER_OF_HEAD_ENTRY( pxDelayedTaskList ) ) != NULL )						\
+    109          	{																												\
+    110          		if( xTickCount < listGET_LIST_ITEM_VALUE( &( pxTCB->xGenericListItem ) ) )									\
+    111          		{																											\
+    112          			break;																									\
+    113          		}																											\
+    114          		vListRemove( &( pxTCB->xGenericListItem ) );																\
+    115          		if( pxTCB->xEventListItem.pvContainer )																		\
+    116          		{																											\
+    117          			vListRemove( &( pxTCB->xEventListItem ) );																\
+    118          		}																											\
+    119          		prvAddTaskToReadyQueue( pxTCB );																			\
+    120          	}																												\
+    121          }
+    122          
+    123          #define prvGetTCBFromHandle( pxHandle ) ( ( pxHandle == NULL ) ? ( tskTCB * ) pxCurrentTCB : ( tskTCB * ) pxHandle )
+    124          /********************************************************************************
+    125          *   Funções locais
+    126          ********************************************************************************/
+    127          static void prvInitialiseTCBVariables( tskTCB *pxTCB, const signed char * const pcName, unsigned portBASE_TYPE uxPriority, const xMemoryRegion * const xRegions, unsigned short usStackDepth ) PRIVILEGED_FUNCTION;
+    128          static void prvInitialiseTaskLists( void ) PRIVILEGED_FUNCTION;
+    129          static portTASK_FUNCTION_PROTO( prvIdleTask, pvParameters );
+    130          static void prvDeleteTCB( tskTCB *pxTCB ) PRIVILEGED_FUNCTION;
+    131          static void prvCheckTasksWaitingTermination( void ) PRIVILEGED_FUNCTION;
+    132          static tskTCB *prvAllocateTCBAndStack( unsigned short usStackDepth, portSTACK_TYPE *puxStackBuffer ) PRIVILEGED_FUNCTION;
+    133          static unsigned short usTaskCheckFreeStackSpace( const unsigned char * pucStackByte ) PRIVILEGED_FUNCTION;
+    134          /********************************************************************************
+    135          *   Implementação
+    136          ********************************************************************************/
+    137          
+    138          /********************************************************************************
+    139          *   Descrição       : 
+    140          *   Parametros      :   
+    141          *   Retorno         : 
+    142          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    143          signed portBASE_TYPE xTaskGenericCreate( pdTASK_CODE pxTaskCode, const signed char * const pcName, unsigned short usStackDepth, void *pvParameters, unsigned portBASE_TYPE uxPriority, xTaskHandle *pxCreatedTask, portSTACK_TYPE *puxStackBuffer, const xMemoryRegion * const xRegions )
+    144          {
+   \                     xTaskGenericCreate:
+   \   00000000   0xE92D 0x4FF8      PUSH     {R3-R11,LR}
+   \   00000004   0x0006             MOVS     R6,R0
+   \   00000006   0x000F             MOVS     R7,R1
+   \   00000008   0x4690             MOV      R8,R2
+   \   0000000A   0x4699             MOV      R9,R3
+   \   0000000C   0x990C             LDR      R1,[SP, #+48]
+   \   0000000E   0xF8DD 0xA034      LDR      R10,[SP, #+52]
+    145          signed portBASE_TYPE xReturn;
+    146          tskTCB * pxNewTCB;
+    147          
+    148          	pxNewTCB = prvAllocateTCBAndStack( usStackDepth, puxStackBuffer );
+   \   00000012   0x4640             MOV      R0,R8
+   \   00000014   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000016   0x.... 0x....      BL       prvAllocateTCBAndStack
+   \   0000001A   0x0005             MOVS     R5,R0
+   \   0000001C   0x9C0A             LDR      R4,[SP, #+40]
+    149          
+    150          	if( pxNewTCB != NULL )
+   \   0000001E   0x2D00             CMP      R5,#+0
+   \   00000020   0xD06D             BEQ.N    ??xTaskGenericCreate_0
+    151          	{
+    152          		portSTACK_TYPE *pxTopOfStack;
+    153          
+    154          		#if( portSTACK_GROWTH < 0 )
+    155          		{
+    156          			pxTopOfStack = pxNewTCB->pxStack + ( usStackDepth - 1 );
+   \   00000022   0xFA1F 0xF888      UXTH     R8,R8            ;; ZeroExt  R8,R8,#+16,#+16
+   \   00000026   0x6B28             LDR      R0,[R5, #+48]
+   \   00000028   0xEB10 0x0088      ADDS     R0,R0,R8, LSL #+2
+   \   0000002C   0xF1B0 0x0B04      SUBS     R11,R0,#+4
+    157          			pxTopOfStack = ( portSTACK_TYPE * ) ( ( ( unsigned long ) pxTopOfStack ) & ( ( unsigned long ) ~portBYTE_ALIGNMENT_MASK  ) );
+   \   00000030   0xEA5F 0x0BDB      LSRS     R11,R11,#+3
+   \   00000034   0xEA5F 0x0BCB      LSLS     R11,R11,#+3
+    158          		}
+    159          		#else
+    160          		{
+    161          			pxTopOfStack = pxNewTCB->pxStack;
+    162          
+    163          			/* If we want to use stack checking on architectures that use
+    164          			a positive stack growth direction then we also need to store the
+    165          			other extreme of the stack space. */
+    166          			pxNewTCB->pxEndOfStack = pxNewTCB->pxStack + ( usStackDepth - 1 );
+    167          		}
+    168          		#endif
+    169          
+    170          		prvInitialiseTCBVariables( pxNewTCB, pcName, uxPriority, xRegions, usStackDepth );
+   \   00000038   0xFA1F 0xF888      UXTH     R8,R8            ;; ZeroExt  R8,R8,#+16,#+16
+   \   0000003C   0xF8CD 0x8000      STR      R8,[SP, #+0]
+   \   00000040   0x4653             MOV      R3,R10
+   \   00000042   0x0022             MOVS     R2,R4
+   \   00000044   0x0039             MOVS     R1,R7
+   \   00000046   0x0028             MOVS     R0,R5
+   \   00000048   0x.... 0x....      BL       prvInitialiseTCBVariables
+    171          
+    172          		/* Initialize the TCB stack to look as if the task was already running,
+    173          		but had been interrupted by the scheduler.  The return address is set
+    174          		to the start of the task function. Once the stack has been initialised
+    175          		the	top of stack variable is updated. */
+    176          		#if( portUSING_MPU_WRAPPERS == 1 )
+    177          		{
+    178          			pxNewTCB->pxTopOfStack = pxPortInitialiseStack( pxTopOfStack, pxTaskCode, pvParameters, xRunPrivileged );
+    179          		}
+    180          		#else
+    181          		{
+    182          			pxNewTCB->pxTopOfStack = pxPortInitialiseStack( pxTopOfStack, pxTaskCode, pvParameters );
+   \   0000004C   0x464A             MOV      R2,R9
+   \   0000004E   0x0031             MOVS     R1,R6
+   \   00000050   0x4658             MOV      R0,R11
+   \   00000052   0x.... 0x....      BL       pxPortInitialiseStack
+   \   00000056   0x6028             STR      R0,[R5, #+0]
+   \   00000058   0x980B             LDR      R0,[SP, #+44]
+    183          		}
+    184          		#endif
+    185          
+    186          		if( ( void * ) pxCreatedTask != NULL )
+   \   0000005A   0x2800             CMP      R0,#+0
+   \   0000005C   0xD000             BEQ.N    ??xTaskGenericCreate_1
+    187          		{
+    188          			/* Pass the TCB out - in an anonymous way.  The calling function/
+    189          			task can use this as a handle to delete the task later if
+    190          			required.*/
+    191          			*pxCreatedTask = ( xTaskHandle ) pxNewTCB;
+   \   0000005E   0x6005             STR      R5,[R0, #+0]
+    192          		}
+    193          		
+    194          		/* We are going to manipulate the task queues to add this task to a
+    195          		ready list, so must make sure no interrupts occur. */
+    196          		portENTER_CRITICAL();
+   \                     ??xTaskGenericCreate_1:
+   \   00000060   0x.... 0x....      BL       vPortEnterCritical
+    197          		{
+    198          			uxCurrentNumberOfTasks++;
+   \   00000064   0x.... 0x....      LDR.W    R0,??DataTable29
+   \   00000068   0x6800             LDR      R0,[R0, #+0]
+   \   0000006A   0x1C40             ADDS     R0,R0,#+1
+   \   0000006C   0x.... 0x....      LDR.W    R1,??DataTable29
+   \   00000070   0x6008             STR      R0,[R1, #+0]
+    199          			if( pxCurrentTCB == NULL )
+   \   00000072   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000076   0x6800             LDR      R0,[R0, #+0]
+   \   00000078   0x2800             CMP      R0,#+0
+   \   0000007A   0xD10A             BNE.N    ??xTaskGenericCreate_2
+    200          			{
+    201          				/* There are no other tasks, or all the other tasks are in
+    202          				the suspended state - make this the current task. */
+    203          				pxCurrentTCB =  pxNewTCB;
+   \   0000007C   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000080   0x6005             STR      R5,[R0, #+0]
+    204          
+    205          				if( uxCurrentNumberOfTasks == ( unsigned portBASE_TYPE ) 1 )
+   \   00000082   0x.... 0x....      LDR.W    R0,??DataTable29
+   \   00000086   0x6800             LDR      R0,[R0, #+0]
+   \   00000088   0x2801             CMP      R0,#+1
+   \   0000008A   0xD110             BNE.N    ??xTaskGenericCreate_3
+    206          				{
+    207          					/* This is the first task to be created so do the preliminary
+    208          					initialisation required.  We will not recover if this call
+    209          					fails, but we will report the failure. */
+    210          					prvInitialiseTaskLists();
+   \   0000008C   0x.... 0x....      BL       prvInitialiseTaskLists
+   \   00000090   0xE00D             B.N      ??xTaskGenericCreate_3
+    211          				}
+    212          			}
+    213          			else
+    214          			{
+    215          				/* If the scheduler is not already running, make this task the
+    216          				current task if it is the highest priority task to be created
+    217          				so far. */
+    218          				if( xSchedulerRunning == pdFALSE )
+   \                     ??xTaskGenericCreate_2:
+   \   00000092   0x.... 0x....      LDR.W    R0,??DataTable29_2
+   \   00000096   0x6800             LDR      R0,[R0, #+0]
+   \   00000098   0x2800             CMP      R0,#+0
+   \   0000009A   0xD108             BNE.N    ??xTaskGenericCreate_3
+    219          				{
+    220          					if( pxCurrentTCB->uxPriority <= uxPriority )
+   \   0000009C   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   000000A0   0x6800             LDR      R0,[R0, #+0]
+   \   000000A2   0x6AC0             LDR      R0,[R0, #+44]
+   \   000000A4   0x4284             CMP      R4,R0
+   \   000000A6   0xD302             BCC.N    ??xTaskGenericCreate_3
+    221          					{
+    222          						pxCurrentTCB = pxNewTCB;
+   \   000000A8   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   000000AC   0x6005             STR      R5,[R0, #+0]
+    223          					}
+    224          				}
+    225          			}
+    226          
+    227          			/* Remember the top priority to make context switching faster.  Use
+    228          			the priority in pxNewTCB as this has been capped to a valid value. */
+    229          			if( pxNewTCB->uxPriority > uxTopUsedPriority )
+   \                     ??xTaskGenericCreate_3:
+   \   000000AE   0x.... 0x....      LDR.W    R0,??DataTable29_3
+   \   000000B2   0x6800             LDR      R0,[R0, #+0]
+   \   000000B4   0x6AE9             LDR      R1,[R5, #+44]
+   \   000000B6   0x4288             CMP      R0,R1
+   \   000000B8   0xD203             BCS.N    ??xTaskGenericCreate_4
+    230          			{
+    231          				uxTopUsedPriority = pxNewTCB->uxPriority;
+   \   000000BA   0x6AE8             LDR      R0,[R5, #+44]
+   \   000000BC   0x.... 0x....      LDR.W    R1,??DataTable29_3
+   \   000000C0   0x6008             STR      R0,[R1, #+0]
+    232          			}
+    233          
+    234          			#if ( configUSE_TRACE_FACILITY == 1 )
+    235          			{
+    236          				/* Add a counter into the TCB for tracing only. */
+    237          				pxNewTCB->uxTCBNumber = uxTaskNumber;
+    238          			}
+    239          			#endif
+    240          			uxTaskNumber++;
+   \                     ??xTaskGenericCreate_4:
+   \   000000C2   0x.... 0x....      LDR.W    R0,??DataTable29_4
+   \   000000C6   0x6800             LDR      R0,[R0, #+0]
+   \   000000C8   0x1C40             ADDS     R0,R0,#+1
+   \   000000CA   0x.... 0x....      LDR.W    R1,??DataTable29_4
+   \   000000CE   0x6008             STR      R0,[R1, #+0]
+    241          
+    242          			prvAddTaskToReadyQueue( pxNewTCB );
+   \   000000D0   0x.... 0x....      LDR.W    R0,??DataTable29_5
+   \   000000D4   0x6800             LDR      R0,[R0, #+0]
+   \   000000D6   0x6AE9             LDR      R1,[R5, #+44]
+   \   000000D8   0x4288             CMP      R0,R1
+   \   000000DA   0xD203             BCS.N    ??xTaskGenericCreate_5
+   \   000000DC   0x6AE8             LDR      R0,[R5, #+44]
+   \   000000DE   0x.... 0x....      LDR.W    R1,??DataTable29_5
+   \   000000E2   0x6008             STR      R0,[R1, #+0]
+   \                     ??xTaskGenericCreate_5:
+   \   000000E4   0x1D29             ADDS     R1,R5,#+4
+   \   000000E6   0x6AE8             LDR      R0,[R5, #+44]
+   \   000000E8   0x2214             MOVS     R2,#+20
+   \   000000EA   0x.... 0x....      LDR.W    R3,??DataTable29_6
+   \   000000EE   0xFB02 0x3000      MLA      R0,R2,R0,R3
+   \   000000F2   0x.... 0x....      BL       vListInsertEnd
+    243          
+    244          			xReturn = pdPASS;
+   \   000000F6   0x2501             MOVS     R5,#+1
+    245          			traceTASK_CREATE( pxNewTCB );
+    246          		}
+    247          		portEXIT_CRITICAL();
+   \   000000F8   0x.... 0x....      BL       vPortExitCritical
+   \   000000FC   0xE001             B.N      ??xTaskGenericCreate_6
+    248          	}
+    249          	else
+    250          	{
+    251          		xReturn = errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY;
+   \                     ??xTaskGenericCreate_0:
+   \   000000FE   0xF05F 0x35FF      MOVS     R5,#-1
+    252          		traceTASK_CREATE_FAILED();
+    253          	}
+    254          
+    255          	if( xReturn == pdPASS )
+   \                     ??xTaskGenericCreate_6:
+   \   00000102   0x2D01             CMP      R5,#+1
+   \   00000104   0xD10C             BNE.N    ??xTaskGenericCreate_7
+    256          	{
+    257          		if( xSchedulerRunning != pdFALSE )
+   \   00000106   0x.... 0x....      LDR.W    R0,??DataTable29_2
+   \   0000010A   0x6800             LDR      R0,[R0, #+0]
+   \   0000010C   0x2800             CMP      R0,#+0
+   \   0000010E   0xD007             BEQ.N    ??xTaskGenericCreate_7
+    258          		{
+    259          			/* If the created task is of a higher priority than the current task
+    260          			then it should run now. */
+    261          			if( pxCurrentTCB->uxPriority < uxPriority )
+   \   00000110   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000114   0x6800             LDR      R0,[R0, #+0]
+   \   00000116   0x6AC0             LDR      R0,[R0, #+44]
+   \   00000118   0x42A0             CMP      R0,R4
+   \   0000011A   0xD201             BCS.N    ??xTaskGenericCreate_7
+    262          			{
+    263          				portYIELD_WITHIN_API();
+   \   0000011C   0x.... 0x....      BL       vPortYieldFromISR
+    264          			}
+    265          		}
+    266          	}
+    267          
+    268          	return xReturn;
+   \                     ??xTaskGenericCreate_7:
+   \   00000120   0x0028             MOVS     R0,R5
+   \   00000122   0xE8BD 0x8FF2      POP      {R1,R4-R11,PC}   ;; return
+    269          }
+    270          /********************************************************************************
+    271          *   Descrição       : 
+    272          *   Parametros      :   
+    273          *   Retorno         : 
+    274          ********************************************************************************/
+    275          #if ( INCLUDE_vTaskDelete == 1 )
+    276          
+
+   \                                 In section .text, align 2, keep-with-next
+    277          	void vTaskDelete( xTaskHandle pxTaskToDelete )
+    278          	{
+   \                     vTaskDelete:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    279          	tskTCB *pxTCB;
+    280          
+    281          		portENTER_CRITICAL();
+   \   00000004   0x.... 0x....      BL       vPortEnterCritical
+    282          		{
+    283          			/* Ensure a yield is performed if the current task is being
+    284          			deleted. */
+    285          			if( pxTaskToDelete == pxCurrentTCB )
+   \   00000008   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000000C   0x6800             LDR      R0,[R0, #+0]
+   \   0000000E   0x4284             CMP      R4,R0
+   \   00000010   0xD100             BNE.N    ??vTaskDelete_0
+    286          			{
+    287          				pxTaskToDelete = NULL;
+   \   00000012   0x2400             MOVS     R4,#+0
+    288          			}
+    289          
+    290          			/* If null is passed in here then we are deleting ourselves. */
+    291          			pxTCB = prvGetTCBFromHandle( pxTaskToDelete );
+   \                     ??vTaskDelete_0:
+   \   00000014   0x2C00             CMP      R4,#+0
+   \   00000016   0xD103             BNE.N    ??vTaskDelete_1
+   \   00000018   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000001C   0x6805             LDR      R5,[R0, #+0]
+   \   0000001E   0xE000             B.N      ??vTaskDelete_2
+   \                     ??vTaskDelete_1:
+   \   00000020   0x0025             MOVS     R5,R4
+    292          
+    293          			/* Remove task from the ready list and place in the	termination list.
+    294          			This will stop the task from be scheduled.  The idle task will check
+    295          			the termination list and free up any memory allocated by the
+    296          			scheduler for the TCB and stack. */
+    297          			vListRemove( &( pxTCB->xGenericListItem ) );
+   \                     ??vTaskDelete_2:
+   \   00000022   0x1D28             ADDS     R0,R5,#+4
+   \   00000024   0x.... 0x....      BL       vListRemove
+    298          
+    299          			/* Is the task waiting on an event also? */
+    300          			if( pxTCB->xEventListItem.pvContainer )
+   \   00000028   0x6AA8             LDR      R0,[R5, #+40]
+   \   0000002A   0x2800             CMP      R0,#+0
+   \   0000002C   0xD003             BEQ.N    ??vTaskDelete_3
+    301          			{
+    302          				vListRemove( &( pxTCB->xEventListItem ) );
+   \   0000002E   0xF115 0x0018      ADDS     R0,R5,#+24
+   \   00000032   0x.... 0x....      BL       vListRemove
+    303          			}
+    304          
+    305          			vListInsertEnd( ( xList * ) &xTasksWaitingTermination, &( pxTCB->xGenericListItem ) );
+   \                     ??vTaskDelete_3:
+   \   00000036   0x1D29             ADDS     R1,R5,#+4
+   \   00000038   0x.... 0x....      LDR.W    R0,??DataTable29_7
+   \   0000003C   0x.... 0x....      BL       vListInsertEnd
+    306          
+    307          			/* Increment the ucTasksDeleted variable so the idle task knows
+    308          			there is a task that has been deleted and that it should therefore
+    309          			check the xTasksWaitingTermination list. */
+    310          			++uxTasksDeleted;
+   \   00000040   0x.... 0x....      LDR.W    R0,??DataTable29_8
+   \   00000044   0x6800             LDR      R0,[R0, #+0]
+   \   00000046   0x1C40             ADDS     R0,R0,#+1
+   \   00000048   0x.... 0x....      LDR.W    R1,??DataTable29_8
+   \   0000004C   0x6008             STR      R0,[R1, #+0]
+    311          
+    312          			/* Increment the uxTaskNumberVariable also so kernel aware debuggers
+    313          			can detect that the task lists need re-generating. */
+    314          			uxTaskNumber++;
+   \   0000004E   0x.... 0x....      LDR.W    R0,??DataTable29_4
+   \   00000052   0x6800             LDR      R0,[R0, #+0]
+   \   00000054   0x1C40             ADDS     R0,R0,#+1
+   \   00000056   0x.... 0x....      LDR.W    R1,??DataTable29_4
+   \   0000005A   0x6008             STR      R0,[R1, #+0]
+    315          
+    316          			traceTASK_DELETE( pxTCB );
+    317          		}
+    318          		portEXIT_CRITICAL();
+   \   0000005C   0x.... 0x....      BL       vPortExitCritical
+    319          
+    320          		/* Force a reschedule if we have just deleted the current task. */
+    321          		if( xSchedulerRunning != pdFALSE )
+   \   00000060   0x.... 0x....      LDR.W    R0,??DataTable29_2
+   \   00000064   0x6800             LDR      R0,[R0, #+0]
+   \   00000066   0x2800             CMP      R0,#+0
+   \   00000068   0xD003             BEQ.N    ??vTaskDelete_4
+    322          		{
+    323          			if( ( void * ) pxTaskToDelete == NULL )
+   \   0000006A   0x2C00             CMP      R4,#+0
+   \   0000006C   0xD101             BNE.N    ??vTaskDelete_4
+    324          			{
+    325          				portYIELD_WITHIN_API();
+   \   0000006E   0x.... 0x....      BL       vPortYieldFromISR
+    326          			}
+    327          		}
+    328          	}
+   \                     ??vTaskDelete_4:
+   \   00000072   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+    329          
+    330          #endif
+    331          /********************************************************************************
+    332          *   Descrição       : 
+    333          *   Parametros      :   
+    334          *   Retorno         : 
+    335          ********************************************************************************/
+    336          #if ( INCLUDE_vTaskDelayUntil == 1 )
+    337          
+
+   \                                 In section .text, align 2, keep-with-next
+    338          	void vTaskDelayUntil( portTickType * const pxPreviousWakeTime, portTickType xTimeIncrement )
+    339          	{
+   \                     vTaskDelayUntil:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000E             MOVS     R6,R1
+    340          	portTickType xTimeToWake;
+    341          	portBASE_TYPE xAlreadyYielded, xShouldDelay = pdFALSE;
+   \   00000006   0x2500             MOVS     R5,#+0
+    342          
+    343          		vTaskSuspendAll();
+   \   00000008   0x.... 0x....      BL       vTaskSuspendAll
+    344          		{
+    345          			/* Generate the tick time at which the task wants to wake. */
+    346          			xTimeToWake = *pxPreviousWakeTime + xTimeIncrement;
+   \   0000000C   0x6820             LDR      R0,[R4, #+0]
+   \   0000000E   0x1836             ADDS     R6,R6,R0
+    347          
+    348          			if( xTickCount < *pxPreviousWakeTime )
+   \   00000010   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   00000014   0x6800             LDR      R0,[R0, #+0]
+   \   00000016   0x6821             LDR      R1,[R4, #+0]
+   \   00000018   0x4288             CMP      R0,R1
+   \   0000001A   0xD209             BCS.N    ??vTaskDelayUntil_0
+    349          			{
+    350          				/* The tick count has overflowed since this function was
+    351          				lasted called.  In this case the only time we should ever
+    352          				actually delay is if the wake time has also	overflowed,
+    353          				and the wake time is greater than the tick time.  When this
+    354          				is the case it is as if neither time had overflowed. */
+    355          				if( ( xTimeToWake < *pxPreviousWakeTime ) && ( xTimeToWake > xTickCount ) )
+   \   0000001C   0x6820             LDR      R0,[R4, #+0]
+   \   0000001E   0x4286             CMP      R6,R0
+   \   00000020   0xD20F             BCS.N    ??vTaskDelayUntil_1
+   \   00000022   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   00000026   0x6800             LDR      R0,[R0, #+0]
+   \   00000028   0x42B0             CMP      R0,R6
+   \   0000002A   0xD20A             BCS.N    ??vTaskDelayUntil_1
+    356          				{
+    357          					xShouldDelay = pdTRUE;
+   \   0000002C   0x2501             MOVS     R5,#+1
+   \   0000002E   0xE008             B.N      ??vTaskDelayUntil_1
+    358          				}
+    359          			}
+    360          			else
+    361          			{
+    362          				/* The tick time has not overflowed.  In this case we will
+    363          				delay if either the wake time has overflowed, and/or the
+    364          				tick time is less than the wake time. */
+    365          				if( ( xTimeToWake < *pxPreviousWakeTime ) || ( xTimeToWake > xTickCount ) )
+   \                     ??vTaskDelayUntil_0:
+   \   00000030   0x6820             LDR      R0,[R4, #+0]
+   \   00000032   0x4286             CMP      R6,R0
+   \   00000034   0xD304             BCC.N    ??vTaskDelayUntil_2
+   \   00000036   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   0000003A   0x6800             LDR      R0,[R0, #+0]
+   \   0000003C   0x42B0             CMP      R0,R6
+   \   0000003E   0xD200             BCS.N    ??vTaskDelayUntil_1
+    366          				{
+    367          					xShouldDelay = pdTRUE;
+   \                     ??vTaskDelayUntil_2:
+   \   00000040   0x2501             MOVS     R5,#+1
+    368          				}
+    369          			}
+    370          
+    371          			/* Update the wake time ready for the next call. */
+    372          			*pxPreviousWakeTime = xTimeToWake;
+   \                     ??vTaskDelayUntil_1:
+   \   00000042   0x6026             STR      R6,[R4, #+0]
+    373          
+    374          			if( xShouldDelay )
+   \   00000044   0x2D00             CMP      R5,#+0
+   \   00000046   0xD021             BEQ.N    ??vTaskDelayUntil_3
+    375          			{
+    376          				traceTASK_DELAY_UNTIL();
+    377          
+    378          				/* We must remove ourselves from the ready list before adding
+    379          				ourselves to the blocked list as the same list item is used for
+    380          				both lists. */
+    381          				vListRemove( ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+   \   00000048   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000004C   0x6800             LDR      R0,[R0, #+0]
+   \   0000004E   0x1D00             ADDS     R0,R0,#+4
+   \   00000050   0x.... 0x....      BL       vListRemove
+    382          
+    383          				/* The list item will be inserted in wake time order. */
+    384          				listSET_LIST_ITEM_VALUE( &( pxCurrentTCB->xGenericListItem ), xTimeToWake );
+   \   00000054   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000058   0x6800             LDR      R0,[R0, #+0]
+   \   0000005A   0x6046             STR      R6,[R0, #+4]
+    385          
+    386          				if( xTimeToWake < xTickCount )
+   \   0000005C   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   00000060   0x6800             LDR      R0,[R0, #+0]
+   \   00000062   0x4286             CMP      R6,R0
+   \   00000064   0xD209             BCS.N    ??vTaskDelayUntil_4
+    387          				{
+    388          					/* Wake time has overflowed.  Place this item in the
+    389          					overflow list. */
+    390          					vListInsert( ( xList * ) pxOverflowDelayedTaskList, ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+   \   00000066   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000006A   0x6800             LDR      R0,[R0, #+0]
+   \   0000006C   0x1D01             ADDS     R1,R0,#+4
+   \   0000006E   0x.... 0x....      LDR.W    R0,??DataTable29_10
+   \   00000072   0x6800             LDR      R0,[R0, #+0]
+   \   00000074   0x.... 0x....      BL       vListInsert
+   \   00000078   0xE008             B.N      ??vTaskDelayUntil_3
+    391          				}
+    392          				else
+    393          				{
+    394          					/* The wake time has not overflowed, so we can use the
+    395          					current block list. */
+    396          					vListInsert( ( xList * ) pxDelayedTaskList, ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+   \                     ??vTaskDelayUntil_4:
+   \   0000007A   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000007E   0x6800             LDR      R0,[R0, #+0]
+   \   00000080   0x1D01             ADDS     R1,R0,#+4
+   \   00000082   0x.... 0x....      LDR.W    R0,??DataTable29_11
+   \   00000086   0x6800             LDR      R0,[R0, #+0]
+   \   00000088   0x.... 0x....      BL       vListInsert
+    397          				}
+    398          			}
+    399          		}
+    400          		xAlreadyYielded = xTaskResumeAll();
+   \                     ??vTaskDelayUntil_3:
+   \   0000008C   0x.... 0x....      BL       xTaskResumeAll
+    401          
+    402          		/* Force a reschedule if xTaskResumeAll has not already done so, we may
+    403          		have put ourselves to sleep. */
+    404          		if( !xAlreadyYielded )
+   \   00000090   0x2800             CMP      R0,#+0
+   \   00000092   0xD101             BNE.N    ??vTaskDelayUntil_5
+    405          		{
+    406          			portYIELD_WITHIN_API();
+   \   00000094   0x.... 0x....      BL       vPortYieldFromISR
+    407          		}
+    408          	}
+   \                     ??vTaskDelayUntil_5:
+   \   00000098   0xBD70             POP      {R4-R6,PC}       ;; return
+    409          
+    410          #endif
+    411          /********************************************************************************
+    412          *   Descrição       : 
+    413          *   Parametros      :   
+    414          *   Retorno         : 
+    415          ********************************************************************************/
+    416          #if ( INCLUDE_vTaskDelay == 1 )
+    417          
+
+   \                                 In section .text, align 2, keep-with-next
+    418          	void vTaskDelay( portTickType xTicksToDelay )
+    419          	{
+   \                     vTaskDelay:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    420          	portTickType xTimeToWake;
+    421          	signed portBASE_TYPE xAlreadyYielded = pdFALSE;
+   \   00000004   0x2000             MOVS     R0,#+0
+    422          
+    423          		/* A delay time of zero just forces a reschedule. */
+    424          		if( xTicksToDelay > ( portTickType ) 0 )
+   \   00000006   0x2C00             CMP      R4,#+0
+   \   00000008   0xD029             BEQ.N    ??vTaskDelay_0
+    425          		{
+    426          			vTaskSuspendAll();
+   \   0000000A   0x.... 0x....      BL       vTaskSuspendAll
+    427          			{
+    428          				traceTASK_DELAY();
+    429          
+    430          				/* A task that is removed from the event list while the
+    431          				scheduler is suspended will not get placed in the ready
+    432          				list or removed from the blocked list until the scheduler
+    433          				is resumed.
+    434          
+    435          				This task cannot be in an event list as it is the currently
+    436          				executing task. */
+    437          
+    438          				/* Calculate the time to wake - this may overflow but this is
+    439          				not a problem. */
+    440          				xTimeToWake = xTickCount + xTicksToDelay;
+   \   0000000E   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   00000012   0x6800             LDR      R0,[R0, #+0]
+   \   00000014   0x1824             ADDS     R4,R4,R0
+    441          
+    442          				/* We must remove ourselves from the ready list before adding
+    443          				ourselves to the blocked list as the same list item is used for
+    444          				both lists. */
+    445          				vListRemove( ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+   \   00000016   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000001A   0x6800             LDR      R0,[R0, #+0]
+   \   0000001C   0x1D00             ADDS     R0,R0,#+4
+   \   0000001E   0x.... 0x....      BL       vListRemove
+    446          
+    447          				/* The list item will be inserted in wake time order. */
+    448          				listSET_LIST_ITEM_VALUE( &( pxCurrentTCB->xGenericListItem ), xTimeToWake );
+   \   00000022   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000026   0x6800             LDR      R0,[R0, #+0]
+   \   00000028   0x6044             STR      R4,[R0, #+4]
+    449          
+    450          				if( xTimeToWake < xTickCount )
+   \   0000002A   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   0000002E   0x6800             LDR      R0,[R0, #+0]
+   \   00000030   0x4284             CMP      R4,R0
+   \   00000032   0xD209             BCS.N    ??vTaskDelay_1
+    451          				{
+    452          					/* Wake time has overflowed.  Place this item in the
+    453          					overflow list. */
+    454          					vListInsert( ( xList * ) pxOverflowDelayedTaskList, ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+   \   00000034   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000038   0x6800             LDR      R0,[R0, #+0]
+   \   0000003A   0x1D01             ADDS     R1,R0,#+4
+   \   0000003C   0x.... 0x....      LDR.W    R0,??DataTable29_10
+   \   00000040   0x6800             LDR      R0,[R0, #+0]
+   \   00000042   0x.... 0x....      BL       vListInsert
+   \   00000046   0xE008             B.N      ??vTaskDelay_2
+    455          				}
+    456          				else
+    457          				{
+    458          					/* The wake time has not overflowed, so we can use the
+    459          					current block list. */
+    460          					vListInsert( ( xList * ) pxDelayedTaskList, ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+   \                     ??vTaskDelay_1:
+   \   00000048   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000004C   0x6800             LDR      R0,[R0, #+0]
+   \   0000004E   0x1D01             ADDS     R1,R0,#+4
+   \   00000050   0x.... 0x....      LDR.W    R0,??DataTable29_11
+   \   00000054   0x6800             LDR      R0,[R0, #+0]
+   \   00000056   0x.... 0x....      BL       vListInsert
+    461          				}
+    462          			}
+    463          			xAlreadyYielded = xTaskResumeAll();
+   \                     ??vTaskDelay_2:
+   \   0000005A   0x.... 0x....      BL       xTaskResumeAll
+    464          		}
+    465          
+    466          		/* Force a reschedule if xTaskResumeAll has not already done so, we may
+    467          		have put ourselves to sleep. */
+    468          		if( !xAlreadyYielded )
+   \                     ??vTaskDelay_0:
+   \   0000005E   0x2800             CMP      R0,#+0
+   \   00000060   0xD101             BNE.N    ??vTaskDelay_3
+    469          		{
+    470          			portYIELD_WITHIN_API();
+   \   00000062   0x.... 0x....      BL       vPortYieldFromISR
+    471          		}
+    472          	}
+   \                     ??vTaskDelay_3:
+   \   00000066   0xBD10             POP      {R4,PC}          ;; return
+    473          
+    474          #endif
+    475          /********************************************************************************
+    476          *   Descrição       : 
+    477          *   Parametros      :   
+    478          *   Retorno         : 
+    479          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    480          unsigned portBASE_TYPE uxTaskPriorityGet( xTaskHandle pxTask )
+    481          {
+   \                     uxTaskPriorityGet:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    482          	tskTCB *pxTCB;
+    483          	unsigned portBASE_TYPE uxReturn;
+    484          
+    485          		portENTER_CRITICAL();
+   \   00000004   0x.... 0x....      BL       vPortEnterCritical
+    486          		{
+    487          			pxTCB = prvGetTCBFromHandle( pxTask );
+   \   00000008   0x2C00             CMP      R4,#+0
+   \   0000000A   0xD103             BNE.N    ??uxTaskPriorityGet_0
+   \   0000000C   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000010   0x6804             LDR      R4,[R0, #+0]
+   \   00000012   0xE7FF             B.N      ??uxTaskPriorityGet_1
+    488          			uxReturn = pxTCB->uxPriority;
+   \                     ??uxTaskPriorityGet_0:
+   \                     ??uxTaskPriorityGet_1:
+   \   00000014   0x6AE4             LDR      R4,[R4, #+44]
+    489          		}
+    490          		portEXIT_CRITICAL();
+   \   00000016   0x.... 0x....      BL       vPortExitCritical
+    491          
+    492          		return uxReturn;
+   \   0000001A   0x0020             MOVS     R0,R4
+   \   0000001C   0xBD10             POP      {R4,PC}          ;; return
+    493          }
+    494          /********************************************************************************
+    495          *   Descrição       : 
+    496          *   Parametros      :   
+    497          *   Retorno         : 
+    498          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    499          void vTaskPrioritySet( xTaskHandle pxTask, unsigned portBASE_TYPE uxNewPriority )
+    500          	{
+   \                     vTaskPrioritySet:
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+   \   00000002   0x0007             MOVS     R7,R0
+   \   00000004   0x000C             MOVS     R4,R1
+    501          	tskTCB *pxTCB;
+    502          	unsigned portBASE_TYPE uxCurrentPriority, xYieldRequired = pdFALSE;
+   \   00000006   0x2500             MOVS     R5,#+0
+    503          
+    504          		if( uxNewPriority >= configMAX_PRIORITIES )
+   \   00000008   0x2C05             CMP      R4,#+5
+   \   0000000A   0xD300             BCC.N    ??vTaskPrioritySet_0
+    505          		{
+    506          			uxNewPriority = configMAX_PRIORITIES - 1;
+   \   0000000C   0x2404             MOVS     R4,#+4
+    507          		}
+    508          
+    509          		portENTER_CRITICAL();
+   \                     ??vTaskPrioritySet_0:
+   \   0000000E   0x.... 0x....      BL       vPortEnterCritical
+    510          		{
+    511          			if( pxTask == pxCurrentTCB )
+   \   00000012   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000016   0x6800             LDR      R0,[R0, #+0]
+   \   00000018   0x4287             CMP      R7,R0
+   \   0000001A   0xD100             BNE.N    ??vTaskPrioritySet_1
+    512          			{
+    513          				pxTask = NULL;
+   \   0000001C   0x2700             MOVS     R7,#+0
+    514          			}
+    515          			pxTCB = prvGetTCBFromHandle( pxTask );
+   \                     ??vTaskPrioritySet_1:
+   \   0000001E   0x2F00             CMP      R7,#+0
+   \   00000020   0xD103             BNE.N    ??vTaskPrioritySet_2
+   \   00000022   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000026   0x6806             LDR      R6,[R0, #+0]
+   \   00000028   0xE000             B.N      ??vTaskPrioritySet_3
+   \                     ??vTaskPrioritySet_2:
+   \   0000002A   0x003E             MOVS     R6,R7
+    516          
+    517          			traceTASK_PRIORITY_SET( pxTask, uxNewPriority );
+    518          			uxCurrentPriority = pxTCB->uxBasePriority;
+   \                     ??vTaskPrioritySet_3:
+   \   0000002C   0x6CB0             LDR      R0,[R6, #+72]
+    519          			if( uxCurrentPriority != uxNewPriority )
+   \   0000002E   0x42A0             CMP      R0,R4
+   \   00000030   0xD033             BEQ.N    ??vTaskPrioritySet_4
+    520          			{
+    521          				if( uxNewPriority > uxCurrentPriority )
+   \   00000032   0x42A0             CMP      R0,R4
+   \   00000034   0xD203             BCS.N    ??vTaskPrioritySet_5
+    522          				{
+    523          					if( pxTask != NULL )
+   \   00000036   0x2F00             CMP      R7,#+0
+   \   00000038   0xD004             BEQ.N    ??vTaskPrioritySet_6
+    524          					{
+    525          						xYieldRequired = pdTRUE;
+   \   0000003A   0x2501             MOVS     R5,#+1
+   \   0000003C   0xE002             B.N      ??vTaskPrioritySet_6
+    526          					}
+    527          				}
+    528          				else if( pxTask == NULL )
+   \                     ??vTaskPrioritySet_5:
+   \   0000003E   0x2F00             CMP      R7,#+0
+   \   00000040   0xD100             BNE.N    ??vTaskPrioritySet_6
+    529          				{
+    530          					xYieldRequired = pdTRUE;
+   \   00000042   0x2501             MOVS     R5,#+1
+    531          				}
+    532          
+    533          
+    534          				if( pxTCB->uxBasePriority == pxTCB->uxPriority )
+   \                     ??vTaskPrioritySet_6:
+   \   00000044   0x6CB1             LDR      R1,[R6, #+72]
+   \   00000046   0x6AF2             LDR      R2,[R6, #+44]
+   \   00000048   0x4291             CMP      R1,R2
+   \   0000004A   0xD100             BNE.N    ??vTaskPrioritySet_7
+    535          				{
+    536          					pxTCB->uxPriority = uxNewPriority;
+   \   0000004C   0x62F4             STR      R4,[R6, #+44]
+    537          				}
+    538          
+    539          				pxTCB->uxBasePriority = uxNewPriority;
+   \                     ??vTaskPrioritySet_7:
+   \   0000004E   0x64B4             STR      R4,[R6, #+72]
+    540          				listSET_LIST_ITEM_VALUE( &( pxTCB->xEventListItem ), ( configMAX_PRIORITIES - ( portTickType ) uxNewPriority ) );
+   \   00000050   0xF1D4 0x0105      RSBS     R1,R4,#+5
+   \   00000054   0x61B1             STR      R1,[R6, #+24]
+    541          
+    542          				if( listIS_CONTAINED_WITHIN( &( pxReadyTasksLists[ uxCurrentPriority ] ), &( pxTCB->xGenericListItem ) ) )
+   \   00000056   0x6971             LDR      R1,[R6, #+20]
+   \   00000058   0x2214             MOVS     R2,#+20
+   \   0000005A   0x.... 0x....      LDR.W    R3,??DataTable29_6
+   \   0000005E   0xFB02 0x3000      MLA      R0,R2,R0,R3
+   \   00000062   0x4281             CMP      R1,R0
+   \   00000064   0xD115             BNE.N    ??vTaskPrioritySet_8
+    543          				{
+    544          					vListRemove( &( pxTCB->xGenericListItem ) );
+   \   00000066   0x1D30             ADDS     R0,R6,#+4
+   \   00000068   0x.... 0x....      BL       vListRemove
+    545          					prvAddTaskToReadyQueue( pxTCB );
+   \   0000006C   0x.... 0x....      LDR.W    R0,??DataTable29_5
+   \   00000070   0x6800             LDR      R0,[R0, #+0]
+   \   00000072   0x6AF1             LDR      R1,[R6, #+44]
+   \   00000074   0x4288             CMP      R0,R1
+   \   00000076   0xD203             BCS.N    ??vTaskPrioritySet_9
+   \   00000078   0x6AF0             LDR      R0,[R6, #+44]
+   \   0000007A   0x.... 0x....      LDR.W    R1,??DataTable29_5
+   \   0000007E   0x6008             STR      R0,[R1, #+0]
+   \                     ??vTaskPrioritySet_9:
+   \   00000080   0x1D31             ADDS     R1,R6,#+4
+   \   00000082   0x6AF0             LDR      R0,[R6, #+44]
+   \   00000084   0x2214             MOVS     R2,#+20
+   \   00000086   0x.... 0x....      LDR.W    R3,??DataTable29_6
+   \   0000008A   0xFB02 0x3000      MLA      R0,R2,R0,R3
+   \   0000008E   0x.... 0x....      BL       vListInsertEnd
+    546          				}
+    547          
+    548          				if( xYieldRequired == pdTRUE )
+   \                     ??vTaskPrioritySet_8:
+   \   00000092   0x2D01             CMP      R5,#+1
+   \   00000094   0xD101             BNE.N    ??vTaskPrioritySet_4
+    549          				{
+    550          					portYIELD_WITHIN_API();
+   \   00000096   0x.... 0x....      BL       vPortYieldFromISR
+    551          				}
+    552          			}
+    553          		}
+    554          		portEXIT_CRITICAL();
+   \                     ??vTaskPrioritySet_4:
+   \   0000009A   0x.... 0x....      BL       vPortExitCritical
+    555          }
+   \   0000009E   0xBDF1             POP      {R0,R4-R7,PC}    ;; return
+    556          /********************************************************************************
+    557          *   Descrição       : 
+    558          *   Parametros      :   
+    559          *   Retorno         : 
+    560          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    561          void vTaskSuspend( xTaskHandle pxTaskToSuspend )
+    562          {
+   \                     vTaskSuspend:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    563              tskTCB *pxTCB;
+    564          
+    565          		portENTER_CRITICAL();
+   \   00000004   0x.... 0x....      BL       vPortEnterCritical
+    566          		{
+    567          			if( pxTaskToSuspend == pxCurrentTCB )
+   \   00000008   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000000C   0x6800             LDR      R0,[R0, #+0]
+   \   0000000E   0x4284             CMP      R4,R0
+   \   00000010   0xD100             BNE.N    ??vTaskSuspend_0
+    568          			{
+    569          				pxTaskToSuspend = NULL;
+   \   00000012   0x2400             MOVS     R4,#+0
+    570          			}
+    571          			pxTCB = prvGetTCBFromHandle( pxTaskToSuspend );
+   \                     ??vTaskSuspend_0:
+   \   00000014   0x2C00             CMP      R4,#+0
+   \   00000016   0xD103             BNE.N    ??vTaskSuspend_1
+   \   00000018   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000001C   0x6805             LDR      R5,[R0, #+0]
+   \   0000001E   0xE000             B.N      ??vTaskSuspend_2
+   \                     ??vTaskSuspend_1:
+   \   00000020   0x0025             MOVS     R5,R4
+    572          
+    573          			traceTASK_SUSPEND( pxTCB );
+    574          			vListRemove( &( pxTCB->xGenericListItem ) );
+   \                     ??vTaskSuspend_2:
+   \   00000022   0x1D28             ADDS     R0,R5,#+4
+   \   00000024   0x.... 0x....      BL       vListRemove
+    575          			if( pxTCB->xEventListItem.pvContainer )
+   \   00000028   0x6AA8             LDR      R0,[R5, #+40]
+   \   0000002A   0x2800             CMP      R0,#+0
+   \   0000002C   0xD003             BEQ.N    ??vTaskSuspend_3
+    576          			{
+    577          				vListRemove( &( pxTCB->xEventListItem ) );
+   \   0000002E   0xF115 0x0018      ADDS     R0,R5,#+24
+   \   00000032   0x.... 0x....      BL       vListRemove
+    578          			}
+    579          
+    580          			vListInsertEnd( ( xList * ) &xSuspendedTaskList, &( pxTCB->xGenericListItem ) );
+   \                     ??vTaskSuspend_3:
+   \   00000036   0x1D29             ADDS     R1,R5,#+4
+   \   00000038   0x.... 0x....      LDR.W    R0,??DataTable29_12
+   \   0000003C   0x.... 0x....      BL       vListInsertEnd
+    581          		}
+    582          		portEXIT_CRITICAL();
+   \   00000040   0x.... 0x....      BL       vPortExitCritical
+    583          
+    584          		if( ( void * ) pxTaskToSuspend == NULL )
+   \   00000044   0x2C00             CMP      R4,#+0
+   \   00000046   0xD113             BNE.N    ??vTaskSuspend_4
+    585          		{
+    586          			if( xSchedulerRunning != pdFALSE )
+   \   00000048   0x.... 0x....      LDR.W    R0,??DataTable29_2
+   \   0000004C   0x6800             LDR      R0,[R0, #+0]
+   \   0000004E   0x2800             CMP      R0,#+0
+   \   00000050   0xD002             BEQ.N    ??vTaskSuspend_5
+    587          			{
+    588          				portYIELD_WITHIN_API();
+   \   00000052   0x.... 0x....      BL       vPortYieldFromISR
+   \   00000056   0xE00B             B.N      ??vTaskSuspend_4
+    589          			}
+    590          			else
+    591          			{
+    592          				if( uxCurrentNumberOfTasks == 1 )
+   \                     ??vTaskSuspend_5:
+   \   00000058   0x.... 0x....      LDR.W    R0,??DataTable29
+   \   0000005C   0x6800             LDR      R0,[R0, #+0]
+   \   0000005E   0x2801             CMP      R0,#+1
+   \   00000060   0xD104             BNE.N    ??vTaskSuspend_6
+    593          				{
+    594          					pxCurrentTCB = NULL;
+   \   00000062   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000066   0x2100             MOVS     R1,#+0
+   \   00000068   0x6001             STR      R1,[R0, #+0]
+   \   0000006A   0xE001             B.N      ??vTaskSuspend_4
+    595          				}
+    596          				else
+    597          				{
+    598          					vTaskSwitchContext();
+   \                     ??vTaskSuspend_6:
+   \   0000006C   0x.... 0x....      BL       vTaskSwitchContext
+    599          				}
+    600          			}
+    601          		}
+    602          }
+   \                     ??vTaskSuspend_4:
+   \   00000070   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+    603          /********************************************************************************
+    604          *   Descrição       : 
+    605          *   Parametros      :   
+    606          *   Retorno         : 
+    607          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    608          signed portBASE_TYPE xTaskIsTaskSuspended( xTaskHandle xTask )
+    609          {
+    610            portBASE_TYPE xReturn = pdFALSE;
+   \                     xTaskIsTaskSuspended:
+   \   00000000   0x2100             MOVS     R1,#+0
+    611            const tskTCB * const pxTCB = ( tskTCB * ) xTask;
+    612          
+    613          		if( listIS_CONTAINED_WITHIN( &xSuspendedTaskList, &( pxTCB->xGenericListItem ) ) != pdFALSE )
+   \   00000002   0x6942             LDR      R2,[R0, #+20]
+   \   00000004   0x.... 0x....      LDR.W    R3,??DataTable29_12
+   \   00000008   0x429A             CMP      R2,R3
+   \   0000000A   0xD108             BNE.N    ??xTaskIsTaskSuspended_0
+    614          		{
+    615          
+    616          			if( listIS_CONTAINED_WITHIN( &xPendingReadyList, &( pxTCB->xEventListItem ) ) != pdTRUE )
+   \   0000000C   0x6A82             LDR      R2,[R0, #+40]
+   \   0000000E   0x.... 0x....      LDR.W    R3,??DataTable29_13
+   \   00000012   0x429A             CMP      R2,R3
+   \   00000014   0xD003             BEQ.N    ??xTaskIsTaskSuspended_0
+    617          			{
+    618          				if( listIS_CONTAINED_WITHIN( NULL, &( pxTCB->xEventListItem ) ) == pdTRUE )
+   \   00000016   0x6A80             LDR      R0,[R0, #+40]
+   \   00000018   0x2800             CMP      R0,#+0
+   \   0000001A   0xD100             BNE.N    ??xTaskIsTaskSuspended_0
+    619          				{
+    620          					xReturn = pdTRUE;
+   \   0000001C   0x2101             MOVS     R1,#+1
+    621          				}
+    622          			}
+    623          		}
+    624          		return xReturn;
+   \                     ??xTaskIsTaskSuspended_0:
+   \   0000001E   0x0008             MOVS     R0,R1
+   \   00000020   0x4770             BX       LR               ;; return
+    625          }
+    626          /********************************************************************************
+    627          *   Descrição       : 
+    628          *   Parametros      :   
+    629          *   Retorno         : 
+    630          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    631          void vTaskResume( xTaskHandle pxTaskToResume ){
+   \                     vTaskResume:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    632            tskTCB *pxTCB;
+    633          
+    634            pxTCB = ( tskTCB * ) pxTaskToResume;
+    635          
+    636            if( ( pxTCB != NULL ) && ( pxTCB != pxCurrentTCB ) ){
+   \   00000004   0x2C00             CMP      R4,#+0
+   \   00000006   0xD02C             BEQ.N    ??vTaskResume_0
+   \   00000008   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000000C   0x6800             LDR      R0,[R0, #+0]
+   \   0000000E   0x4284             CMP      R4,R0
+   \   00000010   0xD027             BEQ.N    ??vTaskResume_0
+    637                portENTER_CRITICAL();
+   \   00000012   0x.... 0x....      BL       vPortEnterCritical
+    638                {
+    639          	if( xTaskIsTaskSuspended( pxTCB ) == pdTRUE )
+   \   00000016   0x0020             MOVS     R0,R4
+   \   00000018   0x.... 0x....      BL       xTaskIsTaskSuspended
+   \   0000001C   0x2801             CMP      R0,#+1
+   \   0000001E   0xD11E             BNE.N    ??vTaskResume_1
+    640          	{
+    641          		traceTASK_RESUME( pxTCB );
+    642          
+    643          		vListRemove(  &( pxTCB->xGenericListItem ) );
+   \   00000020   0x1D20             ADDS     R0,R4,#+4
+   \   00000022   0x.... 0x....      BL       vListRemove
+    644          		prvAddTaskToReadyQueue( pxTCB );
+   \   00000026   0x.... 0x....      LDR.W    R0,??DataTable29_5
+   \   0000002A   0x6800             LDR      R0,[R0, #+0]
+   \   0000002C   0x6AE1             LDR      R1,[R4, #+44]
+   \   0000002E   0x4288             CMP      R0,R1
+   \   00000030   0xD203             BCS.N    ??vTaskResume_2
+   \   00000032   0x6AE0             LDR      R0,[R4, #+44]
+   \   00000034   0x.... 0x....      LDR.W    R1,??DataTable29_5
+   \   00000038   0x6008             STR      R0,[R1, #+0]
+   \                     ??vTaskResume_2:
+   \   0000003A   0x1D21             ADDS     R1,R4,#+4
+   \   0000003C   0x6AE0             LDR      R0,[R4, #+44]
+   \   0000003E   0x2214             MOVS     R2,#+20
+   \   00000040   0x.... 0x....      LDR.W    R3,??DataTable29_6
+   \   00000044   0xFB02 0x3000      MLA      R0,R2,R0,R3
+   \   00000048   0x.... 0x....      BL       vListInsertEnd
+    645          		if( pxTCB->uxPriority >= pxCurrentTCB->uxPriority )
+   \   0000004C   0x6AE0             LDR      R0,[R4, #+44]
+   \   0000004E   0x.... 0x....      LDR.W    R1,??DataTable29_1
+   \   00000052   0x6809             LDR      R1,[R1, #+0]
+   \   00000054   0x6AC9             LDR      R1,[R1, #+44]
+   \   00000056   0x4288             CMP      R0,R1
+   \   00000058   0xD301             BCC.N    ??vTaskResume_1
+    646          		{
+    647                  	  portYIELD_WITHIN_API();
+   \   0000005A   0x.... 0x....      BL       vPortYieldFromISR
+    648          		}
+    649          	}
+    650                  }
+    651                  portEXIT_CRITICAL();
+   \                     ??vTaskResume_1:
+   \   0000005E   0x.... 0x....      BL       vPortExitCritical
+    652              }
+    653          }
+   \                     ??vTaskResume_0:
+   \   00000062   0xBD10             POP      {R4,PC}          ;; return
+    654          /********************************************************************************
+    655          *   Descrição       : 
+    656          *   Parametros      :   
+    657          *   Retorno         : 
+    658          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    659          portBASE_TYPE xTaskResumeFromISR( xTaskHandle pxTaskToResume ){
+   \                     xTaskResumeFromISR:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    660            portBASE_TYPE xYieldRequired = pdFALSE;
+   \   00000004   0x2500             MOVS     R5,#+0
+    661            tskTCB *pxTCB;
+    662          
+    663             pxTCB = ( tskTCB * ) pxTaskToResume;
+    664          
+    665              if( xTaskIsTaskSuspended( pxTCB ) == pdTRUE )
+   \   00000006   0x0020             MOVS     R0,R4
+   \   00000008   0x.... 0x....      BL       xTaskIsTaskSuspended
+   \   0000000C   0x2801             CMP      R0,#+1
+   \   0000000E   0xD12C             BNE.N    ??xTaskResumeFromISR_0
+    666              {
+    667              	traceTASK_RESUME_FROM_ISR( pxTCB );
+    668          
+    669          	if( uxSchedulerSuspended == ( unsigned portBASE_TYPE ) pdFALSE )
+   \   00000010   0x.... 0x....      LDR.W    R0,??DataTable29_14
+   \   00000014   0x6800             LDR      R0,[R0, #+0]
+   \   00000016   0x2800             CMP      R0,#+0
+   \   00000018   0xD121             BNE.N    ??xTaskResumeFromISR_1
+    670          	{
+    671          	    xYieldRequired = ( pxTCB->uxPriority >= pxCurrentTCB->uxPriority );
+   \   0000001A   0x6AE0             LDR      R0,[R4, #+44]
+   \   0000001C   0x.... 0x....      LDR.W    R1,??DataTable29_1
+   \   00000020   0x6809             LDR      R1,[R1, #+0]
+   \   00000022   0x6AC9             LDR      R1,[R1, #+44]
+   \   00000024   0x4288             CMP      R0,R1
+   \   00000026   0xD301             BCC.N    ??xTaskResumeFromISR_2
+   \   00000028   0x2501             MOVS     R5,#+1
+   \   0000002A   0xE000             B.N      ??xTaskResumeFromISR_3
+   \                     ??xTaskResumeFromISR_2:
+   \   0000002C   0x2500             MOVS     R5,#+0
+   \                     ??xTaskResumeFromISR_3:
+   \   0000002E   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+    672          	    vListRemove(  &( pxTCB->xGenericListItem ) );
+   \   00000030   0x1D20             ADDS     R0,R4,#+4
+   \   00000032   0x.... 0x....      BL       vListRemove
+    673          	    prvAddTaskToReadyQueue( pxTCB );
+   \   00000036   0x.... 0x....      LDR.W    R0,??DataTable29_5
+   \   0000003A   0x6800             LDR      R0,[R0, #+0]
+   \   0000003C   0x6AE1             LDR      R1,[R4, #+44]
+   \   0000003E   0x4288             CMP      R0,R1
+   \   00000040   0xD203             BCS.N    ??xTaskResumeFromISR_4
+   \   00000042   0x6AE0             LDR      R0,[R4, #+44]
+   \   00000044   0x.... 0x....      LDR.W    R1,??DataTable29_5
+   \   00000048   0x6008             STR      R0,[R1, #+0]
+   \                     ??xTaskResumeFromISR_4:
+   \   0000004A   0x1D21             ADDS     R1,R4,#+4
+   \   0000004C   0x6AE0             LDR      R0,[R4, #+44]
+   \   0000004E   0x2214             MOVS     R2,#+20
+   \   00000050   0x.... 0x....      LDR.W    R3,??DataTable29_6
+   \   00000054   0xFB02 0x3000      MLA      R0,R2,R0,R3
+   \   00000058   0x.... 0x....      BL       vListInsertEnd
+   \   0000005C   0xE005             B.N      ??xTaskResumeFromISR_0
+    674          	}
+    675            	else
+    676          	{
+    677                      vListInsertEnd( ( xList * ) &( xPendingReadyList ), &( pxTCB->xEventListItem ) );
+   \                     ??xTaskResumeFromISR_1:
+   \   0000005E   0xF114 0x0118      ADDS     R1,R4,#+24
+   \   00000062   0x.... 0x....      LDR.W    R0,??DataTable29_13
+   \   00000066   0x.... 0x....      BL       vListInsertEnd
+    678          	}
+    679                }
+    680          
+    681                return xYieldRequired;
+   \                     ??xTaskResumeFromISR_0:
+   \   0000006A   0x0028             MOVS     R0,R5
+   \   0000006C   0xBD32             POP      {R1,R4,R5,PC}    ;; return
+    682          }
+    683          /********************************************************************************
+    684          *   Descrição       : 
+    685          *   Parametros      :   
+    686          *   Retorno         : 
+    687          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    688          void vTaskStartScheduler( void ){
+   \                     vTaskStartScheduler:
+   \   00000000   0xB500             PUSH     {LR}
+   \   00000002   0xB085             SUB      SP,SP,#+20
+    689            portBASE_TYPE xReturn;
+    690          
+    691            xReturn = xTaskCreate( prvIdleTask, ( signed char * ) "IDLE", tskIDLE_STACK_SIZE, ( void * ) NULL, ( tskIDLE_PRIORITY | portPRIVILEGE_BIT ), ( xTaskHandle * ) NULL );
+   \   00000004   0x2000             MOVS     R0,#+0
+   \   00000006   0x9003             STR      R0,[SP, #+12]
+   \   00000008   0x2000             MOVS     R0,#+0
+   \   0000000A   0x9002             STR      R0,[SP, #+8]
+   \   0000000C   0x2000             MOVS     R0,#+0
+   \   0000000E   0x9001             STR      R0,[SP, #+4]
+   \   00000010   0x2000             MOVS     R0,#+0
+   \   00000012   0x9000             STR      R0,[SP, #+0]
+   \   00000014   0x2300             MOVS     R3,#+0
+   \   00000016   0x2250             MOVS     R2,#+80
+   \   00000018   0x.... 0x....      LDR.W    R1,??DataTable29_15
+   \   0000001C   0x.... 0x....      ADR.W    R0,prvIdleTask
+   \   00000020   0x.... 0x....      BL       xTaskGenericCreate
+    692          
+    693            if( xReturn == pdPASS )
+   \   00000024   0x2801             CMP      R0,#+1
+   \   00000026   0xD10B             BNE.N    ??vTaskStartScheduler_0
+    694            {
+    695                portDISABLE_INTERRUPTS();
+   \   00000028   0x.... 0x....      BL       vPortSetInterruptMask
+    696                xSchedulerRunning = pdTRUE;
+   \   0000002C   0x.... 0x....      LDR.W    R0,??DataTable29_2
+   \   00000030   0x2101             MOVS     R1,#+1
+   \   00000032   0x6001             STR      R1,[R0, #+0]
+    697                xTickCount = ( portTickType ) 0;
+   \   00000034   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   00000038   0x2100             MOVS     R1,#+0
+   \   0000003A   0x6001             STR      R1,[R0, #+0]
+    698          //		portCONFIGURE_TIMER_FOR_RUN_TIME_STATS();		
+    699                 xPortStartScheduler();
+   \   0000003C   0x.... 0x....      BL       xPortStartScheduler
+    700            }
+    701          }
+   \                     ??vTaskStartScheduler_0:
+   \   00000040   0xB005             ADD      SP,SP,#+20
+   \   00000042   0xBD00             POP      {PC}             ;; return
+    702          /********************************************************************************
+    703          *   Descrição       : 
+    704          *   Parametros      :   
+    705          *   Retorno         : 
+    706          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    707          void vTaskEndScheduler( void )
+    708          {
+   \                     vTaskEndScheduler:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    709              portDISABLE_INTERRUPTS();
+   \   00000002   0x.... 0x....      BL       vPortSetInterruptMask
+    710              xSchedulerRunning = pdFALSE;
+   \   00000006   0x.... 0x....      LDR.W    R0,??DataTable29_2
+   \   0000000A   0x2100             MOVS     R1,#+0
+   \   0000000C   0x6001             STR      R1,[R0, #+0]
+    711              vPortEndScheduler();
+   \   0000000E   0x.... 0x....      BL       vPortEndScheduler
+    712          }
+   \   00000012   0xBD01             POP      {R0,PC}          ;; return
+    713          /********************************************************************************
+    714          *   Descrição       : 
+    715          *   Parametros      :   
+    716          *   Retorno         : 
+    717          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    718          void vTaskSuspendAll( void ){
+    719            
+    720             ++uxSchedulerSuspended;
+   \                     vTaskSuspendAll:
+   \   00000000   0x.... 0x....      LDR.W    R0,??DataTable29_14
+   \   00000004   0x6800             LDR      R0,[R0, #+0]
+   \   00000006   0x1C40             ADDS     R0,R0,#+1
+   \   00000008   0x.... 0x....      LDR.W    R1,??DataTable29_14
+   \   0000000C   0x6008             STR      R0,[R1, #+0]
+    721          }
+   \   0000000E   0x4770             BX       LR               ;; return
+    722          /********************************************************************************
+    723          *   Descrição       : 
+    724          *   Parametros      :   
+    725          *   Retorno         : 
+    726          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    727          signed portBASE_TYPE xTaskResumeAll( void )
+    728          {
+   \                     xTaskResumeAll:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+    729            register tskTCB *pxTCB;
+    730            signed portBASE_TYPE xAlreadyYielded = pdFALSE;
+   \   00000002   0x2400             MOVS     R4,#+0
+    731          
+    732          	portENTER_CRITICAL();
+   \   00000004   0x.... 0x....      BL       vPortEnterCritical
+    733          	{
+    734          		--uxSchedulerSuspended;
+   \   00000008   0x.... 0x....      LDR.W    R0,??DataTable29_14
+   \   0000000C   0x6800             LDR      R0,[R0, #+0]
+   \   0000000E   0x1E40             SUBS     R0,R0,#+1
+   \   00000010   0x.... 0x....      LDR.W    R1,??DataTable29_14
+   \   00000014   0x6008             STR      R0,[R1, #+0]
+    735          
+    736          		if( uxSchedulerSuspended == ( unsigned portBASE_TYPE ) pdFALSE )
+   \   00000016   0x.... 0x....      LDR.W    R0,??DataTable29_14
+   \   0000001A   0x6800             LDR      R0,[R0, #+0]
+   \   0000001C   0x2800             CMP      R0,#+0
+   \   0000001E   0xD158             BNE.N    ??xTaskResumeAll_0
+    737          		{
+    738          			if( uxCurrentNumberOfTasks > ( unsigned portBASE_TYPE ) 0 )
+   \   00000020   0x.... 0x....      LDR.W    R0,??DataTable29
+   \   00000024   0x6800             LDR      R0,[R0, #+0]
+   \   00000026   0x2800             CMP      R0,#+0
+   \   00000028   0xD053             BEQ.N    ??xTaskResumeAll_0
+    739          			{
+    740          				portBASE_TYPE xYieldRequired = pdFALSE;
+   \   0000002A   0x2500             MOVS     R5,#+0
+   \   0000002C   0xE021             B.N      ??xTaskResumeAll_1
+    741          
+    742          				while( ( pxTCB = ( tskTCB * ) listGET_OWNER_OF_HEAD_ENTRY(  ( ( xList * ) &xPendingReadyList ) ) ) != NULL )
+    743          				{
+    744          					vListRemove( &( pxTCB->xEventListItem ) );
+   \                     ??xTaskResumeAll_2:
+   \   0000002E   0xF116 0x0018      ADDS     R0,R6,#+24
+   \   00000032   0x.... 0x....      BL       vListRemove
+    745          					vListRemove( &( pxTCB->xGenericListItem ) );
+   \   00000036   0x1D30             ADDS     R0,R6,#+4
+   \   00000038   0x.... 0x....      BL       vListRemove
+    746          					prvAddTaskToReadyQueue( pxTCB );
+   \   0000003C   0x.... 0x....      LDR.W    R0,??DataTable29_5
+   \   00000040   0x6800             LDR      R0,[R0, #+0]
+   \   00000042   0x6AF1             LDR      R1,[R6, #+44]
+   \   00000044   0x4288             CMP      R0,R1
+   \   00000046   0xD203             BCS.N    ??xTaskResumeAll_3
+   \   00000048   0x6AF0             LDR      R0,[R6, #+44]
+   \   0000004A   0x.... 0x....      LDR.W    R1,??DataTable29_5
+   \   0000004E   0x6008             STR      R0,[R1, #+0]
+   \                     ??xTaskResumeAll_3:
+   \   00000050   0x1D31             ADDS     R1,R6,#+4
+   \   00000052   0x6AF0             LDR      R0,[R6, #+44]
+   \   00000054   0x2214             MOVS     R2,#+20
+   \   00000056   0x.... 0x....      LDR.W    R3,??DataTable29_6
+   \   0000005A   0xFB02 0x3000      MLA      R0,R2,R0,R3
+   \   0000005E   0x.... 0x....      BL       vListInsertEnd
+    747          
+    748          					if( pxTCB->uxPriority >= pxCurrentTCB->uxPriority )
+   \   00000062   0x6AF0             LDR      R0,[R6, #+44]
+   \   00000064   0x.... 0x....      LDR.W    R1,??DataTable29_1
+   \   00000068   0x6809             LDR      R1,[R1, #+0]
+   \   0000006A   0x6AC9             LDR      R1,[R1, #+44]
+   \   0000006C   0x4288             CMP      R0,R1
+   \   0000006E   0xD300             BCC.N    ??xTaskResumeAll_1
+    749          					{
+    750          						xYieldRequired = pdTRUE;
+   \   00000070   0x2501             MOVS     R5,#+1
+    751          					}
+    752          				}
+   \                     ??xTaskResumeAll_1:
+   \   00000072   0x.... 0x....      LDR.W    R0,??DataTable29_13
+   \   00000076   0x6800             LDR      R0,[R0, #+0]
+   \   00000078   0x2800             CMP      R0,#+0
+   \   0000007A   0xD004             BEQ.N    ??xTaskResumeAll_4
+   \   0000007C   0x.... 0x....      LDR.W    R0,??DataTable29_13
+   \   00000080   0x68C0             LDR      R0,[R0, #+12]
+   \   00000082   0x68C6             LDR      R6,[R0, #+12]
+   \   00000084   0xE000             B.N      ??xTaskResumeAll_5
+   \                     ??xTaskResumeAll_4:
+   \   00000086   0x2600             MOVS     R6,#+0
+   \                     ??xTaskResumeAll_5:
+   \   00000088   0x2E00             CMP      R6,#+0
+   \   0000008A   0xD1D0             BNE.N    ??xTaskResumeAll_2
+    753          				if( uxMissedTicks > ( unsigned portBASE_TYPE ) 0 )
+   \   0000008C   0x.... 0x....      LDR.W    R0,??DataTable29_16
+   \   00000090   0x6800             LDR      R0,[R0, #+0]
+   \   00000092   0x2800             CMP      R0,#+0
+   \   00000094   0xD109             BNE.N    ??xTaskResumeAll_6
+   \   00000096   0xE00E             B.N      ??xTaskResumeAll_7
+    754          				{
+    755          					while( uxMissedTicks > ( unsigned portBASE_TYPE ) 0 )
+    756          					{
+    757          						vTaskIncrementTick();
+   \                     ??xTaskResumeAll_8:
+   \   00000098   0x.... 0x....      BL       vTaskIncrementTick
+    758          						--uxMissedTicks;
+   \   0000009C   0x.... 0x....      LDR.W    R0,??DataTable29_16
+   \   000000A0   0x6800             LDR      R0,[R0, #+0]
+   \   000000A2   0x1E40             SUBS     R0,R0,#+1
+   \   000000A4   0x.... 0x....      LDR.W    R1,??DataTable29_16
+   \   000000A8   0x6008             STR      R0,[R1, #+0]
+    759          					}
+   \                     ??xTaskResumeAll_6:
+   \   000000AA   0x.... 0x....      LDR.W    R0,??DataTable29_16
+   \   000000AE   0x6800             LDR      R0,[R0, #+0]
+   \   000000B0   0x2800             CMP      R0,#+0
+   \   000000B2   0xD1F1             BNE.N    ??xTaskResumeAll_8
+    760          					xYieldRequired = pdTRUE;
+   \   000000B4   0x2501             MOVS     R5,#+1
+    761          				}
+    762          
+    763          				if( ( xYieldRequired == pdTRUE ) || ( xMissedYield == pdTRUE ) )
+   \                     ??xTaskResumeAll_7:
+   \   000000B6   0x2D01             CMP      R5,#+1
+   \   000000B8   0xD004             BEQ.N    ??xTaskResumeAll_9
+   \   000000BA   0x.... 0x....      LDR.W    R0,??DataTable29_17
+   \   000000BE   0x6800             LDR      R0,[R0, #+0]
+   \   000000C0   0x2801             CMP      R0,#+1
+   \   000000C2   0xD106             BNE.N    ??xTaskResumeAll_0
+    764          				{
+    765          					xAlreadyYielded = pdTRUE;
+   \                     ??xTaskResumeAll_9:
+   \   000000C4   0x2401             MOVS     R4,#+1
+    766          					xMissedYield = pdFALSE;
+   \   000000C6   0x.... 0x....      LDR.W    R0,??DataTable29_17
+   \   000000CA   0x2100             MOVS     R1,#+0
+   \   000000CC   0x6001             STR      R1,[R0, #+0]
+    767          					portYIELD_WITHIN_API();
+   \   000000CE   0x.... 0x....      BL       vPortYieldFromISR
+    768          				}
+    769          			}
+    770          		}
+    771          	}
+    772          	portEXIT_CRITICAL();
+   \                     ??xTaskResumeAll_0:
+   \   000000D2   0x.... 0x....      BL       vPortExitCritical
+    773          
+    774          	return xAlreadyYielded;
+   \   000000D6   0x0020             MOVS     R0,R4
+   \   000000D8   0xBD70             POP      {R4-R6,PC}       ;; return
+    775          }
+    776          /********************************************************************************
+    777          *   Descrição       : 
+    778          *   Parametros      :   
+    779          *   Retorno         : 
+    780          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    781          portTickType xTaskGetTickCount( void ){
+   \                     xTaskGetTickCount:
+   \   00000000   0xB510             PUSH     {R4,LR}
+    782            portTickType xTicks;
+    783          
+    784            portENTER_CRITICAL();
+   \   00000002   0x.... 0x....      BL       vPortEnterCritical
+    785            {
+    786                xTicks = xTickCount;
+   \   00000006   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   0000000A   0x6804             LDR      R4,[R0, #+0]
+    787            }
+    788            
+    789            portEXIT_CRITICAL();
+   \   0000000C   0x.... 0x....      BL       vPortExitCritical
+    790            return xTicks;
+   \   00000010   0x0020             MOVS     R0,R4
+   \   00000012   0xBD10             POP      {R4,PC}          ;; return
+    791          }
+    792          /********************************************************************************
+    793          *   Descrição       : 
+    794          *   Parametros      :   
+    795          *   Retorno         : 
+    796          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    797          portTickType xTaskGetTickCountFromISR( void ){
+    798            
+    799              return xTickCount;
+   \                     xTaskGetTickCountFromISR:
+   \   00000000   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   00000004   0x6800             LDR      R0,[R0, #+0]
+   \   00000006   0x4770             BX       LR               ;; return
+    800          }
+    801          /********************************************************************************
+    802          *   Descrição       : 
+    803          *   Parametros      :   
+    804          *   Retorno         : 
+    805          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    806          unsigned portBASE_TYPE uxTaskGetNumberOfTasks( void ){
+    807            
+    808            return uxCurrentNumberOfTasks;
+   \                     uxTaskGetNumberOfTasks:
+   \   00000000   0x.... 0x....      LDR.W    R0,??DataTable29
+   \   00000004   0x6800             LDR      R0,[R0, #+0]
+   \   00000006   0x4770             BX       LR               ;; return
+    809          }
+    810          /********************************************************************************
+    811          *   Descrição       : 
+    812          *   Parametros      :   
+    813          *   Retorno         : 
+    814          ********************************************************************************/
+    815          extern void TECLADO_amostragem(void);
+    816          extern void ENTRADASDIGITAIS_amostragemSinais(void);
+
+   \                                 In section .text, align 2, keep-with-next
+    817          void vTaskIncrementTick( void )
+    818          {
+   \                     vTaskIncrementTick:
+   \   00000000   0xB510             PUSH     {R4,LR}
+    819              if( uxSchedulerSuspended == ( unsigned portBASE_TYPE ) pdFALSE )
+   \   00000002   0x.... 0x....      LDR.W    R0,??DataTable29_14
+   \   00000006   0x6800             LDR      R0,[R0, #+0]
+   \   00000008   0x2800             CMP      R0,#+0
+   \   0000000A   0xD152             BNE.N    ??vTaskIncrementTick_0
+    820              {
+    821                  ++xTickCount;
+   \   0000000C   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   00000010   0x6800             LDR      R0,[R0, #+0]
+   \   00000012   0x1C40             ADDS     R0,R0,#+1
+   \   00000014   0x.... 0x....      LDR.W    R1,??DataTable29_9
+   \   00000018   0x6008             STR      R0,[R1, #+0]
+    822          	if( xTickCount == ( portTickType ) 0 )
+   \   0000001A   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   0000001E   0x6800             LDR      R0,[R0, #+0]
+   \   00000020   0x2800             CMP      R0,#+0
+   \   00000022   0xD112             BNE.N    ??vTaskIncrementTick_1
+    823          	{
+    824          	    xList *pxTemp;
+    825          	    pxTemp = pxDelayedTaskList;
+   \   00000024   0x.... 0x....      LDR.W    R0,??DataTable29_11
+   \   00000028   0x6800             LDR      R0,[R0, #+0]
+    826          	    pxDelayedTaskList = pxOverflowDelayedTaskList;
+   \   0000002A   0x.... 0x....      LDR.W    R1,??DataTable29_11
+   \   0000002E   0x.... 0x....      LDR.W    R2,??DataTable29_10
+   \   00000032   0x6812             LDR      R2,[R2, #+0]
+   \   00000034   0x600A             STR      R2,[R1, #+0]
+    827          	    pxOverflowDelayedTaskList = pxTemp;
+   \   00000036   0x.... 0x....      LDR.W    R1,??DataTable29_10
+   \   0000003A   0x6008             STR      R0,[R1, #+0]
+    828          	    xNumOfOverflows++;
+   \   0000003C   0x.... 0x....      LDR.W    R0,??DataTable29_18
+   \   00000040   0x6800             LDR      R0,[R0, #+0]
+   \   00000042   0x1C40             ADDS     R0,R0,#+1
+   \   00000044   0x.... 0x....      LDR.W    R1,??DataTable29_18
+   \   00000048   0x6008             STR      R0,[R1, #+0]
+   \                     ??vTaskIncrementTick_1:
+   \   0000004A   0xE01C             B.N      ??vTaskIncrementTick_2
+    829          	 }
+    830          	prvCheckDelayedTasks();
+   \                     ??vTaskIncrementTick_3:
+   \   0000004C   0x1D20             ADDS     R0,R4,#+4
+   \   0000004E   0x.... 0x....      BL       vListRemove
+   \   00000052   0x6AA0             LDR      R0,[R4, #+40]
+   \   00000054   0x2800             CMP      R0,#+0
+   \   00000056   0xD003             BEQ.N    ??vTaskIncrementTick_4
+   \   00000058   0xF114 0x0018      ADDS     R0,R4,#+24
+   \   0000005C   0x.... 0x....      BL       vListRemove
+   \                     ??vTaskIncrementTick_4:
+   \   00000060   0x.... 0x....      LDR.W    R0,??DataTable29_5
+   \   00000064   0x6800             LDR      R0,[R0, #+0]
+   \   00000066   0x6AE1             LDR      R1,[R4, #+44]
+   \   00000068   0x4288             CMP      R0,R1
+   \   0000006A   0xD203             BCS.N    ??vTaskIncrementTick_5
+   \   0000006C   0x6AE0             LDR      R0,[R4, #+44]
+   \   0000006E   0x.... 0x....      LDR.W    R1,??DataTable29_5
+   \   00000072   0x6008             STR      R0,[R1, #+0]
+   \                     ??vTaskIncrementTick_5:
+   \   00000074   0x1D21             ADDS     R1,R4,#+4
+   \   00000076   0x6AE0             LDR      R0,[R4, #+44]
+   \   00000078   0x2214             MOVS     R2,#+20
+   \   0000007A   0x.... 0x....      LDR.W    R3,??DataTable29_6
+   \   0000007E   0xFB02 0x3000      MLA      R0,R2,R0,R3
+   \   00000082   0x.... 0x....      BL       vListInsertEnd
+   \                     ??vTaskIncrementTick_2:
+   \   00000086   0x.... 0x....      LDR.W    R0,??DataTable29_11
+   \   0000008A   0x6800             LDR      R0,[R0, #+0]
+   \   0000008C   0x6800             LDR      R0,[R0, #+0]
+   \   0000008E   0x2800             CMP      R0,#+0
+   \   00000090   0xD005             BEQ.N    ??vTaskIncrementTick_6
+   \   00000092   0x.... 0x....      LDR.W    R0,??DataTable29_11
+   \   00000096   0x6800             LDR      R0,[R0, #+0]
+   \   00000098   0x68C0             LDR      R0,[R0, #+12]
+   \   0000009A   0x68C4             LDR      R4,[R0, #+12]
+   \   0000009C   0xE000             B.N      ??vTaskIncrementTick_7
+   \                     ??vTaskIncrementTick_6:
+   \   0000009E   0x2400             MOVS     R4,#+0
+   \                     ??vTaskIncrementTick_7:
+   \   000000A0   0x2C00             CMP      R4,#+0
+   \   000000A2   0xD00D             BEQ.N    ??vTaskIncrementTick_8
+   \   000000A4   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   000000A8   0x6800             LDR      R0,[R0, #+0]
+   \   000000AA   0x6861             LDR      R1,[R4, #+4]
+   \   000000AC   0x4288             CMP      R0,R1
+   \   000000AE   0xD2CD             BCS.N    ??vTaskIncrementTick_3
+   \   000000B0   0xE006             B.N      ??vTaskIncrementTick_8
+    831              }
+    832              else
+    833              {
+    834          	 ++uxMissedTicks;
+   \                     ??vTaskIncrementTick_0:
+   \   000000B2   0x.... 0x....      LDR.W    R0,??DataTable29_16
+   \   000000B6   0x6800             LDR      R0,[R0, #+0]
+   \   000000B8   0x1C40             ADDS     R0,R0,#+1
+   \   000000BA   0x.... 0x....      LDR.W    R1,??DataTable29_16
+   \   000000BE   0x6008             STR      R0,[R1, #+0]
+    835              }
+    836              
+    837              traceTASK_INCREMENT_TICK( xTickCount );
+    838              
+    839          //   TECLADO_amostragem(); 
+    840          //   ENTRADASDIGITAIS_amostragemSinais();
+    841          }
+   \                     ??vTaskIncrementTick_8:
+   \   000000C0   0xBD10             POP      {R4,PC}          ;; return
+    842          /********************************************************************************
+    843          *   Descrição       : 
+    844          *   Parametros      :   
+    845          *   Retorno         : 
+    846          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    847          void vTaskSwitchContext( void )
+    848          {
+   \                     vTaskSwitchContext:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    849          	if( uxSchedulerSuspended != ( unsigned portBASE_TYPE ) pdFALSE )
+   \   00000002   0x.... 0x....      LDR.W    R0,??DataTable29_14
+   \   00000006   0x6800             LDR      R0,[R0, #+0]
+   \   00000008   0x2800             CMP      R0,#+0
+   \   0000000A   0xD004             BEQ.N    ??vTaskSwitchContext_0
+    850          	{
+    851          		xMissedYield = pdTRUE;
+   \   0000000C   0x.... 0x....      LDR.W    R0,??DataTable29_17
+   \   00000010   0x2101             MOVS     R1,#+1
+   \   00000012   0x6001             STR      R1,[R0, #+0]
+    852          		return;
+   \   00000014   0xE053             B.N      ??vTaskSwitchContext_1
+    853          	}
+    854          
+    855          	traceTASK_SWITCHED_OUT();
+    856          
+    857          	#if ( configGENERATE_RUN_TIME_STATS == 1 )
+    858          	{
+    859          		unsigned long ulTempCounter;
+    860          		
+    861          			#ifdef portALT_GET_RUN_TIME_COUNTER_VALUE
+    862          				portALT_GET_RUN_TIME_COUNTER_VALUE( ulTempCounter );
+    863          			#else
+    864          				ulTempCounter = portGET_RUN_TIME_COUNTER_VALUE();
+    865          			#endif
+    866          			pxCurrentTCB->ulRunTimeCounter += ( ulTempCounter - ulTaskSwitchedInTime );
+    867          			ulTaskSwitchedInTime = ulTempCounter;
+    868          	}
+    869          	#endif
+    870          
+    871          	taskFIRST_CHECK_FOR_STACK_OVERFLOW();
+   \                     ??vTaskSwitchContext_0:
+   \   00000016   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000001A   0x6800             LDR      R0,[R0, #+0]
+   \   0000001C   0x6B00             LDR      R0,[R0, #+48]
+   \   0000001E   0x.... 0x....      LDR.W    R1,??DataTable29_1
+   \   00000022   0x6809             LDR      R1,[R1, #+0]
+   \   00000024   0x6809             LDR      R1,[R1, #+0]
+   \   00000026   0x4288             CMP      R0,R1
+   \   00000028   0xD309             BCC.N    ??vTaskSwitchContext_2
+   \   0000002A   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   0000002E   0x6800             LDR      R0,[R0, #+0]
+   \   00000030   0xF110 0x0134      ADDS     R1,R0,#+52
+   \   00000034   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000038   0x6800             LDR      R0,[R0, #+0]
+   \   0000003A   0x.... 0x....      BL       vApplicationStackOverflowHook
+    872          	taskSECOND_CHECK_FOR_STACK_OVERFLOW();
+   \                     ??vTaskSwitchContext_2:
+   \   0000003E   0x2214             MOVS     R2,#+20
+   \   00000040   0x.... 0x....      LDR.W    R1,??DataTable29_19
+   \   00000044   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000048   0x6800             LDR      R0,[R0, #+0]
+   \   0000004A   0x6B00             LDR      R0,[R0, #+48]
+   \   0000004C   0x.... 0x....      BL       memcmp
+   \   00000050   0x2800             CMP      R0,#+0
+   \   00000052   0xD011             BEQ.N    ??vTaskSwitchContext_3
+   \   00000054   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000058   0x6800             LDR      R0,[R0, #+0]
+   \   0000005A   0xF110 0x0134      ADDS     R1,R0,#+52
+   \   0000005E   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000062   0x6800             LDR      R0,[R0, #+0]
+   \   00000064   0x.... 0x....      BL       vApplicationStackOverflowHook
+   \   00000068   0xE006             B.N      ??vTaskSwitchContext_3
+    873          
+    874          	while( listLIST_IS_EMPTY( &( pxReadyTasksLists[ uxTopReadyPriority ] ) ) )
+    875          	{
+    876          		--uxTopReadyPriority;
+   \                     ??vTaskSwitchContext_4:
+   \   0000006A   0x.... 0x....      LDR.W    R0,??DataTable29_5
+   \   0000006E   0x6800             LDR      R0,[R0, #+0]
+   \   00000070   0x1E40             SUBS     R0,R0,#+1
+   \   00000072   0x.... 0x....      LDR.W    R1,??DataTable29_5
+   \   00000076   0x6008             STR      R0,[R1, #+0]
+    877          	}
+   \                     ??vTaskSwitchContext_3:
+   \   00000078   0x.... 0x....      LDR.W    R0,??DataTable29_5
+   \   0000007C   0x6800             LDR      R0,[R0, #+0]
+   \   0000007E   0x2114             MOVS     R1,#+20
+   \   00000080   0x.... 0x....      LDR.W    R2,??DataTable29_6
+   \   00000084   0xFB01 0x2000      MLA      R0,R1,R0,R2
+   \   00000088   0x6800             LDR      R0,[R0, #+0]
+   \   0000008A   0x2800             CMP      R0,#+0
+   \   0000008C   0xD0ED             BEQ.N    ??vTaskSwitchContext_4
+    878          	listGET_OWNER_OF_NEXT_ENTRY( pxCurrentTCB, &( pxReadyTasksLists[ uxTopReadyPriority ] ) );
+   \   0000008E   0x.... 0x....      LDR.W    R0,??DataTable29_5
+   \   00000092   0x6800             LDR      R0,[R0, #+0]
+   \   00000094   0x2114             MOVS     R1,#+20
+   \   00000096   0x.... 0x....      LDR.W    R2,??DataTable29_6
+   \   0000009A   0xFB01 0x2000      MLA      R0,R1,R0,R2
+   \   0000009E   0x6841             LDR      R1,[R0, #+4]
+   \   000000A0   0x6849             LDR      R1,[R1, #+4]
+   \   000000A2   0x6041             STR      R1,[R0, #+4]
+   \   000000A4   0x6841             LDR      R1,[R0, #+4]
+   \   000000A6   0xF110 0x0208      ADDS     R2,R0,#+8
+   \   000000AA   0x4291             CMP      R1,R2
+   \   000000AC   0xD102             BNE.N    ??vTaskSwitchContext_5
+   \   000000AE   0x6841             LDR      R1,[R0, #+4]
+   \   000000B0   0x6849             LDR      R1,[R1, #+4]
+   \   000000B2   0x6041             STR      R1,[R0, #+4]
+   \                     ??vTaskSwitchContext_5:
+   \   000000B4   0x6840             LDR      R0,[R0, #+4]
+   \   000000B6   0x68C0             LDR      R0,[R0, #+12]
+   \   000000B8   0x.... 0x....      LDR.W    R1,??DataTable29_1
+   \   000000BC   0x6008             STR      R0,[R1, #+0]
+    879          
+    880          	traceTASK_SWITCHED_IN();
+    881          	vWriteTraceToBuffer();
+    882          }
+   \                     ??vTaskSwitchContext_1:
+   \   000000BE   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .rodata, align 4
+   \                     ??ucExpectedStackBytes:
+   \   00000000   0xA5 0xA5          DC8 165, 165, 165, 165, 165, 165, 165, 165, 165, 165, 165, 165, 165
+   \              0xA5 0xA5    
+   \              0xA5 0xA5    
+   \              0xA5 0xA5    
+   \              0xA5 0xA5    
+   \              0xA5 0xA5    
+   \              0xA5         
+   \   0000000D   0xA5 0xA5          DC8 165, 165, 165, 165, 165, 165, 165
+   \              0xA5 0xA5    
+   \              0xA5 0xA5    
+   \              0xA5         
+    883          /********************************************************************************
+    884          *   Descrição       : 
+    885          *   Parametros      :   
+    886          *   Retorno         : 
+    887          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    888          void vTaskPlaceOnEventList( const xList * const pxEventList, portTickType xTicksToWait )
+    889          {
+   \                     vTaskPlaceOnEventList:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x000C             MOVS     R4,R1
+    890          portTickType xTimeToWake;
+    891          
+    892          	vListInsert( ( xList * ) pxEventList, ( xListItem * ) &( pxCurrentTCB->xEventListItem ) );
+   \   00000004   0x.... 0x....      LDR.W    R1,??DataTable29_1
+   \   00000008   0x6809             LDR      R1,[R1, #+0]
+   \   0000000A   0x3118             ADDS     R1,R1,#+24
+   \   0000000C   0x.... 0x....      BL       vListInsert
+    893          
+    894          	vListRemove( ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+   \   00000010   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000014   0x6800             LDR      R0,[R0, #+0]
+   \   00000016   0x1D00             ADDS     R0,R0,#+4
+   \   00000018   0x.... 0x....      BL       vListRemove
+    895          
+    896          
+    897          	#if ( INCLUDE_vTaskSuspend == 1 )
+    898          	{
+    899          		if( xTicksToWait == portMAX_DELAY )
+   \   0000001C   0xF114 0x0F01      CMN      R4,#+1
+   \   00000020   0xD108             BNE.N    ??vTaskPlaceOnEventList_0
+    900          		{
+    901          			vListInsertEnd( ( xList * ) &xSuspendedTaskList, ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+   \   00000022   0x.... 0x....      LDR.W    R0,??DataTable29_1
+   \   00000026   0x6800             LDR      R0,[R0, #+0]
+   \   00000028   0x1D01             ADDS     R1,R0,#+4
+   \   0000002A   0x.... 0x....      LDR.W    R0,??DataTable29_12
+   \   0000002E   0x.... 0x....      BL       vListInsertEnd
+   \   00000032   0xE01C             B.N      ??vTaskPlaceOnEventList_1
+    902          		}
+    903          		else
+    904          		{
+    905          			xTimeToWake = xTickCount + xTicksToWait;
+   \                     ??vTaskPlaceOnEventList_0:
+   \   00000034   0x.... 0x....      LDR.W    R0,??DataTable29_9
+   \   00000038   0x6800             LDR      R0,[R0, #+0]
+   \   0000003A   0x1820             ADDS     R0,R4,R0
+    906          
+    907          			listSET_LIST_ITEM_VALUE( &( pxCurrentTCB->xGenericListItem ), xTimeToWake );
+   \   0000003C   0x.... 0x....      LDR.W    R1,??DataTable29_1
+   \   00000040   0x6809             LDR      R1,[R1, #+0]
+   \   00000042   0x6048             STR      R0,[R1, #+4]
+    908          
+    909          			if( xTimeToWake < xTickCount )
+   \   00000044   0x.... 0x....      LDR.W    R1,??DataTable29_9
+   \   00000048   0x6809             LDR      R1,[R1, #+0]
+   \   0000004A   0x4288             CMP      R0,R1
+   \   0000004C   0xD208             BCS.N    ??vTaskPlaceOnEventList_2
+    910          			{
+    911          				vListInsert( ( xList * ) pxOverflowDelayedTaskList, ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+   \   0000004E   0x....             LDR.N    R0,??DataTable29_1
+   \   00000050   0x6800             LDR      R0,[R0, #+0]
+   \   00000052   0x1D01             ADDS     R1,R0,#+4
+   \   00000054   0x.... 0x....      LDR.W    R0,??DataTable29_10
+   \   00000058   0x6800             LDR      R0,[R0, #+0]
+   \   0000005A   0x.... 0x....      BL       vListInsert
+   \   0000005E   0xE006             B.N      ??vTaskPlaceOnEventList_1
+    912          			}
+    913          			else
+    914          			{
+    915          				vListInsert( ( xList * ) pxDelayedTaskList, ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+   \                     ??vTaskPlaceOnEventList_2:
+   \   00000060   0x....             LDR.N    R0,??DataTable29_1
+   \   00000062   0x6800             LDR      R0,[R0, #+0]
+   \   00000064   0x1D01             ADDS     R1,R0,#+4
+   \   00000066   0x....             LDR.N    R0,??DataTable29_11
+   \   00000068   0x6800             LDR      R0,[R0, #+0]
+   \   0000006A   0x.... 0x....      BL       vListInsert
+    916          			}
+    917          		}
+    918          	}
+    919          	#else
+    920          	{
+    921          			xTimeToWake = xTickCount + xTicksToWait;
+    922          
+    923          			listSET_LIST_ITEM_VALUE( &( pxCurrentTCB->xGenericListItem ), xTimeToWake );
+    924          
+    925          			if( xTimeToWake < xTickCount )
+    926          			{
+    927          				vListInsert( ( xList * ) pxOverflowDelayedTaskList, ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+    928          			}
+    929          			else
+    930          			{
+    931          				vListInsert( ( xList * ) pxDelayedTaskList, ( xListItem * ) &( pxCurrentTCB->xGenericListItem ) );
+    932          			}
+    933          	}
+    934          	#endif
+    935          }
+   \                     ??vTaskPlaceOnEventList_1:
+   \   0000006E   0xBD10             POP      {R4,PC}          ;; return
+    936          /********************************************************************************
+    937          *   Descrição       : 
+    938          *   Parametros      :   
+    939          *   Retorno         : 
+    940          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    941          signed portBASE_TYPE xTaskRemoveFromEventList( const xList * const pxEventList )
+    942          {
+   \                     xTaskRemoveFromEventList:
+   \   00000000   0xB510             PUSH     {R4,LR}
+    943          tskTCB *pxUnblockedTCB;
+    944          portBASE_TYPE xReturn;
+    945          
+    946          	pxUnblockedTCB = ( tskTCB * ) listGET_OWNER_OF_HEAD_ENTRY( pxEventList );
+   \   00000002   0x6801             LDR      R1,[R0, #+0]
+   \   00000004   0x2900             CMP      R1,#+0
+   \   00000006   0xD002             BEQ.N    ??xTaskRemoveFromEventList_0
+   \   00000008   0x68C0             LDR      R0,[R0, #+12]
+   \   0000000A   0x68C4             LDR      R4,[R0, #+12]
+   \   0000000C   0xE000             B.N      ??xTaskRemoveFromEventList_1
+   \                     ??xTaskRemoveFromEventList_0:
+   \   0000000E   0x2400             MOVS     R4,#+0
+    947          	vListRemove( &( pxUnblockedTCB->xEventListItem ) );
+   \                     ??xTaskRemoveFromEventList_1:
+   \   00000010   0xF114 0x0018      ADDS     R0,R4,#+24
+   \   00000014   0x.... 0x....      BL       vListRemove
+    948          
+    949          	if( uxSchedulerSuspended == ( unsigned portBASE_TYPE ) pdFALSE )
+   \   00000018   0x....             LDR.N    R0,??DataTable29_14
+   \   0000001A   0x6800             LDR      R0,[R0, #+0]
+   \   0000001C   0x2800             CMP      R0,#+0
+   \   0000001E   0xD113             BNE.N    ??xTaskRemoveFromEventList_2
+    950          	{
+    951          		vListRemove( &( pxUnblockedTCB->xGenericListItem ) );
+   \   00000020   0x1D20             ADDS     R0,R4,#+4
+   \   00000022   0x.... 0x....      BL       vListRemove
+    952          		prvAddTaskToReadyQueue( pxUnblockedTCB );
+   \   00000026   0x....             LDR.N    R0,??DataTable29_5
+   \   00000028   0x6800             LDR      R0,[R0, #+0]
+   \   0000002A   0x6AE1             LDR      R1,[R4, #+44]
+   \   0000002C   0x4288             CMP      R0,R1
+   \   0000002E   0xD202             BCS.N    ??xTaskRemoveFromEventList_3
+   \   00000030   0x6AE0             LDR      R0,[R4, #+44]
+   \   00000032   0x....             LDR.N    R1,??DataTable29_5
+   \   00000034   0x6008             STR      R0,[R1, #+0]
+   \                     ??xTaskRemoveFromEventList_3:
+   \   00000036   0x1D21             ADDS     R1,R4,#+4
+   \   00000038   0x6AE0             LDR      R0,[R4, #+44]
+   \   0000003A   0x2214             MOVS     R2,#+20
+   \   0000003C   0x....             LDR.N    R3,??DataTable29_6
+   \   0000003E   0xFB02 0x3000      MLA      R0,R2,R0,R3
+   \   00000042   0x.... 0x....      BL       vListInsertEnd
+   \   00000046   0xE004             B.N      ??xTaskRemoveFromEventList_4
+    953          	}
+    954          	else
+    955          	{
+    956          		vListInsertEnd( ( xList * ) &( xPendingReadyList ), &( pxUnblockedTCB->xEventListItem ) );
+   \                     ??xTaskRemoveFromEventList_2:
+   \   00000048   0xF114 0x0118      ADDS     R1,R4,#+24
+   \   0000004C   0x....             LDR.N    R0,??DataTable29_13
+   \   0000004E   0x.... 0x....      BL       vListInsertEnd
+    957          	}
+    958          
+    959          	if( pxUnblockedTCB->uxPriority >= pxCurrentTCB->uxPriority )
+   \                     ??xTaskRemoveFromEventList_4:
+   \   00000052   0x6AE0             LDR      R0,[R4, #+44]
+   \   00000054   0x....             LDR.N    R1,??DataTable29_1
+   \   00000056   0x6809             LDR      R1,[R1, #+0]
+   \   00000058   0x6AC9             LDR      R1,[R1, #+44]
+   \   0000005A   0x4288             CMP      R0,R1
+   \   0000005C   0xD301             BCC.N    ??xTaskRemoveFromEventList_5
+    960          	{
+    961          		xReturn = pdTRUE;
+   \   0000005E   0x2001             MOVS     R0,#+1
+   \   00000060   0xE000             B.N      ??xTaskRemoveFromEventList_6
+    962          	}
+    963          	else
+    964          	{
+    965          		xReturn = pdFALSE;
+   \                     ??xTaskRemoveFromEventList_5:
+   \   00000062   0x2000             MOVS     R0,#+0
+    966          	}
+    967          
+    968          	return xReturn;
+   \                     ??xTaskRemoveFromEventList_6:
+   \   00000064   0xBD10             POP      {R4,PC}          ;; return
+    969          }
+    970          /********************************************************************************
+    971          *   Descrição       : 
+    972          *   Parametros      :   
+    973          *   Retorno         : 
+    974          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    975          void vTaskSetTimeOutState( xTimeOutType * const pxTimeOut )
+    976          {
+    977          	pxTimeOut->xOverflowCount = xNumOfOverflows;
+   \                     vTaskSetTimeOutState:
+   \   00000000   0x....             LDR.N    R1,??DataTable29_18
+   \   00000002   0x6809             LDR      R1,[R1, #+0]
+   \   00000004   0x6001             STR      R1,[R0, #+0]
+    978          	pxTimeOut->xTimeOnEntering = xTickCount;
+   \   00000006   0x....             LDR.N    R1,??DataTable29_9
+   \   00000008   0x6809             LDR      R1,[R1, #+0]
+   \   0000000A   0x6041             STR      R1,[R0, #+4]
+    979          }
+   \   0000000C   0x4770             BX       LR               ;; return
+    980          /********************************************************************************
+    981          *   Descrição       : 
+    982          *   Parametros      :   
+    983          *   Retorno         : 
+    984          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    985          portBASE_TYPE xTaskCheckForTimeOut( xTimeOutType * const pxTimeOut, portTickType * const pxTicksToWait )
+    986          {
+   \                     xTaskCheckForTimeOut:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    987          portBASE_TYPE xReturn;
+    988          
+    989          	portENTER_CRITICAL();
+   \   00000006   0x.... 0x....      BL       vPortEnterCritical
+    990          	{
+    991          		#if ( INCLUDE_vTaskSuspend == 1 )
+    992          			if( *pxTicksToWait == portMAX_DELAY )
+   \   0000000A   0x6828             LDR      R0,[R5, #+0]
+   \   0000000C   0xF110 0x0F01      CMN      R0,#+1
+   \   00000010   0xD101             BNE.N    ??xTaskCheckForTimeOut_0
+    993          			{
+    994          				xReturn = pdFALSE;
+   \   00000012   0x2400             MOVS     R4,#+0
+   \   00000014   0xE01F             B.N      ??xTaskCheckForTimeOut_1
+    995          			}
+    996          			else
+    997          		#endif
+    998          
+    999          		if( ( xNumOfOverflows != pxTimeOut->xOverflowCount ) && ( ( portTickType ) xTickCount >= ( portTickType ) pxTimeOut->xTimeOnEntering ) )
+   \                     ??xTaskCheckForTimeOut_0:
+   \   00000016   0x....             LDR.N    R0,??DataTable29_18
+   \   00000018   0x6800             LDR      R0,[R0, #+0]
+   \   0000001A   0x6821             LDR      R1,[R4, #+0]
+   \   0000001C   0x4288             CMP      R0,R1
+   \   0000001E   0xD006             BEQ.N    ??xTaskCheckForTimeOut_2
+   \   00000020   0x....             LDR.N    R0,??DataTable29_9
+   \   00000022   0x6800             LDR      R0,[R0, #+0]
+   \   00000024   0x6861             LDR      R1,[R4, #+4]
+   \   00000026   0x4288             CMP      R0,R1
+   \   00000028   0xD301             BCC.N    ??xTaskCheckForTimeOut_2
+   1000          		{
+   1001          			xReturn = pdTRUE;
+   \   0000002A   0x2401             MOVS     R4,#+1
+   \   0000002C   0xE013             B.N      ??xTaskCheckForTimeOut_1
+   1002          		}
+   1003          		else if( ( ( portTickType ) ( ( portTickType ) xTickCount - ( portTickType ) pxTimeOut->xTimeOnEntering ) ) < ( portTickType ) *pxTicksToWait )
+   \                     ??xTaskCheckForTimeOut_2:
+   \   0000002E   0x....             LDR.N    R0,??DataTable29_9
+   \   00000030   0x6800             LDR      R0,[R0, #+0]
+   \   00000032   0x6861             LDR      R1,[R4, #+4]
+   \   00000034   0x1A40             SUBS     R0,R0,R1
+   \   00000036   0x6829             LDR      R1,[R5, #+0]
+   \   00000038   0x4288             CMP      R0,R1
+   \   0000003A   0xD20B             BCS.N    ??xTaskCheckForTimeOut_3
+   1004          		{
+   1005          			*pxTicksToWait -= ( ( portTickType ) xTickCount - ( portTickType ) pxTimeOut->xTimeOnEntering );
+   \   0000003C   0x6828             LDR      R0,[R5, #+0]
+   \   0000003E   0x....             LDR.N    R1,??DataTable29_9
+   \   00000040   0x6809             LDR      R1,[R1, #+0]
+   \   00000042   0x1A40             SUBS     R0,R0,R1
+   \   00000044   0x6861             LDR      R1,[R4, #+4]
+   \   00000046   0x1808             ADDS     R0,R1,R0
+   \   00000048   0x6028             STR      R0,[R5, #+0]
+   1006          			vTaskSetTimeOutState( pxTimeOut );
+   \   0000004A   0x0020             MOVS     R0,R4
+   \   0000004C   0x.... 0x....      BL       vTaskSetTimeOutState
+   1007          			xReturn = pdFALSE;
+   \   00000050   0x2400             MOVS     R4,#+0
+   \   00000052   0xE000             B.N      ??xTaskCheckForTimeOut_1
+   1008          		}
+   1009          		else
+   1010          		{
+   1011          			xReturn = pdTRUE;
+   \                     ??xTaskCheckForTimeOut_3:
+   \   00000054   0x2401             MOVS     R4,#+1
+   1012          		}
+   1013          	}
+   1014          	portEXIT_CRITICAL();
+   \                     ??xTaskCheckForTimeOut_1:
+   \   00000056   0x.... 0x....      BL       vPortExitCritical
+   1015          
+   1016          	return xReturn;
+   \   0000005A   0x0020             MOVS     R0,R4
+   \   0000005C   0xBD32             POP      {R1,R4,R5,PC}    ;; return
+   1017          }
+   1018          /********************************************************************************
+   1019          *   Descrição       : 
+   1020          *   Parametros      :   
+   1021          *   Retorno         : 
+   1022          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+   1023          void vTaskMissedYield( void )
+   1024          {
+   1025          	xMissedYield = pdTRUE;
+   \                     vTaskMissedYield:
+   \   00000000   0x....             LDR.N    R0,??DataTable29_17
+   \   00000002   0x2101             MOVS     R1,#+1
+   \   00000004   0x6001             STR      R1,[R0, #+0]
+   1026          }
+   \   00000006   0x4770             BX       LR               ;; return
+   1027          /********************************************************************************
+   1028          *   Descrição       : 
+   1029          *   Parametros      :   
+   1030          *   Retorno         : 
+   1031          ********************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+   1032          static portTASK_FUNCTION( prvIdleTask, pvParameters )
+   1033          {
+   \                     prvIdleTask:
+   \   00000000   0xB580             PUSH     {R7,LR}
+   1034              /* Stop warnings. */
+   1035              ( void ) pvParameters;
+   1036          
+   1037              for( ;; )
+   1038              {
+   1039                prvCheckTasksWaitingTermination();
+   \                     ??prvIdleTask_0:
+   \   00000002   0x.... 0x....      BL       prvCheckTasksWaitingTermination
+   \   00000006   0xE7FC             B.N      ??prvIdleTask_0
+   1040          
+   1041          	#if ( configUSE_PREEMPTION == 0 )
+   1042          		{
+   1043          			taskYIELD();
+   1044          		}
+   1045          		#endif
+   1046          
+   1047          		#if ( ( configUSE_PREEMPTION == 1 ) && ( configIDLE_SHOULD_YIELD == 1 ) )
+   1048          		{
+   1049          			if( listCURRENT_LIST_LENGTH( &( pxReadyTasksLists[ tskIDLE_PRIORITY ] ) ) > ( unsigned portBASE_TYPE ) 1 )
+   1050          			{
+   1051          				taskYIELD();
+   1052          			}
+   1053          		}
+   1054          		#endif
+   1055          	}
+   1056          }
+   1057          /********************************************************************************
+   1058          *   Descrição       : 
+   1059          *   Parametros      :   
+   1060          *   Retorno         : 
+   1061          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+   1062          static void prvInitialiseTCBVariables( tskTCB *pxTCB, const signed char * const pcName, unsigned portBASE_TYPE uxPriority, const xMemoryRegion * const xRegions, unsigned short usStackDepth ){
+   \                     prvInitialiseTCBVariables:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x0015             MOVS     R5,R2
+   1063            
+   1064              strncpy( ( char * ) pxTCB->pcTaskName, ( const char * ) pcName, ( unsigned short ) configMAX_TASK_NAME_LEN );
+   \   00000006   0x220C             MOVS     R2,#+12
+   \   00000008   0xF114 0x0034      ADDS     R0,R4,#+52
+   \   0000000C   0x.... 0x....      BL       strncpy
+   1065              pxTCB->pcTaskName[ ( unsigned short ) configMAX_TASK_NAME_LEN - ( unsigned short ) 1 ] = '\0';
+   \   00000010   0x2000             MOVS     R0,#+0
+   \   00000012   0xF884 0x003F      STRB     R0,[R4, #+63]
+   1066              if( uxPriority >= configMAX_PRIORITIES )
+   \   00000016   0x2D05             CMP      R5,#+5
+   \   00000018   0xD300             BCC.N    ??prvInitialiseTCBVariables_0
+   1067          	uxPriority = configMAX_PRIORITIES - 1;
+   \   0000001A   0x2504             MOVS     R5,#+4
+   1068          
+   1069              pxTCB->uxPriority = uxPriority;
+   \                     ??prvInitialiseTCBVariables_0:
+   \   0000001C   0x62E5             STR      R5,[R4, #+44]
+   1070              pxTCB->uxBasePriority = uxPriority;
+   \   0000001E   0x64A5             STR      R5,[R4, #+72]
+   1071          
+   1072              vListInitialiseItem( &( pxTCB->xGenericListItem ) );
+   \   00000020   0x1D20             ADDS     R0,R4,#+4
+   \   00000022   0x.... 0x....      BL       vListInitialiseItem
+   1073              vListInitialiseItem( &( pxTCB->xEventListItem ) );
+   \   00000026   0xF114 0x0018      ADDS     R0,R4,#+24
+   \   0000002A   0x.... 0x....      BL       vListInitialiseItem
+   1074              listSET_LIST_ITEM_OWNER( &( pxTCB->xGenericListItem ), pxTCB );
+   \   0000002E   0x6124             STR      R4,[R4, #+16]
+   1075              listSET_LIST_ITEM_VALUE( &( pxTCB->xEventListItem ), configMAX_PRIORITIES - ( portTickType ) uxPriority );
+   \   00000030   0xF1D5 0x0005      RSBS     R0,R5,#+5
+   \   00000034   0x61A0             STR      R0,[R4, #+24]
+   1076              listSET_LIST_ITEM_OWNER( &( pxTCB->xEventListItem ), pxTCB );
+   \   00000036   0x6264             STR      R4,[R4, #+36]
+   1077              ( void ) xRegions;
+   1078              ( void ) usStackDepth;
+   1079          }
+   \   00000038   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+   1080          /********************************************************************************
+   1081          *   Descrição       : 
+   1082          *   Parametros      :   
+   1083          *   Retorno         : 
+   1084          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+   1085          static void prvInitialiseTaskLists( void ){
+   \                     prvInitialiseTaskLists:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   1086            unsigned portBASE_TYPE uxPriority;
+   1087          
+   1088            for( uxPriority = 0; uxPriority < configMAX_PRIORITIES; uxPriority++ )
+   \   00000002   0x2400             MOVS     R4,#+0
+   \   00000004   0xE006             B.N      ??prvInitialiseTaskLists_0
+   1089            {
+   1090                vListInitialise( ( xList * ) &( pxReadyTasksLists[ uxPriority ] ) );
+   \                     ??prvInitialiseTaskLists_1:
+   \   00000006   0x2014             MOVS     R0,#+20
+   \   00000008   0x....             LDR.N    R1,??DataTable29_6
+   \   0000000A   0xFB00 0x1004      MLA      R0,R0,R4,R1
+   \   0000000E   0x.... 0x....      BL       vListInitialise
+   1091            }
+   \   00000012   0x1C64             ADDS     R4,R4,#+1
+   \                     ??prvInitialiseTaskLists_0:
+   \   00000014   0x2C05             CMP      R4,#+5
+   \   00000016   0xD3F6             BCC.N    ??prvInitialiseTaskLists_1
+   1092          
+   1093            vListInitialise( ( xList * ) &xDelayedTaskList1 );
+   \   00000018   0x....             LDR.N    R0,??DataTable29_20
+   \   0000001A   0x.... 0x....      BL       vListInitialise
+   1094            vListInitialise( ( xList * ) &xDelayedTaskList2 );
+   \   0000001E   0x....             LDR.N    R0,??DataTable29_21
+   \   00000020   0x.... 0x....      BL       vListInitialise
+   1095            vListInitialise( ( xList * ) &xPendingReadyList );
+   \   00000024   0x....             LDR.N    R0,??DataTable29_13
+   \   00000026   0x.... 0x....      BL       vListInitialise
+   1096            vListInitialise( ( xList * ) &xTasksWaitingTermination );
+   \   0000002A   0x....             LDR.N    R0,??DataTable29_7
+   \   0000002C   0x.... 0x....      BL       vListInitialise
+   1097            vListInitialise( ( xList * ) &xSuspendedTaskList );
+   \   00000030   0x....             LDR.N    R0,??DataTable29_12
+   \   00000032   0x.... 0x....      BL       vListInitialise
+   1098            pxDelayedTaskList = &xDelayedTaskList1;
+   \   00000036   0x....             LDR.N    R0,??DataTable29_11
+   \   00000038   0x....             LDR.N    R1,??DataTable29_20
+   \   0000003A   0x6001             STR      R1,[R0, #+0]
+   1099            pxOverflowDelayedTaskList = &xDelayedTaskList2;
+   \   0000003C   0x....             LDR.N    R0,??DataTable29_10
+   \   0000003E   0x....             LDR.N    R1,??DataTable29_21
+   \   00000040   0x6001             STR      R1,[R0, #+0]
+   1100          }
+   \   00000042   0xBD10             POP      {R4,PC}          ;; return
+   1101          /********************************************************************************
+   1102          *   Descrição       : 
+   1103          *   Parametros      :   
+   1104          *   Retorno         : 
+   1105          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+   1106          static void prvCheckTasksWaitingTermination( void )
+   1107          {
+   \                     prvCheckTasksWaitingTermination:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   1108              portBASE_TYPE xListIsEmpty;
+   1109          
+   1110              if( uxTasksDeleted > ( unsigned portBASE_TYPE ) 0 )
+   \   00000002   0x....             LDR.N    R0,??DataTable29_8
+   \   00000004   0x6800             LDR      R0,[R0, #+0]
+   \   00000006   0x2800             CMP      R0,#+0
+   \   00000008   0xD02A             BEQ.N    ??prvCheckTasksWaitingTermination_0
+   1111              {
+   1112            	vTaskSuspendAll();
+   \   0000000A   0x.... 0x....      BL       vTaskSuspendAll
+   1113          	xListIsEmpty = listLIST_IS_EMPTY( &xTasksWaitingTermination );
+   \   0000000E   0x....             LDR.N    R0,??DataTable29_7
+   \   00000010   0x6800             LDR      R0,[R0, #+0]
+   \   00000012   0x2800             CMP      R0,#+0
+   \   00000014   0xD101             BNE.N    ??prvCheckTasksWaitingTermination_1
+   \   00000016   0x2401             MOVS     R4,#+1
+   \   00000018   0xE000             B.N      ??prvCheckTasksWaitingTermination_2
+   \                     ??prvCheckTasksWaitingTermination_1:
+   \   0000001A   0x2400             MOVS     R4,#+0
+   \                     ??prvCheckTasksWaitingTermination_2:
+   \   0000001C   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   1114          	xTaskResumeAll();
+   \   0000001E   0x.... 0x....      BL       xTaskResumeAll
+   1115          
+   1116                  if( !xListIsEmpty )
+   \   00000022   0x2C00             CMP      R4,#+0
+   \   00000024   0xD11C             BNE.N    ??prvCheckTasksWaitingTermination_0
+   1117          	{
+   1118          	    tskTCB *pxTCB;
+   1119          
+   1120          	    portENTER_CRITICAL();
+   \   00000026   0x.... 0x....      BL       vPortEnterCritical
+   1121          	    {
+   1122          		pxTCB = ( tskTCB * ) listGET_OWNER_OF_HEAD_ENTRY( ( ( xList * ) &xTasksWaitingTermination ) );
+   \   0000002A   0x....             LDR.N    R0,??DataTable29_7
+   \   0000002C   0x6800             LDR      R0,[R0, #+0]
+   \   0000002E   0x2800             CMP      R0,#+0
+   \   00000030   0xD003             BEQ.N    ??prvCheckTasksWaitingTermination_3
+   \   00000032   0x....             LDR.N    R0,??DataTable29_7
+   \   00000034   0x68C0             LDR      R0,[R0, #+12]
+   \   00000036   0x68C4             LDR      R4,[R0, #+12]
+   \   00000038   0xE000             B.N      ??prvCheckTasksWaitingTermination_4
+   \                     ??prvCheckTasksWaitingTermination_3:
+   \   0000003A   0x2400             MOVS     R4,#+0
+   1123          		vListRemove( &( pxTCB->xGenericListItem ) );
+   \                     ??prvCheckTasksWaitingTermination_4:
+   \   0000003C   0x1D20             ADDS     R0,R4,#+4
+   \   0000003E   0x.... 0x....      BL       vListRemove
+   1124          		--uxCurrentNumberOfTasks;
+   \   00000042   0x....             LDR.N    R0,??DataTable29
+   \   00000044   0x6800             LDR      R0,[R0, #+0]
+   \   00000046   0x1E40             SUBS     R0,R0,#+1
+   \   00000048   0x....             LDR.N    R1,??DataTable29
+   \   0000004A   0x6008             STR      R0,[R1, #+0]
+   1125          		--uxTasksDeleted;
+   \   0000004C   0x....             LDR.N    R0,??DataTable29_8
+   \   0000004E   0x6800             LDR      R0,[R0, #+0]
+   \   00000050   0x1E40             SUBS     R0,R0,#+1
+   \   00000052   0x....             LDR.N    R1,??DataTable29_8
+   \   00000054   0x6008             STR      R0,[R1, #+0]
+   1126          	     }
+   1127          	      portEXIT_CRITICAL();
+   \   00000056   0x.... 0x....      BL       vPortExitCritical
+   1128          
+   1129          	      prvDeleteTCB( pxTCB );
+   \   0000005A   0x0020             MOVS     R0,R4
+   \   0000005C   0x.... 0x....      BL       prvDeleteTCB
+   1130          	}
+   1131               }
+   1132          }
+   \                     ??prvCheckTasksWaitingTermination_0:
+   \   00000060   0xBD10             POP      {R4,PC}          ;; return
+   1133          /********************************************************************************
+   1134          *   Descrição       : 
+   1135          *   Parametros      :   
+   1136          *   Retorno         : 
+   1137          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+   1138          static tskTCB *prvAllocateTCBAndStack( unsigned short usStackDepth, portSTACK_TYPE *puxStackBuffer )
+   1139          {
+   \                     prvAllocateTCBAndStack:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   1140            tskTCB *pxNewTCB;
+   1141          
+   1142            pxNewTCB = ( tskTCB * ) pvPortMalloc( sizeof( tskTCB ) );
+   \   00000006   0x204C             MOVS     R0,#+76
+   \   00000008   0x.... 0x....      BL       pvPortMalloc
+   \   0000000C   0x0006             MOVS     R6,R0
+   1143          
+   1144            if( pxNewTCB != NULL )
+   \   0000000E   0x2E00             CMP      R6,#+0
+   \   00000010   0xD016             BEQ.N    ??prvAllocateTCBAndStack_0
+   1145            {
+   1146                pxNewTCB->pxStack = ( portSTACK_TYPE * ) pvPortMallocAligned( ( ( ( size_t )usStackDepth ) * sizeof( portSTACK_TYPE ) ), puxStackBuffer );
+   \   00000012   0x2D00             CMP      R5,#+0
+   \   00000014   0xD105             BNE.N    ??prvAllocateTCBAndStack_1
+   \   00000016   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+   \   00000018   0x00A0             LSLS     R0,R4,#+2
+   \   0000001A   0x.... 0x....      BL       pvPortMalloc
+   \   0000001E   0x0005             MOVS     R5,R0
+   \   00000020   0xE7FF             B.N      ??prvAllocateTCBAndStack_2
+   \                     ??prvAllocateTCBAndStack_1:
+   \                     ??prvAllocateTCBAndStack_2:
+   \   00000022   0x6335             STR      R5,[R6, #+48]
+   1147          
+   1148                if( pxNewTCB->pxStack == NULL )
+   \   00000024   0x6B30             LDR      R0,[R6, #+48]
+   \   00000026   0x2800             CMP      R0,#+0
+   \   00000028   0xD104             BNE.N    ??prvAllocateTCBAndStack_3
+   1149                {
+   1150                  vPortFree( pxNewTCB );
+   \   0000002A   0x0030             MOVS     R0,R6
+   \   0000002C   0x.... 0x....      BL       vPortFree
+   1151            	pxNewTCB = NULL;
+   \   00000030   0x2600             MOVS     R6,#+0
+   \   00000032   0xE005             B.N      ??prvAllocateTCBAndStack_0
+   1152                }
+   1153                else
+   1154                {
+   1155            	memset( pxNewTCB->pxStack, tskSTACK_FILL_BYTE, usStackDepth * sizeof( portSTACK_TYPE ) );
+   \                     ??prvAllocateTCBAndStack_3:
+   \   00000034   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+   \   00000036   0x00A2             LSLS     R2,R4,#+2
+   \   00000038   0x21A5             MOVS     R1,#+165
+   \   0000003A   0x6B30             LDR      R0,[R6, #+48]
+   \   0000003C   0x.... 0x....      BL       memset
+   1156                }
+   1157            }
+   1158            return pxNewTCB;
+   \                     ??prvAllocateTCBAndStack_0:
+   \   00000040   0x0030             MOVS     R0,R6
+   \   00000042   0xBD70             POP      {R4-R6,PC}       ;; return
+   1159          }
+   1160          /********************************************************************************
+   1161          *   Descrição       : 
+   1162          *   Parametros      :   
+   1163          *   Retorno         : 
+   1164          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+   1165          static unsigned short usTaskCheckFreeStackSpace( const unsigned char * pucStackByte ){
+   1166            register unsigned short usCount = 0;
+   \                     usTaskCheckFreeStackSpace:
+   \   00000000   0x2100             MOVS     R1,#+0
+   \   00000002   0xE001             B.N      ??usTaskCheckFreeStackSpace_0
+   1167          
+   1168            while( *pucStackByte == tskSTACK_FILL_BYTE )
+   1169            {
+   1170              pucStackByte -= portSTACK_GROWTH;
+   \                     ??usTaskCheckFreeStackSpace_1:
+   \   00000004   0x1C40             ADDS     R0,R0,#+1
+   1171              usCount++;
+   \   00000006   0x1C49             ADDS     R1,R1,#+1
+   1172            }
+   \                     ??usTaskCheckFreeStackSpace_0:
+   \   00000008   0x7802             LDRB     R2,[R0, #+0]
+   \   0000000A   0x2AA5             CMP      R2,#+165
+   \   0000000C   0xD0FA             BEQ.N    ??usTaskCheckFreeStackSpace_1
+   1173          
+   1174            usCount /= sizeof( portSTACK_TYPE );
+   \   0000000E   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000010   0x0889             LSRS     R1,R1,#+2
+   1175          
+   1176            return usCount;
+   \   00000012   0x0008             MOVS     R0,R1
+   \   00000014   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000016   0x4770             BX       LR               ;; return
+   1177          }
+   1178          /********************************************************************************
+   1179          *   Descrição       : 
+   1180          *   Parametros      :   
+   1181          *   Retorno         : 
+   1182          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+   1183          unsigned portBASE_TYPE uxTaskGetStackHighWaterMark( xTaskHandle xTask )	{
+   \                     uxTaskGetStackHighWaterMark:
+   \   00000000   0xB580             PUSH     {R7,LR}
+   1184            tskTCB *pxTCB;
+   1185            unsigned char *pcEndOfStack;
+   1186            unsigned portBASE_TYPE uxReturn;
+   1187          
+   1188            pxTCB = prvGetTCBFromHandle( xTask );
+   \   00000002   0x2800             CMP      R0,#+0
+   \   00000004   0xD102             BNE.N    ??uxTaskGetStackHighWaterMark_0
+   \   00000006   0x....             LDR.N    R0,??DataTable29_1
+   \   00000008   0x6800             LDR      R0,[R0, #+0]
+   \   0000000A   0xE7FF             B.N      ??uxTaskGetStackHighWaterMark_1
+   1189            pcEndOfStack = ( unsigned char * ) pxTCB->pxStack;
+   \                     ??uxTaskGetStackHighWaterMark_0:
+   \                     ??uxTaskGetStackHighWaterMark_1:
+   \   0000000C   0x6B00             LDR      R0,[R0, #+48]
+   1190          
+   1191            uxReturn = ( unsigned portBASE_TYPE ) usTaskCheckFreeStackSpace( pcEndOfStack );
+   \   0000000E   0x.... 0x....      BL       usTaskCheckFreeStackSpace
+   1192            return uxReturn;
+   \   00000012   0xBD02             POP      {R1,PC}          ;; return
+   1193          }
+   1194          /********************************************************************************
+   1195          *   Descrição       : 
+   1196          *   Parametros      :   
+   1197          *   Retorno         : 
+   1198          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+   1199          static void prvDeleteTCB( tskTCB *pxTCB ){
+   \                     prvDeleteTCB:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   1200            
+   1201            vPortFreeAligned( pxTCB->pxStack );
+   \   00000004   0x6B20             LDR      R0,[R4, #+48]
+   \   00000006   0x.... 0x....      BL       vPortFree
+   1202            vPortFree( pxTCB );
+   \   0000000A   0x0020             MOVS     R0,R4
+   \   0000000C   0x.... 0x....      BL       vPortFree
+   1203          }
+   \   00000010   0xBD10             POP      {R4,PC}          ;; return
+   1204          /********************************************************************************
+   1205          *   Descrição       : 
+   1206          *   Parametros      :   
+   1207          *   Retorno         : 
+   1208          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+   1209          xTaskHandle xTaskGetCurrentTaskHandle( void ){
+   1210            xTaskHandle xReturn;
+   1211          	
+   1212            xReturn = pxCurrentTCB;
+   \                     xTaskGetCurrentTaskHandle:
+   \   00000000   0x....             LDR.N    R0,??DataTable29_1
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   1213            
+   1214            return xReturn;
+   \   00000004   0x4770             BX       LR               ;; return
+   1215          }
+   1216          /********************************************************************************
+   1217          *   Descrição       : 
+   1218          *   Parametros      :   
+   1219          *   Retorno         : 
+   1220          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+   1221          void vTaskPriorityInherit( xTaskHandle * const pxMutexHolder )	{
+   \                     vTaskPriorityInherit:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   1222            tskTCB * const pxTCB = ( tskTCB * ) pxMutexHolder;
+   1223          
+   1224            if( pxTCB->uxPriority < pxCurrentTCB->uxPriority ){
+   \   00000004   0x6AE0             LDR      R0,[R4, #+44]
+   \   00000006   0x....             LDR.N    R1,??DataTable29_1
+   \   00000008   0x6809             LDR      R1,[R1, #+0]
+   \   0000000A   0x6AC9             LDR      R1,[R1, #+44]
+   \   0000000C   0x4288             CMP      R0,R1
+   \   0000000E   0xD229             BCS.N    ??vTaskPriorityInherit_0
+   1225              
+   1226              listSET_LIST_ITEM_VALUE( &( pxTCB->xEventListItem ), configMAX_PRIORITIES - ( portTickType ) pxCurrentTCB->uxPriority );
+   \   00000010   0x....             LDR.N    R0,??DataTable29_1
+   \   00000012   0x6800             LDR      R0,[R0, #+0]
+   \   00000014   0x6AC0             LDR      R0,[R0, #+44]
+   \   00000016   0xF1D0 0x0005      RSBS     R0,R0,#+5
+   \   0000001A   0x61A0             STR      R0,[R4, #+24]
+   1227              if( listIS_CONTAINED_WITHIN( &( pxReadyTasksLists[ pxTCB->uxPriority ] ), &( pxTCB->xGenericListItem ) ) )			{
+   \   0000001C   0x6960             LDR      R0,[R4, #+20]
+   \   0000001E   0x6AE1             LDR      R1,[R4, #+44]
+   \   00000020   0x2214             MOVS     R2,#+20
+   \   00000022   0x....             LDR.N    R3,??DataTable29_6
+   \   00000024   0xFB02 0x3101      MLA      R1,R2,R1,R3
+   \   00000028   0x4288             CMP      R0,R1
+   \   0000002A   0xD117             BNE.N    ??vTaskPriorityInherit_1
+   1228                vListRemove( &( pxTCB->xGenericListItem ) );
+   \   0000002C   0x1D20             ADDS     R0,R4,#+4
+   \   0000002E   0x.... 0x....      BL       vListRemove
+   1229                pxTCB->uxPriority = pxCurrentTCB->uxPriority;
+   \   00000032   0x....             LDR.N    R0,??DataTable29_1
+   \   00000034   0x6800             LDR      R0,[R0, #+0]
+   \   00000036   0x6AC0             LDR      R0,[R0, #+44]
+   \   00000038   0x62E0             STR      R0,[R4, #+44]
+   1230                prvAddTaskToReadyQueue( pxTCB );
+   \   0000003A   0x....             LDR.N    R0,??DataTable29_5
+   \   0000003C   0x6800             LDR      R0,[R0, #+0]
+   \   0000003E   0x6AE1             LDR      R1,[R4, #+44]
+   \   00000040   0x4288             CMP      R0,R1
+   \   00000042   0xD202             BCS.N    ??vTaskPriorityInherit_2
+   \   00000044   0x6AE0             LDR      R0,[R4, #+44]
+   \   00000046   0x....             LDR.N    R1,??DataTable29_5
+   \   00000048   0x6008             STR      R0,[R1, #+0]
+   \                     ??vTaskPriorityInherit_2:
+   \   0000004A   0x1D21             ADDS     R1,R4,#+4
+   \   0000004C   0x6AE0             LDR      R0,[R4, #+44]
+   \   0000004E   0x2214             MOVS     R2,#+20
+   \   00000050   0x....             LDR.N    R3,??DataTable29_6
+   \   00000052   0xFB02 0x3000      MLA      R0,R2,R0,R3
+   \   00000056   0x.... 0x....      BL       vListInsertEnd
+   \   0000005A   0xE003             B.N      ??vTaskPriorityInherit_0
+   1231              }
+   1232              else
+   1233                pxTCB->uxPriority = pxCurrentTCB->uxPriority;
+   \                     ??vTaskPriorityInherit_1:
+   \   0000005C   0x....             LDR.N    R0,??DataTable29_1
+   \   0000005E   0x6800             LDR      R0,[R0, #+0]
+   \   00000060   0x6AC0             LDR      R0,[R0, #+44]
+   \   00000062   0x62E0             STR      R0,[R4, #+44]
+   1234              }
+   1235          }
+   \                     ??vTaskPriorityInherit_0:
+   \   00000064   0xBD10             POP      {R4,PC}          ;; return
+   1236          /********************************************************************************
+   1237          *   Descrição       : 
+   1238          *   Parametros      :   
+   1239          *   Retorno         : 
+   1240          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+   1241          void vTaskPriorityDisinherit( xTaskHandle * const pxMutexHolder ){
+   \                     vTaskPriorityDisinherit:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   1242            tskTCB * const pxTCB = ( tskTCB * ) pxMutexHolder;
+   1243          
+   1244            if( pxMutexHolder != NULL )
+   \   00000004   0x2C00             CMP      R4,#+0
+   \   00000006   0xD01C             BEQ.N    ??vTaskPriorityDisinherit_0
+   1245            {
+   1246               if( pxTCB->uxPriority != pxTCB->uxBasePriority )
+   \   00000008   0x6AE0             LDR      R0,[R4, #+44]
+   \   0000000A   0x6CA1             LDR      R1,[R4, #+72]
+   \   0000000C   0x4288             CMP      R0,R1
+   \   0000000E   0xD018             BEQ.N    ??vTaskPriorityDisinherit_0
+   1247               {
+   1248          	vListRemove( &( pxTCB->xGenericListItem ) );
+   \   00000010   0x1D20             ADDS     R0,R4,#+4
+   \   00000012   0x.... 0x....      BL       vListRemove
+   1249          	pxTCB->uxPriority = pxTCB->uxBasePriority;
+   \   00000016   0x6CA0             LDR      R0,[R4, #+72]
+   \   00000018   0x62E0             STR      R0,[R4, #+44]
+   1250          	listSET_LIST_ITEM_VALUE( &( pxTCB->xEventListItem ), configMAX_PRIORITIES - ( portTickType ) pxTCB->uxPriority );
+   \   0000001A   0x6AE0             LDR      R0,[R4, #+44]
+   \   0000001C   0xF1D0 0x0005      RSBS     R0,R0,#+5
+   \   00000020   0x61A0             STR      R0,[R4, #+24]
+   1251          	prvAddTaskToReadyQueue( pxTCB );
+   \   00000022   0x....             LDR.N    R0,??DataTable29_5
+   \   00000024   0x6800             LDR      R0,[R0, #+0]
+   \   00000026   0x6AE1             LDR      R1,[R4, #+44]
+   \   00000028   0x4288             CMP      R0,R1
+   \   0000002A   0xD202             BCS.N    ??vTaskPriorityDisinherit_1
+   \   0000002C   0x6AE0             LDR      R0,[R4, #+44]
+   \   0000002E   0x....             LDR.N    R1,??DataTable29_5
+   \   00000030   0x6008             STR      R0,[R1, #+0]
+   \                     ??vTaskPriorityDisinherit_1:
+   \   00000032   0x1D21             ADDS     R1,R4,#+4
+   \   00000034   0x6AE0             LDR      R0,[R4, #+44]
+   \   00000036   0x2214             MOVS     R2,#+20
+   \   00000038   0x....             LDR.N    R3,??DataTable29_6
+   \   0000003A   0xFB02 0x3000      MLA      R0,R2,R0,R3
+   \   0000003E   0x.... 0x....      BL       vListInsertEnd
+   1252                }
+   1253             }
+   1254          }
+   \                     ??vTaskPriorityDisinherit_0:
+   \   00000042   0xBD10             POP      {R4,PC}          ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29:
+   \   00000000   0x........         DC32     uxCurrentNumberOfTasks
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_1:
+   \   00000000   0x........         DC32     pxCurrentTCB
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_2:
+   \   00000000   0x........         DC32     xSchedulerRunning
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_3:
+   \   00000000   0x........         DC32     uxTopUsedPriority
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_4:
+   \   00000000   0x........         DC32     uxTaskNumber
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_5:
+   \   00000000   0x........         DC32     uxTopReadyPriority
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_6:
+   \   00000000   0x........         DC32     pxReadyTasksLists
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_7:
+   \   00000000   0x........         DC32     xTasksWaitingTermination
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_8:
+   \   00000000   0x........         DC32     uxTasksDeleted
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_9:
+   \   00000000   0x........         DC32     xTickCount
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_10:
+   \   00000000   0x........         DC32     pxOverflowDelayedTaskList
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_11:
+   \   00000000   0x........         DC32     pxDelayedTaskList
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_12:
+   \   00000000   0x........         DC32     xSuspendedTaskList
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_13:
+   \   00000000   0x........         DC32     xPendingReadyList
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_14:
+   \   00000000   0x........         DC32     uxSchedulerSuspended
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_15:
+   \   00000000   0x........         DC32     `?<Constant "IDLE">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_16:
+   \   00000000   0x........         DC32     uxMissedTicks
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_17:
+   \   00000000   0x........         DC32     xMissedYield
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_18:
+   \   00000000   0x........         DC32     xNumOfOverflows
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_19:
+   \   00000000   0x........         DC32     ??ucExpectedStackBytes
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_20:
+   \   00000000   0x........         DC32     xDelayedTaskList1
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable29_21:
+   \   00000000   0x........         DC32     xDelayedTaskList2
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "IDLE">`:
+   \   00000000   0x49 0x44          DC8 "IDLE"
+   \              0x4C 0x45    
+   \              0x00         
+   \   00000005   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+   1255          /********************************************************************************
+   1256          *     Fim do arquivo
+   1257          ********************************************************************************/
+   1258          
+   1259          
+   1260          
+   1261          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   memset
+         8   -> __aeabi_memset
+      16   prvAllocateTCBAndStack
+        16   -> memset
+        16   -> pvPortMalloc
+        16   -> vPortFree
+       8   prvCheckTasksWaitingTermination
+         8   -> prvDeleteTCB
+         8   -> vListRemove
+         8   -> vPortEnterCritical
+         8   -> vPortExitCritical
+         8   -> vTaskSuspendAll
+         8   -> xTaskResumeAll
+       8   prvDeleteTCB
+         8   -> vPortFree
+       8   prvIdleTask
+         8   -> prvCheckTasksWaitingTermination
+      16   prvInitialiseTCBVariables
+        16   -> strncpy
+        16   -> vListInitialiseItem
+       8   prvInitialiseTaskLists
+         8   -> vListInitialise
+       0   usTaskCheckFreeStackSpace
+       0   uxTaskGetNumberOfTasks
+       8   uxTaskGetStackHighWaterMark
+         8   -> usTaskCheckFreeStackSpace
+       8   uxTaskPriorityGet
+         8   -> vPortEnterCritical
+         8   -> vPortExitCritical
+       8   vTaskDelay
+         8   -> vListInsert
+         8   -> vListRemove
+         8   -> vPortYieldFromISR
+         8   -> vTaskSuspendAll
+         8   -> xTaskResumeAll
+      16   vTaskDelayUntil
+        16   -> vListInsert
+        16   -> vListRemove
+        16   -> vPortYieldFromISR
+        16   -> vTaskSuspendAll
+        16   -> xTaskResumeAll
+      16   vTaskDelete
+        16   -> vListInsertEnd
+        16   -> vListRemove
+        16   -> vPortEnterCritical
+        16   -> vPortExitCritical
+        16   -> vPortYieldFromISR
+       8   vTaskEndScheduler
+         8   -> vPortEndScheduler
+         8   -> vPortSetInterruptMask
+       8   vTaskIncrementTick
+         8   -> vListInsertEnd
+         8   -> vListRemove
+       0   vTaskMissedYield
+       8   vTaskPlaceOnEventList
+         8   -> vListInsert
+         8   -> vListInsertEnd
+         8   -> vListRemove
+       8   vTaskPriorityDisinherit
+         8   -> vListInsertEnd
+         8   -> vListRemove
+       8   vTaskPriorityInherit
+         8   -> vListInsertEnd
+         8   -> vListRemove
+      24   vTaskPrioritySet
+        24   -> vListInsertEnd
+        24   -> vListRemove
+        24   -> vPortEnterCritical
+        24   -> vPortExitCritical
+        24   -> vPortYieldFromISR
+       8   vTaskResume
+         8   -> vListInsertEnd
+         8   -> vListRemove
+         8   -> vPortEnterCritical
+         8   -> vPortExitCritical
+         8   -> vPortYieldFromISR
+         8   -> xTaskIsTaskSuspended
+       0   vTaskSetTimeOutState
+      24   vTaskStartScheduler
+        24   -> vPortSetInterruptMask
+        24   -> xPortStartScheduler
+        24   -> xTaskGenericCreate
+      16   vTaskSuspend
+        16   -> vListInsertEnd
+        16   -> vListRemove
+        16   -> vPortEnterCritical
+        16   -> vPortExitCritical
+        16   -> vPortYieldFromISR
+        16   -> vTaskSwitchContext
+       0   vTaskSuspendAll
+       8   vTaskSwitchContext
+         8   -> memcmp
+         8   -> vApplicationStackOverflowHook
+      16   xTaskCheckForTimeOut
+        16   -> vPortEnterCritical
+        16   -> vPortExitCritical
+        16   -> vTaskSetTimeOutState
+      40   xTaskGenericCreate
+        40   -> prvAllocateTCBAndStack
+        40   -> prvInitialiseTCBVariables
+        40   -> prvInitialiseTaskLists
+        40   -> pxPortInitialiseStack
+        40   -> vListInsertEnd
+        40   -> vPortEnterCritical
+        40   -> vPortExitCritical
+        40   -> vPortYieldFromISR
+       0   xTaskGetCurrentTaskHandle
+       8   xTaskGetTickCount
+         8   -> vPortEnterCritical
+         8   -> vPortExitCritical
+       0   xTaskGetTickCountFromISR
+       0   xTaskIsTaskSuspended
+       8   xTaskRemoveFromEventList
+         8   -> vListInsertEnd
+         8   -> vListRemove
+      16   xTaskResumeAll
+        16   -> vListInsertEnd
+        16   -> vListRemove
+        16   -> vPortEnterCritical
+        16   -> vPortExitCritical
+        16   -> vPortYieldFromISR
+        16   -> vTaskIncrementTick
+      16   xTaskResumeFromISR
+        16   -> vListInsertEnd
+        16   -> vListRemove
+        16   -> xTaskIsTaskSuspended
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       8  ?<Constant "IDLE">
+       4  ??DataTable29
+       4  ??DataTable29_1
+       4  ??DataTable29_10
+       4  ??DataTable29_11
+       4  ??DataTable29_12
+       4  ??DataTable29_13
+       4  ??DataTable29_14
+       4  ??DataTable29_15
+       4  ??DataTable29_16
+       4  ??DataTable29_17
+       4  ??DataTable29_18
+       4  ??DataTable29_19
+       4  ??DataTable29_2
+       4  ??DataTable29_20
+       4  ??DataTable29_21
+       4  ??DataTable29_3
+       4  ??DataTable29_4
+       4  ??DataTable29_5
+       4  ??DataTable29_6
+       4  ??DataTable29_7
+       4  ??DataTable29_8
+       4  ??DataTable29_9
+      20  memset
+      68  prvAllocateTCBAndStack
+      98  prvCheckTasksWaitingTermination
+      18  prvDeleteTCB
+       8  prvIdleTask
+      58  prvInitialiseTCBVariables
+      68  prvInitialiseTaskLists
+       4  pxCurrentTCB
+       4  pxDelayedTaskList
+       4  pxOverflowDelayedTaskList
+     100  pxReadyTasksLists
+      20  ucExpectedStackBytes
+      24  usTaskCheckFreeStackSpace
+       4  uxCurrentNumberOfTasks
+       4  uxMissedTicks
+       4  uxSchedulerSuspended
+       8  uxTaskGetNumberOfTasks
+      20  uxTaskGetStackHighWaterMark
+       4  uxTaskNumber
+      30  uxTaskPriorityGet
+       4  uxTasksDeleted
+       4  uxTopReadyPriority
+       4  uxTopUsedPriority
+     104  vTaskDelay
+     154  vTaskDelayUntil
+     116  vTaskDelete
+      20  vTaskEndScheduler
+     194  vTaskIncrementTick
+       8  vTaskMissedYield
+     112  vTaskPlaceOnEventList
+      68  vTaskPriorityDisinherit
+     102  vTaskPriorityInherit
+     160  vTaskPrioritySet
+     100  vTaskResume
+      14  vTaskSetTimeOutState
+      68  vTaskStartScheduler
+     114  vTaskSuspend
+      16  vTaskSuspendAll
+     192  vTaskSwitchContext
+      20  xDelayedTaskList1
+      20  xDelayedTaskList2
+       4  xMissedYield
+       4  xNumOfOverflows
+      20  xPendingReadyList
+       4  xSchedulerRunning
+      20  xSuspendedTaskList
+      94  xTaskCheckForTimeOut
+     294  xTaskGenericCreate
+       6  xTaskGetCurrentTaskHandle
+      20  xTaskGetTickCount
+       8  xTaskGetTickCountFromISR
+      34  xTaskIsTaskSuspended
+     102  xTaskRemoveFromEventList
+     218  xTaskResumeAll
+     110  xTaskResumeFromISR
+      20  xTasksWaitingTermination
+       4  xTickCount
+
+ 
+   256 bytes in section .bss
+    28 bytes in section .rodata
+ 2 936 bytes in section .text
+ 
+ 2 916 bytes of CODE  memory (+ 20 bytes shared)
+    28 bytes of CONST memory
+   256 bytes of DATA  memory
+
+Errors: none
+Warnings: none

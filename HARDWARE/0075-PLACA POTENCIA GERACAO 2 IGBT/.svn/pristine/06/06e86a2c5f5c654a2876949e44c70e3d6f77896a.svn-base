@@ -1,0 +1,52 @@
+Change Component Comment : Designator=R15 Old Comment=1K2-0805-1% New Comment=NM
+Change Component Comment : Designator=R14 Old Comment=3K6-0805-1% New Comment=0R-0805-5%
+Change Component Comment : Designator=R16 Old Comment=10K-0805-5% New Comment=5K6-0805-5%
+Change Component Comment : Designator=U2 Old Comment=LM2596S-ADJ(TO-263-5) New Comment=LM2575S-5.0
+Added Member To Class: ClassName=Potencia Member=Component C1 33nF/400V
+Added Member To Class: ClassName=Potencia Member=Component C2 33nF/400V
+Added Member To Class: ClassName=Regulador Member=Component C4 220uF/35V
+Added Member To Class: ClassName=Regulador Member=Component C5 470uF/35V
+Added Member To Class: ClassName=Sincronismo Member=Component C6 NM
+Added Member To Class: ClassName=Potencia Member=Component D1 1N4007-SMA
+Added Member To Class: ClassName=Regulador Member=Component D2 1N4007-SMA
+Added Member To Class: ClassName=Regulador Member=Component D3 SMBJ30.0A
+Added Member To Class: ClassName=Regulador Member=Component D4 SMBJ5.0A
+Added Member To Class: ClassName=Regulador Member=Component D5 1N5819-SOD80
+Added Member To Class: ClassName=Potencia Member=Component F1 ZH242
+Added Member To Class: ClassName=Potencia Member=Component F2 ZH242
+Added Member To Class: ClassName=Potencia Member=Component HS2 HS 40mm TO-220PÉ
+Added Member To Class: ClassName=Conectores Member=Component J1 HYLOCK FÊMEA 3 VIAS PARA PCB
+Added Member To Class: ClassName=Potencia Member=Component J2 PCMC2-5
+Added Member To Class: ClassName=Conectores Member=Component J3 HYLOCK-FÊMEA 4 VIAS PARA PCB
+Added Member To Class: ClassName=Regulador Member=Component J4 HYLOCK 2 VIAS FÊMEA P/ PCB
+Added Member To Class: ClassName=Conectores Member=Component J5 PCMC2-6
+Added Member To Class: ClassName=Conectores Member=Component J6 PCMC2-10
+Added Member To Class: ClassName=Potencia Member=Component J7 HYLOCK 4 VIAS PCB
+Added Member To Class: ClassName=Regulador Member=Component JP1 0R-1206-5%
+Added Member To Class: ClassName=Regulador Member=Component JP2 0R-1206-5%
+Added Member To Class: ClassName=Potencia Member=Component JP3 0R-1206-5%
+Added Member To Class: ClassName=Potencia Member=Component K1 RELE SLA-1-D-12
+Added Member To Class: ClassName=Potencia Member=Component K2 S202S01
+Added Member To Class: ClassName=Potencia Member=Component L1 LED VERMELHO 5mm
+Added Member To Class: ClassName=Regulador Member=Component L2 ferrite-CNF15+fio
+Added Member To Class: ClassName=Regulador Member=Component PSW1 NANOSMDC020F-2
+Added Member To Class: ClassName=Potencia Member=Component Q1 BC846
+Added Member To Class: ClassName=Potencia Member=Component Q2 BC846
+Added Member To Class: ClassName=Potencia Member=Component Q3 BC846
+Added Member To Class: ClassName=Potencia Member=Component R1 22K-0805-5%
+Added Member To Class: ClassName=Potencia Member=Component R2 10K-0805-5%
+Added Member To Class: ClassName=Potencia Member=Component R3 10K-0805-5%
+Added Member To Class: ClassName=Potencia Member=Component R4 220R-2512-5%
+Added Member To Class: ClassName=Potencia Member=Component R5 10K-0805-5%
+Added Member To Class: ClassName=Potencia Member=Component R6 10K-0805-5%
+Added Member To Class: ClassName=Potencia Member=Component R7 47R-5W-5%
+Added Member To Class: ClassName=Potencia Member=Component R8 220R-2512-5%
+Added Member To Class: ClassName=Potencia Member=Component R10 10K-0805-5%
+Added Member To Class: ClassName=Potencia Member=Component R12 10K-0805-5%
+Added Member To Class: ClassName=Regulador Member=Component R14 0R-0805-5%
+Added Member To Class: ClassName=Regulador Member=Component R15 NM
+Added Member To Class: ClassName=Sincronismo Member=Component R16 5K6-0805-5%
+Added Member To Class: ClassName=Sincronismo Member=Component R17 22K-10W-5%
+Added Member To Class: ClassName=Sincronismo Member=Component R18 22K-10W-5%
+Added Member To Class: ClassName=Regulador Member=Component U2 LM2575S-5.0
+Added Member To Class: ClassName=Sincronismo Member=Component U3 PC814

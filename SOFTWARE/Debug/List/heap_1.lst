@@ -1,0 +1,274 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jun/2017  11:11:20 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Kernel\heap_1.c            #
+#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Kernel\heap_1.c" -lC      #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA          #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o           #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --no_clustering --no_scheduling --debug --endian=little  #
+#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
+#                    Files (x86)\IAR Systems\Embedded Workbench               #
+#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
+#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\heap_1.lst      #
+#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\heap_1.o         #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Kernel\heap_1.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  log_operacoes_falhas.c
+     18          |       Descrição          :  fila com os eventos ocorridos no sistema
+     19          | 
+     20          |       Autor              :  Marcos Aquino
+     21          |       Data criação       :  02/10/2012
+     22          |
+     23          |       Revisões           :  1.0.0.0
+     24          |
+     25          |
+     26          | __________________________________________________________________________________
+     27          */
+     28          /***********************************************************************************
+     29          *       Includes
+     30          ***********************************************************************************/
+     31          #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+     32          
+     33          #include "FreeRTOS.h"
+     34          #include "task.h"
+     35          
+     36          #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+     37          
+     38          /***********************************************************************************
+     39          *       Estrutura
+     40          ***********************************************************************************/
+     41          /* Allocate the memory for the heap.  The struct is used to force byte
+     42          alignment without using any non-portable code. */
+     43          static union xRTOS_HEAP
+     44          {
+     45          	#if portBYTE_ALIGNMENT == 8
+     46          		volatile portDOUBLE dDummy;
+     47          	#else
+     48          		volatile unsigned long ulDummy;
+     49          	#endif	
+     50          	unsigned char ucHeap[ configTOTAL_HEAP_SIZE ];
+
+   \                                 In section .bss, align 8
+     51          } xHeap;
+   \                     xHeap:
+   \   00000000                      DS8 18432
+     52          
+
+   \                                 In section .bss, align 4
+     53          static size_t xNextFreeByte = ( size_t ) 0;
+   \                     xNextFreeByte:
+   \   00000000                      DS8 4
+     54          
+     55          /***********************************************************************************
+     56          *       Descrição       :       Aloca um bloco de memória no
+     57          *                               vetor do "heap" 
+     58          *       Parametros      :       (size_t) tamanho do bloco
+     59          *       Retorno         :       (void*) ponteiro para o bloco
+     60          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     61          void *pvPortMalloc( size_t xWantedSize )
+     62          {
+   \                     pvPortMalloc:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0005             MOVS     R5,R0
+     63          void *pvReturn = NULL; 
+   \   00000004   0x2400             MOVS     R4,#+0
+     64          
+     65          	/* Ensure that blocks are always aligned to the required number of bytes. */
+     66          	#if portBYTE_ALIGNMENT != 1
+     67          		if( xWantedSize & portBYTE_ALIGNMENT_MASK )
+   \   00000006   0xF015 0x0F07      TST      R5,#0x7
+   \   0000000A   0xD004             BEQ.N    ??pvPortMalloc_0
+     68          		{
+     69          			/* Byte alignment required. */
+     70          			xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
+   \   0000000C   0xF115 0x0008      ADDS     R0,R5,#+8
+   \   00000010   0xF015 0x0107      ANDS     R1,R5,#0x7
+   \   00000014   0x1A45             SUBS     R5,R0,R1
+     71          		}
+     72          	#endif
+     73          
+     74          	vTaskSuspendAll();
+   \                     ??pvPortMalloc_0:
+   \   00000016   0x.... 0x....      BL       vTaskSuspendAll
+     75          	{
+     76          		/* Check there is enough room left for the allocation. */
+     77          		if( ( ( xNextFreeByte + xWantedSize ) < configTOTAL_HEAP_SIZE ) &&
+     78          			( ( xNextFreeByte + xWantedSize ) > xNextFreeByte )	)/* Check for overflow. */
+   \   0000001A   0x....             LDR.N    R0,??DataTable2
+   \   0000001C   0x6800             LDR      R0,[R0, #+0]
+   \   0000001E   0x1828             ADDS     R0,R5,R0
+   \   00000020   0xF5B0 0x4F90      CMP      R0,#+18432
+   \   00000024   0xD20F             BCS.N    ??pvPortMalloc_1
+   \   00000026   0x....             LDR.N    R0,??DataTable2
+   \   00000028   0x6800             LDR      R0,[R0, #+0]
+   \   0000002A   0x....             LDR.N    R1,??DataTable2
+   \   0000002C   0x6809             LDR      R1,[R1, #+0]
+   \   0000002E   0x1869             ADDS     R1,R5,R1
+   \   00000030   0x4288             CMP      R0,R1
+   \   00000032   0xD208             BCS.N    ??pvPortMalloc_1
+     79          		{
+     80          			/* Return the next free byte then increment the index past this
+     81          			block. */
+     82          			pvReturn = &( xHeap.ucHeap[ xNextFreeByte ] );
+   \   00000034   0x....             LDR.N    R0,??DataTable2
+   \   00000036   0x6800             LDR      R0,[R0, #+0]
+   \   00000038   0x....             LDR.N    R1,??DataTable2_1
+   \   0000003A   0x1844             ADDS     R4,R0,R1
+     83          			xNextFreeByte += xWantedSize;			
+   \   0000003C   0x....             LDR.N    R0,??DataTable2
+   \   0000003E   0x6800             LDR      R0,[R0, #+0]
+   \   00000040   0x1828             ADDS     R0,R5,R0
+   \   00000042   0x....             LDR.N    R1,??DataTable2
+   \   00000044   0x6008             STR      R0,[R1, #+0]
+     84          		}	
+     85          	}
+     86          	xTaskResumeAll();
+   \                     ??pvPortMalloc_1:
+   \   00000046   0x.... 0x....      BL       xTaskResumeAll
+     87          	
+     88          	#if( configUSE_MALLOC_FAILED_HOOK == 1 )
+     89          	{
+     90          		if( pvReturn == NULL )
+     91          		{
+     92          			extern void vApplicationMallocFailedHook( void );
+     93          			vApplicationMallocFailedHook();
+     94          		}
+     95          	}
+     96          	#endif	
+     97          
+     98          	return pvReturn;
+   \   0000004A   0x0020             MOVS     R0,R4
+   \   0000004C   0xBD32             POP      {R1,R4,R5,PC}    ;; return
+     99          }
+    100          /***********************************************************************************
+    101          *       Descrição       :       Libera um bloco de memória
+    102          *       Parametros      :       não implementado nessa versão
+    103          *
+    104          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    105          void vPortFree( void *pv )
+    106          {
+    107          	/* Memory cannot be freed using this scheme.  See heap_2.c and heap_3.c 
+    108          	for alternative implementations, and the memory management pages of 
+    109          	http://www.FreeRTOS.org for more information. */
+    110          	( void ) pv;
+    111          }
+   \                     vPortFree:
+   \   00000000   0x4770             BX       LR               ;; return
+    112          /***********************************************************************************
+    113          *       
+    114          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    115          void vPortInitialiseBlocks( void )
+    116          {
+    117          	/* Only required when static memory is not cleared. */
+    118          	xNextFreeByte = ( size_t ) 0;
+   \                     vPortInitialiseBlocks:
+   \   00000000   0x....             LDR.N    R0,??DataTable2
+   \   00000002   0x2100             MOVS     R1,#+0
+   \   00000004   0x6001             STR      R1,[R0, #+0]
+    119          }
+   \   00000006   0x4770             BX       LR               ;; return
+    120          /***********************************************************************************
+    121          *       Descrição       :       Verifica quanta memória está disponível 
+    122          *                               no heap do sistema
+    123          *       Parametros      :       nenhum
+    124          *       Retorno         :       (size_t) quantidade total de posições
+    125          *                                        disponíveis para alocação
+    126          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    127          size_t xPortGetFreeHeapSize( void )
+    128          {
+    129          	return ( configTOTAL_HEAP_SIZE - xNextFreeByte );
+   \                     xPortGetFreeHeapSize:
+   \   00000000   0x....             LDR.N    R0,??DataTable2
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   \   00000004   0xF5D0 0x4090      RSBS     R0,R0,#+18432
+   \   00000008   0x4770             BX       LR               ;; return
+    130          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2:
+   \   00000000   0x........         DC32     xNextFreeByte
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_1:
+   \   00000000   0x........         DC32     xHeap
+    131          /***********************************************************************************
+    132          *       Fim do arquivo
+    133          ***********************************************************************************/
+    134          
+    135          
+    136          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   pvPortMalloc
+        16   -> vTaskSuspendAll
+        16   -> xTaskResumeAll
+       0   vPortFree
+       0   vPortInitialiseBlocks
+       0   xPortGetFreeHeapSize
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable2
+       4  ??DataTable2_1
+      78  pvPortMalloc
+       2  vPortFree
+       8  vPortInitialiseBlocks
+   18432  xHeap
+       4  xNextFreeByte
+      10  xPortGetFreeHeapSize
+
+ 
+ 18 436 bytes in section .bss
+    106 bytes in section .text
+ 
+    106 bytes of CODE memory
+ 18 436 bytes of DATA memory
+
+Errors: none
+Warnings: none

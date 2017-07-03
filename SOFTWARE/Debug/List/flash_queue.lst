@@ -1,0 +1,786 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:57:54 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Historico_precos\flash_que #
+#                    ue.c                                                     #
+#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Historico_precos\flash_qu #
+#                    eue.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmwa #
+#                    re\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\"   #
+#                    -lA "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_m #
+#                    ais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o       #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --no_clustering --no_scheduling --debug --endian=little  #
+#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
+#                    Files (x86)\IAR Systems\Embedded Workbench               #
+#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
+#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\flash_queue.lst #
+#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\flash_queue.o    #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Historico_precos\flash_queue.c
+      1          /*__________________________________________________________________________________
+      2          |	Dextro Soluções Tecnológicas
+      3          |       
+      4          |       Itajaí
+      5          |       www.dextro-st.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Dextro and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Dextro
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Dextro e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |      Dextro ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  flash_queue.c
+     18          |       Descrição          :  Funções para implementação da fila
+     19          |                             de eventos na memória de massa
+     20          | 
+     21          |       Autor              :  Marcos Aquino
+     22          |       Data criação       :  25/08/2011
+     23          |
+     24          |       Revisões           :  1.0.0.0
+     25          |     
+     26          |                             1.1.0.0
+     27          |                             ( As funções de implementação da 
+     28          |                               fila tiveram a implementação completamente
+     29          |                               alterada)
+     30          |                             (31/08/2013) por Marcos
+     31          |
+     32          | __________________________________________________________________________________
+     33          */
+     34          /***********************************************************************************
+     35          *     Includes
+     36          ***********************************************************************************/
+     37          #include <stdio.h>
+     38          #include <stdlib.h>
+     39          #include <string.h>
+     40          #include <nxp\iolpc1768.h>
+     41          #include "flash_queue.h"
+     42          #include "..\includes.h"
+     43          
+     44          /***********************************************************************************
+     45          *     Definições com constantes utilizadas no programa
+     46          ***********************************************************************************/ 
+     47          #define LLW_blockRead                   MEMORYWRAPPER_readBytes
+     48          #define LLW_blockWrite                  MEMORYWRAPPER_writeBytes
+     49          
+     50          /***********************************************************************************
+     51          *     Enumerações
+     52          ***********************************************************************************/
+     53          #define PAGE_SIZE                       128
+     54          
+     55          /***********************************************************************************
+     56          *     Estruturas
+     57          ***********************************************************************************/
+     58          
+     59          
+     60          /***********************************************************************************
+     61          *     Uniões
+     62          ***********************************************************************************/
+     63          
+     64          
+     65          /***********************************************************************************
+     66          *     Constantes
+     67          ***********************************************************************************/
+     68          
+     69          
+     70          /***********************************************************************************
+     71          *     Variaveis locais
+     72          ***********************************************************************************/
+     73          
+     74          
+     75          /***********************************************************************************
+     76          *     Funções locais
+     77          ***********************************************************************************/
+     78          void FLASHQUEUE_loadControl(sFlashQueueData *queue);
+     79          void FLASHQUEUE_saveControl(sFlashQueueData *queue);
+     80          
+     81          /***********************************************************************************
+     82          *     Implementação
+     83          ***********************************************************************************/
+     84          
+     85          /***********************************************************************************
+     86          *     Descrição     :   Carrega o bloco de controle de uma fila
+     87          *     Parametros    :   (sFlashQueueData*)Ponteiro para a fila
+     88          *     Retorno       :   nenhum
+     89          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     90          void FLASHQUEUE_loadControl(sFlashQueueData *queue){
+   \                     FLASHQUEUE_loadControl:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+     91              
+     92            LLW_blockRead(queue->inicio_flash,
+     93                          (unsigned char*)&queue->controleFlash[0],
+     94                          sizeof(sFlashQueueControl));
+   \   00000004   0x220A             MOVS     R2,#+10
+   \   00000006   0xF114 0x0108      ADDS     R1,R4,#+8
+   \   0000000A   0x6820             LDR      R0,[R4, #+0]
+   \   0000000C   0x.... 0x....      BL       MEMORYWRAPPER_readBytes
+     95            
+     96            // A cópia do bloco de controle
+     97            // fica gravado em uma página
+     98            // diferente da dataflash
+     99            LLW_blockRead(queue->inicio_flash + PAGE_SIZE,
+    100                          (unsigned char*)&queue->controleFlash[1],
+    101                          sizeof(sFlashQueueControl));  
+   \   00000010   0x220A             MOVS     R2,#+10
+   \   00000012   0xF114 0x0112      ADDS     R1,R4,#+18
+   \   00000016   0x6820             LDR      R0,[R4, #+0]
+   \   00000018   0x3080             ADDS     R0,R0,#+128
+   \   0000001A   0x.... 0x....      BL       MEMORYWRAPPER_readBytes
+    102               
+    103            if(queue->controleFlash[0].checksum == FLASHQUEUE_checksum((unsigned char*)&queue->controleFlash[0],
+    104                                                                       sizeof(sFlashQueueControl)-2))
+   \   0000001E   0x8A25             LDRH     R5,[R4, #+16]
+   \   00000020   0x2108             MOVS     R1,#+8
+   \   00000022   0xF114 0x0008      ADDS     R0,R4,#+8
+   \   00000026   0x.... 0x....      BL       FLASHQUEUE_checksum
+   \   0000002A   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000002C   0x4285             CMP      R5,R0
+   \   0000002E   0xD023             BEQ.N    ??FLASHQUEUE_loadControl_0
+    105              return;                
+    106            else    
+    107              if(queue->controleFlash[1].checksum == FLASHQUEUE_checksum((unsigned char*)&queue->controleFlash[1],
+    108                                                                         sizeof(sFlashQueueControl)-2)){
+   \                     ??FLASHQUEUE_loadControl_1:
+   \   00000030   0x8B65             LDRH     R5,[R4, #+26]
+   \   00000032   0x2108             MOVS     R1,#+8
+   \   00000034   0xF114 0x0012      ADDS     R0,R4,#+18
+   \   00000038   0x.... 0x....      BL       FLASHQUEUE_checksum
+   \   0000003C   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000003E   0x4285             CMP      R5,R0
+   \   00000040   0xD108             BNE.N    ??FLASHQUEUE_loadControl_2
+    109                queue->controleFlash[0].indiceBlocoInserido   = queue->controleFlash[1].indiceBlocoInserido;
+   \   00000042   0x8A60             LDRH     R0,[R4, #+18]
+   \   00000044   0x8120             STRH     R0,[R4, #+8]
+    110                queue->controleFlash[0].indiceBlocoLido       = queue->controleFlash[1].indiceBlocoLido;
+   \   00000046   0x8AA0             LDRH     R0,[R4, #+20]
+   \   00000048   0x8160             STRH     R0,[R4, #+10]
+    111                queue->controleFlash[0].quantidadeBlocoFila   = queue->controleFlash[1].quantidadeBlocoFila;
+   \   0000004A   0x8AE0             LDRH     R0,[R4, #+22]
+   \   0000004C   0x81A0             STRH     R0,[R4, #+12]
+    112                queue->controleFlash[0].quantidadeNovosBlocos = queue->controleFlash[1].quantidadeNovosBlocos;
+   \   0000004E   0x8B20             LDRH     R0,[R4, #+24]
+   \   00000050   0x81E0             STRH     R0,[R4, #+14]
+   \   00000052   0xE011             B.N      ??FLASHQUEUE_loadControl_3
+    113              }
+    114              else{
+    115                //Se os dados forem inconsistentes nas duas entradas, zera tudo...
+    116                queue->controleFlash[0].indiceBlocoInserido = \
+    117                queue->controleFlash[0].indiceBlocoLido = \
+    118                queue->controleFlash[0].quantidadeBlocoFila = 
+    119                queue->controleFlash[0].quantidadeNovosBlocos = 0;
+   \                     ??FLASHQUEUE_loadControl_2:
+   \   00000054   0x2000             MOVS     R0,#+0
+   \   00000056   0x81E0             STRH     R0,[R4, #+14]
+   \   00000058   0x81A0             STRH     R0,[R4, #+12]
+   \   0000005A   0x8160             STRH     R0,[R4, #+10]
+   \   0000005C   0x8120             STRH     R0,[R4, #+8]
+    120                      
+    121                HD44780_clearText();
+   \   0000005E   0x200C             MOVS     R0,#+12
+   \   00000060   0x.... 0x....      BL       HD44780_writeChar
+    122                HD44780_writeString("MSG:001 - QUEUE INDEX CHANGED");
+   \   00000064   0x....             LDR.N    R0,??DataTable0
+   \   00000066   0x.... 0x....      BL       HD44780_writeString
+    123                
+    124                FLASHQUEUE_saveControl(queue);
+   \   0000006A   0x0020             MOVS     R0,R4
+   \   0000006C   0x.... 0x....      BL       FLASHQUEUE_saveControl
+    125                
+    126                vTaskDelay(10000);
+   \   00000070   0xF242 0x7010      MOVW     R0,#+10000
+   \   00000074   0x.... 0x....      BL       vTaskDelay
+    127              }      
+    128          }
+   \                     ??FLASHQUEUE_loadControl_3:
+   \                     ??FLASHQUEUE_loadControl_0:
+   \   00000078   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+    129          /***********************************************************************************
+    130          *     Descrição     :   Salva o bloco de controle de uma das filas
+    131          *     Parametros    :   (sFlashQueueData*) ponteiro para a fila
+    132          *     Retorno       :   nenhum
+    133          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    134          void FLASHQUEUE_saveControl(sFlashQueueData *queue){
+   \                     FLASHQUEUE_saveControl:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    135           
+    136            // Deixa os dois blocos de controle com
+    137            // os mesmos dados
+    138            queue->controleFlash[1].indiceBlocoInserido   = queue->controleFlash[0].indiceBlocoInserido;
+   \   00000004   0x8920             LDRH     R0,[R4, #+8]
+   \   00000006   0x8260             STRH     R0,[R4, #+18]
+    139            queue->controleFlash[1].indiceBlocoLido       = queue->controleFlash[0].indiceBlocoLido;
+   \   00000008   0x8960             LDRH     R0,[R4, #+10]
+   \   0000000A   0x82A0             STRH     R0,[R4, #+20]
+    140            queue->controleFlash[1].quantidadeBlocoFila   = queue->controleFlash[0].quantidadeBlocoFila;
+   \   0000000C   0x89A0             LDRH     R0,[R4, #+12]
+   \   0000000E   0x82E0             STRH     R0,[R4, #+22]
+    141            queue->controleFlash[1].quantidadeNovosBlocos = queue->controleFlash[0].quantidadeNovosBlocos;  
+   \   00000010   0x89E0             LDRH     R0,[R4, #+14]
+   \   00000012   0x8320             STRH     R0,[R4, #+24]
+    142            
+    143            // Faz o calculo do checksum para o bloco de controle
+    144            // e insere nos dois blocos de controle
+    145            queue->controleFlash[1].checksum = queue->controleFlash[0].checksum = FLASHQUEUE_checksum((unsigned char*)&queue->controleFlash[0],
+    146                                                                                                      sizeof(sFlashQueueControl)-2);
+   \   00000014   0x2108             MOVS     R1,#+8
+   \   00000016   0xF114 0x0008      ADDS     R0,R4,#+8
+   \   0000001A   0x.... 0x....      BL       FLASHQUEUE_checksum
+   \   0000001E   0x8220             STRH     R0,[R4, #+16]
+   \   00000020   0x8360             STRH     R0,[R4, #+26]
+    147            
+    148            // Na sequência os dois blocos de controles são salvos
+    149            // em operações distintas para evitar que caso a falha
+    150            // em uma das operações resulte na corrupção dos dois
+    151            // indexadores!! Não questinona, aceita!
+    152            
+    153            // Salva o primeiro bloco de controle
+    154            LLW_blockWrite(queue->inicio_flash,
+    155                           (unsigned char*)&queue->controleFlash[0],
+    156                           sizeof(sFlashQueueControl));    
+   \   00000022   0x220A             MOVS     R2,#+10
+   \   00000024   0xF114 0x0108      ADDS     R1,R4,#+8
+   \   00000028   0x6820             LDR      R0,[R4, #+0]
+   \   0000002A   0x.... 0x....      BL       MEMORYWRAPPER_writeBytes
+    157            
+    158            // Salva o segundo bloco de controle
+    159            LLW_blockWrite(queue->inicio_flash+PAGE_SIZE,
+    160                           (unsigned char*)&queue->controleFlash[1],
+    161                           sizeof(sFlashQueueControl));                             
+   \   0000002E   0x220A             MOVS     R2,#+10
+   \   00000030   0xF114 0x0112      ADDS     R1,R4,#+18
+   \   00000034   0x6820             LDR      R0,[R4, #+0]
+   \   00000036   0x3080             ADDS     R0,R0,#+128
+   \   00000038   0x.... 0x....      BL       MEMORYWRAPPER_writeBytes
+    162          }
+   \   0000003C   0xBD10             POP      {R4,PC}          ;; return
+    163          /***********************************************************************************
+    164          *     Descrição     :   Inicializa uma fila em flash
+    165          *     Parametros    :   (sFlashQueueData*) Ponteiro para a fila
+    166          *     Retorno       :   (unsigned char) Igual a zero se conseguir
+    167          *                       inicializar a fila
+    168          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    169          unsigned char FLASHQUEUE_init(sFlashQueueData* queue){
+    170            
+    171            
+    172            return 0;  
+   \                     FLASHQUEUE_init:
+   \   00000000   0x2000             MOVS     R0,#+0
+   \   00000002   0x4770             BX       LR               ;; return
+    173          }
+    174          /***********************************************************************************
+    175          *     Descrição     :   Insere um novo evento em uma fila
+    176          *     Parametros    :   (sFlashQueueData*) Ponteiro para a fila
+    177          *                       (void*)bloco de dados que será incluído na fila
+    178          *     Retorno       :   (unsigned char) Igual a zero se conseguir inicializar
+    179          *                       a fila
+    180          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    181          unsigned char FLASHQUEUE_append(sFlashQueueData* queue,void *pData){
+   \                     FLASHQUEUE_append:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    182            
+    183            FLASHQUEUE_loadControl(queue);
+   \   00000006   0x0020             MOVS     R0,R4
+   \   00000008   0x.... 0x....      BL       FLASHQUEUE_loadControl
+    184            // Após a carga do bloco de controle, o 
+    185            // bloco de indice zero sempre virá com os dados
+    186            // corretos, caso ocorra a perda ele virá zerado
+    187            // mas os dados nele contido serão consistentes
+    188            
+    189            /// A quantidade de posições livres na fila é dado
+    190            /// pelo cálculo QtdLivre = Total - Ocupadas
+    191            /// caso não existam posições livres, não insere o evento...
+    192            //if( (queue->posicoes - queue->controleFlash[0].quantidadeBlocoFila)<=0)
+    193              //return 1;
+    194            
+    195            unsigned int inicioAreaDados = queue->inicio_flash+(PAGE_SIZE<<1);
+   \   0000000C   0x6820             LDR      R0,[R4, #+0]
+   \   0000000E   0xF510 0x7080      ADDS     R0,R0,#+256
+    196            
+    197            LLW_blockWrite(inicioAreaDados + (queue->controleFlash[0].indiceBlocoInserido*queue->tamanhoBloco),
+    198                           pData,
+    199                           queue->tamanhoBloco);
+   \   00000012   0x79A2             LDRB     R2,[R4, #+6]
+   \   00000014   0x0029             MOVS     R1,R5
+   \   00000016   0x8923             LDRH     R3,[R4, #+8]
+   \   00000018   0x79A5             LDRB     R5,[R4, #+6]
+   \   0000001A   0xFB05 0x0003      MLA      R0,R5,R3,R0
+   \   0000001E   0x.... 0x....      BL       MEMORYWRAPPER_writeBytes
+    200                           
+    201            queue->controleFlash[0].indiceBlocoInserido = (queue->controleFlash[0].indiceBlocoInserido + 1) % 
+    202                                                           queue->posicoes;
+   \   00000022   0x8920             LDRH     R0,[R4, #+8]
+   \   00000024   0x1C40             ADDS     R0,R0,#+1
+   \   00000026   0x88A1             LDRH     R1,[R4, #+4]
+   \   00000028   0xFB90 0xF2F1      SDIV     R2,R0,R1
+   \   0000002C   0xFB01 0x0012      MLS      R0,R1,R2,R0
+   \   00000030   0x8120             STRH     R0,[R4, #+8]
+    203            queue->controleFlash[0].quantidadeBlocoFila++;
+   \   00000032   0x89A0             LDRH     R0,[R4, #+12]
+   \   00000034   0x1C40             ADDS     R0,R0,#+1
+   \   00000036   0x81A0             STRH     R0,[R4, #+12]
+    204            if(queue->controleFlash[0].quantidadeBlocoFila>queue->posicoes)
+   \   00000038   0x88A0             LDRH     R0,[R4, #+4]
+   \   0000003A   0x89A1             LDRH     R1,[R4, #+12]
+   \   0000003C   0x4288             CMP      R0,R1
+   \   0000003E   0xD208             BCS.N    ??FLASHQUEUE_append_0
+    205              queue->controleFlash[0].quantidadeBlocoFila = queue->controleFlash[0].quantidadeBlocoFila>queue->posicoes;
+   \   00000040   0x88A0             LDRH     R0,[R4, #+4]
+   \   00000042   0x89A1             LDRH     R1,[R4, #+12]
+   \   00000044   0x4288             CMP      R0,R1
+   \   00000046   0xD201             BCS.N    ??FLASHQUEUE_append_1
+   \   00000048   0x2001             MOVS     R0,#+1
+   \   0000004A   0xE000             B.N      ??FLASHQUEUE_append_2
+   \                     ??FLASHQUEUE_append_1:
+   \   0000004C   0x2000             MOVS     R0,#+0
+   \                     ??FLASHQUEUE_append_2:
+   \   0000004E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000050   0x81A0             STRH     R0,[R4, #+12]
+    206            
+    207            /*
+    208            queue->controleFlash[0].quantidadeNovosBlocos = (queue->controleFlash[0].quantidadeNovosBlocos+1) % 
+    209                                                             queue->posicoes;
+    210            */
+    211            
+    212            //Faz uma fila circular com os últimos 10....
+    213            queue->controleFlash[0].quantidadeNovosBlocos++;
+   \                     ??FLASHQUEUE_append_0:
+   \   00000052   0x89E0             LDRH     R0,[R4, #+14]
+   \   00000054   0x1C40             ADDS     R0,R0,#+1
+   \   00000056   0x81E0             STRH     R0,[R4, #+14]
+    214            if(queue->controleFlash[0].quantidadeNovosBlocos > queue->posicoes)
+   \   00000058   0x88A0             LDRH     R0,[R4, #+4]
+   \   0000005A   0x89E1             LDRH     R1,[R4, #+14]
+   \   0000005C   0x4288             CMP      R0,R1
+   \   0000005E   0xD201             BCS.N    ??FLASHQUEUE_append_3
+    215             queue->controleFlash[0].quantidadeNovosBlocos = queue->posicoes;
+   \   00000060   0x88A0             LDRH     R0,[R4, #+4]
+   \   00000062   0x81E0             STRH     R0,[R4, #+14]
+    216            
+    217            FLASHQUEUE_saveControl(queue);  
+   \                     ??FLASHQUEUE_append_3:
+   \   00000064   0x0020             MOVS     R0,R4
+   \   00000066   0x.... 0x....      BL       FLASHQUEUE_saveControl
+    218            
+    219            return 0;
+   \   0000006A   0x2000             MOVS     R0,#+0
+   \   0000006C   0xBD32             POP      {R1,R4,R5,PC}    ;; return
+    220          }
+    221          /***********************************************************************************
+    222          *     Descrição     :   Lê o primeiro evento inserido na fila
+    223          *     Parametros    :   (sFlashQueueData*) Ponteiro para a fila
+    224          *                       (unsigned short int) offset desde o primeiro evento novo
+    225          *                       (void*) Ponteiro para o local onde serão recebidos os dados
+    226          *     Retorno       :   (unsigned char) igual a zero se conseguir ler os dados
+    227          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    228          unsigned char FLASHQUEUE_readFromFirst(sFlashQueueData* queue,unsigned short int offset,
+    229                                                 void *pData){
+   \                     FLASHQUEUE_readFromFirst:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000E             MOVS     R6,R1
+   \   00000006   0x0015             MOVS     R5,R2
+    230                                                   
+    231            FLASHQUEUE_loadControl(queue);                                         
+   \   00000008   0x0020             MOVS     R0,R4
+   \   0000000A   0x.... 0x....      BL       FLASHQUEUE_loadControl
+    232            if(offset>queue->posicoes-1)
+   \   0000000E   0x88A0             LDRH     R0,[R4, #+4]
+   \   00000010   0x1E40             SUBS     R0,R0,#+1
+   \   00000012   0xB2B6             UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
+   \   00000014   0x42B0             CMP      R0,R6
+   \   00000016   0xDA01             BGE.N    ??FLASHQUEUE_readFromFirst_0
+    233              return 0xFF;
+   \   00000018   0x20FF             MOVS     R0,#+255
+   \   0000001A   0xE01B             B.N      ??FLASHQUEUE_readFromFirst_1
+    234            
+    235            unsigned int indiceHistorico;
+    236           
+    237            if(queue->controleFlash[0].indiceBlocoInserido>offset)
+   \                     ??FLASHQUEUE_readFromFirst_0:
+   \   0000001C   0x8920             LDRH     R0,[R4, #+8]
+   \   0000001E   0xB2B6             UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
+   \   00000020   0x4286             CMP      R6,R0
+   \   00000022   0xD204             BCS.N    ??FLASHQUEUE_readFromFirst_2
+    238              indiceHistorico = (queue->controleFlash[0].indiceBlocoInserido-1) - offset;
+   \   00000024   0x8920             LDRH     R0,[R4, #+8]
+   \   00000026   0x1E40             SUBS     R0,R0,#+1
+   \   00000028   0xB2B6             UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
+   \   0000002A   0x1B80             SUBS     R0,R0,R6
+   \   0000002C   0xE004             B.N      ??FLASHQUEUE_readFromFirst_3
+    239            else
+    240              indiceHistorico = queue->posicoes - (offset - queue->controleFlash[0].indiceBlocoInserido);
+   \                     ??FLASHQUEUE_readFromFirst_2:
+   \   0000002E   0x88A0             LDRH     R0,[R4, #+4]
+   \   00000030   0xB2B6             UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
+   \   00000032   0x1B80             SUBS     R0,R0,R6
+   \   00000034   0x8921             LDRH     R1,[R4, #+8]
+   \   00000036   0x1808             ADDS     R0,R1,R0
+    241             
+    242            unsigned int inicioAreaDados = queue->inicio_flash+(PAGE_SIZE<<1);
+   \                     ??FLASHQUEUE_readFromFirst_3:
+   \   00000038   0x6821             LDR      R1,[R4, #+0]
+   \   0000003A   0xF511 0x7380      ADDS     R3,R1,#+256
+    243            
+    244            LLW_blockRead(inicioAreaDados + (indiceHistorico*queue->tamanhoBloco),
+    245                          (unsigned char*)pData,
+    246                          queue->tamanhoBloco);                                       
+   \   0000003E   0x79A2             LDRB     R2,[R4, #+6]
+   \   00000040   0x0029             MOVS     R1,R5
+   \   00000042   0x79A5             LDRB     R5,[R4, #+6]
+   \   00000044   0xFB05 0x3000      MLA      R0,R5,R0,R3
+   \   00000048   0x.... 0x....      BL       MEMORYWRAPPER_readBytes
+    247                                                   
+    248            FLASHQUEUE_saveControl(queue);  
+   \   0000004C   0x0020             MOVS     R0,R4
+   \   0000004E   0x.... 0x....      BL       FLASHQUEUE_saveControl
+    249            return 0;  
+   \   00000052   0x2000             MOVS     R0,#+0
+   \                     ??FLASHQUEUE_readFromFirst_1:
+   \   00000054   0xBD70             POP      {R4-R6,PC}       ;; return
+    250          }
+    251          /***********************************************************************************
+    252          *     Descrição     :   Lê com offset a partir do último evento inserido na fila
+    253          *     Parametros    :   (sFlashQueue*) Ponteiro para a fila
+    254          *                       (unsigned short int) offset desde o ultimo evento inserido
+    255          *                       (void*) Ponteiro para o local onde serão recebidos os dados
+    256          *     Retorno       :   (unsigned char) Igual a zero se conseguir ler os dados
+    257          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    258          unsigned char FLASHQUEUE_readFromLast(sFlashQueueData *queue,unsigned short int offSet,
+    259                                                void *pData){
+   \                     FLASHQUEUE_readFromLast:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x0016             MOVS     R6,R2
+    260            FLASHQUEUE_loadControl(queue);
+   \   00000008   0x0020             MOVS     R0,R4
+   \   0000000A   0x.... 0x....      BL       FLASHQUEUE_loadControl
+    261          
+    262            // Se a quantidade de novos blocos na
+    263            // fila for menor do que a posição
+    264            // do indice não faz a procura
+    265            // na dataflash
+    266            if(queue->controleFlash[0].quantidadeNovosBlocos<offSet)
+   \   0000000E   0x89E0             LDRH     R0,[R4, #+14]
+   \   00000010   0xB2AD             UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+   \   00000012   0x42A8             CMP      R0,R5
+   \   00000014   0xD201             BCS.N    ??FLASHQUEUE_readFromLast_0
+    267              return 1;
+   \   00000016   0x2001             MOVS     R0,#+1
+   \   00000018   0xE00D             B.N      ??FLASHQUEUE_readFromLast_1
+    268            
+    269            unsigned int inicioAreaDados = queue->inicio_flash+(PAGE_SIZE<<1);
+   \                     ??FLASHQUEUE_readFromLast_0:
+   \   0000001A   0x6820             LDR      R0,[R4, #+0]
+   \   0000001C   0xF510 0x7080      ADDS     R0,R0,#+256
+    270            
+    271            LLW_blockRead(inicioAreaDados + ((queue->controleFlash[0].indiceBlocoLido+offSet)*queue->tamanhoBloco),
+    272                          (unsigned char*)pData,
+    273                          queue->tamanhoBloco);                                                                                                                             
+   \   00000020   0x79A2             LDRB     R2,[R4, #+6]
+   \   00000022   0x0031             MOVS     R1,R6
+   \   00000024   0x8963             LDRH     R3,[R4, #+10]
+   \   00000026   0xB2AD             UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+   \   00000028   0x18EB             ADDS     R3,R5,R3
+   \   0000002A   0x79A4             LDRB     R4,[R4, #+6]
+   \   0000002C   0xFB04 0x0003      MLA      R0,R4,R3,R0
+   \   00000030   0x.... 0x....      BL       MEMORYWRAPPER_readBytes
+    274            return 0;                                        
+   \   00000034   0x2000             MOVS     R0,#+0
+   \                     ??FLASHQUEUE_readFromLast_1:
+   \   00000036   0xBD70             POP      {R4-R6,PC}       ;; return
+    275          }
+    276          /***********************************************************************************
+    277          *     Descrição      :    Faz o ajuste do ponteiro de primeiro inserido
+    278          *     Parametros     :    (sFlashQueueData*) Ponteiro para a fila
+    279          *                         (unsigned short int) valor somado ao ponteiro ultimo inserido
+    280          *     Retorno        :    (unsigned char) Igual a zero se conseguir ajustar 
+    281          *                         o ponteiro
+    282          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    283          unsigned char FLASHQUEUE_ajustaPonteiro(sFlashQueueData* queue,unsigned short int offset){
+   \                     FLASHQUEUE_ajustaPonteiro:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    284            
+    285            FLASHQUEUE_loadControl(queue);  
+   \   00000006   0x0020             MOVS     R0,R4
+   \   00000008   0x.... 0x....      BL       FLASHQUEUE_loadControl
+    286            
+    287            
+    288            ///Arrumar isso no futuro!!!!
+    289            if(offset==1){    
+   \   0000000C   0xB2AD             UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+   \   0000000E   0x2D01             CMP      R5,#+1
+   \   00000010   0xD109             BNE.N    ??FLASHQUEUE_ajustaPonteiro_0
+    290              if(queue->controleFlash[0].quantidadeNovosBlocos==1){
+   \   00000012   0x89E0             LDRH     R0,[R4, #+14]
+   \   00000014   0x2801             CMP      R0,#+1
+   \   00000016   0xD106             BNE.N    ??FLASHQUEUE_ajustaPonteiro_0
+    291                  queue->controleFlash[0].indiceBlocoLido = queue->controleFlash[0].indiceBlocoInserido;        
+   \   00000018   0x8920             LDRH     R0,[R4, #+8]
+   \   0000001A   0x8160             STRH     R0,[R4, #+10]
+    292                  queue->controleFlash[0].quantidadeNovosBlocos = 0;
+   \   0000001C   0x2000             MOVS     R0,#+0
+   \   0000001E   0x81E0             STRH     R0,[R4, #+14]
+    293                  FLASHQUEUE_saveControl(queue);   
+   \   00000020   0x0020             MOVS     R0,R4
+   \   00000022   0x.... 0x....      BL       FLASHQUEUE_saveControl
+    294              }
+    295            }
+    296              
+    297            // Sempre ajusta o bloco lido com o bloco inserido
+    298            // e zera a quantidade de novos blocos 
+    299            // O parametros offset ficou na chamada de funções
+    300            // por questões de compatibilidade com
+    301            // o software que utilizada essa biblioteca
+    302            // como cliente
+    303            // TODO: Remover o parametro da função
+    304            //
+    305            queue->controleFlash[0].indiceBlocoLido = queue->controleFlash[0].indiceBlocoInserido;    
+   \                     ??FLASHQUEUE_ajustaPonteiro_0:
+   \   00000026   0x8920             LDRH     R0,[R4, #+8]
+   \   00000028   0x8160             STRH     R0,[R4, #+10]
+    306            queue->controleFlash[0].quantidadeNovosBlocos = 0;
+   \   0000002A   0x2000             MOVS     R0,#+0
+   \   0000002C   0x81E0             STRH     R0,[R4, #+14]
+    307            
+    308            FLASHQUEUE_saveControl(queue);   
+   \   0000002E   0x0020             MOVS     R0,R4
+   \   00000030   0x.... 0x....      BL       FLASHQUEUE_saveControl
+    309            return 0;  
+   \   00000034   0x2000             MOVS     R0,#+0
+   \   00000036   0xBD32             POP      {R1,R4,R5,PC}    ;; return
+    310          }
+    311          /***********************************************************************************
+    312          *     Descrição       :   Formata uma das filas para o estado onde não há eventos
+    313          *                         disponíveis
+    314          *     Parametros      :   (sFlashQueue*) Ponteiro para a fila
+    315          *     Retorno         :   (unsigned char) Igual a zero se conseguir formatar 
+    316          *                         a fila
+    317          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    318          unsigned char FLASHQUEUE_formata(sFlashQueueData *queue){
+   \                     FLASHQUEUE_formata:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    319              
+    320            queue->controleFlash[0].indiceBlocoInserido = 0;
+   \   00000002   0x2100             MOVS     R1,#+0
+   \   00000004   0x8101             STRH     R1,[R0, #+8]
+    321            queue->controleFlash[0].indiceBlocoLido = 0;
+   \   00000006   0x2100             MOVS     R1,#+0
+   \   00000008   0x8141             STRH     R1,[R0, #+10]
+    322            queue->controleFlash[0].quantidadeBlocoFila = 0;
+   \   0000000A   0x2100             MOVS     R1,#+0
+   \   0000000C   0x8181             STRH     R1,[R0, #+12]
+    323            queue->controleFlash[0].quantidadeNovosBlocos = 0;  
+   \   0000000E   0x2100             MOVS     R1,#+0
+   \   00000010   0x81C1             STRH     R1,[R0, #+14]
+    324            
+    325            FLASHQUEUE_saveControl(queue);   
+   \   00000012   0x.... 0x....      BL       FLASHQUEUE_saveControl
+    326            
+    327            return 0;  
+   \   00000016   0x2000             MOVS     R0,#+0
+   \   00000018   0xBD02             POP      {R1,PC}          ;; return
+    328          }
+    329          /***********************************************************************************
+    330          *     Descrição       :   Faz o calculo do checksum de um buffer qualquer
+    331          *     Parametros      :   (unsigned char*) ponteiro para o buffer
+    332          *                         (unsigned short int) tamanho do buffer
+    333          *     Retorno         :   (unsigned char) checksum do buffer
+    334          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    335          unsigned char FLASHQUEUE_checksum(unsigned char *buffer,unsigned short int size){
+   \                     FLASHQUEUE_checksum:
+   \   00000000   0xB410             PUSH     {R4}
+    336            unsigned short int soma=0;    
+   \   00000002   0x2200             MOVS     R2,#+0
+    337              
+    338            for(unsigned short int i=0;i<size;i++)
+   \   00000004   0x2300             MOVS     R3,#+0
+   \   00000006   0xE003             B.N      ??FLASHQUEUE_checksum_0
+    339              soma+=buffer[i];
+   \                     ??FLASHQUEUE_checksum_1:
+   \   00000008   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   0000000A   0x5C1C             LDRB     R4,[R3, R0]
+   \   0000000C   0x18A2             ADDS     R2,R4,R2
+   \   0000000E   0x1C5B             ADDS     R3,R3,#+1
+   \                     ??FLASHQUEUE_checksum_0:
+   \   00000010   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   00000012   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000014   0x428B             CMP      R3,R1
+   \   00000016   0xD3F7             BCC.N    ??FLASHQUEUE_checksum_1
+    340          
+    341            return (unsigned char)((unsigned short int)256 - soma);
+   \   00000018   0x4250             RSBS     R0,R2,#+0
+   \   0000001A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001C   0xBC10             POP      {R4}
+   \   0000001E   0x4770             BX       LR               ;; return
+    342          }  
+    343          /***********************************************************************************
+    344          *     Descrição       :   Calcula o tamanho de uma fila
+    345          *     Parametros      :   nenhum
+    346          *     Retorno         :   nenhum
+    347          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    348          unsigned short int FLASHQUEUE_getSize(sFlashQueueData *queue){
+   \                     FLASHQUEUE_getSize:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    349            
+    350            FLASHQUEUE_loadControl(queue);  
+   \   00000004   0x0020             MOVS     R0,R4
+   \   00000006   0x.... 0x....      BL       FLASHQUEUE_loadControl
+    351            return queue->controleFlash[0].quantidadeNovosBlocos;
+   \   0000000A   0x89E0             LDRH     R0,[R4, #+14]
+   \   0000000C   0xBD10             POP      {R4,PC}          ;; return
+    352          }
+    353          /***********************************************************************************
+    354          *     Descrição       :   Lê o tamanho real de uma fila
+    355          *     Parametros      :   (sFlashQueueData *queue)
+    356          *     Retorno         :   (unsigned short int) tamanho real da fila
+    357          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    358          unsigned short int FLASHQUEUE_getRealSize(sFlashQueueData *queue){
+   \                     FLASHQUEUE_getRealSize:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    359          
+    360            FLASHQUEUE_loadControl(queue);  
+   \   00000004   0x0020             MOVS     R0,R4
+   \   00000006   0x.... 0x....      BL       FLASHQUEUE_loadControl
+    361            return queue->controleFlash[0].quantidadeBlocoFila;  
+   \   0000000A   0x89A0             LDRH     R0,[R4, #+12]
+   \   0000000C   0xBD10             POP      {R4,PC}          ;; return
+    362          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable0:
+   \   00000000   0x........         DC32     `?<Constant "MSG:001 - QUEUE INDEX...">`
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "MSG:001 - QUEUE INDEX...">`:
+   \   00000000   0x4D 0x53          DC8 "MSG:001 - QUEUE INDEX CHANGED"
+   \              0x47 0x3A    
+   \              0x30 0x30    
+   \              0x31 0x20    
+   \              0x2D 0x20    
+   \              0x51 0x55    
+   \              0x45 0x55    
+   \              0x45 0x20    
+   \              0x49 0x4E    
+   \              0x44 0x45    
+   \              0x58 0x20    
+   \              0x43 0x48    
+   \              0x41 0x4E    
+   \              0x47 0x45    
+   \              0x44 0x00    
+   \   0000001E   0x00 0x00          DC8 0, 0
+    363          /***********************************************************************************
+    364          *     Fim do arquivo
+    365          ***********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   FLASHQUEUE_ajustaPonteiro
+        16   -> FLASHQUEUE_loadControl
+        16   -> FLASHQUEUE_saveControl
+      16   FLASHQUEUE_append
+        16   -> FLASHQUEUE_loadControl
+        16   -> FLASHQUEUE_saveControl
+        16   -> MEMORYWRAPPER_writeBytes
+       4   FLASHQUEUE_checksum
+       8   FLASHQUEUE_formata
+         8   -> FLASHQUEUE_saveControl
+       8   FLASHQUEUE_getRealSize
+         8   -> FLASHQUEUE_loadControl
+       8   FLASHQUEUE_getSize
+         8   -> FLASHQUEUE_loadControl
+       0   FLASHQUEUE_init
+      16   FLASHQUEUE_loadControl
+        16   -> FLASHQUEUE_checksum
+        16   -> FLASHQUEUE_saveControl
+        16   -> HD44780_writeChar
+        16   -> HD44780_writeString
+        16   -> MEMORYWRAPPER_readBytes
+        16   -> vTaskDelay
+      16   FLASHQUEUE_readFromFirst
+        16   -> FLASHQUEUE_loadControl
+        16   -> FLASHQUEUE_saveControl
+        16   -> MEMORYWRAPPER_readBytes
+      16   FLASHQUEUE_readFromLast
+        16   -> FLASHQUEUE_loadControl
+        16   -> MEMORYWRAPPER_readBytes
+       8   FLASHQUEUE_saveControl
+         8   -> FLASHQUEUE_checksum
+         8   -> MEMORYWRAPPER_writeBytes
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      32  ?<Constant "MSG:001 - QUEUE INDEX...">
+       4  ??DataTable0
+      56  FLASHQUEUE_ajustaPonteiro
+     110  FLASHQUEUE_append
+      32  FLASHQUEUE_checksum
+      26  FLASHQUEUE_formata
+      14  FLASHQUEUE_getRealSize
+      14  FLASHQUEUE_getSize
+       4  FLASHQUEUE_init
+     122  FLASHQUEUE_loadControl
+      86  FLASHQUEUE_readFromFirst
+      56  FLASHQUEUE_readFromLast
+      62  FLASHQUEUE_saveControl
+
+ 
+  32 bytes in section .rodata
+ 586 bytes in section .text
+ 
+ 586 bytes of CODE  memory
+  32 bytes of CONST memory
+
+Errors: none
+Warnings: none

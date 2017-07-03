@@ -1,0 +1,998 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:58:05 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb.c          #
+#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb.c" -lC    #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA          #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o           #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --no_clustering --no_scheduling --debug --endian=little  #
+#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
+#                    Files (x86)\IAR Systems\Embedded Workbench               #
+#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
+#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\mdb.lst         #
+#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\mdb.o            #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  mdb.c
+     18          | 
+     19          |       Autor              :  Marcos Aquino
+     20          |       Data criação       :  25/02/2017
+     21          |
+     22          |       Revisões           :  001
+     23          |
+     24          |
+     25          | __________________________________________________________________________________
+     26          */
+     27          
+     28          /***********************************************************************************
+     29          *       Includes
+     30          ***********************************************************************************/
+     31          #include <nxp\iolpc1768.h>
+     32          #include <stdio.h>
+     33          #include <stdlib.h>
+     34          #include <string.h>
+
+   \                                 In section .text, align 2
+   \   __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
+   \                     memcpy:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x0020             MOVS     R0,R4
+   \   00000006   0x.... 0x....      BL       __aeabi_memcpy
+   \   0000000A   0x0020             MOVS     R0,R4
+   \   0000000C   0xBD10             POP      {R4,PC}          ;; return
+     35          
+     36          #include "mdb.h"
+     37          #include "mdb_uart.h"
+     38          #include "mdb_bill.h"
+     39          #include "mdb_coin.h"
+     40          #include "mdb_cashless.h"
+     41          
+     42          #include "..\..\includes.h"
+     43          
+     44          /***********************************************************************************
+     45          *       Definiões locais
+     46          ***********************************************************************************/
+     47          #define TIMEOUT_WAIT_MESSAGE                    50
+     48          #define MAX_PACKAGE_SIZE                        36
+     49          
+     50          /***********************************************************************************
+     51          *       variaveis locais
+     52          ***********************************************************************************/
+
+   \                                 In section .bss, align 4
+     53          unsigned char MDB_buffer_stream[MAX_PACKAGE_SIZE];
+   \                     MDB_buffer_stream:
+   \   00000000                      DS8 36
+
+   \                                 In section .bss, align 2
+     54          unsigned short int MDB_tube_status;
+   \                     MDB_tube_status:
+   \   00000000                      DS8 2
+
+   \                                 In section .bss, align 4
+     55          unsigned char MDB_tube_counter[16];
+   \                     MDB_tube_counter:
+   \   00000000                      DS8 16
+     56          
+
+   \                                 In section .bss, align 1
+     57          unsigned char coin_message_level;
+   \                     coin_message_level:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 2
+     58          unsigned short int coin_country;
+   \                     coin_country:
+   \   00000000                      DS8 2
+
+   \                                 In section .bss, align 1
+     59          unsigned char coin_fator_escala;
+   \                     coin_fator_escala:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     60          unsigned char coin_casas_decimais;
+   \                     coin_casas_decimais:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 2
+     61          unsigned short int coin_types_routing;
+   \                     coin_types_routing:
+   \   00000000                      DS8 2
+
+   \                                 In section .bss, align 4
+     62          unsigned char coin_credit[16];
+   \                     coin_credit:
+   \   00000000                      DS8 16
+
+   \                                 In section .bss, align 1
+     63          eMDB_COIN_POOL_TYPE coin_tipo_evento;
+   \                     coin_tipo_evento:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     64          eMDB_COIN_POOL_STATUS coin_status;
+   \                     coin_status:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     65          unsigned char coin_tipo_moeda;
+   \                     coin_tipo_moeda:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     66          unsigned char coin_quantidade_tubo;
+   \                     coin_quantidade_tubo:
+   \   00000000                      DS8 1
+     67          /***********************************************************************************
+     68          *       Funções locais
+     69          ***********************************************************************************/
+     70          
+     71          
+     72          /***********************************************************************************
+     73          *       Implementação das funções
+     74          ***********************************************************************************/
+     75          
+     76          /***********************************************************************************
+     77          *       Descrição       :       Inicialização do módulo
+     78          *       Parametros      :       nenhum
+     79          *       Retorno         :       nenhum
+     80          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     81          void MDB_ini(void){
+   \                     MDB_ini:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     82              
+     83            MDBUART_ini();     
+   \   00000002   0x.... 0x....      BL       MDBUART_ini
+     84          }
+   \   00000006   0xBD01             POP      {R0,PC}          ;; return
+     85          /***********************************************************************************
+     86          *       Descrição       :       Task principal da biblioteca MDB
+     87          *       Parametros      :       nenhum
+     88          *       Retorno         :       nenhum
+     89          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     90          void MDB_main(void*pPAR){
+   \                     MDB_main:
+   \   00000000   0xB500             PUSH     {LR}
+   \   00000002   0xB083             SUB      SP,SP,#+12
+     91            
+     92            vTaskDelay(5000);
+   \   00000004   0xF241 0x3088      MOVW     R0,#+5000
+   \   00000008   0x.... 0x....      BL       vTaskDelay
+     93            
+     94            SMDB_wait();    
+   \   0000000C   0x.... 0x....      BL       SMDB_wait
+     95            MDBCOIN_reset_device();
+   \   00000010   0x.... 0x....      BL       MDBCOIN_reset_device
+     96            SMDB_release();  
+   \   00000014   0x.... 0x....      BL       SMDB_release
+     97            
+     98            for(;;){
+     99              
+    100              SMDB_wait();
+   \                     ??MDB_main_0:
+   \   00000018   0x.... 0x....      BL       SMDB_wait
+    101              
+    102          
+    103             MDBCOIN_get_setup_from_device(&coin_message_level,
+    104                                           &coin_country,
+    105                                           &coin_fator_escala,
+    106                                           &coin_casas_decimais,
+    107                                           &coin_types_routing,
+    108                                           coin_credit);
+   \   0000001C   0x....             LDR.N    R0,??DataTable3
+   \   0000001E   0x9001             STR      R0,[SP, #+4]
+   \   00000020   0x....             LDR.N    R0,??DataTable3_1
+   \   00000022   0x9000             STR      R0,[SP, #+0]
+   \   00000024   0x....             LDR.N    R3,??DataTable3_2
+   \   00000026   0x....             LDR.N    R2,??DataTable3_3
+   \   00000028   0x....             LDR.N    R1,??DataTable3_4
+   \   0000002A   0x....             LDR.N    R0,??DataTable3_5
+   \   0000002C   0x.... 0x....      BL       MDBCOIN_get_setup_from_device
+    109                                                                                                             
+    110              MDBCOIN_get_tube_status_from_device(&MDB_tube_status,MDB_tube_counter);            
+   \   00000030   0x....             LDR.N    R1,??DataTable3_6
+   \   00000032   0x....             LDR.N    R0,??DataTable3_7
+   \   00000034   0x.... 0x....      BL       MDBCOIN_get_tube_status_from_device
+    111              MDBCOIN_coin_type_setup(0x0F,0x0F);
+   \   00000038   0x210F             MOVS     R1,#+15
+   \   0000003A   0x200F             MOVS     R0,#+15
+   \   0000003C   0x.... 0x....      BL       MDBCOIN_coin_type_setup
+    112              
+    113              /*
+    114              if(dispensa){
+    115                MDBCOIN_coin_dispense(2,2);
+    116                dispensa = 0;
+    117              }
+    118              */
+    119              
+    120              MDBCOIN_poll(&coin_tipo_evento,
+    121                           &coin_status,
+    122                           &coin_tipo_moeda,
+    123                           &coin_quantidade_tubo);    
+   \   00000040   0x....             LDR.N    R3,??DataTable3_8
+   \   00000042   0x....             LDR.N    R2,??DataTable3_9
+   \   00000044   0x....             LDR.N    R1,??DataTable3_10
+   \   00000046   0x....             LDR.N    R0,??DataTable3_11
+   \   00000048   0x.... 0x....      BL       MDBCOIN_poll
+    124              
+    125              
+    126              SMDB_release();
+   \   0000004C   0x.... 0x....      BL       SMDB_release
+    127              
+    128              vTaskDelay(100);
+   \   00000050   0x2064             MOVS     R0,#+100
+   \   00000052   0x.... 0x....      BL       vTaskDelay
+   \   00000056   0xE7DF             B.N      ??MDB_main_0
+    129            }
+    130          }
+    131          /***********************************************************************************
+    132          *       Descrição       :       Calcula o CHK do pacote MDB
+    133          *       Parametros      :       (unsigned char*) pacote
+    134          *                               (unsigned char) tamanho
+    135          *       Retorno         :       (unsigned char) CHK do pacote
+    136          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    137          unsigned char MDB_chk_generate(unsigned char *pData,unsigned char size){
+   \                     MDB_chk_generate:
+   \   00000000   0xB410             PUSH     {R4}
+    138            unsigned char chk=0;
+   \   00000002   0x2200             MOVS     R2,#+0
+    139            
+    140            for(unsigned char i=0;i<size;i++)
+   \   00000004   0x2300             MOVS     R3,#+0
+   \   00000006   0xE003             B.N      ??MDB_chk_generate_0
+    141              chk+=pData[i];
+   \                     ??MDB_chk_generate_1:
+   \   00000008   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   0000000A   0x5C1C             LDRB     R4,[R3, R0]
+   \   0000000C   0x18A2             ADDS     R2,R4,R2
+   \   0000000E   0x1C5B             ADDS     R3,R3,#+1
+   \                     ??MDB_chk_generate_0:
+   \   00000010   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   00000012   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000014   0x428B             CMP      R3,R1
+   \   00000016   0xD3F7             BCC.N    ??MDB_chk_generate_1
+    142            
+    143            return chk;
+   \   00000018   0x0010             MOVS     R0,R2
+   \   0000001A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001C   0xBC10             POP      {R4}
+   \   0000001E   0x4770             BX       LR               ;; return
+    144          }
+    145          /***********************************************************************************
+    146          *       Descrição       :       Envia um pacote para um dispositivo
+    147          *       Parametros      :       (unsigned char) pacote com endereço
+    148          *                               (unsigned char*) dados
+    149          *                               (unsigned char) tamanho
+    150          *                               (unsigned char) enviar ao ACK ao final 
+    151          *                               (unsigned char*) dados recebidos
+    152          *                               (unsigned char*) quantidade de bytes recebidos
+    153          *       Retorno         :       (eMDB_reply) resultado da operação
+    154          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    155          eMDB_reply MDB_send_package(unsigned char first_is_address,
+    156                                      unsigned char *pData,unsigned char data_length,
+    157                                      unsigned char send_ack,
+    158                                      unsigned char *pRx,unsigned char *rx_length){
+   \                     MDB_send_package:
+   \   00000000   0xE92D 0x47F0      PUSH     {R4-R10,LR}
+   \   00000004   0x4680             MOV      R8,R0
+   \   00000006   0x4689             MOV      R9,R1
+   \   00000008   0x4692             MOV      R10,R2
+   \   0000000A   0x001C             MOVS     R4,R3
+   \   0000000C   0x9D08             LDR      R5,[SP, #+32]
+   \   0000000E   0x9E09             LDR      R6,[SP, #+36]
+    159            unsigned short int time_out=TIMEOUT_WAIT_MESSAGE;
+   \   00000010   0x2732             MOVS     R7,#+50
+    160            unsigned char flag;  
+    161            
+    162            //flag = U2RBR;
+    163            //flag = U2LSR;  
+    164            //U2FCR |= (0x02);  
+    165              
+    166            memcpy(MDB_buffer_stream,pData,data_length);
+   \   00000012   0xFA5F 0xFA8A      UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+   \   00000016   0x4652             MOV      R2,R10
+   \   00000018   0x4649             MOV      R1,R9
+   \   0000001A   0x....             LDR.N    R0,??DataTable3_12
+   \   0000001C   0x.... 0x....      BL       memcpy
+    167            MDB_buffer_stream[data_length] = MDB_chk_generate(pData,data_length);
+   \   00000020   0x4651             MOV      R1,R10
+   \   00000022   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000024   0x4648             MOV      R0,R9
+   \   00000026   0x.... 0x....      BL       MDB_chk_generate
+   \   0000002A   0xFA5F 0xFA8A      UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+   \   0000002E   0x....             LDR.N    R1,??DataTable3_12
+   \   00000030   0xF80A 0x0001      STRB     R0,[R10, R1]
+    168                
+    169            MDBUART_envia_pacote(first_is_address,MDB_buffer_stream,data_length+1);     
+   \   00000034   0xFA5F 0xFA8A      UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+   \   00000038   0xF11A 0x0201      ADDS     R2,R10,#+1
+   \   0000003C   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   0000003E   0x....             LDR.N    R1,??DataTable3_12
+   \   00000040   0x4640             MOV      R0,R8
+   \   00000042   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000044   0x.... 0x....      BL       MDBUART_envia_pacote
+    170            
+    171            do{
+    172              flag = MDBUART_has_new_package();
+   \                     ??MDB_send_package_0:
+   \   00000048   0x.... 0x....      BL       MDBUART_has_new_package
+   \   0000004C   0x4680             MOV      R8,R0
+    173              MDBAURT_sleep(1);
+   \   0000004E   0x2001             MOVS     R0,#+1
+   \   00000050   0x.... 0x....      BL       MDBAURT_sleep
+    174            }
+    175            while(!flag && time_out--);
+   \   00000054   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   00000058   0xF1B8 0x0F00      CMP      R8,#+0
+   \   0000005C   0xD104             BNE.N    ??MDB_send_package_1
+   \   0000005E   0x0038             MOVS     R0,R7
+   \   00000060   0x1E47             SUBS     R7,R0,#+1
+   \   00000062   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000064   0x2800             CMP      R0,#+0
+   \   00000066   0xD1EF             BNE.N    ??MDB_send_package_0
+    176                               
+    177            if(flag){
+   \                     ??MDB_send_package_1:
+   \   00000068   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   0000006C   0xF1B8 0x0F00      CMP      R8,#+0
+   \   00000070   0xD045             BEQ.N    ??MDB_send_package_2
+    178              
+    179              unsigned char recebidos = MDBUART_get_bytes_recebidos();
+   \   00000072   0x.... 0x....      BL       MDBUART_get_bytes_recebidos
+   \   00000076   0x4680             MOV      R8,R0
+    180              
+    181              MDBUART_le_pacote(MDB_buffer_stream,recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:recebidos);          
+   \   00000078   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   0000007C   0xF1B8 0x0F25      CMP      R8,#+37
+   \   00000080   0xDB01             BLT.N    ??MDB_send_package_3
+   \   00000082   0x2124             MOVS     R1,#+36
+   \   00000084   0xE000             B.N      ??MDB_send_package_4
+   \                     ??MDB_send_package_3:
+   \   00000086   0x4641             MOV      R1,R8
+   \                     ??MDB_send_package_4:
+   \   00000088   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000008A   0x....             LDR.N    R0,??DataTable3_12
+   \   0000008C   0x.... 0x....      BL       MDBUART_le_pacote
+    182                  
+    183              unsigned char checksum = MDB_chk_generate(MDB_buffer_stream,recebidos-1);
+   \   00000090   0xF1B8 0x0101      SUBS     R1,R8,#+1
+   \   00000094   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000096   0x....             LDR.N    R0,??DataTable3_12
+   \   00000098   0x.... 0x....      BL       MDB_chk_generate
+   \   0000009C   0x0007             MOVS     R7,R0
+    184                
+    185              memcpy(pRx,MDB_buffer_stream,recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:recebidos);
+   \   0000009E   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   000000A2   0xF1B8 0x0F25      CMP      R8,#+37
+   \   000000A6   0xDB01             BLT.N    ??MDB_send_package_5
+   \   000000A8   0x2224             MOVS     R2,#+36
+   \   000000AA   0xE002             B.N      ??MDB_send_package_6
+   \                     ??MDB_send_package_5:
+   \   000000AC   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   000000B0   0x4642             MOV      R2,R8
+   \                     ??MDB_send_package_6:
+   \   000000B2   0x....             LDR.N    R1,??DataTable3_12
+   \   000000B4   0x0028             MOVS     R0,R5
+   \   000000B6   0x.... 0x....      BL       memcpy
+    186              *rx_length = recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:(recebidos-1);
+   \   000000BA   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   000000BE   0xF1B8 0x0F25      CMP      R8,#+37
+   \   000000C2   0xDB01             BLT.N    ??MDB_send_package_7
+   \   000000C4   0x2024             MOVS     R0,#+36
+   \   000000C6   0xE001             B.N      ??MDB_send_package_8
+   \                     ??MDB_send_package_7:
+   \   000000C8   0xF1B8 0x0001      SUBS     R0,R8,#+1
+   \                     ??MDB_send_package_8:
+   \   000000CC   0x7030             STRB     R0,[R6, #+0]
+    187               
+    188              if(send_ack)     
+   \   000000CE   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   000000D0   0x2C00             CMP      R4,#+0
+   \   000000D2   0xD001             BEQ.N    ??MDB_send_package_9
+    189                MDB_send_ack();              
+   \   000000D4   0x.... 0x....      BL       MDB_send_ack
+    190              
+    191              if(recebidos || MDB_buffer_stream[recebidos-1] == checksum)
+   \                     ??MDB_send_package_9:
+   \   000000D8   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   000000DC   0xF1B8 0x0F00      CMP      R8,#+0
+   \   000000E0   0xD109             BNE.N    ??MDB_send_package_10
+   \   000000E2   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   000000E6   0x....             LDR.N    R0,??DataTable3_12
+   \   000000E8   0xEB18 0x0000      ADDS     R0,R8,R0
+   \   000000EC   0xF810 0x0C01      LDRB     R0,[R0, #-1]
+   \   000000F0   0xB2FF             UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+   \   000000F2   0x42B8             CMP      R0,R7
+   \   000000F4   0xD101             BNE.N    ??MDB_send_package_11
+    192                return MDB_OK;     
+   \                     ??MDB_send_package_10:
+   \   000000F6   0x2000             MOVS     R0,#+0
+   \   000000F8   0xE002             B.N      ??MDB_send_package_12
+    193              
+    194              return MDB_ERROR;
+   \                     ??MDB_send_package_11:
+   \   000000FA   0x2001             MOVS     R0,#+1
+   \   000000FC   0xE000             B.N      ??MDB_send_package_12
+    195            }
+    196            
+    197            return MDB_TIMEOUT;
+   \                     ??MDB_send_package_2:
+   \   000000FE   0x2002             MOVS     R0,#+2
+   \                     ??MDB_send_package_12:
+   \   00000100   0xE8BD 0x87F0      POP      {R4-R10,PC}      ;; return
+    198          }
+    199          /***********************************************************************************
+    200          *       Descrição       :       Envia um pacote para um dispositivo
+    201          *       Parametros      :       (unsigned char) pacote com endereço
+    202          *                               (unsigned char*) dados
+    203          *                               (unsigned char) tamanho
+    204          *                               (unsigned char) enviar ao ACK ao final 
+    205          *                               (unsigned char*) dados recebidos
+    206          *                               (unsigned char*) quantidade de bytes recebidos
+    207          *       Retorno         :       (eMDB_reply) resultado da operação
+    208          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    209          eMDB_reply MDB_send_package_long(unsigned char first_is_address,
+    210                                           unsigned char *pData,unsigned char data_length,
+    211                                           unsigned char send_ack,
+    212                                           unsigned char *pRx,unsigned char *rx_length){
+   \                     MDB_send_package_long:
+   \   00000000   0xE92D 0x47F0      PUSH     {R4-R10,LR}
+   \   00000004   0x4680             MOV      R8,R0
+   \   00000006   0x4689             MOV      R9,R1
+   \   00000008   0x4692             MOV      R10,R2
+   \   0000000A   0x001C             MOVS     R4,R3
+   \   0000000C   0x9D08             LDR      R5,[SP, #+32]
+   \   0000000E   0x9E09             LDR      R6,[SP, #+36]
+    213            unsigned short int time_out=2000;
+   \   00000010   0xF44F 0x67FA      MOV      R7,#+2000
+    214            unsigned char flag;  
+    215                                        
+    216            memcpy(MDB_buffer_stream,pData,data_length);
+   \   00000014   0xFA5F 0xFA8A      UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+   \   00000018   0x4652             MOV      R2,R10
+   \   0000001A   0x4649             MOV      R1,R9
+   \   0000001C   0x....             LDR.N    R0,??DataTable3_12
+   \   0000001E   0x.... 0x....      BL       memcpy
+    217            MDB_buffer_stream[data_length] = MDB_chk_generate(pData,data_length);
+   \   00000022   0x4651             MOV      R1,R10
+   \   00000024   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000026   0x4648             MOV      R0,R9
+   \   00000028   0x.... 0x....      BL       MDB_chk_generate
+   \   0000002C   0xFA5F 0xFA8A      UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+   \   00000030   0x....             LDR.N    R1,??DataTable3_12
+   \   00000032   0xF80A 0x0001      STRB     R0,[R10, R1]
+    218            
+    219            MDBUART_envia_pacote(first_is_address,MDB_buffer_stream,data_length+1);     
+   \   00000036   0xFA5F 0xFA8A      UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+   \   0000003A   0xF11A 0x0201      ADDS     R2,R10,#+1
+   \   0000003E   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   00000040   0x....             LDR.N    R1,??DataTable3_12
+   \   00000042   0x4640             MOV      R0,R8
+   \   00000044   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000046   0x.... 0x....      BL       MDBUART_envia_pacote
+    220            
+    221            do{
+    222              flag = MDBUART_has_new_package();
+   \                     ??MDB_send_package_long_0:
+   \   0000004A   0x.... 0x....      BL       MDBUART_has_new_package
+   \   0000004E   0x4680             MOV      R8,R0
+    223              MDBAURT_sleep(1);
+   \   00000050   0x2001             MOVS     R0,#+1
+   \   00000052   0x.... 0x....      BL       MDBAURT_sleep
+    224            }
+    225            while(!flag && time_out--);
+   \   00000056   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   0000005A   0xF1B8 0x0F00      CMP      R8,#+0
+   \   0000005E   0xD104             BNE.N    ??MDB_send_package_long_1
+   \   00000060   0x0038             MOVS     R0,R7
+   \   00000062   0x1E47             SUBS     R7,R0,#+1
+   \   00000064   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000066   0x2800             CMP      R0,#+0
+   \   00000068   0xD1EF             BNE.N    ??MDB_send_package_long_0
+    226                               
+    227            if(flag){
+   \                     ??MDB_send_package_long_1:
+   \   0000006A   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   0000006E   0xF1B8 0x0F00      CMP      R8,#+0
+   \   00000072   0xD045             BEQ.N    ??MDB_send_package_long_2
+    228              
+    229              unsigned char recebidos = MDBUART_get_bytes_recebidos();
+   \   00000074   0x.... 0x....      BL       MDBUART_get_bytes_recebidos
+   \   00000078   0x4680             MOV      R8,R0
+    230              
+    231              MDBUART_le_pacote(MDB_buffer_stream,recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:recebidos);          
+   \   0000007A   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   0000007E   0xF1B8 0x0F25      CMP      R8,#+37
+   \   00000082   0xDB01             BLT.N    ??MDB_send_package_long_3
+   \   00000084   0x2124             MOVS     R1,#+36
+   \   00000086   0xE000             B.N      ??MDB_send_package_long_4
+   \                     ??MDB_send_package_long_3:
+   \   00000088   0x4641             MOV      R1,R8
+   \                     ??MDB_send_package_long_4:
+   \   0000008A   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000008C   0x....             LDR.N    R0,??DataTable3_12
+   \   0000008E   0x.... 0x....      BL       MDBUART_le_pacote
+    232                  
+    233              unsigned char checksum = MDB_chk_generate(MDB_buffer_stream,recebidos-1);
+   \   00000092   0xF1B8 0x0101      SUBS     R1,R8,#+1
+   \   00000096   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000098   0x....             LDR.N    R0,??DataTable3_12
+   \   0000009A   0x.... 0x....      BL       MDB_chk_generate
+   \   0000009E   0x0007             MOVS     R7,R0
+    234                
+    235              memcpy(pRx,MDB_buffer_stream,recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:recebidos);
+   \   000000A0   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   000000A4   0xF1B8 0x0F25      CMP      R8,#+37
+   \   000000A8   0xDB01             BLT.N    ??MDB_send_package_long_5
+   \   000000AA   0x2224             MOVS     R2,#+36
+   \   000000AC   0xE002             B.N      ??MDB_send_package_long_6
+   \                     ??MDB_send_package_long_5:
+   \   000000AE   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   000000B2   0x4642             MOV      R2,R8
+   \                     ??MDB_send_package_long_6:
+   \   000000B4   0x....             LDR.N    R1,??DataTable3_12
+   \   000000B6   0x0028             MOVS     R0,R5
+   \   000000B8   0x.... 0x....      BL       memcpy
+    236              *rx_length = recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:(recebidos-1);
+   \   000000BC   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   000000C0   0xF1B8 0x0F25      CMP      R8,#+37
+   \   000000C4   0xDB01             BLT.N    ??MDB_send_package_long_7
+   \   000000C6   0x2024             MOVS     R0,#+36
+   \   000000C8   0xE001             B.N      ??MDB_send_package_long_8
+   \                     ??MDB_send_package_long_7:
+   \   000000CA   0xF1B8 0x0001      SUBS     R0,R8,#+1
+   \                     ??MDB_send_package_long_8:
+   \   000000CE   0x7030             STRB     R0,[R6, #+0]
+    237               
+    238              if(send_ack)     
+   \   000000D0   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   000000D2   0x2C00             CMP      R4,#+0
+   \   000000D4   0xD001             BEQ.N    ??MDB_send_package_long_9
+    239                MDB_send_ack();              
+   \   000000D6   0x.... 0x....      BL       MDB_send_ack
+    240              
+    241              if(recebidos == 1 || MDB_buffer_stream[recebidos-1] == checksum)
+   \                     ??MDB_send_package_long_9:
+   \   000000DA   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   000000DE   0xF1B8 0x0F01      CMP      R8,#+1
+   \   000000E2   0xD009             BEQ.N    ??MDB_send_package_long_10
+   \   000000E4   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   000000E8   0x....             LDR.N    R0,??DataTable3_12
+   \   000000EA   0xEB18 0x0000      ADDS     R0,R8,R0
+   \   000000EE   0xF810 0x0C01      LDRB     R0,[R0, #-1]
+   \   000000F2   0xB2FF             UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+   \   000000F4   0x42B8             CMP      R0,R7
+   \   000000F6   0xD101             BNE.N    ??MDB_send_package_long_11
+    242                return MDB_OK;     
+   \                     ??MDB_send_package_long_10:
+   \   000000F8   0x2000             MOVS     R0,#+0
+   \   000000FA   0xE002             B.N      ??MDB_send_package_long_12
+    243              
+    244              return MDB_ERROR;
+   \                     ??MDB_send_package_long_11:
+   \   000000FC   0x2001             MOVS     R0,#+1
+   \   000000FE   0xE000             B.N      ??MDB_send_package_long_12
+    245            }
+    246            
+    247            return MDB_TIMEOUT;
+   \                     ??MDB_send_package_long_2:
+   \   00000100   0x2002             MOVS     R0,#+2
+   \                     ??MDB_send_package_long_12:
+   \   00000102   0xE8BD 0x87F0      POP      {R4-R10,PC}      ;; return
+    248          }
+    249          /***********************************************************************************
+    250          *       Descrição       :       envia o ack ao escravo 
+    251          *       Parametros      :       nenhum
+    252          *       Retorno         :       nenhum
+    253          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    254          void MDB_send_ack(void){
+   \                     MDB_send_ack:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    255            
+    256            MDB_buffer_stream[0] = MDB_RESP_ACK;
+   \   00000002   0x....             LDR.N    R0,??DataTable3_12
+   \   00000004   0x2100             MOVS     R1,#+0
+   \   00000006   0x7001             STRB     R1,[R0, #+0]
+    257            MDBUART_envia_pacote(0,MDB_buffer_stream,1);
+   \   00000008   0x2201             MOVS     R2,#+1
+   \   0000000A   0x....             LDR.N    R1,??DataTable3_12
+   \   0000000C   0x2000             MOVS     R0,#+0
+   \   0000000E   0x.... 0x....      BL       MDBUART_envia_pacote
+    258          }
+   \   00000012   0xBD01             POP      {R0,PC}          ;; return
+    259          /***********************************************************************************
+    260          *       Descrição       :       Libera troco no moedeiro
+    261          *       Parametros      :       (unsigned char) tipo da moeda
+    262          *                               (unsigned char) quantidade
+    263          *       Retorno         :       (unsigned chra) maior do que zero
+    264          *                                               se conseguir realizar
+    265          *                                               a operação
+    266          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    267          unsigned char MDB_coin_dispenser(unsigned char tipo,unsigned char quantidade){
+   \                     MDB_coin_dispenser:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    268            eMDB_reply flag;
+    269            
+    270            SMDB_wait();
+   \   00000006   0x.... 0x....      BL       SMDB_wait
+    271            
+    272            vTaskDelay(3000);
+   \   0000000A   0xF640 0x30B8      MOVW     R0,#+3000
+   \   0000000E   0x.... 0x....      BL       vTaskDelay
+    273            flag = MDBCOIN_coin_dispense(quantidade,tipo);
+   \   00000012   0x0021             MOVS     R1,R4
+   \   00000014   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000016   0x0028             MOVS     R0,R5
+   \   00000018   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001A   0x.... 0x....      BL       MDBCOIN_coin_dispense
+   \   0000001E   0x0004             MOVS     R4,R0
+    274              
+    275            SMDB_release();
+   \   00000020   0x.... 0x....      BL       SMDB_release
+    276            
+    277            if(flag==MDB_OK)
+   \   00000024   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   00000026   0x2C00             CMP      R4,#+0
+   \   00000028   0xD101             BNE.N    ??MDB_coin_dispenser_0
+    278              return 1;
+   \   0000002A   0x2001             MOVS     R0,#+1
+   \   0000002C   0xE000             B.N      ??MDB_coin_dispenser_1
+    279            
+    280            return 0;
+   \                     ??MDB_coin_dispenser_0:
+   \   0000002E   0x2000             MOVS     R0,#+0
+   \                     ??MDB_coin_dispenser_1:
+   \   00000030   0xBD32             POP      {R1,R4,R5,PC}    ;; return
+    281          }
+    282          /***********************************************************************************
+    283          *       Descrição       :       Verifia o estado dos tubos de moedas
+    284          *       Parametros      :       (unsigned char*) tubos
+    285          *       Retorno         :       (unsigned char) maior do que zero se conseguir
+    286          *                               realizar a operação
+    287          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    288          unsigned char MDB_coin_check_tubes(unsigned char* tubes){
+   \                     MDB_coin_check_tubes:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0xB086             SUB      SP,SP,#+24
+   \   00000004   0x0004             MOVS     R4,R0
+    289            unsigned char tubos[16];
+    290            unsigned char tentativas=10;
+   \   00000006   0x250A             MOVS     R5,#+10
+    291            unsigned short int status;
+    292            eMDB_reply flag;
+    293            
+    294            SMDB_wait();
+   \   00000008   0x.... 0x....      BL       SMDB_wait
+    295            
+    296            do flag = MDBCOIN_get_tube_status_from_device(&status,tubos);
+   \                     ??MDB_coin_check_tubes_0:
+   \   0000000C   0xA901             ADD      R1,SP,#+4
+   \   0000000E   0xA800             ADD      R0,SP,#+0
+   \   00000010   0x.... 0x....      BL       MDBCOIN_get_tube_status_from_device
+   \   00000014   0x0006             MOVS     R6,R0
+    297            while(flag!=MDB_OK && --tentativas);
+   \   00000016   0xB2F6             UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+   \   00000018   0x2E00             CMP      R6,#+0
+   \   0000001A   0xD004             BEQ.N    ??MDB_coin_check_tubes_1
+   \   0000001C   0x1E6D             SUBS     R5,R5,#+1
+   \   0000001E   0x0028             MOVS     R0,R5
+   \   00000020   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000022   0x2800             CMP      R0,#+0
+   \   00000024   0xD1F2             BNE.N    ??MDB_coin_check_tubes_0
+    298            
+    299            SMDB_release();
+   \                     ??MDB_coin_check_tubes_1:
+   \   00000026   0x.... 0x....      BL       SMDB_release
+    300            
+    301            if(flag==MDB_OK){
+   \   0000002A   0xB2F6             UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+   \   0000002C   0x2E00             CMP      R6,#+0
+   \   0000002E   0xD10C             BNE.N    ??MDB_coin_check_tubes_2
+    302              
+    303              for(unsigned char i=0;i<16;i++)
+   \   00000030   0x2000             MOVS     R0,#+0
+   \   00000032   0xE005             B.N      ??MDB_coin_check_tubes_3
+    304                tubes[i] = tubos[i];
+   \                     ??MDB_coin_check_tubes_4:
+   \   00000034   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000036   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000038   0xA901             ADD      R1,SP,#+4
+   \   0000003A   0x5C41             LDRB     R1,[R0, R1]
+   \   0000003C   0x5501             STRB     R1,[R0, R4]
+   \   0000003E   0x1C40             ADDS     R0,R0,#+1
+   \                     ??MDB_coin_check_tubes_3:
+   \   00000040   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000042   0x2810             CMP      R0,#+16
+   \   00000044   0xDBF6             BLT.N    ??MDB_coin_check_tubes_4
+    305              return 1;
+   \   00000046   0x2001             MOVS     R0,#+1
+   \   00000048   0xE000             B.N      ??MDB_coin_check_tubes_5
+    306            }  
+    307            
+    308            return 0;
+   \                     ??MDB_coin_check_tubes_2:
+   \   0000004A   0x2000             MOVS     R0,#+0
+   \                     ??MDB_coin_check_tubes_5:
+   \   0000004C   0xB006             ADD      SP,SP,#+24
+   \   0000004E   0xBD70             POP      {R4-R6,PC}       ;; return
+    309          }
+    310          /***********************************************************************************
+    311          *       Descrição       :       Veririca se os dispositivos MDB habilitados
+    312          *                               estão presentes no barramento
+    313          *       Parametros      :       nenhum
+    314          *       Retorno         :       nenhum
+    315          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    316          eMDB_RESULTADO_SCAN MDB_checa_dispositivos(void){
+   \                     MDB_checa_dispositivos:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    317            unsigned char flag_coin,flag_bill;
+    318            
+    319            PARAMETROS_le(ADR_FLAG_MDB_BIL,(void*)&flag_bill);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x2004             MOVS     R0,#+4
+   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+    320            PARAMETROS_le(ADR_FLAG_MDB_COIN,(void*)&flag_coin);
+   \   0000000A   0xF10D 0x0101      ADD      R1,SP,#+1
+   \   0000000E   0x2005             MOVS     R0,#+5
+   \   00000010   0x.... 0x....      BL       PARAMETROS_le
+    321            
+    322            SMDB_wait();
+   \   00000014   0x.... 0x....      BL       SMDB_wait
+    323            
+    324            if(flag_bill && !SMDBILL_get_net_status()){
+                                    ^
+Warning[Pe223]: function "SMDBILL_get_net_status" declared implicitly
+   \   00000018   0xF89D 0x0000      LDRB     R0,[SP, #+0]
+   \   0000001C   0x2800             CMP      R0,#+0
+   \   0000001E   0xD007             BEQ.N    ??MDB_checa_dispositivos_0
+   \   00000020   0x.... 0x....      BL       SMDBILL_get_net_status
+   \   00000024   0x2800             CMP      R0,#+0
+   \   00000026   0xD103             BNE.N    ??MDB_checa_dispositivos_0
+    325              SMDB_release(); 
+   \   00000028   0x.... 0x....      BL       SMDB_release
+    326              return MDB_BILL_OFFLINE;
+   \   0000002C   0x2001             MOVS     R0,#+1
+   \   0000002E   0xE00E             B.N      ??MDB_checa_dispositivos_1
+    327            }
+    328            
+    329            if(flag_coin && !SMDBCOIN_verifica_net_status()){
+                                    ^
+Warning[Pe223]: function "SMDBCOIN_verifica_net_status" declared implicitly
+   \                     ??MDB_checa_dispositivos_0:
+   \   00000030   0xF89D 0x0001      LDRB     R0,[SP, #+1]
+   \   00000034   0x2800             CMP      R0,#+0
+   \   00000036   0xD007             BEQ.N    ??MDB_checa_dispositivos_2
+   \   00000038   0x.... 0x....      BL       SMDBCOIN_verifica_net_status
+   \   0000003C   0x2800             CMP      R0,#+0
+   \   0000003E   0xD103             BNE.N    ??MDB_checa_dispositivos_2
+    330              SMDB_release(); 
+   \   00000040   0x.... 0x....      BL       SMDB_release
+    331              return MDB_COIN_OFFLINE;
+   \   00000044   0x2002             MOVS     R0,#+2
+   \   00000046   0xE002             B.N      ??MDB_checa_dispositivos_1
+    332            }
+    333           
+    334            SMDB_release(); 
+   \                     ??MDB_checa_dispositivos_2:
+   \   00000048   0x.... 0x....      BL       SMDB_release
+    335            
+    336            return MDB_TODOS_ONLINE;
+   \   0000004C   0x2000             MOVS     R0,#+0
+   \                     ??MDB_checa_dispositivos_1:
+   \   0000004E   0xBD02             POP      {R1,PC}          ;; return
+    337          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3:
+   \   00000000   0x........         DC32     coin_credit
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_1:
+   \   00000000   0x........         DC32     coin_types_routing
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_2:
+   \   00000000   0x........         DC32     coin_casas_decimais
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_3:
+   \   00000000   0x........         DC32     coin_fator_escala
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_4:
+   \   00000000   0x........         DC32     coin_country
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_5:
+   \   00000000   0x........         DC32     coin_message_level
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_6:
+   \   00000000   0x........         DC32     MDB_tube_counter
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_7:
+   \   00000000   0x........         DC32     MDB_tube_status
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_8:
+   \   00000000   0x........         DC32     coin_quantidade_tubo
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_9:
+   \   00000000   0x........         DC32     coin_tipo_moeda
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_10:
+   \   00000000   0x........         DC32     coin_status
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_11:
+   \   00000000   0x........         DC32     coin_tipo_evento
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_12:
+   \   00000000   0x........         DC32     MDB_buffer_stream
+    338          /***********************************************************************************
+    339          *       Fim do arquivo
+    340          ***********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   MDB_checa_dispositivos
+         8   -> PARAMETROS_le
+         8   -> SMDBCOIN_verifica_net_status
+         8   -> SMDBILL_get_net_status
+         8   -> SMDB_release
+         8   -> SMDB_wait
+       4   MDB_chk_generate
+      40   MDB_coin_check_tubes
+        40   -> MDBCOIN_get_tube_status_from_device
+        40   -> SMDB_release
+        40   -> SMDB_wait
+      16   MDB_coin_dispenser
+        16   -> MDBCOIN_coin_dispense
+        16   -> SMDB_release
+        16   -> SMDB_wait
+        16   -> vTaskDelay
+       8   MDB_ini
+         8   -> MDBUART_ini
+      16   MDB_main
+        16   -> MDBCOIN_coin_type_setup
+        16   -> MDBCOIN_get_setup_from_device
+        16   -> MDBCOIN_get_tube_status_from_device
+        16   -> MDBCOIN_poll
+        16   -> MDBCOIN_reset_device
+        16   -> SMDB_release
+        16   -> SMDB_wait
+        16   -> vTaskDelay
+       8   MDB_send_ack
+         8   -> MDBUART_envia_pacote
+      32   MDB_send_package
+        32   -> MDBAURT_sleep
+        32   -> MDBUART_envia_pacote
+        32   -> MDBUART_get_bytes_recebidos
+        32   -> MDBUART_has_new_package
+        32   -> MDBUART_le_pacote
+        32   -> MDB_chk_generate
+        32   -> MDB_send_ack
+        32   -> memcpy
+      32   MDB_send_package_long
+        32   -> MDBAURT_sleep
+        32   -> MDBUART_envia_pacote
+        32   -> MDBUART_get_bytes_recebidos
+        32   -> MDBUART_has_new_package
+        32   -> MDBUART_le_pacote
+        32   -> MDB_chk_generate
+        32   -> MDB_send_ack
+        32   -> memcpy
+       8   memcpy
+         8   -> __aeabi_memcpy
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable3
+       4  ??DataTable3_1
+       4  ??DataTable3_10
+       4  ??DataTable3_11
+       4  ??DataTable3_12
+       4  ??DataTable3_2
+       4  ??DataTable3_3
+       4  ??DataTable3_4
+       4  ??DataTable3_5
+       4  ??DataTable3_6
+       4  ??DataTable3_7
+       4  ??DataTable3_8
+       4  ??DataTable3_9
+      36  MDB_buffer_stream
+      80  MDB_checa_dispositivos
+      32  MDB_chk_generate
+      80  MDB_coin_check_tubes
+      50  MDB_coin_dispenser
+       8  MDB_ini
+      88  MDB_main
+      20  MDB_send_ack
+     260  MDB_send_package
+     262  MDB_send_package_long
+      16  MDB_tube_counter
+       2  MDB_tube_status
+       1  coin_casas_decimais
+       2  coin_country
+      16  coin_credit
+       1  coin_fator_escala
+       1  coin_message_level
+       1  coin_quantidade_tubo
+       1  coin_status
+       1  coin_tipo_evento
+       1  coin_tipo_moeda
+       2  coin_types_routing
+      14  memcpy
+
+ 
+  81 bytes in section .bss
+ 946 bytes in section .text
+ 
+ 932 bytes of CODE memory (+ 14 bytes shared)
+  81 bytes of DATA memory
+
+Errors: none
+Warnings: 2

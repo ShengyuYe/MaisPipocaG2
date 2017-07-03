@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=NetF2_2 Pin=J7-1
+Removed Pin From Net: NetName=ENTRADA_FASE Pin=J7-2
+Added Pin To Net: NetName=ENTRADA_FASE Pin=J7-1
+Added Pin To Net: NetName=NetF2_2 Pin=J7-2

@@ -1,0 +1,279 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:58:36 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Drivers\SERIAL_MUX\serial_ #
+#                    mux.c                                                    #
+#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\SERIAL_MUX\serial #
+#                    _mux.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmw #
+#                    are\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\"  #
+#                    -lA "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_m #
+#                    ais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o       #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --no_clustering --no_scheduling --debug --endian=little  #
+#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
+#                    Files (x86)\IAR Systems\Embedded Workbench               #
+#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
+#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\serial_mux.lst  #
+#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\serial_mux.o     #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\SERIAL_MUX\serial_mux.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  serial_mux.c
+     18          | 
+     19          |       Autor              :  Marcos Aquino
+     20          |       Data criação       :  26/05/2017
+     21          |
+     22          |       Revisões           :  0001
+     23          |
+     24          |
+     25          | __________________________________________________________________________________
+     26          */
+     27          
+     28          /***********************************************************************************
+     29          *       Includes
+     30          ***********************************************************************************/
+     31          #include <stdio.h>
+     32          #include <stdlib.h>
+     33          #include <string.h>
+     34          #include <nxp\iolpc1768.h>
+
+   \                                 In section .noinit, at 0x2009c000
+   \   __absolute union <unnamed> volatile _A_FIO0DIR
+   \                     _A_FIO0DIR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0x2009c018
+   \   __absolute union <unnamed> volatile _A_FIO0SET
+   \                     _A_FIO0SET:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0x2009c020
+   \   __absolute union <unnamed> volatile _A_FIO1DIR
+   \                     _A_FIO1DIR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0x2009c038
+   \   __absolute union <unnamed> volatile _A_FIO1SET
+   \                     _A_FIO1SET:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0x2009c03c
+   \   __absolute union <unnamed> volatile _A_FIO1CLR
+   \                     _A_FIO1CLR:
+   \   00000000                      DS8 4
+     35          #include "serial_mux.h"
+     36          #include "..\..\includes.h"
+     37          
+     38          /***********************************************************************************
+     39          *       Constantes
+     40          ***********************************************************************************/
+     41          
+     42          
+     43          /***********************************************************************************
+     44          *       Definições do hardware
+     45          ***********************************************************************************/
+     46          #define SINAL_MUX_A                     (0x01)<<27
+     47          #define SINAL_MUX_B                     (0x01)<<22
+     48          
+     49          #define SET_SINAL_MUX_A(X)              X?(FIO1SET|=SINAL_MUX_A):(FIO1CLR|=SINAL_MUX_A)
+     50          #define SET_SINAL_MUX_B(X)              X?(FIO0SET|=SINAL_MUX_B):(FIO1CLR|=SINAL_MUX_B)
+     51          
+     52          #define SERIAL_MUX_INI_PINS()           FIO1DIR|=SINAL_MUX_A; FIO0DIR|=SINAL_MUX_B;
+     53          
+     54          /***********************************************************************************
+     55          *       Variaveis locais
+     56          ***********************************************************************************/
+     57          
+     58          
+     59          /***********************************************************************************
+     60          *       Funçõe locais
+     61          ***********************************************************************************/
+     62          
+     63          
+     64          /***********************************************************************************
+     65          *       Implementação das funções
+     66          ***********************************************************************************/
+     67          
+     68          /***********************************************************************************
+     69          *       Descrição       :       Inicialização do módulo
+     70          *       Parametros      :       nenhum
+     71          *       Retorno         :       nenhum
+     72          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     73          void SERIALMUX_ini(void){
+     74            
+     75            SERIAL_MUX_INI_PINS();  
+   \                     SERIALMUX_ini:
+   \   00000000   0x....             LDR.N    R0,??DataTable1  ;; 0x2009c020
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   \   00000004   0xF050 0x6000      ORRS     R0,R0,#0x8000000
+   \   00000008   0x....             LDR.N    R1,??DataTable1  ;; 0x2009c020
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+   \   0000000C   0x....             LDR.N    R0,??DataTable1_1  ;; 0x2009c000
+   \   0000000E   0x6800             LDR      R0,[R0, #+0]
+   \   00000010   0xF450 0x0080      ORRS     R0,R0,#0x400000
+   \   00000014   0x....             LDR.N    R1,??DataTable1_1  ;; 0x2009c000
+   \   00000016   0x6008             STR      R0,[R1, #+0]
+     76          }
+   \   00000018   0x4770             BX       LR               ;; return
+   \   0000001A                      REQUIRE _A_FIO1DIR
+   \   0000001A                      REQUIRE _A_FIO0DIR
+     77          /***********************************************************************************
+     78          *       Descrição       :       Seleciona a porta serial que será utilizada
+     79          *       Parametros      :       (eSERIALMUX) porta serial 
+     80          *       Retorno         :       nenhum
+     81          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     82          void SERIALMUX_seleciona(eSERIALMUX porta){
+     83              
+     84            switch(porta){
+   \                     SERIALMUX_seleciona:
+   \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000002   0x2800             CMP      R0,#+0
+   \   00000004   0xD003             BEQ.N    ??SERIALMUX_seleciona_0
+   \   00000006   0x2802             CMP      R0,#+2
+   \   00000008   0xD01B             BEQ.N    ??SERIALMUX_seleciona_1
+   \   0000000A   0xD30D             BCC.N    ??SERIALMUX_seleciona_2
+   \   0000000C   0xE025             B.N      ??SERIALMUX_seleciona_3
+     85              case SERIALMUX_RS232:
+     86                   SET_SINAL_MUX_A(0);
+   \                     ??SERIALMUX_seleciona_0:
+   \   0000000E   0x....             LDR.N    R0,??DataTable1_2  ;; 0x2009c03c
+   \   00000010   0x6800             LDR      R0,[R0, #+0]
+   \   00000012   0xF050 0x6000      ORRS     R0,R0,#0x8000000
+   \   00000016   0x....             LDR.N    R1,??DataTable1_2  ;; 0x2009c03c
+   \   00000018   0x6008             STR      R0,[R1, #+0]
+     87                   SET_SINAL_MUX_B(0);
+   \   0000001A   0x....             LDR.N    R0,??DataTable1_2  ;; 0x2009c03c
+   \   0000001C   0x6800             LDR      R0,[R0, #+0]
+   \   0000001E   0xF450 0x0080      ORRS     R0,R0,#0x400000
+   \   00000022   0x....             LDR.N    R1,??DataTable1_2  ;; 0x2009c03c
+   \   00000024   0x6008             STR      R0,[R1, #+0]
+     88                   break;
+   \   00000026   0xE018             B.N      ??SERIALMUX_seleciona_3
+     89              case SERIALMUX_DEX:
+     90                   SET_SINAL_MUX_A(1);
+   \                     ??SERIALMUX_seleciona_2:
+   \   00000028   0x....             LDR.N    R0,??DataTable1_3  ;; 0x2009c038
+   \   0000002A   0x6800             LDR      R0,[R0, #+0]
+   \   0000002C   0xF050 0x6000      ORRS     R0,R0,#0x8000000
+   \   00000030   0x....             LDR.N    R1,??DataTable1_3  ;; 0x2009c038
+   \   00000032   0x6008             STR      R0,[R1, #+0]
+     91                   SET_SINAL_MUX_B(0);      
+   \   00000034   0x....             LDR.N    R0,??DataTable1_2  ;; 0x2009c03c
+   \   00000036   0x6800             LDR      R0,[R0, #+0]
+   \   00000038   0xF450 0x0080      ORRS     R0,R0,#0x400000
+   \   0000003C   0x....             LDR.N    R1,??DataTable1_2  ;; 0x2009c03c
+   \   0000003E   0x6008             STR      R0,[R1, #+0]
+     92                   break;
+   \   00000040   0xE00B             B.N      ??SERIALMUX_seleciona_3
+     93              case SERIALMUX_USB:
+     94                   SET_SINAL_MUX_A(0);
+   \                     ??SERIALMUX_seleciona_1:
+   \   00000042   0x....             LDR.N    R0,??DataTable1_2  ;; 0x2009c03c
+   \   00000044   0x6800             LDR      R0,[R0, #+0]
+   \   00000046   0xF050 0x6000      ORRS     R0,R0,#0x8000000
+   \   0000004A   0x....             LDR.N    R1,??DataTable1_2  ;; 0x2009c03c
+   \   0000004C   0x6008             STR      R0,[R1, #+0]
+     95                   SET_SINAL_MUX_B(1);            
+   \   0000004E   0x....             LDR.N    R0,??DataTable1_4  ;; 0x2009c018
+   \   00000050   0x6800             LDR      R0,[R0, #+0]
+   \   00000052   0xF450 0x0080      ORRS     R0,R0,#0x400000
+   \   00000056   0x....             LDR.N    R1,??DataTable1_4  ;; 0x2009c018
+   \   00000058   0x6008             STR      R0,[R1, #+0]
+     96                   break;
+     97            }
+     98          }
+   \                     ??SERIALMUX_seleciona_3:
+   \   0000005A   0x4770             BX       LR               ;; return
+   \   0000005C                      REQUIRE _A_FIO1CLR
+   \   0000005C                      REQUIRE _A_FIO1SET
+   \   0000005C                      REQUIRE _A_FIO0SET
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x2009C020         DC32     0x2009c020
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x2009C000         DC32     0x2009c000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0x2009C03C         DC32     0x2009c03c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_3:
+   \   00000000   0x2009C038         DC32     0x2009c038
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_4:
+   \   00000000   0x2009C018         DC32     0x2009c018
+     99          /***********************************************************************************
+    100          *       Fim do arquivo
+    101          ***********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   SERIALMUX_ini
+       0   SERIALMUX_seleciona
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+       4  ??DataTable1_3
+       4  ??DataTable1_4
+      26  SERIALMUX_ini
+      92  SERIALMUX_seleciona
+       4  _A_FIO0DIR
+       4  _A_FIO0SET
+       4  _A_FIO1CLR
+       4  _A_FIO1DIR
+       4  _A_FIO1SET
+
+ 
+  20 bytes in section .noinit (abs)
+ 138 bytes in section .text
+ 
+ 138 bytes of CODE memory
+   0 bytes of DATA memory (+ 20 bytes shared)
+
+Errors: none
+Warnings: none

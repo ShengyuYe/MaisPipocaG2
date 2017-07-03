@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=11V Pin=K1-1
+Removed Pin From Net: NetName=NetD1_1 Pin=K1-2
+Change Component Comment : Designator=R16 Old Comment=22K-0805-5% New Comment=10K-0805-5%
+Change Component Comment : Designator=C6 Old Comment=100nF/50V-080 New Comment=NM
+Added Pin To Net: NetName=NetD1_1 Pin=K1-1
+Added Pin To Net: NetName=11V Pin=K1-2

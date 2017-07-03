@@ -1,0 +1,916 @@
+G04*
+G04  File:            PIPOCPUF.BSM, Sun Apr 16 23:03:51 2017*
+G04  Source:          P-CAD 2006 PCB, Version 19.02.958, (C:\C\PlusArte\MAquino\PipoCPUF\PIPOCPUF.PCB)*
+G04  Format:          Gerber Format (RS-274-D), ASCII*
+G04*
+G04  Format Options:  Absolute Positioning*
+G04                   Leading-Zero Suppression*
+G04                   Scale Factor 1:1*
+G04                   NO Circular Interpolation*
+G04                   Inch Units*
+G04                   Numeric Format: 4.4 (XXXX.XXXX)*
+G04                   G54 NOT Used for Aperture Change*
+G04                   Apertures Embedded*
+G04*
+G04  File Options:    Offset = (0.0mil,0.0mil)*
+G04                   Drill Symbol Size = 50.0mil*
+G04                   No Pad/Via Holes*
+G04*
+G04  File Contents:   Pads*
+G04                   No Vias*
+G04                   No Designators*
+G04                   No Types*
+G04                   No Values*
+G04                   No Drill Symbols*
+G04                   Board*
+G04                   Bot Mask*
+G04*
+%INPIPOCPUF.BSM*%
+%ICAS*%
+%MOIN*%
+G04*
+G04  Aperture MACROs for general use --- invoked via D-code assignment *
+G04*
+G04  General MACRO for flashed round with rotation and/or offset hole *
+%AMROTOFFROUND*
+1,1,$1,0.0000,0.0000*
+1,0,$2,$3,$4*%
+G04*
+G04  General MACRO for flashed oval (obround) with rotation and/or offset hole *
+%AMROTOFFOVAL*
+21,1,$1,$2,0.0000,0.0000,$3*
+1,1,$4,$5,$6*
+1,1,$4,0-$5,0-$6*
+1,0,$7,$8,$9*%
+G04*
+G04  General MACRO for flashed oval (obround) with rotation and no hole *
+%AMROTOVALNOHOLE*
+21,1,$1,$2,0.0000,0.0000,$3*
+1,1,$4,$5,$6*
+1,1,$4,0-$5,0-$6*%
+G04*
+G04  General MACRO for flashed rectangle with rotation and/or offset hole *
+%AMROTOFFRECT*
+21,1,$1,$2,0.0000,0.0000,$3*
+1,0,$4,$5,$6*%
+G04*
+G04  General MACRO for flashed rectangle with rotation and no hole *
+%AMROTRECTNOHOLE*
+21,1,$1,$2,0.0000,0.0000,$3*%
+G04*
+G04  General MACRO for flashed rounded-rectangle *
+%AMROUNDRECT*
+21,1,$1,$2-$4,0.0000,0.0000,$3*
+21,1,$1-$4,$2,0.0000,0.0000,$3*
+1,1,$4,$5,$6*
+1,1,$4,$7,$8*
+1,1,$4,0-$5,0-$6*
+1,1,$4,0-$7,0-$8*
+1,0,$9,$10,$11*%
+G04*
+G04  General MACRO for flashed rounded-rectangle with rotation and no hole *
+%AMROUNDRECTNOHOLE*
+21,1,$1,$2-$4,0.0000,0.0000,$3*
+21,1,$1-$4,$2,0.0000,0.0000,$3*
+1,1,$4,$5,$6*
+1,1,$4,$7,$8*
+1,1,$4,0-$5,0-$6*
+1,1,$4,0-$7,0-$8*%
+G04*
+G04  General MACRO for flashed regular polygon *
+%AMREGPOLY*
+5,1,$1,0.0000,0.0000,$2,$3+$4*
+1,0,$5,$6,$7*%
+G04*
+G04  General MACRO for flashed regular polygon with no hole *
+%AMREGPOLYNOHOLE*
+5,1,$1,0.0000,0.0000,$2,$3+$4*%
+G04*
+G04  General MACRO for target *
+%AMTARGET*
+6,0,0,$1,$2,$3,4,$4,$5,$6*%
+G04*
+G04  General MACRO for mounting hole *
+%AMMTHOLE*
+1,1,$1,0,0*
+1,0,$2,0,0*
+$1=$1-$2*
+$1=$1/2*
+21,1,$2+$1,$3,0,0,$4*
+21,1,$3,$2+$1,0,0,$4*%
+G04*
+G04*
+G04  D10 : "Ellipse X1.0mil Y1.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0010*
+%ADD10C, 0.0010*%
+G04  D11 : "Ellipse X10.0mil Y10.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0100*
+%ADD11C, 0.0100*%
+G04  D12 : "Ellipse X12.0mil Y12.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0120*
+%ADD12C, 0.0120*%
+G04  D13 : "Ellipse X120.0mil Y120.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.1200*
+%ADD13C, 0.1200*%
+G04  D14 : "Ellipse X14.0mil Y14.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0140*
+%ADD14C, 0.0140*%
+G04  D15 : "Ellipse X140.0mil Y140.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.1400*
+%ADD15C, 0.1400*%
+G04  D16 : "Ellipse X16.0mil Y16.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0160*
+%ADD16C, 0.0160*%
+G04  D17 : "Ellipse X18.0mil Y18.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0180*
+%ADD17C, 0.0180*%
+G04  D18 : "Ellipse X20.0mil Y20.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0200*
+%ADD18C, 0.0200*%
+G04  D19 : "Ellipse X21.0mil Y21.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0210*
+%ADD19C, 0.0210*%
+G04  D20 : "Ellipse X24.0mil Y24.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0240*
+%ADD20C, 0.0240*%
+G04  D21 : "Ellipse X30.0mil Y30.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0300*
+%ADD21C, 0.0300*%
+G04  D22 : "Ellipse X4.0mil Y4.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0040*
+%ADD22C, 0.0040*%
+G04  D23 : "Ellipse X40.0mil Y40.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0400*
+%ADD23C, 0.0400*%
+G04  D24 : "Ellipse X50.0mil Y50.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0500*
+%ADD24C, 0.0500*%
+G04  D25 : "Ellipse X7.0mil Y7.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0070*
+%ADD25C, 0.0070*%
+G04  D26 : "Ellipse X70.0mil Y70.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0700*
+%ADD26C, 0.0700*%
+G04  D27 : "Ellipse X8.0mil Y8.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0080*
+%ADD27C, 0.0080*%
+G04  D28 : "Ellipse X90.0mil Y90.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Draw"*
+G04  Disc: OuterDia=0.0900*
+%ADD28C, 0.0900*%
+G04  D29 : "Ellipse X100.0mil Y100.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.1000*
+%ADD29C, 0.1000*%
+G04  D30 : "Ellipse X104.0mil Y104.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.1040*
+%ADD30C, 0.1040*%
+G04  D31 : "Ellipse X110.0mil Y110.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.1100*
+%ADD31C, 0.1100*%
+G04  D32 : "Ellipse X114.0mil Y114.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.1140*
+%ADD32C, 0.1140*%
+G04  D33 : "Ellipse X122.0mil Y122.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.1220*
+%ADD33C, 0.1220*%
+G04  D34 : "Ellipse X162.0mil Y162.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.1620*
+%ADD34C, 0.1620*%
+G04  D35 : "Ellipse X200.0mil Y200.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.2000*
+%ADD35C, 0.2000*%
+G04  D36 : "Ellipse X204.0mil Y204.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.2040*
+%ADD36C, 0.2040*%
+G04  D37 : "Ellipse X60.0mil Y60.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0600*
+%ADD37C, 0.0600*%
+G04  D38 : "Ellipse X64.0mil Y64.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0640*
+%ADD38C, 0.0640*%
+G04  D39 : "Ellipse X70.0mil Y80.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Irregular Polygon: DimX=0.0700, DimY=0.0800, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%AMIRREGPOLYD39*
+4,1,16,
+0.0350, 0.0000,
+0.0323, 0.0153,
+0.0247, 0.0283,
+0.0134, 0.0370,
+0.0000, 0.0400,
+-0.0134, 0.0370,
+-0.0247, 0.0283,
+-0.0323, 0.0153,
+-0.0350, 0.0000,
+-0.0323, -0.0153,
+-0.0247, -0.0283,
+-0.0134, -0.0370,
+0.0000, -0.0400,
+0.0134, -0.0370,
+0.0247, -0.0283,
+0.0323, -0.0153,
+0.0350, 0.0000,
+$1*%
+%ADD39IRREGPOLYD39, 0.0*%
+G04  D40 : "Ellipse X72.0mil Y72.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0720*
+%ADD40C, 0.0720*%
+G04  D41 : "Ellipse X74.0mil Y84.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Irregular Polygon: DimX=0.0740, DimY=0.0840, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%AMIRREGPOLYD41*
+4,1,16,
+0.0370, 0.0000,
+0.0342, 0.0161,
+0.0262, 0.0297,
+0.0142, 0.0388,
+0.0000, 0.0420,
+-0.0142, 0.0388,
+-0.0262, 0.0297,
+-0.0342, 0.0161,
+-0.0370, 0.0000,
+-0.0342, -0.0161,
+-0.0262, -0.0297,
+-0.0142, -0.0388,
+0.0000, -0.0420,
+0.0142, -0.0388,
+0.0262, -0.0297,
+0.0342, -0.0161,
+0.0370, 0.0000,
+$1*%
+%ADD41IRREGPOLYD41, 0.0*%
+G04  D42 : "Ellipse X76.0mil Y76.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0760*
+%ADD42C, 0.0760*%
+G04  D43 : "Mounting Hole X118.0mil Y118.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Mounting Hole: Diameter=0.1180, Rotation=0.0, LineWidth=0.0050 *
+%ADD43MTHOLE, 0.1180 X0.0980 X0.0050 X0.0*%
+G04  D44 : "Mounting Hole X158.0mil Y158.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Mounting Hole: Diameter=0.1580, Rotation=0.0, LineWidth=0.0050 *
+%ADD44MTHOLE, 0.1580 X0.1380 X0.0050 X0.0*%
+G04  D45 : "Oval X110.0mil Y70.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.1100, DimY=0.0700, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD45O, 0.1100 X0.0700*%
+G04  D46 : "Oval X114.0mil Y74.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.1140, DimY=0.0740, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD46O, 0.1140 X0.0740*%
+G04  D47 : "Oval X48.0mil Y50.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.0480, DimY=0.0500, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD47O, 0.0480 X0.0500*%
+G04  D48 : "Oval X52.0mil Y54.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.0520, DimY=0.0540, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD48O, 0.0520 X0.0540*%
+G04  D49 : "Oval X60.0mil Y78.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.0600, DimY=0.0780, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD49O, 0.0600 X0.0780*%
+G04  D50 : "Oval X60.0mil Y80.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.0600, DimY=0.0800, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD50O, 0.0600 X0.0800*%
+G04  D51 : "Oval X64.0mil Y48.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.0640, DimY=0.0480, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD51O, 0.0640 X0.0480*%
+G04  D52 : "Oval X64.0mil Y82.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.0640, DimY=0.0820, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD52O, 0.0640 X0.0820*%
+G04  D53 : "Oval X64.0mil Y84.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.0640, DimY=0.0840, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD53O, 0.0640 X0.0840*%
+G04  D54 : "Oval X68.0mil Y52.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.0680, DimY=0.0520, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD54O, 0.0680 X0.0520*%
+G04  D55 : "Ellipse X70.0mil Y70.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0700*
+%ADD55C, 0.0700*%
+G04  D56 : "Oval X70.0mil Y98.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.0700, DimY=0.0980, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD56O, 0.0700 X0.0980*%
+G04  D57 : "Oval X74.0mil Y102.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Obround: DimX=0.0740, DimY=0.1020, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD57O, 0.0740 X0.1020*%
+G04  D58 : "Ellipse X74.0mil Y74.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0740*
+%ADD58C, 0.0740*%
+G04  D59 : "Ellipse X78.0mil Y78.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0780*
+%ADD59C, 0.0780*%
+G04  D60 : "Ellipse X80.0mil Y80.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0800*
+%ADD60C, 0.0800*%
+G04  D61 : "Ellipse X82.0mil Y82.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0820*
+%ADD61C, 0.0820*%
+G04  D62 : "Ellipse X84.0mil Y84.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0840*
+%ADD62C, 0.0840*%
+G04  D63 : "Rectangle X100.0mil Y60.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1000, DimY=0.0600, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD63R, 0.1000 X0.0600*%
+G04  D64 : "Rectangle X100.0mil Y70.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1000, DimY=0.0700, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD64R, 0.1000 X0.0700*%
+G04  D65 : "Rectangle X102.0mil Y160.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1020, DimY=0.1600, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD65R, 0.1020 X0.1600*%
+G04  D66 : "Rectangle X102.0mil Y74.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1020, DimY=0.0740, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD66R, 0.1020 X0.0740*%
+G04  D67 : "Rectangle X104.0mil Y64.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1040, DimY=0.0640, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD67R, 0.1040 X0.0640*%
+G04  D68 : "Rectangle X104.0mil Y74.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1040, DimY=0.0740, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD68R, 0.1040 X0.0740*%
+G04  D69 : "Rectangle X11.0mil Y92.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0110, DimY=0.0920, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD69R, 0.0110 X0.0920*%
+G04  D70 : "Rectangle X110.0mil Y110.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Square: Side=0.1100, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000*
+%ADD70R, 0.1100 X0.1100*%
+G04  D71 : "Rectangle X110.0mil Y149.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1100, DimY=0.1490, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD71R, 0.1100 X0.1490*%
+G04  D72 : "Rectangle X114.0mil Y114.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Square: Side=0.1140, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000*
+%ADD72R, 0.1140 X0.1140*%
+G04  D73 : "Rectangle X114.0mil Y153.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1140, DimY=0.1530, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD73R, 0.1140 X0.1530*%
+G04  D74 : "Rectangle X114.0mil Y156.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1140, DimY=0.1560, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD74R, 0.1140 X0.1560*%
+G04  D75 : "Rectangle X118.0mil Y160.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1180, DimY=0.1600, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD75R, 0.1180 X0.1600*%
+G04  D76 : "Rectangle X124.0mil Y100.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1240, DimY=0.1000, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD76R, 0.1240 X0.1000*%
+G04  D77 : "Rectangle X128.0mil Y104.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1280, DimY=0.1040, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD77R, 0.1280 X0.1040*%
+G04  D78 : "Rectangle X14.0mil Y64.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0140, DimY=0.0640, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD78R, 0.0140 X0.0640*%
+G04  D79 : "Rectangle X148.0mil Y110.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1480, DimY=0.1100, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD79R, 0.1480 X0.1100*%
+G04  D80 : "Rectangle X149.0mil Y110.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1490, DimY=0.1100, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD80R, 0.1490 X0.1100*%
+G04  D81 : "Rectangle X15.0mil Y96.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0150, DimY=0.0960, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD81R, 0.0150 X0.0960*%
+G04  D82 : "Rectangle X152.0mil Y114.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1520, DimY=0.1140, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD82R, 0.1520 X0.1140*%
+G04  D83 : "Rectangle X153.0mil Y114.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1530, DimY=0.1140, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD83R, 0.1530 X0.1140*%
+G04  D84 : "Rectangle X156.0mil Y46.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1560, DimY=0.0460, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD84R, 0.1560 X0.0460*%
+G04  D85 : "Rectangle X160.0mil Y50.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.1600, DimY=0.0500, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD85R, 0.1600 X0.0500*%
+G04  D86 : "Rectangle X18.0mil Y68.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0180, DimY=0.0680, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD86R, 0.0180 X0.0680*%
+G04  D87 : "Rectangle X20.0mil Y76.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0200, DimY=0.0760, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD87R, 0.0200 X0.0760*%
+G04  D88 : "Rectangle X22.0mil Y78.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0220, DimY=0.0780, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD88R, 0.0220 X0.0780*%
+G04  D89 : "Rectangle X22.0mil Y86.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0220, DimY=0.0860, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD89R, 0.0220 X0.0860*%
+G04  D90 : "Rectangle X236.0mil Y118.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.2360, DimY=0.1180, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD90R, 0.2360 X0.1180*%
+G04  D91 : "Rectangle X236.0mil Y314.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.2360, DimY=0.3140, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD91R, 0.2360 X0.3140*%
+G04  D92 : "Rectangle X24.0mil Y80.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0240, DimY=0.0800, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD92R, 0.0240 X0.0800*%
+G04  D93 : "Rectangle X240.0mil Y122.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.2400, DimY=0.1220, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD93R, 0.2400 X0.1220*%
+G04  D94 : "Rectangle X240.0mil Y318.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.2400, DimY=0.3180, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD94R, 0.2400 X0.3180*%
+G04  D95 : "Rectangle X26.0mil Y76.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0260, DimY=0.0760, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD95R, 0.0260 X0.0760*%
+G04  D96 : "Rectangle X26.0mil Y80.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0260, DimY=0.0800, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD96R, 0.0260 X0.0800*%
+G04  D97 : "Rectangle X26.0mil Y82.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0260, DimY=0.0820, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD97R, 0.0260 X0.0820*%
+G04  D98 : "Rectangle X26.0mil Y90.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0260, DimY=0.0900, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD98R, 0.0260 X0.0900*%
+G04  D99 : "Rectangle X27.0mil Y118.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0270, DimY=0.1180, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD99R, 0.0270 X0.1180*%
+G04  D100 : "Rectangle X30.0mil Y80.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0300, DimY=0.0800, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD100R, 0.0300 X0.0800*%
+G04  D101 : "Rectangle X30.0mil Y84.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0300, DimY=0.0840, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD101R, 0.0300 X0.0840*%
+G04  D102 : "Rectangle X30.0mil Y86.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0300, DimY=0.0860, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD102R, 0.0300 X0.0860*%
+G04  D103 : "Rectangle X31.0mil Y122.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0310, DimY=0.1220, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD103R, 0.0310 X0.1220*%
+G04  D104 : "Rectangle X34.0mil Y90.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0340, DimY=0.0900, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD104R, 0.0340 X0.0900*%
+G04  D105 : "Rectangle X40.0mil Y60.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0400, DimY=0.0600, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD105R, 0.0400 X0.0600*%
+G04  D106 : "Rectangle X42.0mil Y54.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0420, DimY=0.0540, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD106R, 0.0420 X0.0540*%
+G04  D107 : "Rectangle X44.0mil Y54.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0440, DimY=0.0540, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD107R, 0.0440 X0.0540*%
+G04  D108 : "Rectangle X44.0mil Y64.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0440, DimY=0.0640, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD108R, 0.0440 X0.0640*%
+G04  D109 : "Rectangle X46.0mil Y58.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0460, DimY=0.0580, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD109R, 0.0460 X0.0580*%
+G04  D110 : "Rectangle X48.0mil Y58.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0480, DimY=0.0580, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD110R, 0.0480 X0.0580*%
+G04  D111 : "Rectangle X50.0mil Y100.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0500, DimY=0.1000, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD111R, 0.0500 X0.1000*%
+G04  D112 : "Rectangle X54.0mil Y104.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0540, DimY=0.1040, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD112R, 0.0540 X0.1040*%
+G04  D113 : "Rectangle X54.0mil Y16.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0540, DimY=0.0160, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD113R, 0.0540 X0.0160*%
+G04  D114 : "Rectangle X54.0mil Y42.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0540, DimY=0.0420, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD114R, 0.0540 X0.0420*%
+G04  D115 : "Rectangle X54.0mil Y44.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0540, DimY=0.0440, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD115R, 0.0540 X0.0440*%
+G04  D116 : "Rectangle X58.0mil Y20.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0580, DimY=0.0200, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD116R, 0.0580 X0.0200*%
+G04  D117 : "Rectangle X58.0mil Y46.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0580, DimY=0.0460, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD117R, 0.0580 X0.0460*%
+G04  D118 : "Rectangle X58.0mil Y48.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0580, DimY=0.0480, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD118R, 0.0580 X0.0480*%
+G04  D119 : "Rectangle X58.0mil Y78.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0580, DimY=0.0780, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD119R, 0.0580 X0.0780*%
+G04  D120 : "Rectangle X60.0mil Y40.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0600, DimY=0.0400, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD120R, 0.0600 X0.0400*%
+G04  D121 : "Rectangle X60.0mil Y60.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Square: Side=0.0600, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000*
+%ADD121R, 0.0600 X0.0600*%
+G04  D122 : "Rectangle X60.0mil Y78.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0600, DimY=0.0780, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD122R, 0.0600 X0.0780*%
+G04  D123 : "Rectangle X60.0mil Y80.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0600, DimY=0.0800, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD123R, 0.0600 X0.0800*%
+G04  D124 : "Rectangle X62.0mil Y82.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0620, DimY=0.0820, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD124R, 0.0620 X0.0820*%
+G04  D125 : "Rectangle X64.0mil Y32.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0640, DimY=0.0320, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD125R, 0.0640 X0.0320*%
+G04  D126 : "Rectangle X64.0mil Y44.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0640, DimY=0.0440, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD126R, 0.0640 X0.0440*%
+G04  D127 : "Rectangle X64.0mil Y64.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Square: Side=0.0640, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000*
+%ADD127R, 0.0640 X0.0640*%
+G04  D128 : "Rectangle X64.0mil Y82.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0640, DimY=0.0820, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD128R, 0.0640 X0.0820*%
+G04  D129 : "Rectangle X64.0mil Y84.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0640, DimY=0.0840, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD129R, 0.0640 X0.0840*%
+G04  D130 : "Rectangle X68.0mil Y36.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0680, DimY=0.0360, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD130R, 0.0680 X0.0360*%
+G04  D131 : "Rectangle X70.0mil Y70.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Square: Side=0.0700, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000*
+%ADD131R, 0.0700 X0.0700*%
+G04  D132 : "Rectangle X74.0mil Y74.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Square: Side=0.0740, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000*
+%ADD132R, 0.0740 X0.0740*%
+G04  D133 : "Rectangle X74.0mil Y78.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0740, DimY=0.0780, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD133R, 0.0740 X0.0780*%
+G04  D134 : "Rectangle X78.0mil Y110.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0780, DimY=0.1100, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD134R, 0.0780 X0.1100*%
+G04  D135 : "Rectangle X78.0mil Y118.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0780, DimY=0.1180, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD135R, 0.0780 X0.1180*%
+G04  D136 : "Rectangle X78.0mil Y58.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0780, DimY=0.0580, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD136R, 0.0780 X0.0580*%
+G04  D137 : "Rectangle X78.0mil Y60.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0780, DimY=0.0600, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD137R, 0.0780 X0.0600*%
+G04  D138 : "Rectangle X78.0mil Y78.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Square: Side=0.0780, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000*
+%ADD138R, 0.0780 X0.0780*%
+G04  D139 : "Rectangle X78.0mil Y82.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0780, DimY=0.0820, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD139R, 0.0780 X0.0820*%
+G04  D140 : "Rectangle X80.0mil Y58.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0800, DimY=0.0580, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD140R, 0.0800 X0.0580*%
+G04  D141 : "Rectangle X80.0mil Y80.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Square: Side=0.0800, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000*
+%ADD141R, 0.0800 X0.0800*%
+G04  D142 : "Rectangle X82.0mil Y114.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0820, DimY=0.1140, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD142R, 0.0820 X0.1140*%
+G04  D143 : "Rectangle X82.0mil Y122.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0820, DimY=0.1220, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD143R, 0.0820 X0.1220*%
+G04  D144 : "Rectangle X82.0mil Y62.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0820, DimY=0.0620, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD144R, 0.0820 X0.0620*%
+G04  D145 : "Rectangle X82.0mil Y64.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0820, DimY=0.0640, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD145R, 0.0820 X0.0640*%
+G04  D146 : "Rectangle X82.0mil Y82.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Square: Side=0.0820, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000*
+%ADD146R, 0.0820 X0.0820*%
+G04  D147 : "Rectangle X84.0mil Y62.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0840, DimY=0.0620, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD147R, 0.0840 X0.0620*%
+G04  D148 : "Rectangle X84.0mil Y84.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Square: Side=0.0840, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000*
+%ADD148R, 0.0840 X0.0840*%
+G04  D149 : "Rectangle X84.0mil Y90.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0840, DimY=0.0900, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD149R, 0.0840 X0.0900*%
+G04  D150 : "Rectangle X88.0mil Y94.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0880, DimY=0.0940, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD150R, 0.0880 X0.0940*%
+G04  D151 : "Rectangle X90.0mil Y84.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0900, DimY=0.0840, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD151R, 0.0900 X0.0840*%
+G04  D152 : "Rectangle X92.0mil Y11.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0920, DimY=0.0110, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD152R, 0.0920 X0.0110*%
+G04  D153 : "Rectangle X94.0mil Y88.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0940, DimY=0.0880, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD153R, 0.0940 X0.0880*%
+G04  D154 : "Rectangle X96.0mil Y15.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0960, DimY=0.0150, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD154R, 0.0960 X0.0150*%
+G04  D155 : "Rectangle X98.0mil Y156.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0980, DimY=0.1560, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD155R, 0.0980 X0.1560*%
+G04  D156 : "Rectangle X98.0mil Y70.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Rectangular: DimX=0.0980, DimY=0.0700, Rotation=0.0, OffsetX=0.0000, OffsetY=0.0000, HoleDia=0.0000 *
+%ADD156R, 0.0980 X0.0700*%
+G04  D157 : "Ellipse X28.0mil Y28.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0280*
+%ADD157C, 0.0280*%
+G04  D158 : "Ellipse X32.0mil Y32.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0320*
+%ADD158C, 0.0320*%
+G04  D159 : "Ellipse X36.0mil Y36.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0360*
+%ADD159C, 0.0360*%
+G04  D160 : "Ellipse X40.0mil Y40.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0400*
+%ADD160C, 0.0400*%
+G04  D161 : "Ellipse X44.0mil Y44.0mil H0.0mil 0.0deg (0.0mil,0.0mil) Flash"*
+G04  Disc: OuterDia=0.0440*
+%ADD161C, 0.0440*%
+G04*
+%FSLAX44Y44*%
+%SFA1B1*%
+%OFA0.0000B0.0000*%
+G04*
+G70*
+G90*
+G01*
+D2*
+%LNBoard*%
+D27*
+X130000Y62750*
+Y108000D1*
+X45000Y62750D2*
+Y108000D1*
+Y62750D2*
+X130000D1*
+X45000Y108000D2*
+X130000D1*
+Y62750D2*
+Y108000D1*
+X45000*
+Y62750*
+X130000*
+X45000Y93100D2*
+Y96100D1*
+%LNBot Mask*%
+X45000Y96100D2*
+D46*
+X52450Y101250D3*
+Y100250D3*
+Y99250D3*
+D38*
+X71100Y77700D3*
+D46*
+X73750Y100750D3*
+Y99750D3*
+Y98750D3*
+X101050Y102000D3*
+Y101000D3*
+Y100000D3*
+D42*
+X109750Y103000D3*
+Y104000D3*
+Y105000D3*
+D38*
+X69700Y81500D3*
+Y82500D3*
+D34*
+X46950Y64700D3*
+D54*
+X45570Y93220D3*
+Y95980D3*
+D48*
+X46630Y95580D3*
+Y93620D3*
+D34*
+X46950Y106040D3*
+D46*
+X54250Y99250D3*
+Y100250D3*
+Y101250D3*
+D148*
+X65460Y76000D3*
+D62*
+X63500D3*
+D41*
+X66500Y92750D3*
+X67500D3*
+D46*
+X71750Y98750D3*
+Y99750D3*
+Y100750D3*
+X70000D3*
+Y99750D3*
+Y98750D3*
+D53*
+X82000Y65000D3*
+X81000Y66000D3*
+Y65000D3*
+X80000Y66000D3*
+Y65000D3*
+X79000Y66000D3*
+Y65000D3*
+X78000Y66000D3*
+X82000D3*
+D129*
+X78000Y65000D3*
+D46*
+X75600Y98750D3*
+Y99750D3*
+Y100750D3*
+D34*
+X87500Y64700D3*
+D61*
+X89030Y78000D3*
+D146*
+X87650D3*
+D34*
+X87500Y106040D3*
+D38*
+X89610Y100050D3*
+X88830D3*
+X88040D3*
+D127*
+X87250D3*
+D146*
+X105000Y78700D3*
+D61*
+Y77330D3*
+D46*
+X110750Y69000D3*
+Y68000D3*
+Y67000D3*
+D34*
+X128050Y64710D3*
+Y106040D3*
+D32*
+X92170Y67830D3*
+X93820D3*
+X92170Y65660D3*
+D72*
+X93820D3*
+X107820D3*
+D32*
+X106170D3*
+X107820Y67830D3*
+X106170D3*
+X99170D3*
+X100820D3*
+X99170Y65660D3*
+D72*
+X100820D3*
+D32*
+X112920Y67830D3*
+X114570D3*
+X112920Y65660D3*
+D72*
+X114570D3*
+D32*
+X54400Y102920D3*
+X52750D3*
+X51090D3*
+X54400Y105090D3*
+X52750D3*
+D72*
+X51090D3*
+D32*
+X71820Y102920D3*
+X70170D3*
+X71820Y105090D3*
+D72*
+X70170D3*
+D32*
+X81650Y102920D3*
+X80000D3*
+X78340D3*
+X76690D3*
+X83300Y105090D3*
+X81650D3*
+X80000D3*
+X78340D3*
+X83300Y102920D3*
+D72*
+X76690Y105090D3*
+X103850D3*
+D32*
+X105500D3*
+X107160D3*
+X103850Y102920D3*
+X105500D3*
+X107160D3*
+X112000D3*
+D72*
+Y105090D3*
+D58*
+X67040Y65900D3*
+X68130D3*
+X69220D3*
+X70310D3*
+X66500Y67000D3*
+X67590D3*
+X68680D3*
+X69770D3*
+D132*
+X70860D3*
+D36*
+X63750Y66430D3*
+X73610D3*
+D38*
+X97250Y79250D3*
+X95250Y78250D3*
+X97250Y77250D3*
+D52*
+X68000Y90500D3*
+X69000Y89500D3*
+Y90500D3*
+X70000Y89500D3*
+Y90500D3*
+X71000Y89500D3*
+Y90500D3*
+X63000Y89500D3*
+X72000D3*
+X63000Y90500D3*
+X64000Y89500D3*
+Y90500D3*
+X65000Y89500D3*
+Y90500D3*
+X66000Y89500D3*
+Y90500D3*
+X67000Y89500D3*
+Y90500D3*
+X68000Y89500D3*
+D139*
+X72000Y90500D3*
+D61*
+X62640Y95280D3*
+X60860D3*
+X62640Y92720D3*
+X60860D3*
+D146*
+X108400Y78750D3*
+D61*
+Y77380D3*
+D58*
+X121620Y81220D3*
+X123400D3*
+X121620Y83780D3*
+X123400D3*
+X123390Y77780D3*
+X121620D3*
+X123390Y75220D3*
+X121620D3*
+X123400Y89780D3*
+X121630D3*
+X123400Y87220D3*
+X121630D3*
+X123390Y95780D3*
+X121620D3*
+X123390Y93220D3*
+X121620D3*
+D72*
+X51000Y65660D3*
+D32*
+Y67830D3*
+D30*
+X105150Y73300D3*
+X107910D3*
+D32*
+X119670Y67830D3*
+X121320D3*
+X119670Y65660D3*
+D72*
+X121320D3*
+X92190Y105090D3*
+D32*
+X98800Y102920D3*
+X93840Y105090D3*
+X95500D3*
+X97150D3*
+X98800D3*
+X92190Y102920D3*
+X93840D3*
+X95500D3*
+X97150D3*
+D72*
+X61340Y105090D3*
+D32*
+X63000D3*
+X64650D3*
+X61340Y102920D3*
+X63000D3*
+X64650D3*
+D72*
+X116700Y105090D3*
+D32*
+X123310Y102920D3*
+X118350Y105090D3*
+X120000D3*
+X121660D3*
+X123310D3*
+X116700Y102920D3*
+X118350D3*
+X120000D3*
+X121660D3*
+D30*
+X55060Y65520D3*
+Y68020D3*
+Y70520D3*
+X61440D3*
+Y68020D3*
+Y65520D3*
+D61*
+X61000Y85620D3*
+Y77750D3*
+D33*
+X85450Y95760D3*
+X116560D3*
+X115970Y81580D3*
+X86040D3*
+D57*
+X101490Y80990D3*
+X92490D3*
+X91490D3*
+X90490D3*
+X89490D3*
+X88490D3*
+X103490D3*
+X102490D3*
+X100490D3*
+X99490D3*
+X98490D3*
+X97490D3*
+X96490D3*
+X95490D3*
+X94490D3*
+X93490D3*
+D02M02*

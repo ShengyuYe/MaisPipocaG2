@@ -1,0 +1,781 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:58:20 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Drivers\Teclado\Teclado.c  #
+#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\Teclado\Teclado.c #
+#                    " -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01 #
+#                    _mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA    #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o           #
+#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
+#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --no_clustering --no_scheduling --debug --endian=little  #
+#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
+#                    Files (x86)\IAR Systems\Embedded Workbench               #
+#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
+#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\Teclado.lst     #
+#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
+#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\Teclado.o        #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\Teclado\Teclado.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  Teclado.c
+     18          |       Descrição          :  módulo principal do sistema
+     19          | 
+     20          |       Autor              :  Marcos Aquino
+     21          |       Data criação       :  10/02/2015
+     22          |
+     23          |       Revisões           :  1.0.0.0
+     24          |
+     25          |
+     26          | __________________________________________________________________________________
+     27          */
+     28          /***********************************************************************************
+     29          *       Includes
+     30          ***********************************************************************************/
+     31          #include <nxp\iolpc1768.h>
+
+   \                                 In section .noinit, at 0x2009c034
+   \   __absolute union <unnamed> volatile _A_FIO1PIN
+   \                     _A_FIO1PIN:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0x2009c074
+   \   __absolute union <unnamed> volatile _A_FIO3PIN
+   \                     _A_FIO3PIN:
+   \   00000000                      DS8 4
+     32          #include "teclado.h"
+     33          #include "..\..\includes.h"
+     34          
+     35          /***********************************************************************************
+     36          *       Definições
+     37          ***********************************************************************************/
+     38          #define TECLA_ESC_PIN                   (0x01)<<8
+     39          #define TECLA_INC_PIN                   (0x01)<<9
+     40          #define TECLA_DEC_PIN                   (0x01)<<10
+     41          #define TECLA_ENTER_PIN                 (0x01)<<14
+     42          #define TECLA_GRATIS_PIN                (0x01)<<25        
+     43          #define CHAVE_FIM_PAPEL                 (unsigned int)(0x01)<<31
+     44          #define CHAVE_PORTA_ABERTA              (unsigned int)(0x01)<<30
+     45          
+     46          #define GET_TECLA_ESC()                 (FIO1PIN&TECLA_ESC_PIN)?0:1
+     47          #define GET_TECLA_INC()                 (FIO1PIN&TECLA_INC_PIN)?0:2
+     48          #define GET_TECLA_DEC()                 (FIO1PIN&TECLA_DEC_PIN)?0:4
+     49          #define GET_TECLA_ENTER()               (FIO1PIN&TECLA_ENTER_PIN)?0:8        
+     50          #define GET_TECLA_GRATIS()              (FIO3PIN&TECLA_GRATIS_PIN)?0:16
+     51          
+     52          #define TAM_BUF_TECLADO                 8
+     53          #define CICLOS_TECLADO                  50/8
+     54          #define RELOAD_CONTADOR_REPETICAO       2000
+     55          #define RELOAD_REPETICAO                50        
+     56          
+     57          #define RELOAD_CONTADOR_TIMEOUT         60000
+     58          /***********************************************************************************
+     59          *       Constantes
+     60          ***********************************************************************************/
+
+   \                                 In section .data, align 4
+     61          const char *nomeTeclas[6]={
+   \                     nomeTeclas:
+   \   00000000   0x........         DC32 `?<Constant "NENHUMA">`, `?<Constant "ESC    ">`
+   \              0x........   
+   \   00000008   0x........         DC32 `?<Constant "DEC    ">`, `?<Constant "INC    ">`
+   \              0x........   
+   \   00000010   0x........         DC32 `?<Constant "ENTER  ">`, `?<Constant "GRATIS">`
+   \              0x........   
+     62            "NENHUMA",
+     63            "ESC    ",
+     64            "DEC    ",  
+     65            "INC    ",
+     66            "ENTER  ",
+     67            "GRATIS"
+     68          };
+     69          
+     70          
+     71          /***********************************************************************************
+     72          *       Variaveis locais
+     73          ***********************************************************************************/
+
+   \                                 In section .bss, align 4
+     74          unsigned char TECLADO_bufferAmostragem[TAM_BUF_TECLADO];
+   \                     TECLADO_bufferAmostragem:
+   \   00000000                      DS8 8
+
+   \                                 In section .data, align 2
+     75          unsigned short int TECLADO_contadorRepeticao=1;
+   \                     TECLADO_contadorRepeticao:
+   \   00000000   0x0001             DC16 1
+
+   \                                 In section .bss, align 4
+     76          unsigned int TECLADO_contadorTimeout=0;
+   \                     TECLADO_contadorTimeout:
+   \   00000000                      DS8 4
+     77          
+     78          /***********************************************************************************
+     79          *       Funções locais
+     80          ***********************************************************************************/
+     81          
+     82          /***********************************************************************************
+     83          *       Descrição       :       inicialização da biblioteca
+     84          *       Parametros      :       nenhum
+     85          *       Retorno         :       nenhum
+     86          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     87          void TECLADO_ini(void){
+     88            
+     89            
+     90            
+     91          }
+   \                     TECLADO_ini:
+   \   00000000   0x4770             BX       LR               ;; return
+     92          /***********************************************************************************
+     93          *       Descrição       :       Tick de timer da biblioteca do teclado
+     94          *       Parametros      :       nenhum
+     95          *       Retorno         :       nenhum
+     96          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     97          void TECLADO_timerTick(void){
+     98            static unsigned char indice=0;
+     99            static unsigned short int ciclos=1;
+    100            
+    101            if(TECLADO_contadorTimeout)
+   \                     TECLADO_timerTick:
+   \   00000000   0x....             LDR.N    R0,??DataTable5
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   \   00000004   0x2800             CMP      R0,#+0
+   \   00000006   0xD004             BEQ.N    ??TECLADO_timerTick_0
+    102              TECLADO_contadorTimeout--;
+   \   00000008   0x....             LDR.N    R0,??DataTable5
+   \   0000000A   0x6800             LDR      R0,[R0, #+0]
+   \   0000000C   0x1E40             SUBS     R0,R0,#+1
+   \   0000000E   0x....             LDR.N    R1,??DataTable5
+   \   00000010   0x6008             STR      R0,[R1, #+0]
+    103            
+    104            if(TECLADO_contadorRepeticao)
+   \                     ??TECLADO_timerTick_0:
+   \   00000012   0x....             LDR.N    R0,??DataTable5_1
+   \   00000014   0x8800             LDRH     R0,[R0, #+0]
+   \   00000016   0x2800             CMP      R0,#+0
+   \   00000018   0xD004             BEQ.N    ??TECLADO_timerTick_1
+    105              TECLADO_contadorRepeticao--;
+   \   0000001A   0x....             LDR.N    R0,??DataTable5_1
+   \   0000001C   0x8800             LDRH     R0,[R0, #+0]
+   \   0000001E   0x1E40             SUBS     R0,R0,#+1
+   \   00000020   0x....             LDR.N    R1,??DataTable5_1
+   \   00000022   0x8008             STRH     R0,[R1, #+0]
+    106            
+    107            if(ciclos)
+   \                     ??TECLADO_timerTick_1:
+   \   00000024   0x....             LDR.N    R0,??DataTable5_2
+   \   00000026   0x8800             LDRH     R0,[R0, #+0]
+   \   00000028   0x2800             CMP      R0,#+0
+   \   0000002A   0xD005             BEQ.N    ??TECLADO_timerTick_2
+    108              ciclos--;
+   \   0000002C   0x....             LDR.N    R0,??DataTable5_2
+   \   0000002E   0x8800             LDRH     R0,[R0, #+0]
+   \   00000030   0x1E40             SUBS     R0,R0,#+1
+   \   00000032   0x....             LDR.N    R1,??DataTable5_2
+   \   00000034   0x8008             STRH     R0,[R1, #+0]
+   \   00000036   0xE063             B.N      ??TECLADO_timerTick_3
+    109            else{
+    110              TECLADO_bufferAmostragem[indice] = 0;
+   \                     ??TECLADO_timerTick_2:
+   \   00000038   0x....             LDR.N    R0,??DataTable5_3
+   \   0000003A   0x7800             LDRB     R0,[R0, #+0]
+   \   0000003C   0x....             LDR.N    R1,??DataTable5_4
+   \   0000003E   0x2200             MOVS     R2,#+0
+   \   00000040   0x5442             STRB     R2,[R0, R1]
+    111              TECLADO_bufferAmostragem[indice] |= GET_TECLA_ESC();  
+   \   00000042   0x....             LDR.N    R0,??DataTable5_3
+   \   00000044   0x7800             LDRB     R0,[R0, #+0]
+   \   00000046   0x....             LDR.N    R1,??DataTable5_4
+   \   00000048   0x5C40             LDRB     R0,[R0, R1]
+   \   0000004A   0x....             LDR.N    R1,??DataTable5_5  ;; 0x2009c034
+   \   0000004C   0x6809             LDR      R1,[R1, #+0]
+   \   0000004E   0xF3C1 0x2100      UBFX     R1,R1,#+8,#+1
+   \   00000052   0xF011 0x0101      ANDS     R1,R1,#0x1
+   \   00000056   0xF091 0x0101      EORS     R1,R1,#0x1
+   \   0000005A   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000005C   0x4308             ORRS     R0,R1,R0
+   \   0000005E   0x....             LDR.N    R1,??DataTable5_3
+   \   00000060   0x7809             LDRB     R1,[R1, #+0]
+   \   00000062   0x....             LDR.N    R2,??DataTable5_4
+   \   00000064   0x5488             STRB     R0,[R1, R2]
+    112              TECLADO_bufferAmostragem[indice] |= GET_TECLA_INC();  
+   \   00000066   0x....             LDR.N    R0,??DataTable5_5  ;; 0x2009c034
+   \   00000068   0x6800             LDR      R0,[R0, #+0]
+   \   0000006A   0x0580             LSLS     R0,R0,#+22
+   \   0000006C   0xD501             BPL.N    ??TECLADO_timerTick_4
+   \   0000006E   0x2000             MOVS     R0,#+0
+   \   00000070   0xE000             B.N      ??TECLADO_timerTick_5
+   \                     ??TECLADO_timerTick_4:
+   \   00000072   0x2002             MOVS     R0,#+2
+   \                     ??TECLADO_timerTick_5:
+   \   00000074   0x....             LDR.N    R1,??DataTable5_3
+   \   00000076   0x7809             LDRB     R1,[R1, #+0]
+   \   00000078   0x....             LDR.N    R2,??DataTable5_4
+   \   0000007A   0x5C89             LDRB     R1,[R1, R2]
+   \   0000007C   0x4308             ORRS     R0,R0,R1
+   \   0000007E   0x....             LDR.N    R1,??DataTable5_3
+   \   00000080   0x7809             LDRB     R1,[R1, #+0]
+   \   00000082   0x....             LDR.N    R2,??DataTable5_4
+   \   00000084   0x5488             STRB     R0,[R1, R2]
+    113              TECLADO_bufferAmostragem[indice] |= GET_TECLA_DEC();
+   \   00000086   0x....             LDR.N    R0,??DataTable5_5  ;; 0x2009c034
+   \   00000088   0x6800             LDR      R0,[R0, #+0]
+   \   0000008A   0x0540             LSLS     R0,R0,#+21
+   \   0000008C   0xD501             BPL.N    ??TECLADO_timerTick_6
+   \   0000008E   0x2000             MOVS     R0,#+0
+   \   00000090   0xE000             B.N      ??TECLADO_timerTick_7
+   \                     ??TECLADO_timerTick_6:
+   \   00000092   0x2004             MOVS     R0,#+4
+   \                     ??TECLADO_timerTick_7:
+   \   00000094   0x....             LDR.N    R1,??DataTable5_3
+   \   00000096   0x7809             LDRB     R1,[R1, #+0]
+   \   00000098   0x....             LDR.N    R2,??DataTable5_4
+   \   0000009A   0x5C89             LDRB     R1,[R1, R2]
+   \   0000009C   0x4308             ORRS     R0,R0,R1
+   \   0000009E   0x....             LDR.N    R1,??DataTable5_3
+   \   000000A0   0x7809             LDRB     R1,[R1, #+0]
+   \   000000A2   0x....             LDR.N    R2,??DataTable5_4
+   \   000000A4   0x5488             STRB     R0,[R1, R2]
+    114              TECLADO_bufferAmostragem[indice] |= GET_TECLA_ENTER();
+   \   000000A6   0x....             LDR.N    R0,??DataTable5_5  ;; 0x2009c034
+   \   000000A8   0x6800             LDR      R0,[R0, #+0]
+   \   000000AA   0x0440             LSLS     R0,R0,#+17
+   \   000000AC   0xD501             BPL.N    ??TECLADO_timerTick_8
+   \   000000AE   0x2000             MOVS     R0,#+0
+   \   000000B0   0xE000             B.N      ??TECLADO_timerTick_9
+   \                     ??TECLADO_timerTick_8:
+   \   000000B2   0x2008             MOVS     R0,#+8
+   \                     ??TECLADO_timerTick_9:
+   \   000000B4   0x....             LDR.N    R1,??DataTable5_3
+   \   000000B6   0x7809             LDRB     R1,[R1, #+0]
+   \   000000B8   0x....             LDR.N    R2,??DataTable5_4
+   \   000000BA   0x5C89             LDRB     R1,[R1, R2]
+   \   000000BC   0x4308             ORRS     R0,R0,R1
+   \   000000BE   0x....             LDR.N    R1,??DataTable5_3
+   \   000000C0   0x7809             LDRB     R1,[R1, #+0]
+   \   000000C2   0x....             LDR.N    R2,??DataTable5_4
+   \   000000C4   0x5488             STRB     R0,[R1, R2]
+    115              TECLADO_bufferAmostragem[indice] |= GET_TECLA_GRATIS();
+   \   000000C6   0x....             LDR.N    R0,??DataTable5_6  ;; 0x2009c074
+   \   000000C8   0x6800             LDR      R0,[R0, #+0]
+   \   000000CA   0x0180             LSLS     R0,R0,#+6
+   \   000000CC   0xD501             BPL.N    ??TECLADO_timerTick_10
+   \   000000CE   0x2000             MOVS     R0,#+0
+   \   000000D0   0xE000             B.N      ??TECLADO_timerTick_11
+   \                     ??TECLADO_timerTick_10:
+   \   000000D2   0x2010             MOVS     R0,#+16
+   \                     ??TECLADO_timerTick_11:
+   \   000000D4   0x....             LDR.N    R1,??DataTable5_3
+   \   000000D6   0x7809             LDRB     R1,[R1, #+0]
+   \   000000D8   0x....             LDR.N    R2,??DataTable5_4
+   \   000000DA   0x5C89             LDRB     R1,[R1, R2]
+   \   000000DC   0x4308             ORRS     R0,R0,R1
+   \   000000DE   0x....             LDR.N    R1,??DataTable5_3
+   \   000000E0   0x7809             LDRB     R1,[R1, #+0]
+   \   000000E2   0x....             LDR.N    R2,??DataTable5_4
+   \   000000E4   0x5488             STRB     R0,[R1, R2]
+    116            
+    117              indice = (indice + 1) % TAM_BUF_TECLADO;    
+   \   000000E6   0x....             LDR.N    R0,??DataTable5_3
+   \   000000E8   0x7800             LDRB     R0,[R0, #+0]
+   \   000000EA   0x1C40             ADDS     R0,R0,#+1
+   \   000000EC   0x2108             MOVS     R1,#+8
+   \   000000EE   0xFB90 0xF2F1      SDIV     R2,R0,R1
+   \   000000F2   0xFB02 0x0211      MLS      R2,R2,R1,R0
+   \   000000F6   0x....             LDR.N    R0,??DataTable5_3
+   \   000000F8   0x7002             STRB     R2,[R0, #+0]
+    118              ciclos = CICLOS_TECLADO;
+   \   000000FA   0x....             LDR.N    R0,??DataTable5_2
+   \   000000FC   0x2106             MOVS     R1,#+6
+   \   000000FE   0x8001             STRH     R1,[R0, #+0]
+    119            }
+    120          }
+   \                     ??TECLADO_timerTick_3:
+   \   00000100   0x4770             BX       LR               ;; return
+   \   00000102                      REQUIRE _A_FIO1PIN
+   \   00000102                      REQUIRE _A_FIO3PIN
+
+   \                                 In section .bss, align 1
+   \                     ??indice:
+   \   00000000                      DS8 1
+
+   \                                 In section .data, align 2
+   \                     ??ciclos:
+   \   00000000   0x0001             DC16 1
+    121          /***********************************************************************************
+    122          *       Descrição       :       Verifica se uma determinada tecla foi pressionada
+    123          *       Parametros      :       nenhum
+    124          *       Retorno         :       (eTECLA) código da tecla pressionada
+    125          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    126          eTECLA TECLADO_getch(void){
+   \                     TECLADO_getch:
+   \   00000000   0xB410             PUSH     {R4}
+    127            unsigned char contador;
+    128            static unsigned char teclaLivre=0;
+    129            
+    130            contador=0;
+   \   00000002   0x2100             MOVS     R1,#+0
+    131            for(unsigned char i=0;i<TAM_BUF_TECLADO;i++)    
+   \   00000004   0x2000             MOVS     R0,#+0
+   \   00000006   0xE008             B.N      ??TECLADO_getch_0
+    132              if((TECLADO_bufferAmostragem[i]&0x09)==0x09)
+   \                     ??TECLADO_getch_1:
+   \   00000008   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000000A   0x....             LDR.N    R2,??DataTable5_4
+   \   0000000C   0x5C82             LDRB     R2,[R0, R2]
+   \   0000000E   0xF012 0x0209      ANDS     R2,R2,#0x9
+   \   00000012   0x2A09             CMP      R2,#+9
+   \   00000014   0xD100             BNE.N    ??TECLADO_getch_2
+    133                contador++;
+   \   00000016   0x1C49             ADDS     R1,R1,#+1
+   \                     ??TECLADO_getch_2:
+   \   00000018   0x1C40             ADDS     R0,R0,#+1
+   \                     ??TECLADO_getch_0:
+   \   0000001A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001C   0x2808             CMP      R0,#+8
+   \   0000001E   0xDBF3             BLT.N    ??TECLADO_getch_1
+    134            
+    135            if(contador>(TAM_BUF_TECLADO>>1))
+   \   00000020   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000022   0x2905             CMP      R1,#+5
+   \   00000024   0xDB01             BLT.N    ??TECLADO_getch_3
+    136              return TECLA_MENU_AVANCADO;
+   \   00000026   0x2008             MOVS     R0,#+8
+   \   00000028   0xE04F             B.N      ??TECLADO_getch_4
+    137              
+    138            for(unsigned char i=0;i<5;i++){
+   \                     ??TECLADO_getch_3:
+   \   0000002A   0x2000             MOVS     R0,#+0
+   \   0000002C   0xE000             B.N      ??TECLADO_getch_5
+   \                     ??TECLADO_getch_6:
+   \   0000002E   0x1C40             ADDS     R0,R0,#+1
+   \                     ??TECLADO_getch_5:
+   \   00000030   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000032   0x2805             CMP      R0,#+5
+   \   00000034   0xDA45             BGE.N    ??TECLADO_getch_7
+    139              // inicia a contagem em zero
+    140              contador=0;
+   \   00000036   0x2100             MOVS     R1,#+0
+    141              // Conta as ocorrências da 
+    142              // tecla no buffer
+    143              for(unsigned char j=0;j<TAM_BUF_TECLADO;j++)
+   \   00000038   0x2200             MOVS     R2,#+0
+   \   0000003A   0xE008             B.N      ??TECLADO_getch_8
+    144                if(TECLADO_bufferAmostragem[j]&(0x01<<i))
+   \                     ??TECLADO_getch_9:
+   \   0000003C   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   0000003E   0x....             LDR.N    R3,??DataTable5_4
+   \   00000040   0x5CD3             LDRB     R3,[R2, R3]
+   \   00000042   0x2401             MOVS     R4,#+1
+   \   00000044   0x4084             LSLS     R4,R4,R0
+   \   00000046   0x4223             TST      R3,R4
+   \   00000048   0xD000             BEQ.N    ??TECLADO_getch_10
+    145                  contador++;
+   \   0000004A   0x1C49             ADDS     R1,R1,#+1
+   \                     ??TECLADO_getch_10:
+   \   0000004C   0x1C52             ADDS     R2,R2,#+1
+   \                     ??TECLADO_getch_8:
+   \   0000004E   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   00000050   0x2A08             CMP      R2,#+8
+   \   00000052   0xDBF3             BLT.N    ??TECLADO_getch_9
+    146                
+    147               if(contador>(TAM_BUF_TECLADO>>1)){
+   \   00000054   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000056   0x2905             CMP      R1,#+5
+   \   00000058   0xDBE9             BLT.N    ??TECLADO_getch_6
+    148                               
+    149                 if(!TECLADO_contadorRepeticao){                 
+   \   0000005A   0x....             LDR.N    R1,??DataTable5_1
+   \   0000005C   0x8809             LDRH     R1,[R1, #+0]
+   \   0000005E   0x2900             CMP      R1,#+0
+   \   00000060   0xD11B             BNE.N    ??TECLADO_getch_11
+    150                   if(teclaLivre){
+   \   00000062   0x....             LDR.N    R1,??DataTable5_7
+   \   00000064   0x7809             LDRB     R1,[R1, #+0]
+   \   00000066   0x2900             CMP      R1,#+0
+   \   00000068   0xD00D             BEQ.N    ??TECLADO_getch_12
+    151                      teclaLivre = 0;
+   \   0000006A   0x....             LDR.N    R1,??DataTable5_7
+   \   0000006C   0x2200             MOVS     R2,#+0
+   \   0000006E   0x700A             STRB     R2,[R1, #+0]
+    152                      TECLADO_contadorRepeticao = RELOAD_CONTADOR_REPETICAO;
+   \   00000070   0x....             LDR.N    R1,??DataTable5_1
+   \   00000072   0xF44F 0x62FA      MOV      R2,#+2000
+   \   00000076   0x800A             STRH     R2,[R1, #+0]
+    153                      TECLADO_contadorTimeout = RELOAD_CONTADOR_TIMEOUT;
+   \   00000078   0x....             LDR.N    R1,??DataTable5
+   \   0000007A   0xF64E 0x2260      MOVW     R2,#+60000
+   \   0000007E   0x600A             STR      R2,[R1, #+0]
+    154                      //ultimaTecla = (eTECLA)(i+1);           
+    155                      return (eTECLA)(i+1);           
+   \   00000080   0x1C40             ADDS     R0,R0,#+1
+   \   00000082   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000084   0xE021             B.N      ??TECLADO_getch_4
+    156                   }
+    157                   else{
+    158                      TECLADO_contadorRepeticao = RELOAD_REPETICAO;
+   \                     ??TECLADO_getch_12:
+   \   00000086   0x....             LDR.N    R1,??DataTable5_1
+   \   00000088   0x2232             MOVS     R2,#+50
+   \   0000008A   0x800A             STRH     R2,[R1, #+0]
+    159                      TECLADO_contadorTimeout = RELOAD_CONTADOR_TIMEOUT;
+   \   0000008C   0x....             LDR.N    R1,??DataTable5
+   \   0000008E   0xF64E 0x2260      MOVW     R2,#+60000
+   \   00000092   0x600A             STR      R2,[R1, #+0]
+    160                      //ultimaTecla = (eTECLA)(i+1);           
+    161                      return (eTECLA)(i+1);           
+   \   00000094   0x1C40             ADDS     R0,R0,#+1
+   \   00000096   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000098   0xE017             B.N      ??TECLADO_getch_4
+    162                   }
+    163                 }
+    164                 else{
+    165                   if(teclaLivre){
+   \                     ??TECLADO_getch_11:
+   \   0000009A   0x....             LDR.N    R1,??DataTable5_7
+   \   0000009C   0x7809             LDRB     R1,[R1, #+0]
+   \   0000009E   0x2900             CMP      R1,#+0
+   \   000000A0   0xD00D             BEQ.N    ??TECLADO_getch_13
+    166                      teclaLivre = 0;
+   \   000000A2   0x....             LDR.N    R1,??DataTable5_7
+   \   000000A4   0x2200             MOVS     R2,#+0
+   \   000000A6   0x700A             STRB     R2,[R1, #+0]
+    167                      TECLADO_contadorRepeticao = RELOAD_CONTADOR_REPETICAO;
+   \   000000A8   0x....             LDR.N    R1,??DataTable5_1
+   \   000000AA   0xF44F 0x62FA      MOV      R2,#+2000
+   \   000000AE   0x800A             STRH     R2,[R1, #+0]
+    168                      TECLADO_contadorTimeout = RELOAD_CONTADOR_TIMEOUT;
+   \   000000B0   0x....             LDR.N    R1,??DataTable5
+   \   000000B2   0xF64E 0x2260      MOVW     R2,#+60000
+   \   000000B6   0x600A             STR      R2,[R1, #+0]
+    169                      //ultimaTecla = (eTECLA)(i+1);           
+    170                      return (eTECLA)(i+1);                      
+   \   000000B8   0x1C40             ADDS     R0,R0,#+1
+   \   000000BA   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000000BC   0xE005             B.N      ??TECLADO_getch_4
+    171                   }
+    172                   else
+    173                     return NENHUMA_TECLA;       
+   \                     ??TECLADO_getch_13:
+   \   000000BE   0x2000             MOVS     R0,#+0
+   \   000000C0   0xE003             B.N      ??TECLADO_getch_4
+    174                 }
+    175               }
+    176            }       
+    177            
+    178            //ultimaTecla = NENHUMA_TECLA;
+    179            teclaLivre = 1;
+   \                     ??TECLADO_getch_7:
+   \   000000C2   0x....             LDR.N    R0,??DataTable5_7
+   \   000000C4   0x2101             MOVS     R1,#+1
+   \   000000C6   0x7001             STRB     R1,[R0, #+0]
+    180            return NENHUMA_TECLA;
+   \   000000C8   0x2000             MOVS     R0,#+0
+   \                     ??TECLADO_getch_4:
+   \   000000CA   0xBC10             POP      {R4}
+   \   000000CC   0x4770             BX       LR               ;; return
+    181          }
+
+   \                                 In section .bss, align 1
+   \                     ??teclaLivre:
+   \   00000000                      DS8 1
+    182          /***********************************************************************************
+    183          *       Descrição       :       Converte uma tecla para string
+    184          *       Parametros      :       (eTECLA) código da tecla
+    185          *       Retorno         :       (char*) nome da tecla
+    186          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    187          char* TECLADO_eTecla_to_String(eTECLA tecla){
+    188            
+    189            return (char*)nomeTeclas[(unsigned char)tecla];
+   \                     TECLADO_eTecla_to_String:
+   \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000002   0x....             LDR.N    R1,??DataTable5_8
+   \   00000004   0xF851 0x0020      LDR      R0,[R1, R0, LSL #+2]
+   \   00000008   0x4770             BX       LR               ;; return
+    190          }
+    191          /***********************************************************************************
+    192          *       Descrição       :       Getter para o contador de inatividade do teclado
+    193          *       Parametros      :       nenhum
+    194          *       Retorno         :       (unsigned int) maior do que zero se 
+    195          *                                              o contador for maior do que zero
+    196          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    197          unsigned int TECLADO_getContadorInatividade(void){
+    198            
+    199            return TECLADO_contadorTimeout;  
+   \                     TECLADO_getContadorInatividade:
+   \   00000000   0x....             LDR.N    R0,??DataTable5
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   \   00000004   0x4770             BX       LR               ;; return
+    200          }
+    201          /***********************************************************************************
+    202          *       Descrição       :       Getter para os sinais da chave de porta 
+    203          *                               aberta
+    204          *       Parametros      :       nenhum
+    205          *       Retorno         :       (unsigned char) maior do que zero se a chave
+    206          *                                               de porta aberta estiver 
+    207          *                                               pressionada
+    208          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    209          unsigned char TECLADO_getChavePorta(void){
+    210            unsigned char soma=0;
+   \                     TECLADO_getChavePorta:
+   \   00000000   0x2000             MOVS     R0,#+0
+    211            
+    212            for(unsigned char i=0;i<TAM_BUF_TECLADO;i++)
+   \   00000002   0x2100             MOVS     R1,#+0
+   \   00000004   0xE006             B.N      ??TECLADO_getChavePorta_0
+    213              if(TECLADO_bufferAmostragem[i]&64)
+   \                     ??TECLADO_getChavePorta_1:
+   \   00000006   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000008   0x....             LDR.N    R2,??DataTable5_4
+   \   0000000A   0x5C8A             LDRB     R2,[R1, R2]
+   \   0000000C   0x0652             LSLS     R2,R2,#+25
+   \   0000000E   0xD500             BPL.N    ??TECLADO_getChavePorta_2
+    214                soma++;
+   \   00000010   0x1C40             ADDS     R0,R0,#+1
+   \                     ??TECLADO_getChavePorta_2:
+   \   00000012   0x1C49             ADDS     R1,R1,#+1
+   \                     ??TECLADO_getChavePorta_0:
+   \   00000014   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000016   0x2908             CMP      R1,#+8
+   \   00000018   0xDBF5             BLT.N    ??TECLADO_getChavePorta_1
+    215            
+    216            return (soma>(TAM_BUF_TECLADO>>1));
+   \   0000001A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001C   0x2805             CMP      R0,#+5
+   \   0000001E   0xDB01             BLT.N    ??TECLADO_getChavePorta_3
+   \   00000020   0x2001             MOVS     R0,#+1
+   \   00000022   0xE000             B.N      ??TECLADO_getChavePorta_4
+   \                     ??TECLADO_getChavePorta_3:
+   \   00000024   0x2000             MOVS     R0,#+0
+   \                     ??TECLADO_getChavePorta_4:
+   \   00000026   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000028   0x4770             BX       LR               ;; return
+    217          }
+    218          /***********************************************************************************
+    219          *       Descrição       :       Getter para o sinal da chave de reserva do papel
+    220          *       Parametros      :       nenhum
+    221          *       Retorno         :       (unsigned char) maior do que zero se a chave
+    222          *                               de reserva do papel estiver pressionada
+    223          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    224          unsigned char TECLADO_getChaveReservaPapel(void){
+    225            unsigned char soma=0;
+   \                     TECLADO_getChaveReservaPapel:
+   \   00000000   0x2000             MOVS     R0,#+0
+    226            
+    227            for(unsigned char i=0;i<TAM_BUF_TECLADO;i++)
+   \   00000002   0x2100             MOVS     R1,#+0
+   \   00000004   0xE006             B.N      ??TECLADO_getChaveReservaPapel_0
+    228              if(TECLADO_bufferAmostragem[i]&32)
+   \                     ??TECLADO_getChaveReservaPapel_1:
+   \   00000006   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000008   0x....             LDR.N    R2,??DataTable5_4
+   \   0000000A   0x5C8A             LDRB     R2,[R1, R2]
+   \   0000000C   0x0692             LSLS     R2,R2,#+26
+   \   0000000E   0xD500             BPL.N    ??TECLADO_getChaveReservaPapel_2
+    229                soma++;
+   \   00000010   0x1C40             ADDS     R0,R0,#+1
+   \                     ??TECLADO_getChaveReservaPapel_2:
+   \   00000012   0x1C49             ADDS     R1,R1,#+1
+   \                     ??TECLADO_getChaveReservaPapel_0:
+   \   00000014   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000016   0x2908             CMP      R1,#+8
+   \   00000018   0xDBF5             BLT.N    ??TECLADO_getChaveReservaPapel_1
+    230            
+    231            return (soma>(TAM_BUF_TECLADO>>1)); 
+   \   0000001A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001C   0x2805             CMP      R0,#+5
+   \   0000001E   0xDB01             BLT.N    ??TECLADO_getChaveReservaPapel_3
+   \   00000020   0x2001             MOVS     R0,#+1
+   \   00000022   0xE000             B.N      ??TECLADO_getChaveReservaPapel_4
+   \                     ??TECLADO_getChaveReservaPapel_3:
+   \   00000024   0x2000             MOVS     R0,#+0
+   \                     ??TECLADO_getChaveReservaPapel_4:
+   \   00000026   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000028   0x4770             BX       LR               ;; return
+    232          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5:
+   \   00000000   0x........         DC32     TECLADO_contadorTimeout
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_1:
+   \   00000000   0x........         DC32     TECLADO_contadorRepeticao
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_2:
+   \   00000000   0x........         DC32     ??ciclos
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_3:
+   \   00000000   0x........         DC32     ??indice
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_4:
+   \   00000000   0x........         DC32     TECLADO_bufferAmostragem
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_5:
+   \   00000000   0x2009C034         DC32     0x2009c034
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_6:
+   \   00000000   0x2009C074         DC32     0x2009c074
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_7:
+   \   00000000   0x........         DC32     ??teclaLivre
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_8:
+   \   00000000   0x........         DC32     nomeTeclas
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "NENHUMA">`:
+   \   00000000   0x4E 0x45          DC8 "NENHUMA"
+   \              0x4E 0x48    
+   \              0x55 0x4D    
+   \              0x41 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "ESC    ">`:
+   \   00000000   0x45 0x53          DC8 "ESC    "
+   \              0x43 0x20    
+   \              0x20 0x20    
+   \              0x20 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "DEC    ">`:
+   \   00000000   0x44 0x45          DC8 "DEC    "
+   \              0x43 0x20    
+   \              0x20 0x20    
+   \              0x20 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "INC    ">`:
+   \   00000000   0x49 0x4E          DC8 "INC    "
+   \              0x43 0x20    
+   \              0x20 0x20    
+   \              0x20 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "ENTER  ">`:
+   \   00000000   0x45 0x4E          DC8 "ENTER  "
+   \              0x54 0x45    
+   \              0x52 0x20    
+   \              0x20 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "GRATIS">`:
+   \   00000000   0x47 0x52          DC8 "GRATIS"
+   \              0x41 0x54    
+   \              0x49 0x53    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+    233          /***********************************************************************************
+    234          *       Fim do arquivo
+    235          ***********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   TECLADO_eTecla_to_String
+       0   TECLADO_getChavePorta
+       0   TECLADO_getChaveReservaPapel
+       0   TECLADO_getContadorInatividade
+       4   TECLADO_getch
+       0   TECLADO_ini
+       0   TECLADO_timerTick
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       8  ?<Constant "DEC    ">
+       8  ?<Constant "ENTER  ">
+       8  ?<Constant "ESC    ">
+       8  ?<Constant "GRATIS">
+       8  ?<Constant "INC    ">
+       8  ?<Constant "NENHUMA">
+       4  ??DataTable5
+       4  ??DataTable5_1
+       4  ??DataTable5_2
+       4  ??DataTable5_3
+       4  ??DataTable5_4
+       4  ??DataTable5_5
+       4  ??DataTable5_6
+       4  ??DataTable5_7
+       4  ??DataTable5_8
+       8  TECLADO_bufferAmostragem
+       2  TECLADO_contadorRepeticao
+       4  TECLADO_contadorTimeout
+      10  TECLADO_eTecla_to_String
+      42  TECLADO_getChavePorta
+      42  TECLADO_getChaveReservaPapel
+       6  TECLADO_getContadorInatividade
+     206  TECLADO_getch
+       2  TECLADO_ini
+     258  TECLADO_timerTick
+       4  _A_FIO1PIN
+       4  _A_FIO3PIN
+       2  ciclos
+       1  indice
+      24  nomeTeclas
+       1  teclaLivre
+
+ 
+  14 bytes in section .bss
+  28 bytes in section .data
+   8 bytes in section .noinit (abs)
+  48 bytes in section .rodata
+ 602 bytes in section .text
+ 
+ 602 bytes of CODE  memory
+  48 bytes of CONST memory
+  42 bytes of DATA  memory (+ 8 bytes shared)
+
+Errors: none
+Warnings: none

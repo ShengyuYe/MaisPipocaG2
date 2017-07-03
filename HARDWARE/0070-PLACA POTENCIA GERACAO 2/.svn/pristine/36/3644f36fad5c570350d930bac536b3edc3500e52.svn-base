@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=NetJ2_1 Pin=J2-1
+Removed Pin From Net: NetName=NetJ2_2 Pin=J2-2
+Removed Pin From Net: NetName=SINCRONISMO Pin=J2-4
+Removed Pin From Net: NetName=GND Pin=J2-5
+Removed Pin From Net: NetName=NetJ2_1 Pin=R2-1
+Removed Pin From Net: NetName=NetJ2_2 Pin=R5-1
+Added Pin To Net: NetName=GND Pin=J2-1
+Added Pin To Net: NetName=SINCRONISMO Pin=J2-2
+Added Pin To Net: NetName=NetJ2_1 Pin=J2-4
+Added Pin To Net: NetName=NetJ2_2 Pin=J2-5
+Added Pin To Net: NetName=NetJ2_2 Pin=R2-1
+Added Pin To Net: NetName=NetJ2_1 Pin=R5-1
+Change Net Name : Old Net Name=NetJ2_1 New Net Name=NetJ2_4
+Change Net Name : Old Net Name=NetJ2_2 New Net Name=NetJ2_5
