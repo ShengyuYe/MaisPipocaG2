@@ -33,14 +33,21 @@
 
 
 void SMDB_ini(void);
+
 void SMDB_tick(void);
+
 void SMDB_wait(void);
+
 void SMDB_release(void);
+
 unsigned char SMDB_cashless_vend(unsigned short int valor,
                                  unsigned short int item);
 
+unsigned char SMDB_cancela_venda(void);
 
+unsigned char  SMDB_vend_success(unsigned short int item);
 
+unsigned char SMDB_venda_cartao(unsigned short int preco);
 
 
 

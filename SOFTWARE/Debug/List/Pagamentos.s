@@ -1,29 +1,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:13 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     06/Jul/2017  15:09:50 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Pagam /
-//                    entos.c                                                 /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Paga /
-//                    mentos.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Fi /
-//                    rmware\01_mais_pipoca_exp\MaisPipoca -                  /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
-//                    --no_code_motion --no_tbaa --no_clustering              /
+//    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Drivers\Pagamentos\Pagamentos.c         /
+//    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Drivers\Pagamentos\Pagamentos.c -lC     /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\ -lA                         /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\ -o                          /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll         /
+//                    --no_inline --no_code_motion --no_tbaa --no_clustering  /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
 //                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\Pagamentos.s  /
+//    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\Pagamentos.s                 /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -44,6 +42,7 @@
         EXTERN BV20_subtrai_valor_acumulado
         EXTERN PARAMETROS_grava
         EXTERN PARAMETROS_le
+        EXTERN SMC_setter_bloqueio
         EXTERN SMDBCOIN_set_flag_bloqueio
         EXTERN SMDBILL_set_bloqueio
         EXTERN SMDB_ini
@@ -115,7 +114,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Pagamentos.c
+// C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\Pagamentos.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -1137,30 +1136,35 @@ PAGAMENTOS_set_bloqueio:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall BV20_setter_bloqueio
         BL       BV20_setter_bloqueio
-//  332 }
+//  332   SMC_setter_bloqueio(flag);
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        MOVS     R0,R4
+          CFI FunCall SMC_setter_bloqueio
+        BL       SMC_setter_bloqueio
+//  333 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock15
-//  333 /***********************************************************************************
-//  334 *       Descrição       :       Getter para o contador que indica que
-//  335 *                               não há interação com o meio de pagamento
-//  336 *       Parametros      :       nenhum
-//  337 *       Retorno         :       (unsigned int) contagem do contador
-//  338 ***********************************************************************************/
+//  334 /***********************************************************************************
+//  335 *       Descrição       :       Getter para o contador que indica que
+//  336 *                               não há interação com o meio de pagamento
+//  337 *       Parametros      :       nenhum
+//  338 *       Retorno         :       (unsigned int) contagem do contador
+//  339 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock16 Using cfiCommon0
           CFI Function PAGAMENTOS_get_timeout_pagamento
           CFI NoCalls
         THUMB
-//  339 unsigned int PAGAMENTOS_get_timeout_pagamento(void){
-//  340   
-//  341   return PAGAMENTOS_timeout_pagamento;
+//  340 unsigned int PAGAMENTOS_get_timeout_pagamento(void){
+//  341   
+//  342   return PAGAMENTOS_timeout_pagamento;
 PAGAMENTOS_get_timeout_pagamento:
         LDR.N    R0,??DataTable15_16
         LDR      R0,[R0, #+0]
         BX       LR               ;; return
           CFI EndBlock cfiBlock16
-//  342 }
+//  343 }
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1276,17 +1280,17 @@ PAGAMENTOS_get_timeout_pagamento:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  343 /***********************************************************************************
-//  344 *       Fim do arquivo
-//  345 ***********************************************************************************/
+//  344 /***********************************************************************************
+//  345 *       Fim do arquivo
+//  346 ***********************************************************************************/
 // 
 //    20 bytes in section .bss
 //     4 bytes in section .data
 //    36 bytes in section .noinit (abs)
-// 1 016 bytes in section .text
+// 1 024 bytes in section .text
 // 
-// 1 016 bytes of CODE memory
+// 1 024 bytes of CODE memory
 //    24 bytes of DATA memory (+ 36 bytes shared)
 //
 //Errors: none
-//Warnings: 3
+//Warnings: 4

@@ -126,11 +126,11 @@ eMDB_reply CASHLESS_set_and_get_setup_from_to_device(unsigned char nivel_mdb,
   unsigned char recebidos;
   
   buffer[0] = CASHLESS_SETUP;
-  buffer[1] = 0x00;
-  buffer[2] = 0x03;
-  buffer[3] = 0;
-  buffer[4] = 0;
-  buffer[5] = 0;
+  buffer[1] = 0x00;// Config DATA
+  buffer[2] = 0x01;// Nivel da comunicação
+  buffer[3] = 16;   // Colunas do LCD
+  buffer[4] = 2;    // Linhas do LCD
+  buffer[5] = 1;    // full ascii display
   
   if(MDB_send_package(1,buffer,6,1,buffer,&recebidos)==MDB_OK){
         
@@ -173,6 +173,9 @@ eMDB_reply CASHLESS_set_min_and_max_price_in_device(unsigned short int min,
   unsigned char buffer[36];
   unsigned char recebidos;
   
+  min*=100;
+  max*=100;
+  
   buffer[0] = CASHLESS_SETUP;
   buffer[1] = 0x01;
   buffer[2] = max>>8;
@@ -208,38 +211,55 @@ eMDB_reply CASHLESS_poll_device(eMDB_POLL_HEADER *header,unsigned char *args){
            *header = CASHLESS_POOL_JUST_RESET;
            break;
       case CASHLESS_POOL_READER_CONFIG_DATA:
+           *header = CASHLESS_POOL_READER_CONFIG_DATA;
            break;
       case CASHLESS_POOL_DISPLAY_REQUEST:
+           *header = CASHLESS_POOL_DISPLAY_REQUEST;
            break;
       case CASHLESS_POOL_BEGIN_SESSION:
+           *header = CASHLESS_POOL_BEGIN_SESSION;
            break;
       case CASHLESS_POOL_SESSION_CANCEL_REQUEST:
+           *header = CASHLESS_POOL_SESSION_CANCEL_REQUEST;
            break;
       case CASHLESS_POOL_VEND_APPROVED:
+           *header = CASHLESS_POOL_VEND_APPROVED;
            break;
       case CASHLESS_POOL_VEND_DENIED:
+           *header = CASHLESS_POOL_VEND_DENIED;
            break;
       case CASHLESS_POOL_END_SESSION:
+           *header = CASHLESS_POOL_END_SESSION;
            break;
       case CASHLESS_POOL_CANCELLED:
+           *header = CASHLESS_POOL_CANCELLED;
            break;
       case CASHLESS_POOL_PERIPHERAL_ID:
+           *header = CASHLESS_POOL_PERIPHERAL_ID;
            break;
       case CASHLESS_POOL_MALFUNCTION:
+           *header = CASHLESS_POOL_MALFUNCTION;
            break;
       case CASHLESS_POOL_CMD_OUT_OF_SEQUENCE:
+           *header = CASHLESS_POOL_CMD_OUT_OF_SEQUENCE;
            break;
       case CASHLESS_POOL_REVALUE_APPROVED:
+           *header = CASHLESS_POOL_REVALUE_APPROVED;
            break;
       case CASHLESS_POOL_REVALUE_DENIED:
+           *header = CASHLESS_POOL_REVALUE_DENIED;        
            break;
       case CASHLESS_POOL_REVALUE_LIMIT_AMOUNT:
+           *header = CASHLESS_POOL_REVALUE_LIMIT_AMOUNT;       
            break;
       case CASHLESS_POOL_USER_FILE:
+           *header = CASHLESS_POOL_USER_FILE;  
            break;
       case CASHLESS_POOL_TIME_DATE_REQUEST:
+           *header = CASHLESS_POOL_TIME_DATE_REQUEST;          
            break;
       case CASHLESS_DATA_ENTRY:
+           *header = CASHLESS_DATA_ENTRY;          
            break;
     }
         
@@ -256,24 +276,109 @@ eMDB_reply CASHLESS_poll_device(eMDB_POLL_HEADER *header,unsigned char *args){
 *                               (unsigned short int) código do produto
 *       Retorno         :       (eMDB_reply) maior do que zero se 
 ***********************************************************************************/
-eMDB_reply MDBCASHLESS_start_vend(unsigned short int valor,unsigned short int code){
+eMDB_reply MDBCASHLESS_start_vend(eCASHLESS_VEND_RESULT *resultado,
+                                  unsigned short int *pago,
+                                  unsigned short int valor,unsigned short int code){
   unsigned char buffer[6];
   unsigned char recebidos;                      
   
   buffer[0] = CASHLESS_VEND;
   buffer[1] = REQUEST_VEND;
-  buffer[2] = (unsigned char)valor>>8;
+  buffer[2] = (unsigned char)(valor>>8);
   buffer[3] = valor;
-  buffer[4] = (unsigned char)code>>8;
+  buffer[4] = (unsigned char)(code>>8);
   buffer[5] = code;
+  
+  *resultado = VEND_DENIED;
   
   if(MDB_send_package(1,buffer,6,0,buffer,&recebidos)==MDB_OK){
     
-    
+    *resultado = (eCASHLESS_VEND_RESULT)buffer[Z1];    
+    *pago = buffer[Z2]<<8 | buffer[Z3];
     
     return MDB_OK;
   }
   
+  return MDB_TIMEOUT;
+}
+/***********************************************************************************
+*       Descrição       :       Envia o comando para cancelamento da venda
+*       Parametros      :       nenhum
+*       Retorno         :       (eMDB_reply) se receber resposta
+***********************************************************************************/
+eMDB_reply MDBCASHLESS_vend_cancel(void){
+  unsigned char buffer[2]  ;
+  unsigned char recebidos;
+  
+  buffer[Z1] = CASHLESS_VEND;
+  buffer[Z2] = CANCEL_VEND;
+  
+  if(MDB_send_package(1,buffer,2,0,buffer,&recebidos)==MDB_OK){
+   
+    if(buffer[Z1] == VEND_DENIED)
+      return MDB_OK;
+  }
+  
+  return MDB_TIMEOUT;
+}
+/***********************************************************************************
+*       Descrição       :       Sucesso na venda
+*       Parametros      :       (unsigned short int) item
+*       Retorno         :       (eMDB_reply) se receber resposta
+***********************************************************************************/
+eMDB_reply MDBCASHLESS_vend_success(unsigned short int item){
+  unsigned char buffer[4];
+  unsigned char recebidos;
+  
+  buffer[Z1] = CASHLESS_VEND;
+  buffer[Z2] = SUCCESS_VEND;
+  buffer[Z3] = item>>8;
+  buffer[Z4] = item;
+  
+  if(MDB_send_package(1,buffer,4,0,buffer,&recebidos)==MDB_OK){
+   
+    
+    return MDB_OK;
+  }
+      
+  return MDB_TIMEOUT;
+}
+/***********************************************************************************
+*       Descrição       :       Habilita a leitora
+*       Parametros      :       nenhum
+*       Retorno         :       (eMDB_reply) se receber a configurmação
+***********************************************************************************/
+eMDB_reply MDBCASHLESS_enable_reader(unsigned char flag){
+  unsigned char buffer[3];
+  unsigned char recebidos;
+  
+  buffer[Z1] = CASHLESS_READER;
+  buffer[Z2] = flag?1:0;
+  
+  if(MDB_send_package(1,buffer,2,0,buffer,&recebidos)==MDB_OK){
+      
+    return MDB_OK;
+  }
+      
+  return MDB_TIMEOUT;
+}
+/***********************************************************************************
+*       Descrição       :       Sessão completa
+*       Parametros      :       envia o comando se fim da compra
+*       Retorno         :       (eMDB_reply) se receber confirmação
+***********************************************************************************/
+eMDB_reply MDBCASHLESS_session_complete(void){
+  unsigned char buffer[3];
+  unsigned char recebidos;
+  
+  buffer[Z1] = CASHLESS_VEND;
+  buffer[Z2] = SESSION_COMPLETE;
+  
+  if(MDB_send_package(1,buffer,2,0,buffer,&recebidos)==MDB_OK){
+      
+    return MDB_OK;
+  }
+      
   return MDB_TIMEOUT;
 }
 /***********************************************************************************

@@ -329,6 +329,7 @@ void PAGAMENTOS_set_bloqueio(unsigned char flag){
   SMDBILL_set_bloqueio(flag);
   SMDBCOIN_set_flag_bloqueio(flag);
   BV20_setter_bloqueio(flag);
+  SMC_setter_bloqueio(flag);
 }
 /***********************************************************************************
 *       Descrição       :       Getter para o contador que indica que

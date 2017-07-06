@@ -131,8 +131,8 @@ void APLICACAO_main(void*pPar){
     
     tecla = TECLADO_getch();
     switch(tecla){
-      case TECLA_INC:
-           //SMDB_cashless_vend(100,1);
+      case TECLA_INC:           
+           SMDB_venda_cartao(100);
            break;
       case TECLA_DEC:
            break;

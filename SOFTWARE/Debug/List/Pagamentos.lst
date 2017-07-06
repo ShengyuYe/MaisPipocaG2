@@ -1,35 +1,34 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:58:13 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      06/Jul/2017  15:09:50 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
 #    Endian       =  little                                                   #
-#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Pagamen #
-#                    tos.c                                                    #
-#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Pagame #
-#                    ntos.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmw #
-#                    are\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\"  #
-#                    -lA "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_m #
-#                    ais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o       #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
-#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
-#                    --no_clustering --no_scheduling --debug --endian=little  #
-#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
-#                    Files (x86)\IAR Systems\Embedded Workbench               #
-#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
-#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\Pagamentos.lst  #
-#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\Pagamentos.o     #
+#    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\Pagamentos\Pagamentos.c           #
+#    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\Pagamentos\Pagamentos.c -lC       #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -lA                           #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -o                            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\Pagamentos.lst                 #
+#    Object file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\Pagamentos.o                    #
 #                                                                             #
 #                                                                             #
 ###############################################################################
 
-C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Pagamentos.c
+C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\Pagamentos.c
       1          /*__________________________________________________________________________________
       2          |	Quark Tecnologia Eletrônica Embarcada
       3          |       
@@ -927,24 +926,30 @@ Warning[Pe223]: function "SMDBCOIN_set_flag_bloqueio" declared implicitly
    \   0000002A   0x0020             MOVS     R0,R4
    \   0000002C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   0000002E   0x.... 0x....      BL       BV20_setter_bloqueio
-    332          }
-   \   00000032   0xBD10             POP      {R4,PC}          ;; return
-    333          /***********************************************************************************
-    334          *       Descrição       :       Getter para o contador que indica que
-    335          *                               não há interação com o meio de pagamento
-    336          *       Parametros      :       nenhum
-    337          *       Retorno         :       (unsigned int) contagem do contador
-    338          ***********************************************************************************/
+    332            SMC_setter_bloqueio(flag);
+                   ^
+Warning[Pe223]: function "SMC_setter_bloqueio" declared implicitly
+   \   00000032   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   00000034   0x0020             MOVS     R0,R4
+   \   00000036   0x.... 0x....      BL       SMC_setter_bloqueio
+    333          }
+   \   0000003A   0xBD10             POP      {R4,PC}          ;; return
+    334          /***********************************************************************************
+    335          *       Descrição       :       Getter para o contador que indica que
+    336          *                               não há interação com o meio de pagamento
+    337          *       Parametros      :       nenhum
+    338          *       Retorno         :       (unsigned int) contagem do contador
+    339          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    339          unsigned int PAGAMENTOS_get_timeout_pagamento(void){
-    340            
-    341            return PAGAMENTOS_timeout_pagamento;
+    340          unsigned int PAGAMENTOS_get_timeout_pagamento(void){
+    341            
+    342            return PAGAMENTOS_timeout_pagamento;
    \                     PAGAMENTOS_get_timeout_pagamento:
    \   00000000   0x....             LDR.N    R0,??DataTable15_16
    \   00000002   0x6800             LDR      R0,[R0, #+0]
    \   00000004   0x4770             BX       LR               ;; return
-    342          }
+    343          }
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable15:
@@ -1013,9 +1018,9 @@ Warning[Pe223]: function "SMDBCOIN_set_flag_bloqueio" declared implicitly
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable15_16:
    \   00000000   0x........         DC32     PAGAMENTOS_timeout_pagamento
-    343          /***********************************************************************************
-    344          *       Fim do arquivo
-    345          ***********************************************************************************/
+    344          /***********************************************************************************
+    345          *       Fim do arquivo
+    346          ***********************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -1049,6 +1054,7 @@ Warning[Pe223]: function "SMDBCOIN_set_flag_bloqueio" declared implicitly
          8   -> BV20_setter_bloqueio
          8   -> PAGAMENTOS_bloqueia_uca1
          8   -> PAGAMENTOS_set_inhibit_p70
+         8   -> SMC_setter_bloqueio
          8   -> SMDBCOIN_set_flag_bloqueio
          8   -> SMDBILL_set_bloqueio
        0   PAGAMENTOS_set_inhibit_p70
@@ -1098,7 +1104,7 @@ Warning[Pe223]: function "SMDBCOIN_set_flag_bloqueio" declared implicitly
       50  PAGAMENTOS_irq_uca_1
       56  PAGAMENTOS_main
        4  PAGAMENTOS_semaforo_pagamentos
-      52  PAGAMENTOS_set_bloqueio
+      60  PAGAMENTOS_set_bloqueio
       34  PAGAMENTOS_set_inhibit_p70
       42  PAGAMENTOS_set_valores
       30  PAGAMENTOS_subtrai_contagem_p70
@@ -1123,10 +1129,10 @@ Warning[Pe223]: function "SMDBCOIN_set_flag_bloqueio" declared implicitly
     20 bytes in section .bss
      4 bytes in section .data
     36 bytes in section .noinit (abs)
- 1 016 bytes in section .text
+ 1 024 bytes in section .text
  
- 1 016 bytes of CODE memory
+ 1 024 bytes of CODE memory
     24 bytes of DATA memory (+ 36 bytes shared)
 
 Errors: none
-Warnings: 3
+Warnings: 4

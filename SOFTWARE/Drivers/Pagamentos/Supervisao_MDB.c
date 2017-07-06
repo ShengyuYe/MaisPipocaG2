@@ -82,7 +82,7 @@ void SMDB_tick(void){
   vTaskDelay(5);  
   SMDBILL_tick(); // dentro do módulo ele verifica o bloqueio e habilitação do periférico
   SMDBCOIN_tick(); // 
-  //SMC_tick(); // Dentro do módulo ele verifica o bloqueio e habilitação do cartão
+  SMC_tick(); // Dentro do módulo ele verifica o bloqueio e habilitação do cartão
    
   xSemaphoreGive(SMDB_semaforo_barramento); 
 }
@@ -114,11 +114,14 @@ unsigned char SMDB_cashless_vend(unsigned short int valor,
                                  unsigned short int item){
    unsigned char tentativas=10;
    unsigned char res=0;
+   eCASHLESS_VEND_RESULT venda;
+   unsigned short int pago;
+   
    eMDB_reply flag;
                                    
    SMDB_wait();
    
-   do flag = MDBCASHLESS_start_vend(valor,item);
+   do flag = MDBCASHLESS_start_vend(&venda,&pago,valor,item);
    while(flag!=MDB_OK && tentativas--);
    
    if(flag==MDB_OK)
@@ -127,6 +130,109 @@ unsigned char SMDB_cashless_vend(unsigned short int valor,
    SMDB_release();      
    
    return res;
+}
+/***********************************************************************************
+*       Descrição       :       Envia o comando que faz o cancelamento
+*                               da venda
+*       Parametros      :       nenhum
+*       Retorno         :       (unsigned char) maior do que zero
+*                               se a venda foi cancelada
+***********************************************************************************/
+unsigned char SMDB_cancela_venda(void){
+   unsigned char tentativas=10;
+   unsigned char res=0;
+   
+   eMDB_reply flag;
+                                   
+   SMDB_wait();
+   
+   do flag = MDBCASHLESS_vend_cancel();
+   while(flag!=MDB_OK && tentativas--);
+   
+   if(flag==MDB_OK)
+     res = 1;   
+   
+   SMDB_release();      
+   
+   return res;  
+}
+/***********************************************************************************
+*       Descrição       :       Envia o comando de sucesso na venda
+*       Parametros      :       nenhum
+*       Retorno         :       (unsigned char) maior do que zero se conseguir
+*                               enviar o comando para a placa
+***********************************************************************************/
+unsigned char  SMDB_vend_success(unsigned short int item){
+   unsigned char tentativas=10;
+   unsigned char res=0;
+   
+   eMDB_reply flag;
+                                   
+   SMDB_wait();
+   
+   do flag = MDBCASHLESS_vend_success(item);
+   while(flag!=MDB_OK && tentativas--);
+   
+   if(flag==MDB_OK)
+     res = 1;   
+   
+   SMDB_release();      
+   
+   return res;  
+}
+/***********************************************************************************
+*       Descrição       :       Faz uma venda no cartão
+*       Parametros      :       (unsigned int) valor
+*       Retorno         :       (unsigned char) maior do que zero se conseguir
+*                                               realizar a venda
+***********************************************************************************/
+unsigned char SMDB_venda_cartao(unsigned short int preco){
+  eMDB_reply flag;
+  unsigned char tentativas;
+  unsigned short int pago;
+  eCASHLESS_VEND_RESULT venda;  
+  unsigned short int timeout=15000;
+  
+  SMDB_wait();
+  
+  tentativas = 5;
+  do flag = MDBCASHLESS_start_vend(&venda,&pago,preco,1);
+  while(flag!=MDB_OK && tentativas--);
+  
+  if(flag!=MDB_OK || venda==VEND_DENIED){
+    SMDB_release();     
+    return 0;
+  }
+  
+  eMDB_POLL_HEADER header;
+  
+  for(;--timeout;){
+    
+    tentativas = 10;
+    
+    do flag = CASHLESS_poll_device(&header,NULL);
+    while(flag!=MDB_OK && --tentativas);
+      
+    if(flag!=MDB_OK){
+      SMDB_release();     
+      return 0;      
+    }else{
+      if(header==CASHLESS_POOL_VEND_APPROVED){
+        SMDB_release(); 
+        return SMDB_vend_success(1);
+      }
+    }
+      
+    vTaskDelay(1);
+  }
+  
+  if(!timeout){
+    SMDB_release();       
+    return 0;
+  }      
+  
+  SMDB_release();       
+  return 0;
 }
 /***********************************************************************************
 *       Fim do arquivo

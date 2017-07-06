@@ -1,35 +1,34 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:58:24 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      06/Jul/2017  15:10:15 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
 #    Endian       =  little                                                   #
-#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_cashless.c #
-#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_cashless. #
-#                    c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\0 #
-#                    1_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA   #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o           #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
-#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
-#                    --no_clustering --no_scheduling --debug --endian=little  #
-#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
-#                    Files (x86)\IAR Systems\Embedded Workbench               #
-#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
-#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\mdb_cashless.ls #
-#                    t                                                        #
-#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\mdb_cashless.o   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\MDB\mdb_cashless.c                #
+#    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\MDB\mdb_cashless.c -lC            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -lA                           #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -o                            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\mdb_cashless.lst               #
+#    Object file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\mdb_cashless.o                  #
 #                                                                             #
 #                                                                             #
 ###############################################################################
 
-C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_cashless.c
+C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_cashless.c
       1          /*__________________________________________________________________________________
       2          |	Quark Tecnologia Eletrônica Embarcada
       3          |       
@@ -223,20 +222,20 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
     128            buffer[0] = CASHLESS_SETUP;
    \   00000004   0x2011             MOVS     R0,#+17
    \   00000006   0xF88D 0x000C      STRB     R0,[SP, #+12]
-    129            buffer[1] = 0x00;
+    129            buffer[1] = 0x00;// Config DATA
    \   0000000A   0x2000             MOVS     R0,#+0
    \   0000000C   0xF88D 0x000D      STRB     R0,[SP, #+13]
-    130            buffer[2] = 0x03;
-   \   00000010   0x2003             MOVS     R0,#+3
+    130            buffer[2] = 0x01;// Nivel da comunicação
+   \   00000010   0x2001             MOVS     R0,#+1
    \   00000012   0xF88D 0x000E      STRB     R0,[SP, #+14]
-    131            buffer[3] = 0;
-   \   00000016   0x2000             MOVS     R0,#+0
+    131            buffer[3] = 16;   // Colunas do LCD
+   \   00000016   0x2010             MOVS     R0,#+16
    \   00000018   0xF88D 0x000F      STRB     R0,[SP, #+15]
-    132            buffer[4] = 0;
-   \   0000001C   0x2000             MOVS     R0,#+0
+    132            buffer[4] = 2;    // Linhas do LCD
+   \   0000001C   0x2002             MOVS     R0,#+2
    \   0000001E   0xF88D 0x0010      STRB     R0,[SP, #+16]
-    133            buffer[5] = 0;
-   \   00000022   0x2000             MOVS     R0,#+0
+    133            buffer[5] = 1;    // full ascii display
+   \   00000022   0x2001             MOVS     R0,#+1
    \   00000024   0xF88D 0x0011      STRB     R0,[SP, #+17]
     134            
     135            if(MDB_send_package(1,buffer,6,1,buffer,&recebidos)==MDB_OK){
@@ -350,80 +349,87 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
     173            unsigned char buffer[36];
     174            unsigned char recebidos;
     175            
-    176            buffer[0] = CASHLESS_SETUP;
-   \   00000004   0x2211             MOVS     R2,#+17
-   \   00000006   0xF88D 0x200C      STRB     R2,[SP, #+12]
-    177            buffer[1] = 0x01;
-   \   0000000A   0x2201             MOVS     R2,#+1
-   \   0000000C   0xF88D 0x200D      STRB     R2,[SP, #+13]
-    178            buffer[2] = max>>8;
-   \   00000010   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-   \   00000012   0x0A09             LSRS     R1,R1,#+8
-   \   00000014   0xF88D 0x100E      STRB     R1,[SP, #+14]
-    179            buffer[3] = max>>16;
-   \   00000018   0x2100             MOVS     R1,#+0
-   \   0000001A   0xF88D 0x100F      STRB     R1,[SP, #+15]
-    180            buffer[4] = min>>8;
-   \   0000001E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-   \   00000020   0x0A01             LSRS     R1,R0,#+8
-   \   00000022   0xF88D 0x1010      STRB     R1,[SP, #+16]
-    181            buffer[5] = min;
-   \   00000026   0xF88D 0x0011      STRB     R0,[SP, #+17]
-    182            
-    183            if(MDB_send_package(1,buffer,6,0,buffer,&recebidos)==MDB_OK){
-   \   0000002A   0xA802             ADD      R0,SP,#+8
-   \   0000002C   0x9001             STR      R0,[SP, #+4]
-   \   0000002E   0xA803             ADD      R0,SP,#+12
-   \   00000030   0x9000             STR      R0,[SP, #+0]
-   \   00000032   0x2300             MOVS     R3,#+0
-   \   00000034   0x2206             MOVS     R2,#+6
-   \   00000036   0xA903             ADD      R1,SP,#+12
-   \   00000038   0x2001             MOVS     R0,#+1
-   \   0000003A   0x.... 0x....      BL       MDB_send_package
-   \   0000003E   0x2800             CMP      R0,#+0
-   \   00000040   0xD107             BNE.N    ??CASHLESS_set_min_and_max_price_in_device_0
-    184                  
-    185              if(buffer[0]==MDB_RESP_ACK)
-   \   00000042   0xF89D 0x000C      LDRB     R0,[SP, #+12]
+    176            min*=100;
+   \   00000004   0x2264             MOVS     R2,#+100
+   \   00000006   0x4350             MULS     R0,R2,R0
+    177            max*=100;
+   \   00000008   0x2264             MOVS     R2,#+100
+   \   0000000A   0x4351             MULS     R1,R2,R1
+    178            
+    179            buffer[0] = CASHLESS_SETUP;
+   \   0000000C   0x2211             MOVS     R2,#+17
+   \   0000000E   0xF88D 0x200C      STRB     R2,[SP, #+12]
+    180            buffer[1] = 0x01;
+   \   00000012   0x2201             MOVS     R2,#+1
+   \   00000014   0xF88D 0x200D      STRB     R2,[SP, #+13]
+    181            buffer[2] = max>>8;
+   \   00000018   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000001A   0x0A09             LSRS     R1,R1,#+8
+   \   0000001C   0xF88D 0x100E      STRB     R1,[SP, #+14]
+    182            buffer[3] = max>>16;
+   \   00000020   0x2100             MOVS     R1,#+0
+   \   00000022   0xF88D 0x100F      STRB     R1,[SP, #+15]
+    183            buffer[4] = min>>8;
+   \   00000026   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000028   0x0A01             LSRS     R1,R0,#+8
+   \   0000002A   0xF88D 0x1010      STRB     R1,[SP, #+16]
+    184            buffer[5] = min;
+   \   0000002E   0xF88D 0x0011      STRB     R0,[SP, #+17]
+    185            
+    186            if(MDB_send_package(1,buffer,6,0,buffer,&recebidos)==MDB_OK){
+   \   00000032   0xA802             ADD      R0,SP,#+8
+   \   00000034   0x9001             STR      R0,[SP, #+4]
+   \   00000036   0xA803             ADD      R0,SP,#+12
+   \   00000038   0x9000             STR      R0,[SP, #+0]
+   \   0000003A   0x2300             MOVS     R3,#+0
+   \   0000003C   0x2206             MOVS     R2,#+6
+   \   0000003E   0xA903             ADD      R1,SP,#+12
+   \   00000040   0x2001             MOVS     R0,#+1
+   \   00000042   0x.... 0x....      BL       MDB_send_package
    \   00000046   0x2800             CMP      R0,#+0
-   \   00000048   0xD101             BNE.N    ??CASHLESS_set_min_and_max_price_in_device_1
-    186                return MDB_OK;
-   \   0000004A   0x2000             MOVS     R0,#+0
-   \   0000004C   0xE002             B.N      ??CASHLESS_set_min_and_max_price_in_device_2
-    187              
-    188              return MDB_ERROR;
-   \                     ??CASHLESS_set_min_and_max_price_in_device_1:
-   \   0000004E   0x2001             MOVS     R0,#+1
-   \   00000050   0xE000             B.N      ??CASHLESS_set_min_and_max_price_in_device_2
-    189            }
+   \   00000048   0xD107             BNE.N    ??CASHLESS_set_min_and_max_price_in_device_0
+    187                  
+    188              if(buffer[0]==MDB_RESP_ACK)
+   \   0000004A   0xF89D 0x000C      LDRB     R0,[SP, #+12]
+   \   0000004E   0x2800             CMP      R0,#+0
+   \   00000050   0xD101             BNE.N    ??CASHLESS_set_min_and_max_price_in_device_1
+    189                return MDB_OK;
+   \   00000052   0x2000             MOVS     R0,#+0
+   \   00000054   0xE002             B.N      ??CASHLESS_set_min_and_max_price_in_device_2
     190              
-    191            return  MDB_TIMEOUT;                                                    
+    191              return MDB_ERROR;
+   \                     ??CASHLESS_set_min_and_max_price_in_device_1:
+   \   00000056   0x2001             MOVS     R0,#+1
+   \   00000058   0xE000             B.N      ??CASHLESS_set_min_and_max_price_in_device_2
+    192            }
+    193              
+    194            return  MDB_TIMEOUT;                                                    
    \                     ??CASHLESS_set_min_and_max_price_in_device_0:
-   \   00000052   0x2002             MOVS     R0,#+2
+   \   0000005A   0x2002             MOVS     R0,#+2
    \                     ??CASHLESS_set_min_and_max_price_in_device_2:
-   \   00000054   0xB00D             ADD      SP,SP,#+52
-   \   00000056   0xBD00             POP      {PC}             ;; return
-    192          }
-    193          /***********************************************************************************
-    194          *       Descrição       :       Pool do dispositivo
-    195          *       Parametros      :       nenhum
-    196          *       Retorno         :       (eMDB_reply) resultado da operçaão
-    197          ***********************************************************************************/
+   \   0000005C   0xB00D             ADD      SP,SP,#+52
+   \   0000005E   0xBD00             POP      {PC}             ;; return
+    195          }
+    196          /***********************************************************************************
+    197          *       Descrição       :       Pool do dispositivo
+    198          *       Parametros      :       nenhum
+    199          *       Retorno         :       (eMDB_reply) resultado da operçaão
+    200          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    198          eMDB_reply CASHLESS_poll_device(eMDB_POLL_HEADER *header,unsigned char *args){
+    201          eMDB_reply CASHLESS_poll_device(eMDB_POLL_HEADER *header,unsigned char *args){
    \                     CASHLESS_poll_device:
    \   00000000   0xB510             PUSH     {R4,LR}
    \   00000002   0xB084             SUB      SP,SP,#+16
    \   00000004   0x0004             MOVS     R4,R0
-    199            unsigned char buffer[2];
-    200            unsigned char recebidos;
-    201            
-    202            buffer[0] = CASHLESS_POLL;
+    202            unsigned char buffer[2];
+    203            unsigned char recebidos;
+    204            
+    205            buffer[0] = CASHLESS_POLL;
    \   00000006   0x2012             MOVS     R0,#+18
    \   00000008   0xF88D 0x0008      STRB     R0,[SP, #+8]
-    203            
-    204            if(MDB_send_package(1,buffer,1,0,buffer,&recebidos)==MDB_OK){
+    206            
+    207            if(MDB_send_package(1,buffer,1,0,buffer,&recebidos)==MDB_OK){
    \   0000000C   0xF10D 0x000A      ADD      R0,SP,#+10
    \   00000010   0x9001             STR      R0,[SP, #+4]
    \   00000012   0xA802             ADD      R0,SP,#+8
@@ -434,200 +440,468 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \   0000001C   0x2001             MOVS     R0,#+1
    \   0000001E   0x.... 0x....      BL       MDB_send_package
    \   00000022   0x2800             CMP      R0,#+0
-   \   00000024   0xD13B             BNE.N    ??CASHLESS_poll_device_0
-    205                      
-    206              switch(buffer[0]){
+   \   00000024   0xD15D             BNE.N    ??CASHLESS_poll_device_0
+    208                      
+    209              switch(buffer[0]){
    \   00000026   0xF89D 0x0008      LDRB     R0,[SP, #+8]
    \   0000002A   0x2800             CMP      R0,#+0
    \   0000002C   0xD022             BEQ.N    ??CASHLESS_poll_device_1
    \   0000002E   0x2801             CMP      R0,#+1
    \   00000030   0xD023             BEQ.N    ??CASHLESS_poll_device_2
    \   00000032   0x2802             CMP      R0,#+2
-   \   00000034   0xD022             BEQ.N    ??CASHLESS_poll_device_3
+   \   00000034   0xD024             BEQ.N    ??CASHLESS_poll_device_3
    \   00000036   0x2803             CMP      R0,#+3
-   \   00000038   0xD021             BEQ.N    ??CASHLESS_poll_device_4
+   \   00000038   0xD025             BEQ.N    ??CASHLESS_poll_device_4
    \   0000003A   0x2804             CMP      R0,#+4
-   \   0000003C   0xD020             BEQ.N    ??CASHLESS_poll_device_5
+   \   0000003C   0xD026             BEQ.N    ??CASHLESS_poll_device_5
    \   0000003E   0x2805             CMP      R0,#+5
-   \   00000040   0xD01F             BEQ.N    ??CASHLESS_poll_device_6
+   \   00000040   0xD027             BEQ.N    ??CASHLESS_poll_device_6
    \   00000042   0x2806             CMP      R0,#+6
-   \   00000044   0xD01E             BEQ.N    ??CASHLESS_poll_device_7
+   \   00000044   0xD028             BEQ.N    ??CASHLESS_poll_device_7
    \   00000046   0x2807             CMP      R0,#+7
-   \   00000048   0xD01D             BEQ.N    ??CASHLESS_poll_device_8
+   \   00000048   0xD029             BEQ.N    ??CASHLESS_poll_device_8
    \   0000004A   0x2808             CMP      R0,#+8
-   \   0000004C   0xD01C             BEQ.N    ??CASHLESS_poll_device_9
+   \   0000004C   0xD02A             BEQ.N    ??CASHLESS_poll_device_9
    \   0000004E   0x2809             CMP      R0,#+9
-   \   00000050   0xD01B             BEQ.N    ??CASHLESS_poll_device_10
+   \   00000050   0xD02B             BEQ.N    ??CASHLESS_poll_device_10
    \   00000052   0x280A             CMP      R0,#+10
-   \   00000054   0xD01A             BEQ.N    ??CASHLESS_poll_device_11
+   \   00000054   0xD02C             BEQ.N    ??CASHLESS_poll_device_11
    \   00000056   0x280B             CMP      R0,#+11
-   \   00000058   0xD019             BEQ.N    ??CASHLESS_poll_device_12
+   \   00000058   0xD02D             BEQ.N    ??CASHLESS_poll_device_12
    \   0000005A   0x280D             CMP      R0,#+13
-   \   0000005C   0xD018             BEQ.N    ??CASHLESS_poll_device_13
+   \   0000005C   0xD02E             BEQ.N    ??CASHLESS_poll_device_13
    \   0000005E   0x280E             CMP      R0,#+14
-   \   00000060   0xD017             BEQ.N    ??CASHLESS_poll_device_14
+   \   00000060   0xD02F             BEQ.N    ??CASHLESS_poll_device_14
    \   00000062   0x280F             CMP      R0,#+15
-   \   00000064   0xD016             BEQ.N    ??CASHLESS_poll_device_15
+   \   00000064   0xD030             BEQ.N    ??CASHLESS_poll_device_15
    \   00000066   0x2810             CMP      R0,#+16
-   \   00000068   0xD015             BEQ.N    ??CASHLESS_poll_device_16
+   \   00000068   0xD031             BEQ.N    ??CASHLESS_poll_device_16
    \   0000006A   0x2811             CMP      R0,#+17
-   \   0000006C   0xD014             BEQ.N    ??CASHLESS_poll_device_17
+   \   0000006C   0xD032             BEQ.N    ??CASHLESS_poll_device_17
    \   0000006E   0x2812             CMP      R0,#+18
-   \   00000070   0xD013             BEQ.N    ??CASHLESS_poll_device_18
-   \   00000072   0xE012             B.N      ??CASHLESS_poll_device_19
-    207                case CASHLESS_POOL_JUST_RESET:
-    208                     *header = CASHLESS_POOL_JUST_RESET;
+   \   00000070   0xD033             BEQ.N    ??CASHLESS_poll_device_18
+   \   00000072   0xE034             B.N      ??CASHLESS_poll_device_19
+    210                case CASHLESS_POOL_JUST_RESET:
+    211                     *header = CASHLESS_POOL_JUST_RESET;
    \                     ??CASHLESS_poll_device_1:
    \   00000074   0x2000             MOVS     R0,#+0
    \   00000076   0x7020             STRB     R0,[R4, #+0]
-    209                     break;
-   \   00000078   0xE00F             B.N      ??CASHLESS_poll_device_19
-    210                case CASHLESS_POOL_READER_CONFIG_DATA:
-    211                     break;
+    212                     break;
+   \   00000078   0xE031             B.N      ??CASHLESS_poll_device_19
+    213                case CASHLESS_POOL_READER_CONFIG_DATA:
+    214                     *header = CASHLESS_POOL_READER_CONFIG_DATA;
    \                     ??CASHLESS_poll_device_2:
-   \   0000007A   0xE00E             B.N      ??CASHLESS_poll_device_19
-    212                case CASHLESS_POOL_DISPLAY_REQUEST:
-    213                     break;
-   \                     ??CASHLESS_poll_device_3:
-   \   0000007C   0xE00D             B.N      ??CASHLESS_poll_device_19
-    214                case CASHLESS_POOL_BEGIN_SESSION:
+   \   0000007A   0x2001             MOVS     R0,#+1
+   \   0000007C   0x7020             STRB     R0,[R4, #+0]
     215                     break;
+   \   0000007E   0xE02E             B.N      ??CASHLESS_poll_device_19
+    216                case CASHLESS_POOL_DISPLAY_REQUEST:
+    217                     *header = CASHLESS_POOL_DISPLAY_REQUEST;
+   \                     ??CASHLESS_poll_device_3:
+   \   00000080   0x2002             MOVS     R0,#+2
+   \   00000082   0x7020             STRB     R0,[R4, #+0]
+    218                     break;
+   \   00000084   0xE02B             B.N      ??CASHLESS_poll_device_19
+    219                case CASHLESS_POOL_BEGIN_SESSION:
+    220                     *header = CASHLESS_POOL_BEGIN_SESSION;
    \                     ??CASHLESS_poll_device_4:
-   \   0000007E   0xE00C             B.N      ??CASHLESS_poll_device_19
-    216                case CASHLESS_POOL_SESSION_CANCEL_REQUEST:
-    217                     break;
-   \                     ??CASHLESS_poll_device_5:
-   \   00000080   0xE00B             B.N      ??CASHLESS_poll_device_19
-    218                case CASHLESS_POOL_VEND_APPROVED:
-    219                     break;
-   \                     ??CASHLESS_poll_device_6:
-   \   00000082   0xE00A             B.N      ??CASHLESS_poll_device_19
-    220                case CASHLESS_POOL_VEND_DENIED:
+   \   00000086   0x2003             MOVS     R0,#+3
+   \   00000088   0x7020             STRB     R0,[R4, #+0]
     221                     break;
-   \                     ??CASHLESS_poll_device_7:
-   \   00000084   0xE009             B.N      ??CASHLESS_poll_device_19
-    222                case CASHLESS_POOL_END_SESSION:
-    223                     break;
-   \                     ??CASHLESS_poll_device_8:
-   \   00000086   0xE008             B.N      ??CASHLESS_poll_device_19
-    224                case CASHLESS_POOL_CANCELLED:
-    225                     break;
-   \                     ??CASHLESS_poll_device_9:
-   \   00000088   0xE007             B.N      ??CASHLESS_poll_device_19
-    226                case CASHLESS_POOL_PERIPHERAL_ID:
+   \   0000008A   0xE028             B.N      ??CASHLESS_poll_device_19
+    222                case CASHLESS_POOL_SESSION_CANCEL_REQUEST:
+    223                     *header = CASHLESS_POOL_SESSION_CANCEL_REQUEST;
+   \                     ??CASHLESS_poll_device_5:
+   \   0000008C   0x2004             MOVS     R0,#+4
+   \   0000008E   0x7020             STRB     R0,[R4, #+0]
+    224                     break;
+   \   00000090   0xE025             B.N      ??CASHLESS_poll_device_19
+    225                case CASHLESS_POOL_VEND_APPROVED:
+    226                     *header = CASHLESS_POOL_VEND_APPROVED;
+   \                     ??CASHLESS_poll_device_6:
+   \   00000092   0x2005             MOVS     R0,#+5
+   \   00000094   0x7020             STRB     R0,[R4, #+0]
     227                     break;
-   \                     ??CASHLESS_poll_device_10:
-   \   0000008A   0xE006             B.N      ??CASHLESS_poll_device_19
-    228                case CASHLESS_POOL_MALFUNCTION:
-    229                     break;
-   \                     ??CASHLESS_poll_device_11:
-   \   0000008C   0xE005             B.N      ??CASHLESS_poll_device_19
-    230                case CASHLESS_POOL_CMD_OUT_OF_SEQUENCE:
-    231                     break;
-   \                     ??CASHLESS_poll_device_12:
-   \   0000008E   0xE004             B.N      ??CASHLESS_poll_device_19
-    232                case CASHLESS_POOL_REVALUE_APPROVED:
+   \   00000096   0xE022             B.N      ??CASHLESS_poll_device_19
+    228                case CASHLESS_POOL_VEND_DENIED:
+    229                     *header = CASHLESS_POOL_VEND_DENIED;
+   \                     ??CASHLESS_poll_device_7:
+   \   00000098   0x2006             MOVS     R0,#+6
+   \   0000009A   0x7020             STRB     R0,[R4, #+0]
+    230                     break;
+   \   0000009C   0xE01F             B.N      ??CASHLESS_poll_device_19
+    231                case CASHLESS_POOL_END_SESSION:
+    232                     *header = CASHLESS_POOL_END_SESSION;
+   \                     ??CASHLESS_poll_device_8:
+   \   0000009E   0x2007             MOVS     R0,#+7
+   \   000000A0   0x7020             STRB     R0,[R4, #+0]
     233                     break;
-   \                     ??CASHLESS_poll_device_13:
-   \   00000090   0xE003             B.N      ??CASHLESS_poll_device_19
-    234                case CASHLESS_POOL_REVALUE_DENIED:
-    235                     break;
-   \                     ??CASHLESS_poll_device_14:
-   \   00000092   0xE002             B.N      ??CASHLESS_poll_device_19
-    236                case CASHLESS_POOL_REVALUE_LIMIT_AMOUNT:
-    237                     break;
-   \                     ??CASHLESS_poll_device_15:
-   \   00000094   0xE001             B.N      ??CASHLESS_poll_device_19
-    238                case CASHLESS_POOL_USER_FILE:
+   \   000000A2   0xE01C             B.N      ??CASHLESS_poll_device_19
+    234                case CASHLESS_POOL_CANCELLED:
+    235                     *header = CASHLESS_POOL_CANCELLED;
+   \                     ??CASHLESS_poll_device_9:
+   \   000000A4   0x2008             MOVS     R0,#+8
+   \   000000A6   0x7020             STRB     R0,[R4, #+0]
+    236                     break;
+   \   000000A8   0xE019             B.N      ??CASHLESS_poll_device_19
+    237                case CASHLESS_POOL_PERIPHERAL_ID:
+    238                     *header = CASHLESS_POOL_PERIPHERAL_ID;
+   \                     ??CASHLESS_poll_device_10:
+   \   000000AA   0x2009             MOVS     R0,#+9
+   \   000000AC   0x7020             STRB     R0,[R4, #+0]
     239                     break;
+   \   000000AE   0xE016             B.N      ??CASHLESS_poll_device_19
+    240                case CASHLESS_POOL_MALFUNCTION:
+    241                     *header = CASHLESS_POOL_MALFUNCTION;
+   \                     ??CASHLESS_poll_device_11:
+   \   000000B0   0x200A             MOVS     R0,#+10
+   \   000000B2   0x7020             STRB     R0,[R4, #+0]
+    242                     break;
+   \   000000B4   0xE013             B.N      ??CASHLESS_poll_device_19
+    243                case CASHLESS_POOL_CMD_OUT_OF_SEQUENCE:
+    244                     *header = CASHLESS_POOL_CMD_OUT_OF_SEQUENCE;
+   \                     ??CASHLESS_poll_device_12:
+   \   000000B6   0x200B             MOVS     R0,#+11
+   \   000000B8   0x7020             STRB     R0,[R4, #+0]
+    245                     break;
+   \   000000BA   0xE010             B.N      ??CASHLESS_poll_device_19
+    246                case CASHLESS_POOL_REVALUE_APPROVED:
+    247                     *header = CASHLESS_POOL_REVALUE_APPROVED;
+   \                     ??CASHLESS_poll_device_13:
+   \   000000BC   0x200D             MOVS     R0,#+13
+   \   000000BE   0x7020             STRB     R0,[R4, #+0]
+    248                     break;
+   \   000000C0   0xE00D             B.N      ??CASHLESS_poll_device_19
+    249                case CASHLESS_POOL_REVALUE_DENIED:
+    250                     *header = CASHLESS_POOL_REVALUE_DENIED;        
+   \                     ??CASHLESS_poll_device_14:
+   \   000000C2   0x200E             MOVS     R0,#+14
+   \   000000C4   0x7020             STRB     R0,[R4, #+0]
+    251                     break;
+   \   000000C6   0xE00A             B.N      ??CASHLESS_poll_device_19
+    252                case CASHLESS_POOL_REVALUE_LIMIT_AMOUNT:
+    253                     *header = CASHLESS_POOL_REVALUE_LIMIT_AMOUNT;       
+   \                     ??CASHLESS_poll_device_15:
+   \   000000C8   0x200F             MOVS     R0,#+15
+   \   000000CA   0x7020             STRB     R0,[R4, #+0]
+    254                     break;
+   \   000000CC   0xE007             B.N      ??CASHLESS_poll_device_19
+    255                case CASHLESS_POOL_USER_FILE:
+    256                     *header = CASHLESS_POOL_USER_FILE;  
    \                     ??CASHLESS_poll_device_16:
-   \   00000096   0xE000             B.N      ??CASHLESS_poll_device_19
-    240                case CASHLESS_POOL_TIME_DATE_REQUEST:
-    241                     break;
+   \   000000CE   0x2010             MOVS     R0,#+16
+   \   000000D0   0x7020             STRB     R0,[R4, #+0]
+    257                     break;
+   \   000000D2   0xE004             B.N      ??CASHLESS_poll_device_19
+    258                case CASHLESS_POOL_TIME_DATE_REQUEST:
+    259                     *header = CASHLESS_POOL_TIME_DATE_REQUEST;          
    \                     ??CASHLESS_poll_device_17:
-   \   00000098   0xE7FF             B.N      ??CASHLESS_poll_device_19
-    242                case CASHLESS_DATA_ENTRY:
-    243                     break;
-    244              }
-    245                  
-    246              
-    247              return MDB_OK;
+   \   000000D4   0x2011             MOVS     R0,#+17
+   \   000000D6   0x7020             STRB     R0,[R4, #+0]
+    260                     break;
+   \   000000D8   0xE001             B.N      ??CASHLESS_poll_device_19
+    261                case CASHLESS_DATA_ENTRY:
+    262                     *header = CASHLESS_DATA_ENTRY;          
    \                     ??CASHLESS_poll_device_18:
+   \   000000DA   0x2012             MOVS     R0,#+18
+   \   000000DC   0x7020             STRB     R0,[R4, #+0]
+    263                     break;
+    264              }
+    265                  
+    266              
+    267              return MDB_OK;
    \                     ??CASHLESS_poll_device_19:
-   \   0000009A   0x2000             MOVS     R0,#+0
-   \   0000009C   0xE000             B.N      ??CASHLESS_poll_device_20
-    248            }
-    249              
-    250            return  MDB_TIMEOUT;  
+   \   000000DE   0x2000             MOVS     R0,#+0
+   \   000000E0   0xE000             B.N      ??CASHLESS_poll_device_20
+    268            }
+    269              
+    270            return  MDB_TIMEOUT;  
    \                     ??CASHLESS_poll_device_0:
-   \   0000009E   0x2002             MOVS     R0,#+2
+   \   000000E2   0x2002             MOVS     R0,#+2
    \                     ??CASHLESS_poll_device_20:
-   \   000000A0   0xB004             ADD      SP,SP,#+16
-   \   000000A2   0xBD10             POP      {R4,PC}          ;; return
-    251          }
-    252          /***********************************************************************************
-    253          *       Descrição       :       Envia o comando solicitando um inicio de 
-    254          *                               transação
-    255          *       Parametros      :       (unsigned short int) valor
-    256          *                               (unsigned short int) código do produto
-    257          *       Retorno         :       (eMDB_reply) maior do que zero se 
-    258          ***********************************************************************************/
+   \   000000E4   0xB004             ADD      SP,SP,#+16
+   \   000000E6   0xBD10             POP      {R4,PC}          ;; return
+    271          }
+    272          /***********************************************************************************
+    273          *       Descrição       :       Envia o comando solicitando um inicio de 
+    274          *                               transação
+    275          *       Parametros      :       (unsigned short int) valor
+    276          *                               (unsigned short int) código do produto
+    277          *       Retorno         :       (eMDB_reply) maior do que zero se 
+    278          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    259          eMDB_reply MDBCASHLESS_start_vend(unsigned short int valor,unsigned short int code){
+    279          eMDB_reply MDBCASHLESS_start_vend(eCASHLESS_VEND_RESULT *resultado,
+    280                                            unsigned short int *pago,
+    281                                            unsigned short int valor,unsigned short int code){
    \                     MDBCASHLESS_start_vend:
+   \   00000000   0xB530             PUSH     {R4,R5,LR}
+   \   00000002   0xB085             SUB      SP,SP,#+20
+   \   00000004   0x0004             MOVS     R4,R0
+   \   00000006   0x000D             MOVS     R5,R1
+    282            unsigned char buffer[6];
+    283            unsigned char recebidos;                      
+    284            
+    285            buffer[0] = CASHLESS_VEND;
+   \   00000008   0x2013             MOVS     R0,#+19
+   \   0000000A   0xF88D 0x000C      STRB     R0,[SP, #+12]
+    286            buffer[1] = REQUEST_VEND;
+   \   0000000E   0x2000             MOVS     R0,#+0
+   \   00000010   0xF88D 0x000D      STRB     R0,[SP, #+13]
+    287            buffer[2] = (unsigned char)(valor>>8);
+   \   00000014   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   00000016   0x0A10             LSRS     R0,R2,#+8
+   \   00000018   0xF88D 0x000E      STRB     R0,[SP, #+14]
+    288            buffer[3] = valor;
+   \   0000001C   0xF88D 0x200F      STRB     R2,[SP, #+15]
+    289            buffer[4] = (unsigned char)(code>>8);
+   \   00000020   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   00000022   0x0A18             LSRS     R0,R3,#+8
+   \   00000024   0xF88D 0x0010      STRB     R0,[SP, #+16]
+    290            buffer[5] = code;
+   \   00000028   0xF88D 0x3011      STRB     R3,[SP, #+17]
+    291            
+    292            *resultado = VEND_DENIED;
+   \   0000002C   0x2006             MOVS     R0,#+6
+   \   0000002E   0x7020             STRB     R0,[R4, #+0]
+    293            
+    294            if(MDB_send_package(1,buffer,6,0,buffer,&recebidos)==MDB_OK){
+   \   00000030   0xA802             ADD      R0,SP,#+8
+   \   00000032   0x9001             STR      R0,[SP, #+4]
+   \   00000034   0xA803             ADD      R0,SP,#+12
+   \   00000036   0x9000             STR      R0,[SP, #+0]
+   \   00000038   0x2300             MOVS     R3,#+0
+   \   0000003A   0x2206             MOVS     R2,#+6
+   \   0000003C   0xA903             ADD      R1,SP,#+12
+   \   0000003E   0x2001             MOVS     R0,#+1
+   \   00000040   0x.... 0x....      BL       MDB_send_package
+   \   00000044   0x2800             CMP      R0,#+0
+   \   00000046   0xD10B             BNE.N    ??MDBCASHLESS_start_vend_0
+    295              
+    296              *resultado = (eCASHLESS_VEND_RESULT)buffer[Z1];    
+   \   00000048   0xF89D 0x000C      LDRB     R0,[SP, #+12]
+   \   0000004C   0x7020             STRB     R0,[R4, #+0]
+    297              *pago = buffer[Z2]<<8 | buffer[Z3];
+   \   0000004E   0xF89D 0x000D      LDRB     R0,[SP, #+13]
+   \   00000052   0xF89D 0x100E      LDRB     R1,[SP, #+14]
+   \   00000056   0xEA51 0x2000      ORRS     R0,R1,R0, LSL #+8
+   \   0000005A   0x8028             STRH     R0,[R5, #+0]
+    298              
+    299              return MDB_OK;
+   \   0000005C   0x2000             MOVS     R0,#+0
+   \   0000005E   0xE000             B.N      ??MDBCASHLESS_start_vend_1
+    300            }
+    301            
+    302            return MDB_TIMEOUT;
+   \                     ??MDBCASHLESS_start_vend_0:
+   \   00000060   0x2002             MOVS     R0,#+2
+   \                     ??MDBCASHLESS_start_vend_1:
+   \   00000062   0xB005             ADD      SP,SP,#+20
+   \   00000064   0xBD30             POP      {R4,R5,PC}       ;; return
+    303          }
+    304          /***********************************************************************************
+    305          *       Descrição       :       Envia o comando para cancelamento da venda
+    306          *       Parametros      :       nenhum
+    307          *       Retorno         :       (eMDB_reply) se receber resposta
+    308          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    309          eMDB_reply MDBCASHLESS_vend_cancel(void){
+   \                     MDBCASHLESS_vend_cancel:
+   \   00000000   0xB5E0             PUSH     {R5-R7,LR}
+    310            unsigned char buffer[2]  ;
+    311            unsigned char recebidos;
+    312            
+    313            buffer[Z1] = CASHLESS_VEND;
+   \   00000002   0x2013             MOVS     R0,#+19
+   \   00000004   0xF88D 0x0008      STRB     R0,[SP, #+8]
+    314            buffer[Z2] = CANCEL_VEND;
+   \   00000008   0x2001             MOVS     R0,#+1
+   \   0000000A   0xF88D 0x0009      STRB     R0,[SP, #+9]
+    315            
+    316            if(MDB_send_package(1,buffer,2,0,buffer,&recebidos)==MDB_OK){
+   \   0000000E   0xF10D 0x000A      ADD      R0,SP,#+10
+   \   00000012   0x9001             STR      R0,[SP, #+4]
+   \   00000014   0xA802             ADD      R0,SP,#+8
+   \   00000016   0x9000             STR      R0,[SP, #+0]
+   \   00000018   0x2300             MOVS     R3,#+0
+   \   0000001A   0x2202             MOVS     R2,#+2
+   \   0000001C   0xA902             ADD      R1,SP,#+8
+   \   0000001E   0x2001             MOVS     R0,#+1
+   \   00000020   0x.... 0x....      BL       MDB_send_package
+   \   00000024   0x2800             CMP      R0,#+0
+   \   00000026   0xD105             BNE.N    ??MDBCASHLESS_vend_cancel_0
+    317             
+    318              if(buffer[Z1] == VEND_DENIED)
+   \   00000028   0xF89D 0x0008      LDRB     R0,[SP, #+8]
+   \   0000002C   0x2806             CMP      R0,#+6
+   \   0000002E   0xD101             BNE.N    ??MDBCASHLESS_vend_cancel_0
+    319                return MDB_OK;
+   \   00000030   0x2000             MOVS     R0,#+0
+   \   00000032   0xE000             B.N      ??MDBCASHLESS_vend_cancel_1
+    320            }
+    321            
+    322            return MDB_TIMEOUT;
+   \                     ??MDBCASHLESS_vend_cancel_0:
+   \   00000034   0x2002             MOVS     R0,#+2
+   \                     ??MDBCASHLESS_vend_cancel_1:
+   \   00000036   0xBD0E             POP      {R1-R3,PC}       ;; return
+    323          }
+    324          /***********************************************************************************
+    325          *       Descrição       :       Sucesso na venda
+    326          *       Parametros      :       (unsigned short int) item
+    327          *       Retorno         :       (eMDB_reply) se receber resposta
+    328          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    329          eMDB_reply MDBCASHLESS_vend_success(unsigned short int item){
+   \                     MDBCASHLESS_vend_success:
    \   00000000   0xB500             PUSH     {LR}
    \   00000002   0xB085             SUB      SP,SP,#+20
-    260            unsigned char buffer[6];
-    261            unsigned char recebidos;                      
-    262            
-    263            buffer[0] = CASHLESS_VEND;
-   \   00000004   0x2213             MOVS     R2,#+19
-   \   00000006   0xF88D 0x200C      STRB     R2,[SP, #+12]
-    264            buffer[1] = REQUEST_VEND;
-   \   0000000A   0x2200             MOVS     R2,#+0
-   \   0000000C   0xF88D 0x200D      STRB     R2,[SP, #+13]
-    265            buffer[2] = (unsigned char)valor>>8;
-   \   00000010   0x2200             MOVS     R2,#+0
-   \   00000012   0xF88D 0x200E      STRB     R2,[SP, #+14]
-    266            buffer[3] = valor;
-   \   00000016   0xF88D 0x000F      STRB     R0,[SP, #+15]
-    267            buffer[4] = (unsigned char)code>>8;
-   \   0000001A   0x2000             MOVS     R0,#+0
-   \   0000001C   0xF88D 0x0010      STRB     R0,[SP, #+16]
-    268            buffer[5] = code;
-   \   00000020   0xF88D 0x1011      STRB     R1,[SP, #+17]
-    269            
-    270            if(MDB_send_package(1,buffer,6,0,buffer,&recebidos)==MDB_OK){
-   \   00000024   0xA802             ADD      R0,SP,#+8
-   \   00000026   0x9001             STR      R0,[SP, #+4]
-   \   00000028   0xA803             ADD      R0,SP,#+12
-   \   0000002A   0x9000             STR      R0,[SP, #+0]
-   \   0000002C   0x2300             MOVS     R3,#+0
-   \   0000002E   0x2206             MOVS     R2,#+6
-   \   00000030   0xA903             ADD      R1,SP,#+12
-   \   00000032   0x2001             MOVS     R0,#+1
-   \   00000034   0x.... 0x....      BL       MDB_send_package
-   \   00000038   0x2800             CMP      R0,#+0
-   \   0000003A   0xD101             BNE.N    ??MDBCASHLESS_start_vend_0
-    271              
-    272              
-    273              
-    274              return MDB_OK;
-   \   0000003C   0x2000             MOVS     R0,#+0
-   \   0000003E   0xE000             B.N      ??MDBCASHLESS_start_vend_1
-    275            }
-    276            
-    277            return MDB_TIMEOUT;
-   \                     ??MDBCASHLESS_start_vend_0:
-   \   00000040   0x2002             MOVS     R0,#+2
-   \                     ??MDBCASHLESS_start_vend_1:
-   \   00000042   0xB005             ADD      SP,SP,#+20
-   \   00000044   0xBD00             POP      {PC}             ;; return
-    278          }
-    279          /***********************************************************************************
-    280          *       Fim do arquivo
-    281          ***********************************************************************************/
+    330            unsigned char buffer[4];
+    331            unsigned char recebidos;
+    332            
+    333            buffer[Z1] = CASHLESS_VEND;
+   \   00000004   0x2113             MOVS     R1,#+19
+   \   00000006   0xF88D 0x100C      STRB     R1,[SP, #+12]
+    334            buffer[Z2] = SUCCESS_VEND;
+   \   0000000A   0x2102             MOVS     R1,#+2
+   \   0000000C   0xF88D 0x100D      STRB     R1,[SP, #+13]
+    335            buffer[Z3] = item>>8;
+   \   00000010   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000012   0x0A01             LSRS     R1,R0,#+8
+   \   00000014   0xF88D 0x100E      STRB     R1,[SP, #+14]
+    336            buffer[Z4] = item;
+   \   00000018   0xF88D 0x000F      STRB     R0,[SP, #+15]
+    337            
+    338            if(MDB_send_package(1,buffer,4,0,buffer,&recebidos)==MDB_OK){
+   \   0000001C   0xA802             ADD      R0,SP,#+8
+   \   0000001E   0x9001             STR      R0,[SP, #+4]
+   \   00000020   0xA803             ADD      R0,SP,#+12
+   \   00000022   0x9000             STR      R0,[SP, #+0]
+   \   00000024   0x2300             MOVS     R3,#+0
+   \   00000026   0x2204             MOVS     R2,#+4
+   \   00000028   0xA903             ADD      R1,SP,#+12
+   \   0000002A   0x2001             MOVS     R0,#+1
+   \   0000002C   0x.... 0x....      BL       MDB_send_package
+   \   00000030   0x2800             CMP      R0,#+0
+   \   00000032   0xD101             BNE.N    ??MDBCASHLESS_vend_success_0
+    339             
+    340              
+    341              return MDB_OK;
+   \   00000034   0x2000             MOVS     R0,#+0
+   \   00000036   0xE000             B.N      ??MDBCASHLESS_vend_success_1
+    342            }
+    343                
+    344            return MDB_TIMEOUT;
+   \                     ??MDBCASHLESS_vend_success_0:
+   \   00000038   0x2002             MOVS     R0,#+2
+   \                     ??MDBCASHLESS_vend_success_1:
+   \   0000003A   0xB005             ADD      SP,SP,#+20
+   \   0000003C   0xBD00             POP      {PC}             ;; return
+    345          }
+    346          /***********************************************************************************
+    347          *       Descrição       :       Habilita a leitora
+    348          *       Parametros      :       nenhum
+    349          *       Retorno         :       (eMDB_reply) se receber a configurmação
+    350          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    351          eMDB_reply MDBCASHLESS_enable_reader(unsigned char flag){
+   \                     MDBCASHLESS_enable_reader:
+   \   00000000   0xB500             PUSH     {LR}
+   \   00000002   0xB085             SUB      SP,SP,#+20
+    352            unsigned char buffer[3];
+    353            unsigned char recebidos;
+    354            
+    355            buffer[Z1] = CASHLESS_READER;
+   \   00000004   0x2114             MOVS     R1,#+20
+   \   00000006   0xF88D 0x100C      STRB     R1,[SP, #+12]
+    356            buffer[Z2] = flag?1:0;
+   \   0000000A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000000C   0x2800             CMP      R0,#+0
+   \   0000000E   0xD001             BEQ.N    ??MDBCASHLESS_enable_reader_0
+   \   00000010   0x2001             MOVS     R0,#+1
+   \   00000012   0xE000             B.N      ??MDBCASHLESS_enable_reader_1
+   \                     ??MDBCASHLESS_enable_reader_0:
+   \   00000014   0x2000             MOVS     R0,#+0
+   \                     ??MDBCASHLESS_enable_reader_1:
+   \   00000016   0xF88D 0x000D      STRB     R0,[SP, #+13]
+    357            
+    358            if(MDB_send_package(1,buffer,2,0,buffer,&recebidos)==MDB_OK){
+   \   0000001A   0xA802             ADD      R0,SP,#+8
+   \   0000001C   0x9001             STR      R0,[SP, #+4]
+   \   0000001E   0xA803             ADD      R0,SP,#+12
+   \   00000020   0x9000             STR      R0,[SP, #+0]
+   \   00000022   0x2300             MOVS     R3,#+0
+   \   00000024   0x2202             MOVS     R2,#+2
+   \   00000026   0xA903             ADD      R1,SP,#+12
+   \   00000028   0x2001             MOVS     R0,#+1
+   \   0000002A   0x.... 0x....      BL       MDB_send_package
+   \   0000002E   0x2800             CMP      R0,#+0
+   \   00000030   0xD101             BNE.N    ??MDBCASHLESS_enable_reader_2
+    359                
+    360              return MDB_OK;
+   \   00000032   0x2000             MOVS     R0,#+0
+   \   00000034   0xE000             B.N      ??MDBCASHLESS_enable_reader_3
+    361            }
+    362                
+    363            return MDB_TIMEOUT;
+   \                     ??MDBCASHLESS_enable_reader_2:
+   \   00000036   0x2002             MOVS     R0,#+2
+   \                     ??MDBCASHLESS_enable_reader_3:
+   \   00000038   0xB005             ADD      SP,SP,#+20
+   \   0000003A   0xBD00             POP      {PC}             ;; return
+    364          }
+    365          /***********************************************************************************
+    366          *       Descrição       :       Sessão completa
+    367          *       Parametros      :       envia o comando se fim da compra
+    368          *       Retorno         :       (eMDB_reply) se receber confirmação
+    369          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    370          eMDB_reply MDBCASHLESS_session_complete(void){
+   \                     MDBCASHLESS_session_complete:
+   \   00000000   0xB500             PUSH     {LR}
+   \   00000002   0xB085             SUB      SP,SP,#+20
+    371            unsigned char buffer[3];
+    372            unsigned char recebidos;
+    373            
+    374            buffer[Z1] = CASHLESS_VEND;
+   \   00000004   0x2013             MOVS     R0,#+19
+   \   00000006   0xF88D 0x000C      STRB     R0,[SP, #+12]
+    375            buffer[Z2] = SESSION_COMPLETE;
+   \   0000000A   0x2004             MOVS     R0,#+4
+   \   0000000C   0xF88D 0x000D      STRB     R0,[SP, #+13]
+    376            
+    377            if(MDB_send_package(1,buffer,2,0,buffer,&recebidos)==MDB_OK){
+   \   00000010   0xA802             ADD      R0,SP,#+8
+   \   00000012   0x9001             STR      R0,[SP, #+4]
+   \   00000014   0xA803             ADD      R0,SP,#+12
+   \   00000016   0x9000             STR      R0,[SP, #+0]
+   \   00000018   0x2300             MOVS     R3,#+0
+   \   0000001A   0x2202             MOVS     R2,#+2
+   \   0000001C   0xA903             ADD      R1,SP,#+12
+   \   0000001E   0x2001             MOVS     R0,#+1
+   \   00000020   0x.... 0x....      BL       MDB_send_package
+   \   00000024   0x2800             CMP      R0,#+0
+   \   00000026   0xD101             BNE.N    ??MDBCASHLESS_session_complete_0
+    378                
+    379              return MDB_OK;
+   \   00000028   0x2000             MOVS     R0,#+0
+   \   0000002A   0xE000             B.N      ??MDBCASHLESS_session_complete_1
+    380            }
+    381                
+    382            return MDB_TIMEOUT;
+   \                     ??MDBCASHLESS_session_complete_0:
+   \   0000002C   0x2002             MOVS     R0,#+2
+   \                     ??MDBCASHLESS_session_complete_1:
+   \   0000002E   0xB005             ADD      SP,SP,#+20
+   \   00000030   0xBD00             POP      {PC}             ;; return
+    383          }
+    384          /***********************************************************************************
+    385          *       Fim do arquivo
+    386          ***********************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -643,7 +917,15 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
         56   -> MDB_send_package
       56   CASHLESS_set_min_and_max_price_in_device
         56   -> MDB_send_package
-      24   MDBCASHLESS_start_vend
+      24   MDBCASHLESS_enable_reader
+        24   -> MDB_send_package
+      24   MDBCASHLESS_session_complete
+        24   -> MDB_send_package
+      32   MDBCASHLESS_start_vend
+        32   -> MDB_send_package
+      16   MDBCASHLESS_vend_cancel
+        16   -> MDB_send_package
+      24   MDBCASHLESS_vend_success
         24   -> MDB_send_package
 
 
@@ -652,16 +934,20 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    Bytes  Function/Label
    -----  --------------
       54  CASHLESS_adreess
-     164  CASHLESS_poll_device
+     232  CASHLESS_poll_device
       54  CASHLESS_reset_device
      174  CASHLESS_set_and_get_setup_from_to_device
-      88  CASHLESS_set_min_and_max_price_in_device
-      70  MDBCASHLESS_start_vend
+      96  CASHLESS_set_min_and_max_price_in_device
+      60  MDBCASHLESS_enable_reader
+      50  MDBCASHLESS_session_complete
+     102  MDBCASHLESS_start_vend
+      56  MDBCASHLESS_vend_cancel
+      62  MDBCASHLESS_vend_success
 
  
- 604 bytes in section .text
+ 940 bytes in section .text
  
- 604 bytes of CODE memory
+ 940 bytes of CODE memory
 
 Errors: none
 Warnings: none
