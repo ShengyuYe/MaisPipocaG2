@@ -1,0 +1,399 @@
+###############################################################################
+#                                                                             #
+#     IAR Assembler V6.50.3.4676/W32 for ARM 06/Jul/2017  16:40:03            #
+#     Copyright 1999-2013 IAR Systems AB.                                     #
+#                                                                             #
+#           Source file   =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\cstartup_M.asm#
+#           List file     =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Debug\List\cstartup_M.lst#
+#           Object file   =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Debug\Obj\cstartup_M.o#
+#           Command line  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\cstartup_M.asm #
+#                            -OC:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Debug\Obj\ #
+#                            -s+ -M<> -w+ -r                                  #
+#                            -LC:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Debug\List\ #
+#                            -t8 --cpu Cortex-M3 --fpu None                   #
+#                                                                             #
+###############################################################################
+
+    1                           /*____________________________________________
+                                ______________________________________
+    2                           |       Quark Tecnologia Eletrônica Embarcada
+    3                           |       
+    4                           |       Itapema - SC
+    5                           |       www.quarktee.com.br
+    6                           | ____________________________________________
+                                ______________________________________
+    7                           |
+    8                           |       This source code was developed by
+                                 Quark  and cannot be copied, in part
+                                 
+    9                           |       or in whole, or used, except when
+                                 legally licensed by Quark 
+   10                           |       or its distributors.
+   11                           |
+   12                           |       Este código é propriedade da Quark  e
+                                 não pode ser copiado, em parte 
+   13                           |       ou em todo, ou utilizado, exceto
+                                 quando for legalmente licenciado pela
+                                 
+   14                           |       Quark  ou por um de seus distribuidore
+                                s.
+   15                           | ____________________________________________
+                                ______________________________________
+   16                           |
+   17                           |       Arquivo            :
+   18                           |       Descrição          :
+   19                           | 
+   20                           |       Autor              :
+   21                           |       Data criação       :
+   22                           |
+   23                           |       Revisões           :
+   24                           |
+   25                           |
+   26                           | ____________________________________________
+                                ______________________________________
+   27                           */
+   28                           ;
+   29                           ; The modules in this file are included in the
+                                 libraries, and may be replaced
+   30                           ; by any user-defined modules that define the
+                                 PUBLIC symbol _program_start or
+   31                           ; a user defined start symbol.
+   32                           ; To override the cstartup defined in the
+                                 library, simply add your modified
+   33                           ; version to the workbench project.
+   34                           ;
+   35                           ; The vector table is normally located at
+                                 address 0.
+   36                           ; When debugging in RAM, it can be located in
+                                 RAM, aligned to at least 2^6.
+   37                           ; The name "__vector_table" has special
+                                 meaning for C-SPY:
+   38                           ; it is where the SP start value is found, and
+                                 the NVIC vector
+   39                           ; table register (VTOR) is initialized to this
+                                 address if != 0.
+   40                           ;
+   41                           ; Cortex-M version
+   42                           ;
+   43                           
+   44                                   MODULE  ?cstartup
+   45                           
+   46                                   ;; Forward declaration of sections.
+   47                                   SECTION CSTACK:DATA:NOROOT(3)
+   48                           
+   49                                   SECTION .intvec:CODE:NOROOT(2)
+   50                           
+   51                                   EXTERN  __iar_program_start
+   52                                   
+   53                                   EXTERN xPortPendSVHandler
+   54                                   EXTERN xPortSysTickHandler
+   55                                   EXTERN vPortSVCHandler
+   56                                   EXTERN vPortSVCHandler; // Aqui tinha
+                                 alguma coisa ENCODER_rti
+   57                                   EXTERN CCTALK_irqUart;  // 
+   58                                   EXTERN PAGAMENTOS_irq_uca_1;
+   59                                             
+   60                                   EXTERN POTENCIA_eintInterrupt;
+   61                                   EXTERN POTENCIA_captureInterrupt;
+   62                                   EXTERN POTENCIA_mathTimer2;
+   63                                   EXTERN PAGAMENTOS_irq_p70
+   64                                   EXTERN MDBUART_irq      
+   65                                   EXTERN PROTOCOLO_intVect;
+   66                                   EXTERN PLAYRWAVE_rti
+   67                                           
+   68                                   PUBLIC  __vector_table
+   69                                   PUBLIC  __vector_table_0x1c
+   70                           
+   71                                   DATA
+   72                           __vector_table
+   73    00000000 ........              DCD     sfe(CSTACK)                 ;
+  Top of Stack
+   74    00000004 ........              DCD     __iar_program_start         ;
+  Reset Handler
+   75    00000008 ........              DCD     NMI_Handler                 ;
+  NMI Handler
+   76    0000000C ........              DCD     HardFault_Handler           ;
+  Hard Fault Handler
+   77    00000010 ........              DCD     MemManage_Handler           ;
+  MPU Fault Handler
+   78    00000014 ........              DCD     BusFault_Handler            ;
+  Bus Fault Handler
+   79    00000018 ........              DCD     UsageFault_Handler          ;
+  Usage Fault Handler
+   80                           __vector_table_0x1c
+   81    0000001C 00000000              DCD     0                            ;
+  Reserved
+   82    00000020 00000000              DCD     0                            ;
+  Reserved
+   83    00000024 00000000              DCD     0                            ;
+  Reuserved
+   84    00000028 00000000              DCD     0                            ;
+  Reserved
+   85    0000002C ........              DCD     vPortSVCHandler              ;
+  SVCall Handler
+   86    00000030 ........              DCD     DebugMon_Handler             ;
+  Debug Monitor Handler
+   87    00000034 00000000              DCD     0                            ;
+  Reserved
+   88    00000038 ........              DCD     xPortPendSVHandler           ;
+  PendSV Handler
+   89    0000003C ........              DCD     xPortSysTickHandler          ;
+  SysTick Handler
+   90    00000040 ........              DCD     WDT_IRQHandler               ;
+  Watchdog Handler
+   91    00000044 ........              DCD     PLAYRWAVE_rti                ;
+  MU_captureInterrupt          ; TIMER0 Handler
+   92    00000048 ........              DCD     POTENCIA_captureInterrupt    ;
+  MU_captureInterrupt          ; TIMER1 Handler
+   93    0000004C ........              DCD     POTENCIA_mathTimer2;         ;
+  MU_mathTimer2                ; DECODIFICADOR_interruptCAP_2 ; TIMER2
+  Handler
+   94    00000050 ........              DCD     TMR3_IRQHandler              ;
+  TIMER3 Handler        
+   95    00000054 ........              DCD     CCTALK_irqUart               ;
+  CCTALK_irqUart               ; UART0_IRQHandler            ; UART0 Handler
+   96    00000058 00000000              DCD     0                            ;
+  TELET_vetor_interrupcao    ; 0                           ; UART1_IRQHandler   
+          ; UART1 Handler
+   97    0000005C ........              DCD     MDBUART_irq                  ;
+  UART2 Handler
+   98    00000060 ........              DCD     PROTOCOLO_intVect            ; 
+    PROTOCOLO_intVect            ; PROTOCOLO_intVect          ; UART3_IRQHandler
+             ; UART3 Handler        
+   99    00000064 ........              DCD     PWM1_IRQHandler              ;
+  PWM1 Handler
+  100    00000068 ........              DCD     I2C0_IRQHandler              ;
+  I2C0 Handler
+  101    0000006C ........              DCD     I2C1_IRQHandler              ;
+  I2C1 Handler
+  102    00000070 ........              DCD     I2C2_IRQHandler              ;
+  I2C2 Handler
+  103    00000074 ........              DCD     SPI_IRQHandler               ;
+  SPI Handler
+  104    00000078 ........              DCD     SSP0_IRQHandler              ;
+  SSP0 Handler
+  105    0000007C ........              DCD     SSP1_IRQHandler              ;
+  SSP1 Handler
+  106    00000080 ........              DCD     PLL0_IRQHandler              ;
+  PLL0 Handler
+  107    00000084 ........              DCD     RTC_IRQHandler               ;
+  RTC Handler
+  108    00000088 ........              DCD     EINT0_IRQHandler             ;
+  EXT Interupt 0 Handler
+  109    0000008C ........              DCD     POTENCIA_eintInterrupt       ;
+  MU_eintInterrupt             ; EINT1_IRQHandler            ; EXT Interupt 1
+  Handler
+  110    00000090 ........              DCD     PAGAMENTOS_irq_uca_1         ;
+  EXT Interupt 2 Handler
+  111    00000094 ........              DCD     PAGAMENTOS_irq_p70           ;
+  MP_gpioInt                 ; EXT Interupt 3 Handler
+  112    00000098 ........              DCD     ADC_IRQHandler               ;
+  ADC Handler
+  113    0000009C ........              DCD     BOD_IRQHandler               ;
+  BOD Handler
+  114    000000A0 ........              DCD     USB_IRQHandler               ;
+  USB Handler
+  115    000000A4 ........              DCD     CAN_IRQHandler               ;
+  CAN Handler
+  116    000000A8 ........              DCD     GPDMA_IRQHandler             ;
+  General Purpose DMA Handler
+  117    000000AC ........              DCD     I2S_IRQHandler               ;
+  I2S Handler
+  118    000000B0 ........              DCD     I2S_IRQHandler               ;
+  vEMAC_ISR                                ; Ethernet Handler
+  119    000000B4 ........              DCD     RIT_IRQHandler               ;
+  Repetitive Interrupt Timer Handler
+  120    000000B8 00000000              DCD     0                            ;
+  MotorControlPWM_IRQHandler   ; Motor Control PWM Handler
+  121    000000BC ........              DCD     QE_IRQHandler                ;
+  Quadrature Encoder Handler
+  122    000000C0 ........              DCD     PLL1_IRQHandler              ;
+  PLL1 Handler
+  123                           
+  124                           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                ;;;;;;
+  125                           ;;
+  126                           ;; Default interrupt handlers.
+  127                           ;;
+  128                                   THUMB
+  129                           
+  130                                   PUBWEAK NMI_Handler
+  131                                   SECTION .text:CODE:REORDER(1)
+  132                           NMI_Handler
+  133    00000000 ........              B NMI_Handler
+  134                                   PUBWEAK HardFault_Handler
+  135                                   SECTION .text:CODE:REORDER(1)
+  136                           HardFault_Handler
+  137    00000000 ........              B HardFault_Handler
+  138                                   PUBWEAK MemManage_Handler
+  139                                   SECTION .text:CODE:REORDER(1)
+  140                           MemManage_Handler
+  141    00000000 ........              B MemManage_Handler
+  142                                   PUBWEAK BusFault_Handler
+  143                                   SECTION .text:CODE:REORDER(1)
+  144                           BusFault_Handler
+  145    00000000 ........              B BusFault_Handler
+  146                                   PUBWEAK UsageFault_Handler
+  147                                   SECTION .text:CODE:REORDER(1)
+  148                           UsageFault_Handler
+  149    00000000 ........              B UsageFault_Handler
+  150                                   PUBWEAK SVC_Handler
+  151                                   SECTION .text:CODE:REORDER(1)
+  152                           SVC_Handler
+  153    00000000 ........              B SVC_Handler
+  154                                   PUBWEAK DebugMon_Handler
+  155                                   SECTION .text:CODE:REORDER(1)
+  156                           DebugMon_Handler
+  157    00000000 ........              B DebugMon_Handler
+  158                                   PUBWEAK PendSV_Handler
+  159                                   SECTION .text:CODE:REORDER(1)
+  160                           PendSV_Handler
+  161    00000000 ........              B PendSV_Handler
+  162                                   PUBWEAK SysTick_Handler
+  163                                   SECTION .text:CODE:REORDER(1)
+  164                           SysTick_Handler
+  165    00000000 ........              B SysTick_Handler
+  166                                   PUBWEAK WDT_IRQHandler
+  167                                   SECTION .text:CODE:REORDER(1)
+  168                           WDT_IRQHandler
+  169    00000000 ........              B WDT_IRQHandler
+  170                                   PUBWEAK TMR0_IRQHandler
+  171                                   SECTION .text:CODE:REORDER(1)
+  172                           TMR0_IRQHandler
+  173    00000000 ........              B TMR0_IRQHandler
+  174                                   PUBWEAK TMR1_IRQHandler
+  175                                   SECTION .text:CODE:REORDER(1)
+  176                           TMR1_IRQHandler
+  177    00000000 ........              B TMR1_IRQHandler
+  178                                   PUBWEAK TMR2_IRQHandler
+  179                                   SECTION .text:CODE:REORDER(1)
+  180                           TMR2_IRQHandler
+  181    00000000 ........              B TMR2_IRQHandler
+  182                                   PUBWEAK TMR3_IRQHandler
+  183                                   SECTION .text:CODE:REORDER(1)
+  184                           TMR3_IRQHandler
+  185    00000000 ........              B TMR3_IRQHandler
+  186                                   PUBWEAK UART0_IRQHandler
+  187                                   SECTION .text:CODE:REORDER(1)
+  188                           UART0_IRQHandler
+  189    00000000 ........              B UART0_IRQHandler
+  190                                   PUBWEAK UART1_IRQHandler
+  191                                   SECTION .text:CODE:REORDER(1)
+  192                           UART1_IRQHandler
+  193    00000000 ........              B UART1_IRQHandler
+  194                                   PUBWEAK UART2_IRQHandler
+  195                                   SECTION .text:CODE:REORDER(1)
+  196                           UART2_IRQHandler
+  197    00000000 ........              B UART2_IRQHandler
+  198                                   PUBWEAK UART3_IRQHandler
+  199                                   SECTION .text:CODE:REORDER(1)
+  200                           UART3_IRQHandler
+  201    00000000 ........              B UART3_IRQHandler
+  202                                   PUBWEAK PWM1_IRQHandler
+  203                                   SECTION .text:CODE:REORDER(1)
+  204                           PWM1_IRQHandler
+  205    00000000 ........              B PWM1_IRQHandler
+  206                                   PUBWEAK I2C0_IRQHandler
+  207                                   SECTION .text:CODE:REORDER(1)
+  208                           I2C0_IRQHandler
+  209    00000000 ........              B I2C0_IRQHandler
+  210                                   PUBWEAK I2C1_IRQHandler
+  211                                   SECTION .text:CODE:REORDER(1)
+  212                           I2C1_IRQHandler
+  213    00000000 ........              B I2C1_IRQHandler
+  214                                   PUBWEAK I2C2_IRQHandler
+  215                                   SECTION .text:CODE:REORDER(1)
+  216                           I2C2_IRQHandler
+  217    00000000 ........              B I2C2_IRQHandler
+  218                                   PUBWEAK SPI_IRQHandler
+  219                                   SECTION .text:CODE:REORDER(1)
+  220                           SPI_IRQHandler
+  221    00000000 ........              B SPI_IRQHandler
+  222                                   PUBWEAK SSP0_IRQHandler
+  223                                   SECTION .text:CODE:REORDER(1)
+  224                           SSP0_IRQHandler
+  225    00000000 ........              B SSP0_IRQHandler
+  226                                   PUBWEAK SSP1_IRQHandler
+  227                                   SECTION .text:CODE:REORDER(1)
+  228                           SSP1_IRQHandler
+  229    00000000 ........              B SSP1_IRQHandler
+  230                                   PUBWEAK PLL0_IRQHandler
+  231                                   SECTION .text:CODE:REORDER(1)
+  232                           PLL0_IRQHandler
+  233    00000000 ........              B PLL0_IRQHandler
+  234                                   PUBWEAK RTC_IRQHandler
+  235                                   SECTION .text:CODE:REORDER(1)
+  236                           RTC_IRQHandler
+  237    00000000 ........              B RTC_IRQHandler
+  238                                   PUBWEAK EINT0_IRQHandler
+  239                                   SECTION .text:CODE:REORDER(1)
+  240                           EINT0_IRQHandler
+  241    00000000 ........              B EINT0_IRQHandler
+  242                                   PUBWEAK EINT1_IRQHandler
+  243                                   SECTION .text:CODE:REORDER(1)
+  244                           EINT1_IRQHandler
+  245    00000000 ........              B EINT1_IRQHandler
+  246                                   PUBWEAK EINT2_IRQHandler
+  247                                   SECTION .text:CODE:REORDER(1)
+  248                           EINT2_IRQHandler
+  249    00000000 ........              B EINT2_IRQHandler
+  250                                   PUBWEAK EINT3_IRQHandler
+  251                                   SECTION .text:CODE:REORDER(1)
+  252                           EINT3_IRQHandler
+  253    00000000 ........              B EINT3_IRQHandler
+  254                                   PUBWEAK ADC_IRQHandler
+  255                                   SECTION .text:CODE:REORDER(1)
+  256                           ADC_IRQHandler
+  257    00000000 ........              B ADC_IRQHandler
+  258                                   PUBWEAK BOD_IRQHandler
+  259                                   SECTION .text:CODE:REORDER(1)
+  260                           BOD_IRQHandler
+  261    00000000 ........              B BOD_IRQHandler
+  262                                   PUBWEAK USB_IRQHandler
+  263                                   SECTION .text:CODE:REORDER(1)
+  264                           USB_IRQHandler
+  265    00000000 ........              B USB_IRQHandler
+  266                                   PUBWEAK CAN_IRQHandler
+  267                                   SECTION .text:CODE:REORDER(1)
+  268                           CAN_IRQHandler
+  269    00000000 ........              B CAN_IRQHandler
+  270                                   PUBWEAK GPDMA_IRQHandler
+  271                                   SECTION .text:CODE:REORDER(1)
+  272                           GPDMA_IRQHandler
+  273    00000000 ........              B GPDMA_IRQHandler
+  274                                   PUBWEAK I2S_IRQHandler
+  275                                   SECTION .text:CODE:REORDER(1)
+  276                           I2S_IRQHandler
+  277    00000000 ........              B I2S_IRQHandler
+  278                                   PUBWEAK Ethernet_IRQHandler
+  279                                   SECTION .text:CODE:REORDER(1)
+  280                           Ethernet_IRQHandler
+  281    00000000 ........              B Ethernet_IRQHandler
+  282                                   PUBWEAK RIT_IRQHandler
+  283                                   SECTION .text:CODE:REORDER(1)
+  284                           RIT_IRQHandler
+  285    00000000 ........              B RIT_IRQHandler
+  286                                   PUBWEAK MotorControlPWM_IRQHandler
+  287                                   SECTION .text:CODE:REORDER(1)
+  288                           MotorControlPWM_IRQHandler
+  289    00000000 ........              B MotorControlPWM_IRQHandler
+  290                                   PUBWEAK QE_IRQHandler
+  291                                   SECTION .text:CODE:REORDER(1)
+  292                           QE_IRQHandler
+  293    00000000 ........              B QE_IRQHandler
+  294                                   PUBWEAK PLL1_IRQHandler
+  295                                   SECTION .text:CODE:REORDER(1)
+  296                           PLL1_IRQHandler
+  297    00000000 ........              B PLL1_IRQHandler
+  298                           
+  299                                   END
+##############################
+#           CRC:0            #
+#        Errors:   0         #
+#        Warnings: 0         #
+#         Bytes: 364         #
+##############################
+
+
+
+

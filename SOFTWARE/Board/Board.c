@@ -132,6 +132,7 @@ void BOARD_ini(void){
   FITA_LED_INI();
   PLAYERWAVE_ini();
   SERIALMUX_ini();
+  SD_disk_initialize();
   // Deixa a porta serial RS232
   // habilitada direto
   SERIALMUX_seleciona(SERIALMUX_RS232);

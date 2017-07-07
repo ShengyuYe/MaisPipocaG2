@@ -80,6 +80,7 @@ void APLICACAO_verificao_ciclica(void);
 void APLICACAO_loop_falha_ciclica(void);
 void APLICACAO_ciclo_desumidificador(unsigned char flag);
 
+void APLICACAO_teste_arquivo(void);
 /***********************************************************************************
 *       Implementação das funções
 ***********************************************************************************/
@@ -132,7 +133,7 @@ void APLICACAO_main(void*pPar){
     tecla = TECLADO_getch();
     switch(tecla){
       case TECLA_INC:           
-           SMDB_venda_cartao(100);
+           APLICACAO_teste_arquivo();
            break;
       case TECLA_DEC:
            break;
@@ -750,6 +751,30 @@ void APLICACAO_ciclo_desumidificador(unsigned char flag){
     APLICACAO_verifica_post();
     APLICACAO_tempo_desumidificador = TEMPO_DESUMIDIFICADOR;
   }
+}
+
+
+void APLICACAO_teste_arquivo(void){ 
+  FATFS fs;
+  FIL arquivo;
+  char buffer[32];
+  unsigned char hora,minuto,segundo,dia,mes;
+  unsigned int ano;
+  
+  sprintf(buffer,"log_texto.txt");
+  
+  f_mount(0,&fs);
+  f_open(&arquivo,buffer,FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
+  
+  UINT br,bw;
+  FRESULT res;
+  
+  sprintf(buffer,"Ola mundo!");
+  br = strlen(buffer);
+  
+  f_write(&arquivo,buffer,br,&bw);
+  
+  f_close(&arquivo);
 }
 /***********************************************************************************
 *       Fim do arquivo

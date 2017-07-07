@@ -1,0 +1,243 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      06/Jul/2017  16:39:23 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\Impressora\impressora.c           #
+#    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\Impressora\impressora.c -lC       #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -lA                           #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -o                            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\impressora.lst                 #
+#    Object file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\impressora.o                    #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\Impressora\impressora.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  impressora.c
+     18          | 
+     19          |       Autor              :  Marcos Aquino
+     20          |       Data criação       :  01/03/2017
+     21          |
+     22          |       Revisões           :  001
+     23          |
+     24          |
+     25          | __________________________________________________________________________________
+     26          */
+     27          
+     28          /**********************************************************************************
+     29          *       Includes
+     30          **********************************************************************************/
+     31          #include <stdio.h>
+     32          #include <stdlib.h>
+     33          #include <string.h>
+     34          #include "..\..\includes.h"
+     35          
+     36          /**********************************************************************************
+     37          *       Definições
+     38          **********************************************************************************/
+     39          
+     40          
+     41          
+     42          /**********************************************************************************
+     43          *       Variaveis locais
+     44          **********************************************************************************/
+     45          
+     46          
+     47          /**********************************************************************************
+     48          *       Funções locais
+     49          **********************************************************************************/
+     50          
+     51          /**********************************************************************************
+     52          *       Descrição       :       Inicializa o driver da impressora
+     53          *       Parametros      :       nenhum
+     54          *       Retorno         :       nenhum
+     55          **********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     56          void IMPRESSORA_ini(void){    
+     57          
+     58            
+     59            
+     60          }
+   \                     IMPRESSORA_ini:
+   \   00000000   0x4770             BX       LR               ;; return
+     61          /**********************************************************************************
+     62          *       Descrição       :       Imprime uma linha na impressora
+     63          *       Parametros      :       nenhum
+     64          *       Retorno         :       nenhum
+     65          **********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     66          void IMPRESSORA_envia_linha(char *texto){
+   \                     IMPRESSORA_envia_linha:
+   \   00000000   0xB51C             PUSH     {R2-R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+     67            unsigned int  baudrate;
+     68            
+     69            PARAMETROS_le(ADR_BAUDRATE_IMPRESSORA,(void*)&baudrate);            
+   \   00000004   0xA901             ADD      R1,SP,#+4
+   \   00000006   0x2007             MOVS     R0,#+7
+   \   00000008   0x.... 0x....      BL       PARAMETROS_le
+     70            UART_init(3,baudrate,NULL,NULL,NULL);      
+   \   0000000C   0x2000             MOVS     R0,#+0
+   \   0000000E   0x9000             STR      R0,[SP, #+0]
+   \   00000010   0x2300             MOVS     R3,#+0
+   \   00000012   0x2200             MOVS     R2,#+0
+   \   00000014   0x9901             LDR      R1,[SP, #+4]
+   \   00000016   0x2003             MOVS     R0,#+3
+   \   00000018   0x.... 0x....      BL       UART_init
+     71                  
+     72            unsigned char tamanho = strlen(texto);
+   \   0000001C   0x0020             MOVS     R0,R4
+   \   0000001E   0x.... 0x....      BL       strlen
+     73            PROTOCOLO_enviaDadosDireto((unsigned char*)texto,tamanho);
+   \   00000022   0x0001             MOVS     R1,R0
+   \   00000024   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000026   0x0020             MOVS     R0,R4
+   \   00000028   0x.... 0x....      BL       PROTOCOLO_enviaDadosDireto
+     74            while(PROTOCOLO_bytesNoBufferTx());
+   \                     ??IMPRESSORA_envia_linha_0:
+   \   0000002C   0x.... 0x....      BL       PROTOCOLO_bytesNoBufferTx
+   \   00000030   0x2800             CMP      R0,#+0
+   \   00000032   0xD1FB             BNE.N    ??IMPRESSORA_envia_linha_0
+     75            
+     76            // Volta a configuração normal do 
+     77            // protocolo
+     78            UART_init(3,36600,NULL,NULL,NULL);      
+   \   00000034   0x2000             MOVS     R0,#+0
+   \   00000036   0x9000             STR      R0,[SP, #+0]
+   \   00000038   0x2300             MOVS     R3,#+0
+   \   0000003A   0x2200             MOVS     R2,#+0
+   \   0000003C   0xF648 0x61F8      MOVW     R1,#+36600
+   \   00000040   0x2003             MOVS     R0,#+3
+   \   00000042   0x.... 0x....      BL       UART_init
+     79          }
+   \   00000046   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+     80          /**********************************************************************************
+     81          *       Descrição       :       Gera o relatório de faturamento da máquina
+     82          *       Parametros      :       nenhum
+     83          *       Retorno         :       nenhum
+     84          **********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     85          void IMPRESSORA_gera_relatorio(void){
+   \                     IMPRESSORA_gera_relatorio:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     86            unsigned char idioma;
+     87            
+     88            PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma); 
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x2000             MOVS     R0,#+0
+   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+     89          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+     90          /**********************************************************************************
+     91          *       Descrição       :       Gera o relatório de teste da impressora
+     92          *       Parametros      :       nenhum
+     93          *       Retorno         :       nenhum
+     94          **********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     95          void IMPRESSORA_impressora_teste(void){
+   \                     IMPRESSORA_impressora_teste:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB082             SUB      SP,SP,#+8
+     96            unsigned char idioma;
+     97            
+     98            PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma);   
+   \   00000004   0xA900             ADD      R1,SP,#+0
+   \   00000006   0x2000             MOVS     R0,#+0
+   \   00000008   0x.... 0x....      BL       PARAMETROS_le
+     99            for(unsigned char i=0;i<QTD_LINHAS_IMPRESSAO_TESTE;i++)
+   \   0000000C   0x2400             MOVS     R4,#+0
+   \   0000000E   0xE00A             B.N      ??IMPRESSORA_impressora_teste_0
+    100              IMPRESSORA_envia_linha((char*)STRING_impressao_teste[idioma][i]);  
+   \                     ??IMPRESSORA_impressora_teste_1:
+   \   00000010   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   00000012   0xF89D 0x0000      LDRB     R0,[SP, #+0]
+   \   00000016   0x....             LDR.N    R1,??DataTable0
+   \   00000018   0xEB11 0x1000      ADDS     R0,R1,R0, LSL #+4
+   \   0000001C   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
+   \   00000020   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   00000024   0x1C64             ADDS     R4,R4,#+1
+   \                     ??IMPRESSORA_impressora_teste_0:
+   \   00000026   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   00000028   0x2C04             CMP      R4,#+4
+   \   0000002A   0xDBF1             BLT.N    ??IMPRESSORA_impressora_teste_1
+    101          }
+   \   0000002C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable0:
+   \   00000000   0x........         DC32     STRING_impressao_teste
+    102          /**********************************************************************************
+    103          *       Fim do arquivo
+    104          **********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   IMPRESSORA_envia_linha
+        16   -> PARAMETROS_le
+        16   -> PROTOCOLO_bytesNoBufferTx
+        16   -> PROTOCOLO_enviaDadosDireto
+        16   -> UART_init
+        16   -> strlen
+       8   IMPRESSORA_gera_relatorio
+         8   -> PARAMETROS_le
+      16   IMPRESSORA_impressora_teste
+        16   -> IMPRESSORA_envia_linha
+        16   -> PARAMETROS_le
+       0   IMPRESSORA_ini
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable0
+      72  IMPRESSORA_envia_linha
+      12  IMPRESSORA_gera_relatorio
+      46  IMPRESSORA_impressora_teste
+       2  IMPRESSORA_ini
+
+ 
+ 136 bytes in section .text
+ 
+ 136 bytes of CODE memory
+
+Errors: none
+Warnings: none

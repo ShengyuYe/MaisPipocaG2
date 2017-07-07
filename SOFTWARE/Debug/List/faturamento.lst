@@ -1,0 +1,778 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      06/Jul/2017  16:39:17 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Aplicacao\faturamento.c                   #
+#    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Aplicacao\faturamento.c -lC               #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -lA                           #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -o                            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\faturamento.lst                #
+#    Object file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\faturamento.o                   #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao\faturamento.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  faturamento.c
+     18          | 
+     19          |       Autor              :  Marcos Aquino
+     20          |       Data criação       :  (06/03/2017)
+     21          |
+     22          |       Revisões           :  001
+     23          |
+     24          |
+     25          | __________________________________________________________________________________
+     26          */
+     27          
+     28          /***********************************************************************************
+     29          *       Includes
+     30          ***********************************************************************************/
+     31          #include <stdio.h>
+     32          #include <stdlib.h>
+     33          #include <string.h>
+     34          #include "..\includes.h"
+     35          
+     36          /***********************************************************************************
+     37          *       Definições
+     38          ***********************************************************************************/
+     39          
+     40          
+     41          /***********************************************************************************
+     42          *       Variaveis locais
+     43          ***********************************************************************************/
+     44          
+     45          
+     46          /***********************************************************************************
+     47          *       Funções locais
+     48          ***********************************************************************************/
+     49          
+     50          
+     51          /***********************************************************************************
+     52          *       Implementação das funções
+     53          ***********************************************************************************/
+     54          
+     55          /***********************************************************************************
+     56          *       Descrição       :       Getter para a contagem parcial
+     57          *       Parametros      :       nenhum
+     58          *       Retorno         :       (unsigned int) contagem parcial de unidades
+     59          *                               vendidas
+     60          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     61          unsigned int FATURAMENTO_get_contagem_parcial(void){
+   \                     FATURAMENTO_get_contagem_parcial:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     62            unsigned int temp;
+     63            
+     64            PARAMETROS_le(ADR_CONTAGEM_UNIDADES_PARCIAL,(void*)&temp);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200A             MOVS     R0,#+10
+   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+     65            
+     66            return temp;  
+   \   0000000A   0x9800             LDR      R0,[SP, #+0]
+   \   0000000C   0xBD02             POP      {R1,PC}          ;; return
+     67          }
+     68          /***********************************************************************************
+     69          *       Descrição       :       Getter para a arrecadação parcial
+     70          *       Parametros      :       nenhum
+     71          *       Retorno         :       (unsigned int) arrecadação parcial
+     72          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     73          unsigned int FATURAMENTO_get_arrecadacao_parcial(void){
+   \                     FATURAMENTO_get_arrecadacao_parcial:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     74            unsigned int temp;
+     75            
+     76            PARAMETROS_le(ADR_MOEDA_PARCIAL,(void*)&temp);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200C             MOVS     R0,#+12
+   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+     77            
+     78            return temp;
+   \   0000000A   0x9800             LDR      R0,[SP, #+0]
+   \   0000000C   0xBD02             POP      {R1,PC}          ;; return
+     79          }
+     80          /***********************************************************************************
+     81          *       Descrição       :       Getter para a contagem parcial
+     82          *                               do cartão de crédito
+     83          *       Parametros      :       nenhum
+     84          *       Retorno         :       (unsigned int) ccontagem parcial do cartão
+     85          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     86          unsigned int FATURAMENTO_get_contagem_cartao_parcial(void){
+   \                     FATURAMENTO_get_contagem_cartao_parcial:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     87            unsigned int temp;
+     88            
+     89            PARAMETROS_le(ADR_UNIDADES_CARTAO_PARCIAL,(void*)&temp);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x2010             MOVS     R0,#+16
+   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+     90            
+     91            return temp;
+   \   0000000A   0x9800             LDR      R0,[SP, #+0]
+   \   0000000C   0xBD02             POP      {R1,PC}          ;; return
+     92          }
+     93          /***********************************************************************************
+     94          *       Descrição       :       Getter para a arrecadação parcial do cartão
+     95          *       Parametros      :       nenhum
+     96          *       Retorno         :       (unsigned int) arrecadacao parcial do cartão
+     97          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     98          unsigned int FATURAMENTO_get_arrecadacao_cartao_parcial(void){
+   \                     FATURAMENTO_get_arrecadacao_cartao_parcial:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     99            unsigned int temp;
+    100            
+    101            PARAMETROS_le(ADR_CARTAO_PARCIAL,(void*)&temp);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200E             MOVS     R0,#+14
+   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+    102            
+    103            return temp;
+   \   0000000A   0x9800             LDR      R0,[SP, #+0]
+   \   0000000C   0xBD02             POP      {R1,PC}          ;; return
+    104          }
+    105          /***********************************************************************************
+    106          *       Descrição       :       Getter para a contagem total das unidades
+    107          *                               vendidas
+    108          *       Parametros      :       nenhum
+    109          *       Retorno         :       (unsigned int) contagem total 
+    110          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    111          unsigned int FATURAMENTO_get_contagem_total(void){
+   \                     FATURAMENTO_get_contagem_total:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    112            unsigned int temp;
+    113            
+    114            PARAMETROS_le(ADR_CONTAGEM_UNIDADES_TOTAL,(void*)&temp);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200B             MOVS     R0,#+11
+   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+    115            
+    116            return temp;
+   \   0000000A   0x9800             LDR      R0,[SP, #+0]
+   \   0000000C   0xBD02             POP      {R1,PC}          ;; return
+    117          }
+    118          /***********************************************************************************
+    119          *       Descrição       :       Getter para a arrecadação total
+    120          *       Parametros      :       nenhum
+    121          *       Retorno         :       (unsigned int) arrecadacao total
+    122          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    123          unsigned int FATURAMENTO_get_arrecadacao_total(void){
+   \                     FATURAMENTO_get_arrecadacao_total:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    124            unsigned int temp;
+    125            
+    126            PARAMETROS_le(ADR_MOEDA_TOTAL,(void*)&temp);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200D             MOVS     R0,#+13
+   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+    127            
+    128            return temp;
+   \   0000000A   0x9800             LDR      R0,[SP, #+0]
+   \   0000000C   0xBD02             POP      {R1,PC}          ;; return
+    129          }
+    130          /***********************************************************************************
+    131          *       Descrição       :       Getter paraa contagem do cartão de crédito
+    132          *       Parametros      :       nenhum
+    133          *       Retorno         :       (unsigned int) contagem do cartão de crédito
+    134          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    135          unsigned int FATURAMENTO_get_contagem_cartao_total(void){
+   \                     FATURAMENTO_get_contagem_cartao_total:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    136            unsigned int temp;
+    137            
+    138            PARAMETROS_le(ADR_UNIDADES_CARTAO_TOTAL,(void*)&temp);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x2011             MOVS     R0,#+17
+   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+    139            
+    140            return temp;
+   \   0000000A   0x9800             LDR      R0,[SP, #+0]
+   \   0000000C   0xBD02             POP      {R1,PC}          ;; return
+    141          }
+    142          /***********************************************************************************
+    143          *       Descrição       :       Getter para a arrecadacao total do cartão
+    144          *       Parametros      :       nenhum
+    145          *       Retorno         :       (unsigned int) arrecadacao total do cartão
+    146          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    147          unsigned int FATURAMENTO_get_arrecadacao_cartao_total(void){
+   \                     FATURAMENTO_get_arrecadacao_cartao_total:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    148            unsigned int temp;
+    149            
+    150            PARAMETROS_le(ADR_CARTAO_TOTAL,(void*)&temp);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200F             MOVS     R0,#+15
+   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+    151            
+    152            return temp;
+   \   0000000A   0x9800             LDR      R0,[SP, #+0]
+   \   0000000C   0xBD02             POP      {R1,PC}          ;; return
+    153          }
+    154          /***********************************************************************************
+    155          *       Descrição       :       Setter para a contagem parcial 
+    156          *       Parametros      :       (unsigned int) contagem
+    157          *       Retorno         :       nenhum
+    158          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    159          void FATURAMENTO_set_contagem_parcial(unsigned int contagem){
+   \                     FATURAMENTO_set_contagem_parcial:
+   \   00000000   0xB501             PUSH     {R0,LR}
+    160              
+    161            PARAMETROS_grava(ADR_CONTAGEM_UNIDADES_PARCIAL,(void*)&contagem);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200A             MOVS     R0,#+10
+   \   00000006   0x.... 0x....      BL       PARAMETROS_grava
+    162          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+    163          /***********************************************************************************
+    164          *       Descrição       :       Setter para a arrecadação 
+    165          *       Parametros      :       (unsigned int) arrecadacao
+    166          *       Retorno         :       nenhum
+    167          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    168          void FATURAMENTO_set_arrecadacao_parcial(unsigned int arrecadacao){
+   \                     FATURAMENTO_set_arrecadacao_parcial:
+   \   00000000   0xB501             PUSH     {R0,LR}
+    169            
+    170            PARAMETROS_grava(ADR_MOEDA_PARCIAL,(void*)&arrecadacao);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200C             MOVS     R0,#+12
+   \   00000006   0x.... 0x....      BL       PARAMETROS_grava
+    171          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+    172          /***********************************************************************************
+    173          *       Descrição       :       Setter para a contagem parcial do cartão
+    174          *       Parametros      :       (unsigned int) contagem
+    175          *       Retorno         :       nenhum
+    176          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    177          void FATURAMENTO_set_contagem_cartao_parcial(unsigned int contagem){
+   \                     FATURAMENTO_set_contagem_cartao_parcial:
+   \   00000000   0xB501             PUSH     {R0,LR}
+    178            
+    179            PARAMETROS_grava(ADR_UNIDADES_CARTAO_PARCIAL,(void*)&contagem);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x2010             MOVS     R0,#+16
+   \   00000006   0x.... 0x....      BL       PARAMETROS_grava
+    180          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+    181          /***********************************************************************************
+    182          *       Descrição       :       Setter para a contagem parcial do cartão
+    183          *       Parametros      :       (unsigned int) arrecadação parcial do
+    184          *                                              cartão
+    185          *       Retorno         :       nenhum
+    186          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    187          void FATURAMENTO_set_arrecadacao_cartao_parcial(unsigned int arrecadacao){
+   \                     FATURAMENTO_set_arrecadacao_cartao_parcial:
+   \   00000000   0xB501             PUSH     {R0,LR}
+    188            
+    189            PARAMETROS_grava(ADR_CARTAO_PARCIAL,(void*)&arrecadacao);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200E             MOVS     R0,#+14
+   \   00000006   0x.... 0x....      BL       PARAMETROS_grava
+    190          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+    191          /***********************************************************************************
+    192          *       Descrição       :       Setter para a contagem de unidades vendidas
+    193          *       Parametros      :       (unsigned int) contagem
+    194          *       Retorno         :       nenhum
+    195          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    196          void FATURAMENTO_set_contagem_total(unsigned int contagem){
+   \                     FATURAMENTO_set_contagem_total:
+   \   00000000   0xB501             PUSH     {R0,LR}
+    197            
+    198            PARAMETROS_grava(ADR_CONTAGEM_UNIDADES_TOTAL,(void*)&contagem);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200B             MOVS     R0,#+11
+   \   00000006   0x.... 0x....      BL       PARAMETROS_grava
+    199          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+    200          /***********************************************************************************
+    201          *       Descrição       :       Setter para a arrecadação 
+    202          *       Parametros      :       (unsigned int) arrecadacao
+    203          *       Retorno         :       nenhum
+    204          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    205          void FATURAMENTO_set_arrecadacao_total(unsigned int arrecadacao){
+   \                     FATURAMENTO_set_arrecadacao_total:
+   \   00000000   0xB501             PUSH     {R0,LR}
+    206            
+    207            PARAMETROS_grava(ADR_MOEDA_TOTAL,(void*)&arrecadacao);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200D             MOVS     R0,#+13
+   \   00000006   0x.... 0x....      BL       PARAMETROS_grava
+    208          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+    209          /***********************************************************************************
+    210          *       Descrição       :       Setter para a contagem do cartão
+    211          *       Parametros      :       (unsigned int) contagem
+    212          *       Retorno         :       nenhum
+    213          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    214          void FATURAMENTO_set_contagem_cartao_total(unsigned int contagem){
+   \                     FATURAMENTO_set_contagem_cartao_total:
+   \   00000000   0xB501             PUSH     {R0,LR}
+    215            
+    216             PARAMETROS_grava(ADR_UNIDADES_CARTAO_TOTAL,(void*)&contagem); 
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x2011             MOVS     R0,#+17
+   \   00000006   0x.... 0x....      BL       PARAMETROS_grava
+    217          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+    218          /***********************************************************************************
+    219          *       Descrição       :       Setter para a arrecadacação do cartão
+    220          *       Parametros      :       (unsigned int) arrecadacao total do cartão
+    221          *       Retorno         :       nenhum
+    222          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    223          void FATURAMENTO_set_arrecadacao_cartao_total(unsigned int arrecadacao){
+   \                     FATURAMENTO_set_arrecadacao_cartao_total:
+   \   00000000   0xB501             PUSH     {R0,LR}
+    224            
+    225            PARAMETROS_grava(ADR_CARTAO_TOTAL,(void*)&arrecadacao); 
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x200F             MOVS     R0,#+15
+   \   00000006   0x.... 0x....      BL       PARAMETROS_grava
+    226          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+    227          /***********************************************************************************
+    228          *       Descrição       :       Adicionar uma contagem ao contador parcial
+    229          *       Parametros      :       (unsigned int) contagem para adicionar
+    230          *       Retorno         :       nenhum
+    231          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    232          void FATURAMENTO_add_contagem_parcial(unsigned int contagem){
+   \                     FATURAMENTO_add_contagem_parcial:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB082             SUB      SP,SP,#+8
+   \   00000004   0x0004             MOVS     R4,R0
+    233            unsigned int temp;
+    234          
+    235            PARAMETROS_le(ADR_CONTAGEM_UNIDADES_PARCIAL,(void*)&temp);
+   \   00000006   0xA900             ADD      R1,SP,#+0
+   \   00000008   0x200A             MOVS     R0,#+10
+   \   0000000A   0x.... 0x....      BL       PARAMETROS_le
+    236            temp+=contagem;
+   \   0000000E   0x9800             LDR      R0,[SP, #+0]
+   \   00000010   0x1820             ADDS     R0,R4,R0
+   \   00000012   0x9000             STR      R0,[SP, #+0]
+    237            PARAMETROS_grava(ADR_CONTAGEM_UNIDADES_PARCIAL,(void*)&temp);  
+   \   00000014   0xA900             ADD      R1,SP,#+0
+   \   00000016   0x200A             MOVS     R0,#+10
+   \   00000018   0x.... 0x....      BL       PARAMETROS_grava
+    238          }
+   \   0000001C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    239          /***********************************************************************************
+    240          *       Descrição       :       Adicionar uma contagem à arrecadação parcial
+    241          *       Parametros      :       (unsigned int) arrecadacao
+    242          *       Retorno         :       nenhum
+    243          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    244          void FATURAMENTO_add_arrecadacao_parcial(unsigned int arrecadacao){
+   \                     FATURAMENTO_add_arrecadacao_parcial:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB082             SUB      SP,SP,#+8
+   \   00000004   0x0004             MOVS     R4,R0
+    245            unsigned int temp;
+    246          
+    247            PARAMETROS_le(ADR_MOEDA_PARCIAL,(void*)&temp);
+   \   00000006   0xA900             ADD      R1,SP,#+0
+   \   00000008   0x200C             MOVS     R0,#+12
+   \   0000000A   0x.... 0x....      BL       PARAMETROS_le
+    248            temp+=arrecadacao;
+   \   0000000E   0x9800             LDR      R0,[SP, #+0]
+   \   00000010   0x1820             ADDS     R0,R4,R0
+   \   00000012   0x9000             STR      R0,[SP, #+0]
+    249            PARAMETROS_grava(ADR_MOEDA_PARCIAL,(void*)&temp);  
+   \   00000014   0xA900             ADD      R1,SP,#+0
+   \   00000016   0x200C             MOVS     R0,#+12
+   \   00000018   0x.... 0x....      BL       PARAMETROS_grava
+    250          }
+   \   0000001C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    251          /***********************************************************************************
+    252          *       Descrição       :       Adiciona contagem ao cartão parcial
+    253          *       Parametros      :       (unsigned int) cartão parcial
+    254          *       Retorno                 nenhum
+    255          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    256          void FATURAMENTO_add_contagem_cartao_parcial(unsigned int contagem){
+   \                     FATURAMENTO_add_contagem_cartao_parcial:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB082             SUB      SP,SP,#+8
+   \   00000004   0x0004             MOVS     R4,R0
+    257            unsigned int temp;
+    258          
+    259            PARAMETROS_le(ADR_UNIDADES_CARTAO_PARCIAL,(void*)&temp);
+   \   00000006   0xA900             ADD      R1,SP,#+0
+   \   00000008   0x2010             MOVS     R0,#+16
+   \   0000000A   0x.... 0x....      BL       PARAMETROS_le
+    260            temp+=contagem;
+   \   0000000E   0x9800             LDR      R0,[SP, #+0]
+   \   00000010   0x1820             ADDS     R0,R4,R0
+   \   00000012   0x9000             STR      R0,[SP, #+0]
+    261            PARAMETROS_grava(ADR_UNIDADES_CARTAO_PARCIAL,(void*)&temp);  
+   \   00000014   0xA900             ADD      R1,SP,#+0
+   \   00000016   0x2010             MOVS     R0,#+16
+   \   00000018   0x.... 0x....      BL       PARAMETROS_grava
+    262          }
+   \   0000001C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    263          /***********************************************************************************
+    264          *       Descrição        :    Adiciona um valor à arrecadação do cartão
+    265          *       Parametros       :    (unsigned int) cartão parcial
+    266          *       Retorno         :       nenhum
+    267          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    268          void FATURAMENTO_add_arrecadacao_cartao_parcial(unsigned int arrecadacao){
+   \                     FATURAMENTO_add_arrecadacao_cartao_parcial:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB082             SUB      SP,SP,#+8
+   \   00000004   0x0004             MOVS     R4,R0
+    269            unsigned int temp;
+    270          
+    271            PARAMETROS_le(ADR_CARTAO_PARCIAL,(void*)&temp);
+   \   00000006   0xA900             ADD      R1,SP,#+0
+   \   00000008   0x200E             MOVS     R0,#+14
+   \   0000000A   0x.... 0x....      BL       PARAMETROS_le
+    272            temp+=arrecadacao;
+   \   0000000E   0x9800             LDR      R0,[SP, #+0]
+   \   00000010   0x1820             ADDS     R0,R4,R0
+   \   00000012   0x9000             STR      R0,[SP, #+0]
+    273            PARAMETROS_grava(ADR_CARTAO_PARCIAL,(void*)&temp);  
+   \   00000014   0xA900             ADD      R1,SP,#+0
+   \   00000016   0x200E             MOVS     R0,#+14
+   \   00000018   0x.... 0x....      BL       PARAMETROS_grava
+    274          }
+   \   0000001C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    275          /***********************************************************************************
+    276          *       Descrição       :      Adiciona um valor a contagem total de unidades
+    277          *                              vendidas
+    278          *       Parametros      :      (unsigned int) contagem
+    279          *       Retorno         :       nenhum
+    280          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    281          void FATURAMENTO_add_contagem_total(unsigned int contagem){
+   \                     FATURAMENTO_add_contagem_total:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB082             SUB      SP,SP,#+8
+   \   00000004   0x0004             MOVS     R4,R0
+    282            unsigned int temp;
+    283          
+    284            PARAMETROS_le(ADR_CONTAGEM_UNIDADES_TOTAL,(void*)&temp);
+   \   00000006   0xA900             ADD      R1,SP,#+0
+   \   00000008   0x200B             MOVS     R0,#+11
+   \   0000000A   0x.... 0x....      BL       PARAMETROS_le
+    285            temp+=contagem;
+   \   0000000E   0x9800             LDR      R0,[SP, #+0]
+   \   00000010   0x1820             ADDS     R0,R4,R0
+   \   00000012   0x9000             STR      R0,[SP, #+0]
+    286            PARAMETROS_grava(ADR_CONTAGEM_UNIDADES_TOTAL,(void*)&temp);  
+   \   00000014   0xA900             ADD      R1,SP,#+0
+   \   00000016   0x200B             MOVS     R0,#+11
+   \   00000018   0x.... 0x....      BL       PARAMETROS_grava
+    287          }
+   \   0000001C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    288          /***********************************************************************************
+    289          *       Descrição       :       Adiciona um valor a contagem total de unidades
+    290          *                               vendidas
+    291          *       Parametros      :       (unsigned int) contagem
+    292          *       Retorno         :       nenhum
+    293          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    294          void FATURAMENTO_add_arrecadacao_total(unsigned int arrecadacao){
+   \                     FATURAMENTO_add_arrecadacao_total:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB082             SUB      SP,SP,#+8
+   \   00000004   0x0004             MOVS     R4,R0
+    295            unsigned int temp;
+    296          
+    297            PARAMETROS_le(ADR_MOEDA_TOTAL,(void*)&temp);
+   \   00000006   0xA900             ADD      R1,SP,#+0
+   \   00000008   0x200D             MOVS     R0,#+13
+   \   0000000A   0x.... 0x....      BL       PARAMETROS_le
+    298            temp+=arrecadacao;
+   \   0000000E   0x9800             LDR      R0,[SP, #+0]
+   \   00000010   0x1820             ADDS     R0,R4,R0
+   \   00000012   0x9000             STR      R0,[SP, #+0]
+    299            PARAMETROS_grava(ADR_MOEDA_TOTAL,(void*)&temp);  
+   \   00000014   0xA900             ADD      R1,SP,#+0
+   \   00000016   0x200D             MOVS     R0,#+13
+   \   00000018   0x.... 0x....      BL       PARAMETROS_grava
+    300          }
+   \   0000001C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    301          /***********************************************************************************
+    302          *       Descrição       :       Adiciona um valor a contagem total do 
+    303          *                               cartão
+    304          *       Parametros      :       (unsigned int) contagem
+    305          *       Retorno         :       nennhum
+    306          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    307          void FATURAMENTO_add_contagem_cartao_total(unsigned int contagem){
+   \                     FATURAMENTO_add_contagem_cartao_total:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB082             SUB      SP,SP,#+8
+   \   00000004   0x0004             MOVS     R4,R0
+    308            unsigned int temp;
+    309          
+    310            PARAMETROS_le(ADR_UNIDADES_CARTAO_TOTAL,(void*)&temp);
+   \   00000006   0xA900             ADD      R1,SP,#+0
+   \   00000008   0x2011             MOVS     R0,#+17
+   \   0000000A   0x.... 0x....      BL       PARAMETROS_le
+    311            temp+=contagem;
+   \   0000000E   0x9800             LDR      R0,[SP, #+0]
+   \   00000010   0x1820             ADDS     R0,R4,R0
+   \   00000012   0x9000             STR      R0,[SP, #+0]
+    312            PARAMETROS_grava(ADR_UNIDADES_CARTAO_TOTAL,(void*)&temp);  
+   \   00000014   0xA900             ADD      R1,SP,#+0
+   \   00000016   0x2011             MOVS     R0,#+17
+   \   00000018   0x.... 0x....      BL       PARAMETROS_grava
+    313          }
+   \   0000001C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    314          /***********************************************************************************
+    315          *       Descrição       :       Adiciona um valor à contagem total do cartão
+    316          *       Parametros      :       (unsigned int) contagem
+    317          *       Retorno         :       nenhum
+    318          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    319          void FATURAMENTO_add_arrecadacao_cartao_total(unsigned int arrecadacao){
+   \                     FATURAMENTO_add_arrecadacao_cartao_total:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB082             SUB      SP,SP,#+8
+   \   00000004   0x0004             MOVS     R4,R0
+    320            unsigned int temp;
+    321          
+    322            PARAMETROS_le(ADR_CARTAO_TOTAL,(void*)&temp);
+   \   00000006   0xA900             ADD      R1,SP,#+0
+   \   00000008   0x200F             MOVS     R0,#+15
+   \   0000000A   0x.... 0x....      BL       PARAMETROS_le
+    323            temp+=arrecadacao;
+   \   0000000E   0x9800             LDR      R0,[SP, #+0]
+   \   00000010   0x1820             ADDS     R0,R4,R0
+   \   00000012   0x9000             STR      R0,[SP, #+0]
+    324            PARAMETROS_grava(ADR_CARTAO_TOTAL,(void*)&temp);  
+   \   00000014   0xA900             ADD      R1,SP,#+0
+   \   00000016   0x200F             MOVS     R0,#+15
+   \   00000018   0x.... 0x....      BL       PARAMETROS_grava
+    325          }
+   \   0000001C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    326          /***********************************************************************************
+    327          *       Descrição       :       Reinicia a contagem do contador de 
+    328          *                               pipocas preparada na tela de teste
+    329          *       Parametros      :       nenhum
+    330          *       Retorno         :       nenhum
+    331          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    332          void FATURAMENTO_reinicia_pipocas_teste(void){
+   \                     FATURAMENTO_reinicia_pipocas_teste:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    333            unsigned int temp;
+    334            
+    335            temp = 0;
+   \   00000002   0x2000             MOVS     R0,#+0
+   \   00000004   0x9000             STR      R0,[SP, #+0]
+    336            PARAMETROS_grava(ADR_CONTADOR_PIPOCAS_TESTE,(void*)&temp);    
+   \   00000006   0xA900             ADD      R1,SP,#+0
+   \   00000008   0x2027             MOVS     R0,#+39
+   \   0000000A   0x.... 0x....      BL       PARAMETROS_grava
+    337          }
+   \   0000000E   0xBD01             POP      {R0,PC}          ;; return
+    338          /***********************************************************************************
+    339          *       Descrição       :       Incrementa o contador de pipocas
+    340          *                               teste
+    341          *       Parametros      :       nennhum
+    342          *       Retorno         :       nennhum
+    343          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    344          void FATURAMENTO_inc_contador_pipocas_teste(void){
+   \                     FATURAMENTO_inc_contador_pipocas_teste:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    345            unsigned int temp;
+    346            
+    347             PARAMETROS_le(ADR_CONTADOR_PIPOCAS_TESTE,(void*)&temp);
+   \   00000002   0xA900             ADD      R1,SP,#+0
+   \   00000004   0x2027             MOVS     R0,#+39
+   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+    348             temp+=1;
+   \   0000000A   0x9800             LDR      R0,[SP, #+0]
+   \   0000000C   0x1C40             ADDS     R0,R0,#+1
+   \   0000000E   0x9000             STR      R0,[SP, #+0]
+    349             PARAMETROS_grava(ADR_CONTADOR_PIPOCAS_TESTE,(void*)&temp);  
+   \   00000010   0xA900             ADD      R1,SP,#+0
+   \   00000012   0x2027             MOVS     R0,#+39
+   \   00000014   0x.... 0x....      BL       PARAMETROS_grava
+    350          }
+   \   00000018   0xBD01             POP      {R0,PC}          ;; return
+    351          /***********************************************************************************
+    352          *       Fim do arquivo
+    353          ***********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   FATURAMENTO_add_arrecadacao_cartao_parcial
+        16   -> PARAMETROS_grava
+        16   -> PARAMETROS_le
+      16   FATURAMENTO_add_arrecadacao_cartao_total
+        16   -> PARAMETROS_grava
+        16   -> PARAMETROS_le
+      16   FATURAMENTO_add_arrecadacao_parcial
+        16   -> PARAMETROS_grava
+        16   -> PARAMETROS_le
+      16   FATURAMENTO_add_arrecadacao_total
+        16   -> PARAMETROS_grava
+        16   -> PARAMETROS_le
+      16   FATURAMENTO_add_contagem_cartao_parcial
+        16   -> PARAMETROS_grava
+        16   -> PARAMETROS_le
+      16   FATURAMENTO_add_contagem_cartao_total
+        16   -> PARAMETROS_grava
+        16   -> PARAMETROS_le
+      16   FATURAMENTO_add_contagem_parcial
+        16   -> PARAMETROS_grava
+        16   -> PARAMETROS_le
+      16   FATURAMENTO_add_contagem_total
+        16   -> PARAMETROS_grava
+        16   -> PARAMETROS_le
+       8   FATURAMENTO_get_arrecadacao_cartao_parcial
+         8   -> PARAMETROS_le
+       8   FATURAMENTO_get_arrecadacao_cartao_total
+         8   -> PARAMETROS_le
+       8   FATURAMENTO_get_arrecadacao_parcial
+         8   -> PARAMETROS_le
+       8   FATURAMENTO_get_arrecadacao_total
+         8   -> PARAMETROS_le
+       8   FATURAMENTO_get_contagem_cartao_parcial
+         8   -> PARAMETROS_le
+       8   FATURAMENTO_get_contagem_cartao_total
+         8   -> PARAMETROS_le
+       8   FATURAMENTO_get_contagem_parcial
+         8   -> PARAMETROS_le
+       8   FATURAMENTO_get_contagem_total
+         8   -> PARAMETROS_le
+       8   FATURAMENTO_inc_contador_pipocas_teste
+         8   -> PARAMETROS_grava
+         8   -> PARAMETROS_le
+       8   FATURAMENTO_reinicia_pipocas_teste
+         8   -> PARAMETROS_grava
+       8   FATURAMENTO_set_arrecadacao_cartao_parcial
+         8   -> PARAMETROS_grava
+       8   FATURAMENTO_set_arrecadacao_cartao_total
+         8   -> PARAMETROS_grava
+       8   FATURAMENTO_set_arrecadacao_parcial
+         8   -> PARAMETROS_grava
+       8   FATURAMENTO_set_arrecadacao_total
+         8   -> PARAMETROS_grava
+       8   FATURAMENTO_set_contagem_cartao_parcial
+         8   -> PARAMETROS_grava
+       8   FATURAMENTO_set_contagem_cartao_total
+         8   -> PARAMETROS_grava
+       8   FATURAMENTO_set_contagem_parcial
+         8   -> PARAMETROS_grava
+       8   FATURAMENTO_set_contagem_total
+         8   -> PARAMETROS_grava
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      30  FATURAMENTO_add_arrecadacao_cartao_parcial
+      30  FATURAMENTO_add_arrecadacao_cartao_total
+      30  FATURAMENTO_add_arrecadacao_parcial
+      30  FATURAMENTO_add_arrecadacao_total
+      30  FATURAMENTO_add_contagem_cartao_parcial
+      30  FATURAMENTO_add_contagem_cartao_total
+      30  FATURAMENTO_add_contagem_parcial
+      30  FATURAMENTO_add_contagem_total
+      14  FATURAMENTO_get_arrecadacao_cartao_parcial
+      14  FATURAMENTO_get_arrecadacao_cartao_total
+      14  FATURAMENTO_get_arrecadacao_parcial
+      14  FATURAMENTO_get_arrecadacao_total
+      14  FATURAMENTO_get_contagem_cartao_parcial
+      14  FATURAMENTO_get_contagem_cartao_total
+      14  FATURAMENTO_get_contagem_parcial
+      14  FATURAMENTO_get_contagem_total
+      26  FATURAMENTO_inc_contador_pipocas_teste
+      16  FATURAMENTO_reinicia_pipocas_teste
+      12  FATURAMENTO_set_arrecadacao_cartao_parcial
+      12  FATURAMENTO_set_arrecadacao_cartao_total
+      12  FATURAMENTO_set_arrecadacao_parcial
+      12  FATURAMENTO_set_arrecadacao_total
+      12  FATURAMENTO_set_contagem_cartao_parcial
+      12  FATURAMENTO_set_contagem_cartao_total
+      12  FATURAMENTO_set_contagem_parcial
+      12  FATURAMENTO_set_contagem_total
+
+ 
+ 490 bytes in section .text
+ 
+ 490 bytes of CODE memory
+
+Errors: none
+Warnings: none

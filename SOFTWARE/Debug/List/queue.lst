@@ -1,0 +1,1683 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      06/Jul/2017  16:40:05 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Kernel\queue.c                            #
+#    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Kernel\queue.c -lC                        #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -lA                           #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -o                            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\queue.lst                      #
+#    Object file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\queue.o                         #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Kernel\queue.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :
+     18          |       Descrição          :
+     19          | 
+     20          |       Autor              :
+     21          |       Data criação       :
+     22          |
+     23          |       Revisões           :
+     24          |
+     25          |
+     26          | __________________________________________________________________________________
+     27          */
+     28          
+     29          /********************************************************************************
+     30          *   Includes
+     31          ********************************************************************************/
+     32          #include <stdlib.h>
+     33          #include <string.h>
+
+   \                                 In section .text, align 2
+   \   __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
+   \                     memcpy:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x0020             MOVS     R0,R4
+   \   00000006   0x.... 0x....      BL       __aeabi_memcpy
+   \   0000000A   0x0020             MOVS     R0,R4
+   \   0000000C   0xBD10             POP      {R4,PC}          ;; return
+     34          #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+     35            #include "FreeRTOS.h"
+     36            #include "task.h"
+     37          #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+     38          /********************************************************************************
+     39          *   Definições
+     40          ********************************************************************************/
+     41          #define queueUNLOCKED				( ( signed portBASE_TYPE ) -1 )
+     42          #define queueLOCKED_UNMODIFIED			( ( signed portBASE_TYPE ) 0 )
+     43          #define queueERRONEOUS_UNBLOCK			( -1 )
+     44          #define	queueSEND_TO_BACK			( 0 )
+     45          #define	queueSEND_TO_FRONT			( 1 )
+     46          #define pxMutexHolder				pcTail
+     47          #define uxQueueType				pcHead
+     48          #define uxRecursiveCallCount			pcReadFrom
+     49          #define queueQUEUE_IS_MUTEX			NULL
+     50          #define queueSEMAPHORE_QUEUE_ITEM_LENGTH        ( 0 )
+     51          #define queueDONT_BLOCK			        ( ( portTickType ) 0 )
+     52          #define queueMUTEX_GIVE_BLOCK_TIME		( ( portTickType ) 0 )
+     53          /********************************************************************************
+     54          *   Estruturas
+     55          ********************************************************************************/
+     56          typedef struct QueueDefinition{
+     57            signed char *pcHead;
+     58            signed char *pcTail;
+     59            signed char *pcWriteTo;
+     60            signed char *pcReadFrom;
+     61            xList xTasksWaitingToSend;
+     62            xList xTasksWaitingToReceive;
+     63            volatile unsigned portBASE_TYPE uxMessagesWaiting;
+     64            unsigned portBASE_TYPE uxLength;		
+     65            unsigned portBASE_TYPE uxItemSize;		
+     66            signed portBASE_TYPE xRxLock;			
+     67            signed portBASE_TYPE xTxLock;		
+     68          } xQUEUE;
+     69          
+     70          typedef xQUEUE * xQueueHandle;
+     71          
+     72          typedef struct QUEUE_REGISTRY_ITEM
+     73          {
+     74            signed char *pcQueueName;
+     75            xQueueHandle xHandle;
+     76          } xQueueRegistryItem;
+     77          
+     78          /********************************************************************************
+     79          *   Funções locais
+     80          ********************************************************************************/
+     81          xQueueHandle xQueueCreate( unsigned portBASE_TYPE uxQueueLength, unsigned portBASE_TYPE uxItemSize ) PRIVILEGED_FUNCTION;
+     82          signed portBASE_TYPE xQueueGenericSend( xQueueHandle xQueue, const void * const pvItemToQueue, portTickType xTicksToWait, portBASE_TYPE xCopyPosition ) PRIVILEGED_FUNCTION;
+     83          unsigned portBASE_TYPE uxQueueMessagesWaiting( const xQueueHandle pxQueue ) PRIVILEGED_FUNCTION;
+     84          void vQueueDelete( xQueueHandle xQueue ) PRIVILEGED_FUNCTION;
+     85          signed portBASE_TYPE xQueueGenericSendFromISR( xQueueHandle pxQueue, const void * const pvItemToQueue, signed portBASE_TYPE *pxHigherPriorityTaskWoken, portBASE_TYPE xCopyPosition ) PRIVILEGED_FUNCTION;
+     86          signed portBASE_TYPE xQueueGenericReceive( xQueueHandle pxQueue, void * const pvBuffer, portTickType xTicksToWait, portBASE_TYPE xJustPeeking ) PRIVILEGED_FUNCTION;
+     87          signed portBASE_TYPE xQueueReceiveFromISR( xQueueHandle pxQueue, void * const pvBuffer, signed portBASE_TYPE *pxTaskWoken ) PRIVILEGED_FUNCTION;
+     88          xQueueHandle xQueueCreateMutex( void ) PRIVILEGED_FUNCTION;
+     89          xQueueHandle xQueueCreateCountingSemaphore( unsigned portBASE_TYPE uxCountValue, unsigned portBASE_TYPE uxInitialCount ) PRIVILEGED_FUNCTION;
+     90          portBASE_TYPE xQueueTakeMutexRecursive( xQueueHandle xMutex, portTickType xBlockTime ) PRIVILEGED_FUNCTION;
+     91          portBASE_TYPE xQueueGiveMutexRecursive( xQueueHandle xMutex ) PRIVILEGED_FUNCTION;
+     92          signed portBASE_TYPE xQueueAltGenericSend( xQueueHandle pxQueue, const void * const pvItemToQueue, portTickType xTicksToWait, portBASE_TYPE xCopyPosition ) PRIVILEGED_FUNCTION;
+     93          signed portBASE_TYPE xQueueAltGenericReceive( xQueueHandle pxQueue, void * const pvBuffer, portTickType xTicksToWait, portBASE_TYPE xJustPeeking ) PRIVILEGED_FUNCTION;
+     94          signed portBASE_TYPE xQueueIsQueueEmptyFromISR( const xQueueHandle pxQueue ) PRIVILEGED_FUNCTION;
+     95          signed portBASE_TYPE xQueueIsQueueFullFromISR( const xQueueHandle pxQueue ) PRIVILEGED_FUNCTION;
+     96          unsigned portBASE_TYPE uxQueueMessagesWaitingFromISR( const xQueueHandle pxQueue ) PRIVILEGED_FUNCTION;
+     97          void vQueueAddToRegistry( xQueueHandle xQueue, signed char *pcQueueName ) PRIVILEGED_FUNCTION;
+     98          static void vQueueUnregisterQueue( xQueueHandle xQueue ) PRIVILEGED_FUNCTION;;
+     99          static void prvUnlockQueue( xQueueHandle pxQueue ) PRIVILEGED_FUNCTION;
+    100          static signed portBASE_TYPE prvIsQueueEmpty( const xQueueHandle pxQueue ) PRIVILEGED_FUNCTION;
+    101          static signed portBASE_TYPE prvIsQueueFull( const xQueueHandle pxQueue ) PRIVILEGED_FUNCTION;
+    102          static void prvCopyDataToQueue( xQUEUE *pxQueue, const void *pvItemToQueue, portBASE_TYPE xPosition ) PRIVILEGED_FUNCTION;
+    103          static void prvCopyDataFromQueue( xQUEUE * const pxQueue, const void *pvBuffer ) PRIVILEGED_FUNCTION;
+
+   \                                 In section .bss, align 4
+    104          xQueueRegistryItem xQueueRegistry[ configQUEUE_REGISTRY_SIZE ];
+   \                     xQueueRegistry:
+   \   00000000                      DS8 80
+    105          /********************************************************************************
+    106          *   Macros
+    107          ********************************************************************************/
+    108          #define prvLockQueue( pxQueue )							\
+    109          {														\
+    110          	taskENTER_CRITICAL();								\
+    111          	{													\
+    112          		if( pxQueue->xRxLock == queueUNLOCKED )			\
+    113          		{												\
+    114          			pxQueue->xRxLock = queueLOCKED_UNMODIFIED;	\
+    115          		}												\
+    116          		if( pxQueue->xTxLock == queueUNLOCKED )			\
+    117          		{												\
+    118          			pxQueue->xTxLock = queueLOCKED_UNMODIFIED;	\
+    119          		}												\
+    120          	}													\
+    121          	taskEXIT_CRITICAL();								\
+    122          }
+    123          /********************************************************************************
+    124          *   Descrição   : 
+    125          *   Parametros  : 
+    126          *   Retorno     : 
+    127          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    128          xQueueHandle xQueueCreate( unsigned portBASE_TYPE uxQueueLength, unsigned portBASE_TYPE uxItemSize )
+    129          {
+   \                     xQueueCreate:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    130            xQUEUE *pxNewQueue;
+    131            size_t xQueueSizeInBytes; 
+    132          
+    133            if( uxQueueLength > ( unsigned portBASE_TYPE ) 0 )
+   \   00000006   0x2C00             CMP      R4,#+0
+   \   00000008   0xD030             BEQ.N    ??xQueueCreate_0
+    134            {
+    135              pxNewQueue = ( xQUEUE * ) pvPortMalloc( sizeof( xQUEUE ) );
+   \   0000000A   0x204C             MOVS     R0,#+76
+   \   0000000C   0x.... 0x....      BL       pvPortMalloc
+   \   00000010   0x0006             MOVS     R6,R0
+    136              if( pxNewQueue != NULL )
+   \   00000012   0x2E00             CMP      R6,#+0
+   \   00000014   0xD02A             BEQ.N    ??xQueueCreate_0
+    137              {
+    138                xQueueSizeInBytes = ( size_t ) ( uxQueueLength * uxItemSize ) + ( size_t ) 1;
+   \   00000016   0xFB05 0xF004      MUL      R0,R5,R4
+   \   0000001A   0x1C40             ADDS     R0,R0,#+1
+    139                pxNewQueue->pcHead = ( signed char * ) pvPortMalloc( xQueueSizeInBytes );
+   \   0000001C   0x.... 0x....      BL       pvPortMalloc
+   \   00000020   0x6030             STR      R0,[R6, #+0]
+    140                if( pxNewQueue->pcHead != NULL )
+   \   00000022   0x6830             LDR      R0,[R6, #+0]
+   \   00000024   0x2800             CMP      R0,#+0
+   \   00000026   0xD01E             BEQ.N    ??xQueueCreate_1
+    141                { 
+    142                  pxNewQueue->pcTail = pxNewQueue->pcHead + ( uxQueueLength * uxItemSize );
+   \   00000028   0x6830             LDR      R0,[R6, #+0]
+   \   0000002A   0xFB05 0x0004      MLA      R0,R5,R4,R0
+   \   0000002E   0x6070             STR      R0,[R6, #+4]
+    143          	pxNewQueue->uxMessagesWaiting = 0;
+   \   00000030   0x2000             MOVS     R0,#+0
+   \   00000032   0x63B0             STR      R0,[R6, #+56]
+    144          	pxNewQueue->pcWriteTo = pxNewQueue->pcHead;
+   \   00000034   0x6830             LDR      R0,[R6, #+0]
+   \   00000036   0x60B0             STR      R0,[R6, #+8]
+    145          	pxNewQueue->pcReadFrom = pxNewQueue->pcHead + ( ( uxQueueLength - 1 ) * uxItemSize );
+   \   00000038   0x1E60             SUBS     R0,R4,#+1
+   \   0000003A   0x6831             LDR      R1,[R6, #+0]
+   \   0000003C   0xFB05 0x1000      MLA      R0,R5,R0,R1
+   \   00000040   0x60F0             STR      R0,[R6, #+12]
+    146          	pxNewQueue->uxLength = uxQueueLength;
+   \   00000042   0x63F4             STR      R4,[R6, #+60]
+    147          	pxNewQueue->uxItemSize = uxItemSize;
+   \   00000044   0x6435             STR      R5,[R6, #+64]
+    148          	pxNewQueue->xRxLock = queueUNLOCKED;
+   \   00000046   0xF05F 0x30FF      MOVS     R0,#-1
+   \   0000004A   0x6470             STR      R0,[R6, #+68]
+    149          	pxNewQueue->xTxLock = queueUNLOCKED;
+   \   0000004C   0xF05F 0x30FF      MOVS     R0,#-1
+   \   00000050   0x64B0             STR      R0,[R6, #+72]
+    150          
+    151          	vListInitialise( &( pxNewQueue->xTasksWaitingToSend ) );
+   \   00000052   0xF116 0x0010      ADDS     R0,R6,#+16
+   \   00000056   0x.... 0x....      BL       vListInitialise
+    152          	vListInitialise( &( pxNewQueue->xTasksWaitingToReceive ) );
+   \   0000005A   0xF116 0x0024      ADDS     R0,R6,#+36
+   \   0000005E   0x.... 0x....      BL       vListInitialise
+    153          
+    154          	traceQUEUE_CREATE( pxNewQueue );
+    155          	return  pxNewQueue;
+   \   00000062   0x0030             MOVS     R0,R6
+   \   00000064   0xE003             B.N      ??xQueueCreate_2
+    156                }
+    157                else
+    158                {
+    159                    traceQUEUE_CREATE_FAILED();
+    160          	  vPortFree( pxNewQueue );
+   \                     ??xQueueCreate_1:
+   \   00000066   0x0030             MOVS     R0,R6
+   \   00000068   0x.... 0x....      BL       vPortFree
+    161                } 
+    162              }
+    163            }
+    164          
+    165            return NULL;
+   \                     ??xQueueCreate_0:
+   \   0000006C   0x2000             MOVS     R0,#+0
+   \                     ??xQueueCreate_2:
+   \   0000006E   0xBD70             POP      {R4-R6,PC}       ;; return
+    166          }
+    167          /********************************************************************************
+    168          *   Descrição     : 
+    169          *   Parametros    : 
+    170          *   Retorno       : 
+    171          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    172          xQueueHandle xQueueCreateMutex( void )	{
+   \                     xQueueCreateMutex:
+   \   00000000   0xB510             PUSH     {R4,LR}
+    173              xQUEUE *pxNewQueue;
+    174          
+    175              pxNewQueue = ( xQUEUE * ) pvPortMalloc( sizeof( xQUEUE ) );
+   \   00000002   0x204C             MOVS     R0,#+76
+   \   00000004   0x.... 0x....      BL       pvPortMalloc
+   \   00000008   0x0004             MOVS     R4,R0
+    176              if( pxNewQueue != NULL )
+   \   0000000A   0x2C00             CMP      R4,#+0
+   \   0000000C   0xD021             BEQ.N    ??xQueueCreateMutex_0
+    177              {
+    178                  pxNewQueue->pxMutexHolder = NULL;
+   \   0000000E   0x2000             MOVS     R0,#+0
+   \   00000010   0x6060             STR      R0,[R4, #+4]
+    179          	pxNewQueue->uxQueueType = queueQUEUE_IS_MUTEX;
+   \   00000012   0x2000             MOVS     R0,#+0
+   \   00000014   0x6020             STR      R0,[R4, #+0]
+    180          
+    181          	pxNewQueue->pcWriteTo = NULL;
+   \   00000016   0x2000             MOVS     R0,#+0
+   \   00000018   0x60A0             STR      R0,[R4, #+8]
+    182          	pxNewQueue->pcReadFrom = NULL;
+   \   0000001A   0x2000             MOVS     R0,#+0
+   \   0000001C   0x60E0             STR      R0,[R4, #+12]
+    183          
+    184          	pxNewQueue->uxMessagesWaiting = 0;
+   \   0000001E   0x2000             MOVS     R0,#+0
+   \   00000020   0x63A0             STR      R0,[R4, #+56]
+    185          	pxNewQueue->uxLength = 1;
+   \   00000022   0x2001             MOVS     R0,#+1
+   \   00000024   0x63E0             STR      R0,[R4, #+60]
+    186          	pxNewQueue->uxItemSize = 0;
+   \   00000026   0x2000             MOVS     R0,#+0
+   \   00000028   0x6420             STR      R0,[R4, #+64]
+    187          	pxNewQueue->xRxLock = queueUNLOCKED;
+   \   0000002A   0xF05F 0x30FF      MOVS     R0,#-1
+   \   0000002E   0x6460             STR      R0,[R4, #+68]
+    188          	pxNewQueue->xTxLock = queueUNLOCKED;
+   \   00000030   0xF05F 0x30FF      MOVS     R0,#-1
+   \   00000034   0x64A0             STR      R0,[R4, #+72]
+    189                  
+    190          	vListInitialise( &( pxNewQueue->xTasksWaitingToSend ) );
+   \   00000036   0xF114 0x0010      ADDS     R0,R4,#+16
+   \   0000003A   0x.... 0x....      BL       vListInitialise
+    191          	vListInitialise( &( pxNewQueue->xTasksWaitingToReceive ) );
+   \   0000003E   0xF114 0x0024      ADDS     R0,R4,#+36
+   \   00000042   0x.... 0x....      BL       vListInitialise
+    192          
+    193          	xQueueGenericSend( pxNewQueue, NULL, 0, queueSEND_TO_BACK );
+   \   00000046   0x2300             MOVS     R3,#+0
+   \   00000048   0x2200             MOVS     R2,#+0
+   \   0000004A   0x2100             MOVS     R1,#+0
+   \   0000004C   0x0020             MOVS     R0,R4
+   \   0000004E   0x.... 0x....      BL       xQueueGenericSend
+    194          
+    195          	traceCREATE_MUTEX( pxNewQueue );
+    196              }
+    197              else
+    198              {
+    199          	traceCREATE_MUTEX_FAILED();
+    200              }
+    201          
+    202              return pxNewQueue;
+   \                     ??xQueueCreateMutex_0:
+   \   00000052   0x0020             MOVS     R0,R4
+   \   00000054   0xBD10             POP      {R4,PC}          ;; return
+    203          }
+    204          /********************************************************************************
+    205          *   Descrição     :   
+    206          *   Parametros    : 
+    207          *   Retorno       : 
+    208          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    209          portBASE_TYPE xQueueGiveMutexRecursive( xQueueHandle pxMutex )
+    210          {
+   \                     xQueueGiveMutexRecursive:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    211              portBASE_TYPE xReturn;
+    212          
+    213              if( pxMutex->pxMutexHolder == xTaskGetCurrentTaskHandle() )
+   \   00000004   0x6865             LDR      R5,[R4, #+4]
+   \   00000006   0x.... 0x....      BL       xTaskGetCurrentTaskHandle
+   \   0000000A   0x4285             CMP      R5,R0
+   \   0000000C   0xD10D             BNE.N    ??xQueueGiveMutexRecursive_0
+    214              {
+    215          	traceGIVE_MUTEX_RECURSIVE( pxMutex );
+    216          
+    217          	( pxMutex->uxRecursiveCallCount )--;
+   \   0000000E   0x68E0             LDR      R0,[R4, #+12]
+   \   00000010   0x1E40             SUBS     R0,R0,#+1
+   \   00000012   0x60E0             STR      R0,[R4, #+12]
+    218          	if( pxMutex->uxRecursiveCallCount == 0 )
+   \   00000014   0x68E0             LDR      R0,[R4, #+12]
+   \   00000016   0x2800             CMP      R0,#+0
+   \   00000018   0xD105             BNE.N    ??xQueueGiveMutexRecursive_1
+    219          	{
+    220          	    xQueueGenericSend( pxMutex, NULL, queueMUTEX_GIVE_BLOCK_TIME, queueSEND_TO_BACK );
+   \   0000001A   0x2300             MOVS     R3,#+0
+   \   0000001C   0x2200             MOVS     R2,#+0
+   \   0000001E   0x2100             MOVS     R1,#+0
+   \   00000020   0x0020             MOVS     R0,R4
+   \   00000022   0x.... 0x....      BL       xQueueGenericSend
+    221          	}
+    222          	xReturn = pdPASS;
+   \                     ??xQueueGiveMutexRecursive_1:
+   \   00000026   0x2001             MOVS     R0,#+1
+   \   00000028   0xE000             B.N      ??xQueueGiveMutexRecursive_2
+    223              }
+    224              else
+    225              {
+    226          	xReturn = pdFAIL;
+   \                     ??xQueueGiveMutexRecursive_0:
+   \   0000002A   0x2000             MOVS     R0,#+0
+    227          
+    228          	traceGIVE_MUTEX_RECURSIVE_FAILED( pxMutex );
+    229              }
+    230              return xReturn;
+   \                     ??xQueueGiveMutexRecursive_2:
+   \   0000002C   0xBD32             POP      {R1,R4,R5,PC}    ;; return
+    231          }
+    232          /********************************************************************************
+    233          *   Descrição   :
+    234          *   Parametros  : 
+    235          *   Retorno     : 
+    236          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    237          portBASE_TYPE xQueueTakeMutexRecursive( xQueueHandle pxMutex, portTickType xBlockTime )
+    238          {
+   \                     xQueueTakeMutexRecursive:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    239              portBASE_TYPE xReturn;
+    240          
+    241              traceTAKE_MUTEX_RECURSIVE( pxMutex );
+    242          
+    243              if( pxMutex->pxMutexHolder == xTaskGetCurrentTaskHandle() )
+   \   00000006   0x6866             LDR      R6,[R4, #+4]
+   \   00000008   0x.... 0x....      BL       xTaskGetCurrentTaskHandle
+   \   0000000C   0x4286             CMP      R6,R0
+   \   0000000E   0xD104             BNE.N    ??xQueueTakeMutexRecursive_0
+    244              {
+    245          	  ( pxMutex->uxRecursiveCallCount )++;
+   \   00000010   0x68E0             LDR      R0,[R4, #+12]
+   \   00000012   0x1C40             ADDS     R0,R0,#+1
+   \   00000014   0x60E0             STR      R0,[R4, #+12]
+    246          	    xReturn = pdPASS;
+   \   00000016   0x2001             MOVS     R0,#+1
+   \   00000018   0xE00A             B.N      ??xQueueTakeMutexRecursive_1
+    247              }
+    248              else
+    249              {
+    250          	xReturn = xQueueGenericReceive( pxMutex, NULL, xBlockTime, pdFALSE );
+   \                     ??xQueueTakeMutexRecursive_0:
+   \   0000001A   0x2300             MOVS     R3,#+0
+   \   0000001C   0x002A             MOVS     R2,R5
+   \   0000001E   0x2100             MOVS     R1,#+0
+   \   00000020   0x0020             MOVS     R0,R4
+   \   00000022   0x.... 0x....      BL       xQueueGenericReceive
+    251          
+    252                  if( xReturn == pdPASS )
+   \   00000026   0x2801             CMP      R0,#+1
+   \   00000028   0xD102             BNE.N    ??xQueueTakeMutexRecursive_1
+    253          	{
+    254          	  ( pxMutex->uxRecursiveCallCount )++;
+   \   0000002A   0x68E1             LDR      R1,[R4, #+12]
+   \   0000002C   0x1C49             ADDS     R1,R1,#+1
+   \   0000002E   0x60E1             STR      R1,[R4, #+12]
+    255          	}
+    256          	else
+    257          	{
+    258          	  traceTAKE_MUTEX_RECURSIVE_FAILED( pxMutex );
+    259          	}
+    260              }
+    261          
+    262              return xReturn;
+   \                     ??xQueueTakeMutexRecursive_1:
+   \   00000030   0xBD70             POP      {R4-R6,PC}       ;; return
+    263          }
+    264          /********************************************************************************
+    265          *   Descrição     :   
+    266          *   Parametros    : 
+    267          *   Retorno       : 
+    268          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    269          signed portBASE_TYPE xQueueGenericSend( xQueueHandle pxQueue, const void * const pvItemToQueue, portTickType xTicksToWait, portBASE_TYPE xCopyPosition )
+    270          {
+   \                     xQueueGenericSend:
+   \   00000000   0xB5F7             PUSH     {R0-R2,R4-R7,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x001E             MOVS     R6,R3
+    271            signed portBASE_TYPE xEntryTimeSet = pdFALSE;
+   \   00000008   0x2700             MOVS     R7,#+0
+   \   0000000A   0xE004             B.N      ??xQueueGenericSend_0
+    272            xTimeOutType xTimeOut;
+    273          
+    274            for( ;; )
+    275            {
+    276                taskENTER_CRITICAL();
+    277                {
+    278          	if( pxQueue->uxMessagesWaiting < pxQueue->uxLength )
+    279          	{
+    280          	    traceQUEUE_SEND( pxQueue );
+    281          	    prvCopyDataToQueue( pxQueue, pvItemToQueue, xCopyPosition );
+    282          
+    283          	    if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
+    284          	    {
+    285          		if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) == pdTRUE )
+    286          		{
+    287          		    portYIELD_WITHIN_API();
+    288          		}
+    289          	    }
+    290          
+    291                      taskEXIT_CRITICAL();
+    292          
+    293          	return pdPASS;
+    294             }
+    295              else
+    296              {
+    297          	if( xTicksToWait == ( portTickType ) 0 )
+    298          	 {
+    299          	    taskEXIT_CRITICAL();
+    300          
+    301          	    traceQUEUE_SEND_FAILED( pxQueue );
+    302          	    return errQUEUE_FULL;
+    303          	  }
+    304          	else if( xEntryTimeSet == pdFALSE )
+    305          	{
+    306          	    vTaskSetTimeOutState( &xTimeOut );
+    307          	    xEntryTimeSet = pdTRUE;
+    308          	}
+    309              }
+    310            }
+    311            taskEXIT_CRITICAL();
+    312          
+    313             vTaskSuspendAll();
+    314             prvLockQueue( pxQueue );
+    315          
+    316              if( xTaskCheckForTimeOut( &xTimeOut, &xTicksToWait ) == pdFALSE )
+    317              {
+    318          	if( prvIsQueueFull( pxQueue ) )
+    319          	{
+    320          	    traceBLOCKING_ON_QUEUE_SEND( pxQueue );
+    321          	    vTaskPlaceOnEventList( &( pxQueue->xTasksWaitingToSend ), xTicksToWait );
+    322                	    prvUnlockQueue( pxQueue );
+    323              	    if( !xTaskResumeAll() )
+    324          	    {
+    325          		portYIELD_WITHIN_API();
+    326          	    }
+    327          	}
+    328          	else
+    329          	{
+    330          	    prvUnlockQueue( pxQueue );
+   \                     ??xQueueGenericSend_1:
+   \   0000000C   0x0020             MOVS     R0,R4
+   \   0000000E   0x.... 0x....      BL       prvUnlockQueue
+    331          	    ( void ) xTaskResumeAll();
+   \   00000012   0x.... 0x....      BL       xTaskResumeAll
+    332          	}
+   \                     ??xQueueGenericSend_0:
+   \   00000016   0x.... 0x....      BL       vPortEnterCritical
+   \   0000001A   0x6BA0             LDR      R0,[R4, #+56]
+   \   0000001C   0x6BE1             LDR      R1,[R4, #+60]
+   \   0000001E   0x4288             CMP      R0,R1
+   \   00000020   0xD213             BCS.N    ??xQueueGenericSend_2
+   \   00000022   0x0032             MOVS     R2,R6
+   \   00000024   0x0029             MOVS     R1,R5
+   \   00000026   0x0020             MOVS     R0,R4
+   \   00000028   0x.... 0x....      BL       prvCopyDataToQueue
+   \   0000002C   0x6A60             LDR      R0,[R4, #+36]
+   \   0000002E   0x2800             CMP      R0,#+0
+   \   00000030   0xD007             BEQ.N    ??xQueueGenericSend_3
+   \   00000032   0xF114 0x0024      ADDS     R0,R4,#+36
+   \   00000036   0x.... 0x....      BL       xTaskRemoveFromEventList
+   \   0000003A   0x2801             CMP      R0,#+1
+   \   0000003C   0xD101             BNE.N    ??xQueueGenericSend_3
+   \   0000003E   0x.... 0x....      BL       vPortYieldFromISR
+   \                     ??xQueueGenericSend_3:
+   \   00000042   0x.... 0x....      BL       vPortExitCritical
+   \   00000046   0x2001             MOVS     R0,#+1
+   \   00000048   0xE041             B.N      ??xQueueGenericSend_4
+   \                     ??xQueueGenericSend_2:
+   \   0000004A   0x9802             LDR      R0,[SP, #+8]
+   \   0000004C   0x2800             CMP      R0,#+0
+   \   0000004E   0xD103             BNE.N    ??xQueueGenericSend_5
+   \   00000050   0x.... 0x....      BL       vPortExitCritical
+   \   00000054   0x2000             MOVS     R0,#+0
+   \   00000056   0xE03A             B.N      ??xQueueGenericSend_4
+   \                     ??xQueueGenericSend_5:
+   \   00000058   0x2F00             CMP      R7,#+0
+   \   0000005A   0xD103             BNE.N    ??xQueueGenericSend_6
+   \   0000005C   0xA800             ADD      R0,SP,#+0
+   \   0000005E   0x.... 0x....      BL       vTaskSetTimeOutState
+   \   00000062   0x2701             MOVS     R7,#+1
+   \                     ??xQueueGenericSend_6:
+   \   00000064   0x.... 0x....      BL       vPortExitCritical
+   \   00000068   0x.... 0x....      BL       vTaskSuspendAll
+   \   0000006C   0x.... 0x....      BL       vPortEnterCritical
+   \   00000070   0x6C60             LDR      R0,[R4, #+68]
+   \   00000072   0xF110 0x0F01      CMN      R0,#+1
+   \   00000076   0xD101             BNE.N    ??xQueueGenericSend_7
+   \   00000078   0x2000             MOVS     R0,#+0
+   \   0000007A   0x6460             STR      R0,[R4, #+68]
+   \                     ??xQueueGenericSend_7:
+   \   0000007C   0x6CA0             LDR      R0,[R4, #+72]
+   \   0000007E   0xF110 0x0F01      CMN      R0,#+1
+   \   00000082   0xD101             BNE.N    ??xQueueGenericSend_8
+   \   00000084   0x2000             MOVS     R0,#+0
+   \   00000086   0x64A0             STR      R0,[R4, #+72]
+   \                     ??xQueueGenericSend_8:
+   \   00000088   0x.... 0x....      BL       vPortExitCritical
+   \   0000008C   0xA902             ADD      R1,SP,#+8
+   \   0000008E   0xA800             ADD      R0,SP,#+0
+   \   00000090   0x.... 0x....      BL       xTaskCheckForTimeOut
+   \   00000094   0x2800             CMP      R0,#+0
+   \   00000096   0xD113             BNE.N    ??xQueueGenericSend_9
+   \   00000098   0x0020             MOVS     R0,R4
+   \   0000009A   0x.... 0x....      BL       prvIsQueueFull
+   \   0000009E   0x2800             CMP      R0,#+0
+   \   000000A0   0xD0B4             BEQ.N    ??xQueueGenericSend_1
+   \   000000A2   0x9902             LDR      R1,[SP, #+8]
+   \   000000A4   0xF114 0x0010      ADDS     R0,R4,#+16
+   \   000000A8   0x.... 0x....      BL       vTaskPlaceOnEventList
+   \   000000AC   0x0020             MOVS     R0,R4
+   \   000000AE   0x.... 0x....      BL       prvUnlockQueue
+   \   000000B2   0x.... 0x....      BL       xTaskResumeAll
+   \   000000B6   0x2800             CMP      R0,#+0
+   \   000000B8   0xD1AD             BNE.N    ??xQueueGenericSend_0
+   \   000000BA   0x.... 0x....      BL       vPortYieldFromISR
+   \   000000BE   0xE7AA             B.N      ??xQueueGenericSend_0
+    333              }
+    334              else
+    335              {
+    336          	prvUnlockQueue( pxQueue );
+   \                     ??xQueueGenericSend_9:
+   \   000000C0   0x0020             MOVS     R0,R4
+   \   000000C2   0x.... 0x....      BL       prvUnlockQueue
+    337          	( void ) xTaskResumeAll();
+   \   000000C6   0x.... 0x....      BL       xTaskResumeAll
+   \   000000CA   0x0001             MOVS     R1,R0
+    338                  traceQUEUE_SEND_FAILED( pxQueue );
+    339          	return errQUEUE_FULL;
+   \   000000CC   0x2000             MOVS     R0,#+0
+   \                     ??xQueueGenericSend_4:
+   \   000000CE   0xBDFE             POP      {R1-R7,PC}       ;; return
+    340              }
+    341            }
+    342          }
+    343          /********************************************************************************
+    344          *     Descrição     : 
+    345          *     Parametros    : 
+    346          *     Retorno       : 
+    347          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    348          signed portBASE_TYPE xQueueGenericSendFromISR( xQueueHandle pxQueue, const void * const pvItemToQueue, signed portBASE_TYPE *pxHigherPriorityTaskWoken, portBASE_TYPE xCopyPosition )
+    349          {
+   \                     xQueueGenericSendFromISR:
+   \   00000000   0xE92D 0x41F0      PUSH     {R4-R8,LR}
+   \   00000004   0x0004             MOVS     R4,R0
+   \   00000006   0x000E             MOVS     R6,R1
+   \   00000008   0x0015             MOVS     R5,R2
+   \   0000000A   0x001F             MOVS     R7,R3
+    350            signed portBASE_TYPE xReturn;
+    351            unsigned portBASE_TYPE uxSavedInterruptStatus;
+    352            
+    353              uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
+   \   0000000C   0xF05F 0x0800      MOVS     R8,#+0
+   \   00000010   0x.... 0x....      BL       vPortSetInterruptMask
+    354              {
+    355                  if( pxQueue->uxMessagesWaiting < pxQueue->uxLength )
+   \   00000014   0x6BA0             LDR      R0,[R4, #+56]
+   \   00000016   0x6BE1             LDR      R1,[R4, #+60]
+   \   00000018   0x4288             CMP      R0,R1
+   \   0000001A   0xD219             BCS.N    ??xQueueGenericSendFromISR_0
+    356          	{
+    357          	    traceQUEUE_SEND_FROM_ISR( pxQueue );
+    358          	    prvCopyDataToQueue( pxQueue, pvItemToQueue, xCopyPosition );
+   \   0000001C   0x003A             MOVS     R2,R7
+   \   0000001E   0x0031             MOVS     R1,R6
+   \   00000020   0x0020             MOVS     R0,R4
+   \   00000022   0x.... 0x....      BL       prvCopyDataToQueue
+    359          
+    360          	    if( pxQueue->xTxLock == queueUNLOCKED )
+   \   00000026   0x6CA0             LDR      R0,[R4, #+72]
+   \   00000028   0xF110 0x0F01      CMN      R0,#+1
+   \   0000002C   0xD10B             BNE.N    ??xQueueGenericSendFromISR_1
+    361          	    {
+    362          		if( !listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) )
+   \   0000002E   0x6A60             LDR      R0,[R4, #+36]
+   \   00000030   0x2800             CMP      R0,#+0
+   \   00000032   0xD00B             BEQ.N    ??xQueueGenericSendFromISR_2
+    363          		{
+    364                		  if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+   \   00000034   0xF114 0x0024      ADDS     R0,R4,#+36
+   \   00000038   0x.... 0x....      BL       xTaskRemoveFromEventList
+   \   0000003C   0x2800             CMP      R0,#+0
+   \   0000003E   0xD005             BEQ.N    ??xQueueGenericSendFromISR_2
+    365          		  {
+    366          			*pxHigherPriorityTaskWoken = pdTRUE;
+   \   00000040   0x2001             MOVS     R0,#+1
+   \   00000042   0x6028             STR      R0,[R5, #+0]
+   \   00000044   0xE002             B.N      ??xQueueGenericSendFromISR_2
+    367          		  }
+    368          		 }
+    369          	    }
+    370              else
+    371              {
+    372          	++( pxQueue->xTxLock );
+   \                     ??xQueueGenericSendFromISR_1:
+   \   00000046   0x6CA0             LDR      R0,[R4, #+72]
+   \   00000048   0x1C40             ADDS     R0,R0,#+1
+   \   0000004A   0x64A0             STR      R0,[R4, #+72]
+    373              }
+    374          
+    375              xReturn = pdPASS;
+   \                     ??xQueueGenericSendFromISR_2:
+   \   0000004C   0x2401             MOVS     R4,#+1
+   \   0000004E   0xE000             B.N      ??xQueueGenericSendFromISR_3
+    376              }
+    377              else
+    378              {
+    379          	traceQUEUE_SEND_FROM_ISR_FAILED( pxQueue );
+    380          	xReturn = errQUEUE_FULL;
+   \                     ??xQueueGenericSendFromISR_0:
+   \   00000050   0x2400             MOVS     R4,#+0
+    381              }
+    382              }
+    383              portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
+   \                     ??xQueueGenericSendFromISR_3:
+   \   00000052   0x.... 0x....      BL       vPortClearInterruptMask
+    384          
+    385              return xReturn;
+   \   00000056   0x0020             MOVS     R0,R4
+   \   00000058   0xE8BD 0x81F0      POP      {R4-R8,PC}       ;; return
+    386          }
+    387          /********************************************************************************
+    388          *   Descrição   : 
+    389          *   Parametros  : 
+    390          *   Retorno     : 
+    391          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    392          signed portBASE_TYPE xQueueGenericReceive( xQueueHandle pxQueue, void * const pvBuffer, portTickType xTicksToWait, portBASE_TYPE xJustPeeking )
+    393          {
+   \                     xQueueGenericReceive:
+   \   00000000   0xB5F7             PUSH     {R0-R2,R4-R7,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x001E             MOVS     R6,R3
+    394          signed portBASE_TYPE xEntryTimeSet = pdFALSE;
+   \   00000008   0x2700             MOVS     R7,#+0
+   \   0000000A   0xE004             B.N      ??xQueueGenericReceive_0
+    395          xTimeOutType xTimeOut;
+    396          signed char *pcOriginalReadPosition;
+    397          
+    398          	for( ;; )
+    399          	{
+    400          		taskENTER_CRITICAL();
+    401          		{
+    402          			if( pxQueue->uxMessagesWaiting > ( unsigned portBASE_TYPE ) 0 )
+    403          			{
+    404          				pcOriginalReadPosition = pxQueue->pcReadFrom;
+    405          
+    406          				prvCopyDataFromQueue( pxQueue, pvBuffer );
+    407          
+    408          				if( xJustPeeking == pdFALSE )
+    409          				{
+    410          					traceQUEUE_RECEIVE( pxQueue );
+    411          
+    412          					--( pxQueue->uxMessagesWaiting );
+    413          
+    414          					{
+    415          						if( pxQueue->uxQueueType == queueQUEUE_IS_MUTEX )
+    416          						{
+    417          							/* Record the information required to implement
+    418          							priority inheritance should it become necessary. */
+    419          							pxQueue->pxMutexHolder = xTaskGetCurrentTaskHandle();
+    420          						}
+    421          					}
+    422          
+    423          					if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToSend ) ) == pdFALSE )
+    424          					{
+    425          						if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToSend ) ) == pdTRUE )
+    426          						{
+    427          							portYIELD_WITHIN_API();
+    428          						}
+    429          					}
+    430          				}
+    431          				else
+    432          				{
+    433          					traceQUEUE_PEEK( pxQueue );
+    434          
+    435          					pxQueue->pcReadFrom = pcOriginalReadPosition;
+    436          
+    437          					if( !listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) )
+    438          					{
+    439          						if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+    440          						{
+    441          							portYIELD_WITHIN_API();
+    442          						}
+    443          					}
+    444          
+    445          				}
+    446          
+    447          				taskEXIT_CRITICAL();
+    448          				return pdPASS;
+    449          			}
+    450          			else
+    451          			{
+    452          				if( xTicksToWait == ( portTickType ) 0 )
+    453          				{
+    454          					taskEXIT_CRITICAL();
+    455          					traceQUEUE_RECEIVE_FAILED( pxQueue );
+    456          					return errQUEUE_EMPTY;
+    457          				}
+    458          				else if( xEntryTimeSet == pdFALSE )
+    459          				{
+    460          					vTaskSetTimeOutState( &xTimeOut );
+    461          					xEntryTimeSet = pdTRUE;
+    462          				}
+    463          			}
+    464          		}
+    465          		taskEXIT_CRITICAL();
+    466          
+    467          		vTaskSuspendAll();
+    468          		prvLockQueue( pxQueue );
+    469          
+    470          		if( xTaskCheckForTimeOut( &xTimeOut, &xTicksToWait ) == pdFALSE )
+    471          		{
+    472          			if( prvIsQueueEmpty( pxQueue ) )
+    473          			{
+    474          				traceBLOCKING_ON_QUEUE_RECEIVE( pxQueue );
+    475          
+    476          				{
+    477          					if( pxQueue->uxQueueType == queueQUEUE_IS_MUTEX )
+    478          					{
+    479          						portENTER_CRITICAL();
+    480          						{
+    481          							vTaskPriorityInherit( ( void * ) pxQueue->pxMutexHolder );
+    482          						}
+    483          						portEXIT_CRITICAL();
+    484          					}
+    485          				}
+    486          
+    487          				vTaskPlaceOnEventList( &( pxQueue->xTasksWaitingToReceive ), xTicksToWait );
+    488          				prvUnlockQueue( pxQueue );
+    489          				if( !xTaskResumeAll() )
+    490          				{
+    491          					portYIELD_WITHIN_API();
+    492          				}
+    493          			}
+    494          			else
+    495          			{
+    496          				prvUnlockQueue( pxQueue );
+   \                     ??xQueueGenericReceive_1:
+   \   0000000C   0x0020             MOVS     R0,R4
+   \   0000000E   0x.... 0x....      BL       prvUnlockQueue
+    497          				( void ) xTaskResumeAll();
+   \   00000012   0x.... 0x....      BL       xTaskResumeAll
+    498          			}
+   \                     ??xQueueGenericReceive_0:
+   \   00000016   0x.... 0x....      BL       vPortEnterCritical
+   \   0000001A   0x6BA0             LDR      R0,[R4, #+56]
+   \   0000001C   0x2800             CMP      R0,#+0
+   \   0000001E   0xD02B             BEQ.N    ??xQueueGenericReceive_2
+   \   00000020   0x68E7             LDR      R7,[R4, #+12]
+   \   00000022   0x0029             MOVS     R1,R5
+   \   00000024   0x0020             MOVS     R0,R4
+   \   00000026   0x.... 0x....      BL       prvCopyDataFromQueue
+   \   0000002A   0x2E00             CMP      R6,#+0
+   \   0000002C   0xD114             BNE.N    ??xQueueGenericReceive_3
+   \   0000002E   0x6BA0             LDR      R0,[R4, #+56]
+   \   00000030   0x1E40             SUBS     R0,R0,#+1
+   \   00000032   0x63A0             STR      R0,[R4, #+56]
+   \   00000034   0x6820             LDR      R0,[R4, #+0]
+   \   00000036   0x2800             CMP      R0,#+0
+   \   00000038   0xD102             BNE.N    ??xQueueGenericReceive_4
+   \   0000003A   0x.... 0x....      BL       xTaskGetCurrentTaskHandle
+   \   0000003E   0x6060             STR      R0,[R4, #+4]
+   \                     ??xQueueGenericReceive_4:
+   \   00000040   0x6920             LDR      R0,[R4, #+16]
+   \   00000042   0x2800             CMP      R0,#+0
+   \   00000044   0xD014             BEQ.N    ??xQueueGenericReceive_5
+   \   00000046   0xF114 0x0010      ADDS     R0,R4,#+16
+   \   0000004A   0x.... 0x....      BL       xTaskRemoveFromEventList
+   \   0000004E   0x2801             CMP      R0,#+1
+   \   00000050   0xD10E             BNE.N    ??xQueueGenericReceive_5
+   \   00000052   0x.... 0x....      BL       vPortYieldFromISR
+   \   00000056   0xE00B             B.N      ??xQueueGenericReceive_5
+   \                     ??xQueueGenericReceive_3:
+   \   00000058   0x60E7             STR      R7,[R4, #+12]
+   \   0000005A   0x6A60             LDR      R0,[R4, #+36]
+   \   0000005C   0x2800             CMP      R0,#+0
+   \   0000005E   0xD007             BEQ.N    ??xQueueGenericReceive_5
+   \   00000060   0xF114 0x0024      ADDS     R0,R4,#+36
+   \   00000064   0x.... 0x....      BL       xTaskRemoveFromEventList
+   \   00000068   0x2800             CMP      R0,#+0
+   \   0000006A   0xD001             BEQ.N    ??xQueueGenericReceive_5
+   \   0000006C   0x.... 0x....      BL       vPortYieldFromISR
+   \                     ??xQueueGenericReceive_5:
+   \   00000070   0x.... 0x....      BL       vPortExitCritical
+   \   00000074   0x2001             MOVS     R0,#+1
+   \   00000076   0xE04B             B.N      ??xQueueGenericReceive_6
+   \                     ??xQueueGenericReceive_2:
+   \   00000078   0x9802             LDR      R0,[SP, #+8]
+   \   0000007A   0x2800             CMP      R0,#+0
+   \   0000007C   0xD103             BNE.N    ??xQueueGenericReceive_7
+   \   0000007E   0x.... 0x....      BL       vPortExitCritical
+   \   00000082   0x2000             MOVS     R0,#+0
+   \   00000084   0xE044             B.N      ??xQueueGenericReceive_6
+   \                     ??xQueueGenericReceive_7:
+   \   00000086   0x2F00             CMP      R7,#+0
+   \   00000088   0xD103             BNE.N    ??xQueueGenericReceive_8
+   \   0000008A   0xA800             ADD      R0,SP,#+0
+   \   0000008C   0x.... 0x....      BL       vTaskSetTimeOutState
+   \   00000090   0x2701             MOVS     R7,#+1
+   \                     ??xQueueGenericReceive_8:
+   \   00000092   0x.... 0x....      BL       vPortExitCritical
+   \   00000096   0x.... 0x....      BL       vTaskSuspendAll
+   \   0000009A   0x.... 0x....      BL       vPortEnterCritical
+   \   0000009E   0x6C60             LDR      R0,[R4, #+68]
+   \   000000A0   0xF110 0x0F01      CMN      R0,#+1
+   \   000000A4   0xD101             BNE.N    ??xQueueGenericReceive_9
+   \   000000A6   0x2000             MOVS     R0,#+0
+   \   000000A8   0x6460             STR      R0,[R4, #+68]
+   \                     ??xQueueGenericReceive_9:
+   \   000000AA   0x6CA0             LDR      R0,[R4, #+72]
+   \   000000AC   0xF110 0x0F01      CMN      R0,#+1
+   \   000000B0   0xD101             BNE.N    ??xQueueGenericReceive_10
+   \   000000B2   0x2000             MOVS     R0,#+0
+   \   000000B4   0x64A0             STR      R0,[R4, #+72]
+   \                     ??xQueueGenericReceive_10:
+   \   000000B6   0x.... 0x....      BL       vPortExitCritical
+   \   000000BA   0xA902             ADD      R1,SP,#+8
+   \   000000BC   0xA800             ADD      R0,SP,#+0
+   \   000000BE   0x.... 0x....      BL       xTaskCheckForTimeOut
+   \   000000C2   0x2800             CMP      R0,#+0
+   \   000000C4   0xD11D             BNE.N    ??xQueueGenericReceive_11
+   \   000000C6   0x0020             MOVS     R0,R4
+   \   000000C8   0x.... 0x....      BL       prvIsQueueEmpty
+   \   000000CC   0x2800             CMP      R0,#+0
+   \   000000CE   0xD09D             BEQ.N    ??xQueueGenericReceive_1
+   \   000000D0   0x6820             LDR      R0,[R4, #+0]
+   \   000000D2   0x2800             CMP      R0,#+0
+   \   000000D4   0xD106             BNE.N    ??xQueueGenericReceive_12
+   \   000000D6   0x.... 0x....      BL       vPortEnterCritical
+   \   000000DA   0x6860             LDR      R0,[R4, #+4]
+   \   000000DC   0x.... 0x....      BL       vTaskPriorityInherit
+   \   000000E0   0x.... 0x....      BL       vPortExitCritical
+   \                     ??xQueueGenericReceive_12:
+   \   000000E4   0x9902             LDR      R1,[SP, #+8]
+   \   000000E6   0xF114 0x0024      ADDS     R0,R4,#+36
+   \   000000EA   0x.... 0x....      BL       vTaskPlaceOnEventList
+   \   000000EE   0x0020             MOVS     R0,R4
+   \   000000F0   0x.... 0x....      BL       prvUnlockQueue
+   \   000000F4   0x.... 0x....      BL       xTaskResumeAll
+   \   000000F8   0x2800             CMP      R0,#+0
+   \   000000FA   0xD18C             BNE.N    ??xQueueGenericReceive_0
+   \   000000FC   0x.... 0x....      BL       vPortYieldFromISR
+   \   00000100   0xE789             B.N      ??xQueueGenericReceive_0
+    499          		}
+    500          		else
+    501          		{
+    502          			prvUnlockQueue( pxQueue );
+   \                     ??xQueueGenericReceive_11:
+   \   00000102   0x0020             MOVS     R0,R4
+   \   00000104   0x.... 0x....      BL       prvUnlockQueue
+    503          			( void ) xTaskResumeAll();
+   \   00000108   0x.... 0x....      BL       xTaskResumeAll
+   \   0000010C   0x0001             MOVS     R1,R0
+    504          			traceQUEUE_RECEIVE_FAILED( pxQueue );
+    505          			return errQUEUE_EMPTY;
+   \   0000010E   0x2000             MOVS     R0,#+0
+   \                     ??xQueueGenericReceive_6:
+   \   00000110   0xBDFE             POP      {R1-R7,PC}       ;; return
+    506          		}
+    507          	}
+    508          }
+    509          /********************************************************************************
+    510          *   Descrição     :
+    511          *   Parametros    : 
+    512          *   Retorno       : 
+    513          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    514          signed portBASE_TYPE xQueueReceiveFromISR( xQueueHandle pxQueue, void * const pvBuffer, signed portBASE_TYPE *pxTaskWoken )
+    515          {
+   \                     xQueueReceiveFromISR:
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000E             MOVS     R6,R1
+   \   00000006   0x0015             MOVS     R5,R2
+    516          signed portBASE_TYPE xReturn;
+    517          unsigned portBASE_TYPE uxSavedInterruptStatus;
+    518          
+    519          	uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
+   \   00000008   0x2700             MOVS     R7,#+0
+   \   0000000A   0x.... 0x....      BL       vPortSetInterruptMask
+    520          	{
+    521          		if( pxQueue->uxMessagesWaiting > ( unsigned portBASE_TYPE ) 0 )
+   \   0000000E   0x6BA0             LDR      R0,[R4, #+56]
+   \   00000010   0x2800             CMP      R0,#+0
+   \   00000012   0xD01B             BEQ.N    ??xQueueReceiveFromISR_0
+    522          		{
+    523          			traceQUEUE_RECEIVE_FROM_ISR( pxQueue );
+    524          
+    525          			prvCopyDataFromQueue( pxQueue, pvBuffer );
+   \   00000014   0x0031             MOVS     R1,R6
+   \   00000016   0x0020             MOVS     R0,R4
+   \   00000018   0x.... 0x....      BL       prvCopyDataFromQueue
+    526          			--( pxQueue->uxMessagesWaiting );
+   \   0000001C   0x6BA0             LDR      R0,[R4, #+56]
+   \   0000001E   0x1E40             SUBS     R0,R0,#+1
+   \   00000020   0x63A0             STR      R0,[R4, #+56]
+    527          			if( pxQueue->xRxLock == queueUNLOCKED )
+   \   00000022   0x6C60             LDR      R0,[R4, #+68]
+   \   00000024   0xF110 0x0F01      CMN      R0,#+1
+   \   00000028   0xD10B             BNE.N    ??xQueueReceiveFromISR_1
+    528          			{
+    529          				if( !listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToSend ) ) )
+   \   0000002A   0x6920             LDR      R0,[R4, #+16]
+   \   0000002C   0x2800             CMP      R0,#+0
+   \   0000002E   0xD00B             BEQ.N    ??xQueueReceiveFromISR_2
+    530          				{
+    531          					if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToSend ) ) != pdFALSE )
+   \   00000030   0xF114 0x0010      ADDS     R0,R4,#+16
+   \   00000034   0x.... 0x....      BL       xTaskRemoveFromEventList
+   \   00000038   0x2800             CMP      R0,#+0
+   \   0000003A   0xD005             BEQ.N    ??xQueueReceiveFromISR_2
+    532          					{
+    533          						*pxTaskWoken = pdTRUE;
+   \   0000003C   0x2001             MOVS     R0,#+1
+   \   0000003E   0x6028             STR      R0,[R5, #+0]
+   \   00000040   0xE002             B.N      ??xQueueReceiveFromISR_2
+    534          					}
+    535          				}
+    536          			}
+    537          			else
+    538          			{
+    539          				++( pxQueue->xRxLock );
+   \                     ??xQueueReceiveFromISR_1:
+   \   00000042   0x6C60             LDR      R0,[R4, #+68]
+   \   00000044   0x1C40             ADDS     R0,R0,#+1
+   \   00000046   0x6460             STR      R0,[R4, #+68]
+    540          			}
+    541          
+    542          			xReturn = pdPASS;
+   \                     ??xQueueReceiveFromISR_2:
+   \   00000048   0x2401             MOVS     R4,#+1
+   \   0000004A   0xE000             B.N      ??xQueueReceiveFromISR_3
+    543          		}
+    544          		else
+    545          		{
+    546          			xReturn = pdFAIL;
+   \                     ??xQueueReceiveFromISR_0:
+   \   0000004C   0x2400             MOVS     R4,#+0
+    547          			traceQUEUE_RECEIVE_FROM_ISR_FAILED( pxQueue );
+    548          		}
+    549          	}
+    550          	portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
+   \                     ??xQueueReceiveFromISR_3:
+   \   0000004E   0x.... 0x....      BL       vPortClearInterruptMask
+    551          
+    552          	return xReturn;
+   \   00000052   0x0020             MOVS     R0,R4
+   \   00000054   0xBDF2             POP      {R1,R4-R7,PC}    ;; return
+    553          }
+    554          /********************************************************************************
+    555          *     Descrição     :   
+    556          *     Parametros    : 
+    557          *     Retorno       : 
+    558          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    559          unsigned portBASE_TYPE uxQueueMessagesWaiting( const xQueueHandle pxQueue )
+    560          {
+   \                     uxQueueMessagesWaiting:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    561          unsigned portBASE_TYPE uxReturn;
+    562          
+    563          	taskENTER_CRITICAL();
+   \   00000004   0x.... 0x....      BL       vPortEnterCritical
+    564          		uxReturn = pxQueue->uxMessagesWaiting;
+   \   00000008   0x6BA4             LDR      R4,[R4, #+56]
+    565          	taskEXIT_CRITICAL();
+   \   0000000A   0x.... 0x....      BL       vPortExitCritical
+    566          
+    567          	return uxReturn;
+   \   0000000E   0x0020             MOVS     R0,R4
+   \   00000010   0xBD10             POP      {R4,PC}          ;; return
+    568          }
+    569          /********************************************************************************
+    570          *   Descrição      :  
+    571          *   Parametros     :
+    572          *   Retorno        :  
+    573          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    574          unsigned portBASE_TYPE uxQueueMessagesWaitingFromISR( const xQueueHandle pxQueue )
+    575          {
+    576          unsigned portBASE_TYPE uxReturn;
+    577          
+    578          	uxReturn = pxQueue->uxMessagesWaiting;
+   \                     uxQueueMessagesWaitingFromISR:
+   \   00000000   0x6B80             LDR      R0,[R0, #+56]
+    579          
+    580          	return uxReturn;
+   \   00000002   0x4770             BX       LR               ;; return
+    581          }
+    582          /********************************************************************************
+    583          *   Descrição      :  
+    584          *   Parametros     :
+    585          *   Retorno        :  
+    586          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    587          void vQueueDelete( xQueueHandle pxQueue )
+    588          {
+   \                     vQueueDelete:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    589          	traceQUEUE_DELETE( pxQueue );
+    590          	vQueueUnregisterQueue( pxQueue );
+   \   00000004   0x0020             MOVS     R0,R4
+   \   00000006   0x.... 0x....      BL       vQueueUnregisterQueue
+    591          	vPortFree( pxQueue->pcHead );
+   \   0000000A   0x6820             LDR      R0,[R4, #+0]
+   \   0000000C   0x.... 0x....      BL       vPortFree
+    592          	vPortFree( pxQueue );
+   \   00000010   0x0020             MOVS     R0,R4
+   \   00000012   0x.... 0x....      BL       vPortFree
+    593          }
+   \   00000016   0xBD10             POP      {R4,PC}          ;; return
+    594          /********************************************************************************
+    595          *   Descrição      :  
+    596          *   Parametros     :
+    597          *   Retorno        :  
+    598          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    599          static void prvCopyDataToQueue( xQUEUE *pxQueue, const void *pvItemToQueue, portBASE_TYPE xPosition )
+    600          {
+   \                     prvCopyDataToQueue:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    601          	if( pxQueue->uxItemSize == ( unsigned portBASE_TYPE ) 0 )
+   \   00000004   0x6C20             LDR      R0,[R4, #+64]
+   \   00000006   0x2800             CMP      R0,#+0
+   \   00000008   0xD108             BNE.N    ??prvCopyDataToQueue_0
+    602          	{
+    603          		{
+    604          			if( pxQueue->uxQueueType == queueQUEUE_IS_MUTEX )
+   \   0000000A   0x6820             LDR      R0,[R4, #+0]
+   \   0000000C   0x2800             CMP      R0,#+0
+   \   0000000E   0xD128             BNE.N    ??prvCopyDataToQueue_1
+    605          			{
+    606          				vTaskPriorityDisinherit( ( void * ) pxQueue->pxMutexHolder );
+   \   00000010   0x6860             LDR      R0,[R4, #+4]
+   \   00000012   0x.... 0x....      BL       vTaskPriorityDisinherit
+    607          				pxQueue->pxMutexHolder = NULL;
+   \   00000016   0x2000             MOVS     R0,#+0
+   \   00000018   0x6060             STR      R0,[R4, #+4]
+   \   0000001A   0xE022             B.N      ??prvCopyDataToQueue_1
+    608          			}
+    609          		}
+    610          	}
+    611          	else if( xPosition == queueSEND_TO_BACK )
+   \                     ??prvCopyDataToQueue_0:
+   \   0000001C   0x2A00             CMP      R2,#+0
+   \   0000001E   0xD10E             BNE.N    ??prvCopyDataToQueue_2
+    612          	{
+    613          		memcpy( ( void * ) pxQueue->pcWriteTo, pvItemToQueue, ( unsigned ) pxQueue->uxItemSize );
+   \   00000020   0x6C22             LDR      R2,[R4, #+64]
+   \   00000022   0x68A0             LDR      R0,[R4, #+8]
+   \   00000024   0x.... 0x....      BL       memcpy
+    614          		pxQueue->pcWriteTo += pxQueue->uxItemSize;
+   \   00000028   0x6C20             LDR      R0,[R4, #+64]
+   \   0000002A   0x68A1             LDR      R1,[R4, #+8]
+   \   0000002C   0x1840             ADDS     R0,R0,R1
+   \   0000002E   0x60A0             STR      R0,[R4, #+8]
+    615          		if( pxQueue->pcWriteTo >= pxQueue->pcTail )
+   \   00000030   0x68A0             LDR      R0,[R4, #+8]
+   \   00000032   0x6861             LDR      R1,[R4, #+4]
+   \   00000034   0x4288             CMP      R0,R1
+   \   00000036   0xD314             BCC.N    ??prvCopyDataToQueue_1
+    616          		{
+    617          			pxQueue->pcWriteTo = pxQueue->pcHead;
+   \   00000038   0x6820             LDR      R0,[R4, #+0]
+   \   0000003A   0x60A0             STR      R0,[R4, #+8]
+   \   0000003C   0xE011             B.N      ??prvCopyDataToQueue_1
+    618          		}
+    619          	}
+    620          	else
+    621          	{
+    622          		memcpy( ( void * ) pxQueue->pcReadFrom, pvItemToQueue, ( unsigned ) pxQueue->uxItemSize );
+   \                     ??prvCopyDataToQueue_2:
+   \   0000003E   0x6C22             LDR      R2,[R4, #+64]
+   \   00000040   0x68E0             LDR      R0,[R4, #+12]
+   \   00000042   0x.... 0x....      BL       memcpy
+    623          		pxQueue->pcReadFrom -= pxQueue->uxItemSize;
+   \   00000046   0x6C20             LDR      R0,[R4, #+64]
+   \   00000048   0x4240             RSBS     R0,R0,#+0
+   \   0000004A   0x68E1             LDR      R1,[R4, #+12]
+   \   0000004C   0x1840             ADDS     R0,R0,R1
+   \   0000004E   0x60E0             STR      R0,[R4, #+12]
+    624          		if( pxQueue->pcReadFrom < pxQueue->pcHead )
+   \   00000050   0x68E0             LDR      R0,[R4, #+12]
+   \   00000052   0x6821             LDR      R1,[R4, #+0]
+   \   00000054   0x4288             CMP      R0,R1
+   \   00000056   0xD204             BCS.N    ??prvCopyDataToQueue_1
+    625          		{
+    626          			pxQueue->pcReadFrom = ( pxQueue->pcTail - pxQueue->uxItemSize );
+   \   00000058   0x6C20             LDR      R0,[R4, #+64]
+   \   0000005A   0x4240             RSBS     R0,R0,#+0
+   \   0000005C   0x6861             LDR      R1,[R4, #+4]
+   \   0000005E   0x1840             ADDS     R0,R0,R1
+   \   00000060   0x60E0             STR      R0,[R4, #+12]
+    627          		}
+    628          	}
+    629          
+    630          	++( pxQueue->uxMessagesWaiting );
+   \                     ??prvCopyDataToQueue_1:
+   \   00000062   0x6BA0             LDR      R0,[R4, #+56]
+   \   00000064   0x1C40             ADDS     R0,R0,#+1
+   \   00000066   0x63A0             STR      R0,[R4, #+56]
+    631          }
+   \   00000068   0xBD10             POP      {R4,PC}          ;; return
+    632          /********************************************************************************
+    633          *   Descrição      :  
+    634          *   Parametros     :
+    635          *   Retorno        :  
+    636          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    637          static void prvCopyDataFromQueue( xQUEUE * const pxQueue, const void *pvBuffer )
+    638          {
+   \                     prvCopyDataFromQueue:
+   \   00000000   0xB580             PUSH     {R7,LR}
+   \   00000002   0x0003             MOVS     R3,R0
+   \   00000004   0x0008             MOVS     R0,R1
+    639          	if( pxQueue->uxQueueType != queueQUEUE_IS_MUTEX )
+   \   00000006   0x6819             LDR      R1,[R3, #+0]
+   \   00000008   0x2900             CMP      R1,#+0
+   \   0000000A   0xD00D             BEQ.N    ??prvCopyDataFromQueue_0
+    640          	{
+    641          		pxQueue->pcReadFrom += pxQueue->uxItemSize;
+   \   0000000C   0x6C19             LDR      R1,[R3, #+64]
+   \   0000000E   0x68DA             LDR      R2,[R3, #+12]
+   \   00000010   0x1889             ADDS     R1,R1,R2
+   \   00000012   0x60D9             STR      R1,[R3, #+12]
+    642          		if( pxQueue->pcReadFrom >= pxQueue->pcTail )
+   \   00000014   0x68D9             LDR      R1,[R3, #+12]
+   \   00000016   0x685A             LDR      R2,[R3, #+4]
+   \   00000018   0x4291             CMP      R1,R2
+   \   0000001A   0xD301             BCC.N    ??prvCopyDataFromQueue_1
+    643          		{
+    644          			pxQueue->pcReadFrom = pxQueue->pcHead;
+   \   0000001C   0x6819             LDR      R1,[R3, #+0]
+   \   0000001E   0x60D9             STR      R1,[R3, #+12]
+    645          		}
+    646          		memcpy( ( void * ) pvBuffer, ( void * ) pxQueue->pcReadFrom, ( unsigned ) pxQueue->uxItemSize );
+   \                     ??prvCopyDataFromQueue_1:
+   \   00000020   0x6C1A             LDR      R2,[R3, #+64]
+   \   00000022   0x68D9             LDR      R1,[R3, #+12]
+   \   00000024   0x.... 0x....      BL       memcpy
+    647          	}
+    648          }
+   \                     ??prvCopyDataFromQueue_0:
+   \   00000028   0xBD01             POP      {R0,PC}          ;; return
+    649          /********************************************************************************
+    650          *   Descrição      :  
+    651          *   Parametros     :
+    652          *   Retorno        :  
+    653          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    654          static void prvUnlockQueue( xQueueHandle pxQueue )
+    655          {
+   \                     prvUnlockQueue:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    656          	taskENTER_CRITICAL();
+   \   00000004   0x.... 0x....      BL       vPortEnterCritical
+   \   00000008   0xE00A             B.N      ??prvUnlockQueue_0
+    657          	{
+    658          		while( pxQueue->xTxLock > queueLOCKED_UNMODIFIED )
+    659          		{
+    660          			if( !listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) )
+    661          			{
+    662          				if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+   \                     ??prvUnlockQueue_1:
+   \   0000000A   0xF114 0x0024      ADDS     R0,R4,#+36
+   \   0000000E   0x.... 0x....      BL       xTaskRemoveFromEventList
+   \   00000012   0x2800             CMP      R0,#+0
+   \   00000014   0xD001             BEQ.N    ??prvUnlockQueue_2
+    663          				{
+    664          					vTaskMissedYield();
+   \   00000016   0x.... 0x....      BL       vTaskMissedYield
+    665          				}
+    666          
+    667          				--( pxQueue->xTxLock );
+   \                     ??prvUnlockQueue_2:
+   \   0000001A   0x6CA0             LDR      R0,[R4, #+72]
+   \   0000001C   0x1E40             SUBS     R0,R0,#+1
+   \   0000001E   0x64A0             STR      R0,[R4, #+72]
+    668          			}
+   \                     ??prvUnlockQueue_0:
+   \   00000020   0x6CA0             LDR      R0,[R4, #+72]
+   \   00000022   0x2801             CMP      R0,#+1
+   \   00000024   0xDB02             BLT.N    ??prvUnlockQueue_3
+   \   00000026   0x6A60             LDR      R0,[R4, #+36]
+   \   00000028   0x2800             CMP      R0,#+0
+   \   0000002A   0xD1EE             BNE.N    ??prvUnlockQueue_1
+    669          			else
+    670          			{
+    671          				break;
+    672          			}
+    673          		}
+    674          
+    675          		pxQueue->xTxLock = queueUNLOCKED;
+   \                     ??prvUnlockQueue_3:
+   \   0000002C   0xF05F 0x30FF      MOVS     R0,#-1
+   \   00000030   0x64A0             STR      R0,[R4, #+72]
+    676          	}
+    677          	taskEXIT_CRITICAL();
+   \   00000032   0x.... 0x....      BL       vPortExitCritical
+    678          
+    679          	taskENTER_CRITICAL();
+   \   00000036   0x.... 0x....      BL       vPortEnterCritical
+   \   0000003A   0xE00A             B.N      ??prvUnlockQueue_4
+    680          	{
+    681          		while( pxQueue->xRxLock > queueLOCKED_UNMODIFIED )
+    682          		{
+    683          			if( !listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToSend ) ) )
+    684          			{
+    685          				if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToSend ) ) != pdFALSE )
+   \                     ??prvUnlockQueue_5:
+   \   0000003C   0xF114 0x0010      ADDS     R0,R4,#+16
+   \   00000040   0x.... 0x....      BL       xTaskRemoveFromEventList
+   \   00000044   0x2800             CMP      R0,#+0
+   \   00000046   0xD001             BEQ.N    ??prvUnlockQueue_6
+    686          				{
+    687          					vTaskMissedYield();
+   \   00000048   0x.... 0x....      BL       vTaskMissedYield
+    688          				}
+    689          
+    690          				--( pxQueue->xRxLock );
+   \                     ??prvUnlockQueue_6:
+   \   0000004C   0x6C60             LDR      R0,[R4, #+68]
+   \   0000004E   0x1E40             SUBS     R0,R0,#+1
+   \   00000050   0x6460             STR      R0,[R4, #+68]
+    691          			}
+   \                     ??prvUnlockQueue_4:
+   \   00000052   0x6C60             LDR      R0,[R4, #+68]
+   \   00000054   0x2801             CMP      R0,#+1
+   \   00000056   0xDB02             BLT.N    ??prvUnlockQueue_7
+   \   00000058   0x6920             LDR      R0,[R4, #+16]
+   \   0000005A   0x2800             CMP      R0,#+0
+   \   0000005C   0xD1EE             BNE.N    ??prvUnlockQueue_5
+    692          			else
+    693          			{
+    694          				break;
+    695          			}
+    696          		}
+    697          
+    698          		pxQueue->xRxLock = queueUNLOCKED;
+   \                     ??prvUnlockQueue_7:
+   \   0000005E   0xF05F 0x30FF      MOVS     R0,#-1
+   \   00000062   0x6460             STR      R0,[R4, #+68]
+    699          	}
+    700          	taskEXIT_CRITICAL();
+   \   00000064   0x.... 0x....      BL       vPortExitCritical
+    701          }
+   \   00000068   0xBD10             POP      {R4,PC}          ;; return
+    702          /********************************************************************************
+    703          *   Descrição      :  
+    704          *   Parametros     :
+    705          *   Retorno        :  
+    706          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    707          static signed portBASE_TYPE prvIsQueueEmpty( const xQueueHandle pxQueue )
+    708          {
+   \                     prvIsQueueEmpty:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    709          signed portBASE_TYPE xReturn;
+    710          
+    711          	taskENTER_CRITICAL();
+   \   00000004   0x.... 0x....      BL       vPortEnterCritical
+    712          		xReturn = ( pxQueue->uxMessagesWaiting == ( unsigned portBASE_TYPE ) 0 );
+   \   00000008   0x6BA0             LDR      R0,[R4, #+56]
+   \   0000000A   0x2800             CMP      R0,#+0
+   \   0000000C   0xD101             BNE.N    ??prvIsQueueEmpty_0
+   \   0000000E   0x2401             MOVS     R4,#+1
+   \   00000010   0xE000             B.N      ??prvIsQueueEmpty_1
+   \                     ??prvIsQueueEmpty_0:
+   \   00000012   0x2400             MOVS     R4,#+0
+   \                     ??prvIsQueueEmpty_1:
+   \   00000014   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+    713          	taskEXIT_CRITICAL();
+   \   00000016   0x.... 0x....      BL       vPortExitCritical
+    714          
+    715          	return xReturn;
+   \   0000001A   0x0020             MOVS     R0,R4
+   \   0000001C   0xBD10             POP      {R4,PC}          ;; return
+    716          }
+    717          /********************************************************************************
+    718          *   Descrição      :  
+    719          *   Parametros     :
+    720          *   Retorno        :  
+    721          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    722          signed portBASE_TYPE xQueueIsQueueEmptyFromISR( const xQueueHandle pxQueue )
+    723          {
+    724          signed portBASE_TYPE xReturn;
+    725          
+    726          	xReturn = ( pxQueue->uxMessagesWaiting == ( unsigned portBASE_TYPE ) 0 );
+   \                     xQueueIsQueueEmptyFromISR:
+   \   00000000   0x6B80             LDR      R0,[R0, #+56]
+   \   00000002   0x2800             CMP      R0,#+0
+   \   00000004   0xD101             BNE.N    ??xQueueIsQueueEmptyFromISR_0
+   \   00000006   0x2001             MOVS     R0,#+1
+   \   00000008   0xE000             B.N      ??xQueueIsQueueEmptyFromISR_1
+   \                     ??xQueueIsQueueEmptyFromISR_0:
+   \   0000000A   0x2000             MOVS     R0,#+0
+   \                     ??xQueueIsQueueEmptyFromISR_1:
+   \   0000000C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    727          
+    728          	return xReturn;
+   \   0000000E   0x4770             BX       LR               ;; return
+    729          }
+    730          /********************************************************************************
+    731          *   Descrição      :  
+    732          *   Parametros     :
+    733          *   Retorno        :  
+    734          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    735          static signed portBASE_TYPE prvIsQueueFull( const xQueueHandle pxQueue )
+    736          {
+   \                     prvIsQueueFull:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    737          signed portBASE_TYPE xReturn;
+    738          
+    739          	taskENTER_CRITICAL();
+   \   00000004   0x.... 0x....      BL       vPortEnterCritical
+    740          		xReturn = ( pxQueue->uxMessagesWaiting == pxQueue->uxLength );
+   \   00000008   0x6BA0             LDR      R0,[R4, #+56]
+   \   0000000A   0x6BE1             LDR      R1,[R4, #+60]
+   \   0000000C   0x4288             CMP      R0,R1
+   \   0000000E   0xD101             BNE.N    ??prvIsQueueFull_0
+   \   00000010   0x2401             MOVS     R4,#+1
+   \   00000012   0xE000             B.N      ??prvIsQueueFull_1
+   \                     ??prvIsQueueFull_0:
+   \   00000014   0x2400             MOVS     R4,#+0
+   \                     ??prvIsQueueFull_1:
+   \   00000016   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+    741          	taskEXIT_CRITICAL();
+   \   00000018   0x.... 0x....      BL       vPortExitCritical
+    742          
+    743          	return xReturn;
+   \   0000001C   0x0020             MOVS     R0,R4
+   \   0000001E   0xBD10             POP      {R4,PC}          ;; return
+    744          }
+    745          /********************************************************************************
+    746          *   Descrição      :  
+    747          *   Parametros     :
+    748          *   Retorno        :  
+    749          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    750          signed portBASE_TYPE xQueueIsQueueFullFromISR( const xQueueHandle pxQueue )
+    751          {
+    752          signed portBASE_TYPE xReturn;
+    753          
+    754          	xReturn = ( pxQueue->uxMessagesWaiting == pxQueue->uxLength );
+   \                     xQueueIsQueueFullFromISR:
+   \   00000000   0x6B81             LDR      R1,[R0, #+56]
+   \   00000002   0x6BC0             LDR      R0,[R0, #+60]
+   \   00000004   0x4281             CMP      R1,R0
+   \   00000006   0xD101             BNE.N    ??xQueueIsQueueFullFromISR_0
+   \   00000008   0x2001             MOVS     R0,#+1
+   \   0000000A   0xE000             B.N      ??xQueueIsQueueFullFromISR_1
+   \                     ??xQueueIsQueueFullFromISR_0:
+   \   0000000C   0x2000             MOVS     R0,#+0
+   \                     ??xQueueIsQueueFullFromISR_1:
+   \   0000000E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    755          
+    756          	return xReturn;
+   \   00000010   0x4770             BX       LR               ;; return
+    757          }
+    758          /********************************************************************************
+    759          *   Descrição      :  
+    760          *   Parametros     :
+    761          *   Retorno        :  
+    762          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    763          void vQueueAddToRegistry( xQueueHandle xQueue, signed char *pcQueueName )
+    764          {
+    765          unsigned portBASE_TYPE ux;
+    766          
+    767              for( ux = 0; ux < configQUEUE_REGISTRY_SIZE; ux++ )
+   \                     vQueueAddToRegistry:
+   \   00000000   0x2200             MOVS     R2,#+0
+   \   00000002   0xE000             B.N      ??vQueueAddToRegistry_0
+   \                     ??vQueueAddToRegistry_1:
+   \   00000004   0x1C52             ADDS     R2,R2,#+1
+   \                     ??vQueueAddToRegistry_0:
+   \   00000006   0x2A0A             CMP      R2,#+10
+   \   00000008   0xD20B             BCS.N    ??vQueueAddToRegistry_2
+    768              {
+    769          	if( xQueueRegistry[ ux ].pcQueueName == NULL )
+   \   0000000A   0x....             LDR.N    R3,??DataTable1
+   \   0000000C   0xF853 0x3032      LDR      R3,[R3, R2, LSL #+3]
+   \   00000010   0x2B00             CMP      R3,#+0
+   \   00000012   0xD1F7             BNE.N    ??vQueueAddToRegistry_1
+    770          	{
+    771          	    xQueueRegistry[ ux ].pcQueueName = pcQueueName;
+   \   00000014   0x....             LDR.N    R3,??DataTable1
+   \   00000016   0xF843 0x1032      STR      R1,[R3, R2, LSL #+3]
+    772          	    xQueueRegistry[ ux ].xHandle = xQueue;
+   \   0000001A   0x....             LDR.N    R1,??DataTable1
+   \   0000001C   0xEB11 0x01C2      ADDS     R1,R1,R2, LSL #+3
+   \   00000020   0x6048             STR      R0,[R1, #+4]
+    773          	    break;
+    774          	}
+    775              }
+    776          }
+   \                     ??vQueueAddToRegistry_2:
+   \   00000022   0x4770             BX       LR               ;; return
+    777          /********************************************************************************
+    778          *   Descrição      :  
+    779          *   Parametros     :
+    780          *   Retorno        :  
+    781          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    782          static void vQueueUnregisterQueue( xQueueHandle xQueue )
+    783          {
+    784              unsigned portBASE_TYPE ux;
+    785          
+    786          	
+    787              for( ux = 0; ux < configQUEUE_REGISTRY_SIZE; ux++ )
+   \                     vQueueUnregisterQueue:
+   \   00000000   0x2100             MOVS     R1,#+0
+   \   00000002   0xE000             B.N      ??vQueueUnregisterQueue_0
+   \                     ??vQueueUnregisterQueue_1:
+   \   00000004   0x1C49             ADDS     R1,R1,#+1
+   \                     ??vQueueUnregisterQueue_0:
+   \   00000006   0x290A             CMP      R1,#+10
+   \   00000008   0xD209             BCS.N    ??vQueueUnregisterQueue_2
+    788              {
+    789          	if( xQueueRegistry[ ux ].xHandle == xQueue )
+   \   0000000A   0x....             LDR.N    R2,??DataTable1
+   \   0000000C   0xEB12 0x02C1      ADDS     R2,R2,R1, LSL #+3
+   \   00000010   0x6852             LDR      R2,[R2, #+4]
+   \   00000012   0x4282             CMP      R2,R0
+   \   00000014   0xD1F6             BNE.N    ??vQueueUnregisterQueue_1
+    790          	{
+    791          	    xQueueRegistry[ ux ].pcQueueName = NULL;
+   \   00000016   0x....             LDR.N    R0,??DataTable1
+   \   00000018   0x2200             MOVS     R2,#+0
+   \   0000001A   0xF840 0x2031      STR      R2,[R0, R1, LSL #+3]
+    792          	    break;
+    793          	}
+    794              }
+    795          
+    796          }
+   \                     ??vQueueUnregisterQueue_2:
+   \   0000001E   0x4770             BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     xQueueRegistry
+    797          /********************************************************************************
+    798          *   Fim do arquivo
+    799          ********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   memcpy
+         8   -> __aeabi_memcpy
+       8   prvCopyDataFromQueue
+         8   -> memcpy
+       8   prvCopyDataToQueue
+         8   -> memcpy
+         8   -> vTaskPriorityDisinherit
+       8   prvIsQueueEmpty
+         8   -> vPortEnterCritical
+         8   -> vPortExitCritical
+       8   prvIsQueueFull
+         8   -> vPortEnterCritical
+         8   -> vPortExitCritical
+       8   prvUnlockQueue
+         8   -> vPortEnterCritical
+         8   -> vPortExitCritical
+         8   -> vTaskMissedYield
+         8   -> xTaskRemoveFromEventList
+       8   uxQueueMessagesWaiting
+         8   -> vPortEnterCritical
+         8   -> vPortExitCritical
+       0   uxQueueMessagesWaitingFromISR
+       0   vQueueAddToRegistry
+       8   vQueueDelete
+         8   -> vPortFree
+         8   -> vQueueUnregisterQueue
+       0   vQueueUnregisterQueue
+      16   xQueueCreate
+        16   -> pvPortMalloc
+        16   -> vListInitialise
+        16   -> vPortFree
+       8   xQueueCreateMutex
+         8   -> pvPortMalloc
+         8   -> vListInitialise
+         8   -> xQueueGenericSend
+      32   xQueueGenericReceive
+        32   -> prvCopyDataFromQueue
+        32   -> prvIsQueueEmpty
+        32   -> prvUnlockQueue
+        32   -> vPortEnterCritical
+        32   -> vPortExitCritical
+        32   -> vPortYieldFromISR
+        32   -> vTaskPlaceOnEventList
+        32   -> vTaskPriorityInherit
+        32   -> vTaskSetTimeOutState
+        32   -> vTaskSuspendAll
+        32   -> xTaskCheckForTimeOut
+        32   -> xTaskGetCurrentTaskHandle
+        32   -> xTaskRemoveFromEventList
+        32   -> xTaskResumeAll
+      32   xQueueGenericSend
+        32   -> prvCopyDataToQueue
+        32   -> prvIsQueueFull
+        32   -> prvUnlockQueue
+        32   -> vPortEnterCritical
+        32   -> vPortExitCritical
+        32   -> vPortYieldFromISR
+        32   -> vTaskPlaceOnEventList
+        32   -> vTaskSetTimeOutState
+        32   -> vTaskSuspendAll
+        32   -> xTaskCheckForTimeOut
+        32   -> xTaskRemoveFromEventList
+        32   -> xTaskResumeAll
+      24   xQueueGenericSendFromISR
+        24   -> prvCopyDataToQueue
+        24   -> vPortClearInterruptMask
+        24   -> vPortSetInterruptMask
+        24   -> xTaskRemoveFromEventList
+      16   xQueueGiveMutexRecursive
+        16   -> xQueueGenericSend
+        16   -> xTaskGetCurrentTaskHandle
+       0   xQueueIsQueueEmptyFromISR
+       0   xQueueIsQueueFullFromISR
+      24   xQueueReceiveFromISR
+        24   -> prvCopyDataFromQueue
+        24   -> vPortClearInterruptMask
+        24   -> vPortSetInterruptMask
+        24   -> xTaskRemoveFromEventList
+      16   xQueueTakeMutexRecursive
+        16   -> xQueueGenericReceive
+        16   -> xTaskGetCurrentTaskHandle
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+      14  memcpy
+      42  prvCopyDataFromQueue
+     106  prvCopyDataToQueue
+      30  prvIsQueueEmpty
+      32  prvIsQueueFull
+     106  prvUnlockQueue
+      18  uxQueueMessagesWaiting
+       4  uxQueueMessagesWaitingFromISR
+      36  vQueueAddToRegistry
+      24  vQueueDelete
+      32  vQueueUnregisterQueue
+     112  xQueueCreate
+      86  xQueueCreateMutex
+     274  xQueueGenericReceive
+     208  xQueueGenericSend
+      92  xQueueGenericSendFromISR
+      46  xQueueGiveMutexRecursive
+      16  xQueueIsQueueEmptyFromISR
+      18  xQueueIsQueueFullFromISR
+      86  xQueueReceiveFromISR
+      80  xQueueRegistry
+      50  xQueueTakeMutexRecursive
+
+ 
+    80 bytes in section .bss
+ 1 436 bytes in section .text
+ 
+ 1 422 bytes of CODE memory (+ 14 bytes shared)
+    80 bytes of DATA memory
+
+Errors: none
+Warnings: none

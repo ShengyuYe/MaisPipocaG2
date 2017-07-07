@@ -1975,6 +1975,27 @@
       </file>
     </group>
     <group>
+      <name>FILESYSTEM</name>
+      <file>
+        <name>$PROJ_DIR$\Drivers\FILESYSTEM\diskio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\FILESYSTEM\ff.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c</name>
+      </file>
+    </group>
+    <group>
+      <name>SDCARD</name>
+      <file>
+        <name>$PROJ_DIR$\Drivers\SD CARD\SDCARD.C</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\SD CARD\SPI_WRAPPER_SD.C</name>
+      </file>
+    </group>
+    <group>
       <name>SERIAL_MUX</name>
       <file>
         <name>$PROJ_DIR$\Drivers\SERIAL_MUX\serial_mux.c</name>

@@ -1,0 +1,283 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      06/Jul/2017  16:39:47 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Kernel\list.c                             #
+#    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Kernel\list.c -lC                         #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -lA                           #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -o                            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\list.lst                       #
+#    Object file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\list.o                          #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Kernel\list.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :
+     18          |       Descrição          :
+     19          | 
+     20          |       Autor              :
+     21          |       Data criação       :
+     22          |
+     23          |       Revisões           :
+     24          |
+     25          |
+     26          | __________________________________________________________________________________
+     27          */
+     28          /********************************************************************************
+     29          *   Includes
+     30          ********************************************************************************/
+     31          #include <stdlib.h>
+     32          #include "FreeRTOS.h"
+     33          #include "list.h"
+     34          /********************************************************************************
+     35          *   Implementação
+     36          ********************************************************************************/
+     37          
+     38          /********************************************************************************
+     39          *   Descrição       :   
+     40          *   Parametros      :   
+     41          *   Retorno         : 
+     42          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     43          void vListInitialise( xList *pxList ){
+     44          
+     45              pxList->pxIndex = ( xListItem * ) &( pxList->xListEnd );
+   \                     vListInitialise:
+   \   00000000   0xF110 0x0108      ADDS     R1,R0,#+8
+   \   00000004   0x6041             STR      R1,[R0, #+4]
+     46              pxList->xListEnd.xItemValue = portMAX_DELAY;
+   \   00000006   0xF05F 0x31FF      MOVS     R1,#-1
+   \   0000000A   0x6081             STR      R1,[R0, #+8]
+     47              pxList->xListEnd.pxNext = ( xListItem * ) &( pxList->xListEnd );
+   \   0000000C   0xF110 0x0108      ADDS     R1,R0,#+8
+   \   00000010   0x60C1             STR      R1,[R0, #+12]
+     48              pxList->xListEnd.pxPrevious = ( xListItem * ) &( pxList->xListEnd );
+   \   00000012   0xF110 0x0108      ADDS     R1,R0,#+8
+   \   00000016   0x6101             STR      R1,[R0, #+16]
+     49              pxList->uxNumberOfItems = 0;
+   \   00000018   0x2100             MOVS     R1,#+0
+   \   0000001A   0x6001             STR      R1,[R0, #+0]
+     50          }
+   \   0000001C   0x4770             BX       LR               ;; return
+     51          /********************************************************************************
+     52          *   Descrição       :   
+     53          *   Parametros      :   
+     54          *   Retorno         :
+     55          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     56          void vListInitialiseItem( xListItem *pxItem ){
+     57          
+     58            pxItem->pvContainer = NULL;
+   \                     vListInitialiseItem:
+   \   00000000   0x2100             MOVS     R1,#+0
+   \   00000002   0x6101             STR      R1,[R0, #+16]
+     59          }
+   \   00000004   0x4770             BX       LR               ;; return
+     60          /********************************************************************************
+     61          *   Descrição       : 
+     62          *   Parametros      : 
+     63          *   Retorno         : 
+     64          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     65          void vListInsertEnd( xList *pxList, xListItem *pxNewListItem ){
+     66            volatile xListItem * pxIndex;
+     67          	
+     68              pxIndex = pxList->pxIndex;
+   \                     vListInsertEnd:
+   \   00000000   0x6842             LDR      R2,[R0, #+4]
+     69              pxNewListItem->pxNext = pxIndex->pxNext;
+   \   00000002   0x6853             LDR      R3,[R2, #+4]
+   \   00000004   0x604B             STR      R3,[R1, #+4]
+     70              pxNewListItem->pxPrevious = pxList->pxIndex;
+   \   00000006   0x6843             LDR      R3,[R0, #+4]
+   \   00000008   0x608B             STR      R3,[R1, #+8]
+     71              pxIndex->pxNext->pxPrevious = ( volatile xListItem * ) pxNewListItem;
+   \   0000000A   0x6853             LDR      R3,[R2, #+4]
+   \   0000000C   0x6099             STR      R1,[R3, #+8]
+     72              pxIndex->pxNext = ( volatile xListItem * ) pxNewListItem;
+   \   0000000E   0x6051             STR      R1,[R2, #+4]
+     73              pxList->pxIndex = ( volatile xListItem * ) pxNewListItem;
+   \   00000010   0x6041             STR      R1,[R0, #+4]
+     74              pxNewListItem->pvContainer = ( void * ) pxList;
+   \   00000012   0x6108             STR      R0,[R1, #+16]
+     75              ( pxList->uxNumberOfItems )++;
+   \   00000014   0x6801             LDR      R1,[R0, #+0]
+   \   00000016   0x1C49             ADDS     R1,R1,#+1
+   \   00000018   0x6001             STR      R1,[R0, #+0]
+     76          }
+   \   0000001A   0x4770             BX       LR               ;; return
+     77          /********************************************************************************
+     78          *   Descrição       : 
+     79          *   Parametros      : 
+     80          *   Retorno         : 
+     81          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     82          void vListInsert( xList *pxList, xListItem *pxNewListItem ){
+   \                     vListInsert:
+   \   00000000   0xB410             PUSH     {R4}
+     83            volatile xListItem *pxIterator;
+     84            portTickType xValueOfInsertion;
+     85          
+     86            xValueOfInsertion = pxNewListItem->xItemValue;
+   \   00000002   0x680B             LDR      R3,[R1, #+0]
+     87          
+     88            if( xValueOfInsertion == portMAX_DELAY )
+   \   00000004   0xF113 0x0F01      CMN      R3,#+1
+   \   00000008   0xD101             BNE.N    ??vListInsert_0
+     89            {
+     90                pxIterator = pxList->xListEnd.pxPrevious;
+   \   0000000A   0x6902             LDR      R2,[R0, #+16]
+   \   0000000C   0xE007             B.N      ??vListInsert_1
+     91            }
+     92            else
+     93            {		
+     94                for( pxIterator = ( xListItem * ) &( pxList->xListEnd ); pxIterator->pxNext->xItemValue <= xValueOfInsertion; pxIterator = pxIterator->pxNext )
+   \                     ??vListInsert_0:
+   \   0000000E   0xF110 0x0208      ADDS     R2,R0,#+8
+   \   00000012   0xE000             B.N      ??vListInsert_2
+   \                     ??vListInsert_3:
+   \   00000014   0x6852             LDR      R2,[R2, #+4]
+   \                     ??vListInsert_2:
+   \   00000016   0x6854             LDR      R4,[R2, #+4]
+   \   00000018   0x6824             LDR      R4,[R4, #+0]
+   \   0000001A   0x42A3             CMP      R3,R4
+   \   0000001C   0xD2FA             BCS.N    ??vListInsert_3
+     95                {
+     96          
+     97                }
+     98             }
+     99          
+    100             pxNewListItem->pxNext = pxIterator->pxNext;
+   \                     ??vListInsert_1:
+   \   0000001E   0x6853             LDR      R3,[R2, #+4]
+   \   00000020   0x604B             STR      R3,[R1, #+4]
+    101             pxNewListItem->pxNext->pxPrevious = ( volatile xListItem * ) pxNewListItem;
+   \   00000022   0x684B             LDR      R3,[R1, #+4]
+   \   00000024   0x6099             STR      R1,[R3, #+8]
+    102             pxNewListItem->pxPrevious = pxIterator;
+   \   00000026   0x608A             STR      R2,[R1, #+8]
+    103             pxIterator->pxNext = ( volatile xListItem * ) pxNewListItem;
+   \   00000028   0x6051             STR      R1,[R2, #+4]
+    104          
+    105             pxNewListItem->pvContainer = ( void * ) pxList;
+   \   0000002A   0x6108             STR      R0,[R1, #+16]
+    106             ( pxList->uxNumberOfItems )++;
+   \   0000002C   0x6801             LDR      R1,[R0, #+0]
+   \   0000002E   0x1C49             ADDS     R1,R1,#+1
+   \   00000030   0x6001             STR      R1,[R0, #+0]
+    107          }
+   \   00000032   0xBC10             POP      {R4}
+   \   00000034   0x4770             BX       LR               ;; return
+    108          /********************************************************************************
+    109          *   Descrição     :   
+    110          *   Parametros    : 
+    111          *   Retorno       : 
+    112          ********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    113          void vListRemove( xListItem *pxItemToRemove ){
+    114            xList * pxList;
+    115          
+    116            pxItemToRemove->pxNext->pxPrevious = pxItemToRemove->pxPrevious;
+   \                     vListRemove:
+   \   00000000   0x6841             LDR      R1,[R0, #+4]
+   \   00000002   0x6882             LDR      R2,[R0, #+8]
+   \   00000004   0x608A             STR      R2,[R1, #+8]
+    117            pxItemToRemove->pxPrevious->pxNext = pxItemToRemove->pxNext;
+   \   00000006   0x6881             LDR      R1,[R0, #+8]
+   \   00000008   0x6842             LDR      R2,[R0, #+4]
+   \   0000000A   0x604A             STR      R2,[R1, #+4]
+    118          	
+    119            pxList = ( xList * ) pxItemToRemove->pvContainer;
+   \   0000000C   0x6901             LDR      R1,[R0, #+16]
+    120          
+    121            if( pxList->pxIndex == pxItemToRemove )
+   \   0000000E   0x684A             LDR      R2,[R1, #+4]
+   \   00000010   0x4282             CMP      R2,R0
+   \   00000012   0xD101             BNE.N    ??vListRemove_0
+    122            {
+    123                pxList->pxIndex = pxItemToRemove->pxPrevious;
+   \   00000014   0x6882             LDR      R2,[R0, #+8]
+   \   00000016   0x604A             STR      R2,[R1, #+4]
+    124            }
+    125          
+    126            pxItemToRemove->pvContainer = NULL;
+   \                     ??vListRemove_0:
+   \   00000018   0x2200             MOVS     R2,#+0
+   \   0000001A   0x6102             STR      R2,[R0, #+16]
+    127            ( pxList->uxNumberOfItems )--;
+   \   0000001C   0x6808             LDR      R0,[R1, #+0]
+   \   0000001E   0x1E40             SUBS     R0,R0,#+1
+   \   00000020   0x6008             STR      R0,[R1, #+0]
+    128          }
+   \   00000022   0x4770             BX       LR               ;; return
+    129          /********************************************************************************
+    130          *   Fim do arquivo
+    131          ********************************************************************************/
+    132          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   vListInitialise
+       0   vListInitialiseItem
+       4   vListInsert
+       0   vListInsertEnd
+       0   vListRemove
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      30  vListInitialise
+       6  vListInitialiseItem
+      54  vListInsert
+      28  vListInsertEnd
+      36  vListRemove
+
+ 
+ 154 bytes in section .text
+ 
+ 154 bytes of CODE memory
+
+Errors: none
+Warnings: none

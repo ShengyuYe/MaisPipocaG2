@@ -68,6 +68,8 @@
 #include "drivers\playerwave\playerwave.h"
 #include "drivers\serial_mux\serial_mux.h"
 
+#include "drivers\filesystem\ff.h"
+
 #include "aplicacao\aplicacao.h"
 #include "aplicacao\menu_configuracao.h"
 #include "aplicacao\menu_operacao.h"

@@ -1,0 +1,364 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      06/Jul/2017  16:40:14 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Historico_precos\fila_troca_preco.c       #
+#    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Historico_precos\fila_troca_preco.c -lC   #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -lA                           #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -o                            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\fila_troca_preco.lst           #
+#    Object file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\fila_troca_preco.o              #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Historico_precos\fila_troca_preco.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica 
+      3          |       
+      4          |       Porto Belo
+      5          | __________________________________________________________________________________
+      6          |
+      7          |       This source code was developed by Dextro and cannot be copied, in part 
+      8          |       or in whole, or used, except when legally licensed by Dextro
+      9          |       or its distributors.
+     10          |
+     11          |       Este código é propriedade da Dextro e não pode ser copiado, em parte 
+     12          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     13          |      Dextro ou por um de seus distribuidores.
+     14          | __________________________________________________________________________________
+     15          |
+     16          |       Arquivo            :  flash_queue.c
+     17          |       Descrição          :  Funções para implementação da fila
+     18          |                             de eventos na memória de massa
+     19          | 
+     20          |       Autor              :  Marcos Aquino
+     21          |       Data criação       :  15/06/2017
+     22          |
+     23          |       Revisões           :  1.0.0.0
+     24          |     
+     25          
+     26          |
+     27          | __________________________________________________________________________________
+     28          */
+     29          
+     30          /***********************************************************************************
+     31          *       Includes
+     32          ***********************************************************************************/
+     33          #include <stdio.h>
+     34          #include <stdlib.h>
+     35          #include <string.h>
+     36          #include "..\includes.h"
+     37          #include "flash_queue.h"
+     38          
+     39          /***********************************************************************************
+     40          *       Definições
+     41          ***********************************************************************************/
+     42          
+     43          
+     44          /***********************************************************************************
+     45          *       Estruturas
+     46          ***********************************************************************************/
+     47          typedef struct{
+     48            unsigned short int novo_preco;
+     49            unsigned short int preco_antigo;
+     50            unsigned char hora,minuto,segundo,dia,mes;
+     51            unsigned  int ano;  
+     52          }sTROCA_PRECO;
+     53          
+     54          /***********************************************************************************
+     55          *       Constantes
+     56          ***********************************************************************************/
+     57          
+     58          
+     59          /***********************************************************************************
+     60          *       Variaveis locais]
+     61          **********************************************************************************/
+
+   \                                 In section .data, align 4
+     62          sFlashQueueData FTP_fila_troca_preco={
+   \                     FTP_fila_troca_preco:
+   \   00000000   0x00000E00         DC32 3584
+   \   00000004   0x000A             DC16 10
+   \   00000006   0x10 0x00          DC8 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+     63            .inicio_flash = AREA_TABELA,
+     64            .posicoes = 10,
+     65            .tamanhoBloco = sizeof(sTROCA_PRECO)  
+     66          };
+     67          
+     68          /***********************************************************************************
+     69          *       Funções locais
+     70          ***********************************************************************************/
+     71          
+     72          
+     73          /***********************************************************************************
+     74          *       Tabelas de funções
+     75          ***********************************************************************************/
+     76          
+     77          /***********************************************************************************
+     78          *       Implementação das funções
+     79          ***********************************************************************************/
+     80          
+     81          /***********************************************************************************
+     82          *       Descrição       :       Insere um novo evento de troca de preço
+     83          *                               na fila
+     84          *       Parametros      :       (unsigned short int) novo preço
+     85          *                               (unsigned short int) preço anterior
+     86          *                               (unsigned char ) hora
+     87          *                               (unsigned char) minuto
+     88          *                               (unsigned char) segundo
+     89          *                               (unsigned char) dia
+     90          *                               (unsigned char) mes
+     91          *                               (unsigned short int) ano
+     92          *       Retorno         :       nenhum
+     93          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     94          void FTP_novo_preco(unsigned short int novo_preco,unsigned short int preco_antigo){  
+   \                     FTP_novo_preco:
+   \   00000000   0xB500             PUSH     {LR}
+   \   00000002   0xB087             SUB      SP,SP,#+28
+     95            sTROCA_PRECO dados;
+     96                                
+     97            dados.novo_preco = novo_preco;
+   \   00000004   0xF8AD 0x0008      STRH     R0,[SP, #+8]
+     98            dados.preco_antigo = preco_antigo;
+   \   00000008   0xF8AD 0x100A      STRH     R1,[SP, #+10]
+     99            
+    100            //Carrega o horário da alteração
+    101            RTC_getValue(&dados.hora,&dados.minuto,&dados.segundo,&dados.dia,&dados.mes,&dados.ano);  
+   \   0000000C   0xA805             ADD      R0,SP,#+20
+   \   0000000E   0x9001             STR      R0,[SP, #+4]
+   \   00000010   0xA804             ADD      R0,SP,#+16
+   \   00000012   0x9000             STR      R0,[SP, #+0]
+   \   00000014   0xF10D 0x030F      ADD      R3,SP,#+15
+   \   00000018   0xF10D 0x020E      ADD      R2,SP,#+14
+   \   0000001C   0xF10D 0x010D      ADD      R1,SP,#+13
+   \   00000020   0xA803             ADD      R0,SP,#+12
+   \   00000022   0x.... 0x....      BL       RTC_getValue
+    102            
+    103            //unsigned char FLASHQUEUE_append(sFlashQueueData* queue,void *pData)
+    104            FLASHQUEUE_append(&FTP_fila_troca_preco,(void*)&dados);                      
+   \   00000026   0xA902             ADD      R1,SP,#+8
+   \   00000028   0x....             LDR.N    R0,??DataTable5
+   \   0000002A   0x.... 0x....      BL       FLASHQUEUE_append
+    105          }
+   \   0000002E   0xB007             ADD      SP,SP,#+28
+   \   00000030   0xBD00             POP      {PC}             ;; return
+    106          /***********************************************************************************
+    107          *       Descrição       :       Verifica quantos novos eventos de troca
+    108          *                               preço existem na fila de eventos
+    109          *       Parametros      :       nenhum
+    110          *       Retorno         :       (usnigned short int) quantidade de novos
+    111          *                                                    eventos
+    112          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    113          unsigned short int FTP_get_quantidade_novas_trocas(void){
+   \                     FTP_get_quantidade_novas_trocas:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    114            
+    115            return FLASHQUEUE_getSize(&FTP_fila_troca_preco);
+   \   00000002   0x....             LDR.N    R0,??DataTable5
+   \   00000004   0x.... 0x....      BL       FLASHQUEUE_getSize
+   \   00000008   0xBD02             POP      {R1,PC}          ;; return
+    116          }
+    117          /***********************************************************************************
+    118          *       Descrição       :       Verifiac quantos eventos existem ao total na fila
+    119          *       Parametros      :       nenhum
+    120          *       Retorno         :       (unsigned short int) quantidade total de eventos
+    121          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    122          unsigned short int FTP_get_quantidade_historico_trocas(void){
+   \                     FTP_get_quantidade_historico_trocas:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    123              
+    124            return FLASHQUEUE_getRealSize(&FTP_fila_troca_preco);
+   \   00000002   0x....             LDR.N    R0,??DataTable5
+   \   00000004   0x.... 0x....      BL       FLASHQUEUE_getRealSize
+   \   00000008   0xBD02             POP      {R1,PC}          ;; return
+    125          }
+    126          /***********************************************************************************
+    127          *       Descrição       :       Lê um evento na fila de eventos
+    128          *       Parametros      :       (unsigned short int) indice do evento
+    129          *                               (unsigned short int*) preço
+    130          *                               (unsigned short int*) preço antigo
+    131          *                               (unsigned char) hora
+    132          *                               (unsigned char) minuto
+    133          *                               (unsigned char) segundo
+    134          *                               (unsigned char) dia
+    135          *                               (unsigned char) mês
+    136          *                               (unsigned short int) ano
+    137          *       Retorno         :       (unsigned char) maior do que zero se existir
+    138          *                                               evento com este indice
+    139          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    140          unsigned char FTP_get_troca(unsigned short int indice,unsigned short int *novo_preco,unsigned short int *preco_antigo,
+    141                                      unsigned char *hora,unsigned char *minuto,unsigned char *segundo,
+    142                                      unsigned char *dia,unsigned char *mes,unsigned int *ano){
+   \                     FTP_get_troca:
+   \   00000000   0xE92D 0x4FF0      PUSH     {R4-R11,LR}
+   \   00000004   0xB085             SUB      SP,SP,#+20
+   \   00000006   0x000C             MOVS     R4,R1
+   \   00000008   0x0015             MOVS     R5,R2
+   \   0000000A   0x001E             MOVS     R6,R3
+   \   0000000C   0x9F0E             LDR      R7,[SP, #+56]
+   \   0000000E   0xF8DD 0x803C      LDR      R8,[SP, #+60]
+   \   00000012   0xF8DD 0x9040      LDR      R9,[SP, #+64]
+   \   00000016   0xF8DD 0xA044      LDR      R10,[SP, #+68]
+   \   0000001A   0xF8DD 0xB048      LDR      R11,[SP, #+72]
+    143            sTROCA_PRECO dados;
+    144            unsigned char flag;
+    145            
+    146            flag = FLASHQUEUE_readFromLast(&FTP_fila_troca_preco,indice,(void*)&dados);
+   \   0000001E   0xAA00             ADD      R2,SP,#+0
+   \   00000020   0x0001             MOVS     R1,R0
+   \   00000022   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000024   0x....             LDR.N    R0,??DataTable5
+   \   00000026   0x.... 0x....      BL       FLASHQUEUE_readFromLast
+    147                        
+    148            *novo_preco = dados.novo_preco;
+   \   0000002A   0xF8BD 0x1000      LDRH     R1,[SP, #+0]
+   \   0000002E   0x8021             STRH     R1,[R4, #+0]
+    149            *preco_antigo = dados.preco_antigo;
+   \   00000030   0xF8BD 0x1002      LDRH     R1,[SP, #+2]
+   \   00000034   0x8029             STRH     R1,[R5, #+0]
+    150            *hora = dados.hora;
+   \   00000036   0xF89D 0x1004      LDRB     R1,[SP, #+4]
+   \   0000003A   0x7031             STRB     R1,[R6, #+0]
+    151            *minuto = dados.minuto;
+   \   0000003C   0xF89D 0x1005      LDRB     R1,[SP, #+5]
+   \   00000040   0x7039             STRB     R1,[R7, #+0]
+    152            *segundo = dados.segundo;
+   \   00000042   0xF89D 0x1006      LDRB     R1,[SP, #+6]
+   \   00000046   0xF888 0x1000      STRB     R1,[R8, #+0]
+    153            *dia = dados.dia;
+   \   0000004A   0xF89D 0x1007      LDRB     R1,[SP, #+7]
+   \   0000004E   0xF889 0x1000      STRB     R1,[R9, #+0]
+    154            *mes = dados.mes;
+   \   00000052   0xF89D 0x1008      LDRB     R1,[SP, #+8]
+   \   00000056   0xF88A 0x1000      STRB     R1,[R10, #+0]
+    155            *ano = dados.ano;
+   \   0000005A   0x9903             LDR      R1,[SP, #+12]
+   \   0000005C   0xF8CB 0x1000      STR      R1,[R11, #+0]
+    156            
+    157            return flag;                     
+   \   00000060   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000062   0xB005             ADD      SP,SP,#+20
+   \   00000064   0xE8BD 0x8FF0      POP      {R4-R11,PC}      ;; return
+    158          }
+    159          /***********************************************************************************
+    160          *       Descrição       :       Reconhece os novos eventos, como efeito o 
+    161          *                               indice é atualizado para retornar zero em novos eventos
+    162          *       Parametros      :       nenhum
+    163          *       Retorno         :       nenhum
+    164          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    165          void FTP_ack_novos_eventos(void){
+   \                     FTP_ack_novos_eventos:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    166              
+    167            FLASHQUEUE_ajustaPonteiro(&FTP_fila_troca_preco,FTP_get_quantidade_novas_trocas());
+   \   00000002   0x.... 0x....      BL       FTP_get_quantidade_novas_trocas
+   \   00000006   0x0001             MOVS     R1,R0
+   \   00000008   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000000A   0x....             LDR.N    R0,??DataTable5
+   \   0000000C   0x.... 0x....      BL       FLASHQUEUE_ajustaPonteiro
+    168          }
+   \   00000010   0xBD01             POP      {R0,PC}          ;; return
+    169          /***********************************************************************************
+    170          *       Descrição       :       Formata os dados da fila de eventos de troca
+    171          *                               de preço
+    172          *       Parametros      :       nenhum
+    173          *       Retorno         :       nenhum
+    174          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    175          void FTP_formata_fila(void){
+   \                     FTP_formata_fila:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    176              
+    177            FLASHQUEUE_formata(&FTP_fila_troca_preco);
+   \   00000002   0x....             LDR.N    R0,??DataTable5
+   \   00000004   0x.... 0x....      BL       FLASHQUEUE_formata
+    178          }
+   \   00000008   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5:
+   \   00000000   0x........         DC32     FTP_fila_troca_preco
+    179          /***********************************************************************************
+    180          *       Fim do arquivo
+    181          ***********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   FTP_ack_novos_eventos
+         8   -> FLASHQUEUE_ajustaPonteiro
+         8   -> FTP_get_quantidade_novas_trocas
+       8   FTP_formata_fila
+         8   -> FLASHQUEUE_formata
+       8   FTP_get_quantidade_historico_trocas
+         8   -> FLASHQUEUE_getRealSize
+       8   FTP_get_quantidade_novas_trocas
+         8   -> FLASHQUEUE_getSize
+      56   FTP_get_troca
+        56   -> FLASHQUEUE_readFromLast
+      32   FTP_novo_preco
+        32   -> FLASHQUEUE_append
+        32   -> RTC_getValue
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable5
+      18  FTP_ack_novos_eventos
+      28  FTP_fila_troca_preco
+      10  FTP_formata_fila
+      10  FTP_get_quantidade_historico_trocas
+      10  FTP_get_quantidade_novas_trocas
+     104  FTP_get_troca
+      50  FTP_novo_preco
+
+ 
+  28 bytes in section .data
+ 206 bytes in section .text
+ 
+ 206 bytes of CODE memory
+  28 bytes of DATA memory
+
+Errors: none
+Warnings: none

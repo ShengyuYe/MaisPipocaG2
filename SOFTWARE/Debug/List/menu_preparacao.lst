@@ -1,0 +1,341 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      06/Jul/2017  16:40:17 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Aplicacao\menu_preparacao.c               #
+#    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Aplicacao\menu_preparacao.c -lC           #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -lA                           #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -o                            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\menu_preparacao.lst            #
+#    Object file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\menu_preparacao.o               #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao\menu_preparacao.c
+      1          /*__________________________________________________________________________________
+      2          |	Quark Tecnologia Eletrônica Embarcada
+      3          |       
+      4          |       Itapema - SC
+      5          |       www.quarktee.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Quark  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Quark 
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Quark  ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  menu_preparacao.c
+     18          |       Descrição          :  Menu com opções de preparação da pipoca
+     19          | 
+     20          |       Autor              :  Marcos Aquino
+     21          |       Data criação       :  22/04/2017
+     22          |
+     23          |       Revisões           :  001
+     24          |
+     25          |
+     26          | __________________________________________________________________________________
+     27          */
+     28          
+     29          /***********************************************************************************
+     30          *       Includes
+     31          ***********************************************************************************/
+     32          #include <stdio.h>
+     33          #include <stdlib.h>
+     34          #include <string.h>
+     35          #include "menu_preparacao.h"
+     36          #include "menu_rolagem.h"
+     37          #include "menu_edita_inteiro.h"
+     38          #include "..\includes.h"
+     39          
+     40          /***********************************************************************************
+     41          *       Definições
+     42          ***********************************************************************************/
+     43          
+     44          
+     45          
+     46          /***********************************************************************************
+     47          *       Constantes
+     48          ***********************************************************************************/
+     49          
+     50          
+     51          /***********************************************************************************
+     52          *       Variaveis locais
+     53          ***********************************************************************************/
+     54          
+     55          
+     56          /***********************************************************************************
+     57          *       Funções locais
+     58          ***********************************************************************************/
+     59          void MPREP_edita_temperatura(void);
+     60          void MPREP_edita_velocidade(void);
+     61          
+     62          /***********************************************************************************
+     63          *       Tabela de funções
+     64          ***********************************************************************************/
+
+   \                                 In section .rodata, align 4
+     65          void(*const MPREP_funcs[QTD_OPCOES_PREPARACAO])(void)={
+   \                     MPREP_funcs:
+   \   00000000   0x........         DC32 MPREP_edita_temperatura, MPREP_edita_velocidade, 0H
+   \              0x........   
+   \              0x00000000   
+     66            MPREP_edita_temperatura,
+     67            MPREP_edita_velocidade,
+     68            NULL  
+     69          };
+     70          
+     71          /***********************************************************************************
+     72          *       Implementação das funções
+     73          ***********************************************************************************/
+     74          
+     75          /**********************************************************************************
+     76          *       Descrição       :       Ponto de entrada do menu de configuração
+     77          *                               dos parâmetros de preparação
+     78          *       Parametros      :       nenhum
+     79          *       Retorno         :       nenhum
+     80          **********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     81          void MPREP_entry(void){
+   \                     MPREP_entry:
+   \   00000000   0xB510             PUSH     {R4,LR}
+     82            unsigned char idioma = APLICACAO_carrega_idioma();
+   \   00000002   0x.... 0x....      BL       APLICACAO_carrega_idioma
+     83            
+     84            MENUROLAGEM_show((char*)STRING_titulo_menu_preparacao[idioma],
+     85                             (char**)STRING_opcoes_menu_preparacao[idioma],
+     86                             QTD_OPCOES_PREPARACAO,
+     87                             (void(**)(void))MPREP_funcs);   
+   \   00000006   0x....             LDR.N    R3,??DataTable2
+   \   00000008   0x2203             MOVS     R2,#+3
+   \   0000000A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000000C   0x210C             MOVS     R1,#+12
+   \   0000000E   0x....             LDR.N    R4,??DataTable2_1
+   \   00000010   0xFB01 0x4100      MLA      R1,R1,R0,R4
+   \   00000014   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000016   0x....             LDR.N    R4,??DataTable2_2
+   \   00000018   0xF854 0x0020      LDR      R0,[R4, R0, LSL #+2]
+   \   0000001C   0x.... 0x....      BL       MENUROLAGEM_show
+     88          }
+   \   00000020   0xBD10             POP      {R4,PC}          ;; return
+     89          /***********************************************************************************
+     90          *       Descrição       :       Tela para edição da temperatura de preparação
+     91          *                               das pipocas
+     92          *       Parametros      :       nenhum
+     93          *       Retorno         :       nenhum
+     94          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     95          void MPREP_edita_temperatura(void){
+   \                     MPREP_edita_temperatura:
+   \   00000000   0xB51C             PUSH     {R2-R4,LR}
+     96            unsigned char idioma = APLICACAO_carrega_idioma();
+   \   00000002   0x.... 0x....      BL       APLICACAO_carrega_idioma
+   \   00000006   0x0004             MOVS     R4,R0
+     97            unsigned int temperatura;
+     98          
+     99            PARAMETROS_le(ADR_TEMPERATURA_PREPARACAO,(void*)&temperatura);
+   \   00000008   0xA901             ADD      R1,SP,#+4
+   \   0000000A   0x201A             MOVS     R0,#+26
+   \   0000000C   0x.... 0x....      BL       PARAMETROS_le
+    100            if(temperatura>200)
+   \   00000010   0x9801             LDR      R0,[SP, #+4]
+   \   00000012   0x28C9             CMP      R0,#+201
+   \   00000014   0xD301             BCC.N    ??MPREP_edita_temperatura_0
+    101              temperatura = 60;
+   \   00000016   0x203C             MOVS     R0,#+60
+   \   00000018   0x9001             STR      R0,[SP, #+4]
+    102            
+    103            temperatura = MEI_entry((char*)STRING_titulo_edita_temperatura[idioma],
+    104                                    "%03doC",
+    105                                    temperatura,
+    106                                    40,
+    107                                    200);
+   \                     ??MPREP_edita_temperatura_0:
+   \   0000001A   0x20C8             MOVS     R0,#+200
+   \   0000001C   0x9000             STR      R0,[SP, #+0]
+   \   0000001E   0x2328             MOVS     R3,#+40
+   \   00000020   0x9A01             LDR      R2,[SP, #+4]
+   \   00000022   0x....             LDR.N    R1,??DataTable2_3
+   \   00000024   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   00000026   0x....             LDR.N    R0,??DataTable2_4
+   \   00000028   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
+   \   0000002C   0x.... 0x....      BL       MEI_entry
+   \   00000030   0x9001             STR      R0,[SP, #+4]
+    108            PARAMETROS_grava(ADR_TEMPERATURA_PREPARACAO,(void*)&temperatura);
+   \   00000032   0xA901             ADD      R1,SP,#+4
+   \   00000034   0x201A             MOVS     R0,#+26
+   \   00000036   0x.... 0x....      BL       PARAMETROS_grava
+    109          }
+   \   0000003A   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    110          /***********************************************************************************
+    111          *       Descrição       :       Tela para edição da velocidade de preparação
+    112          *       Parametros      :       nenhum
+    113          *       Retorno         :       nenhum
+    114          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    115          void MPREP_edita_velocidade(void){
+   \                     MPREP_edita_velocidade:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB084             SUB      SP,SP,#+16
+    116            unsigned char idioma = APLICACAO_carrega_idioma();
+   \   00000004   0x.... 0x....      BL       APLICACAO_carrega_idioma
+   \   00000008   0x0004             MOVS     R4,R0
+    117            unsigned int velocidade;
+    118            
+    119            PARAMETROS_le(ADR_VELOCIDADE_PREPARACAO,(void*)&velocidade);
+   \   0000000A   0xA902             ADD      R1,SP,#+8
+   \   0000000C   0x201B             MOVS     R0,#+27
+   \   0000000E   0x.... 0x....      BL       PARAMETROS_le
+    120            if(velocidade>12000)
+   \   00000012   0x9802             LDR      R0,[SP, #+8]
+   \   00000014   0xF642 0x61E1      MOVW     R1,#+12001
+   \   00000018   0x4288             CMP      R0,R1
+   \   0000001A   0xD302             BCC.N    ??MPREP_edita_velocidade_0
+    121              velocidade = 4500;
+   \   0000001C   0xF241 0x1094      MOVW     R0,#+4500
+   \   00000020   0x9002             STR      R0,[SP, #+8]
+    122            velocidade = MEI_entry_inc((char*)STRING_titulo_edita_velocidade[idioma],
+    123                                       "%05d RPM",
+    124                                       velocidade,
+    125                                       3500,
+    126                                       12000,
+    127                                       100);
+   \                     ??MPREP_edita_velocidade_0:
+   \   00000022   0x2064             MOVS     R0,#+100
+   \   00000024   0x9001             STR      R0,[SP, #+4]
+   \   00000026   0xF642 0x60E0      MOVW     R0,#+12000
+   \   0000002A   0x9000             STR      R0,[SP, #+0]
+   \   0000002C   0xF640 0x53AC      MOVW     R3,#+3500
+   \   00000030   0x9A02             LDR      R2,[SP, #+8]
+   \   00000032   0x....             LDR.N    R1,??DataTable2_5
+   \   00000034   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   00000036   0x....             LDR.N    R0,??DataTable2_6
+   \   00000038   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
+   \   0000003C   0x.... 0x....      BL       MEI_entry_inc
+   \   00000040   0x9002             STR      R0,[SP, #+8]
+    128              
+    129            PARAMETROS_grava(ADR_VELOCIDADE_PREPARACAO,(void*)&velocidade);  
+   \   00000042   0xA902             ADD      R1,SP,#+8
+   \   00000044   0x201B             MOVS     R0,#+27
+   \   00000046   0x.... 0x....      BL       PARAMETROS_grava
+    130          }
+   \   0000004A   0xBD1F             POP      {R0-R4,PC}       ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2:
+   \   00000000   0x........         DC32     MPREP_funcs
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_1:
+   \   00000000   0x........         DC32     STRING_opcoes_menu_preparacao
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_2:
+   \   00000000   0x........         DC32     STRING_titulo_menu_preparacao
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_3:
+   \   00000000   0x........         DC32     `?<Constant "%03doC">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_4:
+   \   00000000   0x........         DC32     STRING_titulo_edita_temperatura
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_5:
+   \   00000000   0x........         DC32     `?<Constant "%05d RPM">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_6:
+   \   00000000   0x........         DC32     STRING_titulo_edita_velocidade
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "%03doC">`:
+   \   00000000   0x25 0x30          DC8 "%03doC"
+   \              0x33 0x64    
+   \              0x6F 0x43    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "%05d RPM">`:
+   \   00000000   0x25 0x30          DC8 "%05d RPM"
+   \              0x35 0x64    
+   \              0x20 0x52    
+   \              0x50 0x4D    
+   \              0x00         
+   \   00000009   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+    131          /***********************************************************************************
+    132          *       fim do arquivo
+    133          ***********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   MPREP_edita_temperatura
+        16   -> APLICACAO_carrega_idioma
+        16   -> MEI_entry
+        16   -> PARAMETROS_grava
+        16   -> PARAMETROS_le
+      24   MPREP_edita_velocidade
+        24   -> APLICACAO_carrega_idioma
+        24   -> MEI_entry_inc
+        24   -> PARAMETROS_grava
+        24   -> PARAMETROS_le
+       8   MPREP_entry
+         8   -> APLICACAO_carrega_idioma
+         8   -> MENUROLAGEM_show
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       8  ?<Constant "%03doC">
+      12  ?<Constant "%05d RPM">
+       4  ??DataTable2
+       4  ??DataTable2_1
+       4  ??DataTable2_2
+       4  ??DataTable2_3
+       4  ??DataTable2_4
+       4  ??DataTable2_5
+       4  ??DataTable2_6
+      60  MPREP_edita_temperatura
+      76  MPREP_edita_velocidade
+      34  MPREP_entry
+      12  MPREP_funcs
+
+ 
+  32 bytes in section .rodata
+ 198 bytes in section .text
+ 
+ 198 bytes of CODE  memory
+  32 bytes of CONST memory
+
+Errors: none
+Warnings: none
