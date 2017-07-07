@@ -1,28 +1,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:12 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     07/Jul/2017  16:29:13 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Board\Board.c            /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Board\Board.c" -lC      /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA        /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
-//                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
-//                    --dlib_config "C:\Program Files (x86)\IAR               /
-//                    Systems\Embedded Workbench                              /
+//    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Board\Board.c                           /
+//    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Board\Board.c -lC                       /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\ -lA                         /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\ -o                          /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll         /
+//                    --no_inline --no_code_motion --no_tbaa --no_clustering  /
+//                    --no_scheduling --debug --endian=little                 /
+//                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
+//                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
 //                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\Board.s       /
+//    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\Board.s                      /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -126,7 +125,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Board\Board.c
+// C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Board\Board.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -401,8 +400,8 @@ BOARD_ini:
         BL       SERIALMUX_ini
 //  135   // Deixa a porta serial RS232
 //  136   // habilitada direto
-//  137   SERIALMUX_seleciona(SERIALMUX_RS232);
-        MOVS     R0,#+0
+//  137   SERIALMUX_seleciona(SERIALMUX_USB);
+        MOVS     R0,#+2
           CFI FunCall SERIALMUX_seleciona
         BL       SERIALMUX_seleciona
 //  138 }

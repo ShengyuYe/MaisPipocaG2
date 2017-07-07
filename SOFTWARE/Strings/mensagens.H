@@ -51,13 +51,13 @@
 //
 
 const char *STRING_splash[QTY_OF_LANGUAGES][2]={
-  [BRASIL]    = {"GRUPO ALTECH","VER. 2.0.14"},
-  [URUGUAI]   = {"GRUPO ALTECH","VER. 2.0.14"},
-  [ARGENTINA] = {"GRUPO ALTECH","VER. 2.0.14"},
-  [PARAGUAI]  = {"GRUPO ALTECH","VER. 2.0.14"},
-  [PERU]      = {"GRUPO ALTECH","VER. 2.0.14"},
-  [EUA]       = {"POPCORN KING","VER. 1.0.14"},
-  [CANADA]    = {"GRUPO ALTECH","VER. 2.0.14"}
+  [BRASIL]    = {"GRUPO ALTECH","VER. 2.1.0"},
+  [URUGUAI]   = {"GRUPO ALTECH","VER. 2.1.0"},
+  [ARGENTINA] = {"GRUPO ALTECH","VER. 2.1.0"},
+  [PARAGUAI]  = {"GRUPO ALTECH","VER. 2.1.0"},
+  [PERU]      = {"GRUPO ALTECH","VER. 2.1.0"},
+  [EUA]       = {"  HEY POP   ","VER. 2.1.0"},
+  [CANADA]    = {"GRUPO ALTECH","VER. 2.1.0"}
 };
 
 const char *STRING_titulo_menu_configuracao[QTY_OF_LANGUAGES]={
@@ -135,9 +135,9 @@ const char *STRING_menu_configuracao[QTY_OF_LANGUAGES][TAM_OPCOES_CFG]={
                  "(5)TELEMETRY    ",
                  "(6)TESTE HW     ",
                  "(7)REGION       ",
-                 "(8)SERVICO      ",
-                 "(9)AVANCADO     ",
-                 "(10)SAIR        "},
+                 "(8)SERVICE      ",
+                 "(9)TECHNICAL    ",
+                 "(10)EXIT        "},
   //-------------------------------
   [CANADA]    = {"(1)OPERACAO     ",
                  "(2)FATURAMENTO  ",
@@ -342,7 +342,7 @@ const char *STRING_menu_teste_hardware[QTY_OF_LANGUAGES][TAM_OPCOES_HARDWARE]={
      "(13)VOICE       ",
      "(14)LEDS        ",
      "(15)EXTERNAL LCD",
-     "(16)VOLTAR      "
+     "(16)EXIT        "
   },
   [CANADA]={
     //1234567890123456
@@ -608,21 +608,21 @@ const char *STRING_menu_configuracao_operacao[QTY_OF_LANGUAGES][QTD_OPCOES_OPERA
                  "(16)VOLTAR      "
   },
   [EUA]       = {"(1) PRICE       ",
-                 "(2) CEDULAS     ",
-                 "(3) GRATIS      ",
-                 "(4) FITA LED    ",
-                 "(5) VOLUME MUS. ",
-                 "(6) VOLUME VOZ  ",
-                 "(7) PROPAGANDA  ",
-                 "(8) TEMPO EMB.  ",
-                 "(9) TROCO       ",
-                 "(10)COMISSAO    ",
-                 "(11)MENSAGEM 01 ",
-                 "(12)MENSAGEM 02 ",
-                 "(13)MENSAGEM 03 ",
-                 "(14)MENSAGEM 04 ",                                  
-                 "(15)DESUMIDIF.  ",
-                 "(16)VOLTAR      "
+                 "(2) BILLING     ",
+                 "(3) FREE        ",
+                 "(4) LED STRIP   ",
+                 "(5) MUSIC LEVEL ",
+                 "(6) VOICE LEVEL ",
+                 "(7) ADVERTISING ",
+                 "(8) CUP TIME    ",
+                 "(9) CHANGE      ",
+                 "(10)COMMITTEE   ",
+                 "(11)MESSAGE 01  ",
+                 "(12)MESSAGE 02  ",
+                 "(13)MESSAGE 03  ",
+                 "(14)MESSAGE 03  ",                                  
+                 "(15)DEHUMIDIFIER",
+                 "(16)EXIT        "
   },
   [CANADA]    = {"(1) VALOR       ",
                  "(2) CEDULAS     ",
@@ -670,7 +670,7 @@ const char *STRING_titulo_configuracao_notas[QTY_OF_LANGUAGES]={
   [ARGENTINA]= {"NOTAS"},
   [PARAGUAI] = {"NOTAS"},
   [PERU]     = {"NOTAS"},
-  [EUA]      = {"BILSS"},
+  [EUA]      = {"BILLS"},
   [CANADA]   = {"NOTAS"}
 };
 
@@ -936,7 +936,7 @@ const char *STRING_opcoes_menu_mdb[QTY_OF_LANGUAGES][TAM_OPCOES_MDB]={
                 "(2) BILL        ",
                 "(3) COIN        ",
                 "(4) CASHLESS    ",
-                "(5) VOLTAR      "},
+                "(5) EXIT        "},
   [CANADA]   = {"(1) MDB DEVICES ",
                 "(2) BILL        ",
                 "(3) COIN        ",
@@ -1010,7 +1010,7 @@ const char *STRING_mensagem_saudacao_maquina[QTY_OF_LANGUAGES][2]={
   [ARGENTINA]= {"Mais Pipoca","Grupo Altech"},
   [PARAGUAI] = {"Mais Pipoca","Grupo Altech"},
   [PERU]     = {"Mais Pipoca","Grupo Altech"},
-  [EUA]      = {"Mais Pipoca","Grupo Altech"},
+  [EUA]      = {"-|HEY POP|-","            "},
   [CANADA]   = {"Mais Pipoca","Grupo Altech"},
 };
 
@@ -1043,7 +1043,7 @@ const char *STRING_impressao_teste[QTY_OF_LANGUAGES][QTD_LINHAS_IMPRESSAO_TESTE]
                 "MAIS PIPOCA E\n\r",
                 "\n\r\n\r\n\r\n\r"},
   [PERU]     = {"TESTE LCD EXT"},
-  [EUA]      = {"TESTE DA IMPRESSORA\n\r",
+  [EUA]      = {"PRINTER TESTE      \n\r",
                 "GRUPO ALTECH 2017\n\r",
                 "MAIS PIPOCA E\n\r",
                 "\n\r\n\r\n\r\n\r"},
@@ -1170,7 +1170,7 @@ const char *STRING_titulo_edita_velocidade[QTY_OF_LANGUAGES]={
   [ARGENTINA] = {"VELOCIDADE"},
   [PARAGUAI]  = {"VELOCIDADE"},
   [PERU]      = {"SPEED"},
-  [EUA]       = {"VELOCIDADE"},
+  [EUA]       = {"SPEED"},
   [CANADA]    = {"VELOCIDADE"}
 };
 
@@ -1568,13 +1568,13 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
   },
   [EUA]={
     //1234567890123456
-     "(1) PADRAO FAB. ",
-     "(2) SENHA ADMIN ",
-     "(3) RESET GERAL ",
-     "(4) MOTOR AC    ",
-     "(5) NUM SERIE   ",
-     "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(1) FACTORY SET.",
+     "(2) MASTER PWS  ",
+     "(3) GERAL RESET ",
+     "(4) PID AC MOTOR",
+     "(5) SERIAL NUMB.",
+     "(6) HOUR/DATE   ",
+     "(7) EXIT        "
   },
   [CANADA]={
     //1234567890123456
@@ -1594,7 +1594,7 @@ const char *STRING_titulo_menu_avancado[QTY_OF_LANGUAGES]={
   [ARGENTINA] = {"MENU AVANCADO"},
   [PARAGUAI]  = {"MENU AVANCADO"},
   [PERU]      = {"MENU AVANCADO"},
-  [EUA]       = {"MENU AVANCADO"},
+  [EUA]       = {"ADVANCED MENU"},
   [CANADA]    = {"MENU AVANCADO"}
 };
 
@@ -1604,7 +1604,7 @@ const char *STRING_titulo_padrao_fabrica[QTY_OF_LANGUAGES]={
   [ARGENTINA] = {"PADRAO FABRICA"},
   [PARAGUAI]  = {"PADRAO FABRICA"},
   [PERU]      = {"PADRAO FABRICA"},
-  [EUA]       = {"PADRAO FABRICA"},
+  [EUA]       = {"FACTORY REST."},
   [CANADA]    = {"PADRAO FABRICA"},
 };
 
@@ -1614,7 +1614,7 @@ const char *STRING_mensagem_reset_fabrica[QTY_OF_LANGUAGES][2]={
   [ARGENTINA]= {"REINICIANDO","PARAMETROS"},
   [PARAGUAI] = {"REINICIANDO","PARAMETROS"},
   [PERU]     = {"REINICIANDO","PARAMETROS"},
-  [EUA]      = {"REINICIANDO","PARAMETROS"},
+  [EUA]      = {"RESTARTING","SETUP"},
   [CANADA]   = {"REINICIANDO","PARAMETROS"},
 };
 
@@ -1624,7 +1624,7 @@ const char *STRING_mensagem_inserir_senha[QTY_OF_LANGUAGES]={
   [ARGENTINA] = {"NOVA SENHA"},
   [PARAGUAI]  = {"NOVA SENHA"},
   [PERU]      = {"NOVA SENHA"},
-  [EUA]       = {"NOVA SENHA"},
+  [EUA]       = {"NEW PSW"},
   [CANADA]    = {"NOVA SENHA"},
 };
 
@@ -1634,7 +1634,7 @@ const char *STRING_mensagem_cadastro_senha[QTY_OF_LANGUAGES][2]={
   [ARGENTINA]= {"CADASTRADO","C/ SUCESSO"},
   [PARAGUAI] = {"CADASTRADO","C/ SUCESSO"},
   [PERU]     = {"CADASTRADO","C/ SUCESSO"},
-  [EUA]      = {"CADASTRADO","C/ SUCESSO"},
+  [EUA]      = {"SUCCESS","NEW PSW"},
   [CANADA]   = {"CADASTRADO","C/ SUCESSO"},
 };
 
@@ -1675,7 +1675,7 @@ const char *STRING_titulo_edita_serial[QTY_OF_LANGUAGES]={
   [ARGENTINA] = {"NUMERO SERIE"},
   [PARAGUAI]  = {"NUMERO SERIE"},
   [PERU]      = {"NUMERO SERIE"},
-  [EUA]       = {"NUMERO SERIE"},
+  [EUA]       = {"SERIAL NUMB."},
   [CANADA]    = {"NUMERO SERIE"},
 };
 

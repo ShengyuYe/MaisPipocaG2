@@ -35,8 +35,8 @@
 /***********************************************************************************
 *       Definições locais
 ***********************************************************************************/
-#define TAM_BUF_TX                              256
-#define TAM_BUF_RX                              256
+#define TAM_BUF_TX                              1024
+#define TAM_BUF_RX                              128
 
 #define STX                                     0x02
 #define ETX                                     0x03
@@ -201,6 +201,7 @@ void PROTOCOLO_main(void*pPar){
     //FEEDS_THE_DOG();
     
     if(PROTOCOLO_novoPacote){
+      /*
       PROTOCOLO_novoPacote = 0;        
       if(PROTOCOLO_checksum(PROTOCOLO_bufferRx,PROTOCOLO_bufferRx[1]-1)==PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos-1]){      
         switch(PROTOCOLO_bufferRx[0]){
@@ -236,7 +237,8 @@ void PROTOCOLO_main(void*pPar){
                                                           &PROTOCOLO_bufferRx[5]);
               break;
         }
-      }      
+      */
+      //}      
     }
     vTaskDelay(1);
   }    
@@ -274,7 +276,8 @@ void PROTOCOLO_enviaPacote(unsigned char *pData,unsigned short int tamanho){
 *       Retorno         :       nenhum
 ***********************************************************************************/
 void PROTOCOLO_decodeLeBloco(unsigned long int endereco,unsigned char tamanho){
-                                    
+                       
+  /*
   if(tamanho>128){     
     PROTOCOLO_bufferTmp[0] = READ_DATA_FLASH_BLOCK | 0x80;
     PROTOCOLO_bufferTmp[1] = 4;
@@ -297,6 +300,7 @@ void PROTOCOLO_decodeLeBloco(unsigned long int endereco,unsigned char tamanho){
     PROTOCOLO_bufferTmp[7+tamanho] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,7+tamanho);
     PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,tamanho+8);  
   }
+  */
 }
 /***********************************************************************************
 *       Descrição       :       Escreve um bloco de dados
@@ -308,6 +312,7 @@ void PROTOCOLO_decodeLeBloco(unsigned long int endereco,unsigned char tamanho){
 ***********************************************************************************/
 void PROTOCOLO_decodeEscreveBloco(unsigned long int endereco,unsigned char tamanho,
                                   unsigned char *dados){
+                                    /*
   
   if(tamanho>128){    
     PROTOCOLO_bufferTmp[0] = WRITE_DATA_FLASH_BLOCK | 0x80;
@@ -330,7 +335,8 @@ void PROTOCOLO_decodeEscreveBloco(unsigned long int endereco,unsigned char taman
   
     PROTOCOLO_bufferTmp[7] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,7);
     PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,8);  
-  }                                    
+  }      
+                                    */
 }
 /***********************************************************************************
 *       Descrição       :      Formata a área da flash onde são alocados
@@ -339,6 +345,7 @@ void PROTOCOLO_decodeEscreveBloco(unsigned long int endereco,unsigned char taman
 *       Retorno         :      nenhum
 ***********************************************************************************/
 void PROTOCOLO_decodeFormataAudioFlash(void){
+  /*
   unsigned long int enderecoInicial=AREA_AUDIO;
   
   for(unsigned short int i=0;i<599;i++){
@@ -352,6 +359,7 @@ void PROTOCOLO_decodeFormataAudioFlash(void){
   PROTOCOLO_bufferTmp[2] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,2);
   
   PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,3);  
+  */
 }
 /***********************************************************************************
 *       Descrição       :       Escreve valores na tabela de musica do sistema
@@ -364,6 +372,7 @@ void PROTOCOLO_decodeEscreveTabelaMusicas(unsigned char musica,
                                           unsigned long int enderecoInicial,
                                           unsigned long int tamanho){
                                             
+                                            /*
   if(musica>3){
     PROTOCOLO_bufferTmp[0] = WRITE_MUSIC_TABLE | 0x80;
     PROTOCOLO_bufferTmp[1] = 4;
@@ -394,7 +403,8 @@ void PROTOCOLO_decodeEscreveTabelaMusicas(unsigned char musica,
     PROTOCOLO_bufferTmp[9] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,9);
     
     PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,10);                      
-  }                                                                                                                                     
+  }        
+                                            */
 }
 /***********************************************************************************
 *       Descrição       :       Lê os valores da tabela de música do sistema
@@ -403,6 +413,7 @@ void PROTOCOLO_decodeEscreveTabelaMusicas(unsigned char musica,
 ***********************************************************************************/
 void PROTOCOLO_decodeLeituraTabelaMusicas(unsigned char musica){
   
+  /*
   if(musica>3){
     PROTOCOLO_bufferTmp[0] = READ_MUSIC_TABLE | 0x80;
     PROTOCOLO_bufferTmp[1] = 4;
@@ -434,6 +445,7 @@ void PROTOCOLO_decodeLeituraTabelaMusicas(unsigned char musica){
     
     PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,10);   
   }  
+  */
 }
 /***********************************************************************************
 *       Descrição       :       envia data direto
@@ -442,12 +454,14 @@ void PROTOCOLO_decodeLeituraTabelaMusicas(unsigned char musica){
 ***********************************************************************************/
 void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho){
   
+  /*
   for(unsigned char i=0;i<tamanho;i++)
     PROTOCOLO_bufferTx[i] = buffer[i];
   
   PROTOCOLO_bytesParaEnviar = tamanho-1;
   PROTOCOLO_bytesEnviados = 1;
   U3THR = buffer[0];    
+  */
 }
 /***********************************************************************************
 *       Descrição       :       Verifica se o buffer de transmissão está vazio
@@ -466,12 +480,14 @@ unsigned short int PROTOCOLO_bytesNoBufferTx(void){
 ***********************************************************************************/
 void PROTOCOLO_decodifica_tamanho_parametros(void){
   
+  /*
     PROTOCOLO_bufferTmp[0] = GET_PARAMETERS_LENGHT;
     PROTOCOLO_bufferTmp[1] = 6;
     PROTOCOLO_bufferTmp[2] = TAMANHO_PARAMETROS>>8;    
     PROTOCOLO_bufferTmp[3] = TAMANHO_PARAMETROS;
     PROTOCOLO_bufferTmp[4] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,4);
     PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,5);    
+  */
 }
 /***********************************************************************************
 *       Descrição       :       Decodifica o comando que solocita a informação
@@ -482,6 +498,7 @@ void PROTOCOLO_decodifica_tamanho_parametros(void){
 extern const sPARAMETROS tabela_parametros[];
 void PROTOCOLO_decodifica_info_sobre_parametro(unsigned short int parametro){
   
+  /*
    PROTOCOLO_bufferTmp[0] = GET_PARAMETER_INFO;
    PROTOCOLO_bufferTmp[1] = parametro;
    PROTOCOLO_bufferTmp[2] = tabela_parametros[parametro].length;
@@ -494,6 +511,7 @@ void PROTOCOLO_decodifica_info_sobre_parametro(unsigned short int parametro){
    PROTOCOLO_bufferTmp[38] = tabela_parametros[parametro].ext[2];
    PROTOCOLO_bufferTmp[39] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,39);
    PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,40);
+  */
 }
 /***********************************************************************************
 *       Descrição       :       Decodifica o comando que solicita a leitura

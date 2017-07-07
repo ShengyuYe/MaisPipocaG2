@@ -80,6 +80,8 @@ void RELATORIO_entry(void){
   char buffer_linha[64];
   unsigned int preparacao_teste;
   
+  SERIALMUX_seleciona(SERIALMUX_RS232);
+  
   RTC_getValue(&hora,&minuto,&segundo,&dia,&mes,&ano);
   PARAMETROS_le(ADR_NUMERO_SERIE,             (void*)&numero_serie);  
   PARAMETROS_le(ADR_CONTAGEM_UNIDADES_PARCIAL,(void*)&unidades_parcial);
@@ -282,7 +284,9 @@ void RELATORIO_entry(void){
   IMPRESSORA_envia_linha(buffer_linha);                    
   // Linha 60
   sprintf(buffer_linha,REL_PT_BR_60);
-  IMPRESSORA_envia_linha(buffer_linha);                      
+  IMPRESSORA_envia_linha(buffer_linha);        
+  
+  SERIALMUX_seleciona(SERIALMUX_USB);
 }
 /***********************************************************************************
 *       Descrição       :       Verifica se existem eventos de alteração

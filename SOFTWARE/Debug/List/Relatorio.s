@@ -1,28 +1,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:18 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     07/Jul/2017  16:29:24 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Relatorio\Relatorio.c    /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Relatorio\Relatorio.c"  /
-//                    -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_ /
-//                    mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA    /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
-//                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
-//                    --dlib_config "C:\Program Files (x86)\IAR               /
-//                    Systems\Embedded Workbench                              /
+//    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Relatorio\Relatorio.c                   /
+//    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Relatorio\Relatorio.c -lC               /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\ -lA                         /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\ -o                          /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll         /
+//                    --no_inline --no_code_motion --no_tbaa --no_clustering  /
+//                    --no_scheduling --debug --endian=little                 /
+//                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
+//                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
 //                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\Relatorio.s   /
+//    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\Relatorio.s                  /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -44,6 +43,7 @@
         EXTERN IMPRESSORA_envia_linha
         EXTERN PARAMETROS_le
         EXTERN RTC_getValue
+        EXTERN SERIALMUX_seleciona
         EXTERN sprintf
 
         PUBLIC RELATORIO_entry
@@ -76,7 +76,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Relatorio\Relatorio.c
+// C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio\Relatorio.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -171,7 +171,12 @@ RELATORIO_entry:
 //   80   char buffer_linha[64];
 //   81   unsigned int preparacao_teste;
 //   82   
-//   83   RTC_getValue(&hora,&minuto,&segundo,&dia,&mes,&ano);
+//   83   SERIALMUX_seleciona(SERIALMUX_RS232);
+        MOVS     R0,#+0
+          CFI FunCall SERIALMUX_seleciona
+        BL       SERIALMUX_seleciona
+//   84   
+//   85   RTC_getValue(&hora,&minuto,&segundo,&dia,&mes,&ano);
         ADD      R0,SP,#+108
         STR      R0,[SP, #+4]
         ADD      R0,SP,#+8
@@ -182,199 +187,199 @@ RELATORIO_entry:
         ADD      R0,SP,#+12
           CFI FunCall RTC_getValue
         BL       RTC_getValue
-//   84   PARAMETROS_le(ADR_NUMERO_SERIE,             (void*)&numero_serie);  
+//   86   PARAMETROS_le(ADR_NUMERO_SERIE,             (void*)&numero_serie);  
         ADD      R1,SP,#+120
         MOVS     R0,#+36
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//   85   PARAMETROS_le(ADR_CONTAGEM_UNIDADES_PARCIAL,(void*)&unidades_parcial);
+//   87   PARAMETROS_le(ADR_CONTAGEM_UNIDADES_PARCIAL,(void*)&unidades_parcial);
         ADD      R1,SP,#+116
         MOVS     R0,#+10
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//   86   PARAMETROS_le(ADR_CONTAGEM_UNIDADES_TOTAL,  (void*)&unidades_total);
+//   88   PARAMETROS_le(ADR_CONTAGEM_UNIDADES_TOTAL,  (void*)&unidades_total);
         ADD      R1,SP,#+112
         MOVS     R0,#+11
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//   87   PARAMETROS_le(ADR_MOEDA_PARCIAL,            (void*)&arrecadacao_parcial);
+//   89   PARAMETROS_le(ADR_MOEDA_PARCIAL,            (void*)&arrecadacao_parcial);
         ADD      R1,SP,#+80
         MOVS     R0,#+12
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//   88   PARAMETROS_le(ADR_MOEDA_TOTAL,              (void*)&arrecadacao_total);
+//   90   PARAMETROS_le(ADR_MOEDA_TOTAL,              (void*)&arrecadacao_total);
         ADD      R1,SP,#+100
         MOVS     R0,#+13
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//   89   PARAMETROS_le(ADR_CARTAO_PARCIAL,           (void*)&cartao_parcial);
+//   91   PARAMETROS_le(ADR_CARTAO_PARCIAL,           (void*)&cartao_parcial);
         ADD      R1,SP,#+96
         MOVS     R0,#+14
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//   90   PARAMETROS_le(ADR_CARTAO_TOTAL,             (void*)&cartao_total); 
+//   92   PARAMETROS_le(ADR_CARTAO_TOTAL,             (void*)&cartao_total); 
         ADD      R1,SP,#+92
         MOVS     R0,#+15
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//   91   PARAMETROS_le(ADR_COMISSAO_PONTO,           (void*)&comissao_ponto);
+//   93   PARAMETROS_le(ADR_COMISSAO_PONTO,           (void*)&comissao_ponto);
         ADD      R1,SP,#+88
         MOVS     R0,#+37
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//   92   PARAMETROS_le(ADR_VALOR_PIPOCA,             (void*)&valor);
+//   94   PARAMETROS_le(ADR_VALOR_PIPOCA,             (void*)&valor);
         ADD      R1,SP,#+84
         MOVS     R0,#+3
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//   93   PARAMETROS_le(ADR_CONTADOR_PIPOCAS_TESTE,   (void*)&preparacao_teste);  
+//   95   PARAMETROS_le(ADR_CONTADOR_PIPOCAS_TESTE,   (void*)&preparacao_teste);  
         ADD      R1,SP,#+104
         MOVS     R0,#+39
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//   94     
-//   95   faturamento_ponto = comissao_ponto * arrecadacao_parcial;
+//   96     
+//   97   faturamento_ponto = comissao_ponto * arrecadacao_parcial;
         LDR      R0,[SP, #+88]
         LDR      R1,[SP, #+80]
         MUL      R4,R1,R0
-//   96   faturamento_ponto/= 100;
+//   98   faturamento_ponto/= 100;
         MOVS     R0,#+100
         UDIV     R4,R4,R0
-//   97   
-//   98   // Linha 01
-//   99   sprintf(buffer_linha,REL_PT_BR_01);
+//   99   
+//  100   // Linha 01
+//  101   sprintf(buffer_linha,REL_PT_BR_01);
         LDR.W    R1,??DataTable1
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  100   IMPRESSORA_envia_linha(buffer_linha);
+//  102   IMPRESSORA_envia_linha(buffer_linha);
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  101   // Linha 02
-//  102   sprintf(buffer_linha,REL_PT_BR_02);
+//  103   // Linha 02
+//  104   sprintf(buffer_linha,REL_PT_BR_02);
         LDR.W    R1,??DataTable1_1
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  103   IMPRESSORA_envia_linha(buffer_linha);  
+//  105   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  104   // Linha 03
-//  105   sprintf(buffer_linha,REL_PT_BR_03);
+//  106   // Linha 03
+//  107   sprintf(buffer_linha,REL_PT_BR_03);
         LDR.W    R1,??DataTable1
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  106   IMPRESSORA_envia_linha(buffer_linha);  
+//  108   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  107   // Linha 04
-//  108   sprintf(buffer_linha,REL_PT_BR_04);
+//  109   // Linha 04
+//  110   sprintf(buffer_linha,REL_PT_BR_04);
         LDR.W    R1,??DataTable1_2
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  109   IMPRESSORA_envia_linha(buffer_linha);  
+//  111   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  110   // Linha 05
-//  111   sprintf(buffer_linha,REL_PT_BR_05);
+//  112   // Linha 05
+//  113   sprintf(buffer_linha,REL_PT_BR_05);
         LDR.W    R1,??DataTable1_3
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  112   IMPRESSORA_envia_linha(buffer_linha);  
+//  114   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  113   // Linha 06
-//  114   sprintf(buffer_linha,REL_PT_BR_06);
+//  115   // Linha 06
+//  116   sprintf(buffer_linha,REL_PT_BR_06);
         LDR.W    R1,??DataTable1_2
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  115   IMPRESSORA_envia_linha(buffer_linha);  
+//  117   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  116   // Linha 07
-//  117   sprintf(buffer_linha,REL_PT_BR_07);
+//  118   // Linha 07
+//  119   sprintf(buffer_linha,REL_PT_BR_07);
         LDR.W    R1,??DataTable1
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  118   IMPRESSORA_envia_linha(buffer_linha);  
+//  120   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  119   // Linha 08
-//  120   sprintf(buffer_linha,REL_PT_BR_08);
+//  121   // Linha 08
+//  122   sprintf(buffer_linha,REL_PT_BR_08);
         LDR.W    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  121   IMPRESSORA_envia_linha(buffer_linha);  
+//  123   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  122   // Linha 09
-//  123   sprintf(buffer_linha,REL_PT_BR_09);
+//  124   // Linha 09
+//  125   sprintf(buffer_linha,REL_PT_BR_09);
         LDR.W    R1,??DataTable1_5
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  124   IMPRESSORA_envia_linha(buffer_linha);  
+//  126   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  125   // Linha 10
-//  126   sprintf(buffer_linha,REL_PT_BR_10);
+//  127   // Linha 10
+//  128   sprintf(buffer_linha,REL_PT_BR_10);
         LDR      R2,[SP, #+120]
         LDR.W    R1,??DataTable1_6
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  127   IMPRESSORA_envia_linha(buffer_linha);  
+//  129   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  128   // Linha 11
-//  129   sprintf(buffer_linha,REL_PT_BR_11);
+//  130   // Linha 11
+//  131   sprintf(buffer_linha,REL_PT_BR_11);
         LDR.W    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  130   IMPRESSORA_envia_linha(buffer_linha);  
+//  132   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  131   // Linha 12
-//  132   sprintf(buffer_linha,REL_PT_BR_12);
+//  133   // Linha 12
+//  134   sprintf(buffer_linha,REL_PT_BR_12);
         LDR.W    R1,??DataTable1_7
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  133   IMPRESSORA_envia_linha(buffer_linha);  
+//  135   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  134   // Linha 13
-//  135   sprintf(buffer_linha,REL_PT_BR_13);
+//  136   // Linha 13
+//  137   sprintf(buffer_linha,REL_PT_BR_13);
         LDR      R2,[SP, #+116]
         LDR.W    R1,??DataTable1_8
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  136   IMPRESSORA_envia_linha(buffer_linha);  
+//  138   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  137   // Linha 14
-//  138   sprintf(buffer_linha,REL_PT_BR_14);
+//  139   // Linha 14
+//  140   sprintf(buffer_linha,REL_PT_BR_14);
         LDR      R0,[SP, #+80]
         MOVS     R1,#+100
         UDIV     R2,R0,R1
@@ -386,43 +391,43 @@ RELATORIO_entry:
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  139   IMPRESSORA_envia_linha(buffer_linha);  
+//  141   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  140   // Linha 15
-//  141   sprintf(buffer_linha,REL_PT_BR_15);
+//  142   // Linha 15
+//  143   sprintf(buffer_linha,REL_PT_BR_15);
         LDR.W    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  142   IMPRESSORA_envia_linha(buffer_linha);  
+//  144   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  143   // Linha 16
-//  144   sprintf(buffer_linha,REL_PT_BR_16);
+//  145   // Linha 16
+//  146   sprintf(buffer_linha,REL_PT_BR_16);
         LDR.W    R1,??DataTable1_10
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  145   IMPRESSORA_envia_linha(buffer_linha);  
+//  147   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  146   // Linha 17
-//  147   sprintf(buffer_linha,REL_PT_BR_17);
+//  148   // Linha 17
+//  149   sprintf(buffer_linha,REL_PT_BR_17);
         LDR      R2,[SP, #+112]
         LDR.W    R1,??DataTable1_8
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  148   IMPRESSORA_envia_linha(buffer_linha);  
+//  150   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  149   // Linha 18
-//  150   sprintf(buffer_linha,REL_PT_BR_18);
+//  151   // Linha 18
+//  152   sprintf(buffer_linha,REL_PT_BR_18);
         LDR      R0,[SP, #+100]
         MOVS     R1,#+100
         UDIV     R2,R0,R1
@@ -434,32 +439,32 @@ RELATORIO_entry:
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  151   IMPRESSORA_envia_linha(buffer_linha);  
+//  153   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  152   // Linha 19
-//  153   sprintf(buffer_linha,REL_PT_BR_19);
+//  154   // Linha 19
+//  155   sprintf(buffer_linha,REL_PT_BR_19);
         LDR.W    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  154   IMPRESSORA_envia_linha(buffer_linha);  
+//  156   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  155   // Linha 20
-//  156   sprintf(buffer_linha,REL_PT_BR_20);
+//  157   // Linha 20
+//  158   sprintf(buffer_linha,REL_PT_BR_20);
         LDR.W    R1,??DataTable1_11
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  157   IMPRESSORA_envia_linha(buffer_linha);  
+//  159   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  158   // Linha 21
-//  159   sprintf(buffer_linha,REL_PT_BR_21);
+//  160   // Linha 21
+//  161   sprintf(buffer_linha,REL_PT_BR_21);
         LDR      R0,[SP, #+96]
         MOVS     R1,#+100
         UDIV     R2,R0,R1
@@ -471,12 +476,12 @@ RELATORIO_entry:
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  160   IMPRESSORA_envia_linha(buffer_linha);  
+//  162   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  161   // Linha 22
-//  162   sprintf(buffer_linha,REL_PT_BR_22);
+//  163   // Linha 22
+//  164   sprintf(buffer_linha,REL_PT_BR_22);
         LDR      R0,[SP, #+92]
         MOVS     R1,#+100
         UDIV     R2,R0,R1
@@ -488,43 +493,43 @@ RELATORIO_entry:
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  163   IMPRESSORA_envia_linha(buffer_linha);  
+//  165   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  164   // Linha 23
-//  165   sprintf(buffer_linha,REL_PT_BR_23);
+//  166   // Linha 23
+//  167   sprintf(buffer_linha,REL_PT_BR_23);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  166   IMPRESSORA_envia_linha(buffer_linha);  
+//  168   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  167   // Linha 24
-//  168   sprintf(buffer_linha,REL_PT_BR_24);
+//  169   // Linha 24
+//  170   sprintf(buffer_linha,REL_PT_BR_24);
         LDR.W    R1,??DataTable1_14
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  169   IMPRESSORA_envia_linha(buffer_linha);  
+//  171   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  170   // Linha 25
-//  171   sprintf(buffer_linha,REL_PT_BR_25);
+//  172   // Linha 25
+//  173   sprintf(buffer_linha,REL_PT_BR_25);
         LDR      R2,[SP, #+88]
         LDR.N    R1,??DataTable1_15
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  172   IMPRESSORA_envia_linha(buffer_linha);  
+//  174   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  173   // Linha 26
-//  174   sprintf(buffer_linha,REL_PT_BR_26);
+//  175   // Linha 26
+//  176   sprintf(buffer_linha,REL_PT_BR_26);
         MOVS     R0,#+100
         UDIV     R1,R4,R0
         MLS      R3,R0,R1,R4
@@ -534,32 +539,32 @@ RELATORIO_entry:
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  175   IMPRESSORA_envia_linha(buffer_linha);  
+//  177   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  176   // Linha 27
-//  177   sprintf(buffer_linha,REL_PT_BR_27);
+//  178   // Linha 27
+//  179   sprintf(buffer_linha,REL_PT_BR_27);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  178   IMPRESSORA_envia_linha(buffer_linha);  
+//  180   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  179   // Linha 28
-//  180   sprintf(buffer_linha,REL_PT_BR_28);
+//  181   // Linha 28
+//  182   sprintf(buffer_linha,REL_PT_BR_28);
         LDR.N    R1,??DataTable1_17
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  181   IMPRESSORA_envia_linha(buffer_linha);  
+//  183   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  182   // Linha 29
-//  183   sprintf(buffer_linha,REL_PT_BR_29);
+//  184   // Linha 29
+//  185   sprintf(buffer_linha,REL_PT_BR_29);
         LDR      R0,[SP, #+108]
         STR      R0,[SP, #+0]
         LDRB     R3,[SP, #+8]
@@ -568,12 +573,12 @@ RELATORIO_entry:
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  184   IMPRESSORA_envia_linha(buffer_linha);  
+//  186   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  185   // Linha 30
-//  186   sprintf(buffer_linha,REL_PT_BR_30);
+//  187   // Linha 30
+//  188   sprintf(buffer_linha,REL_PT_BR_30);
         LDRB     R0,[SP, #+10]
         STR      R0,[SP, #+0]
         LDRB     R3,[SP, #+11]
@@ -582,32 +587,32 @@ RELATORIO_entry:
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  187   IMPRESSORA_envia_linha(buffer_linha);  
+//  189   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  188   // Linha 31
-//  189   sprintf(buffer_linha,REL_PT_BR_31);
+//  190   // Linha 31
+//  191   sprintf(buffer_linha,REL_PT_BR_31);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  190   IMPRESSORA_envia_linha(buffer_linha);  
+//  192   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  191   // Linha 32
-//  192   sprintf(buffer_linha,REL_PT_BR_32);
+//  193   // Linha 32
+//  194   sprintf(buffer_linha,REL_PT_BR_32);
         LDR.N    R1,??DataTable1_20
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  193   IMPRESSORA_envia_linha(buffer_linha);  
+//  195   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  194   // Linha 33
-//  195   sprintf(buffer_linha,REL_PT_BR_33);
+//  196   // Linha 33
+//  197   sprintf(buffer_linha,REL_PT_BR_33);
         LDR      R0,[SP, #+84]
         MOVS     R1,#+100
         UDIV     R2,R0,R1
@@ -619,315 +624,320 @@ RELATORIO_entry:
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  196   IMPRESSORA_envia_linha(buffer_linha);  
+//  198   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  197   // Linha 34
-//  198   sprintf(buffer_linha,REL_PT_BR_34);
+//  199   // Linha 34
+//  200   sprintf(buffer_linha,REL_PT_BR_34);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  199   IMPRESSORA_envia_linha(buffer_linha);  
+//  201   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  200   // Linha 35
-//  201   sprintf(buffer_linha,REL_PT_BR_35);
+//  202   // Linha 35
+//  203   sprintf(buffer_linha,REL_PT_BR_35);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  202   IMPRESSORA_envia_linha(buffer_linha);  
+//  204   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  203   // Linha 36
-//  204   sprintf(buffer_linha,REL_PT_BR_36);
+//  205   // Linha 36
+//  206   sprintf(buffer_linha,REL_PT_BR_36);
         LDR.N    R1,??DataTable1_22
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  205   IMPRESSORA_envia_linha(buffer_linha);  
+//  207   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  206   // Linha 37
-//  207   sprintf(buffer_linha,REL_PT_BR_37);
+//  208   // Linha 37
+//  209   sprintf(buffer_linha,REL_PT_BR_37);
         LDR      R2,[SP, #+104]
         LDR.N    R1,??DataTable1_23
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  208   IMPRESSORA_envia_linha(buffer_linha);  
+//  210   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  209   // Linha 38
-//  210   sprintf(buffer_linha,REL_PT_BR_38);
+//  211   // Linha 38
+//  212   sprintf(buffer_linha,REL_PT_BR_38);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  211   IMPRESSORA_envia_linha(buffer_linha);  
+//  213   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  212   // Linha 39
-//  213   sprintf(buffer_linha,REL_PT_BR_39);
+//  214   // Linha 39
+//  215   sprintf(buffer_linha,REL_PT_BR_39);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  214   IMPRESSORA_envia_linha(buffer_linha);
+//  216   IMPRESSORA_envia_linha(buffer_linha);
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  215   
-//  216   // Imprime os últimos 10 eventos de troca
-//  217   // no preço da pipoca
-//  218   RELATORIO_eventos_troca_preco();
+//  217   
+//  218   // Imprime os últimos 10 eventos de troca
+//  219   // no preço da pipoca
+//  220   RELATORIO_eventos_troca_preco();
           CFI FunCall RELATORIO_eventos_troca_preco
         BL       RELATORIO_eventos_troca_preco
-//  219   
-//  220   // Linha 40
-//  221   sprintf(buffer_linha,REL_PT_BR_40);
+//  221   
+//  222   // Linha 40
+//  223   sprintf(buffer_linha,REL_PT_BR_40);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  222   IMPRESSORA_envia_linha(buffer_linha);  
+//  224   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  223   // Linha 41
-//  224   sprintf(buffer_linha,REL_PT_BR_41);
+//  225   // Linha 41
+//  226   sprintf(buffer_linha,REL_PT_BR_41);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  225   IMPRESSORA_envia_linha(buffer_linha);  
+//  227   IMPRESSORA_envia_linha(buffer_linha);  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  226   // Linha 42
-//  227   sprintf(buffer_linha,REL_PT_BR_42);
+//  228   // Linha 42
+//  229   sprintf(buffer_linha,REL_PT_BR_42);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  228   IMPRESSORA_envia_linha(buffer_linha);    
+//  230   IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  229   // Linha 42
-//  230   sprintf(buffer_linha,REL_PT_BR_42);
+//  231   // Linha 42
+//  232   sprintf(buffer_linha,REL_PT_BR_42);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  231   IMPRESSORA_envia_linha(buffer_linha);    
+//  233   IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  232   // Linha 43
-//  233   sprintf(buffer_linha,REL_PT_BR_43);
+//  234   // Linha 43
+//  235   sprintf(buffer_linha,REL_PT_BR_43);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  234   IMPRESSORA_envia_linha(buffer_linha);    
+//  236   IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  235   // Linha 44
-//  236   sprintf(buffer_linha,REL_PT_BR_44);
+//  237   // Linha 44
+//  238   sprintf(buffer_linha,REL_PT_BR_44);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  237   IMPRESSORA_envia_linha(buffer_linha);    
+//  239   IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  238   // Linha 45
-//  239   sprintf(buffer_linha,REL_PT_BR_45);
+//  240   // Linha 45
+//  241   sprintf(buffer_linha,REL_PT_BR_45);
         LDR.N    R1,??DataTable1_24
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  240   IMPRESSORA_envia_linha(buffer_linha);    
+//  242   IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  241   // Linha 46
-//  242   sprintf(buffer_linha,REL_PT_BR_46);
+//  243   // Linha 46
+//  244   sprintf(buffer_linha,REL_PT_BR_46);
         LDR.N    R1,??DataTable1_25
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  243   IMPRESSORA_envia_linha(buffer_linha);    
+//  245   IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  244   // Linha 47
-//  245   sprintf(buffer_linha,REL_PT_BR_47);
+//  246   // Linha 47
+//  247   sprintf(buffer_linha,REL_PT_BR_47);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  246   IMPRESSORA_envia_linha(buffer_linha);    
+//  248   IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  247   // Linha 48
-//  248   sprintf(buffer_linha,REL_PT_BR_48);
+//  249   // Linha 48
+//  250   sprintf(buffer_linha,REL_PT_BR_48);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  249   IMPRESSORA_envia_linha(buffer_linha);    
+//  251   IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  250   // Linha 49
-//  251   sprintf(buffer_linha,REL_PT_BR_49);
+//  252   // Linha 49
+//  253   sprintf(buffer_linha,REL_PT_BR_49);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  252   IMPRESSORA_envia_linha(buffer_linha);    
+//  254   IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  253   // Linha 50
-//  254   sprintf(buffer_linha,REL_PT_BR_50);
+//  255   // Linha 50
+//  256   sprintf(buffer_linha,REL_PT_BR_50);
         LDR.N    R1,??DataTable1
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  255   IMPRESSORA_envia_linha(buffer_linha);    
+//  257   IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  256   // Linha 51
-//  257   sprintf(buffer_linha,REL_PT_BR_51);
+//  258   // Linha 51
+//  259   sprintf(buffer_linha,REL_PT_BR_51);
         LDR.N    R1,??DataTable1_26
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  258   IMPRESSORA_envia_linha(buffer_linha);    
+//  260   IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  259   // Linha 52
-//  260   sprintf(buffer_linha,REL_PT_BR_52);
+//  261   // Linha 52
+//  262   sprintf(buffer_linha,REL_PT_BR_52);
         LDR.N    R1,??DataTable1_27
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  261   IMPRESSORA_envia_linha(buffer_linha);      
+//  263   IMPRESSORA_envia_linha(buffer_linha);      
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  262   // Linha 53
-//  263   sprintf(buffer_linha,REL_PT_BR_53);
+//  264   // Linha 53
+//  265   sprintf(buffer_linha,REL_PT_BR_53);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  264   IMPRESSORA_envia_linha(buffer_linha);        
+//  266   IMPRESSORA_envia_linha(buffer_linha);        
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  265   // Linha 54
-//  266   sprintf(buffer_linha,REL_PT_BR_54);
+//  267   // Linha 54
+//  268   sprintf(buffer_linha,REL_PT_BR_54);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  267   IMPRESSORA_envia_linha(buffer_linha);          
+//  269   IMPRESSORA_envia_linha(buffer_linha);          
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  268   // Linha 55
-//  269   sprintf(buffer_linha,REL_PT_BR_55);
+//  270   // Linha 55
+//  271   sprintf(buffer_linha,REL_PT_BR_55);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  270   IMPRESSORA_envia_linha(buffer_linha);            
+//  272   IMPRESSORA_envia_linha(buffer_linha);            
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  271   // Linha 56
-//  272   sprintf(buffer_linha,REL_PT_BR_56);
+//  273   // Linha 56
+//  274   sprintf(buffer_linha,REL_PT_BR_56);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  273   IMPRESSORA_envia_linha(buffer_linha);              
+//  275   IMPRESSORA_envia_linha(buffer_linha);              
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  274   // Linha 57
-//  275   sprintf(buffer_linha,REL_PT_BR_57);
+//  276   // Linha 57
+//  277   sprintf(buffer_linha,REL_PT_BR_57);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  276   IMPRESSORA_envia_linha(buffer_linha);                
+//  278   IMPRESSORA_envia_linha(buffer_linha);                
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  277   // Linha 58
-//  278   sprintf(buffer_linha,REL_PT_BR_58);
+//  279   // Linha 58
+//  280   sprintf(buffer_linha,REL_PT_BR_58);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  279   IMPRESSORA_envia_linha(buffer_linha);                  
+//  281   IMPRESSORA_envia_linha(buffer_linha);                  
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  280   // Linha 59
-//  281   sprintf(buffer_linha,REL_PT_BR_59);
+//  282   // Linha 59
+//  283   sprintf(buffer_linha,REL_PT_BR_59);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  282   IMPRESSORA_envia_linha(buffer_linha);                    
+//  284   IMPRESSORA_envia_linha(buffer_linha);                    
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  283   // Linha 60
-//  284   sprintf(buffer_linha,REL_PT_BR_60);
+//  285   // Linha 60
+//  286   sprintf(buffer_linha,REL_PT_BR_60);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  285   IMPRESSORA_envia_linha(buffer_linha);                      
+//  287   IMPRESSORA_envia_linha(buffer_linha);        
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  286 }
+//  288   
+//  289   SERIALMUX_seleciona(SERIALMUX_USB);
+        MOVS     R0,#+2
+          CFI FunCall SERIALMUX_seleciona
+        BL       SERIALMUX_seleciona
+//  290 }
         ADD      SP,SP,#+128
           CFI CFA R13+8
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock0
-//  287 /***********************************************************************************
-//  288 *       Descrição       :       Verifica se existem eventos de alteração
-//  289 *                               no valor da pipoca
-//  290 *       Parametros      :       nennhum
-//  291 *       Retorno         :       nenhum
-//  292 ***********************************************************************************/
+//  291 /***********************************************************************************
+//  292 *       Descrição       :       Verifica se existem eventos de alteração
+//  293 *                               no valor da pipoca
+//  294 *       Parametros      :       nennhum
+//  295 *       Retorno         :       nenhum
+//  296 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock1 Using cfiCommon0
           CFI Function RELATORIO_eventos_troca_preco
         THUMB
-//  293 void RELATORIO_eventos_troca_preco(void){
+//  297 void RELATORIO_eventos_troca_preco(void){
 RELATORIO_eventos_troca_preco:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -937,39 +947,39 @@ RELATORIO_eventos_troca_preco:
           CFI CFA R13+16
         SUB      SP,SP,#+80
           CFI CFA R13+96
-//  294   unsigned short int eventos;
-//  295   unsigned short int novo_preco;
-//  296   unsigned short int preco_antigo;
-//  297   unsigned char hora,minuto,segundo;
-//  298   unsigned char dia,mes;
-//  299   unsigned int ano;
-//  300   char buffer_linha[40];
-//  301   
-//  302   eventos = FTP_get_quantidade_novas_trocas();
+//  298   unsigned short int eventos;
+//  299   unsigned short int novo_preco;
+//  300   unsigned short int preco_antigo;
+//  301   unsigned char hora,minuto,segundo;
+//  302   unsigned char dia,mes;
+//  303   unsigned int ano;
+//  304   char buffer_linha[40];
+//  305   
+//  306   eventos = FTP_get_quantidade_novas_trocas();
           CFI FunCall FTP_get_quantidade_novas_trocas
         BL       FTP_get_quantidade_novas_trocas
         MOVS     R4,R0
-//  303   if(eventos){
+//  307   if(eventos){
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         CMP      R4,#+0
         BEQ.N    ??RELATORIO_eventos_troca_preco_0
-//  304     
-//  305     sprintf(buffer_linha,LINHA_TROCA_PRECO);
+//  308     
+//  309     sprintf(buffer_linha,LINHA_TROCA_PRECO);
         LDR.N    R1,??DataTable1_28
         ADD      R0,SP,#+36
           CFI FunCall sprintf
         BL       sprintf
-//  306     IMPRESSORA_envia_linha(buffer_linha);                 
+//  310     IMPRESSORA_envia_linha(buffer_linha);                 
         ADD      R0,SP,#+36
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  307         
-//  308     for(unsigned short int i=0,indice=eventos-1;i<eventos;i++,indice--){
+//  311         
+//  312     for(unsigned short int i=0,indice=eventos-1;i<eventos;i++,indice--){
         MOVS     R5,#+0
         SUBS     R6,R4,#+1
         B.N      ??RELATORIO_eventos_troca_preco_1
-//  309       
-//  310       FTP_get_troca(indice,&novo_preco,&preco_antigo,&hora,&minuto,&segundo,&dia,&mes,&ano);
+//  313       
+//  314       FTP_get_troca(indice,&novo_preco,&preco_antigo,&hora,&minuto,&segundo,&dia,&mes,&ano);
 ??RELATORIO_eventos_troca_preco_2:
         ADD      R0,SP,#+32
         STR      R0,[SP, #+16]
@@ -988,8 +998,8 @@ RELATORIO_eventos_troca_preco:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall FTP_get_troca
         BL       FTP_get_troca
-//  311       
-//  312       sprintf(buffer_linha,"  [%02d de %02d]\n\r",i+1,eventos);
+//  315       
+//  316       sprintf(buffer_linha,"  [%02d de %02d]\n\r",i+1,eventos);
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         MOVS     R3,R4
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
@@ -998,12 +1008,12 @@ RELATORIO_eventos_troca_preco:
         ADD      R0,SP,#+36
           CFI FunCall sprintf
         BL       sprintf
-//  313       IMPRESSORA_envia_linha(buffer_linha);    
+//  317       IMPRESSORA_envia_linha(buffer_linha);    
         ADD      R0,SP,#+36
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  314       
-//  315       sprintf(buffer_linha,"   Preco Antigo: R$ %02d,%02d\n\r\n\r",preco_antigo/100,preco_antigo%100);
+//  318       
+//  319       sprintf(buffer_linha,"   Preco Antigo: R$ %02d,%02d\n\r\n\r",preco_antigo/100,preco_antigo%100);
         LDRH     R0,[SP, #+26]
         MOVS     R1,#+100
         SDIV     R2,R0,R1
@@ -1015,12 +1025,12 @@ RELATORIO_eventos_troca_preco:
         ADD      R0,SP,#+36
           CFI FunCall sprintf
         BL       sprintf
-//  316       IMPRESSORA_envia_linha(buffer_linha);   
+//  320       IMPRESSORA_envia_linha(buffer_linha);   
         ADD      R0,SP,#+36
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  317       
-//  318       sprintf(buffer_linha,"   Novo Preco: R$ %02d,%02d\n\r\n\r",novo_preco/100,novo_preco%100);
+//  321       
+//  322       sprintf(buffer_linha,"   Novo Preco: R$ %02d,%02d\n\r\n\r",novo_preco/100,novo_preco%100);
         LDRH     R0,[SP, #+28]
         MOVS     R1,#+100
         SDIV     R2,R0,R1
@@ -1032,12 +1042,12 @@ RELATORIO_eventos_troca_preco:
         ADD      R0,SP,#+36
           CFI FunCall sprintf
         BL       sprintf
-//  319       IMPRESSORA_envia_linha(buffer_linha);   
+//  323       IMPRESSORA_envia_linha(buffer_linha);   
         ADD      R0,SP,#+36
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  320       
-//  321       sprintf(buffer_linha,"   Em %02d/%02d/%04d as %02d:%02d:%02d\n\r",dia,mes,ano,hora,minuto,segundo);
+//  324       
+//  325       sprintf(buffer_linha,"   Em %02d/%02d/%04d as %02d:%02d:%02d\n\r",dia,mes,ano,hora,minuto,segundo);
         LDRB     R0,[SP, #+22]
         STR      R0,[SP, #+12]
         LDRB     R0,[SP, #+23]
@@ -1052,11 +1062,11 @@ RELATORIO_eventos_troca_preco:
         ADD      R0,SP,#+36
           CFI FunCall sprintf
         BL       sprintf
-//  322       IMPRESSORA_envia_linha(buffer_linha);   
+//  326       IMPRESSORA_envia_linha(buffer_linha);   
         ADD      R0,SP,#+36
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  323     }
+//  327     }
         ADDS     R5,R5,#+1
         SUBS     R6,R6,#+1
 ??RELATORIO_eventos_troca_preco_1:
@@ -1064,18 +1074,18 @@ RELATORIO_eventos_troca_preco:
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         CMP      R5,R4
         BCC.N    ??RELATORIO_eventos_troca_preco_2
-//  324     
-//  325     sprintf(buffer_linha,"\n\r\n\r\n\r\n\r\n\r");
+//  328     
+//  329     sprintf(buffer_linha,"\n\r\n\r\n\r\n\r\n\r");
         LDR.N    R1,??DataTable1_33
         ADD      R0,SP,#+36
           CFI FunCall sprintf
         BL       sprintf
-//  326     IMPRESSORA_envia_linha(buffer_linha);       
+//  330     IMPRESSORA_envia_linha(buffer_linha);       
         ADD      R0,SP,#+36
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  327   }      
-//  328 }
+//  331   }      
+//  332 }
 ??RELATORIO_eventos_troca_preco_0:
         ADD      SP,SP,#+80
           CFI CFA R13+16
@@ -1501,14 +1511,14 @@ RELATORIO_eventos_troca_preco:
         DC8 0
 
         END
-//  329 /***********************************************************************************
-//  330 *       Fim do arquivo
-//  331 ***********************************************************************************/
+//  333 /***********************************************************************************
+//  334 *       Fim do arquivo
+//  335 ***********************************************************************************/
 // 
 // 1 512 bytes in section .rodata
-// 1 570 bytes in section .text
+// 1 582 bytes in section .text
 // 
-// 1 570 bytes of CODE  memory
+// 1 582 bytes of CODE  memory
 // 1 512 bytes of CONST memory
 //
 //Errors: none

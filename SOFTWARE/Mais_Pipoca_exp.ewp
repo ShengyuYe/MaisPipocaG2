@@ -572,7 +572,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>MaisPipoca_G2_2_0_14.HEX</state>
+          <state>MaisPipoca_G2_2_1_0.HEX</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1964,6 +1964,15 @@
     </group>
     <group>
       <name>PROTOCOLO</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\DESCRITIVO_DXTNET.TXT</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_system.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_target.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\Drivers\Protocolo\Protocolo.c</name>
       </file>
