@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     07/Jul/2017  16:29:19 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     10/Jul/2017  15:34:40 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -64,6 +64,7 @@
         EXTERN POTENCIA_setRPM
         EXTERN POTENCIA_set_neutro
         EXTERN PREPARACAO_entry
+        EXTERN PREPARACAO_limpeza_inicial
         EXTERN PREPARACAO_resfriamento
         EXTERN STRING_mensagem_cctalk_offline
         EXTERN STRING_mensagem_fora_servico
@@ -184,7 +185,7 @@
 //   46 #define TEMPO_DESUMIDIFICADOR                   1000*60*30
 //   47 #define TEMPO_MENSAGEM_LINHA_INFERIOR           10000
 //   48 
-//   49 #define _DEBUG_PAGAMENTOS_
+//   49 //#define _DEBUG_PAGAMENTOS_
 //   50 
 //   51 /***********************************************************************************
 //   52 *       Enumerações
@@ -292,7 +293,14 @@ APLICACAO_main:
 //  106   
 //  107 #ifndef _DEBUG_PAGAMENTOS_
 //  108   vTaskDelay(3000);
+        MOVW     R0,#+3000
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
 //  109   PREPARACAO_limpeza_inicial(idioma);
+        MOVS     R0,R4
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+          CFI FunCall PREPARACAO_limpeza_inicial
+        BL       PREPARACAO_limpeza_inicial
 //  110 #endif
 //  111   
 //  112   
@@ -315,6 +323,8 @@ APLICACAO_main:
 //  118   
 //  119 #ifndef _DEBUG_PAGAMENTOS_  
 //  120   APLICACAO_verifica_post();
+          CFI FunCall APLICACAO_verifica_post
+        BL       APLICACAO_verifica_post
 //  121 #endif
 //  122     
 //  123   PAGAMENTOS_subtrai_valores(PAGAMENTOS_get_valor_acumulado());
@@ -413,6 +423,8 @@ APLICACAO_main:
         BL       APLICACAO_tela_descanso
 //  179 #ifndef _DEBUG_PAGAMENTOS_    
 //  180     APLICACAO_verificao_ciclica();
+          CFI FunCall APLICACAO_verificao_ciclica
+        BL       APLICACAO_verificao_ciclica
 //  181 #endif
 //  182     vTaskDelay(50);
         MOVS     R0,#+50
@@ -2560,9 +2572,9 @@ APLICACAO_ciclo_desumidificador:
 //    25 bytes in section .bss
 //     4 bytes in section .data
 //   212 bytes in section .rodata
-// 2 494 bytes in section .text
+// 2 518 bytes in section .text
 // 
-// 2 494 bytes of CODE  memory
+// 2 518 bytes of CODE  memory
 //   212 bytes of CONST memory
 //    29 bytes of DATA  memory
 //

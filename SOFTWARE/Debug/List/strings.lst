@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      07/Jul/2017  16:29:17 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      10/Jul/2017  15:19:57 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -70,19 +70,19 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Strings\s
    \                                 In section .data, align 4
    \   __absolute char const *STRING_splash[7][2]
    \                     STRING_splash:
-   \   00000000   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.0">`
+   \   00000000   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
    \              0x........   
-   \   00000008   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.0">`
+   \   00000008   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
    \              0x........   
-   \   00000010   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.0">`
+   \   00000010   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
    \              0x........   
-   \   00000018   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.0">`
+   \   00000018   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
    \              0x........   
-   \   00000020   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.0">`
+   \   00000020   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
    \              0x........   
-   \   00000028   0x........         DC32 `?<Constant "  HEY POP   ">`, `?<Constant "VER. 2.1.0">`
+   \   00000028   0x........         DC32 `?<Constant "  HEY POP   ">`, `?<Constant "VER. 2.1.1">`
    \              0x........   
-   \   00000030   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.0">`
+   \   00000030   0x........         DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
    \              0x........   
 
    \                                 In section .data, align 4
@@ -2015,12 +2015,12 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Strings\s
    \              0x00         
 
    \                                 In section .rodata, align 4
-   \                     `?<Constant "VER. 2.1.0">`:
-   \   00000000   0x56 0x45          DC8 "VER. 2.1.0"
+   \                     `?<Constant "VER. 2.1.1">`:
+   \   00000000   0x56 0x45          DC8 "VER. 2.1.1"
    \              0x52 0x2E    
    \              0x20 0x32    
    \              0x2E 0x31    
-   \              0x2E 0x30    
+   \              0x2E 0x31    
    \              0x00         
    \   0000000B   0x00               DC8 0
 
@@ -6516,7 +6516,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Strings\s
       16  ?<Constant "USO DE TROCO">
       16  ?<Constant "VALOR PIPOCA">
       12  ?<Constant "VELOCIDADE">
-      12  ?<Constant "VER. 2.1.0">
+      12  ?<Constant "VER. 2.1.1">
       12  ?<Constant "VOICE LEVEL">
       12  ?<Constant "VOICE TESTE">
       16  ?<Constant "VOLUME MUSICA">

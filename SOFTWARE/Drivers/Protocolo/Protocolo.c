@@ -29,6 +29,9 @@
 *       Includes
 ***********************************************************************************/
 #include <nxp\iolpc1768.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "protocolo.h"
 #include "..\..\includes.h"
 
@@ -59,23 +62,7 @@ unsigned char PROTOCOLO_novoPacote=0;
 ***********************************************************************************/
 void PROTOCOLO_enviaPacote(unsigned char *pData,unsigned short int tamanho);
 unsigned char PROTOCOLO_checksum(unsigned char*pData,unsigned short int tamanho);
-void PROTOCOLO_decodeLeBloco(unsigned long int endereco,unsigned char tamanho);
-void PROTOCOLO_decodeEscreveBloco(unsigned long int endereco,unsigned char tamanho,unsigned char *dados);
-void PROTOCOLO_decodeFormataAudioFlash(void);
-void PROTOCOLO_decodeEscreveTabelaMusicas(unsigned char musica,
-                                          unsigned long int enderecoInicial,
-                                          unsigned long int tamanho);
-void PROTOCOLO_decodeLeituraTabelaMusicas(unsigned char musica);
-void PROTOCOLO_decodeEscreveParametro(unsigned char indice,unsigned short int valor);
-void PROTOCOLO_decodeLeParametro(unsigned char indice);
-void PROTOCOLO_decodeMensagemUsuario(unsigned char indice,unsigned char *msg);
-void PROTOCOLO_decodeAssinaPlaca(void);
-void PROTOCOLO_decodifica_tamanho_parametros(void);
-void PROTOCOLO_decodifica_info_sobre_parametro(unsigned short int parametro);
-void PROTOCOLO_decodifica_leitura_valor_parametro(unsigned short int parametro);
-void PROTOCOLO_decodifica_escrita_valor_parametro(unsigned short int parametro,
-                                                  unsigned char tipo,
-                                                  unsigned char *valor);
+void PROTOCOLO_get_device(void);
 
 /***********************************************************************************
 *       Implementação das funções
@@ -88,7 +75,7 @@ void PROTOCOLO_decodifica_escrita_valor_parametro(unsigned short int parametro,
 ***********************************************************************************/
 void PROTOCOLO_ini(void){
   
-  UART_init(3,36600,NULL,NULL,NULL);    
+  UART_init(3,119200,NULL,NULL,NULL);    
 }
 /***********************************************************************************
 *       Descrição       :       Função para tratamento da interrupção
@@ -194,54 +181,49 @@ unsigned char PROTOCOLO_checksum(unsigned char*pData,unsigned short int tamanho)
 void PROTOCOLO_main(void*pPar){
   
   PROTOCOLO_ini();
-  //WATCHDOG_init(0);  
   
-  for(;;){
-        
-    //FEEDS_THE_DOG();
+  for(;;){        
     
     if(PROTOCOLO_novoPacote){
-      /*
-      PROTOCOLO_novoPacote = 0;        
+      
+      PROTOCOLO_novoPacote = 0;
       if(PROTOCOLO_checksum(PROTOCOLO_bufferRx,PROTOCOLO_bufferRx[1]-1)==PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos-1]){      
-        switch(PROTOCOLO_bufferRx[0]){
-         case READ_DATA_FLASH_BLOCK:              
-              PROTOCOLO_decodeLeBloco     (PROTOCOLO_bufferRx[2]<<24 | PROTOCOLO_bufferRx[3]<<16 | PROTOCOLO_bufferRx[4]<<8 | PROTOCOLO_bufferRx[5],PROTOCOLO_bufferRx[6]);
-              break;
-         case WRITE_DATA_FLASH_BLOCK:
-              PROTOCOLO_decodeEscreveBloco(PROTOCOLO_bufferRx[2]<<24 | PROTOCOLO_bufferRx[3]<<16 | PROTOCOLO_bufferRx[4]<<8 | PROTOCOLO_bufferRx[5],PROTOCOLO_bufferRx[6],&PROTOCOLO_bufferRx[7]);
-              break;
-         case FORMAT_AUDIO_FLASH:
-              PROTOCOLO_decodeFormataAudioFlash();
-              break;
-         case WRITE_MUSIC_TABLE:
-              PROTOCOLO_decodeEscreveTabelaMusicas(PROTOCOLO_bufferRx[2],
-                                                   PROTOCOLO_bufferRx[3]<<16 | PROTOCOLO_bufferRx[4]<<8 | PROTOCOLO_bufferRx[5],
-                                                   PROTOCOLO_bufferRx[6]<<16 | PROTOCOLO_bufferRx[7]<<8 | PROTOCOLO_bufferRx[8]);
-              break;
-         case READ_MUSIC_TABLE:
-              PROTOCOLO_decodeLeituraTabelaMusicas(PROTOCOLO_bufferRx[2]);
-              break;          
-         case GET_PARAMETERS_LENGHT:
-              PROTOCOLO_decodifica_tamanho_parametros();
-              break;
-         case GET_PARAMETER_INFO:
-              PROTOCOLO_decodifica_info_sobre_parametro(PROTOCOLO_bufferRx[2]<<8 | PROTOCOLO_bufferRx[3]);
-              break;
-         case GET_PARAMETER_DATA:
-              PROTOCOLO_decodifica_leitura_valor_parametro(PROTOCOLO_bufferRx[2]<<8 | PROTOCOLO_bufferRx[3]);
-              break;
-         case SET_PARAMETER_DATA:
-              PROTOCOLO_decodifica_escrita_valor_parametro(PROTOCOLO_bufferRx[2]<<8 | PROTOCOLO_bufferRx[3],
-                                                           PROTOCOLO_bufferRx[4],
-                                                          &PROTOCOLO_bufferRx[5]);
-              break;
-        }
-      */
-      //}      
+        switch(PROTOCOLO_bufferRx[0]){      
+          case DXTNET_GET_DEVICE:
+               PROTOCOLO_get_device();
+               break;
+          case DXTNET_READ_PARAMETERS:
+               break;
+          case DXTNET_WRITE_PARAMETERS:
+               break;
+          case DXTNET_READ_FILE_TABLE:
+               break;
+          case DXTNET_WRITE_FILE_TABLE:
+               break;
+          case DXTNET_DELETE_FILE_TABLE:
+               break;
+          case DXTNET_READ_FILE:
+               break;
+          case DXTNET_WRITE_FILE:
+               break;
+        }    
+      }
     }
     vTaskDelay(1);
   }    
+}
+/***********************************************************************************
+*       Descrição       :       Faz a decodificação do comando getdevice
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
+***********************************************************************************/
+void PROTOCOLO_get_device(void){
+  
+  PROTOCOLO_bufferTmp[0]  = DXTNET_GET_DEVICE;
+  PROTOCOLO_bufferTmp[2]  = DXTNET_MAIS_PIPOCA_G2;
+  
+  sprintf((char*)&PROTOCOLO_bufferTmp[3],STRING_VERSAO_PROTOCOLO);
+  PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,21);  
 }
 /***********************************************************************************
 *       Descrição       :       Encapsula os dados que serão enviados
@@ -252,6 +234,9 @@ void PROTOCOLO_main(void*pPar){
 ***********************************************************************************/
 void PROTOCOLO_enviaPacote(unsigned char *pData,unsigned short int tamanho){
   unsigned char indice=0;
+  
+  pData[1] = tamanho;
+  pData[tamanho-1] = PROTOCOLO_checksum(pData,tamanho-1);
   
   PROTOCOLO_bufferTx[indice++] = DLE;
   PROTOCOLO_bufferTx[indice++] = STX;
@@ -271,199 +256,6 @@ void PROTOCOLO_enviaPacote(unsigned char *pData,unsigned short int tamanho){
   U3THR = PROTOCOLO_bufferTx[0];  
 }
 /***********************************************************************************
-*       Descrição       :       Lê um bloco de dados da dataflash
-*       Parametros      :       nenhum
-*       Retorno         :       nenhum
-***********************************************************************************/
-void PROTOCOLO_decodeLeBloco(unsigned long int endereco,unsigned char tamanho){
-                       
-  /*
-  if(tamanho>128){     
-    PROTOCOLO_bufferTmp[0] = READ_DATA_FLASH_BLOCK | 0x80;
-    PROTOCOLO_bufferTmp[1] = 4;
-    PROTOCOLO_bufferTmp[2] = 1;
-    PROTOCOLO_bufferTmp[3] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,3);
-    
-    PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,4);  
-  }
-  else{
-    PROTOCOLO_bufferTmp[0] = READ_DATA_FLASH_BLOCK;
-    PROTOCOLO_bufferTmp[1] = tamanho+8;
-    PROTOCOLO_bufferTmp[2] = endereco>>24;
-    PROTOCOLO_bufferTmp[3] = endereco>>16;
-    PROTOCOLO_bufferTmp[4] = endereco>>8;
-    PROTOCOLO_bufferTmp[5] = endereco;
-    PROTOCOLO_bufferTmp[6] = tamanho;
-   
-    SST_highSpeedRead(endereco+AREA_AUDIO,&PROTOCOLO_bufferTmp[7],tamanho);
-  
-    PROTOCOLO_bufferTmp[7+tamanho] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,7+tamanho);
-    PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,tamanho+8);  
-  }
-  */
-}
-/***********************************************************************************
-*       Descrição       :       Escreve um bloco de dados
-*                               na memória de dados
-*       Parametros      :       (unsigned int) endereco inicial da escrita
-*                               (unsigned char) tamanho do bloco
-*                               (unsigned char*) ponteiro para os dados
-*       Retorno         :       nenhum
-***********************************************************************************/
-void PROTOCOLO_decodeEscreveBloco(unsigned long int endereco,unsigned char tamanho,
-                                  unsigned char *dados){
-                                    /*
-  
-  if(tamanho>128){    
-    PROTOCOLO_bufferTmp[0] = WRITE_DATA_FLASH_BLOCK | 0x80;
-    PROTOCOLO_bufferTmp[1] = 4;
-    PROTOCOLO_bufferTmp[2] = 1;
-    PROTOCOLO_bufferTmp[3] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,3);
-    
-    PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,4);      
-  }
-  else{
-    PROTOCOLO_bufferTmp[0] = WRITE_DATA_FLASH_BLOCK;
-    PROTOCOLO_bufferTmp[1] = 8;
-    PROTOCOLO_bufferTmp[2] = endereco>>24;
-    PROTOCOLO_bufferTmp[3] = endereco>>16;
-    PROTOCOLO_bufferTmp[4] = endereco>>8;
-    PROTOCOLO_bufferTmp[5] = endereco;
-    PROTOCOLO_bufferTmp[6] = tamanho;
-   
-    SST_writeAutoAddressInc(endereco+AREA_AUDIO,dados,tamanho);
-  
-    PROTOCOLO_bufferTmp[7] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,7);
-    PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,8);  
-  }      
-                                    */
-}
-/***********************************************************************************
-*       Descrição       :      Formata a área da flash onde são alocados
-*                              os arquivos de audio
-*       Parametros      :      nenhum
-*       Retorno         :      nenhum
-***********************************************************************************/
-void PROTOCOLO_decodeFormataAudioFlash(void){
-  /*
-  unsigned long int enderecoInicial=AREA_AUDIO;
-  
-  for(unsigned short int i=0;i<599;i++){
-    SST_erase4kbSector(enderecoInicial);
-    enderecoInicial+=4096;
-    //FEEDS_THE_DOG();
-  }
-    
-  PROTOCOLO_bufferTmp[0] = FORMAT_AUDIO_FLASH;
-  PROTOCOLO_bufferTmp[1] = 3;
-  PROTOCOLO_bufferTmp[2] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,2);
-  
-  PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,3);  
-  */
-}
-/***********************************************************************************
-*       Descrição       :       Escreve valores na tabela de musica do sistema
-*       Parametros      :       (unsigned char) música
-*                               (unsigned long int) endereco inicial
-*                               (unsigned long int) tamanho da música
-*       Retorno         :       nenhum
-***********************************************************************************/
-void PROTOCOLO_decodeEscreveTabelaMusicas(unsigned char musica,
-                                          unsigned long int enderecoInicial,
-                                          unsigned long int tamanho){
-                                            
-                                            /*
-  if(musica>3){
-    PROTOCOLO_bufferTmp[0] = WRITE_MUSIC_TABLE | 0x80;
-    PROTOCOLO_bufferTmp[1] = 4;
-    PROTOCOLO_bufferTmp[2] = 1;
-    PROTOCOLO_bufferTmp[3] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,3);
-    
-    PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,4);                                                    
-  } 
-  else{
-    
-    unsigned int temp;
-    
-    temp = enderecoInicial + AREA_AUDIO;
-    PARAMETROS_grava(ADR_INICIO_BLOCO_MUSICA+musica,(void*)&temp);
-    
-    temp = tamanho;
-    PARAMETROS_grava(ADR_TAMANHO_BLOCO_MUSICA+musica,(void*)&temp);
-    
-    PROTOCOLO_bufferTmp[0] = WRITE_MUSIC_TABLE;
-    PROTOCOLO_bufferTmp[1] = 10;
-    PROTOCOLO_bufferTmp[2] = musica;
-    PROTOCOLO_bufferTmp[3] = enderecoInicial>>16;
-    PROTOCOLO_bufferTmp[4] = enderecoInicial>>8;
-    PROTOCOLO_bufferTmp[5] = enderecoInicial;
-    PROTOCOLO_bufferTmp[6] = tamanho>>16;
-    PROTOCOLO_bufferTmp[7] = tamanho>>8;
-    PROTOCOLO_bufferTmp[8] = tamanho;
-    PROTOCOLO_bufferTmp[9] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,9);
-    
-    PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,10);                      
-  }        
-                                            */
-}
-/***********************************************************************************
-*       Descrição       :       Lê os valores da tabela de música do sistema
-*       Parametros      :       (unsigned char) música
-*       Retorno         :       nenhum
-***********************************************************************************/
-void PROTOCOLO_decodeLeituraTabelaMusicas(unsigned char musica){
-  
-  /*
-  if(musica>3){
-    PROTOCOLO_bufferTmp[0] = READ_MUSIC_TABLE | 0x80;
-    PROTOCOLO_bufferTmp[1] = 4;
-    PROTOCOLO_bufferTmp[2] = 1;
-    PROTOCOLO_bufferTmp[3] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,3);
-    
-    PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,4);   
-  }
-  else{
-    unsigned int enderecoInicial;
-    unsigned int tamanho;
-    
-    
-    PARAMETROS_le(ADR_INICIO_BLOCO_MUSICA+musica ,(void*)&enderecoInicial);
-    PARAMETROS_le(ADR_TAMANHO_BLOCO_MUSICA+musica,(void*)&tamanho);
-    
-    enderecoInicial -= AREA_AUDIO;
-    
-    PROTOCOLO_bufferTmp[0] = READ_MUSIC_TABLE;
-    PROTOCOLO_bufferTmp[1] = 10;
-    PROTOCOLO_bufferTmp[2] = musica;
-    PROTOCOLO_bufferTmp[3] = enderecoInicial>>16;
-    PROTOCOLO_bufferTmp[4] = enderecoInicial>>8;
-    PROTOCOLO_bufferTmp[5] = enderecoInicial;
-    PROTOCOLO_bufferTmp[6] = tamanho>>16;
-    PROTOCOLO_bufferTmp[7] = tamanho>>8;
-    PROTOCOLO_bufferTmp[8] = tamanho;
-    PROTOCOLO_bufferTmp[9] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,9);
-    
-    PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,10);   
-  }  
-  */
-}
-/***********************************************************************************
-*       Descrição       :       envia data direto
-*       Parametros      :       nenhum
-*       Retorno         :       nenhum
-***********************************************************************************/
-void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho){
-  
-  /*
-  for(unsigned char i=0;i<tamanho;i++)
-    PROTOCOLO_bufferTx[i] = buffer[i];
-  
-  PROTOCOLO_bytesParaEnviar = tamanho-1;
-  PROTOCOLO_bytesEnviados = 1;
-  U3THR = buffer[0];    
-  */
-}
-/***********************************************************************************
 *       Descrição       :       Verifica se o buffer de transmissão está vazio
 *       Parametros      :       nenhum
 *       Retorno         :       Tamanho do buffer de transmissão
@@ -473,72 +265,18 @@ unsigned short int PROTOCOLO_bytesNoBufferTx(void){
   return PROTOCOLO_bytesParaEnviar;
 }
 /***********************************************************************************
-*       Descrição       :       Decodofica o comando para leitura do tamanho
-*                               da listagem de parâmetros
+*       Descrição       :       envia data direto
 *       Parametros      :       nenhum
 *       Retorno         :       nenhum
 ***********************************************************************************/
-void PROTOCOLO_decodifica_tamanho_parametros(void){
+void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho){
   
-  /*
-    PROTOCOLO_bufferTmp[0] = GET_PARAMETERS_LENGHT;
-    PROTOCOLO_bufferTmp[1] = 6;
-    PROTOCOLO_bufferTmp[2] = TAMANHO_PARAMETROS>>8;    
-    PROTOCOLO_bufferTmp[3] = TAMANHO_PARAMETROS;
-    PROTOCOLO_bufferTmp[4] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,4);
-    PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,5);    
-  */
-}
-/***********************************************************************************
-*       Descrição       :       Decodifica o comando que solocita a informação
-*                               sobre um dos parâmetros
-*       Parametros      :       (unsigned int) parametro
-*       Retorno         :       nenhum
-***********************************************************************************/
-extern const sPARAMETROS tabela_parametros[];
-void PROTOCOLO_decodifica_info_sobre_parametro(unsigned short int parametro){
+  for(unsigned char i=0;i<tamanho;i++)
+    PROTOCOLO_bufferTx[i] = buffer[i];
   
-  /*
-   PROTOCOLO_bufferTmp[0] = GET_PARAMETER_INFO;
-   PROTOCOLO_bufferTmp[1] = parametro;
-   PROTOCOLO_bufferTmp[2] = tabela_parametros[parametro].length;
-   
-   for(unsigned char i=0;i<32;i++)    
-     PROTOCOLO_bufferTmp[3+i] = tabela_parametros[parametro].nome[i];
-   
-   PROTOCOLO_bufferTmp[36] = tabela_parametros[parametro].ext[0];
-   PROTOCOLO_bufferTmp[37] = tabela_parametros[parametro].ext[1];
-   PROTOCOLO_bufferTmp[38] = tabela_parametros[parametro].ext[2];
-   PROTOCOLO_bufferTmp[39] = PROTOCOLO_checksum(PROTOCOLO_bufferTmp,39);
-   PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,40);
-  */
-}
-/***********************************************************************************
-*       Descrição       :       Decodifica o comando que solicita a leitura
-*                               de um dos parâmetros do sistema
-*       Parametros      :       (unsigned short int) parâmetro
-8       Retorno         :       nenhum
-***********************************************************************************/
-void PROTOCOLO_decodifica_leitura_valor_parametro(unsigned short int parametro){
-  
-  
-}
-/***********************************************************************************
-*       Descrição       :       Decodifica o comando que solicita a escrita
-*                               de um dos parâmetros do sistema
-*       Parametro       :       (unsigned int) parametro
-*                               (unsigned char) tipo
-*                               (unsigned char*) dados do parâmetro
-*       Retorno         :       nenhum
-***********************************************************************************/
-void PROTOCOLO_decodifica_escrita_valor_parametro(unsigned short int parametro,
-                                                  unsigned char tipo,
-                                                  unsigned char *valor){
-                                            
-                                                    
-                                                    
-                                                    
-                                                    
+  PROTOCOLO_bytesParaEnviar = tamanho-1;
+  PROTOCOLO_bytesEnviados = 1;
+  U3THR = buffer[0];    
 }
 /***********************************************************************************
 *       Fim do arquivo

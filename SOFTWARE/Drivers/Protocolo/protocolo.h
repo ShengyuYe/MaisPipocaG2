@@ -27,6 +27,14 @@
 #ifndef _PROTOCOLO_H_
 #define _PROTOCOLO_H_
 
+#define STRING_VERSAO_PROTOCOLO                 "MPG2-2.1.0-BR-MA"
+
+typedef enum{
+  DXTNET_MAIS_PIPOCA_G1 = 1,
+  DXTNET_MAIS_PIPOCA_G2 = 2,
+  DXTNET_PEGA_BOLA_G2 = 3,  
+}eDXT_DEVICE;
+
 typedef enum{
    DXTNET_GET_DEVICE=0x10,
    DXTNET_READ_PARAMETERS,
@@ -50,7 +58,7 @@ void PROTOCOLO_timerTick(void);
 void PROTOCOLO_main(void*pPar);
 void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho);
 unsigned short int PROTOCOLO_bytesNoBufferTx(void);
-
+void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho);
 
 
 #endif//_PROTOCOLO_H_

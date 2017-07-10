@@ -36,7 +36,7 @@ ShowSource=1
 [JLinkDriver]
 CStepIntDis=_ 0
 [DebugChecksum]
-Checksum=1054881221
+Checksum=990553541
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -46,13 +46,15 @@ ShowArgs=0
 MixedMode=1
 [array_types]
 Fmt0=char[2]	4	0
-Fmt1=unsigned char[16]	3	0
-Fmt2=unsigned char[36]	3	0
-Fmt3=unsigned char[3]	4	0
-Fmt4=unsigned char[50]	3	0
-Fmt5=unsigned char[5]	4	0
-Fmt6=unsigned char[64]	3	0
-Fmt7=unsigned short[16]	3	0
+Fmt1=unsigned char[1024]	4	0
+Fmt2=unsigned char[128]	3	0
+Fmt3=unsigned char[16]	3	0
+Fmt4=unsigned char[36]	3	0
+Fmt5=unsigned char[3]	4	0
+Fmt6=unsigned char[50]	3	0
+Fmt7=unsigned char[5]	4	0
+Fmt8=unsigned char[64]	3	0
+Fmt9=unsigned short[16]	3	0
 [watch_formats]
 Fmt0={W}0:LEDS_espelho_leds	1	0
 Fmt1={W}0:MDBILL_temp	3	0
