@@ -1,0 +1,1491 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      12/Jul/2017  11:50:11 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\SDCARD\SDCARD.C                   #
+#    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\SDCARD\SDCARD.C -lC               #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -lA                           #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -o                            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\SDCARD.lst                     #
+#    Object file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\SDCARD.o                        #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\SDCARD\SDCARD.C
+      1          /*__________________________________________________________________________________
+      2          |	Chave Digital Tecnologia Eletronica Ltda. 
+      3          |       
+      4          |       Balneário Camboriú - SC
+      5          |       www.chavedigital.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Chave Digital and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Chave Digital
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Chave Digital e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Chave Digital ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :
+     18          |       Descrição          :
+     19          | 
+     20          |       Autor              :
+     21          |       Data criação       :
+     22          |
+     23          |       Revisões           :
+     24          |
+     25          |
+     26          | __________________________________________________________________________________
+     27          */
+     28          
+     29          #include "spi_wrapper_sd.h"
+     30          #include "sdcard.h"
+     31          
+     32          /* Command definitions in SPI bus mode */
+     33          #define GO_IDLE_STATE           0
+     34          #define SEND_OP_COND            1
+     35          #define SWITCH_FUNC             6
+     36          #define SEND_IF_COND            8
+     37          #define SEND_CSD                9
+     38          #define SEND_CID                10
+     39          #define STOP_TRANSMISSION       12
+     40          #define SEND_STATUS             13
+     41          #define SET_BLOCKLEN            16
+     42          #define READ_SINGLE_BLOCK       17
+     43          #define READ_MULTIPLE_BLOCK     18
+     44          #define WRITE_SINGLE_BLOCK      24
+     45          #define WRITE_MULTIPLE_BLOCK    25
+     46          #define APP_CMD                 55
+     47          #define READ_OCR                58
+     48          #define CRC_ON_OFF              59
+     49          
+     50          /* Application specific commands supported by SD.
+     51          All these commands shall be preceded with APP_CMD (CMD55). */
+     52          #define SD_STATUS               13
+     53          #define SD_SEND_OP_COND         41
+     54          
+     55          /* R1 response bit flag definition */
+     56          #define R1_NO_ERROR         0x00
+     57          #define R1_IN_IDLE_STATE    0x01
+     58          #define R1_ERASE_RESET      0x02
+     59          #define R1_ILLEGAL_CMD      0x04
+     60          #define R1_COM_CRC_ERROR    0x08
+     61          #define R1_ERASE_SEQ_ERROR  0x10
+     62          #define R1_ADDRESS_ERROR    0x20
+     63          #define R1_PARA_ERROR       0x40
+     64          #define R1_MASK             0x7F
+     65          
+     66          /* The sector size is fixed to 512bytes in most applications. */
+     67          #define SECTOR_SIZE 512
+     68          
+     69          
+     70          /* Global variables */
+
+   \                                 In section .bss, align 1
+     71          unsigned char CardType;          /* card type */ 
+   \                     CardType:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 4
+     72          CARDCONFIG CardConfig;      /* Card configuration */
+   \                     CardConfig:
+   \   00000000                      DS8 48
+     73          
+     74          /* Local variables */
+
+   \                                 In section .bss, align 4
+     75          static volatile unsigned int Timer1, Timer2;	/* 100Hz decrement timer stopped at zero (disk_timerproc()) */
+   \                     Timer1:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+   \                     Timer2:
+   \   00000000                      DS8 4
+     76          
+     77          /** Select the card */
+     78          #define SD_Select()  do {SPI_CS_Low();} while (0)
+     79          /** DeSelect the card */
+     80          #define SD_DeSelect() do { SPI_CS_High ();SPI_RecvByte();} while (0)
+     81          
+     82          /* Local functions */
+     83          SD_BOOL     SD_Init (void);
+     84          SD_BOOL     SD_ReadSector (unsigned int sect, unsigned char *buf, unsigned int cnt);
+     85          SD_BOOL     SD_WriteSector (unsigned int sect, const unsigned char *buf, unsigned int cnt);
+     86          SD_BOOL     SD_ReadConfiguration (void);
+     87          unsigned char     SD_SendCommand (unsigned char cmd, unsigned int arg, unsigned char *buf, unsigned int len);
+     88          unsigned char     SD_SendACommand (unsigned char cmd, unsigned int arg, unsigned char *buf, unsigned int len);
+     89          SD_BOOL     SD_RecvDataBlock (unsigned char *buf, unsigned int len);
+     90          SD_BOOL     SD_SendDataBlock (const unsigned char *buf, unsigned char tkn, unsigned int len) ;
+     91          SD_BOOL     SD_WaitForReady (void);
+     92          
+     93          /***********************************************************************************
+     94          *     Descrição     :   Função de temporização da biblioteca, deve
+     95          *                       ser executada a cada 10ms
+     96          *     Parametros    :   nenhum
+     97          *     Retorno       :   nenhum
+     98          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     99          void disk_timerproc (void){ 
+    100              static unsigned char counter=10;
+    101              unsigned int n;
+    102              
+    103              if(counter){
+   \                     disk_timerproc:
+   \   00000000   0x.... 0x....      LDR.W    R0,??DataTable7
+   \   00000004   0x7800             LDRB     R0,[R0, #+0]
+   \   00000006   0x2800             CMP      R0,#+0
+   \   00000008   0xD007             BEQ.N    ??disk_timerproc_0
+    104                counter--;
+   \   0000000A   0x.... 0x....      LDR.W    R0,??DataTable7
+   \   0000000E   0x7800             LDRB     R0,[R0, #+0]
+   \   00000010   0x1E40             SUBS     R0,R0,#+1
+   \   00000012   0x.... 0x....      LDR.W    R1,??DataTable7
+   \   00000016   0x7008             STRB     R0,[R1, #+0]
+    105                return;
+   \   00000018   0xE015             B.N      ??disk_timerproc_1
+    106              }
+    107              
+    108              counter=10;
+   \                     ??disk_timerproc_0:
+   \   0000001A   0x.... 0x....      LDR.W    R0,??DataTable7
+   \   0000001E   0x210A             MOVS     R1,#+10
+   \   00000020   0x7001             STRB     R1,[R0, #+0]
+    109              
+    110              n = Timer1;						/* 100Hz decrement timer stopped at 0 */
+   \   00000022   0x.... 0x....      LDR.W    R0,??DataTable7_1
+   \   00000026   0x6800             LDR      R0,[R0, #+0]
+    111              if (n) Timer1 = --n;
+   \   00000028   0x2800             CMP      R0,#+0
+   \   0000002A   0xD003             BEQ.N    ??disk_timerproc_2
+   \   0000002C   0x1E40             SUBS     R0,R0,#+1
+   \   0000002E   0x.... 0x....      LDR.W    R1,??DataTable7_1
+   \   00000032   0x6008             STR      R0,[R1, #+0]
+    112              n = Timer2;
+   \                     ??disk_timerproc_2:
+   \   00000034   0x.... 0x....      LDR.W    R0,??DataTable7_2
+   \   00000038   0x6800             LDR      R0,[R0, #+0]
+    113              if (n) Timer2 = --n;               
+   \   0000003A   0x2800             CMP      R0,#+0
+   \   0000003C   0xD003             BEQ.N    ??disk_timerproc_3
+   \   0000003E   0x1E40             SUBS     R0,R0,#+1
+   \   00000040   0x.... 0x....      LDR.W    R1,??DataTable7_2
+   \   00000044   0x6008             STR      R0,[R1, #+0]
+    114          }
+   \                     ??disk_timerproc_3:
+   \                     ??disk_timerproc_1:
+   \   00000046   0x4770             BX       LR               ;; return
+
+   \                                 In section .data, align 1
+   \                     ??counter:
+   \   00000000   0x0A               DC8 10
+    115          /***********************************************************************************
+    116          *     Descrição   :     Inicialização do módulo
+    117          *     Parametros  :     nenhum
+    118          *     Retorno     :     nenhum
+    119          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    120          SD_BOOL SD_Init (void)
+    121          {
+   \                     SD_Init:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB082             SUB      SP,SP,#+8
+    122              unsigned int i;
+    123              unsigned char  r1, buf[4];
+    124          
+    125              /* Set card type to unknown */
+    126              CardType = CARDTYPE_UNKNOWN;
+   \   00000004   0x.... 0x....      LDR.W    R0,??DataTable7_3
+   \   00000008   0x2100             MOVS     R1,#+0
+   \   0000000A   0x7001             STRB     R1,[R0, #+0]
+    127          
+    128              /* Init SPI interface */
+    129              SPI_Init ();
+   \   0000000C   0x.... 0x....      BL       SPI_Init
+    130          
+    131              /* Before reset, Send at least 74 clocks at low frequency 
+    132              (between 100kHz and 400kHz) with CS high and DI (MISO) high. */
+    133              SD_DeSelect();
+   \   00000010   0x.... 0x....      BL       SPI_CS_High
+   \   00000014   0x.... 0x....      BL       SPI_RecvByte
+    134              SPI_ConfigClockRate (SPI_CLOCKRATE_LOW);
+   \   00000018   0x.... 0x....      LDR.W    R0,??DataTable7_4  ;; 0x3d0900
+   \   0000001C   0x.... 0x....      BL       SPI_ConfigClockRate
+    135              for (i = 0; i < 10; i++)    SPI_SendByte (0xFF);
+   \   00000020   0x2400             MOVS     R4,#+0
+   \   00000022   0xE003             B.N      ??SD_Init_0
+   \                     ??SD_Init_1:
+   \   00000024   0x20FF             MOVS     R0,#+255
+   \   00000026   0x.... 0x....      BL       SPI_SendByte
+   \   0000002A   0x1C64             ADDS     R4,R4,#+1
+   \                     ??SD_Init_0:
+   \   0000002C   0x2C0A             CMP      R4,#+10
+   \   0000002E   0xD3F9             BCC.N    ??SD_Init_1
+    136          
+    137              /* Send CMD0 with CS low to enter SPI mode and reset the card.
+    138              The card will enter SPI mode if CS is low during the reception of CMD0. 
+    139              Since the CMD0 (and CMD8) must be sent as a native command, the CRC field
+    140              must have a valid value. */
+    141              if (SD_SendCommand (GO_IDLE_STATE, 0, NULL, 0) != R1_IN_IDLE_STATE) // CMD0
+   \   00000030   0x2300             MOVS     R3,#+0
+   \   00000032   0x2200             MOVS     R2,#+0
+   \   00000034   0x2100             MOVS     R1,#+0
+   \   00000036   0x2000             MOVS     R0,#+0
+   \   00000038   0x.... 0x....      BL       SD_SendCommand
+   \   0000003C   0x2801             CMP      R0,#+1
+   \   0000003E   0xF040 0x8094      BNE.W    ??SD_Init_2
+    142              {
+    143                  goto  init_end;
+    144              }
+    145          
+    146              /* Now the card enters IDLE state. */
+    147          
+    148              /* Card type identification Start ... */
+    149          
+    150              /* Check the card type, needs around 1000ms */    
+    151              r1 = SD_SendCommand (SEND_IF_COND, 0x1AA, buf, 4);  // CMD8
+   \                     ??SD_Init_3:
+   \   00000042   0x2304             MOVS     R3,#+4
+   \   00000044   0xAA00             ADD      R2,SP,#+0
+   \   00000046   0xF44F 0x71D5      MOV      R1,#+426
+   \   0000004A   0x2008             MOVS     R0,#+8
+   \   0000004C   0x.... 0x....      BL       SD_SendCommand
+    152              if (r1 & 0x80) goto init_end;
+   \   00000050   0x0601             LSLS     R1,R0,#+24
+   \   00000052   0xF100 0x808A      BMI.W    ??SD_Init_2
+    153          
+    154              Timer1 = 100; // 1000ms
+   \                     ??SD_Init_4:
+   \   00000056   0x.... 0x....      LDR.W    R1,??DataTable7_1
+   \   0000005A   0x2264             MOVS     R2,#+100
+   \   0000005C   0x600A             STR      R2,[R1, #+0]
+    155              if (r1 == R1_IN_IDLE_STATE) { /* It's V2.0 or later SD card */
+   \   0000005E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000060   0x2801             CMP      R0,#+1
+   \   00000062   0xD132             BNE.N    ??SD_Init_5
+    156                  if (buf[2]!= 0x01 || buf[3]!=0xAA) goto init_end; 
+   \   00000064   0xF89D 0x0002      LDRB     R0,[SP, #+2]
+   \   00000068   0x2801             CMP      R0,#+1
+   \   0000006A   0xD103             BNE.N    ??SD_Init_6
+   \   0000006C   0xF89D 0x0003      LDRB     R0,[SP, #+3]
+   \   00000070   0x28AA             CMP      R0,#+170
+   \   00000072   0xD000             BEQ.N    ??SD_Init_7
+   \                     ??SD_Init_6:
+   \   00000074   0xE079             B.N      ??SD_Init_2
+    157          
+    158                  /* The card is SD V2 and can work at voltage range of 2.7 to 3.6V */
+    159          
+    160                  do {
+    161                      r1 = SD_SendACommand (SD_SEND_OP_COND, 0x40000000, NULL, 0);  // ACMD41
+   \                     ??SD_Init_7:
+   \   00000076   0x2300             MOVS     R3,#+0
+   \   00000078   0x2200             MOVS     R2,#+0
+   \   0000007A   0xF05F 0x4180      MOVS     R1,#+1073741824
+   \   0000007E   0x2029             MOVS     R0,#+41
+   \   00000080   0x.... 0x....      BL       SD_SendACommand
+    162                      if      (r1 == 0x00) break;
+   \   00000084   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000086   0x2800             CMP      R0,#+0
+   \   00000088   0xD007             BEQ.N    ??SD_Init_8
+    163                      else if (r1 > 0x01)  goto init_end;            
+   \                     ??SD_Init_9:
+   \   0000008A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000008C   0x2802             CMP      R0,#+2
+   \   0000008E   0xDA6C             BGE.N    ??SD_Init_2
+    164                  } while (Timer1);
+   \                     ??SD_Init_10:
+   \   00000090   0x.... 0x....      LDR.W    R0,??DataTable7_1
+   \   00000094   0x6800             LDR      R0,[R0, #+0]
+   \   00000096   0x2800             CMP      R0,#+0
+   \   00000098   0xD1ED             BNE.N    ??SD_Init_7
+    165          
+    166                  if (Timer1 && SD_SendCommand (READ_OCR, 0, buf, 4)==R1_NO_ERROR)  // CMD58
+   \                     ??SD_Init_8:
+   \   0000009A   0x.... 0x....      LDR.W    R0,??DataTable7_1
+   \   0000009E   0x6800             LDR      R0,[R0, #+0]
+   \   000000A0   0x2800             CMP      R0,#+0
+   \   000000A2   0xD046             BEQ.N    ??SD_Init_11
+   \   000000A4   0x2304             MOVS     R3,#+4
+   \   000000A6   0xAA00             ADD      R2,SP,#+0
+   \   000000A8   0x2100             MOVS     R1,#+0
+   \   000000AA   0x203A             MOVS     R0,#+58
+   \   000000AC   0x.... 0x....      BL       SD_SendCommand
+   \   000000B0   0x2800             CMP      R0,#+0
+   \   000000B2   0xD13E             BNE.N    ??SD_Init_11
+    167                      CardType = (buf[0] & 0x40) ? CARDTYPE_SDV2_HC : CARDTYPE_SDV2_SC;
+   \   000000B4   0xF89D 0x0000      LDRB     R0,[SP, #+0]
+   \   000000B8   0x0640             LSLS     R0,R0,#+25
+   \   000000BA   0xD501             BPL.N    ??SD_Init_12
+   \   000000BC   0x2004             MOVS     R0,#+4
+   \   000000BE   0xE000             B.N      ??SD_Init_13
+   \                     ??SD_Init_12:
+   \   000000C0   0x2003             MOVS     R0,#+3
+   \                     ??SD_Init_13:
+   \   000000C2   0x.... 0x....      LDR.W    R1,??DataTable7_3
+   \   000000C6   0x7008             STRB     R0,[R1, #+0]
+   \   000000C8   0xE033             B.N      ??SD_Init_11
+    168                   
+    169              } else { /* It's Ver1.x SD card or MMC card */
+    170          
+    171                  /* Check if it is SD card */
+    172                  if (SD_SendCommand (APP_CMD, 0, NULL, 0) & R1_ILLEGAL_CMD)
+   \                     ??SD_Init_5:
+   \   000000CA   0x2300             MOVS     R3,#+0
+   \   000000CC   0x2200             MOVS     R2,#+0
+   \   000000CE   0x2100             MOVS     R1,#+0
+   \   000000D0   0x2037             MOVS     R0,#+55
+   \   000000D2   0x.... 0x....      BL       SD_SendCommand
+   \   000000D6   0x0740             LSLS     R0,R0,#+29
+   \   000000D8   0xD511             BPL.N    ??SD_Init_14
+    173                  {   
+    174                      CardType = CARDTYPE_MMC; 
+   \   000000DA   0x.... 0x....      LDR.W    R0,??DataTable7_3
+   \   000000DE   0x2101             MOVS     R1,#+1
+   \   000000E0   0x7001             STRB     R1,[R0, #+0]
+    175                      while (Timer1 && SD_SendCommand (SEND_OP_COND, 0, NULL, 0));
+   \                     ??SD_Init_15:
+   \   000000E2   0x.... 0x....      LDR.W    R0,??DataTable7_1
+   \   000000E6   0x6800             LDR      R0,[R0, #+0]
+   \   000000E8   0x2800             CMP      R0,#+0
+   \   000000EA   0xD019             BEQ.N    ??SD_Init_16
+   \   000000EC   0x2300             MOVS     R3,#+0
+   \   000000EE   0x2200             MOVS     R2,#+0
+   \   000000F0   0x2100             MOVS     R1,#+0
+   \   000000F2   0x2001             MOVS     R0,#+1
+   \   000000F4   0x.... 0x....      BL       SD_SendCommand
+   \   000000F8   0x2800             CMP      R0,#+0
+   \   000000FA   0xD1F2             BNE.N    ??SD_Init_15
+   \   000000FC   0xE010             B.N      ??SD_Init_16
+    176                  }  
+    177                  else 
+    178                  {   
+    179                      CardType = CARDTYPE_SDV1; 
+   \                     ??SD_Init_14:
+   \   000000FE   0x.... 0x....      LDR.W    R0,??DataTable7_3
+   \   00000102   0x2102             MOVS     R1,#+2
+   \   00000104   0x7001             STRB     R1,[R0, #+0]
+    180                      while (Timer1 && SD_SendACommand (SD_SEND_OP_COND, 0, NULL, 0));
+   \                     ??SD_Init_17:
+   \   00000106   0x.... 0x....      LDR.W    R0,??DataTable7_1
+   \   0000010A   0x6800             LDR      R0,[R0, #+0]
+   \   0000010C   0x2800             CMP      R0,#+0
+   \   0000010E   0xD007             BEQ.N    ??SD_Init_16
+   \   00000110   0x2300             MOVS     R3,#+0
+   \   00000112   0x2200             MOVS     R2,#+0
+   \   00000114   0x2100             MOVS     R1,#+0
+   \   00000116   0x2029             MOVS     R0,#+41
+   \   00000118   0x.... 0x....      BL       SD_SendACommand
+   \   0000011C   0x2800             CMP      R0,#+0
+   \   0000011E   0xD1F2             BNE.N    ??SD_Init_17
+    181                  }
+    182          
+    183                  if (Timer1 == 0) CardType = CARDTYPE_UNKNOWN;
+   \                     ??SD_Init_16:
+   \   00000120   0x.... 0x....      LDR.W    R0,??DataTable7_1
+   \   00000124   0x6800             LDR      R0,[R0, #+0]
+   \   00000126   0x2800             CMP      R0,#+0
+   \   00000128   0xD103             BNE.N    ??SD_Init_11
+   \   0000012A   0x.... 0x....      LDR.W    R0,??DataTable7_3
+   \   0000012E   0x2100             MOVS     R1,#+0
+   \   00000130   0x7001             STRB     R1,[R0, #+0]
+    184              }
+    185          
+    186              /* For SDHC or SDXC, block length is fixed to 512 bytes, for others,
+    187              the block length is set to 512 manually. */
+    188              if (CardType == CARDTYPE_MMC ||
+    189                  CardType == CARDTYPE_SDV1 ||
+    190                  CardType == CARDTYPE_SDV2_SC )
+   \                     ??SD_Init_11:
+   \   00000132   0x.... 0x....      LDR.W    R0,??DataTable7_3
+   \   00000136   0x7800             LDRB     R0,[R0, #+0]
+   \   00000138   0x2801             CMP      R0,#+1
+   \   0000013A   0xD009             BEQ.N    ??SD_Init_18
+   \   0000013C   0x.... 0x....      LDR.W    R0,??DataTable7_3
+   \   00000140   0x7800             LDRB     R0,[R0, #+0]
+   \   00000142   0x2802             CMP      R0,#+2
+   \   00000144   0xD004             BEQ.N    ??SD_Init_18
+   \   00000146   0x.... 0x....      LDR.W    R0,??DataTable7_3
+   \   0000014A   0x7800             LDRB     R0,[R0, #+0]
+   \   0000014C   0x2803             CMP      R0,#+3
+   \   0000014E   0xD10C             BNE.N    ??SD_Init_2
+    191              {
+    192                  if (SD_SendCommand (SET_BLOCKLEN, SECTOR_SIZE, NULL, 0) != R1_NO_ERROR)
+   \                     ??SD_Init_18:
+   \   00000150   0x2300             MOVS     R3,#+0
+   \   00000152   0x2200             MOVS     R2,#+0
+   \   00000154   0xF44F 0x7100      MOV      R1,#+512
+   \   00000158   0x2010             MOVS     R0,#+16
+   \   0000015A   0x.... 0x....      BL       SD_SendCommand
+   \   0000015E   0x2800             CMP      R0,#+0
+   \   00000160   0xD003             BEQ.N    ??SD_Init_2
+    193                      CardType = CARDTYPE_UNKNOWN;
+   \   00000162   0x.... 0x....      LDR.W    R0,??DataTable7_3
+   \   00000166   0x2100             MOVS     R1,#+0
+   \   00000168   0x7001             STRB     R1,[R0, #+0]
+    194              }
+    195          
+    196          init_end:              
+    197             SD_DeSelect();
+   \                     ??SD_Init_2:
+   \   0000016A   0x.... 0x....      BL       SPI_CS_High
+   \   0000016E   0x.... 0x....      BL       SPI_RecvByte
+    198          
+    199              if (CardType == CARDTYPE_UNKNOWN)
+   \   00000172   0x.... 0x....      LDR.W    R0,??DataTable7_3
+   \   00000176   0x7800             LDRB     R0,[R0, #+0]
+   \   00000178   0x2800             CMP      R0,#+0
+   \   0000017A   0xD101             BNE.N    ??SD_Init_19
+    200              {
+    201                  return (SD_FALSE);
+   \   0000017C   0x2000             MOVS     R0,#+0
+   \   0000017E   0xE004             B.N      ??SD_Init_20
+    202              }
+    203              else     /* Init OK. use high speed during data transaction stage. */
+    204              {
+    205                  SPI_ConfigClockRate (SPI_CLOCKRATE_HIGH);
+   \                     ??SD_Init_19:
+   \   00000180   0x.... 0x....      LDR.W    R0,??DataTable7_5  ;; 0x17d7840
+   \   00000184   0x.... 0x....      BL       SPI_ConfigClockRate
+    206                  return (SD_TRUE);
+   \   00000188   0x2001             MOVS     R0,#+1
+   \                     ??SD_Init_20:
+   \   0000018A   0xBD16             POP      {R1,R2,R4,PC}    ;; return
+    207              }
+    208          }
+    209          /***********************************************************************************
+    210          * @brief  Wait for the card is ready. 
+    211          *
+    212          * @param  None
+    213          * @retval SD_TRUE: Card is ready for read commands.
+    214          *         SD_FALSE: Card is not ready 
+    215          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    216          SD_BOOL SD_WaitForReady (void)
+    217          {
+   \                     SD_WaitForReady:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    218              Timer2 = 50;    // 500ms
+   \   00000002   0x.... 0x....      LDR.W    R0,??DataTable7_2
+   \   00000006   0x2132             MOVS     R1,#+50
+   \   00000008   0x6001             STR      R1,[R0, #+0]
+    219              SPI_RecvByte(); /* Read a byte (Force enable DO output) */
+   \   0000000A   0x.... 0x....      BL       SPI_RecvByte
+    220              do {
+    221                  if (SPI_RecvByte () == 0xFF) return SD_TRUE;
+   \                     ??SD_WaitForReady_0:
+   \   0000000E   0x.... 0x....      BL       SPI_RecvByte
+   \   00000012   0x28FF             CMP      R0,#+255
+   \   00000014   0xD101             BNE.N    ??SD_WaitForReady_1
+   \   00000016   0x2001             MOVS     R0,#+1
+   \   00000018   0xE005             B.N      ??SD_WaitForReady_2
+    222              } while (Timer2);
+   \                     ??SD_WaitForReady_1:
+   \   0000001A   0x.... 0x....      LDR.W    R0,??DataTable7_2
+   \   0000001E   0x6800             LDR      R0,[R0, #+0]
+   \   00000020   0x2800             CMP      R0,#+0
+   \   00000022   0xD1F4             BNE.N    ??SD_WaitForReady_0
+    223          
+    224              return SD_FALSE;    
+   \   00000024   0x2000             MOVS     R0,#+0
+   \                     ??SD_WaitForReady_2:
+   \   00000026   0xBD02             POP      {R1,PC}          ;; return
+    225          }
+    226          /***********************************************************************************
+    227          * @brief  Send a command and receive a response with specified format. 
+    228          *
+    229          * @param  cmd: Specifies the command index.
+    230          * @param  arg: Specifies the argument.
+    231          * @param  buf: Pointer to byte array to store the response content.
+    232          * @param  len: Specifies the byte number to be received after R1 response.
+    233          * @retval Value below 0x80 is the normal R1 response (0x0 means no error) 
+    234          *         Value above 0x80 is the additional returned status code.
+    235          *             0x81: Card is not ready
+    236          *             0x82: command response time out error
+    237          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    238          unsigned char SD_SendCommand (unsigned char cmd, unsigned int arg, unsigned char *buf, unsigned int len) 
+    239          {
+   \                     SD_SendCommand:
+   \   00000000   0xE92D 0x43F8      PUSH     {R3-R9,LR}
+   \   00000004   0x0004             MOVS     R4,R0
+   \   00000006   0x000D             MOVS     R5,R1
+   \   00000008   0x0016             MOVS     R6,R2
+   \   0000000A   0x001F             MOVS     R7,R3
+    240              unsigned int r1,i;
+    241              unsigned char crc_stop;
+    242          
+    243              /* The CS signal must be kept low during a transaction */
+    244              SD_Select();
+   \   0000000C   0x.... 0x....      BL       SPI_CS_Low
+    245          
+    246              /* Wait until the card is ready to read (DI signal is High) */
+    247              if (SD_WaitForReady() == SD_FALSE) return 0x81;
+   \   00000010   0x.... 0x....      BL       SD_WaitForReady
+   \   00000014   0x2800             CMP      R0,#+0
+   \   00000016   0xD101             BNE.N    ??SD_SendCommand_0
+   \   00000018   0x2081             MOVS     R0,#+129
+   \   0000001A   0xE042             B.N      ??SD_SendCommand_1
+    248          
+    249              /* Prepare CRC7 + stop bit. For cmd GO_IDLE_STATE and SEND_IF_COND, 
+    250              the CRC7 should be valid, otherwise, the CRC7 will be ignored. */
+    251              if      (cmd == GO_IDLE_STATE)  crc_stop = 0x95; /* valid CRC7 + stop bit */
+   \                     ??SD_SendCommand_0:
+   \   0000001C   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   0000001E   0x2C00             CMP      R4,#+0
+   \   00000020   0xD102             BNE.N    ??SD_SendCommand_2
+   \   00000022   0xF05F 0x0995      MOVS     R9,#+149
+   \   00000026   0xE007             B.N      ??SD_SendCommand_3
+    252              else if (cmd == SEND_IF_COND)   crc_stop = 0x87; /* valid CRC7 + stop bit */
+   \                     ??SD_SendCommand_2:
+   \   00000028   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   0000002A   0x2C08             CMP      R4,#+8
+   \   0000002C   0xD102             BNE.N    ??SD_SendCommand_4
+   \   0000002E   0xF05F 0x0987      MOVS     R9,#+135
+   \   00000032   0xE001             B.N      ??SD_SendCommand_3
+    253              else                            crc_stop = 0x01; /* dummy CRC7 + Stop bit */
+   \                     ??SD_SendCommand_4:
+   \   00000034   0xF05F 0x0901      MOVS     R9,#+1
+    254          
+    255              /* Send 6-byte command with CRC. */ 
+    256              SPI_SendByte (cmd | 0x40);
+   \                     ??SD_SendCommand_3:
+   \   00000038   0xF054 0x0040      ORRS     R0,R4,#0x40
+   \   0000003C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000003E   0x.... 0x....      BL       SPI_SendByte
+    257              SPI_SendByte (arg >> 24);
+   \   00000042   0x0E28             LSRS     R0,R5,#+24
+   \   00000044   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000046   0x.... 0x....      BL       SPI_SendByte
+    258              SPI_SendByte (arg >> 16);
+   \   0000004A   0x0C28             LSRS     R0,R5,#+16
+   \   0000004C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000004E   0x.... 0x....      BL       SPI_SendByte
+    259              SPI_SendByte (arg >> 8);
+   \   00000052   0x0A28             LSRS     R0,R5,#+8
+   \   00000054   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000056   0x.... 0x....      BL       SPI_SendByte
+    260              SPI_SendByte (arg);
+   \   0000005A   0x0028             MOVS     R0,R5
+   \   0000005C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000005E   0x.... 0x....      BL       SPI_SendByte
+    261              SPI_SendByte (crc_stop); /* Valid or dummy CRC plus stop bit */
+   \   00000062   0x4648             MOV      R0,R9
+   \   00000064   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000066   0x.... 0x....      BL       SPI_SendByte
+    262          
+    263             
+    264              /* The command response time (Ncr) is 0 to 8 bytes for SDC, 
+    265              1 to 8 bytes for MMC. */
+    266              for (i = 8; i; i--)
+   \   0000006A   0x2408             MOVS     R4,#+8
+   \   0000006C   0xE000             B.N      ??SD_SendCommand_5
+   \                     ??SD_SendCommand_6:
+   \   0000006E   0x1E64             SUBS     R4,R4,#+1
+   \                     ??SD_SendCommand_5:
+   \   00000070   0x2C00             CMP      R4,#+0
+   \   00000072   0xD005             BEQ.N    ??SD_SendCommand_7
+    267              {
+    268                  r1 = SPI_RecvByte ();
+   \   00000074   0x.... 0x....      BL       SPI_RecvByte
+   \   00000078   0x4680             MOV      R8,R0
+    269                  if (r1 != 0xFF) break;   /* received valid response */      
+   \   0000007A   0xF1B8 0x0FFF      CMP      R8,#+255
+   \   0000007E   0xD0F6             BEQ.N    ??SD_SendCommand_6
+    270              }
+    271              if (i == 0)  return (0x82); /* command response time out error */
+   \                     ??SD_SendCommand_7:
+   \   00000080   0x2C00             CMP      R4,#+0
+   \   00000082   0xD101             BNE.N    ??SD_SendCommand_8
+   \   00000084   0x2082             MOVS     R0,#+130
+   \   00000086   0xE00C             B.N      ??SD_SendCommand_1
+    272          
+    273              /* Read remaining bytes after R1 response */
+    274              if (buf && len)
+   \                     ??SD_SendCommand_8:
+   \   00000088   0x2E00             CMP      R6,#+0
+   \   0000008A   0xD008             BEQ.N    ??SD_SendCommand_9
+   \   0000008C   0x2F00             CMP      R7,#+0
+   \   0000008E   0xD006             BEQ.N    ??SD_SendCommand_9
+    275              {
+    276                  do {   
+    277                      *buf++ = SPI_RecvByte ();
+   \                     ??SD_SendCommand_10:
+   \   00000090   0x.... 0x....      BL       SPI_RecvByte
+   \   00000094   0x7030             STRB     R0,[R6, #+0]
+   \   00000096   0x1C76             ADDS     R6,R6,#+1
+    278                  } while (--len);
+   \   00000098   0x1E7F             SUBS     R7,R7,#+1
+   \   0000009A   0x2F00             CMP      R7,#+0
+   \   0000009C   0xD1F8             BNE.N    ??SD_SendCommand_10
+    279              }
+    280          
+    281              return (r1);
+   \                     ??SD_SendCommand_9:
+   \   0000009E   0x4640             MOV      R0,R8
+   \   000000A0   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \                     ??SD_SendCommand_1:
+   \   000000A2   0xE8BD 0x83F2      POP      {R1,R4-R9,PC}    ;; return
+    282          }
+    283          /***********************************************************************************
+    284          * @brief  Send an application specific command for SD card 
+    285          *         and receive a response with specified format. 
+    286          *
+    287          * @param  cmd: Specifies the command index.
+    288          * @param  arg: Specifies the argument.
+    289          * @param  buf: Pointer to byte array to store the response content.
+    290          * @param  len: Specifies the byte number to be received after R1 response.
+    291          * @retval Value below 0x80 is the normal R1 response(0x0 means no error)
+    292          *         Value above 0x80 is the additional returned status code.
+    293          *             0x81: Card is not ready
+    294          *             0x82: command response time out error
+    295          *
+    296          * Note: All the application specific commands should be precdeded with APP_CMD
+    297          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    298          unsigned char SD_SendACommand (unsigned char cmd, unsigned int arg, unsigned char *buf, unsigned int len)
+    299          {
+   \                     SD_SendACommand:
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x0016             MOVS     R6,R2
+   \   00000008   0x001F             MOVS     R7,R3
+    300              unsigned char r1;
+    301          
+    302              /* Send APP_CMD (CMD55) first */
+    303          	r1 = SD_SendCommand(APP_CMD, 0, NULL, 0);
+   \   0000000A   0x2300             MOVS     R3,#+0
+   \   0000000C   0x2200             MOVS     R2,#+0
+   \   0000000E   0x2100             MOVS     R1,#+0
+   \   00000010   0x2037             MOVS     R0,#+55
+   \   00000012   0x.... 0x....      BL       SD_SendCommand
+    304          	if (r1 > 1) return r1;    
+   \   00000016   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000018   0x2802             CMP      R0,#+2
+   \   0000001A   0xDB01             BLT.N    ??SD_SendACommand_0
+   \   0000001C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001E   0xE006             B.N      ??SD_SendACommand_1
+    305              
+    306              return (SD_SendCommand (cmd, arg, buf, len));
+   \                     ??SD_SendACommand_0:
+   \   00000020   0x003B             MOVS     R3,R7
+   \   00000022   0x0032             MOVS     R2,R6
+   \   00000024   0x0029             MOVS     R1,R5
+   \   00000026   0x0020             MOVS     R0,R4
+   \   00000028   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000002A   0x.... 0x....      BL       SD_SendCommand
+   \                     ??SD_SendACommand_1:
+   \   0000002E   0xBDF2             POP      {R1,R4-R7,PC}    ;; return
+    307          }
+    308          /***********************************************************************************
+    309          *   @brief  Read single or multiple sector(s) from memory card.
+    310          *
+    311          *   @param  sect: Specifies the starting sector index to read
+    312          *   @param  buf:  Pointer to byte array to store the data
+    313          *   @param  cnt:  Specifies the count of sectors to read
+    314          *   @retval SD_TRUE or SD_FALSE. 
+    315          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    316          SD_BOOL SD_ReadSector (unsigned int sect, unsigned char *buf, unsigned int cnt)
+    317          {
+   \                     SD_ReadSector:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x000C             MOVS     R4,R1
+   \   00000004   0x0015             MOVS     R5,R2
+    318              SD_BOOL flag;
+    319          
+    320              /* Convert sector-based address to byte-based address for non SDHC */
+    321              if (CardType != CARDTYPE_SDV2_HC) sect <<= 9;
+   \   00000006   0x.... 0x....      LDR.W    R1,??DataTable7_3
+   \   0000000A   0x7809             LDRB     R1,[R1, #+0]
+   \   0000000C   0x2904             CMP      R1,#+4
+   \   0000000E   0xD000             BEQ.N    ??SD_ReadSector_0
+   \   00000010   0x0240             LSLS     R0,R0,#+9
+    322          
+    323              flag = SD_FALSE;
+   \                     ??SD_ReadSector_0:
+   \   00000012   0x2600             MOVS     R6,#+0
+    324          
+    325              if (cnt > 1) /* Read multiple block */
+   \   00000014   0x2D02             CMP      R5,#+2
+   \   00000016   0xD321             BCC.N    ??SD_ReadSector_1
+    326              {
+    327          		if (SD_SendCommand(READ_MULTIPLE_BLOCK, sect, NULL, 0) == R1_NO_ERROR) 
+   \   00000018   0x2300             MOVS     R3,#+0
+   \   0000001A   0x2200             MOVS     R2,#+0
+   \   0000001C   0x0001             MOVS     R1,R0
+   \   0000001E   0x2012             MOVS     R0,#+18
+   \   00000020   0x.... 0x....      BL       SD_SendCommand
+   \   00000024   0x2800             CMP      R0,#+0
+   \   00000026   0xD129             BNE.N    ??SD_ReadSector_2
+    328                  {            
+    329          			do {
+    330          				if (SD_RecvDataBlock(buf, SECTOR_SIZE) == SD_FALSE) break;
+   \                     ??SD_ReadSector_3:
+   \   00000028   0xF44F 0x7100      MOV      R1,#+512
+   \   0000002C   0x0020             MOVS     R0,R4
+   \   0000002E   0x.... 0x....      BL       SD_RecvDataBlock
+   \   00000032   0x2800             CMP      R0,#+0
+   \   00000034   0xD004             BEQ.N    ??SD_ReadSector_4
+    331          				buf += SECTOR_SIZE;
+   \                     ??SD_ReadSector_5:
+   \   00000036   0xF514 0x7400      ADDS     R4,R4,#+512
+    332          			} while (--cnt);
+   \   0000003A   0x1E6D             SUBS     R5,R5,#+1
+   \   0000003C   0x2D00             CMP      R5,#+0
+   \   0000003E   0xD1F3             BNE.N    ??SD_ReadSector_3
+    333          
+    334          			/* Stop transmission */
+    335                      SD_SendCommand(STOP_TRANSMISSION, 0, NULL, 0);				
+   \                     ??SD_ReadSector_4:
+   \   00000040   0x2300             MOVS     R3,#+0
+   \   00000042   0x2200             MOVS     R2,#+0
+   \   00000044   0x2100             MOVS     R1,#+0
+   \   00000046   0x200C             MOVS     R0,#+12
+   \   00000048   0x.... 0x....      BL       SD_SendCommand
+    336          
+    337                      /* Wait for the card is ready */
+    338                      if (SD_WaitForReady() && cnt==0) flag = SD_TRUE;
+   \   0000004C   0x.... 0x....      BL       SD_WaitForReady
+   \   00000050   0x2800             CMP      R0,#+0
+   \   00000052   0xD013             BEQ.N    ??SD_ReadSector_2
+   \   00000054   0x2D00             CMP      R5,#+0
+   \   00000056   0xD111             BNE.N    ??SD_ReadSector_2
+   \   00000058   0x2601             MOVS     R6,#+1
+   \   0000005A   0xE00F             B.N      ??SD_ReadSector_2
+    339                  }
+    340              }
+    341              else   /* Read single block */
+    342              {        
+    343                  if ((SD_SendCommand(READ_SINGLE_BLOCK, sect, NULL, 0)==R1_NO_ERROR) &&
+    344                      SD_RecvDataBlock(buf, SECTOR_SIZE)==SD_TRUE)    
+   \                     ??SD_ReadSector_1:
+   \   0000005C   0x2300             MOVS     R3,#+0
+   \   0000005E   0x2200             MOVS     R2,#+0
+   \   00000060   0x0001             MOVS     R1,R0
+   \   00000062   0x2011             MOVS     R0,#+17
+   \   00000064   0x.... 0x....      BL       SD_SendCommand
+   \   00000068   0x2800             CMP      R0,#+0
+   \   0000006A   0xD107             BNE.N    ??SD_ReadSector_2
+   \   0000006C   0xF44F 0x7100      MOV      R1,#+512
+   \   00000070   0x0020             MOVS     R0,R4
+   \   00000072   0x.... 0x....      BL       SD_RecvDataBlock
+   \   00000076   0x2801             CMP      R0,#+1
+   \   00000078   0xD100             BNE.N    ??SD_ReadSector_2
+    345                      flag = SD_TRUE;        
+   \   0000007A   0x2601             MOVS     R6,#+1
+    346              }
+    347          
+    348              /* De-select the card */
+    349              SD_DeSelect();
+   \                     ??SD_ReadSector_2:
+   \   0000007C   0x.... 0x....      BL       SPI_CS_High
+   \   00000080   0x.... 0x....      BL       SPI_RecvByte
+    350          
+    351              return (flag);
+   \   00000084   0x0030             MOVS     R0,R6
+   \   00000086   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000088   0xBD70             POP      {R4-R6,PC}       ;; return
+    352          }
+    353          /***********************************************************************************
+    354          * @brief  Write single or multiple sectors to SD/MMC. 
+    355          *
+    356          * @param  sect: Specifies the starting sector index to write
+    357          * @param  buf: Pointer to the data array to be written
+    358          * @param  cnt: Specifies the number sectors to be written
+    359          * @retval SD_TRUE or SD_FALSE
+    360          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    361          SD_BOOL SD_WriteSector (unsigned int sect, const unsigned char *buf, unsigned int cnt)
+    362          {
+   \                     SD_WriteSector:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x000C             MOVS     R4,R1
+   \   00000004   0x0015             MOVS     R5,R2
+    363              SD_BOOL flag;
+    364          
+    365              /* Convert sector-based address to byte-based address for non SDHC */
+    366              if (CardType != CARDTYPE_SDV2_HC) sect <<= 9; 
+   \   00000006   0x....             LDR.N    R1,??DataTable7_3
+   \   00000008   0x7809             LDRB     R1,[R1, #+0]
+   \   0000000A   0x2904             CMP      R1,#+4
+   \   0000000C   0xD000             BEQ.N    ??SD_WriteSector_0
+   \   0000000E   0x0240             LSLS     R0,R0,#+9
+    367          
+    368              flag = SD_FALSE;
+   \                     ??SD_WriteSector_0:
+   \   00000010   0x2600             MOVS     R6,#+0
+    369              if (cnt > 1)  /* write multiple block */
+   \   00000012   0x2D02             CMP      R5,#+2
+   \   00000014   0xD31F             BCC.N    ??SD_WriteSector_1
+    370              { 
+    371                  if (SD_SendCommand (WRITE_MULTIPLE_BLOCK, sect, NULL, 0) == R1_NO_ERROR)
+   \   00000016   0x2300             MOVS     R3,#+0
+   \   00000018   0x2200             MOVS     R2,#+0
+   \   0000001A   0x0001             MOVS     R1,R0
+   \   0000001C   0x2019             MOVS     R0,#+25
+   \   0000001E   0x.... 0x....      BL       SD_SendCommand
+   \   00000022   0x2800             CMP      R0,#+0
+   \   00000024   0xD128             BNE.N    ??SD_WriteSector_2
+    372                  {
+    373                      do {
+    374                          if (SD_SendDataBlock (buf, 0xFC, SECTOR_SIZE) == SD_FALSE)  break;
+   \                     ??SD_WriteSector_3:
+   \   00000026   0xF44F 0x7200      MOV      R2,#+512
+   \   0000002A   0x21FC             MOVS     R1,#+252
+   \   0000002C   0x0020             MOVS     R0,R4
+   \   0000002E   0x.... 0x....      BL       SD_SendDataBlock
+   \   00000032   0x2800             CMP      R0,#+0
+   \   00000034   0xD004             BEQ.N    ??SD_WriteSector_4
+    375                          buf += SECTOR_SIZE;
+   \                     ??SD_WriteSector_5:
+   \   00000036   0xF514 0x7400      ADDS     R4,R4,#+512
+    376                      } while (--cnt);
+   \   0000003A   0x1E6D             SUBS     R5,R5,#+1
+   \   0000003C   0x2D00             CMP      R5,#+0
+   \   0000003E   0xD1F2             BNE.N    ??SD_WriteSector_3
+    377          
+    378                      /* Send Stop Transmission Token. */
+    379                      SPI_SendByte (0xFD);
+   \                     ??SD_WriteSector_4:
+   \   00000040   0x20FD             MOVS     R0,#+253
+   \   00000042   0x.... 0x....      BL       SPI_SendByte
+    380                  
+    381                      /* Wait for complete */
+    382                      if (SD_WaitForReady() && cnt==0) flag = SD_TRUE;
+   \   00000046   0x.... 0x....      BL       SD_WaitForReady
+   \   0000004A   0x2800             CMP      R0,#+0
+   \   0000004C   0xD014             BEQ.N    ??SD_WriteSector_2
+   \   0000004E   0x2D00             CMP      R5,#+0
+   \   00000050   0xD112             BNE.N    ??SD_WriteSector_2
+   \   00000052   0x2601             MOVS     R6,#+1
+   \   00000054   0xE010             B.N      ??SD_WriteSector_2
+    383                  }
+    384              }
+    385              else  /* write single block */
+    386              {
+    387              
+    388                  if ( (SD_SendCommand (WRITE_SINGLE_BLOCK, sect, NULL, 0) == R1_NO_ERROR) &&
+    389                      (SD_SendDataBlock (buf, 0xFE, SECTOR_SIZE) == SD_TRUE))
+   \                     ??SD_WriteSector_1:
+   \   00000056   0x2300             MOVS     R3,#+0
+   \   00000058   0x2200             MOVS     R2,#+0
+   \   0000005A   0x0001             MOVS     R1,R0
+   \   0000005C   0x2018             MOVS     R0,#+24
+   \   0000005E   0x.... 0x....      BL       SD_SendCommand
+   \   00000062   0x2800             CMP      R0,#+0
+   \   00000064   0xD108             BNE.N    ??SD_WriteSector_2
+   \   00000066   0xF44F 0x7200      MOV      R2,#+512
+   \   0000006A   0x21FE             MOVS     R1,#+254
+   \   0000006C   0x0020             MOVS     R0,R4
+   \   0000006E   0x.... 0x....      BL       SD_SendDataBlock
+   \   00000072   0x2801             CMP      R0,#+1
+   \   00000074   0xD100             BNE.N    ??SD_WriteSector_2
+    390                      flag = SD_TRUE;
+   \   00000076   0x2601             MOVS     R6,#+1
+    391              }
+    392          
+    393              /* De-select the card */
+    394              SD_DeSelect();
+   \                     ??SD_WriteSector_2:
+   \   00000078   0x.... 0x....      BL       SPI_CS_High
+   \   0000007C   0x.... 0x....      BL       SPI_RecvByte
+    395          
+    396              return (flag);
+   \   00000080   0x0030             MOVS     R0,R6
+   \   00000082   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000084   0xBD70             POP      {R4-R6,PC}       ;; return
+    397          }
+    398          /***********************************************************************************
+    399          * @brief  Read card configuration and fill structure CardConfig.
+    400          *
+    401          * @param  None
+    402          * @retval SD_TRUE or SD_FALSE. 
+    403          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    404          SD_BOOL SD_ReadConfiguration ()
+    405          {
+   \                     SD_ReadConfiguration:
+   \   00000000   0xB51F             PUSH     {R0-R4,LR}
+    406              unsigned char buf[16];
+    407              unsigned int i, c_size, c_size_mult, read_bl_len;
+    408              SD_BOOL retv;
+    409            
+    410              retv = SD_FALSE;
+   \   00000002   0x2400             MOVS     R4,#+0
+    411          
+    412              /* Read OCR */
+    413              if (SD_SendCommand(READ_OCR, 0, CardConfig.ocr, 4) != R1_NO_ERROR) goto end;
+   \   00000004   0x2304             MOVS     R3,#+4
+   \   00000006   0x....             LDR.N    R2,??DataTable7_6
+   \   00000008   0x2100             MOVS     R1,#+0
+   \   0000000A   0x203A             MOVS     R0,#+58
+   \   0000000C   0x.... 0x....      BL       SD_SendCommand
+   \   00000010   0x2800             CMP      R0,#+0
+   \   00000012   0xF040 0x8093      BNE.W    ??SD_ReadConfiguration_0
+    414          
+    415              /* Read CID */
+    416              if ((SD_SendCommand(SEND_CID, 0, NULL, 0) != R1_NO_ERROR) ||
+    417                  SD_RecvDataBlock (CardConfig.cid, 16)==SD_FALSE) goto end;
+   \                     ??SD_ReadConfiguration_1:
+   \   00000016   0x2300             MOVS     R3,#+0
+   \   00000018   0x2200             MOVS     R2,#+0
+   \   0000001A   0x2100             MOVS     R1,#+0
+   \   0000001C   0x200A             MOVS     R0,#+10
+   \   0000001E   0x.... 0x....      BL       SD_SendCommand
+   \   00000022   0x2800             CMP      R0,#+0
+   \   00000024   0xD105             BNE.N    ??SD_ReadConfiguration_2
+   \   00000026   0x2110             MOVS     R1,#+16
+   \   00000028   0x....             LDR.N    R0,??DataTable7_7
+   \   0000002A   0x.... 0x....      BL       SD_RecvDataBlock
+   \   0000002E   0x2800             CMP      R0,#+0
+   \   00000030   0xD100             BNE.N    ??SD_ReadConfiguration_3
+   \                     ??SD_ReadConfiguration_2:
+   \   00000032   0xE083             B.N      ??SD_ReadConfiguration_0
+    418          
+    419              /* Read CSD */
+    420              if ((SD_SendCommand(SEND_CSD, 0, NULL, 0) != R1_NO_ERROR) ||
+    421                  SD_RecvDataBlock (CardConfig.csd, 16)==SD_FALSE) goto end;
+   \                     ??SD_ReadConfiguration_3:
+   \   00000034   0x2300             MOVS     R3,#+0
+   \   00000036   0x2200             MOVS     R2,#+0
+   \   00000038   0x2100             MOVS     R1,#+0
+   \   0000003A   0x2009             MOVS     R0,#+9
+   \   0000003C   0x.... 0x....      BL       SD_SendCommand
+   \   00000040   0x2800             CMP      R0,#+0
+   \   00000042   0xD105             BNE.N    ??SD_ReadConfiguration_4
+   \   00000044   0x2110             MOVS     R1,#+16
+   \   00000046   0x....             LDR.N    R0,??DataTable7_8
+   \   00000048   0x.... 0x....      BL       SD_RecvDataBlock
+   \   0000004C   0x2800             CMP      R0,#+0
+   \   0000004E   0xD100             BNE.N    ??SD_ReadConfiguration_5
+   \                     ??SD_ReadConfiguration_4:
+   \   00000050   0xE074             B.N      ??SD_ReadConfiguration_0
+    422          
+    423              /* sector size */
+    424              CardConfig.sectorsize = 512;
+   \                     ??SD_ReadConfiguration_5:
+   \   00000052   0x....             LDR.N    R0,??DataTable7_9
+   \   00000054   0xF44F 0x7100      MOV      R1,#+512
+   \   00000058   0x6001             STR      R1,[R0, #+0]
+    425              
+    426              /* sector count */
+    427              if (((CardConfig.csd[0]>>6) & 0x3) == 0x1) /* CSD V2.0 (for High/eXtended Capacity) */
+   \   0000005A   0x....             LDR.N    R0,??DataTable7_9
+   \   0000005C   0xF890 0x0020      LDRB     R0,[R0, #+32]
+   \   00000060   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000062   0x0980             LSRS     R0,R0,#+6
+   \   00000064   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000066   0x2801             CMP      R0,#+1
+   \   00000068   0xD115             BNE.N    ??SD_ReadConfiguration_6
+    428              {
+    429                  /* Read C_SIZE */
+    430                  c_size =  (((unsigned int)CardConfig.csd[7]<<16) + ((unsigned int)CardConfig.csd[8]<<8) + CardConfig.csd[9]) & 0x3FFFFF;
+   \   0000006A   0x....             LDR.N    R0,??DataTable7_9
+   \   0000006C   0xF890 0x0027      LDRB     R0,[R0, #+39]
+   \   00000070   0x....             LDR.N    R1,??DataTable7_9
+   \   00000072   0xF891 0x1028      LDRB     R1,[R1, #+40]
+   \   00000076   0x0209             LSLS     R1,R1,#+8
+   \   00000078   0xEB11 0x4000      ADDS     R0,R1,R0, LSL #+16
+   \   0000007C   0x....             LDR.N    R1,??DataTable7_9
+   \   0000007E   0xF891 0x1029      LDRB     R1,[R1, #+41]
+   \   00000082   0x1808             ADDS     R0,R1,R0
+   \   00000084   0x0280             LSLS     R0,R0,#+10       ;; ZeroExtS R0,R0,#+10,#+10
+   \   00000086   0x0A80             LSRS     R0,R0,#+10
+    431                  /* Calculate sector count */
+    432                 CardConfig.sectorcnt = (c_size + 1) * 1024;
+   \   00000088   0x1C40             ADDS     R0,R0,#+1
+   \   0000008A   0xF44F 0x6180      MOV      R1,#+1024
+   \   0000008E   0x4348             MULS     R0,R1,R0
+   \   00000090   0x....             LDR.N    R1,??DataTable7_9
+   \   00000092   0x6048             STR      R0,[R1, #+4]
+   \   00000094   0xE029             B.N      ??SD_ReadConfiguration_7
+    433          
+    434              } else   /* CSD V1.0 (for Standard Capacity) */
+    435              {
+    436                  /* C_SIZE */
+    437                  c_size = (((unsigned int)(CardConfig.csd[6]&0x3)<<10) + ((unsigned int)CardConfig.csd[7]<<2) + (CardConfig.csd[8]>>6)) & 0xFFF;
+   \                     ??SD_ReadConfiguration_6:
+   \   00000096   0x....             LDR.N    R0,??DataTable7_9
+   \   00000098   0xF890 0x0026      LDRB     R0,[R0, #+38]
+   \   0000009C   0x....             LDR.N    R1,??DataTable7_9
+   \   0000009E   0xF891 0x1027      LDRB     R1,[R1, #+39]
+   \   000000A2   0x0089             LSLS     R1,R1,#+2
+   \   000000A4   0xEB11 0x2080      ADDS     R0,R1,R0, LSL #+10
+   \   000000A8   0x....             LDR.N    R1,??DataTable7_9
+   \   000000AA   0xF891 0x1028      LDRB     R1,[R1, #+40]
+   \   000000AE   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   000000B0   0x0989             LSRS     R1,R1,#+6
+   \   000000B2   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   000000B4   0x1808             ADDS     R0,R1,R0
+   \   000000B6   0x0500             LSLS     R0,R0,#+20       ;; ZeroExtS R0,R0,#+20,#+20
+   \   000000B8   0x0D00             LSRS     R0,R0,#+20
+    438                  /* C_SIZE_MUTE */
+    439                  c_size_mult = ((CardConfig.csd[9]&0x3)<<1) + ((CardConfig.csd[10]&0x80)>>7);
+   \   000000BA   0x....             LDR.N    R1,??DataTable7_9
+   \   000000BC   0xF891 0x1029      LDRB     R1,[R1, #+41]
+   \   000000C0   0xF011 0x0103      ANDS     R1,R1,#0x3
+   \   000000C4   0x....             LDR.N    R2,??DataTable7_9
+   \   000000C6   0xF892 0x202A      LDRB     R2,[R2, #+42]
+   \   000000CA   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   000000CC   0x09D2             LSRS     R2,R2,#+7
+   \   000000CE   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   000000D0   0xEB12 0x0141      ADDS     R1,R2,R1, LSL #+1
+    440                  /* READ_BL_LEN */
+    441                  read_bl_len = CardConfig.csd[5] & 0xF;
+   \   000000D4   0x....             LDR.N    R2,??DataTable7_9
+   \   000000D6   0xF892 0x2025      LDRB     R2,[R2, #+37]
+   \   000000DA   0xF012 0x020F      ANDS     R2,R2,#0xF
+    442                  /* sector count = BLOCKNR*BLOCK_LEN/512, we manually set SECTOR_SIZE to 512*/
+    443                  //CardConfig.sectorcnt = (c_size+1)*(1<<read_bl_len) * (1<<(c_size_mult+2)) / 512;
+    444                  CardConfig.sectorcnt = (c_size+1) << (read_bl_len + c_size_mult - 7);        
+   \   000000DE   0x1C40             ADDS     R0,R0,#+1
+   \   000000E0   0x1889             ADDS     R1,R1,R2
+   \   000000E2   0x1FC9             SUBS     R1,R1,#+7
+   \   000000E4   0x4088             LSLS     R0,R0,R1
+   \   000000E6   0x....             LDR.N    R1,??DataTable7_9
+   \   000000E8   0x6048             STR      R0,[R1, #+4]
+    445              }
+    446          
+    447              /* Get erase block size in unit of sector */
+    448              switch (CardType)
+   \                     ??SD_ReadConfiguration_7:
+   \   000000EA   0x....             LDR.N    R0,??DataTable7_3
+   \   000000EC   0x7800             LDRB     R0,[R0, #+0]
+   \   000000EE   0x2801             CMP      R0,#+1
+   \   000000F0   0xD02C             BEQ.N    ??SD_ReadConfiguration_8
+   \   000000F2   0xD35C             BCC.N    ??SD_ReadConfiguration_9
+   \   000000F4   0x2803             CMP      R0,#+3
+   \   000000F6   0xD002             BEQ.N    ??SD_ReadConfiguration_10
+   \   000000F8   0xD341             BCC.N    ??SD_ReadConfiguration_11
+   \   000000FA   0x2804             CMP      R0,#+4
+   \   000000FC   0xD157             BNE.N    ??SD_ReadConfiguration_9
+    449              {
+    450                  case CARDTYPE_SDV2_SC:
+    451                  case CARDTYPE_SDV2_HC:
+    452                      if ((SD_SendACommand (SD_STATUS, 0, buf, 1) !=  R1_NO_ERROR) ||
+    453                          SD_RecvDataBlock(buf, 16) == SD_FALSE) goto end;      /* Read partial block */    
+   \                     ??SD_ReadConfiguration_10:
+   \   000000FE   0x2301             MOVS     R3,#+1
+   \   00000100   0xAA00             ADD      R2,SP,#+0
+   \   00000102   0x2100             MOVS     R1,#+0
+   \   00000104   0x200D             MOVS     R0,#+13
+   \   00000106   0x.... 0x....      BL       SD_SendACommand
+   \   0000010A   0x2800             CMP      R0,#+0
+   \   0000010C   0xD105             BNE.N    ??SD_ReadConfiguration_12
+   \   0000010E   0x2110             MOVS     R1,#+16
+   \   00000110   0xA800             ADD      R0,SP,#+0
+   \   00000112   0x.... 0x....      BL       SD_RecvDataBlock
+   \   00000116   0x2800             CMP      R0,#+0
+   \   00000118   0xD100             BNE.N    ??SD_ReadConfiguration_13
+   \                     ??SD_ReadConfiguration_12:
+   \   0000011A   0xE00F             B.N      ??SD_ReadConfiguration_0
+    454                      for (i=64-16;i;i--) SPI_RecvByte();  /* Purge trailing data */            
+   \                     ??SD_ReadConfiguration_13:
+   \   0000011C   0x2430             MOVS     R4,#+48
+   \   0000011E   0xE002             B.N      ??SD_ReadConfiguration_14
+   \                     ??SD_ReadConfiguration_15:
+   \   00000120   0x.... 0x....      BL       SPI_RecvByte
+   \   00000124   0x1E64             SUBS     R4,R4,#+1
+   \                     ??SD_ReadConfiguration_14:
+   \   00000126   0x2C00             CMP      R4,#+0
+   \   00000128   0xD1FA             BNE.N    ??SD_ReadConfiguration_15
+    455                      CardConfig.blocksize = 16UL << (buf[10] >> 4); /* Calculate block size based on AU size */
+   \   0000012A   0x2010             MOVS     R0,#+16
+   \   0000012C   0xF89D 0x100A      LDRB     R1,[SP, #+10]
+   \   00000130   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000132   0x0909             LSRS     R1,R1,#+4
+   \   00000134   0x4088             LSLS     R0,R0,R1
+   \   00000136   0x....             LDR.N    R1,??DataTable7_9
+   \   00000138   0x6088             STR      R0,[R1, #+8]
+    456                      break;
+    457                  case CARDTYPE_MMC:
+    458                      CardConfig.blocksize = ((unsigned short int)((CardConfig.csd[10] & 124) >> 2) + 1) * (((CardConfig.csd[10] & 3) << 3) + ((CardConfig.csd[11] & 224) >> 5) + 1);
+    459                      break;
+    460                  case CARDTYPE_SDV1:
+    461                      CardConfig.blocksize = (((CardConfig.csd[10] & 63) << 1) + ((unsigned short int)(CardConfig.csd[11] & 128) >> 7) + 1) << ((CardConfig.csd[13] >> 6) - 1);
+    462                      break;
+    463                  default:
+    464                      goto end;                
+    465              }
+    466          
+    467              retv = SD_TRUE;
+   \                     ??SD_ReadConfiguration_16:
+   \   0000013A   0x2401             MOVS     R4,#+1
+    468          end:
+    469              SD_DeSelect ();
+   \                     ??SD_ReadConfiguration_0:
+   \   0000013C   0x.... 0x....      BL       SPI_CS_High
+   \   00000140   0x.... 0x....      BL       SPI_RecvByte
+    470          
+    471              return retv;
+   \   00000144   0x0020             MOVS     R0,R4
+   \   00000146   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000148   0xB004             ADD      SP,SP,#+16
+   \   0000014A   0xBD10             POP      {R4,PC}          ;; return
+   \                     ??SD_ReadConfiguration_8:
+   \   0000014C   0x....             LDR.N    R0,??DataTable7_9
+   \   0000014E   0xF890 0x002A      LDRB     R0,[R0, #+42]
+   \   00000152   0xF3C0 0x0084      UBFX     R0,R0,#+2,#+5
+   \   00000156   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000158   0x1C40             ADDS     R0,R0,#+1
+   \   0000015A   0x....             LDR.N    R1,??DataTable7_9
+   \   0000015C   0xF891 0x102A      LDRB     R1,[R1, #+42]
+   \   00000160   0xF011 0x0103      ANDS     R1,R1,#0x3
+   \   00000164   0x....             LDR.N    R2,??DataTable7_9
+   \   00000166   0xF892 0x202B      LDRB     R2,[R2, #+43]
+   \   0000016A   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   0000016C   0x0952             LSRS     R2,R2,#+5
+   \   0000016E   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   00000170   0xEB12 0x01C1      ADDS     R1,R2,R1, LSL #+3
+   \   00000174   0x1C49             ADDS     R1,R1,#+1
+   \   00000176   0x4348             MULS     R0,R1,R0
+   \   00000178   0x....             LDR.N    R1,??DataTable7_9
+   \   0000017A   0x6088             STR      R0,[R1, #+8]
+   \   0000017C   0xE7DD             B.N      ??SD_ReadConfiguration_16
+   \                     ??SD_ReadConfiguration_11:
+   \   0000017E   0x....             LDR.N    R0,??DataTable7_9
+   \   00000180   0xF890 0x002A      LDRB     R0,[R0, #+42]
+   \   00000184   0xF010 0x003F      ANDS     R0,R0,#0x3F
+   \   00000188   0x....             LDR.N    R1,??DataTable7_9
+   \   0000018A   0xF891 0x102B      LDRB     R1,[R1, #+43]
+   \   0000018E   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000190   0x09C9             LSRS     R1,R1,#+7
+   \   00000192   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000194   0xEB11 0x0040      ADDS     R0,R1,R0, LSL #+1
+   \   00000198   0x1C40             ADDS     R0,R0,#+1
+   \   0000019A   0x....             LDR.N    R1,??DataTable7_9
+   \   0000019C   0xF891 0x102D      LDRB     R1,[R1, #+45]
+   \   000001A0   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   000001A2   0x0989             LSRS     R1,R1,#+6
+   \   000001A4   0x1E49             SUBS     R1,R1,#+1
+   \   000001A6   0x4088             LSLS     R0,R0,R1
+   \   000001A8   0x....             LDR.N    R1,??DataTable7_9
+   \   000001AA   0x6088             STR      R0,[R1, #+8]
+   \   000001AC   0xE7C5             B.N      ??SD_ReadConfiguration_16
+   \                     ??SD_ReadConfiguration_9:
+   \   000001AE   0xE7C5             B.N      ??SD_ReadConfiguration_0
+    472          }
+    473          /***********************************************************************************
+    474          *   @brief  Receive a data block with specified length from SD/MMC. 
+    475          *
+    476          *   @param  buf: Pointer to the data array to store the received data
+    477          *   @param  len: Specifies the length (in byte) to be received.
+    478          *              The value should be a multiple of 4.
+    479          *   @retval SD_TRUE or SD_FALSE
+    480          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    481          SD_BOOL SD_RecvDataBlock (unsigned char *buf, unsigned int len)
+    482          {
+   \                     SD_RecvDataBlock:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    483              unsigned char datatoken;
+    484              unsigned int i;
+    485          
+    486              /* Read data token (0xFE) */
+    487          	Timer1 = 10;   /* Data Read Timerout: 100ms */
+   \   00000006   0x....             LDR.N    R0,??DataTable7_1
+   \   00000008   0x210A             MOVS     R1,#+10
+   \   0000000A   0x6001             STR      R1,[R0, #+0]
+    488          	do {							
+    489          		datatoken = SPI_RecvByte ();
+   \                     ??SD_RecvDataBlock_0:
+   \   0000000C   0x.... 0x....      BL       SPI_RecvByte
+    490                  if (datatoken == 0xFE) break;
+   \   00000010   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000012   0x28FE             CMP      R0,#+254
+   \   00000014   0xD003             BEQ.N    ??SD_RecvDataBlock_1
+    491          	} while (Timer1);
+   \                     ??SD_RecvDataBlock_2:
+   \   00000016   0x....             LDR.N    R1,??DataTable7_1
+   \   00000018   0x6809             LDR      R1,[R1, #+0]
+   \   0000001A   0x2900             CMP      R1,#+0
+   \   0000001C   0xD1F6             BNE.N    ??SD_RecvDataBlock_0
+    492          	if(datatoken != 0xFE) return (SD_FALSE);	/* data read timeout */
+   \                     ??SD_RecvDataBlock_1:
+   \   0000001E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000020   0x28FE             CMP      R0,#+254
+   \   00000022   0xD001             BEQ.N    ??SD_RecvDataBlock_3
+   \   00000024   0x2000             MOVS     R0,#+0
+   \   00000026   0xE00C             B.N      ??SD_RecvDataBlock_4
+    493          
+    494              /* Read data block */
+    495              for (i = 0; i < len; i++) {
+   \                     ??SD_RecvDataBlock_3:
+   \   00000028   0x2600             MOVS     R6,#+0
+   \   0000002A   0xE003             B.N      ??SD_RecvDataBlock_5
+    496                  buf[i] = SPI_RecvByte ();
+   \                     ??SD_RecvDataBlock_6:
+   \   0000002C   0x.... 0x....      BL       SPI_RecvByte
+   \   00000030   0x5530             STRB     R0,[R6, R4]
+    497              }
+   \   00000032   0x1C76             ADDS     R6,R6,#+1
+   \                     ??SD_RecvDataBlock_5:
+   \   00000034   0x42AE             CMP      R6,R5
+   \   00000036   0xD3F9             BCC.N    ??SD_RecvDataBlock_6
+    498          
+    499              /* 2 bytes CRC will be discarded. */
+    500              SPI_RecvByte ();
+   \   00000038   0x.... 0x....      BL       SPI_RecvByte
+    501              SPI_RecvByte ();
+   \   0000003C   0x.... 0x....      BL       SPI_RecvByte
+    502          
+    503              return (SD_TRUE);
+   \   00000040   0x2001             MOVS     R0,#+1
+   \                     ??SD_RecvDataBlock_4:
+   \   00000042   0xBD70             POP      {R4-R6,PC}       ;; return
+    504          }
+    505          /***********************************************************************************
+    506          * @brief  Send a data block with specified length to SD/MMC. 
+    507          *
+    508          * @param  buf: Pointer to the data array to store the received data
+    509          * @param  tkn: Specifies the token to send before the data block
+    510          * @param  len: Specifies the length (in byte) to send.
+    511          *              The value should be 512 for memory card.
+    512          * @retval SD_TRUE or SD_FALSE
+    513          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    514          SD_BOOL SD_SendDataBlock (const unsigned char *buf, unsigned char tkn, unsigned int len) 
+    515          {
+   \                     SD_SendDataBlock:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x0008             MOVS     R0,R1
+   \   00000006   0x0015             MOVS     R5,R2
+    516              unsigned char recv;
+    517              unsigned int i;
+    518              
+    519              /* Send Start Block Token */
+    520              SPI_SendByte (tkn);
+   \   00000008   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000000A   0x.... 0x....      BL       SPI_SendByte
+    521          
+    522              /* Send data block */
+    523              for (i = 0; i < len; i++) 
+   \   0000000E   0x2600             MOVS     R6,#+0
+   \   00000010   0xE003             B.N      ??SD_SendDataBlock_0
+    524              {
+    525                SPI_SendByte (buf[i]);
+   \                     ??SD_SendDataBlock_1:
+   \   00000012   0x5D30             LDRB     R0,[R6, R4]
+   \   00000014   0x.... 0x....      BL       SPI_SendByte
+    526              }
+   \   00000018   0x1C76             ADDS     R6,R6,#+1
+   \                     ??SD_SendDataBlock_0:
+   \   0000001A   0x42AE             CMP      R6,R5
+   \   0000001C   0xD3F9             BCC.N    ??SD_SendDataBlock_1
+    527          
+    528              /* Send 2 bytes dummy CRC */
+    529              SPI_SendByte (0xFF);
+   \   0000001E   0x20FF             MOVS     R0,#+255
+   \   00000020   0x.... 0x....      BL       SPI_SendByte
+    530              SPI_SendByte (0xFF);
+   \   00000024   0x20FF             MOVS     R0,#+255
+   \   00000026   0x.... 0x....      BL       SPI_SendByte
+    531          
+    532              /* Read data response to check if the data block has been accepted. */
+    533              if (( (SPI_RecvByte ()) & 0x0F) != 0x05)
+   \   0000002A   0x.... 0x....      BL       SPI_RecvByte
+   \   0000002E   0xF010 0x000F      ANDS     R0,R0,#0xF
+   \   00000032   0x2805             CMP      R0,#+5
+   \   00000034   0xD001             BEQ.N    ??SD_SendDataBlock_2
+    534                  return (SD_FALSE); /* write error */
+   \   00000036   0x2000             MOVS     R0,#+0
+   \   00000038   0xE011             B.N      ??SD_SendDataBlock_3
+    535          
+    536              /* Wait for wirte complete. */
+    537              Timer1 = 20;  // 200ms
+   \                     ??SD_SendDataBlock_2:
+   \   0000003A   0x....             LDR.N    R0,??DataTable7_1
+   \   0000003C   0x2114             MOVS     R1,#+20
+   \   0000003E   0x6001             STR      R1,[R0, #+0]
+    538              do {
+    539                  recv = SPI_RecvByte();
+   \                     ??SD_SendDataBlock_4:
+   \   00000040   0x.... 0x....      BL       SPI_RecvByte
+    540                  if (recv == 0xFF) break;  
+   \   00000044   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000046   0x28FF             CMP      R0,#+255
+   \   00000048   0xD003             BEQ.N    ??SD_SendDataBlock_5
+    541              } while (Timer1);
+   \                     ??SD_SendDataBlock_6:
+   \   0000004A   0x....             LDR.N    R1,??DataTable7_1
+   \   0000004C   0x6809             LDR      R1,[R1, #+0]
+   \   0000004E   0x2900             CMP      R1,#+0
+   \   00000050   0xD1F6             BNE.N    ??SD_SendDataBlock_4
+    542          
+    543              if (recv == 0xFF) return SD_TRUE;       /* write complete */
+   \                     ??SD_SendDataBlock_5:
+   \   00000052   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000054   0x28FF             CMP      R0,#+255
+   \   00000056   0xD101             BNE.N    ??SD_SendDataBlock_7
+   \   00000058   0x2001             MOVS     R0,#+1
+   \   0000005A   0xE000             B.N      ??SD_SendDataBlock_3
+    544              else              return (SD_FALSE);    /* write time out */
+   \                     ??SD_SendDataBlock_7:
+   \   0000005C   0x2000             MOVS     R0,#+0
+   \                     ??SD_SendDataBlock_3:
+   \   0000005E   0xBD70             POP      {R4-R6,PC}       ;; return
+    545          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7:
+   \   00000000   0x........         DC32     ??counter
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_1:
+   \   00000000   0x........         DC32     Timer1
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_2:
+   \   00000000   0x........         DC32     Timer2
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_3:
+   \   00000000   0x........         DC32     CardType
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_4:
+   \   00000000   0x003D0900         DC32     0x3d0900
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_5:
+   \   00000000   0x017D7840         DC32     0x17d7840
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_6:
+   \   00000000   0x........         DC32     CardConfig+0xC
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_7:
+   \   00000000   0x........         DC32     CardConfig+0x10
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_8:
+   \   00000000   0x........         DC32     CardConfig+0x20
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_9:
+   \   00000000   0x........         DC32     CardConfig
+    546          /***********************************************************************************
+    547          *   Fim do arquivo
+    548          ***********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   SD_Init
+        16   -> SD_SendACommand
+        16   -> SD_SendCommand
+        16   -> SPI_CS_High
+        16   -> SPI_ConfigClockRate
+        16   -> SPI_Init
+        16   -> SPI_RecvByte
+        16   -> SPI_SendByte
+      24   SD_ReadConfiguration
+        24   -> SD_RecvDataBlock
+        24   -> SD_SendACommand
+        24   -> SD_SendCommand
+        24   -> SPI_CS_High
+        24   -> SPI_RecvByte
+      16   SD_ReadSector
+        16   -> SD_RecvDataBlock
+        16   -> SD_SendCommand
+        16   -> SD_WaitForReady
+        16   -> SPI_CS_High
+        16   -> SPI_RecvByte
+      16   SD_RecvDataBlock
+        16   -> SPI_RecvByte
+      24   SD_SendACommand
+        24   -> SD_SendCommand
+      32   SD_SendCommand
+        32   -> SD_WaitForReady
+        32   -> SPI_CS_Low
+        32   -> SPI_RecvByte
+        32   -> SPI_SendByte
+      16   SD_SendDataBlock
+        16   -> SPI_RecvByte
+        16   -> SPI_SendByte
+       8   SD_WaitForReady
+         8   -> SPI_RecvByte
+      16   SD_WriteSector
+        16   -> SD_SendCommand
+        16   -> SD_SendDataBlock
+        16   -> SD_WaitForReady
+        16   -> SPI_CS_High
+        16   -> SPI_RecvByte
+        16   -> SPI_SendByte
+       0   disk_timerproc
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable7
+       4  ??DataTable7_1
+       4  ??DataTable7_2
+       4  ??DataTable7_3
+       4  ??DataTable7_4
+       4  ??DataTable7_5
+       4  ??DataTable7_6
+       4  ??DataTable7_7
+       4  ??DataTable7_8
+       4  ??DataTable7_9
+      48  CardConfig
+       1  CardType
+     396  SD_Init
+     432  SD_ReadConfiguration
+     138  SD_ReadSector
+      68  SD_RecvDataBlock
+      48  SD_SendACommand
+     166  SD_SendCommand
+      96  SD_SendDataBlock
+      40  SD_WaitForReady
+     134  SD_WriteSector
+       4  Timer1
+       4  Timer2
+       1  counter
+      72  disk_timerproc
+
+ 
+    57 bytes in section .bss
+     1 byte  in section .data
+ 1 630 bytes in section .text
+ 
+ 1 630 bytes of CODE memory
+    58 bytes of DATA memory
+
+Errors: none
+Warnings: none

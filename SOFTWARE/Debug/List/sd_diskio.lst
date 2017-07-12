@@ -1,0 +1,298 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      12/Jul/2017  11:50:10 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\FILESYSTEM\sd_diskio.c            #
+#    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\FILESYSTEM\sd_diskio.c -lC        #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -lA                           #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -o                            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\sd_diskio.lst                  #
+#    Object file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\sd_diskio.o                     #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\FILESYSTEM\sd_diskio.c
+      1          /*__________________________________________________________________________________
+      2          |	    Chave Digital Tecnologia Eletronica Ltda. 
+      3          |       
+      4          |       Balneário Camboriú - SC
+      5          |       www.chavedigital.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Chave Digital and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Chave Digital
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Chave Digital e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Chave Digital ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  sd_diskio.c
+     18          |       Descrição          :  Funções para implementação do driver
+     19          |                             FAT no SDCARD
+     20          | 
+     21          |       Autor              :  Marcos Aquino
+     22          |       Data criação       :  01/08/2011
+     23          |
+     24          |       Revisões           :  1.0
+     25          |
+     26          |
+     27          | __________________________________________________________________________________
+     28          */
+     29          /***********************************************************************************
+     30          *		Includes
+     31          ***********************************************************************************/
+     32          #include <nxp\iolpc1768.h>
+     33          #include "diskio.h"
+     34          #include "integer.h"
+     35          #include "..\sdcard\sdcard.h"
+     36          #include "sd_diskio.h"
+     37          
+     38          /***********************************************************************************
+     39          *		Definições com constantes utilizadas no programa
+     40          ***********************************************************************************/ 
+     41          
+     42          
+     43          
+     44          /***********************************************************************************
+     45          *		Enumerações
+     46          ***********************************************************************************/
+     47          
+     48          
+     49          /***********************************************************************************
+     50          *		Estruturas
+     51          ***********************************************************************************/
+     52          
+     53          
+     54          /***********************************************************************************
+     55          *		Uniões
+     56          ***********************************************************************************/
+     57          
+     58          
+     59          /***********************************************************************************
+     60          *		Constantes
+     61          ***********************************************************************************/
+     62          
+     63          
+     64          /***********************************************************************************
+     65          *		Variaveis locais
+     66          ***********************************************************************************/
+
+   \                                 In section .data, align 1
+     67          DSTATUS sdStatus=STA_NOINIT;
+   \                     sdStatus:
+   \   00000000   0x01               DC8 1
+     68          
+     69          /***********************************************************************************
+     70          *		Funções locais
+     71          ***********************************************************************************/
+     72           
+     73          /***********************************************************************************
+     74          *		Implementação
+     75          ***********************************************************************************/
+     76          
+     77          /***********************************************************************************
+     78          *   Descrição   :   Inicialização dos drives do sistema
+     79          *   Parametros  :   (unsigned char) número do drive
+     80          *   Retorno     :   (DSTATUS) 
+     81          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     82          unsigned int SD_disk_initialize(void){
+   \                     SD_disk_initialize:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     83            
+     84            if( SD_Init()){
+   \   00000002   0x.... 0x....      BL       SD_Init
+   \   00000006   0x2800             CMP      R0,#+0
+   \   00000008   0xD007             BEQ.N    ??SD_disk_initialize_0
+     85               sdStatus &= ~STA_NOINIT;
+   \   0000000A   0x....             LDR.N    R0,??DataTable1
+   \   0000000C   0x7800             LDRB     R0,[R0, #+0]
+   \   0000000E   0xF010 0x00FE      ANDS     R0,R0,#0xFE
+   \   00000012   0x....             LDR.N    R1,??DataTable1
+   \   00000014   0x7008             STRB     R0,[R1, #+0]
+     86               return 0;
+   \   00000016   0x2000             MOVS     R0,#+0
+   \   00000018   0xE006             B.N      ??SD_disk_initialize_1
+     87            }
+     88            
+     89            sdStatus |= STA_NOINIT;    
+   \                     ??SD_disk_initialize_0:
+   \   0000001A   0x....             LDR.N    R0,??DataTable1
+   \   0000001C   0x7800             LDRB     R0,[R0, #+0]
+   \   0000001E   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   00000022   0x....             LDR.N    R1,??DataTable1
+   \   00000024   0x7008             STRB     R0,[R1, #+0]
+     90            return STA_NOINIT;
+   \   00000026   0x2001             MOVS     R0,#+1
+   \                     ??SD_disk_initialize_1:
+   \   00000028   0xBD02             POP      {R1,PC}          ;; return
+     91             //ToDo: Inserir verificação do flag de proteção de escrita
+     92          }
+     93          /***********************************************************************************
+     94          *     Descrição   :   Lê o status do disco passado no parametro
+     95          *     Parametros  :   (unsigned char) número do drive
+     96          *     Retorno     :   nenhum
+     97          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     98          DSTATUS SD_disk_status (void){
+     99          
+    100            return sdStatus;
+   \                     SD_disk_status:
+   \   00000000   0x....             LDR.N    R0,??DataTable1
+   \   00000002   0x7800             LDRB     R0,[R0, #+0]
+   \   00000004   0x4770             BX       LR               ;; return
+    101          }
+    102          /***********************************************************************************
+    103          *     Descrição   :   Lê um setor de uma das unidades de disco
+    104          *     Parametros  :   (unsigned char) drive
+    105          *                     (unsigned char*) buffer
+    106          *                     (unsigned long int) setor
+    107          *                     (unsigned char) tamanho do bloco lido
+    108          *     Retorno     :   (DRESULT)
+    109          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    110          DRESULT SD_disk_read (unsigned char *buffer,DWORD sector,unsigned char count){
+   \                     SD_disk_read:
+   \   00000000   0xB580             PUSH     {R7,LR}
+   \   00000002   0x000B             MOVS     R3,R1
+    111          
+    112            if(SD_ReadSector(sector,buffer,count))
+   \   00000004   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   00000006   0x0001             MOVS     R1,R0
+   \   00000008   0x0018             MOVS     R0,R3
+   \   0000000A   0x.... 0x....      BL       SD_ReadSector
+   \   0000000E   0x2800             CMP      R0,#+0
+   \   00000010   0xD001             BEQ.N    ??SD_disk_read_0
+    113              return RES_OK;
+   \   00000012   0x2000             MOVS     R0,#+0
+   \   00000014   0xE000             B.N      ??SD_disk_read_1
+    114            
+    115            return RES_ERROR;  
+   \                     ??SD_disk_read_0:
+   \   00000016   0x2001             MOVS     R0,#+1
+   \                     ??SD_disk_read_1:
+   \   00000018   0xBD02             POP      {R1,PC}          ;; return
+    116          }
+    117          /***********************************************************************************
+    118          *     Descrição   :   Escreve em um setor de um determinado disco
+    119          *     Parametros  :   (unsigned char) drive
+    120          *                     (unsigned char*) buffer
+    121          *                     (unsigned int) número do setor
+    122          *                     (unsigned char) tamanho do bloco escrito
+    123          *     Retorno     :   (DRESULT)
+    124          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    125          DRESULT SD_disk_write(unsigned char *buff,DWORD sector,unsigned char byte){
+   \                     SD_disk_write:
+   \   00000000   0xB580             PUSH     {R7,LR}
+   \   00000002   0x000B             MOVS     R3,R1
+    126          
+    127            if(SD_WriteSector(sector,buff,byte))
+   \   00000004   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   00000006   0x0001             MOVS     R1,R0
+   \   00000008   0x0018             MOVS     R0,R3
+   \   0000000A   0x.... 0x....      BL       SD_WriteSector
+   \   0000000E   0x2800             CMP      R0,#+0
+   \   00000010   0xD001             BEQ.N    ??SD_disk_write_0
+    128              return RES_OK;
+   \   00000012   0x2000             MOVS     R0,#+0
+   \   00000014   0xE000             B.N      ??SD_disk_write_1
+    129            
+    130            return RES_ERROR;    
+   \                     ??SD_disk_write_0:
+   \   00000016   0x2001             MOVS     R0,#+1
+   \                     ??SD_disk_write_1:
+   \   00000018   0xBD02             POP      {R1,PC}          ;; return
+    131          }
+    132          /***********************************************************************************
+    133          *   Descrição   :   Controle de funções específicas do disco
+    134          *   Parametros  :   (unsigned char) drive
+    135          *                   (unsigned char) comando
+    136          *                   (void*) ponteiro para a estrutura de controle do 
+    137          *                   comando que será executado
+    138          *   Retorno     :   nenhum
+    139          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    140          DRESULT SD_disk_ioctl(unsigned char ctrl,void *buff){
+    141          
+    142            if(ctrl==GET_BLOCK_SIZE)
+   \                     SD_disk_ioctl:
+   \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000002   0x2803             CMP      R0,#+3
+   \   00000004   0xD102             BNE.N    ??SD_disk_ioctl_0
+    143              *(unsigned int*)buff = 512;
+   \   00000006   0xF44F 0x7000      MOV      R0,#+512
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+    144            
+    145            return RES_ERROR;
+   \                     ??SD_disk_ioctl_0:
+   \   0000000C   0x2001             MOVS     R0,#+1
+   \   0000000E   0x4770             BX       LR               ;; return
+    146          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     sdStatus
+    147          /***********************************************************************************
+    148          *		Fim do arquivo
+    149          ***********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   SD_disk_initialize
+         8   -> SD_Init
+       0   SD_disk_ioctl
+       8   SD_disk_read
+         8   -> SD_ReadSector
+       0   SD_disk_status
+       8   SD_disk_write
+         8   -> SD_WriteSector
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+      42  SD_disk_initialize
+      16  SD_disk_ioctl
+      26  SD_disk_read
+       6  SD_disk_status
+      26  SD_disk_write
+       1  sdStatus
+
+ 
+   1 byte  in section .data
+ 120 bytes in section .text
+ 
+ 120 bytes of CODE memory
+   1 byte  of DATA memory
+
+Errors: none
+Warnings: none

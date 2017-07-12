@@ -1,0 +1,245 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      12/Jul/2017  11:51:29 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\FILESYSTEM\dataflash_diskio.c     #
+#    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Drivers\FILESYSTEM\dataflash_diskio.c     #
+#                    -lC C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\Mai #
+#                    sPipocaG2\SOFTWARE\Debug\List\ -lA                       #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\ -o                            #
+#                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files (x86)\IAR  #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -Ol                                               #
+#    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\List\dataflash_diskio.lst           #
+#    Object file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
+#                    ocaG2\SOFTWARE\Debug\Obj\dataflash_diskio.o              #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\FILESYSTEM\dataflash_diskio.c
+      1          /*__________________________________________________________________________________
+      2          |	Dextro soluções tecnológicas.
+      3          |       
+      4          |       Itajaí/SC
+      5          |       www.dextro-st.com.br
+      6          | __________________________________________________________________________________
+      7          |
+      8          |       This source code was developed by Dextro and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Dextro
+     10          |       or its distributors.
+     11          |
+     12          |       Este código é propriedade da Dextro e não pode ser copiado, em parte 
+     13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
+     14          |       Dextro ou por um de seus distribuidores.
+     15          | __________________________________________________________________________________
+     16          |
+     17          |       Arquivo            :  flash_diskio.c
+     18          |       Descrição          :  Camada de acesso à memória flash
+     19          | 
+     20          |       Autor              :  Marcos Aquino
+     21          |       Data criação       :  11/07/2017
+     22          |
+     23          |       Revisões           :  1.0
+     24          |
+     25          |
+     26          | __________________________________________________________________________________
+     27          */
+     28          /**********************************************************************************
+     29          *       Includes
+     30          **********************************************************************************/
+     31          #include <stdio.h>
+     32          #include <stdlib.h>
+     33          #include <string.h>
+     34          #include "diskio.h"
+     35          #include "integer.h"
+     36          #include "..\..\includes.h"
+     37          
+     38          /**********************************************************************************
+     39          *       Definições
+     40          **********************************************************************************/
+     41          #define DF_SECTOR_SIZE                  4096
+     42          
+     43          /**********************************************************************************
+     44          *       Variaveis locais
+     45          **********************************************************************************/
+
+   \                                 In section .data, align 1
+     46          DSTATUS dfStatus=STA_NOINIT;
+   \                     dfStatus:
+   \   00000000   0x01               DC8 1
+     47          
+     48          /**********************************************************************************
+     49          *       Funções locais
+     50          **********************************************************************************/
+     51          
+     52          
+     53          /**********************************************************************************
+     54          *       Implementação das funções
+     55          **********************************************************************************/
+     56          
+     57          /***********************************************************************************
+     58          *   Descrição   :   Inicialização dos drives do sistema
+     59          *   Parametros  :   (unsigned char) número do drive
+     60          *   Retorno     :   (DSTATUS) 
+     61          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     62          unsigned int DF_disk_initialize(void){
+     63              
+     64            dfStatus |= STA_NOINIT;    
+   \                     DF_disk_initialize:
+   \   00000000   0x....             LDR.N    R0,??DataTable1
+   \   00000002   0x7800             LDRB     R0,[R0, #+0]
+   \   00000004   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   00000008   0x....             LDR.N    R1,??DataTable1
+   \   0000000A   0x7008             STRB     R0,[R1, #+0]
+     65            return STA_NOINIT;
+   \   0000000C   0x2001             MOVS     R0,#+1
+   \   0000000E   0x4770             BX       LR               ;; return
+     66             //ToDo: Inserir verificação do flag de proteção de escrita
+     67          }
+     68          /***********************************************************************************
+     69          *     Descrição   :   Lê o status do disco passado no parametro
+     70          *     Parametros  :   (unsigned char) número do drive
+     71          *     Retorno     :   nenhum
+     72          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     73          DSTATUS DF_disk_status (void){
+     74          
+     75            return dfStatus;
+   \                     DF_disk_status:
+   \   00000000   0x....             LDR.N    R0,??DataTable1
+   \   00000002   0x7800             LDRB     R0,[R0, #+0]
+   \   00000004   0x4770             BX       LR               ;; return
+     76          }
+     77          /***********************************************************************************
+     78          *     Descrição   :   Lê um setor de uma das unidades de disco
+     79          *     Parametros  :   (unsigned char) drive
+     80          *                     (unsigned char*) buffer
+     81          *                     (unsigned long int) setor
+     82          *                     (unsigned char) tamanho do bloco lido
+     83          *     Retorno     :   (DRESULT)
+     84          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     85          DRESULT DF_disk_read (unsigned char *buffer,DWORD sector,unsigned char count){
+   \                     DF_disk_read:
+   \   00000000   0xB580             PUSH     {R7,LR}
+   \   00000002   0x000B             MOVS     R3,R1
+     86            
+     87            MEMORYWRAPPER_readBytes(sector*DF_SECTOR_SIZE,buffer,count);
+   \   00000004   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   00000006   0x0001             MOVS     R1,R0
+   \   00000008   0xF44F 0x5080      MOV      R0,#+4096
+   \   0000000C   0xFB00 0xF003      MUL      R0,R0,R3
+   \   00000010   0x.... 0x....      BL       MEMORYWRAPPER_readBytes
+     88            return RES_OK;  
+   \   00000014   0x2000             MOVS     R0,#+0
+   \   00000016   0xBD02             POP      {R1,PC}          ;; return
+     89          }
+     90          /***********************************************************************************
+     91          *     Descrição   :   Escreve em um setor de um determinado disco
+     92          *     Parametros  :   (unsigned char) drive
+     93          *                     (unsigned char*) buffer
+     94          *                     (unsigned int) número do setor
+     95          *                     (unsigned char) tamanho do bloco escrito
+     96          *     Retorno     :   (DRESULT)
+     97          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     98          DRESULT DF_disk_write(unsigned char *buff,DWORD sector,unsigned char byte){
+   \                     DF_disk_write:
+   \   00000000   0xB580             PUSH     {R7,LR}
+   \   00000002   0x000B             MOVS     R3,R1
+     99          
+    100            MEMORYWRAPPER_writeBytes(sector*DF_SECTOR_SIZE,buff,byte);
+   \   00000004   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   00000006   0x0001             MOVS     R1,R0
+   \   00000008   0xF44F 0x5080      MOV      R0,#+4096
+   \   0000000C   0xFB00 0xF003      MUL      R0,R0,R3
+   \   00000010   0x.... 0x....      BL       MEMORYWRAPPER_writeBytes
+    101            return RES_OK;  
+   \   00000014   0x2000             MOVS     R0,#+0
+   \   00000016   0xBD02             POP      {R1,PC}          ;; return
+    102          }
+    103          /***********************************************************************************
+    104          *   Descrição   :   Controle de funções específicas do disco
+    105          *   Parametros  :   (unsigned char) drive
+    106          *                   (unsigned char) comando
+    107          *                   (void*) ponteiro para a estrutura de controle do 
+    108          *                   comando que será executado
+    109          *   Retorno     :   nenhum
+    110          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    111          DRESULT DF_disk_ioctl(unsigned char ctrl,void *buff){
+    112          
+    113            if(ctrl==GET_BLOCK_SIZE)
+   \                     DF_disk_ioctl:
+   \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000002   0x2803             CMP      R0,#+3
+   \   00000004   0xD102             BNE.N    ??DF_disk_ioctl_0
+    114              *(unsigned int*)buff = DF_SECTOR_SIZE;
+   \   00000006   0xF44F 0x5080      MOV      R0,#+4096
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+    115            
+    116            return RES_ERROR;
+   \                     ??DF_disk_ioctl_0:
+   \   0000000C   0x2001             MOVS     R0,#+1
+   \   0000000E   0x4770             BX       LR               ;; return
+    117          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     dfStatus
+    118          /**********************************************************************************
+    119          *       Fim do arquivo
+    120          **********************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   DF_disk_initialize
+       0   DF_disk_ioctl
+       8   DF_disk_read
+         8   -> MEMORYWRAPPER_readBytes
+       0   DF_disk_status
+       8   DF_disk_write
+         8   -> MEMORYWRAPPER_writeBytes
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+      16  DF_disk_initialize
+      16  DF_disk_ioctl
+      24  DF_disk_read
+       6  DF_disk_status
+      24  DF_disk_write
+       1  dfStatus
+
+ 
+  1 byte  in section .data
+ 90 bytes in section .text
+ 
+ 90 bytes of CODE memory
+  1 byte  of DATA memory
+
+Errors: none
+Warnings: none

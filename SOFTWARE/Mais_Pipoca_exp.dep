@@ -385,7 +385,7 @@
       <file>$PROJ_DIR$\Debug\Obj\menu_servico.o</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_edita_inteiro.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\Supervisao_mdb_coin.pbi</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\spi_wrapper.h</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\SPI_WRAPPER.H</file>
       <file>$PROJ_DIR$\Debug\Obj\PlayerWave.o</file>
       <file>$PROJ_DIR$\Debug\List\fila_troca_preco.s</file>
       <file>$PROJ_DIR$\Debug\Obj\BV20.o</file>
@@ -1554,18 +1554,10 @@
           <name>BICOMP</name>
           <file> 335</file>
         </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 315 325 326</file>
-        </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 338 331</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
           <file> 338 331</file>
         </tool>
       </inputs>
@@ -1585,7 +1577,7 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 141 266 407 317 319 321</file>
+          <file> 141 266 407 317 319 331 321</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -1920,10 +1912,6 @@
         </tool>
       </outputs>
       <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
         <tool>
           <name>ICCARM</name>
           <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>

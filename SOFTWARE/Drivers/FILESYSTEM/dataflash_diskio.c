@@ -60,12 +60,7 @@ DSTATUS dfStatus=STA_NOINIT;
 *   Retorno     :   (DSTATUS) 
 ***********************************************************************************/
 unsigned int DF_disk_initialize(void){
-  
-  //if( SD_Init()){
-//     sdStatus &= ~STA_NOINIT;
-//     return 0;
-//  }
-  
+    
   dfStatus |= STA_NOINIT;    
   return STA_NOINIT;
    //ToDo: Inserir verificação do flag de proteção de escrita
