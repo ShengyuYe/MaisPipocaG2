@@ -1922,6 +1922,24 @@
     </group>
     <group>
       <name>FILESYSTEM</name>
+      <file>
+        <name>$PROJ_DIR$\Drivers\FILESYSTEM\dataflash_diskio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\FILESYSTEM\diskio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\FILESYSTEM\ff.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\SDCARD\SDCARD.C</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\SDCARD\SPI_WRAPPER_SD.C</name>
+      </file>
     </group>
     <group>
       <name>FLASH</name>

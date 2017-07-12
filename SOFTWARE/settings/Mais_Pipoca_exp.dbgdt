@@ -44,7 +44,7 @@
         <expressions>
           
           
-        <item>PROTOCOLO_bufferRx</item><item>PROTOCOLO_bufferTx</item><item></item></expressions>
+        <item>PROTOCOLO_bufferRx</item><item>PROTOCOLO_bufferTx</item><item/></expressions>
         <col-names>
           
           
