@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      12/Jul/2017  11:49:54 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      14/Jul/2017  11:54:29 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -316,19 +316,19 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
     167              // Grava as mensagens de cliente como Mais PIpoca
     168              PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_01,(void*)msg_padrao);
    \   000000DA   0xA902             ADD      R1,SP,#+8
-   \   000000DC   0x203C             MOVS     R0,#+60
+   \   000000DC   0x2028             MOVS     R0,#+40
    \   000000DE   0x.... 0x....      BL       PARAMETROS_grava
     169              PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_02,(void*)msg_padrao);
    \   000000E2   0xA902             ADD      R1,SP,#+8
-   \   000000E4   0x203D             MOVS     R0,#+61
+   \   000000E4   0x2029             MOVS     R0,#+41
    \   000000E6   0x.... 0x....      BL       PARAMETROS_grava
     170              PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_03,(void*)msg_padrao);
    \   000000EA   0xA902             ADD      R1,SP,#+8
-   \   000000EC   0x203E             MOVS     R0,#+62
+   \   000000EC   0x202A             MOVS     R0,#+42
    \   000000EE   0x.... 0x....      BL       PARAMETROS_grava
     171              PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_04,(void*)msg_padrao);
    \   000000F2   0xA902             ADD      R1,SP,#+8
-   \   000000F4   0x203F             MOVS     R0,#+63
+   \   000000F4   0x202B             MOVS     R0,#+43
    \   000000F6   0x.... 0x....      BL       PARAMETROS_grava
     172            }
     173          }

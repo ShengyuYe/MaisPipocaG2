@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     12/Jul/2017  11:49:42 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     14/Jul/2017  11:55:05 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -888,7 +888,7 @@ APLICACAO_exibe_valor:
         ADD      R1,SP,#+4
         LDR.W    R0,??DataTable14_11
         LDRB     R0,[R0, #+0]
-        ADDS     R0,R0,#+60
+        ADDS     R0,R0,#+40
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  286     STRING_write_to_external(NO_CLEAR,NULL,buffer_linha);

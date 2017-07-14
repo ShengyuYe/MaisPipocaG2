@@ -32,7 +32,7 @@
 //
 // Endereço dos parâmetros
 //
-#define TAMANHO_PARAMETROS                      26
+#define TAMANHO_PARAMETROS                      44
 
 #define ADR_FLAG_IDIOMA                         0
 #define ADR_FLAG_BV20                           1
@@ -74,10 +74,10 @@
 #define ADR_COMISSAO_PONTO                      37
 #define ADR_FLAG_DESUMIDIFICADOR                38
 #define ADR_CONTADOR_PIPOCAS_TESTE              39
-#define ADR_MENSAGEM_CLIENTE_01                 60
-#define ADR_MENSAGEM_CLIENTE_02                 61
-#define ADR_MENSAGEM_CLIENTE_03                 62
-#define ADR_MENSAGEM_CLIENTE_04                 63
+#define ADR_MENSAGEM_CLIENTE_01                 40
+#define ADR_MENSAGEM_CLIENTE_02                 41
+#define ADR_MENSAGEM_CLIENTE_03                 42
+#define ADR_MENSAGEM_CLIENTE_04                 43
 
 #define ADR_AREA_TESTE                          100
 
@@ -120,6 +120,10 @@ unsigned char PARAMETROS_leVolumeVoz(void);
 
 void PARAMETROS_gravaVolumeVoz(unsigned char volume);
 
+unsigned short int PARAMETROS_get_tamanho_lista(void);
+
+void PARAMETROS_set_parametro_rec(unsigned short int indice,unsigned short int tamanho,
+                                  unsigned char *pData);
 /**********************************************************************************
 *       Fim do arquivo
 **********************************************************************************/

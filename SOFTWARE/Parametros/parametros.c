@@ -127,5 +127,53 @@ void PARAMETROS_le(unsigned int endereco,void*parametro){
   }
 }
 /***********************************************************************************
+*       Descrição       :       Getter para o tamanho total da lista 
+*                               de parâmetros
+*       Parametros      :       nenhum
+*       Retorno         :       (unsigned short int) tamanho da lista
+*                               de parâmetros
+***********************************************************************************/
+unsigned short int PARAMETROS_get_tamanho_lista(void){
+  
+  return TAMANHO_PARAMETROS;
+}
+/***********************************************************************************
+*       Descrição       :       Lê as informações referentes a um 
+*                               determinado parâmetro
+*       Parametros      :       (unsigned short int) indice
+*                       :       (unsigned short int*)tamanho
+*                               (char*) nome
+*                               (char*) extensao
+*                               (void*) valor 
+*       Retorno         :       nenhum
+***********************************************************************************/
+void PARAMETROS_get_parametro_rec(unsigned short int indice,unsigned short int *tamanho,
+                                  char *nome,char *extensao,void *valor){
+                                    
+  *tamanho = tabela_parametros[indice].length;
+  memcpy(nome,tabela_parametros[indice].nome,16);
+  memcpy(extensao,tabela_parametros[indice].ext,3);  
+  PARAMETROS_le(indice,valor);
+}
+/***********************************************************************************
+*       Descrição       :       Escreve as informações referentes a um
+*                               determinado parâmetro
+*       Parametros      :       (unsigned short int) indice
+*                               (unsigned short int) quantidade de octetos
+*                               (unsigned char*) ponteiro para o buffer
+*                                               de dados
+*       Retorno         :       nenhum
+***********************************************************************************/
+void PARAMETROS_set_parametro_rec(unsigned short int indice,unsigned short int tamanho,
+                                  unsigned char *pData){
+                                    
+  if(tabela_parametros[indice].length>PAR_DOUBLE_WORD){
+    for(unsigned char i=tamanho-1;i<tabela_parametros[indice].length;i++)
+      pData[i] = ' ';
+  }
+  
+  PARAMETROS_grava(indice,pData);                                     
+}
+/***********************************************************************************
 *       Fim do arquivo
 ***********************************************************************************/

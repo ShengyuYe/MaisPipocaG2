@@ -1989,12 +1989,6 @@
         <name>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\DESCRITIVO_DXTNET.TXT</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_system.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_target.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\Drivers\Protocolo\Protocolo.c</name>
       </file>
     </group>

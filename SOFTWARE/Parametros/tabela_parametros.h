@@ -14,62 +14,62 @@ const sPARAMETROS tabela_parametros[]={
   [ADR_FLAG_IDIOMA] = {
        .length = PAR_BYTE,
        .nome = "IDIOMA",
-       .ext = "NUM",
+       .ext = "I08",
        .default_value = (void*) 0x00
   },
 
   [ADR_FLAG_BV20]={
        .length = PAR_BYTE,
        .nome = "FLAG_BV20",
-       .ext = "NUM",
+       .ext = "I08",
        .default_value = (void*) 0x00    
   },
   [ADR_NOTAS ]={
        .length = PAR_BYTE,
        .nome = "TIPO_NOTAS",
-       .ext = "NUM",
+       .ext = "I08",
        .default_value = (void*) 0x03    
   },
   [ADR_VALOR_PIPOCA]={
        .length = PAR_DOUBLE_WORD,
        .nome = "VALOR_PIPOCA",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0x000000000000000A
   },  
   [ADR_FLAG_MDB_BIL]={
        .length = PAR_BYTE,
        .nome = "FLAG_MDB_BILL",
-       .ext = "NUM",
+       .ext = "I08",
        .default_value = (void*) 0x00       
   },
   [ADR_FLAG_MDB_COIN]={
        .length = PAR_BYTE,
        .nome = "FLAG_MDB_COIN",
-       .ext = "NUM",
+       .ext = "I08",
        .default_value = (void*) 0x00           
   },
   [ADR_FLAG_MDB_CASHLESS]={
        .length = PAR_BYTE,
        .nome = "FLAG_MDB_CSH",
-       .ext = "NUM",
+       .ext = "I08",
        .default_value = (void*) 0x00           
   },
   [ADR_BAUDRATE_IMPRESSORA]={
        .length = PAR_DOUBLE_WORD,
        .nome = "BAUD_PRINTER",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0x000000000000000A   
   },
   [ADR_VALOR_PULSO_MOEDEIRO]={
        .length = PAR_DOUBLE_WORD,
        .nome = "VALOR_PULSO_MOED",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0x000000000000000A
   },
   [ADR_VALOR_PULSO_NOTEIRO]={
        .length = PAR_DOUBLE_WORD,
        .nome = "VALOR_PULSO_NOT",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0x000000000000000A
   },  
   //
@@ -80,183 +80,183 @@ const sPARAMETROS tabela_parametros[]={
   [ADR_CONTAGEM_UNIDADES_PARCIAL]={
        .length = PAR_DOUBLE_WORD,
        .nome = "CONTAGEM_PARCIAL",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0    
   },
  [ADR_CONTAGEM_UNIDADES_TOTAL]={
        .length = PAR_DOUBLE_WORD,
        .nome = "CONTAGEM_TOTAL",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0    
   },       
  [ADR_MOEDA_PARCIAL]={
        .length = PAR_DOUBLE_WORD,
        .nome = "MOEDA_PARCIAL",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0    
   },            
  [ADR_MOEDA_TOTAL]={
        .length = PAR_DOUBLE_WORD,
        .nome = "MOEDA_TOTAL",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0    
   },
  [ADR_CARTAO_PARCIAL]={
        .length = PAR_DOUBLE_WORD,
        .nome = "CARTAO_PARCIAL",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0    
   },
  [ADR_CARTAO_TOTAL]={
        .length = PAR_DOUBLE_WORD,
        .nome = "CARTAO_TOTAL",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0    
   },
   [ADR_UNIDADES_CARTAO_PARCIAL]={
        .length = PAR_DOUBLE_WORD,
        .nome = "UNI_CARTAO_PARCIAL",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0     
   },
   [ADR_UNIDADES_CARTAO_TOTAL]={
        .length = PAR_DOUBLE_WORD,
        .nome = "UNI_CARTAO_TOTAL",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0   
   },  
   //---
   [ADR_INICIO_BLOCO_MUSICA]={
        .length = PAR_DOUBLE_WORD,
        .nome = "INICIO_MUSICA",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0   
   },    
   
   [ADR_INICIO_LOCUCAO_PROPAGANDA]={
        .length = PAR_DOUBLE_WORD,
        .nome = "INICIO_PROPAGANDA",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0       
   },
   
   [ADR_INICIO_LOCUCAO_PEGA_PACOTE]={
        .length = PAR_DOUBLE_WORD,
        .nome = "INICIO_PEGA_PACOTE",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0       
   },
   
   [ADR_INICIO_LOCUCAO_PIPOCAS_PRONTAS]={
        .length = PAR_DOUBLE_WORD,
        .nome = "INICIO_PIPOCAS_PRONTAS",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0          
   },
   
   [ADR_TAMANHO_BLOCO_MUSICA]={
        .length = PAR_DOUBLE_WORD,
        .nome = "TAMANHO_BLOCO_MUSICA",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0       
   },
   
   [ADR_TAMANHO_LOCUCAO_PROPAGANDA]={
        .length = PAR_DOUBLE_WORD,
        .nome = "TAMANHO_LOCUCAO_PROP",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0         
   },
   
   [ADR_TAMANHO_LOCUCAO_PEGA_PACOTE]={
        .length = PAR_DOUBLE_WORD,
        .nome = "TAMANHO_PEGA_PACOTE",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0         
   },
   
   [ADR_TAMANHO_LOCUCAO_PIPOCAS_PRONTAS]={
        .length = PAR_DOUBLE_WORD,
        .nome = "TAMANHO_PIPOCAS_PRONTAS",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0         
   },
   [ADR_TEMPERATURA_PREPARACAO]={
        .length = PAR_DOUBLE_WORD,
        .nome = "TEMPERATURA_PREPARO",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0       
   },
   [ADR_VELOCIDADE_PREPARACAO]={
        .length = PAR_DOUBLE_WORD,
        .nome = "VELOCIDADE_PREPARAO",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0       
   },
   [ADR_TEMPO_EMBALAGEM]={
        .length = PAR_DOUBLE_WORD,
        .nome = "TEMPO_MOTOR_EMBALAGEM",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0     
   },
   [ADR_VOLUME_MUSICA]={
        .length = PAR_DOUBLE_WORD,
        .nome = "VOLUME_MUSICA",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0   
   },
   [ADR_VOLUME_VOZ]={
        .length = PAR_DOUBLE_WORD,
        .nome = "VOLUME_LOCUCAO",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0  
   },
   [ADR_INTERVALO_TEMPO_PROP]={
        .length = PAR_DOUBLE_WORD,
        .nome = "INTERVALO_PROP",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0      
   },
   [ADR_FLAG_FREE]={
        .length = PAR_BYTE,
        .nome = "FREE",
-       .ext = "NUM",
+       .ext = "I08",
        .default_value = (void*) 0x00
   },
   [ADR_FLAG_FITA_LED]={
        .length = PAR_BYTE,
        .nome = "FITA_LED",
-       .ext = "NUM",
+       .ext = "I08",
        .default_value = (void*) 0x00    
   },
   [ADR_FLAG_TROCO]={
        .length = PAR_BYTE,
        .nome = "TROCO_MOEDA",
-       .ext = "NUM",
+       .ext = "I08",
        .default_value = (void*) 0x00     
   },
   [ADR_SENHA_ADMIN]={
        .length = PAR_DOUBLE_WORD,
        .nome = "SENHA_ADMIN",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0x00         
   },
   [ADR_NUMERO_SERIE]={
        .length = PAR_DOUBLE_WORD,
        .nome = "NUMERO_SERIE",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0x00             
   },
   [ADR_COMISSAO_PONTO]={
        .length = PAR_DOUBLE_WORD,
        .nome = "COMISSAO_PONTO",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0x00                 
   },
   [ADR_FLAG_DESUMIDIFICADOR]={
        .length = PAR_BYTE,
        .nome = "FLG_DESUMID",
-       .ext = "NUM",
+       .ext = "I08",
        .default_value = (void*) 0x00       
   },
   [ADR_MENSAGEM_CLIENTE_01]={
@@ -268,7 +268,7 @@ const sPARAMETROS tabela_parametros[]={
   [ADR_CONTADOR_PIPOCAS_TESTE]={
        .length = PAR_DOUBLE_WORD,
        .nome = "cnt_pip_teste",
-       .ext = "NUM",
+       .ext = "I32",
        .default_value = (void*) 0x00
   },
   [ADR_MENSAGEM_CLIENTE_02]={

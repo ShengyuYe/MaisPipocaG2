@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     12/Jul/2017  11:49:49 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     14/Jul/2017  15:39:35 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -44,10 +44,13 @@
         EXTERN __aeabi_memcpy
 
         PUBLIC PARAMETROS_buffer
+        PUBLIC PARAMETROS_get_parametro_rec
+        PUBLIC PARAMETROS_get_tamanho_lista
         PUBLIC PARAMETROS_grava
         PUBLIC PARAMETROS_ini
         PUBLIC PARAMETROS_le
         PUBLIC PARAMETROS_resolve_endereco
+        PUBLIC PARAMETROS_set_parametro_rec
         PUBLIC memcpy
         PUBLIC tabela_parametros
         
@@ -144,7 +147,7 @@ memcpy:
 //   38 #include "tabela_parametros.h"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-// __absolute struct <unnamed> const tabela_parametros[64]
+// __absolute struct <unnamed> const tabela_parametros[44]
 tabela_parametros:
         DATA
         DC32 0H
@@ -152,323 +155,243 @@ tabela_parametros:
         DC8 "IDIOMA"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 30H, 38H
         DC8 0, 0, 0
         DC32 0H
         DC16 1
         DC8 "FLAG_BV20"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 30H, 38H
         DC8 0, 0, 0
         DC32 3H
         DC16 1
         DC8 "TIPO_NOTAS"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 30H, 38H
         DC8 0, 0, 0
         DC32 0AH
         DC16 4
         DC8 "VALOR_PIPOCA"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 1
         DC8 "FLAG_MDB_BILL"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 30H, 38H
         DC8 0, 0, 0
         DC32 0H
         DC16 1
         DC8 "FLAG_MDB_COIN"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 30H, 38H
         DC8 0, 0, 0
         DC32 0H
         DC16 1
         DC8 "FLAG_MDB_CSH"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 30H, 38H
         DC8 0, 0, 0
         DC32 0AH
         DC16 4
         DC8 "BAUD_PRINTER"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0AH
         DC16 4
         DC8 "VALOR_PULSO_MOED"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0AH
         DC16 4
         DC8 "VALOR_PULSO_NOT"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "CONTAGEM_PARCIAL"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "CONTAGEM_TOTAL"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "MOEDA_PARCIAL"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "MOEDA_TOTAL"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "CARTAO_PARCIAL"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "CARTAO_TOTAL"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "UNI_CARTAO_PARCIAL"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "UNI_CARTAO_TOTAL"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "INICIO_MUSICA"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "INICIO_PROPAGANDA"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "INICIO_PEGA_PACOTE"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "INICIO_PIPOCAS_PRONTAS"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "TAMANHO_BLOCO_MUSICA"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "TAMANHO_LOCUCAO_PROP"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "TAMANHO_PEGA_PACOTE"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "TAMANHO_PIPOCAS_PRONTAS"
         DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "TEMPERATURA_PREPARO"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "VELOCIDADE_PREPARAO"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "TEMPO_MOTOR_EMBALAGEM"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "VOLUME_MUSICA"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "VOLUME_LOCUCAO"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "INTERVALO_PROP"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 1
         DC8 "FREE"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 30H, 38H
         DC8 0, 0, 0
         DC32 0H
         DC16 1
         DC8 "FITA_LED"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 30H, 38H
         DC8 0, 0, 0
         DC32 0H
         DC16 1
         DC8 "TROCO_MOEDA"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 30H, 38H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "SENHA_ADMIN"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "NUMERO_SERIE"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "COMISSAO_PONTO"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
         DC32 0H
         DC16 1
         DC8 "FLG_DESUMID"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 30H, 38H
         DC8 0, 0, 0
         DC32 0H
         DC16 4
         DC8 "cnt_pip_teste"
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 4EH, 55H, 4DH
+        DC8 49H, 33H, 32H
         DC8 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
-        DC32 0H
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0
         DC32 `?<Constant "  GRUPO ALTECH  ">`
         DC16 16
         DC8 "SG_CLIENTE_01"
@@ -570,7 +493,7 @@ PARAMETROS_resolve_endereco:
 //   83     endereco_fisico+=(tabela_parametros[i].length+2); // 2 = CRC
 ??PARAMETROS_resolve_endereco_1:
         MOVS     R3,#+44
-        LDR.N    R4,??DataTable2
+        LDR.N    R4,??DataTable4
         MLA      R3,R3,R2,R4
         LDRH     R3,[R3, #+4]
         ADDS     R3,R3,#+2
@@ -610,36 +533,36 @@ PARAMETROS_grava:
 //   95   
 //   96   memcpy(&PARAMETROS_buffer[0][0],parametro,tabela_parametros[endereco].length);
         MOVS     R0,#+44
-        LDR.N    R2,??DataTable2
+        LDR.N    R2,??DataTable4
         MLA      R0,R0,R4,R2
         LDRH     R2,[R0, #+4]
-        LDR.N    R0,??DataTable2_1
+        LDR.N    R0,??DataTable4_1
           CFI FunCall memcpy
         BL       memcpy
 //   97   crc = CCTALK_calculaCRC(&PARAMETROS_buffer[0][0],0,tabela_parametros[endereco].length);
         MOVS     R0,#+44
-        LDR.N    R1,??DataTable2
+        LDR.N    R1,??DataTable4
         MLA      R0,R0,R4,R1
         LDRH     R2,[R0, #+4]
         MOVS     R1,#+0
-        LDR.N    R0,??DataTable2_1
+        LDR.N    R0,??DataTable4_1
           CFI FunCall CCTALK_calculaCRC
         BL       CCTALK_calculaCRC
 //   98   PARAMETROS_buffer[0][tabela_parametros[endereco].length]   = crc>>8;
         MOVS     R1,#+44
-        LDR.N    R2,??DataTable2
+        LDR.N    R2,??DataTable4
         MLA      R1,R1,R4,R2
         LDRH     R1,[R1, #+4]
-        LDR.N    R2,??DataTable2_1
+        LDR.N    R2,??DataTable4_1
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         LSRS     R3,R0,#+8
         STRB     R3,[R1, R2]
 //   99   PARAMETROS_buffer[0][tabela_parametros[endereco].length+1] = crc;
         MOVS     R1,#+44
-        LDR.N    R2,??DataTable2
+        LDR.N    R2,??DataTable4
         MLA      R1,R1,R4,R2
         LDRH     R1,[R1, #+4]
-        LDR.N    R2,??DataTable2_1
+        LDR.N    R2,??DataTable4_1
         ADDS     R1,R1,R2
         STRB     R0,[R1, #+1]
 //  100  
@@ -650,11 +573,11 @@ PARAMETROS_grava:
           CFI FunCall PARAMETROS_resolve_endereco
         BL       PARAMETROS_resolve_endereco
         MOVS     R1,#+44
-        LDR.N    R2,??DataTable2
+        LDR.N    R2,??DataTable4
         MLA      R1,R1,R4,R2
         LDRH     R1,[R1, #+4]
         ADDS     R2,R1,#+2
-        LDR.N    R1,??DataTable2_1
+        LDR.N    R1,??DataTable4_1
           CFI FunCall MEMORYWRAPPER_writeBytes
         BL       MEMORYWRAPPER_writeBytes
 //  104 }
@@ -690,37 +613,37 @@ PARAMETROS_le:
           CFI FunCall PARAMETROS_resolve_endereco
         BL       PARAMETROS_resolve_endereco
         MOVS     R1,#+44
-        LDR.N    R2,??DataTable2
+        LDR.N    R2,??DataTable4
         MLA      R1,R1,R4,R2
         LDRH     R1,[R1, #+4]
         ADDS     R2,R1,#+2
-        LDR.N    R1,??DataTable2_2
+        LDR.N    R1,??DataTable4_2
           CFI FunCall MEMORYWRAPPER_readBytes
         BL       MEMORYWRAPPER_readBytes
 //  117   
 //  118   crc = CCTALK_calculaCRC(&PARAMETROS_buffer[1][0],0,tabela_parametros[endereco].length);
         MOVS     R0,#+44
-        LDR.N    R1,??DataTable2
+        LDR.N    R1,??DataTable4
         MLA      R0,R0,R4,R1
         LDRH     R2,[R0, #+4]
         MOVS     R1,#+0
-        LDR.N    R0,??DataTable2_2
+        LDR.N    R0,??DataTable4_2
           CFI FunCall CCTALK_calculaCRC
         BL       CCTALK_calculaCRC
 //  119   if(crc==(PARAMETROS_buffer[1][tabela_parametros[endereco].length]<<8 | PARAMETROS_buffer[1][tabela_parametros[endereco].length+1]))
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         MOVS     R1,#+44
-        LDR.N    R2,??DataTable2
+        LDR.N    R2,??DataTable4
         MLA      R1,R1,R4,R2
         LDRH     R1,[R1, #+4]
-        LDR.N    R2,??DataTable2_1
+        LDR.N    R2,??DataTable4_1
         ADDS     R1,R1,R2
         LDRB     R1,[R1, #+64]
         MOVS     R2,#+44
-        LDR.N    R3,??DataTable2
+        LDR.N    R3,??DataTable4
         MLA      R2,R2,R4,R3
         LDRH     R2,[R2, #+4]
-        LDR.N    R3,??DataTable2_1
+        LDR.N    R3,??DataTable4_1
         ADDS     R2,R2,R3
         LDRB     R2,[R2, #+65]
         ORRS     R1,R2,R1, LSL #+8
@@ -728,10 +651,10 @@ PARAMETROS_le:
         BNE.N    ??PARAMETROS_le_0
 //  120     memcpy(parametro,&PARAMETROS_buffer[1][0],tabela_parametros[endereco].length);      
         MOVS     R0,#+44
-        LDR.N    R1,??DataTable2
+        LDR.N    R1,??DataTable4
         MLA      R0,R0,R4,R1
         LDRH     R2,[R0, #+4]
-        LDR.N    R1,??DataTable2_2
+        LDR.N    R1,??DataTable4_2
         MOVS     R0,R5
           CFI FunCall memcpy
         BL       memcpy
@@ -741,7 +664,7 @@ PARAMETROS_le:
 //  123     unsigned char *vlr = (unsigned char*)&tabela_parametros[endereco].default_value;
 ??PARAMETROS_le_0:
         MOVS     R0,#+44
-        LDR.N    R1,??DataTable2
+        LDR.N    R1,??DataTable4
         MLA      R0,R0,R4,R1
 //  124     
 //  125     for(unsigned char i=0;i<tabela_parametros[endereco].length;i++)
@@ -758,7 +681,7 @@ PARAMETROS_le:
         MOVS     R2,R1
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         MOVS     R3,#+44
-        LDR.N    R6,??DataTable2
+        LDR.N    R6,??DataTable4
         MLA      R3,R3,R4,R6
         LDRH     R3,[R3, #+4]
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
@@ -769,23 +692,170 @@ PARAMETROS_le:
 ??PARAMETROS_le_1:
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock4
+//  129 /***********************************************************************************
+//  130 *       Descrição       :       Getter para o tamanho total da lista 
+//  131 *                               de parâmetros
+//  132 *       Parametros      :       nenhum
+//  133 *       Retorno         :       (unsigned short int) tamanho da lista
+//  134 *                               de parâmetros
+//  135 ***********************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(1)
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI Function PARAMETROS_get_tamanho_lista
+          CFI NoCalls
+        THUMB
+//  136 unsigned short int PARAMETROS_get_tamanho_lista(void){
+//  137   
+//  138   return TAMANHO_PARAMETROS;
+PARAMETROS_get_tamanho_lista:
+        MOVS     R0,#+44
+        BX       LR               ;; return
+          CFI EndBlock cfiBlock5
+//  139 }
+//  140 /***********************************************************************************
+//  141 *       Descrição       :       Lê as informações referentes a um 
+//  142 *                               determinado parâmetro
+//  143 *       Parametros      :       (unsigned short int) indice
+//  144 *                       :       (unsigned short int*)tamanho
+//  145 *                               (char*) nome
+//  146 *                               (char*) extensao
+//  147 *                               (void*) valor 
+//  148 *       Retorno         :       nenhum
+//  149 ***********************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(1)
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI Function PARAMETROS_get_parametro_rec
+        THUMB
+//  150 void PARAMETROS_get_parametro_rec(unsigned short int indice,unsigned short int *tamanho,
+//  151                                   char *nome,char *extensao,void *valor){
+PARAMETROS_get_parametro_rec:
+        PUSH     {R4-R6,LR}
+          CFI R14 Frame(CFA, -4)
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
+        MOVS     R4,R0
+        MOVS     R0,R2
+        MOVS     R5,R3
+        LDR      R6,[SP, #+16]
+//  152                                     
+//  153   *tamanho = tabela_parametros[indice].length;
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        MOVS     R2,#+44
+        LDR.N    R3,??DataTable4
+        MLA      R2,R2,R4,R3
+        LDRH     R2,[R2, #+4]
+        STRH     R2,[R1, #+0]
+//  154   memcpy(nome,tabela_parametros[indice].nome,16);
+        MOVS     R2,#+16
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        MOVS     R1,#+44
+        LDR.N    R3,??DataTable4
+        MLA      R1,R1,R4,R3
+        ADDS     R1,R1,#+6
+          CFI FunCall memcpy
+        BL       memcpy
+//  155   memcpy(extensao,tabela_parametros[indice].ext,3);  
+        MOVS     R2,#+3
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        MOVS     R0,#+44
+        LDR.N    R1,??DataTable4
+        MLA      R0,R0,R4,R1
+        ADDS     R1,R0,#+38
+        MOVS     R0,R5
+          CFI FunCall memcpy
+        BL       memcpy
+//  156   PARAMETROS_le(indice,valor);
+        MOVS     R1,R6
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        MOVS     R0,R4
+          CFI FunCall PARAMETROS_le
+        BL       PARAMETROS_le
+//  157 }
+        POP      {R4-R6,PC}       ;; return
+          CFI EndBlock cfiBlock6
+//  158 /***********************************************************************************
+//  159 *       Descrição       :       Escreve as informações referentes a um
+//  160 *                               determinado parâmetro
+//  161 *       Parametros      :       (unsigned short int) indice
+//  162 *                               (unsigned short int) quantidade de octetos
+//  163 *                               (unsigned char*) ponteiro para o buffer
+//  164 *                                               de dados
+//  165 *       Retorno         :       nenhum
+//  166 ***********************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(1)
+          CFI Block cfiBlock7 Using cfiCommon0
+          CFI Function PARAMETROS_set_parametro_rec
+        THUMB
+//  167 void PARAMETROS_set_parametro_rec(unsigned short int indice,unsigned short int tamanho,
+//  168                                   unsigned char *pData){
+PARAMETROS_set_parametro_rec:
+        PUSH     {R3-R5,LR}
+          CFI R14 Frame(CFA, -4)
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
+//  169                                     
+//  170   if(tabela_parametros[indice].length>PAR_DOUBLE_WORD){
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        MOVS     R3,#+44
+        LDR.N    R4,??DataTable4
+        MLA      R3,R3,R0,R4
+        LDRH     R3,[R3, #+4]
+        CMP      R3,#+5
+        BLT.N    ??PARAMETROS_set_parametro_rec_0
+//  171     for(unsigned char i=tamanho-1;i<tabela_parametros[indice].length;i++)
+        SUBS     R1,R1,#+1
+        B.N      ??PARAMETROS_set_parametro_rec_1
+//  172       pData[i] = ' ';
+??PARAMETROS_set_parametro_rec_2:
+        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+        MOVS     R3,#+32
+        STRB     R3,[R1, R2]
+        ADDS     R1,R1,#+1
+??PARAMETROS_set_parametro_rec_1:
+        MOVS     R3,R1
+        UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        MOVS     R4,#+44
+        LDR.N    R5,??DataTable4
+        MLA      R4,R4,R0,R5
+        LDRH     R4,[R4, #+4]
+        UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+        CMP      R3,R4
+        BCC.N    ??PARAMETROS_set_parametro_rec_2
+//  173   }
+//  174   
+//  175   PARAMETROS_grava(indice,pData);                                     
+??PARAMETROS_set_parametro_rec_0:
+        MOVS     R1,R2
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+          CFI FunCall PARAMETROS_grava
+        BL       PARAMETROS_grava
+//  176 }
+        POP      {R0,R4,R5,PC}    ;; return
+          CFI EndBlock cfiBlock7
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable2:
+??DataTable4:
         DC32     tabela_parametros
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable2_1:
+??DataTable4_1:
         DC32     PARAMETROS_buffer
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable2_2:
+??DataTable4_2:
         DC32     PARAMETROS_buffer+0x40
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
@@ -800,16 +870,16 @@ PARAMETROS_le:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  129 /***********************************************************************************
-//  130 *       Fim do arquivo
-//  131 ***********************************************************************************/
+//  177 /***********************************************************************************
+//  178 *       Fim do arquivo
+//  179 ***********************************************************************************/
 // 
 //   128 bytes in section .bss
-// 2 836 bytes in section .rodata
-//   324 bytes in section .text
+// 1 956 bytes in section .rodata
+//   466 bytes in section .text
 // 
-//   310 bytes of CODE  memory (+ 14 bytes shared)
-// 2 836 bytes of CONST memory
+//   452 bytes of CODE  memory (+ 14 bytes shared)
+// 1 956 bytes of CONST memory
 //   128 bytes of DATA  memory
 //
 //Errors: none

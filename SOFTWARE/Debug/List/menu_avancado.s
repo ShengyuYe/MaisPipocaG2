@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     12/Jul/2017  11:49:54 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     14/Jul/2017  11:54:29 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -437,22 +437,22 @@ MENUAVANCADO_padrao_fabrica:
 //  167     // Grava as mensagens de cliente como Mais PIpoca
 //  168     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_01,(void*)msg_padrao);
         ADD      R1,SP,#+8
-        MOVS     R0,#+60
+        MOVS     R0,#+40
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  169     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_02,(void*)msg_padrao);
         ADD      R1,SP,#+8
-        MOVS     R0,#+61
+        MOVS     R0,#+41
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  170     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_03,(void*)msg_padrao);
         ADD      R1,SP,#+8
-        MOVS     R0,#+62
+        MOVS     R0,#+42
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  171     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_04,(void*)msg_padrao);
         ADD      R1,SP,#+8
-        MOVS     R0,#+63
+        MOVS     R0,#+43
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  172   }

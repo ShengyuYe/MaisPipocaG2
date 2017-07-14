@@ -61,8 +61,18 @@ unsigned char PROTOCOLO_novoPacote=0;
 *       Funções locais
 ***********************************************************************************/
 void PROTOCOLO_enviaPacote(unsigned char *pData,unsigned short int tamanho);
+
 unsigned char PROTOCOLO_checksum(unsigned char*pData,unsigned short int tamanho);
+
 void PROTOCOLO_get_device(void);
+
+void PROTOCOLO_decodifica_tamanho_tabela(void);
+
+void PROTOCOLO_decodifica_le_parametro(unsigned short int indice);
+
+void PROTOCOLO_decodifica_escreve_parametro(unsigned short int endereco,
+                                            unsigned short int tamanho,
+                                            unsigned char *pData);
 
 /***********************************************************************************
 *       Implementação das funções
@@ -192,9 +202,14 @@ void PROTOCOLO_main(void*pPar){
           case DXTNET_GET_DEVICE:
                PROTOCOLO_get_device();
                break;
+          case DXTNET_READ_PARAMETERS_TABLE_SIZE:
+               PROTOCOLO_decodifica_tamanho_tabela();
+               break;
           case DXTNET_READ_PARAMETERS:
+               PROTOCOLO_decodifica_le_parametro(PROTOCOLO_bufferRx[2]<<8 | PROTOCOLO_bufferRx[3]);
                break;
           case DXTNET_WRITE_PARAMETERS:
+               PROTOCOLO_decodifica_escreve_parametro(PROTOCOLO_bufferRx[2]<<8 | PROTOCOLO_bufferRx[3],PROTOCOLO_bufferRx[4]<<8 | PROTOCOLO_bufferRx[5],&PROTOCOLO_bufferRx[6]);
                break;
           case DXTNET_READ_FILE_TABLE:
                break;
@@ -277,6 +292,60 @@ void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho){
   PROTOCOLO_bytesParaEnviar = tamanho-1;
   PROTOCOLO_bytesEnviados = 1;
   U3THR = buffer[0];    
+}
+/***********************************************************************************
+*       Descrição       :       Lê a quantidade de parâmetros existentes
+*                               na tabela de parâmetros do sistema
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
+***********************************************************************************/
+void PROTOCOLO_decodifica_tamanho_tabela(void){
+  unsigned short int quantidade = PARAMETROS_get_tamanho_lista();
+  
+  PROTOCOLO_bufferTmp[0]  = DXTNET_READ_PARAMETERS_TABLE_SIZE;
+  PROTOCOLO_bufferTmp[2]  = quantidade>>8;
+  PROTOCOLO_bufferTmp[3]  = quantidade;
+  
+  PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,5);    
+}
+/***********************************************************************************
+*       Descrição       :       Decodifica o comando para leitura
+*                               de um dos parâmetros da tabela
+*       Parametros      :       (unsigned short int) indice
+*       Retorno         :       nenhum
+***********************************************************************************/
+void PROTOCOLO_decodifica_le_parametro(unsigned short int indice){
+  unsigned short int tamanho;
+  
+  PROTOCOLO_bufferTmp[0] =  DXTNET_READ_PARAMETERS;      
+  PARAMETROS_get_parametro_rec(indice,&tamanho,&PROTOCOLO_bufferTmp[4],&PROTOCOLO_bufferTmp[20],&PROTOCOLO_bufferTmp[23]);
+  PROTOCOLO_bufferTmp[2] = tamanho>>8;
+  PROTOCOLO_bufferTmp[3] = tamanho;
+  
+  PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,24+tamanho);
+}
+/***********************************************************************************
+*       Descrição       :       Decodifica o comando de escrita em um 
+*                               dos parâmetro da tabela de leitura
+*       Parametros      :       (unsigned short int) endereço
+*                               (unsigned short int) tamanho do parâmetro
+*                               (unsigned char*) ponteiro para o stream
+*
+*       Retorno         :       nenhum
+***********************************************************************************/
+void PROTOCOLO_decodifica_escreve_parametro(unsigned short int endereco,
+                                            unsigned short int tamanho,
+                                            unsigned char *pData){
+                                                    
+  PROTOCOLO_bufferTmp[0] = DXTNET_WRITE_PARAMETERS;
+  
+  PARAMETROS_set_parametro_rec(endereco,tamanho,pData);
+  
+  PROTOCOLO_bufferTmp[2] = endereco>>8;
+  PROTOCOLO_bufferTmp[3] = endereco;
+  PROTOCOLO_bufferTmp[4] = tamanho>>8;
+  PROTOCOLO_bufferTmp[5] = tamanho;
+  PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,7);
 }
 /***********************************************************************************
 *       Fim do arquivo

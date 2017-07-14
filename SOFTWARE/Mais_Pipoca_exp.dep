@@ -2,550 +2,527 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>1160510051</fileChecksum>
+  <fileChecksum>1298744767</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
       <file>$PROJ_DIR$\Drivers\WH1602\WH1602.C</file>
-      <file>$PROJ_DIR$\Drivers\RTC\RTC.C</file>
       <file>$PROJ_DIR$\Drivers\WH1602_2\WH1602_2.C</file>
+      <file>$PROJ_DIR$\Historico_precos\fila_troca_preco.c</file>
+      <file>$PROJ_DIR$\Historico_precos\flash_queue.c</file>
       <file>$PROJ_DIR$\Drivers\Teclado\Teclado.c</file>
-      <file>$PROJ_DIR$\Drivers\SERIAL_MUX\serial_mux.c</file>
       <file>$PROJ_DIR$\Drivers\UARTS\uart.c</file>
       <file>$PROJ_DIR$\Drivers\WATCHDOG\WATCHDOG.C</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_ajuste_relogio.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_edita_inteiro.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_edita_listagem.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_info_binaria.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_edita_flag.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_operacao.c</file>
-      <file>$PROJ_DIR$\Aplicacao\InterfaceAjusteRelogio.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_faturamento.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_configuracao.c</file>
-      <file>$PROJ_DIR$\Aplicacao\faturamento.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_preparacao.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_rolagem.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_seleciona_lista.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_servico.c</file>
-      <file>$PROJ_DIR$\Aplicacao\embalagem.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_avancado.c</file>
-      <file>$PROJ_DIR$\Aplicacao\aplicacao.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_acessorios.c</file>
-      <file>$PROJ_DIR$\Drivers\Impressora\impressora.c</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb_bill.c</file>
-      <file>$PROJ_DIR$\Drivers\PlayerWave\PlayerWave.c</file>
-      <file>$PROJ_DIR$\Drivers\AmostragemAnalogica\AmostraAnalogica.c</file>
-      <file>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\DESCRITIVO_DXTNET.TXT</file>
-      <file>$PROJ_DIR$\Drivers\FILESYSTEM\ff.c</file>
-      <file>$PROJ_DIR$\Drivers\SDCARD\SPI_WRAPPER_SD.C</file>
-      <file>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_system.c</file>
       <file>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_target.c</file>
-      <file>$PROJ_DIR$\Drivers\FILESYSTEM\dataflash_diskio.c</file>
-      <file>$PROJ_DIR$\Drivers\Protocolo\Protocolo.c</file>
-      <file>$PROJ_DIR$\Aplicacao\tela_senha.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_teste_hardware.c</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\sst25vf016b.c</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb.c</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb_cashless.c</file>
-      <file>$PROJ_DIR$\Drivers\FILESYSTEM\diskio.c</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb_coin.c</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb_uart.c</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_teste_mdb.c</file>
-      <file>$PROJ_DIR$\Aplicacao\POST.c</file>
-      <file>$PROJ_DIR$\Drivers\SDCARD\SDCARD.C</file>
-      <file>$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\memoryWrapper.c</file>
-      <file>$PROJ_DIR$\Aplicacao\Preparacao.c</file>
-      <file>$PROJ_DIR$\Drivers\CCTALK\cctalk.c</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\spi_wrapper.c</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_avancado.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\BV20.lst</file>
-      <file>$PROJ_DIR$\Debug\List\menu_ajuste_relogio.lst</file>
-      <file>$PROJ_DIR$\Debug\List\AmostraAnalogica.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\memoryWrapper.pbi</file>
-      <file>$PROJ_DIR$\Drivers\CCTALK\cctalk.h</file>
-      <file>$PROJ_DIR$\Drivers\UARTS\uart.h</file>
-      <file>$PROJ_DIR$\Debug\List\tela_senha.lst</file>
-      <file>$PROJ_DIR$\Debug\List\Protocolo.s</file>
-      <file>$PROJ_DIR$\Debug\List\POST.lst</file>
-      <file>$PROJ_DIR$\Debug\List\PlayerWave.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\Pagamentos.o</file>
-      <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_avancado.o</file>
-      <file>$PROJ_DIR$\Debug\List\flash_queue.lst</file>
-      <file>$TOOLKIT_DIR$\inc\c\xtgmath.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\InterfaceAjusteRelogio.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\cstartup_M.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\heap_1.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\mdb_coin.o</file>
-      <file>$PROJ_DIR$\Debug\List\aplicacao.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\Supervisao_MDB.o</file>
-      <file>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_coin.h</file>
-      <file>$PROJ_DIR$\Debug\List\mdb_bill.s</file>
-      <file>$PROJ_DIR$\Debug\List\heap_1.s</file>
-      <file>$PROJ_DIR$\Debug\List\Relatorio.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_teste_mdb.o</file>
-      <file>$PROJ_DIR$\Debug\List\portasm.lst</file>
-      <file>$PROJ_DIR$\Debug\List\WH1602_2.lst</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
-      <file>$PROJ_DIR$\Debug\List\RTC.lst</file>
-      <file>$PROJ_DIR$\Debug\List\aplicacao.lst</file>
-      <file>$PROJ_DIR$\Debug\List\InterfaceAjusteRelogio.s</file>
-      <file>$PROJ_DIR$\Board\board.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\mdb.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\list.pbi</file>
-      <file>$PROJ_DIR$\Drivers\AmostragemAnalogica\tabelaTermistor.h</file>
-      <file>$PROJ_DIR$\Debug\List\strings.s</file>
-      <file>$PROJ_DIR$\Debug\List\leds.lst</file>
-      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
-      <file>$PROJ_DIR$\Debug\Obj\mdb_cashless.pbi</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb_uart.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\POST.o</file>
-      <file>$PROJ_DIR$\Debug\List\cstartup_M.lst</file>
-      <file>$PROJ_DIR$\Debug\List\menu_rolagem.s</file>
-      <file>$PROJ_DIR$\Kernel\portable.h</file>
-      <file>$PROJ_DIR$\Debug\List\uart.lst</file>
-      <file>$PROJ_DIR$\Drivers\WH1602_2\WH1602_2_targetWrapper.h</file>
-      <file>$PROJ_DIR$\Debug\List\parametros.lst</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_edita_listagem.o</file>
-      <file>$PROJ_DIR$\Debug\List\Potencia.lst</file>
-      <file>$PROJ_DIR$\Debug\List\menu_faturamento.lst</file>
-      <file>$PROJ_DIR$\Debug\List\menu_acessorios.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\WATCHDOG.o</file>
-      <file>$PROJ_DIR$\Debug\List\Supervisao_MDB.lst</file>
-      <file>$PROJ_DIR$\Drivers\playerwave\playerwave.h</file>
-      <file>$PROJ_DIR$\Debug\List\Pagamentos.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\Supervisao_MDB.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\Teclado.pbi</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_edita_flag.h</file>
-      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
-      <file>$PROJ_DIR$\Debug\List\menu_operacao.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\Potencia.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\c\ymath.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\fila_troca_preco.o</file>
-      <file>$PROJ_DIR$\Debug\List\menu_info_binaria.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\AmostraAnalogica.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\menu_avancado.lst</file>
-      <file>$PROJ_DIR$\Debug\List\sst25vf016b.s</file>
-      <file>$PROJ_DIR$\aplicacao\preparacao.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_configuracao.pbi</file>
-      <file>$PROJ_DIR$\Historico_precos\flash_queue.h</file>
-      <file>$PROJ_DIR$\Debug\List\menu_edita_flag.lst</file>
-      <file>$PROJ_DIR$\Parametros\tabela_parametros.h</file>
-      <file>$PROJ_DIR$\aplicacao\embalagem.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\fila_troca_preco.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\menu_info_binaria.s</file>
-      <file>$PROJ_DIR$\Debug\List\queue.s</file>
-      <file>$PROJ_DIR$\aplicacao\aplicacao.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\Board.pbi</file>
-      <file>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_bill.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\flash_queue.pbi</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_edita_inteiro.h</file>
-      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
-      <file>$PROJ_DIR$\Debug\List\tela_senha.s</file>
-      <file>$PROJ_DIR$\Kernel\semphr.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
-      <file>$PROJ_DIR$\Drivers\Teclado\teclado.h</file>
-      <file>$TOOLKIT_DIR$\inc\NXP\iolpc1768.h</file>
-      <file>$PROJ_DIR$\Historico_precos\flash_queue.c</file>
-      <file>$PROJ_DIR$\Strings\strings.h</file>
+      <file>$PROJ_DIR$\Parametros\parametros.c</file>
       <file>$PROJ_DIR$\Potencia\ControleTemperatura.c</file>
-      <file>$PROJ_DIR$\Potencia\Potencia.c</file>
-      <file>$PROJ_DIR$\Board\Board.c</file>
-      <file>$PROJ_DIR$\Relatorio\Relatorio.c</file>
-      <file>$PROJ_DIR$\Kernel\portasm.s</file>
-      <file>$PROJ_DIR$\Relatorio\relatorio_ptbr.h</file>
-      <file>$PROJ_DIR$\Drivers\Pagamentos\Pagamentos.c</file>
+      <file>$PROJ_DIR$\Debug\List\menu_ajuste_relogio.lst</file>
       <file>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_mdb_bill.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_avancado.pbi</file>
+      <file>$PROJ_DIR$\Kernel\port.c</file>
+      <file>$PROJ_DIR$\Kernel\heap_1.c</file>
+      <file>$PROJ_DIR$\Kernel\portasm.s</file>
+      <file>$PROJ_DIR$\Kernel\queue.c</file>
+      <file>$PROJ_DIR$\Drivers\Pagamentos\Pagamentos.c</file>
+      <file>$PROJ_DIR$\Kernel\tasks.c</file>
       <file>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_MDB.c</file>
+      <file>$PROJ_DIR$\Strings\mensagens.H</file>
       <file>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_mdb_coin.c</file>
-      <file>$PROJ_DIR$\IU\leds.c</file>
-      <file>$PROJ_DIR$\Historico_precos\fila_troca_preco.c</file>
+      <file>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_cashless.c</file>
+      <file>$PROJ_DIR$\Strings\strings.h</file>
+      <file>$PROJ_DIR$\Potencia\Potencia.c</file>
+      <file>$PROJ_DIR$\main.c</file>
+      <file>$PROJ_DIR$\Strings\strings.c</file>
+      <file>$PROJ_DIR$\Board\Board.c</file>
       <file>$PROJ_DIR$\cstartup_M.asm</file>
       <file>$PROJ_DIR$\Kernel\list.c</file>
-      <file>$PROJ_DIR$\Kernel\heap_1.c</file>
-      <file>$PROJ_DIR$\Kernel\queue.c</file>
-      <file>$PROJ_DIR$\Kernel\tasks.c</file>
-      <file>$PROJ_DIR$\Kernel\port.c</file>
-      <file>$PROJ_DIR$\main.c</file>
-      <file>$PROJ_DIR$\Strings\mensagens.H</file>
-      <file>$PROJ_DIR$\Strings\strings.c</file>
+      <file>$PROJ_DIR$\Relatorio\Relatorio.c</file>
+      <file>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_system.c</file>
+      <file>$PROJ_DIR$\IU\leds.c</file>
+      <file>$PROJ_DIR$\Debug\List\BV20.lst</file>
       <file>$PROJ_DIR$\Drivers\Pagamentos\BV20.c</file>
-      <file>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_cashless.c</file>
-      <file>$PROJ_DIR$\Parametros\parametros.c</file>
       <file>$PROJ_DIR$\parametros\parametros.h</file>
-      <file>$PROJ_DIR$\Debug\List\heap_1.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\tela_senha.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\ControleTemperatura.o</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb_cashless.h</file>
-      <file>$PROJ_DIR$\Kernel\portmacro.h</file>
-      <file>$PROJ_DIR$\Drivers\WATCHDOG\WATCHDOG.H</file>
-      <file>$PROJ_DIR$\Debug\Obj\aplicacao.pbi</file>
-      <file>$PROJ_DIR$\Kernel\queue.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\strings.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\serial_mux.o</file>
-      <file>$PROJ_DIR$\Debug\Exe\Mais_Pipoca_exp.out</file>
-      <file>$PROJ_DIR$\Debug\List\Board.s</file>
-      <file>$PROJ_DIR$\includes.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_faturamento.o</file>
-      <file>$PROJ_DIR$\Drivers\AmostragemAnalogica\AmostraAnalogica.h</file>
-      <file>$PROJ_DIR$\Potencia\Potencia.h</file>
-      <file>$PROJ_DIR$\Debug\List\leds.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\WH1602.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
-      <file>$PROJ_DIR$\aplicacao\tela_senha.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\queue.o</file>
-      <file>$PROJ_DIR$\Debug\List\spi_wrapper.s</file>
-      <file>$PROJ_DIR$\Debug\List\faturamento.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_edita_listagem.o</file>
+      <file>$PROJ_DIR$\Debug\List\leds.lst</file>
+      <file>$PROJ_DIR$\Debug\List\uart.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\mdb.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\dataflash_diskio.lst</file>
+      <file>$PROJ_DIR$\Debug\List\cstartup_M.lst</file>
+      <file>$PROJ_DIR$\Debug\List\strings.s</file>
+      <file>$PROJ_DIR$\Debug\List\Pagamentos.s</file>
+      <file>$PROJ_DIR$\Debug\List\Supervisao_MDB.lst</file>
+      <file>$PROJ_DIR$\Debug\List\menu_acessorios.lst</file>
+      <file>$PROJ_DIR$\Board\board.h</file>
+      <file>$PROJ_DIR$\Debug\List\dataflash_diskio.s</file>
+      <file>$PROJ_DIR$\aplicacao\menu_operacao.h</file>
+      <file>$PROJ_DIR$\Debug\List\parametros.lst</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_edita_listagem.h</file>
+      <file>$PROJ_DIR$\Debug\List\InterfaceAjusteRelogio.s</file>
+      <file>$PROJ_DIR$\Drivers\WH1602_2\WH1602_2_targetWrapper.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\spi_wrapper.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\menu_faturamento.lst</file>
+      <file>$PROJ_DIR$\Debug\List\Potencia.lst</file>
+      <file>$PROJ_DIR$\Drivers\FILESYSTEM\dataflash_diskio.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\Teclado.pbi</file>
+      <file>$PROJ_DIR$\Drivers\AmostragemAnalogica\tabelaTermistor.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\WATCHDOG.o</file>
+      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+      <file>$PROJ_DIR$\Debug\Obj\POST.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\list.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\Supervisao_MDB.pbi</file>
       <file>$PROJ_DIR$\Drivers\sst25vf016b\paginacaoMemoriaFlash.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\Protocolo.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\WH1602.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_ajuste_relogio.o</file>
       <file>$PROJ_DIR$\Debug\List\embalagem.s</file>
+      <file>$PROJ_DIR$\Drivers\Teclado\teclado.h</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_edita_flag.h</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_teste_mdb.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\Protocolo.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\Relatorio.s</file>
-      <file>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_target.h</file>
-      <file>$PROJ_DIR$\Debug\List\Board.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\supervisao_mdb_cashless.o</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.1\AirPopCorn.icf</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_operacao.o</file>
-      <file>$PROJ_DIR$\Debug\List\ControleTemperatura.s</file>
-      <file>$PROJ_DIR$\Debug\List\menu_preparacao.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\uart.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\mdb.s</file>
-      <file>$PROJ_DIR$\Debug\List\menu_operacao.s</file>
-      <file>$PROJ_DIR$\Debug\List\main.lst</file>
-      <file>$PROJ_DIR$\Debug\List\Supervisao_mdb_coin.s</file>
-      <file>$PROJ_DIR$\Debug\List\dxt_file_system.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\flash_queue.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\dxt_file_system.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\ControleTemperatura.pbi</file>
-      <file>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_system.h</file>
-      <file>$PROJ_DIR$\Debug\List\mdb_cashless.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\dxt_file_system.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\WH1602_2.pbi</file>
-      <file>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_cashless.h</file>
-      <file>$PROJ_DIR$\Debug\List\Preparacao.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\serial_mux.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\embalagem.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\Preparacao.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\Pagamentos.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_faturamento.o</file>
+      <file>$PROJ_DIR$\Relatorio\relatorio_ptbr.h</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_uart.h</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\tela_senha.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\aplicacao.pbi</file>
+      <file>$PROJ_DIR$\Kernel\portable.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\Mais_Pipoca_exp.out</file>
+      <file>$PROJ_DIR$\Debug\Obj\ControleTemperatura.o</file>
+      <file>$PROJ_DIR$\Debug\List\Board.s</file>
+      <file>$PROJ_DIR$\Kernel\portmacro.h</file>
+      <file>$PROJ_DIR$\Potencia\Potencia.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\mdb_cashless.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\serial_mux.o</file>
+      <file>$PROJ_DIR$\Debug\List\faturamento.s</file>
+      <file>$TOOLKIT_DIR$\inc\NXP\iolpc1768.h</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_cashless.h</file>
+      <file>$PROJ_DIR$\Debug\List\menu_rolagem.s</file>
+      <file>$PROJ_DIR$\Drivers\playerwave\playerwave.h</file>
+      <file>$PROJ_DIR$\aplicacao\tela_senha.h</file>
+      <file>$PROJ_DIR$\Debug\List\menu_avancado.lst</file>
+      <file>$PROJ_DIR$\Drivers\AmostragemAnalogica\AmostraAnalogica.h</file>
+      <file>$PROJ_DIR$\Parametros\tabela_parametros.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\queue.o</file>
+      <file>$PROJ_DIR$\Debug\List\leds.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\fila_troca_preco.pbi</file>
+      <file>$PROJ_DIR$\aplicacao\aplicacao.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\flash_queue.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\strings.o</file>
+      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\Debug\List\menu_info_binaria.lst</file>
+      <file>$PROJ_DIR$\Debug\List\menu_info_binaria.s</file>
+      <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
+      <file>$PROJ_DIR$\Debug\List\spi_wrapper.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\Potencia.pbi</file>
+      <file>$PROJ_DIR$\Drivers\WATCHDOG\WATCHDOG.H</file>
+      <file>$PROJ_DIR$\Debug\List\heap_1.lst</file>
+      <file>$PROJ_DIR$\Debug\List\queue.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\AmostraAnalogica.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\Board.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\tela_senha.s</file>
+      <file>$PROJ_DIR$\Debug\List\menu_operacao.lst</file>
+      <file>$PROJ_DIR$\Historico_precos\flash_queue.h</file>
+      <file>$PROJ_DIR$\Kernel\queue.h</file>
+      <file>$PROJ_DIR$\includes.h</file>
+      <file>$PROJ_DIR$\aplicacao\embalagem.h</file>
+      <file>$PROJ_DIR$\Debug\List\sst25vf016b.s</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_seleciona_lista.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\dxt_file_system.o</file>
+      <file>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_cashless.h</file>
+      <file>$PROJ_DIR$\Debug\List\menu_preparacao.lst</file>
+      <file>$PROJ_DIR$\Debug\List\menu_edita_flag.lst</file>
+      <file>$PROJ_DIR$\Debug\List\Relatorio.s</file>
+      <file>$PROJ_DIR$\Debug\List\main.lst</file>
       <file>$PROJ_DIR$\Debug\Obj\dxt_file_target.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\sst25vf016b.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\Mais_Pipoca_exp.pbd</file>
-      <file>$PROJ_DIR$\Debug\List\menu_edita_inteiro.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\mdb_cashless.o</file>
-      <file>$PROJ_DIR$\Debug\List\Teclado.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\BV20.pbi</file>
-      <file>$PROJ_DIR$\IU\leds.h</file>
-      <file>$PROJ_DIR$\Debug\List\serial_mux.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\tasks.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\dxt_file_target.s</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb_bill.h</file>
-      <file>$PROJ_DIR$\Debug\List\list.s</file>
-      <file>$PROJ_DIR$\Debug\List\menu_acessorios.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\mdb_bill.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\tasks.o</file>
-      <file>$PROJ_DIR$\Debug\List\dxt_file_system.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\Relatorio.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\dxt_file_target.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\dxt_file_target.o</file>
-      <file>$PROJ_DIR$\Debug\List\menu_configuracao.s</file>
-      <file>$PROJ_DIR$\Debug\List\menu_ajuste_relogio.s</file>
-      <file>$PROJ_DIR$\Debug\List\Pagamentos.lst</file>
-      <file>$PROJ_DIR$\Debug\List\memoryWrapper.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\uart.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\RTC.o</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_rolagem.h</file>
-      <file>$PROJ_DIR$\Drivers\UARTS\uart_types.h</file>
-      <file>$PROJ_DIR$\Debug\List\Supervisao_MDB.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\queue.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\faturamento.o</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_seleciona_lista.h</file>
-      <file>$PROJ_DIR$\Debug\List\menu_teste_hardware.s</file>
-      <file>$PROJ_DIR$\Debug\List\menu_edita_inteiro.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\cctalk.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\WATCHDOG.pbi</file>
-      <file>$PROJ_DIR$\Drivers\pagamentos\supervisao_mdb.h</file>
-      <file>$PROJ_DIR$\Debug\List\queue.lst</file>
-      <file>$PROJ_DIR$\Debug\List\menu_teste_hardware.lst</file>
-      <file>$PROJ_DIR$\Debug\List\Potencia.s</file>
-      <file>$TOOLKIT_DIR$\inc\NXP\iolpc1766.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\portasm.o</file>
-      <file>$PROJ_DIR$\Debug\List\BV20.s</file>
-      <file>$PROJ_DIR$\Debug\List\menu_configuracao.lst</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\memoryWrapper.h</file>
-      <file>$PROJ_DIR$\Drivers\RTC\RTC.H</file>
-      <file>$PROJ_DIR$\Debug\Obj\cctalk.o</file>
-      <file>$PROJ_DIR$\Debug\List\embalagem.lst</file>
-      <file>$PROJ_DIR$\historico_precos\fila_troca_preco.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_configuracao.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_acessorios.o</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-      <file>$PROJ_DIR$\Debug\List\Protocolo.lst</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_ajuste_relogio.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\Supervisao_mdb_bill.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\list.o</file>
-      <file>$PROJ_DIR$\Debug\List\Teclado.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_servico.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\port.lst</file>
-      <file>$PROJ_DIR$\Kernel\mpu_wrappers.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\mdb_uart.pbi</file>
-      <file>$PROJ_DIR$\aplicacao\parametros_fabrica.h</file>
-      <file>$PROJ_DIR$\Debug\List\WH1602_2.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_info_binaria.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\AmostraAnalogica.s</file>
-      <file>$PROJ_DIR$\Debug\List\impressora.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\parametros.o</file>
-      <file>$PROJ_DIR$\Debug\List\strings.lst</file>
-      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-      <file>$PROJ_DIR$\Debug\List\flash_queue.s</file>
-      <file>$PROJ_DIR$\aplicacao\menu_preparacao.h</file>
-      <file>$PROJ_DIR$\Debug\List\faturamento.lst</file>
-      <file>$PROJ_DIR$\Debug\List\spi_wrapper.lst</file>
-      <file>$TOOLKIT_DIR$\inc\c\math.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\dxt_file_system.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\Preparacao.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_configuracao.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\menu_operacao.s</file>
+      <file>$PROJ_DIR$\Debug\List\mdb_cashless.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\supervisao_mdb_cashless.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\fila_troca_preco.o</file>
+      <file>$PROJ_DIR$\Debug\List\Supervisao_mdb_coin.s</file>
+      <file>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_system.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\flash_queue.o</file>
+      <file>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_bill.h</file>
+      <file>$PROJ_DIR$\Kernel\semphr.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\ControleTemperatura.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.1\AirPopCorn.icf</file>
+      <file>$PROJ_DIR$\Debug\Obj\uart.pbi</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_edita_inteiro.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ymath.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\serial_mux.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_operacao.o</file>
+      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
+      <file>$PROJ_DIR$\aplicacao\preparacao.h</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_edita_inteiro.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\faturamento.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\Preparacao.lst</file>
+      <file>$PROJ_DIR$\aplicacao\menu_preparacao.h</file>
+      <file>$PROJ_DIR$\Debug\List\menu_teste_hardware.lst</file>
       <file>$PROJ_DIR$\Debug\List\mdb_uart.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\leds.o</file>
-      <file>$PROJ_DIR$\Debug\List\list.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_ajuste_relogio.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_teste_hardware.pbi</file>
-      <file>$PROJ_DIR$\Potencia\controleTemperatura.h</file>
       <file>$PROJ_DIR$\aplicacao\faturamento.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\leds.o</file>
+      <file>$PROJ_DIR$\Kernel\mpu_wrappers.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_ajuste_relogio.pbi</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_seleciona_lista.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\faturamento.o</file>
+      <file>$PROJ_DIR$\Debug\List\list.lst</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_edita_flag.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_teste_hardware.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\menu_teste_hardware.s</file>
+      <file>$PROJ_DIR$\Debug\List\WH1602_2.s</file>
+      <file>$PROJ_DIR$\Debug\List\menu_edita_inteiro.s</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_seleciona_lista.o</file>
       <file>$PROJ_DIR$\Debug\Obj\aplicacao.o</file>
+      <file>$PROJ_DIR$\Debug\List\strings.lst</file>
       <file>$PROJ_DIR$\Debug\List\menu_edita_listagem.s</file>
+      <file>$PROJ_DIR$\Debug\List\impressora.lst</file>
+      <file>$PROJ_DIR$\Drivers\pagamentos\supervisao_mdb.h</file>
+      <file>$PROJ_DIR$\Debug\List\port.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\faturamento.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\faturamento.lst</file>
+      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+      <file>$PROJ_DIR$\Drivers\RTC\RTC.H</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_servico.pbi</file>
+      <file>$PROJ_DIR$\Potencia\controleTemperatura.h</file>
+      <file>$PROJ_DIR$\Debug\List\dxt_file_system.s</file>
+      <file>$PROJ_DIR$\Debug\List\ControleTemperatura.s</file>
+      <file>$PROJ_DIR$\Debug\List\menu_configuracao.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\Mais_Pipoca_exp.pbd</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_rolagem.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\dxt_file_target.o</file>
+      <file>$PROJ_DIR$\Debug\List\dxt_file_system.lst</file>
+      <file>$PROJ_DIR$\Debug\List\menu_acessorios.s</file>
+      <file>$PROJ_DIR$\Debug\List\serial_mux.lst</file>
+      <file>$PROJ_DIR$\IU\leds.h</file>
+      <file>$PROJ_DIR$\Debug\List\mdb.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\tasks.o</file>
+      <file>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_target.h</file>
+      <file>$PROJ_DIR$\Debug\List\Board.lst</file>
+      <file>$PROJ_DIR$\Debug\List\menu_ajuste_relogio.s</file>
+      <file>$PROJ_DIR$\Debug\List\memoryWrapper.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\mdb_cashless.o</file>
+      <file>$PROJ_DIR$\Debug\List\list.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\WH1602_2.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\Preparacao.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\Pagamentos.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\tasks.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\Relatorio.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\uart.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\BV20.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\embalagem.o</file>
+      <file>$PROJ_DIR$\Debug\List\menu_edita_inteiro.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\RTC.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\mdb_bill.o</file>
+      <file>$PROJ_DIR$\historico_precos\fila_troca_preco.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\queue.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\dxt_file_target.s</file>
+      <file>$PROJ_DIR$\Debug\List\menu_configuracao.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\portasm.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\sst25vf016b.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\dxt_file_target.lst</file>
+      <file>$PROJ_DIR$\Debug\List\Potencia.s</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_bill.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\WATCHDOG.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\queue.lst</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\memoryWrapper.h</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_ajuste_relogio.h</file>
+      <file>$PROJ_DIR$\Drivers\UARTS\uart_types.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\Debug\List\Protocolo.lst</file>
+      <file>$PROJ_DIR$\Debug\List\Teclado.lst</file>
+      <file>$PROJ_DIR$\Debug\List\Pagamentos.lst</file>
+      <file>$TOOLKIT_DIR$\inc\NXP\iolpc1766.h</file>
+      <file>$PROJ_DIR$\Debug\List\BV20.s</file>
+      <file>$PROJ_DIR$\Debug\List\Teclado.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\cctalk.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_configuracao.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\Supervisao_mdb_bill.o</file>
+      <file>$PROJ_DIR$\Debug\List\embalagem.lst</file>
+      <file>$PROJ_DIR$\Debug\List\Supervisao_MDB.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\list.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\cctalk.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_acessorios.o</file>
       <file>$PROJ_DIR$\Debug\List\sd_diskio.s</file>
-      <file>$PROJ_DIR$\Debug\List\SDCARD.s</file>
-      <file>$PROJ_DIR$\Debug\List\SPI_WRAPPER_SD.lst</file>
-      <file>$PROJ_DIR$\Drivers\FILESYSTEM\diskio.h</file>
-      <file>$PROJ_DIR$\Debug\List\diskio.s</file>
-      <file>$PROJ_DIR$\Drivers\FILESYSTEM\integer.h</file>
-      <file>$PROJ_DIR$\Debug\List\sd_diskio.lst</file>
-      <file>$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.h</file>
-      <file>$PROJ_DIR$\Debug\List\SPI_WRAPPER_SD.s</file>
-      <file>$PROJ_DIR$\Debug\List\diskio.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\diskio.o</file>
-      <file>$PROJ_DIR$\Debug\List\SDCARD.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\SDCARD.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\SPI_WRAPPER_SD.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\dataflash_diskio.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\ff.o</file>
       <file>$PROJ_DIR$\Drivers\FILESYSTEM\ff.h</file>
-      <file>$PROJ_DIR$\Drivers\SDCARD\SDCARD.H</file>
-      <file>$PROJ_DIR$\Debug\List\menu_teste_mdb.s</file>
-      <file>$PROJ_DIR$\Drivers\FILESYSTEM\ffconf.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\SPI_WRAPPER_SD.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\SDCARD.pbi</file>
-      <file>$PROJ_DIR$\Drivers\SD CARD\spi_wrapper_sd.h</file>
-      <file>$PROJ_DIR$\Debug\List\mdb_cashless.lst</file>
-      <file>$PROJ_DIR$\Drivers\SDCARD\spi_wrapper_sd.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\impressora.o</file>
+      <file>$PROJ_DIR$\Drivers\FILESYSTEM\diskio.h</file>
+      <file>$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.h</file>
       <file>$PROJ_DIR$\Debug\Obj\sd_diskio.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\math.h</file>
       <file>$PROJ_DIR$\Debug\Obj\diskio.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\ff.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\mdb_uart.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\impressora.o</file>
+      <file>$PROJ_DIR$\Debug\List\SDCARD.s</file>
+      <file>$PROJ_DIR$\Debug\List\spi_wrapper.lst</file>
+      <file>$PROJ_DIR$\Drivers\SD CARD\spi_wrapper_sd.h</file>
+      <file>$PROJ_DIR$\Debug\List\diskio.s</file>
+      <file>$PROJ_DIR$\Debug\List\flash_queue.s</file>
+      <file>$PROJ_DIR$\Debug\List\Preparacao.lst</file>
       <file>$PROJ_DIR$\Drivers\SD CARD\SDCARD.H</file>
-      <file>$PROJ_DIR$\Debug\Obj\dataflash_diskio.o</file>
-      <file>$PROJ_DIR$\Debug\List\ff.lst</file>
-      <file>$PROJ_DIR$\Drivers\SD CARD\SDCARD.C</file>
-      <file>$PROJ_DIR$\Drivers\SD CARD\SPI_WRAPPER_SD.C</file>
-      <file>$PROJ_DIR$\Debug\List\ff.s</file>
-      <file>$PROJ_DIR$\mapa_memoria.h</file>
-      <file>$PROJ_DIR$\Drivers\Pagamentos\Pagamentos.h</file>
-      <file>$PROJ_DIR$\aplicacao\POST.h</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_servico.h</file>
-      <file>$PROJ_DIR$\Debug\List\Supervisao_mdb_bill.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\Preparacao.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\parametros.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\Potencia.o</file>
-      <file>$PROJ_DIR$\Kernel\freertosconfig.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\RTC.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_rolagem.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-      <file>$PROJ_DIR$\Kernel\system_LPC17xx.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_faturamento.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\SPI_WRAPPER_SD.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\parametros.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\SDCARD.o</file>
+      <file>$PROJ_DIR$\Debug\List\menu_teste_mdb.s</file>
+      <file>$PROJ_DIR$\Drivers\SDCARD\spi_wrapper_sd.h</file>
+      <file>$PROJ_DIR$\Debug\List\mdb_cashless.lst</file>
+      <file>$PROJ_DIR$\Debug\List\AmostraAnalogica.s</file>
+      <file>$PROJ_DIR$\Debug\List\SDCARD.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\SPI_WRAPPER_SD.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_info_binaria.pbi</file>
+      <file>$PROJ_DIR$\aplicacao\parametros_fabrica.h</file>
+      <file>$PROJ_DIR$\Drivers\FILESYSTEM\ffconf.h</file>
+      <file>$PROJ_DIR$\Debug\List\SPI_WRAPPER_SD.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\SDCARD.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\diskio.lst</file>
+      <file>$PROJ_DIR$\Debug\List\sd_diskio.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\diskio.o</file>
+      <file>$PROJ_DIR$\Debug\List\SPI_WRAPPER_SD.s</file>
+      <file>$PROJ_DIR$\Drivers\FILESYSTEM\integer.h</file>
+      <file>$PROJ_DIR$\Drivers\SDCARD\SDCARD.H</file>
+      <file>$PROJ_DIR$\Debug\Obj\dataflash_diskio.pbi</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_teste_mdb.c</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_cashless.c</file>
+      <file>$PROJ_DIR$\Drivers\PlayerWave\PlayerWave.c</file>
+      <file>$PROJ_DIR$\Drivers\FILESYSTEM\dataflash_diskio.c</file>
+      <file>$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c</file>
+      <file>$PROJ_DIR$\Drivers\RTC\RTC.C</file>
+      <file>$PROJ_DIR$\Drivers\SERIAL_MUX\serial_mux.c</file>
+      <file>$PROJ_DIR$\Drivers\AmostragemAnalogica\AmostraAnalogica.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_teste_hardware.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_seleciona_lista.c</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_coin.c</file>
+      <file>$PROJ_DIR$\Aplicacao\POST.c</file>
+      <file>$PROJ_DIR$\Aplicacao\tela_senha.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_preparacao.c</file>
+      <file>$PROJ_DIR$\Drivers\FILESYSTEM\ff.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_operacao.c</file>
+      <file>$PROJ_DIR$\Aplicacao\Preparacao.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_rolagem.c</file>
+      <file>$PROJ_DIR$\Drivers\FILESYSTEM\diskio.c</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\sst25vf016b.c</file>
+      <file>$PROJ_DIR$\Drivers\SDCARD\SDCARD.C</file>
+      <file>$PROJ_DIR$\Drivers\Impressora\impressora.c</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb.c</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_uart.c</file>
+      <file>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\DESCRITIVO_DXTNET.TXT</file>
+      <file>$PROJ_DIR$\Drivers\Protocolo\Protocolo.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_servico.c</file>
+      <file>$PROJ_DIR$\Drivers\CCTALK\cctalk.c</file>
+      <file>$PROJ_DIR$\Drivers\SDCARD\SPI_WRAPPER_SD.C</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\memoryWrapper.c</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\spi_wrapper.c</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_bill.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_info_binaria.c</file>
+      <file>$PROJ_DIR$\Aplicacao\faturamento.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_acessorios.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_faturamento.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_edita_inteiro.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_edita_listagem.c</file>
+      <file>$PROJ_DIR$\Aplicacao\embalagem.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_ajuste_relogio.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_avancado.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_edita_flag.c</file>
+      <file>$PROJ_DIR$\Aplicacao\aplicacao.c</file>
+      <file>$PROJ_DIR$\Aplicacao\InterfaceAjusteRelogio.c</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_configuracao.c</file>
+      <file>$PROJ_DIR$\Debug\List\AmostraAnalogica.lst</file>
+      <file>$PROJ_DIR$\Debug\List\WH1602_2.lst</file>
+      <file>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_coin.h</file>
+      <file>$PROJ_DIR$\Debug\List\POST.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\mdb_coin.o</file>
+      <file>$PROJ_DIR$\Debug\List\Relatorio.lst</file>
+      <file>$PROJ_DIR$\Debug\List\aplicacao.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\memoryWrapper.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\PlayerWave.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_teste_mdb.o</file>
+      <file>$PROJ_DIR$\Drivers\UARTS\uart.h</file>
+      <file>$PROJ_DIR$\Debug\List\RTC.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_avancado.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\Drivers\CCTALK\cctalk.h</file>
+      <file>$PROJ_DIR$\Debug\List\Protocolo.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\Pagamentos.o</file>
+      <file>$PROJ_DIR$\Debug\List\tela_senha.lst</file>
+      <file>$TOOLKIT_DIR$\inc\c\xtgmath.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
+      <file>$PROJ_DIR$\Debug\List\aplicacao.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\heap_1.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\heap_1.s</file>
+      <file>$PROJ_DIR$\Debug\List\mdb_bill.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\cstartup_M.o</file>
+      <file>$PROJ_DIR$\Debug\List\portasm.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\Supervisao_MDB.o</file>
+      <file>$PROJ_DIR$\Debug\List\flash_queue.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\InterfaceAjusteRelogio.pbi</file>
       <file>$PROJ_DIR$\Aplicacao\menu_avancado.h</file>
-      <file>$PROJ_DIR$\Debug\List\WH1602.lst</file>
-      <file>$PROJ_DIR$\Debug\List\memoryWrapper.lst</file>
-      <file>$PROJ_DIR$\Debug\List\fila_troca_preco.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\RTC.pbi</file>
       <file>$PROJ_DIR$\Debug\List\menu_teste_mdb.lst</file>
-      <file>$PROJ_DIR$\Debug\List\supervisao_mdb_cashless.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_faturamento.pbi</file>
       <file>$PROJ_DIR$\Drivers\WH1602_2\WH1602_2.H</file>
-      <file>$PROJ_DIR$\Debug\List\mdb_coin.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\Potencia.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+      <file>$PROJ_DIR$\Debug\List\supervisao_mdb_cashless.s</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_servico.h</file>
+      <file>$PROJ_DIR$\aplicacao\POST.h</file>
+      <file>$PROJ_DIR$\Debug\List\Supervisao_mdb_bill.lst</file>
       <file>$PROJ_DIR$\Kernel\task.h</file>
-      <file>$PROJ_DIR$\Debug\List\parametros.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\Board.o</file>
-      <file>$PROJ_DIR$\Kernel\list.h</file>
-      <file>$PROJ_DIR$\Drivers\pagamentos\BV20.h</file>
+      <file>$PROJ_DIR$\Debug\List\ff.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\Preparacao.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\mdb_coin.lst</file>
+      <file>$PROJ_DIR$\Kernel\system_LPC17xx.h</file>
+      <file>$PROJ_DIR$\Debug\List\fila_troca_preco.lst</file>
+      <file>$PROJ_DIR$\mapa_memoria.h</file>
+      <file>$PROJ_DIR$\Debug\List\WH1602.lst</file>
+      <file>$PROJ_DIR$\Drivers\Pagamentos\Pagamentos.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\dataflash_diskio.o</file>
+      <file>$PROJ_DIR$\Debug\List\memoryWrapper.lst</file>
+      <file>$PROJ_DIR$\Debug\List\ff.lst</file>
+      <file>$PROJ_DIR$\Kernel\freertosconfig.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\parametros.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_rolagem.pbi</file>
+      <file>$PROJ_DIR$\Drivers\SD CARD\SPI_WRAPPER_SD.C</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+      <file>$PROJ_DIR$\Drivers\SD CARD\SDCARD.C</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_servico.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_edita_inteiro.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\PlayerWave.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\Supervisao_mdb_coin.pbi</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\SPI_WRAPPER.H</file>
-      <file>$PROJ_DIR$\Debug\Obj\PlayerWave.o</file>
-      <file>$PROJ_DIR$\Debug\List\fila_troca_preco.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\BV20.o</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
-      <file>$PROJ_DIR$\aplicacao\senhas.h</file>
-      <file>$PROJ_DIR$\Debug\List\mdb_coin.s</file>
       <file>$PROJ_DIR$\Debug\List\WH1602.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\mdb_coin.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_preparacao.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\mdb_bill.lst</file>
+      <file>$PROJ_DIR$\Debug\List\fila_troca_preco.s</file>
+      <file>$PROJ_DIR$\Debug\List\POST.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\PlayerWave.o</file>
       <file>$PROJ_DIR$\Debug\Obj\embalagem.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\ControleTemperatura.lst</file>
-      <file>$PROJ_DIR$\Kernel\projdefs.h</file>
       <file>$PROJ_DIR$\Debug\Obj\tela_senha.pbi</file>
       <file>$PROJ_DIR$\Debug\List\Supervisao_mdb_bill.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\Protocolo.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_preparacao.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_operacao.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\POST.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\Board.o</file>
+      <file>$PROJ_DIR$\Debug\List\mdb_coin.s</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\spi_wrapper.h</file>
+      <file>$PROJ_DIR$\Kernel\list.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_edita_inteiro.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\Protocolo.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+      <file>$PROJ_DIR$\Drivers\pagamentos\BV20.h</file>
+      <file>$PROJ_DIR$\Debug\List\parametros.s</file>
+      <file>$PROJ_DIR$\Debug\List\ControleTemperatura.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\BV20.o</file>
+      <file>$PROJ_DIR$\Kernel\projdefs.h</file>
+      <file>$PROJ_DIR$\aplicacao\senhas.h</file>
       <file>$PROJ_DIR$\Debug\List\menu_servico.lst</file>
       <file>$PROJ_DIR$\Aplicacao\menu_teste_hardware.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\mdb_coin.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\PlayerWave.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\mdb_bill.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\InterfaceAjusteRelogio.o</file>
+      <file>$PROJ_DIR$\Drivers\WH1602\WH1602.H</file>
+      <file>$PROJ_DIR$\Debug\Obj\Supervisao_mdb_bill.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\Supervisao_mdb_coin.o</file>
+      <file>$PROJ_DIR$\Debug\Exe\MaisPipoca_G2_2_1_1.HEX</file>
+      <file>$PROJ_DIR$\Debug\List\tasks.lst</file>
       <file>$PROJ_DIR$\Debug\Obj\heap_1.o</file>
+      <file>$PROJ_DIR$\Debug\List\menu_avancado.s</file>
+      <file>$PROJ_DIR$\Debug\List\cctalk.lst</file>
+      <file>$PROJ_DIR$\Debug\List\menu_edita_flag.s</file>
       <file>$PROJ_DIR$\Debug\List\Supervisao_mdb_coin.lst</file>
       <file>$PROJ_DIR$\Debug\List\WATCHDOG.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\AmostraAnalogica.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\supervisao_mdb_cashless.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\c\io_macros.h</file>
-      <file>$PROJ_DIR$\Debug\List\cctalk.s</file>
-      <file>$PROJ_DIR$\Debug\List\cctalk.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\Supervisao_mdb_coin.o</file>
-      <file>$PROJ_DIR$\aplicacao\menu_configuracao.h</file>
-      <file>$PROJ_DIR$\Drivers\WH1602\WH1602.H</file>
+      <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
       <file>$PROJ_DIR$\Debug\Obj\WH1602_2.o</file>
-      <file>$PROJ_DIR$\Debug\List\mdb_uart.s</file>
-      <file>$PROJ_DIR$\Debug\List\menu_edita_flag.s</file>
+      <file>$PROJ_DIR$\Debug\List\cctalk.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\AmostraAnalogica.o</file>
+      <file>$PROJ_DIR$\Debug\List\menu_preparacao.s</file>
       <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\Debug\List\mdb_uart.s</file>
       <file>$PROJ_DIR$\Debug\Obj\impressora.pbi</file>
       <file>$PROJ_DIR$\Debug\List\WATCHDOG.s</file>
       <file>$PROJ_DIR$\Debug\List\menu_seleciona_lista.lst</file>
-      <file>$PROJ_DIR$\Debug\List\tasks.lst</file>
-      <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-      <file>$PROJ_DIR$\Debug\List\menu_avancado.s</file>
-      <file>$PROJ_DIR$\Debug\List\supervisao_mdb_cashless.lst</file>
       <file>$PROJ_DIR$\Kernel\LPC17xx.h</file>
-      <file>$PROJ_DIR$\Debug\List\menu_preparacao.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\Supervisao_mdb_bill.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\supervisao_mdb_cashless.pbi</file>
+      <file>$PROJ_DIR$\aplicacao\menu_configuracao.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\io_macros.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\InterfaceAjusteRelogio.o</file>
+      <file>$PROJ_DIR$\Debug\List\supervisao_mdb_cashless.lst</file>
       <file>$PROJ_DIR$\Drivers\impressora\impressora.h</file>
-      <file>$PROJ_DIR$\Debug\Exe\MaisPipoca_G2_2_1_1.HEX</file>
-      <file>$PROJ_DIR$\Debug\List\RTC.s</file>
-      <file>$PROJ_DIR$\Debug\List\menu_faturamento.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\POST.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\PlayerWave.s</file>
-      <file>$PROJ_DIR$\Debug\List\uart.s</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_teste_mdb.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\mdb.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\strings.pbi</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb_coin.h</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\sst25vf016b.h</file>
-      <file>$PROJ_DIR$\Debug\List\Mais_Pipoca_exp.map</file>
-      <file>$PROJ_DIR$\Relatorio\relatorio.h</file>
-      <file>$PROJ_DIR$\Debug\List\impressora.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\mdb_bill.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\sst25vf016b.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\port.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_teste_hardware.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\mdb_uart.o</file>
-      <file>$PROJ_DIR$\Debug\List\tasks.s</file>
-      <file>$PROJ_DIR$\Debug\List\port.s</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_acessorios.h</file>
-      <file>$PROJ_DIR$\Kernel\StackMacros.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\WH1602.o</file>
-      <file>$PROJ_DIR$\Drivers\WH1602\WH1602_targetWrapper.h</file>
       <file>$PROJ_DIR$\Debug\Obj\Teclado.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\POST.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\mdb_uart.o</file>
+      <file>$PROJ_DIR$\Debug\List\menu_faturamento.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\port.pbi</file>
       <file>$PROJ_DIR$\Aplicacao\menu_info_binaria.h</file>
+      <file>$PROJ_DIR$\Kernel\StackMacros.h</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_coin.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_teste_hardware.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\mdb_bill.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\impressora.s</file>
+      <file>$PROJ_DIR$\Debug\List\PlayerWave.s</file>
+      <file>$PROJ_DIR$\Debug\List\tasks.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\strings.pbi</file>
+      <file>$PROJ_DIR$\Drivers\WH1602\WH1602_targetWrapper.h</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\sst25vf016b.h</file>
       <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
+      <file>$PROJ_DIR$\Debug\List\RTC.s</file>
+      <file>$PROJ_DIR$\Debug\List\uart.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\mdb.o</file>
+      <file>$PROJ_DIR$\Debug\List\Mais_Pipoca_exp.map</file>
+      <file>$PROJ_DIR$\Debug\List\sst25vf016b.lst</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_teste_mdb.h</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_acessorios.h</file>
+      <file>$PROJ_DIR$\Relatorio\relatorio.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
       <file>$PROJ_DIR$\Debug\List\main.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\menu_rolagem.lst</file>
-      <file>$PROJ_DIR$\Kernel\core_cm3.h</file>
-      <file>$PROJ_DIR$\Kernel\FreeRTOS.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\port.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.o</file>
-      <file>$PROJ_DIR$\Debug\List\serial_mux.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_acessorios.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\menu_edita_listagem.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\sst25vf016b.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\Relatorio.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\sd_diskio.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\menu_seleciona_lista.s</file>
-      <file>$PROJ_DIR$\Debug\Obj\ff.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_preparacao.o</file>
-      <file>$PROJ_DIR$\Drivers\serial_mux\serial_mux.h</file>
-      <file>$PROJ_DIR$\Debug\List\InterfaceAjusteRelogio.lst</file>
-      <file>$PROJ_DIR$\Debug\Obj\menu_info_binaria.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\memoryWrapper.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\leds.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\spi_wrapper.o</file>
-      <file>$PROJ_DIR$\Aplicacao\InterfaceAJusteRelogio.h</file>
+      <file>$PROJ_DIR$\Debug\List\port.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\WH1602.o</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_rolagem.o</file>
-      <file>$PROJ_DIR$\Debug\List\mdb.lst</file>
-      <file>$TOOLKIT_DIR$\inc\c\string.h</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_faturamento.h</file>
-      <file>$PROJ_DIR$\aplicacao\menu_operacao.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
-      <file>$PROJ_DIR$\Drivers\protocolo\protocolo.h</file>
-      <file>$PROJ_DIR$\Debug\List\menu_servico.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.o</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_edita_listagem.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\menu_servico.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\Relatorio.o</file>
+      <file>$PROJ_DIR$\Aplicacao\menu_faturamento.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\ff.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\mdb.lst</file>
+      <file>$PROJ_DIR$\Debug\List\menu_rolagem.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\sd_diskio.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\menu_edita_listagem.lst</file>
+      <file>$PROJ_DIR$\Kernel\FreeRTOS.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\memoryWrapper.o</file>
+      <file>$PROJ_DIR$\Debug\List\serial_mux.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\leds.pbi</file>
+      <file>$PROJ_DIR$\Aplicacao\InterfaceAJusteRelogio.h</file>
+      <file>$PROJ_DIR$\Debug\List\InterfaceAjusteRelogio.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\spi_wrapper.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\port.o</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_edita_flag.pbi</file>
-      <file>$PROJ_DIR$\Aplicacao\menu_edita_listagem.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\spi_wrapper.pbi</file>
-      <file>$PROJ_DIR$\Debug\List\dataflash_diskio.lst</file>
-      <file>$PROJ_DIR$\Debug\List\dataflash_diskio.s</file>
-      <file>$PROJ_DIR$\Drivers\FILESYSTEM\dataflash_diskio.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\sst25vf016b.o</file>
+      <file>$PROJ_DIR$\Kernel\core_cm3.h</file>
+      <file>$PROJ_DIR$\Drivers\protocolo\protocolo.h</file>
+      <file>$PROJ_DIR$\Drivers\serial_mux\serial_mux.h</file>
+      <file>$PROJ_DIR$\Debug\List\menu_seleciona_lista.s</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_info_binaria.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_acessorios.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\menu_preparacao.o</file>
     </outputs>
     <file>
       <name>$PROJ_DIR$\Drivers\WH1602\WH1602.C</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 186</file>
+          <file> 68</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 386 364 453</file>
+          <file> 383 369 466</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 454 141 266 407 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 452 90 228 434 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 454 141 266 407 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\RTC\RTC.C</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 358</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 430 82 251</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 452 90 228 434 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
         </tool>
       </inputs>
     </file>
@@ -554,1367 +531,21 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 218</file>
+          <file> 199</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 288 80 413</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 189 99 141 266 407 181 357 425 461 81 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 189 99 141 266 407 181 357 425 461 81 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\Teclado\Teclado.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 111</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 231 282 455</file>
+          <file> 166 323 422</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 141 266 407 140 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 108 53 90 228 434 120 374 431 489 335 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 141 266 407 140 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\SERIAL_MUX\serial_mux.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 221</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 465 234 178</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 474 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 474 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\UARTS\uart.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 206</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 434 98 250</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 141 266 407 58 253 189</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 141 266 407 58 253 189</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\WATCHDOG\WATCHDOG.C</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 261</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 418 404 106</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 174</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 174</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>[ROOT_NODE]</name>
-      <outputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 179 440</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_ajuste_relogio.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 306</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 247 54 194</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 279</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 279</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_edita_inteiro.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 377</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 259 229 300</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 135 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 135 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_edita_listagem.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 489</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 313 467 102</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 491 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 491 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_info_binaria.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 289</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 129 118 476</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_edita_flag.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 490</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 415 125 310</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 135</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 135</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_operacao.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 394</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 208 114 203</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 252 491 135 112</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 252 491 135 112</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\InterfaceAjusteRelogio.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 68</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 84 475 401</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 480 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 480 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_faturamento.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 362</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 431 104 182</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 484 252</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 484 252</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_configuracao.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 123</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 246 269 275</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 279 112 135 491 456 252 397 450 484 257 351 363</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 279 112 135 491 456 252 397 450 484 257 351 363</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\faturamento.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 301</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 192 297 256</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_preparacao.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 393</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 426 205 473</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 296 252 135 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 296 252 135 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_rolagem.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 359</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 96 460 481</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 252 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 252 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_seleciona_lista.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 225</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 471 419 311</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 257 491 112 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 257 491 112 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_servico.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 283</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 488 396 376</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 351</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 351</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\embalagem.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 387</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 195 273 222</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_avancado.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 52</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 423 120 65</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 252 279</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 252 279</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\aplicacao.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 175</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 72 83 312</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 131 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 131 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_acessorios.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 466</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 239 105 276</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 135 279 112 491 456 252 397 450 257</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 135 279 112 491 456 252 397 450 257</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\Impressora\impressora.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 417</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 442 291 339</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\MDB\mdb_bill.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 443</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 75 400 240</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 101 93 237</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 101 93 237</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\PlayerWave\PlayerWave.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 399</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 433 62 380</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 108 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 108 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\AmostragemAnalogica\AmostraAnalogica.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 119</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 290 55 405</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 299 116 67 88</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 299 116 67 88</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\FILESYSTEM\ff.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 472</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 347 344 329</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 330 319 333 317</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 330 319 333 317</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\SDCARD\SPI_WRAPPER_SD.C</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 334</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 322 316 327</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 338</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 338</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_system.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 217</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 211 242 213</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 215 199</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 215 199</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_target.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 226</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 236 244 245</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\FILESYSTEM\dataflash_diskio.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 328</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 494 493 343</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 317 319 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 317 319 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\Protocolo\Protocolo.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 197</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 60 278 392</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 187 422 360 277 452 139 416 486 294 64 383 483 355 487 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 187 422 360 277 452 139 416 486 294 64 383 483 355 487 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\tela_senha.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 390</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 137 59 170</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_teste_hardware.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 307</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 258 264 446</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 279 112 135 491 456 252 397 435</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 279 112 135 491 456 252 397 435</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\sst25vf016b\sst25vf016b.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 227</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 121 444 468</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 439 379</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 439 379</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\MDB\mdb.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 86</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 207 482 436</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 187 422 360 277 452 139 416 486 294 64 383 483 355 101 93 237 438 172 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 187 422 360 277 452 139 416 486 294 64 383 483 355 101 93 237 438 172 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\MDB\mdb_cashless.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 92</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 216 337 230</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 93 101 172</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 93 101 172</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\FILESYSTEM\diskio.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 341</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 318 323 324</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 317 319 321 495 271</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 317 319 321 495 271</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\MDB\mdb_coin.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 398</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 385 370 71</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 93 101 438</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 93 101 438</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\MDB\mdb_uart.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 286</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 414 303 447</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\menu_teste_mdb.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 196</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 332 367 78</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 435 279 112 135 491 456 252 397</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 435 279 112 135 491 456 252 397</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\POST.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 432</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 395 61 94</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\SDCARD\SDCARD.C</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 335</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 338 331</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 470</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 314 320 340</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 317 319 331 321</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 317 319 331 321</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\sst25vf016b\memoryWrapper.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 56</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 249 365 477</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 483 422 360 277 452 139 416 486 294 355 439 270 193 379 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 483 422 360 277 452 139 416 486 294 355 439 270 193 379 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Aplicacao\Preparacao.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 353</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 220 302 223</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\CCTALK\cctalk.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 260</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 408 409 272</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 141 266 407 57 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 141 266 407 57 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\sst25vf016b\spi_wrapper.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 492</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 191 298 479</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 379 141 266 407 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 379 141 266 407 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Historico_precos\flash_queue.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 134</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 295 66 212</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 124 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 124 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Potencia\ControleTemperatura.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 214</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 204 388 171</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Potencia\Potencia.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 115</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 265 103 356</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Board\Board.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 132</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 180 200 373</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Relatorio\Relatorio.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 243</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 198 77 469</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 441 149</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 441 149</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Kernel\portasm.s</name>
-      <outputs>
-        <tool>
-          <name>AARM</name>
-          <file> 267 79</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>AARM</name>
-          <file> 357</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\Pagamentos\Pagamentos.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 224</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 109 248 63</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141 266 407 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 141 266 407 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_mdb_bill.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 427</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 391 352 280</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 133</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 133</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_MDB.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 110</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 254 107 73</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 133 74 219</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 133 74 219</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_mdb_coin.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 378</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 210 403 410</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 74</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 74</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\IU\leds.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 478</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 185 90 304</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 141 266 407 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 108 53 90 228 434 120 374 431 489 335 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
         </tool>
       </inputs>
     </file>
@@ -1923,237 +554,145 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 128</file>
+          <file> 100</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 381 366 117</file>
+          <file> 387 367 137</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 124</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 118</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 124</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 118</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\cstartup_M.asm</name>
-      <outputs>
-        <tool>
-          <name>AARM</name>
-          <file> 69 95</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Kernel\list.c</name>
+      <name>$PROJ_DIR$\Historico_precos\flash_queue.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 87</file>
+          <file> 102</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 238 305 281</file>
+          <file> 253 349 140</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 383 422 360 277 452 139 416 486 294 462 421 389 357 425 461 81 189 361 97 173 285 374</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 118 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 383 422 360 277 452 139 416 486 294 462 421 389 357 425 461 81 189 361 97 173 285 374</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 118 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\Kernel\heap_1.c</name>
+      <name>$PROJ_DIR$\Drivers\Teclado\Teclado.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 70</file>
+          <file> 58</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 76 169 402</file>
+          <file> 230 226 438</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 462 421 422 360 277 452 139 416 486 294 389 357 425 461 81 189 361 97 173 285 371 374</file>
+          <file> 90 228 434 71 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 462 421 422 360 277 452 139 416 486 294 389 357 425 461 81 189 361 97 173 285 371 374</file>
+          <file> 90 228 434 71 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\Kernel\queue.c</name>
+      <name>$PROJ_DIR$\Drivers\UARTS\uart.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 255</file>
+          <file> 145</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 130 263 190</file>
+          <file> 456 38 204</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 383 422 360 277 452 139 416 486 294 483 355 462 421 389 357 425 461 81 189 361 97 173 285 371 374</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 90 228 434 332 223 108</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 383 422 360 277 452 139 416 486 294 483 355 462 421 389 357 425 461 81 189 361 97 173 285 371 374</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 90 228 434 332 223 108</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\Kernel\tasks.c</name>
+      <name>$PROJ_DIR$\Drivers\WATCHDOG\WATCHDOG.C</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 235</file>
+          <file> 219</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 448 420 241</file>
+          <file> 429 419 60</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 462 421 389 357 425 461 81 189 361 97 173 285 371 374 451</file>
+          <file> 90 228 434 111</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 462 421 389 357 425 461 81 189 361 97 173 285 371 374 451</file>
+          <file> 90 228 434 111</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\Kernel\port.c</name>
+      <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 445</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 449 284 463</file>
+          <name>ILINK</name>
+          <file> 81 458</file>
         </tool>
       </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 462 421 422 360 277 452 139 416 486 294 389 357 425 461 81 189 361 97 173 285 371 374</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 462 421 422 360 277 452 139 416 486 294 389 357 425 461 81 189 361 97 173 285 371 374</file>
-        </tool>
-      </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\main.c</name>
+      <name>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_target.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 459</file>
+          <file> 130</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 458 209 464</file>
+          <file> 212 216 186</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 141 266 407 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 141 266 407 181 357 425 461 81 422 360 277 452 139 416 486 189 361 462 421 294 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Strings\strings.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 437</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 89 293 177</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 143 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 143 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\Pagamentos\BV20.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 232</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 268 53 382</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_cashless.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 406</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 368 424 201</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 219</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 219</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378</file>
         </tool>
       </inputs>
     </file>
@@ -2162,21 +701,482 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 354</file>
+          <file> 375</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 372 100 292</file>
+          <file> 402 50 257</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 141 266 407 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 126</file>
+          <file> 90 228 434 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 97</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 141 266 407 187 422 360 277 452 139 416 486 294 64 383 483 355 181 357 425 461 81 189 361 462 421 389 97 173 285 374 371 138 176 348 85 143 163 57 412 369 140 271 270 439 183 58 349 375 262 101 237 438 172 93 487 428 108 474 131 411 485 296 122 127 350 168 309 188 384 287 184 308 233 274 126</file>
+          <file> 90 228 434 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 97</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Potencia\ControleTemperatura.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 143</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 182 403 82</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_mdb_bill.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 410</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 392 361 233</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 141</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 141</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Kernel\port.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 442</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 465 174 485</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 478 420 421 357 224 463 105 426 64 177 405 374 431 489 335 108 366 80 84 158 362 397</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 478 420 421 357 224 463 105 426 64 177 405 374 431 489 335 108 366 80 84 158 362 397</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Kernel\heap_1.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 343</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 344 112 414</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 478 420 421 357 224 463 105 426 64 177 405 374 431 489 335 108 366 80 84 158 362 397</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 478 420 421 357 224 463 105 426 64 177 405 374 431 489 335 108 366 80 84 158 362 397</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Kernel\portasm.s</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 214 347</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>AARM</name>
+          <file> 374</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Kernel\queue.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 211</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 113 220 98</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 400 421 357 224 463 105 426 64 177 487 378 478 420 405 374 431 489 335 108 366 80 84 158 362 397</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 400 421 357 224 463 105 426 64 177 487 378 478 420 405 374 431 489 335 108 366 80 84 158 362 397</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\Pagamentos\Pagamentos.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 201</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 44 227 338</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Kernel\tasks.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 202</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 450 413 192</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 478 420 405 374 431 489 335 108 366 80 84 158 362 397 444</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 478 420 405 374 431 489 335 108 366 80 84 158 362 397 444</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_MDB.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 65</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 235 45 348</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 141 324 125</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 141 324 125</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_mdb_coin.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 382</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 138 418 411</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 324</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 324</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_cashless.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 432</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 358 436 136</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 125</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 125</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Potencia\Potencia.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 110</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 217 56 356</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\main.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 40</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 464 129 468</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Strings\strings.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 451</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 43 170 103</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 23 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 23 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Board\Board.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 115</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 83 194 394</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\cstartup_M.asm</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 346 42</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Kernel\list.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 63</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 198 162 236</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 400 421 357 224 463 105 426 64 177 478 420 405 374 431 489 335 108 366 80 84 158 397</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 400 421 357 224 463 105 426 64 177 478 420 405 374 431 489 335 108 366 80 84 158 397</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Relatorio\Relatorio.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 203</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 128 327 471</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 462 75</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 462 75</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\pegabola_g2\FIRMWARE\app\Protocolo\dxt_file_system.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 131</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 181 187 124</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 139 193</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 139 193</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\IU\leds.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 481</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 99 37 157</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\Pagamentos\BV20.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 205</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 229 33 404</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
         </tool>
       </inputs>
     </file>
@@ -2184,41 +1184,1026 @@
       <name>$PROJ_DIR$\Debug\Exe\Mais_Pipoca_exp.out</name>
       <outputs>
         <tool>
-          <name>OBJCOPY</name>
-          <file> 429</file>
+          <name>ILINK</name>
+          <file> 458</file>
         </tool>
         <tool>
-          <name>ILINK</name>
-          <file> 440</file>
+          <name>OBJCOPY</name>
+          <file> 412</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ILINK</name>
-          <file> 202 405 382 373 171 401 94 63 380 356 223 392 251 469 326 327 73 280 410 455 106 453 413 312 272 69 343 324 213 245 222 256 329 117 212 402 339 304 281 464 436 240 230 71 447 477 276 194 65 275 310 300 102 182 476 203 473 481 311 376 446 78 292 463 267 190 340 178 479 468 177 201 241 170 250 91 113 136 457</file>
+          <file> 144 424 404 394 82 435 62 338 389 356 200 399 208 471 258 264 348 233 411 438 60 466 422 169 231 346 371 272 206 161 246 137 140 414 248 157 236 468 457 209 197 326 440 479 238 69 334 232 163 152 36 74 493 149 495 467 168 380 446 331 257 485 214 98 243 88 484 488 103 136 192 78 204 61 104 150 454</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\Drivers\SD CARD\SDCARD.C</name>
+      <name>$PROJ_DIR$\Aplicacao\menu_teste_mdb.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 335</file>
+          <file> 73</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 315 325 326</file>
+          <file> 259 353 331</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 336 342</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 460 222 72 146 51 443 185 408</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 336 342</file>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 460 222 72 146 51 443 185 408</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\MDB\mdb_cashless.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 87</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 135 261 197</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 76 77 91</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 76 77 91</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\PlayerWave\PlayerWave.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 381</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 449 330 389</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 93 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 93 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\FILESYSTEM\dataflash_diskio.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 276</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 48 41 371</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 241 274 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 241 274 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 476</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 239 271 243</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 241 274 275 242</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 241 274 275 242</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\RTC\RTC.C</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 352</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 455 333 208</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\SERIAL_MUX\serial_mux.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 148</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 480 189 88</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 491 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 90 228 434 491 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\AmostragemAnalogica\AmostraAnalogica.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 114</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 262 322 424</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 244 147 340 59</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 244 147 340 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_teste_hardware.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 164</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 165 154 446</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 222 72 146 51 443 185 408 460</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 222 72 146 51 443 185 408 460</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_seleciona_lista.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 123</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 492 430 168</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 160 51 72 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 160 51 72 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\MDB\mdb_coin.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 384</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 395 365 326</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 76 77 445</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 76 77 445</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\POST.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 439</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 388 325 62</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\tela_senha.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 391</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 116 339 78</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_preparacao.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 385</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 425 126 495</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 153 185 146 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 153 185 146 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\FILESYSTEM\ff.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 473</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 363 373 246</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 240 274 267 241</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 240 274 267 241</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_operacao.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 393</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 134 117 149</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 185 51 146 72</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 185 51 146 72</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\Preparacao.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 364</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 132 254 200</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_rolagem.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 376</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 92 475 467</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 185 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 185 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\FILESYSTEM\diskio.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 245</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 252 270 272</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 241 274 242 57 178</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 241 274 242 57 178</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\sst25vf016b\sst25vf016b.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 215</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 122 459 488</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 453 396</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 453 396</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\SDCARD\SDCARD.C</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 269</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 258</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 260 275</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\Impressora\impressora.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 428</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 448 172 248</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\MDB\mdb.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 39</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 191 474 457</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 86 421 357 224 463 105 426 64 177 341 400 487 378 77 76 218 445 91 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 86 421 357 224 463 105 426 64 177 341 400 487 378 77 76 218 445 91 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\MDB\mdb_uart.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 247</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 427 155 440</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\Protocolo\Protocolo.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 67</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 337 225 399</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 86 421 357 224 463 105 426 64 177 341 400 487 378 490 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 86 421 357 224 463 105 426 64 177 341 400 487 378 490 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_servico.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 179</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 470 407 380</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 359</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 359</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\CCTALK\cctalk.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 237</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 423 416 231</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 90 228 434 336 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 90 228 434 336 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\SDCARD\SPI_WRAPPER_SD.C</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 256</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 273 268 264</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 260</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 260</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\sst25vf016b\memoryWrapper.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 329</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 196 372 479</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90 228 434 487 421 357 224 463 105 426 64 177 378 453 221 66 396 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 228 434 487 421 357 224 463 105 426 64 177 378 453 221 66 396 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\sst25vf016b\spi_wrapper.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 54</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 109 250 484</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 396 90 228 434 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 396 90 228 434 120 374 431 489 335 421 357 224 463 105 426 64 108 366 478 420 177 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\MDB\mdb_bill.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 447</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 345 386 209</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 77 76 218</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 77 76 218</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_info_binaria.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 265</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 107 106 493</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\faturamento.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 175</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 89 176 161</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_acessorios.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 494</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 188 46 238</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 146 222 72 51 443 185 408 461 160</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 146 222 72 51 443 185 408 461 160</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_faturamento.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 354</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 441 55 74</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 472 185</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 472 185</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_edita_inteiro.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 398</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 167 207 152</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 146 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 146 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_edita_listagem.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 469</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 171 477 36</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 51 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 51 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\embalagem.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 390</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 70 234 206</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_ajuste_relogio.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 159</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 195 10 69</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 222</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 222</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_avancado.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 12</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 415 95 334</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 185 222</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 185 222</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_edita_flag.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 486</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 417 127 163</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 146</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 146</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\aplicacao.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 79</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 342 328 169</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 101 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 101 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\InterfaceAjusteRelogio.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 350</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 52 483 435</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 482 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 482 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Aplicacao\menu_configuracao.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 133</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 183 213 232</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 222 72 146 51 443 185 408 461 472 160 359 351</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 86 421 357 224 463 105 426 64 177 341 400 487 378 120 374 431 489 335 108 366 478 420 405 80 84 158 397 362 142 119 368 47 23 20 336 409 355 71 178 221 453 96 332 370 401 173 77 218 445 91 76 490 437 93 491 101 433 49 153 151 121 360 35 156 94 406 266 85 180 190 210 222 72 146 51 443 185 408 461 472 160 359 351</file>
         </tool>
       </inputs>
     </file>
@@ -2227,21 +2212,44 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 334</file>
+          <file> 256</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 322 316 327</file>
+          <file> 273 268 264</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 141 266 407 336</file>
+          <file> 90 228 434 251</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 141 266 407 336</file>
+          <file> 90 228 434 251</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Drivers\SD CARD\SDCARD.C</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 269</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 249 263 258</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 251 255</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 251 255</file>
         </tool>
       </inputs>
     </file>

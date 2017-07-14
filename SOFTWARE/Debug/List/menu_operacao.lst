@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      12/Jul/2017  11:49:53 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      14/Jul/2017  11:54:34 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -959,7 +959,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
     414            
     415            PARAMETROS_le(ADR_MENSAGEM_CLIENTE_01,(void*)buffer_mensagem);
    \   00000004   0xA900             ADD      R1,SP,#+0
-   \   00000006   0x203C             MOVS     R0,#+60
+   \   00000006   0x2028             MOVS     R0,#+40
    \   00000008   0x.... 0x....      BL       PARAMETROS_le
     416            if(MENUOP_edita_mensagem("MSG CLIENTE 01",buffer_mensagem)){
    \   0000000C   0xA900             ADD      R1,SP,#+0
@@ -969,7 +969,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   00000016   0xD003             BEQ.N    ??MENUOP_configura_mensagem_cliente_0
     417              PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_01,(void*)buffer_mensagem);
    \   00000018   0xA900             ADD      R1,SP,#+0
-   \   0000001A   0x203C             MOVS     R0,#+60
+   \   0000001A   0x2028             MOVS     R0,#+40
    \   0000001C   0x.... 0x....      BL       PARAMETROS_grava
     418            }
     419          }
@@ -992,7 +992,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
     428            
     429            PARAMETROS_le(ADR_MENSAGEM_CLIENTE_02,(void*)buffer_mensagem);
    \   00000004   0xA900             ADD      R1,SP,#+0
-   \   00000006   0x203D             MOVS     R0,#+61
+   \   00000006   0x2029             MOVS     R0,#+41
    \   00000008   0x.... 0x....      BL       PARAMETROS_le
     430            if(MENUOP_edita_mensagem("MSG CLIENTE 02",buffer_mensagem)){
    \   0000000C   0xA900             ADD      R1,SP,#+0
@@ -1002,7 +1002,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   00000016   0xD003             BEQ.N    ??MENUOP_configura_mensagem_cliente_02_0
     431              PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_02,(void*)buffer_mensagem);
    \   00000018   0xA900             ADD      R1,SP,#+0
-   \   0000001A   0x203D             MOVS     R0,#+61
+   \   0000001A   0x2029             MOVS     R0,#+41
    \   0000001C   0x.... 0x....      BL       PARAMETROS_grava
     432            }
     433          }
@@ -1025,7 +1025,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
     442            
     443            PARAMETROS_le(ADR_MENSAGEM_CLIENTE_03,(void*)buffer_mensagem);
    \   00000004   0xA900             ADD      R1,SP,#+0
-   \   00000006   0x203E             MOVS     R0,#+62
+   \   00000006   0x202A             MOVS     R0,#+42
    \   00000008   0x.... 0x....      BL       PARAMETROS_le
     444            if(MENUOP_edita_mensagem("MSG CLIENTE 03",buffer_mensagem)){
    \   0000000C   0xA900             ADD      R1,SP,#+0
@@ -1035,7 +1035,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   00000016   0xD003             BEQ.N    ??MENUOP_configura_mensagem_cliente_03_0
     445              PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_03,(void*)buffer_mensagem);
    \   00000018   0xA900             ADD      R1,SP,#+0
-   \   0000001A   0x203E             MOVS     R0,#+62
+   \   0000001A   0x202A             MOVS     R0,#+42
    \   0000001C   0x.... 0x....      BL       PARAMETROS_grava
     446            }
     447          }
@@ -1058,7 +1058,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
     456            
     457            PARAMETROS_le(ADR_MENSAGEM_CLIENTE_04,(void*)buffer_mensagem);
    \   00000004   0xA900             ADD      R1,SP,#+0
-   \   00000006   0x203F             MOVS     R0,#+63
+   \   00000006   0x202B             MOVS     R0,#+43
    \   00000008   0x.... 0x....      BL       PARAMETROS_le
     458            if(MENUOP_edita_mensagem("MSG CLIENTE 04",buffer_mensagem)){
    \   0000000C   0xA900             ADD      R1,SP,#+0
@@ -1068,7 +1068,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   00000016   0xD003             BEQ.N    ??MENUOP_configura_mensagem_cliente_04_0
     459              PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_04,(void*)buffer_mensagem);
    \   00000018   0xA900             ADD      R1,SP,#+0
-   \   0000001A   0x203F             MOVS     R0,#+63
+   \   0000001A   0x202B             MOVS     R0,#+43
    \   0000001C   0x.... 0x....      BL       PARAMETROS_grava
     460            }   
     461          }
