@@ -133,7 +133,7 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   // da rotação do motor
   POTENCIA_set_neutro(1);
   vTaskDelay(500);
-  POTENCIA_setRPM(3000);//velocidade_processo);
+  POTENCIA_setRPM(2500);//velocidade_processo);
 
   PREPARACAO_cnt_preparo = TEMPO_PREPARO;  
   // Faz a verificação do ventilador

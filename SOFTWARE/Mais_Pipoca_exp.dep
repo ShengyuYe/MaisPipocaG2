@@ -125,7 +125,7 @@
       <file>$PROJ_DIR$\Debug\List\Potencia.lst</file>
       <file>$PROJ_DIR$\Debug\List\portasm.lst</file>
       <file>$PROJ_DIR$\Debug\Obj\tasks.o</file>
-      <file>$PROJ_DIR$\aplicacao\aplicacao.h</file>
+      <file>$PROJ_DIR$\Aplicacao\aplicacao.h</file>
       <file>$PROJ_DIR$\Debug\List\cstartup_M.lst</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_avancado.pbi</file>
       <file>$PROJ_DIR$\Debug\List\POST.lst</file>
