@@ -117,10 +117,6 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
     if(PREPARACAO_compensador<5)
       PREPARACAO_compensador++;
   }
-  else{
-    if(PREPARACAO_compensador)
-      PREPARACAO_compensador--;
-  }
   
   PREPARACAO_contador_compensacao = RELOAD_COMPENSADOR;  
   

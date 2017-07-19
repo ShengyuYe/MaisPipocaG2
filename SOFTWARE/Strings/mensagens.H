@@ -51,13 +51,13 @@
 //
 
 const char *STRING_splash[QTY_OF_LANGUAGES][2]={
-  [BRASIL]    = {"GRUPO ALTECH","VER. 2.0.14"},
-  [URUGUAI]   = {"GRUPO ALTECH","VER. 2.0.14"},
-  [ARGENTINA] = {"GRUPO ALTECH","VER. 2.0.14"},
-  [PARAGUAI]  = {"GRUPO ALTECH","VER. 2.0.14"},
-  [PERU]      = {"GRUPO ALTECH","VER. 2.0.14"},
-  [EUA]       = {"POPCORN KING","VER. 1.0.14"},
-  [CANADA]    = {"GRUPO ALTECH","VER. 2.0.14"}
+  [BRASIL]    = {"GRUPO ALTECH","VER. 2.0.15"},
+  [URUGUAI]   = {"GRUPO ALTECH","VER. 2.0.15"},
+  [ARGENTINA] = {"GRUPO ALTECH","VER. 2.0.15"},
+  [PARAGUAI]  = {"GRUPO ALTECH","VER. 2.0.15"},
+  [PERU]      = {"GRUPO ALTECH","VER. 2.0.15"},
+  [EUA]       = {"POPCORN KING","VER. 1.0.15"},
+  [CANADA]    = {"GRUPO ALTECH","VER. 2.0.15"}
 };
 
 const char *STRING_titulo_menu_configuracao[QTY_OF_LANGUAGES]={

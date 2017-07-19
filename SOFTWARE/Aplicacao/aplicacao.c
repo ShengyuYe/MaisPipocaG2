@@ -147,6 +147,8 @@ void APLICACAO_main(void*pPar){
              PARAMETROS_le(ADR_FLAG_FREE,(void*)&modo_gratis);
              PARAMETROS_le(ADR_FLAG_TROCO,(void*)&modo_troco);             
              
+             APLICACAO_tempo_desumidificador=30*60*1000;
+             
            APLICACAO_release_lcd();  
            
            STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);
