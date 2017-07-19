@@ -133,7 +133,7 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   // da rotação do motor
   POTENCIA_set_neutro(1);
   vTaskDelay(500);
-  POTENCIA_setRPM(velocidade_processo);
+  POTENCIA_setRPM(3000);//velocidade_processo);
 
   PREPARACAO_cnt_preparo = TEMPO_PREPARO;  
   // Faz a verificação do ventilador
@@ -165,7 +165,7 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   while(AA_calculaTemperatura()<temperatura_processo && --timeout){
     vTaskDelay(1);
     APLICACAO_tela_descanso();
-  }
+  }  
   
   if(!timeout){
     POTENCIA_setRPM(0);
@@ -174,8 +174,8 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
     return FALHA_RESISTENCIA;   
   }
   
-  POTENCIA_setRPM(4000);
-  while(POTENCIA_getRPMmedido()>4200);
+  //POTENCIA_setRPM(4000);
+  //while(POTENCIA_getRPMmedido()>4200);
   
   if(!PREPARACAO_dosagem_milho()){
     POTENCIA_setRPM(0);
@@ -185,6 +185,7 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   }
   
   POTENCIA_setRPM(velocidade_processo);
+  while(POTENCIA_getRPMmedido()<velocidade_processo);
   
   BOARD_setter_led_instrucao(LED_PEGUE_PACOTE,PISCANDO); // Indica na plac ade instrução para pegar a embalagem
   //if(

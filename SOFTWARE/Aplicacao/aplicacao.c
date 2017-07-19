@@ -46,7 +46,7 @@
 #define TEMPO_DESUMIDIFICADOR                   1000*60*30
 #define TEMPO_MENSAGEM_LINHA_INFERIOR           10000
 
-#define _DEBUG_PAGAMENTOS_
+//#define _DEBUG_PAGAMENTOS_
 
 /***********************************************************************************
 *       Enumerações

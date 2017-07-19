@@ -1,28 +1,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  18:14:20 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     19/Jul/2017  14:02:23 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\aplicacao.c    /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\aplicacao.c"  /
-//                    -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_ /
-//                    mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA    /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
-//                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
-//                    --dlib_config "C:\Program Files (x86)\IAR               /
-//                    Systems\Embedded Workbench                              /
+//    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Aplicacao\aplicacao.c                   /
+//    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Aplicacao\aplicacao.c -lC               /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\ -lA                         /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\ -o                          /
+//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll         /
+//                    --no_inline --no_code_motion --no_tbaa --no_clustering  /
+//                    --no_scheduling --debug --endian=little                 /
+//                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
+//                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
 //                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\aplicacao.s   /
+//    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
+//                    pocaG2\SOFTWARE\Debug\List\aplicacao.s                  /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -65,8 +64,8 @@
         EXTERN POTENCIA_setRPM
         EXTERN POTENCIA_set_neutro
         EXTERN PREPARACAO_entry
+        EXTERN PREPARACAO_limpeza_inicial
         EXTERN PREPARACAO_resfriamento
-        EXTERN SMDB_cashless_vend
         EXTERN STRING_mensagem_cctalk_offline
         EXTERN STRING_mensagem_fora_servico
         EXTERN STRING_mensagem_modo_gratis
@@ -137,7 +136,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\aplicacao.c
+// C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao\aplicacao.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -186,7 +185,7 @@
 //   46 #define TEMPO_DESUMIDIFICADOR                   1000*60*30
 //   47 #define TEMPO_MENSAGEM_LINHA_INFERIOR           10000
 //   48 
-//   49 #define _DEBUG_PAGAMENTOS_
+//   49 //#define _DEBUG_PAGAMENTOS_
 //   50 
 //   51 /***********************************************************************************
 //   52 *       Enumerações
@@ -294,7 +293,14 @@ APLICACAO_main:
 //  106   
 //  107 #ifndef _DEBUG_PAGAMENTOS_
 //  108   vTaskDelay(3000);
+        MOVW     R0,#+3000
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
 //  109   PREPARACAO_limpeza_inicial(idioma);
+        MOVS     R0,R4
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+          CFI FunCall PREPARACAO_limpeza_inicial
+        BL       PREPARACAO_limpeza_inicial
 //  110 #endif
 //  111   
 //  112   
@@ -317,6 +323,8 @@ APLICACAO_main:
 //  118   
 //  119 #ifndef _DEBUG_PAGAMENTOS_  
 //  120   APLICACAO_verifica_post();
+          CFI FunCall APLICACAO_verifica_post
+        BL       APLICACAO_verifica_post
 //  121 #endif
 //  122     
 //  123   PAGAMENTOS_subtrai_valores(PAGAMENTOS_get_valor_acumulado());
@@ -339,7 +347,7 @@ APLICACAO_main:
 //  132     tecla = TECLADO_getch();
 //  133     switch(tecla){
 //  134       case TECLA_INC:
-//  135            SMDB_cashless_vend(100,1);
+//  135            //SMDB_cashless_vend(100,1);
 //  136            break;
 //  137       case TECLA_DEC:
 //  138            break;
@@ -415,6 +423,8 @@ APLICACAO_main:
         BL       APLICACAO_tela_descanso
 //  179 #ifndef _DEBUG_PAGAMENTOS_    
 //  180     APLICACAO_verificao_ciclica();
+          CFI FunCall APLICACAO_verificao_ciclica
+        BL       APLICACAO_verificao_ciclica
 //  181 #endif
 //  182     vTaskDelay(50);
         MOVS     R0,#+50
@@ -451,10 +461,6 @@ APLICACAO_main:
         BCC.N    ??APLICACAO_main_9
         B.N      ??APLICACAO_main_5
 ??APLICACAO_main_7:
-        MOVS     R1,#+1
-        MOVS     R0,#+100
-          CFI FunCall SMDB_cashless_vend
-        BL       SMDB_cashless_vend
         B.N      ??APLICACAO_main_5
 ??APLICACAO_main_6:
         B.N      ??APLICACAO_main_5
@@ -2566,9 +2572,9 @@ APLICACAO_ciclo_desumidificador:
 //    25 bytes in section .bss
 //     4 bytes in section .data
 //   212 bytes in section .rodata
-// 2 502 bytes in section .text
+// 2 518 bytes in section .text
 // 
-// 2 502 bytes of CODE  memory
+// 2 518 bytes of CODE  memory
 //   212 bytes of CONST memory
 //    29 bytes of DATA  memory
 //
