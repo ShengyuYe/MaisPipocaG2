@@ -58,7 +58,7 @@
 ***********************************************************************************/
 xSemaphoreHandle  APLICACAO_sem_LCD;
 unsigned char APLICACAO_tubos[16]={0};
-unsigned int APLICACAO_tempo_desumidificador=30*1000;//TEMPO_DESUMIDIFICADOR;
+unsigned int APLICACAO_tempo_desumidificador=30*60*1000;//TEMPO_DESUMIDIFICADOR;
 unsigned int APLICACAO_tempo_mensagem=0;
 /***********************************************************************************
 *       Funções
@@ -145,9 +145,7 @@ void APLICACAO_main(void*pPar){
              
              PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);
              PARAMETROS_le(ADR_FLAG_FREE,(void*)&modo_gratis);
-             PARAMETROS_le(ADR_FLAG_TROCO,(void*)&modo_troco);
-             
-             APLICACAO_tempo_desumidificador=TEMPO_DESUMIDIFICADOR;
+             PARAMETROS_le(ADR_FLAG_TROCO,(void*)&modo_troco);             
              
            APLICACAO_release_lcd();  
            

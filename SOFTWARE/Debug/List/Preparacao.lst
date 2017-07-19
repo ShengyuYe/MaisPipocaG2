@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      19/Jul/2017  13:56:54 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      19/Jul/2017  14:08:55 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -286,8 +286,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
     135            vTaskDelay(500);
    \   00000106   0xF44F 0x70FA      MOV      R0,#+500
    \   0000010A   0x.... 0x....      BL       vTaskDelay
-    136            POTENCIA_setRPM(3000);//velocidade_processo);
-   \   0000010E   0xF640 0x30B8      MOVW     R0,#+3000
+    136            POTENCIA_setRPM(2500);//velocidade_processo);
+   \   0000010E   0xF640 0x10C4      MOVW     R0,#+2500
    \   00000112   0x.... 0x....      BL       POTENCIA_setRPM
     137          
     138            PREPARACAO_cnt_preparo = TEMPO_PREPARO;  

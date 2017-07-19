@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     19/Jul/2017  13:56:54 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     19/Jul/2017  14:08:55 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -388,8 +388,8 @@ PREPARACAO_entry:
         MOV      R0,#+500
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  136   POTENCIA_setRPM(3000);//velocidade_processo);
-        MOVW     R0,#+3000
+//  136   POTENCIA_setRPM(2500);//velocidade_processo);
+        MOVW     R0,#+2500
           CFI FunCall POTENCIA_setRPM
         BL       POTENCIA_setRPM
 //  137 
