@@ -384,6 +384,7 @@ void BOARD_instrucao_leds(void){
     else
       LEDS_setter_led(LED_FORA_SERVICO,toggle);        
    //--------------------------------------------------
+    /*
    if(BOARD_estado_leds[LED_VERMELHO_GRELHA] == APAGADO)
      LEDS_setter_led(LED_VERMELHO_GRELHA,0);
    else
@@ -399,6 +400,7 @@ void BOARD_instrucao_leds(void){
        LEDS_setter_led(LED_VERDE_GRELHA,1);
      else
        LEDS_setter_led(LED_VERDE_GRELHA,toggle);
+    */
    //--------------------------------------------------
      
    if(toggle){
@@ -458,6 +460,15 @@ void BOARD_setter_contador_propaganda(unsigned int contagem){
 void BOARD_reset_tempo_propaganda(void){
   
   BOARD_contador_propaganda = BOARD_intervalo_propaganda*60000;
+}
+/***********************************************************************************
+*       Descrição       :       Desabilita o contador por contagem extrema
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
+***********************************************************************************/
+void BOARD_overshoot_tempo_propaganda(void){
+  
+  BOARD_contador_propaganda = 0xFFFFFFFF;
 }
 /***********************************************************************************
 *       Fim do arquivo

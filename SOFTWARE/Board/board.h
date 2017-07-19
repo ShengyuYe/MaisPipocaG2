@@ -76,6 +76,7 @@ void BOARD_setter_led_instrucao(unsigned char led,eLED_STATE estado);
 void BOARD_liga_placa_instrucao(unsigned char flag);
 void BOARD_setter_contador_propaganda(unsigned int contagem);
 void BOARD_reset_tempo_propaganda(void);
+void BOARD_overshoot_tempo_propaganda(void);
 
 /************************************************************************************
 *       Fim do arquivo

@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      14/Jul/2017  11:54:39 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      17/Jul/2017  16:19:05 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -92,7 +92,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\main.c
      56            BOARD_ini();
    \   00000008   0x.... 0x....      BL       BOARD_ini
      57            
-     58            xTaskCreate(APLICACAO_main ,"APLICACAO" ,768,NULL,1,NULL);
+     58            xTaskCreate(APLICACAO_main ,"APLICACAO" ,256,NULL,1,NULL);
    \   0000000C   0x2000             MOVS     R0,#+0
    \   0000000E   0x9003             STR      R0,[SP, #+12]
    \   00000010   0x2000             MOVS     R0,#+0
@@ -102,7 +102,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\main.c
    \   00000018   0x2001             MOVS     R0,#+1
    \   0000001A   0x9000             STR      R0,[SP, #+0]
    \   0000001C   0x2300             MOVS     R3,#+0
-   \   0000001E   0xF44F 0x7240      MOV      R2,#+768
+   \   0000001E   0xF44F 0x7280      MOV      R2,#+256
    \   00000022   0x....             LDR.N    R1,??DataTable1_1
    \   00000024   0x....             LDR.N    R0,??DataTable1_2
    \   00000026   0x.... 0x....      BL       xTaskGenericCreate

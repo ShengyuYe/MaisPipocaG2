@@ -1,158 +1,181 @@
 /*__________________________________________________________________________________
-|	Chave Digital Tecnologia Eletronica Ltda. 
+|	Dextro soluções tecnológicas.
 |       
-|       Balneário Camboriú - SC
-|       www.chavedigital.com.br
+|       Itajaí/SC
+|       www.dextro-st.com.br
 | __________________________________________________________________________________
 |
-|       This source code was developed by Chave Digital and cannot be copied, in part 
-|       or in whole, or used, except when legally licensed by Chave Digital
+|       This source code was developed by Dextro and cannot be copied, in part 
+|       or in whole, or used, except when legally licensed by Dextro
 |       or its distributors.
 |
-|       Este código é propriedade da Chave Digital e não pode ser copiado, em parte 
+|       Este código é propriedade da Dextro e não pode ser copiado, em parte 
 |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
-|       Chave Digital ou por um de seus distribuidores.
+|       Dextro ou por um de seus distribuidores.
 | __________________________________________________________________________________
 |
 |       Arquivo            :  diskio.c
-|       Descrição          :  Middleware para o acesso à memória física
-|                             DATAFLASH OU SDCARD
+|       Descrição          :  Camada de acesso à mídia
 | 
 |       Autor              :  Marcos Aquino
-|       Data criação       :  01/08/2011
+|       Data criação       :  17/07/2017
 |
 |       Revisões           :  1.0
 |
 |
 | __________________________________________________________________________________
 */
+
 /***********************************************************************************
-*		Includes
+*       Includes
 ***********************************************************************************/
-#include <nxp\iolpc1768.h>
-#include "diskio.h"
-#include "sd_diskio.h"
-#include "dataflash_diskio.h"
-#include "..\rtc\rtc.h"
-/***********************************************************************************
-*		Definições com constantes utilizadas no programa
-***********************************************************************************/ 
+#include "diskio.h"		/* FatFs lower layer API */
 
 
 
 /***********************************************************************************
-*		Enumerações
+*       Definições
 ***********************************************************************************/
-
-
-/***********************************************************************************
-*		Estruturas
-***********************************************************************************/
-
+/* Definitions of physical drive number for each drive */
+#define DEV_RAM		0	/* Example: Map Ramdisk to physical drive 0 */
+#define DEV_MMC		1	/* Example: Map MMC/SD card to physical drive 1 */
+#define DEV_USB		2	/* Example: Map USB MSD to physical drive 2 */
 
 /***********************************************************************************
-*		Uniões
-***********************************************************************************/
-
-
-/***********************************************************************************
-*		Constantes
-***********************************************************************************/
-
-
-/***********************************************************************************
-*		Variaveis locais
-***********************************************************************************/
-
-
-/***********************************************************************************
-*		Funções locais
-***********************************************************************************/
- 
-/***********************************************************************************
-*		Implementação
+*       Implementação das funções
 ***********************************************************************************/
 
 /***********************************************************************************
-*   Descrição   :   Inicialização dos drives do sistema
-*   Parametros  :   (unsigned char) número do drive
-*   Retorno     :   (DSTATUS) 
+*       Descrição       :       Get drive status
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
 ***********************************************************************************/
-DSTATUS disk_initialize(unsigned char drv){
+DSTATUS disk_status(BYTE pdrv){
+  DSTATUS stat;
+  int result;
+
+  switch (pdrv) {
+    case DEV_RAM :
+         return DF_disk_status();
+    case DEV_MMC :
+	 //result = MMC_disk_status();
+         // translate the reslut code here
+         return stat;
+    case DEV_USB :
+         //result = USB_disk_status();
+         // translate the reslut code here
+         return stat;
+   }
   
-  switch(drv){
-   case DRIVE_SD        : return (DSTATUS)SD_disk_initialize();               
-   case DRIVE_DATAFLASH : return (DSTATUS)DF_disk_initialize();
+   return STA_NOINIT;
+}
+/***********************************************************************************
+*       Descrição       :       Inicialização do disco
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
+***********************************************************************************/
+DSTATUS disk_initialize(BYTE pdrv){
+  DSTATUS stat;
+  int result;
+
+  switch (pdrv) {
+    case DEV_RAM :
+         //result = RAM_disk_initialize();
+         // translate the reslut code here
+         return DF_disk_initialize();
+    case DEV_MMC :
+         //result = MMC_disk_initialize();
+         // translate the reslut code here
+         return stat;
+    case DEV_USB :
+         //result = USB_disk_initialize();
+         // translate the reslut code here
+         return stat;
+   }
+  
+   return STA_NOINIT;
+}
+/***********************************************************************************
+*       Descrição       :       Lê um bloco do disco
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
+***********************************************************************************/
+DRESULT disk_read(BYTE pdrv,BYTE *buff,DWORD sector,UINT count){
+  DRESULT res;
+  int result;
+
+  switch (pdrv) {
+    case DEV_RAM :
+                  // translate the arguments here
+		  result = DF_disk_read(buff, sector, count);
+		  // translate the reslut code here
+		  return res; 
+    case DEV_MMC :
+	  	  // translate the arguments here
+		  //result = MMC_disk_read(buff, sector, count);
+		  // translate the reslut code here
+		  return res; 
+    case DEV_USB :
+	  	  // translate the arguments here
+	          //result = USB_disk_read(buff, sector, count);
+		  // translate the reslut code here
+		  return res;
   }
-  
-  return STA_NOINIT;  
+
+  return RES_PARERR;
 }
 /***********************************************************************************
-*     Descrição   :   Lê o status do disco passado no parametro
-*     Parametros  :   (unsigned char) número do drive
-*     Retorno     :   nenhum
+*       Descrição       :       Escreve um bloco no disco
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
 ***********************************************************************************/
-DSTATUS disk_status (unsigned char drv){
-
-  switch(drv){
-   case DRIVE_SD        : return (DSTATUS)SD_disk_status();               
-   case DRIVE_DATAFLASH : return (DSTATUS)DF_disk_status();
-  }  
+DRESULT disk_write(BYTE pdrv,const BYTE *buff,DWORD sector,UINT count){
+  DRESULT res;
+  int result;
   
-  return STA_NOINIT;  
+  switch (pdrv) {
+    case DEV_RAM :
+		// translate the arguments here
+		result = DF_disk_write(buff, sector, count);
+		// translate the reslut code here
+		return res;
+    case DEV_MMC :
+		// translate the arguments here
+		//result = MMC_disk_write(buff, sector, count);
+		// translate the reslut code here
+		return res;
+    case DEV_USB :
+		// translate the arguments here
+		//result = USB_disk_write(buff, sector, count);
+		// translate the reslut code here
+		return res;
+  }
+
+  return RES_PARERR;
 }
 /***********************************************************************************
-*     Descrição   :   Lê um setor de uma das unidades de disco
-*     Parametros  :   (unsigned char) drive
-*                     (unsigned char*) buffer
-*                     (unsigned long int) setor
-*                     (unsigned char) tamanho do bloco lido
-*     Retorno     :   (DRESULT)
+*       Descrição       :       Verifica o status do disco
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
 ***********************************************************************************/
-DRESULT disk_read (unsigned char drv,unsigned char *buffer,
-                   DWORD sector,unsigned char count){/* Physical drive number (0) */
+DRESULT disk_ioctl(BYTE pdrv,BYTE cmd,void *buff){
+  DRESULT res;
+  int result;
 
-  switch(drv){
-   case DRIVE_SD        : return (DRESULT)SD_disk_read(buffer,sector,count);
-   case DRIVE_DATAFLASH : return (DRESULT)DF_disk_read(buffer,sector,count);
-  }                     
-  
-  return RES_NOTRDY;  
-}
-/***********************************************************************************
-*     Descrição   :   Escreve em um setor de um determinado disco
-*     Parametros  :   (unsigned char) drive
-*                     (unsigned char*) buffer
-*                     (unsigned int) número do setor
-*                     (unsigned char) tamanho do bloco escrito
-*     Retorno     :   (DRESULT)
-***********************************************************************************/
-DRESULT disk_write(unsigned char drv,const unsigned char *buff,
-                   DWORD sector,unsigned char byte){
+  switch (pdrv) {
+    case DEV_RAM :
+		// Process of the command for the RAM drive
+                res = DF_disk_ioctl(cmd,buff);
+		return res;
+    case DEV_MMC :
+		// Process of the command for the MMC/SD card
+		return res; 
+    case DEV_USB :
+		// Process of the command the USB drive
+		return res;
+  }
 
-  switch(drv){
-   case DRIVE_SD        : return (DRESULT)SD_disk_write((unsigned char*)buff,sector,byte);              
-   case DRIVE_DATAFLASH : return (DRESULT)DF_disk_write((unsigned char*)buff,sector,byte);              
-  }                     
-  
-  return RES_NOTRDY;
-}
-/***********************************************************************************
-*   Descrição   :   Controle de funções específicas do disco
-*   Parametros  :   (unsigned char) drive
-*                   (unsigned char) comando
-*                   (void*) ponteiro para a estrutura de controle do 
-*                   comando que será executado
-*   Retorno     :   nenhum
-***********************************************************************************/
-DRESULT disk_ioctl(unsigned char drv,unsigned char ctrl,void *buff){
-
-  switch(drv){
-   case DRIVE_SD        : return (DRESULT)SD_disk_ioctl(ctrl,buff);               
-   case DRIVE_DATAFLASH : return (DRESULT)DF_disk_ioctl(ctrl,buff);  
-  }  
-  
-  return RES_NOTRDY;
+  return RES_PARERR;
 }
 /***********************************************************************************
 *   Descrição   :   Função para leitura do relógio
@@ -203,5 +226,6 @@ DWORD get_fattime(void){
   return relogio; 
 }
 /***********************************************************************************
-*		Fim do arquivo
+*       Fim do arquivo
 ***********************************************************************************/
+

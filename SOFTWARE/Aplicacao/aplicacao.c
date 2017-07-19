@@ -83,7 +83,7 @@ void APLICACAO_ciclo_desumidificador(unsigned char flag);
 /***********************************************************************************
 *       Implementação das funções
 ***********************************************************************************/
-
+extern void DF_teste_file_system(void);
 /***********************************************************************************
 *       Descrição       :       Função principal da interface de usuário
 *       Parametros      :       nenhum
@@ -132,11 +132,11 @@ void APLICACAO_main(void*pPar){
     tecla = TECLADO_getch();
     switch(tecla){
       case TECLA_INC:
-           //SMDB_cashless_vend(100,1);
            break;
       case TECLA_DEC:
            break;
       case TECLA_ENTER:
+           BOARD_overshoot_tempo_propaganda();
            APLIACAO_wait_lcd();
              BOARD_liga_placa_instrucao(0);
              MCFG_entry();                     
@@ -152,6 +152,8 @@ void APLICACAO_main(void*pPar){
            APLICACAO_release_lcd();  
            
            STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);
+           APLICACAO_tempo_desumidificador = TEMPO_DESUMIDIFICADOR;
+           BOARD_reset_tempo_propaganda();
            break;
       case TECLA_ESC:
            break;

@@ -19,7 +19,9 @@
 |       Autor              :  Marcos Aquino
 |       Data criação       :  21/02/2014
 |
-|       Revisões           :  1.0.0.0
+|       Revisões           :  1
+|                             2 (17/07/2017) revisão do protocolo para nova
+|                                            topologia de comandos
 |
 |
 | __________________________________________________________________________________

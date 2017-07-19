@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     14/Jul/2017  15:02:10 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     17/Jul/2017  16:18:01 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -118,16 +118,18 @@
 //   19 |       Autor              :  Marcos Aquino
 //   20 |       Data criação       :  21/02/2014
 //   21 |
-//   22 |       Revisões           :  1.0.0.0
-//   23 |
-//   24 |
-//   25 | __________________________________________________________________________________
-//   26 */
-//   27 
-//   28 /***********************************************************************************
-//   29 *       Includes
-//   30 ***********************************************************************************/
-//   31 #include <nxp\iolpc1768.h>
+//   22 |       Revisões           :  1
+//   23 |                             2 (17/07/2017) revisão do protocolo para nova
+//   24 |                                            topologia de comandos
+//   25 |
+//   26 |
+//   27 | __________________________________________________________________________________
+//   28 */
+//   29 
+//   30 /***********************************************************************************
+//   31 *       Includes
+//   32 ***********************************************************************************/
+//   33 #include <nxp\iolpc1768.h>
 
         ASEGN `.noinit`:DATA:NOROOT,0e000e280H
         SECTION_GROUP _A_CLRPEND0
@@ -152,100 +154,100 @@ _A_U3FCR:
 // __absolute union <unnamed> const volatile _A_U3LSR
 _A_U3LSR:
         DS8 1
-//   32 #include <stdio.h>
-//   33 #include <stdlib.h>
-//   34 #include <string.h>
-//   35 #include "protocolo.h"
-//   36 #include "..\..\includes.h"
-//   37 
-//   38 /***********************************************************************************
-//   39 *       Definições locais
-//   40 ***********************************************************************************/
-//   41 #define TAM_BUF_TX                              1024
-//   42 #define TAM_BUF_RX                              128
-//   43 
-//   44 #define STX                                     0x02
-//   45 #define ETX                                     0x03
-//   46 #define DLE                                     0x10
-//   47 
-//   48 /***********************************************************************************
-//   49 *       Variaveis locais
-//   50 ***********************************************************************************/
+//   34 #include <stdio.h>
+//   35 #include <stdlib.h>
+//   36 #include <string.h>
+//   37 #include "protocolo.h"
+//   38 #include "..\..\includes.h"
+//   39 
+//   40 /***********************************************************************************
+//   41 *       Definições locais
+//   42 ***********************************************************************************/
+//   43 #define TAM_BUF_TX                              1024
+//   44 #define TAM_BUF_RX                              128
+//   45 
+//   46 #define STX                                     0x02
+//   47 #define ETX                                     0x03
+//   48 #define DLE                                     0x10
+//   49 
+//   50 /***********************************************************************************
+//   51 *       Variaveis locais
+//   52 ***********************************************************************************/
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
-//   51 unsigned char PROTOCOLO_bufferTx[TAM_BUF_TX];
+//   53 unsigned char PROTOCOLO_bufferTx[TAM_BUF_TX];
 PROTOCOLO_bufferTx:
         DS8 1024
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
-//   52 unsigned char PROTOCOLO_bufferRx[TAM_BUF_RX];
+//   54 unsigned char PROTOCOLO_bufferRx[TAM_BUF_RX];
 PROTOCOLO_bufferRx:
         DS8 128
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
-//   53 unsigned char PROTOCOLO_bufferTmp[TAM_BUF_TX];
+//   55 unsigned char PROTOCOLO_bufferTmp[TAM_BUF_TX];
 PROTOCOLO_bufferTmp:
         DS8 1024
 
         SECTION `.bss`:DATA:REORDER:NOROOT(0)
-//   54 unsigned char PROTOCOLO_bytesRecebidos;
+//   56 unsigned char PROTOCOLO_bytesRecebidos;
 PROTOCOLO_bytesRecebidos:
         DS8 1
 
         SECTION `.bss`:DATA:REORDER:NOROOT(0)
-//   55 unsigned char PROTOCOLO_bytesParaEnviar;
+//   57 unsigned char PROTOCOLO_bytesParaEnviar;
 PROTOCOLO_bytesParaEnviar:
         DS8 1
 
         SECTION `.bss`:DATA:REORDER:NOROOT(0)
-//   56 unsigned char PROTOCOLO_bytesEnviados;
+//   58 unsigned char PROTOCOLO_bytesEnviados;
 PROTOCOLO_bytesEnviados:
         DS8 1
 
         SECTION `.bss`:DATA:REORDER:NOROOT(0)
-//   57 unsigned char PROTOCOLO_novoPacote=0;
+//   59 unsigned char PROTOCOLO_novoPacote=0;
 PROTOCOLO_novoPacote:
         DS8 1
-//   58 
-//   59 
-//   60 /***********************************************************************************
-//   61 *       Funções locais
-//   62 ***********************************************************************************/
-//   63 void PROTOCOLO_enviaPacote(unsigned char *pData,unsigned short int tamanho);
-//   64 
-//   65 unsigned char PROTOCOLO_checksum(unsigned char*pData,unsigned short int tamanho);
+//   60 
+//   61 
+//   62 /***********************************************************************************
+//   63 *       Funções locais
+//   64 ***********************************************************************************/
+//   65 void PROTOCOLO_enviaPacote(unsigned char *pData,unsigned short int tamanho);
 //   66 
-//   67 void PROTOCOLO_get_device(void);
+//   67 unsigned char PROTOCOLO_checksum(unsigned char*pData,unsigned short int tamanho);
 //   68 
-//   69 void PROTOCOLO_decodifica_tamanho_tabela(void);
+//   69 void PROTOCOLO_get_device(void);
 //   70 
-//   71 void PROTOCOLO_decodifica_le_parametro(unsigned short int indice);
+//   71 void PROTOCOLO_decodifica_tamanho_tabela(void);
 //   72 
-//   73 void PROTOCOLO_decodifica_escreve_parametro(unsigned short int endereco,
-//   74                                             unsigned short int tamanho,
-//   75                                             unsigned char *pData);
-//   76 
-//   77 /***********************************************************************************
-//   78 *       Implementação das funções
-//   79 ***********************************************************************************/
-//   80 
-//   81 /***********************************************************************************
-//   82 *       Descrição       :       Inicialização da biblioteca
-//   83 *       Parametros      :       nenhum
-//   84 *       Retorno         :       nenhum
-//   85 ***********************************************************************************/
+//   73 void PROTOCOLO_decodifica_le_parametro(unsigned short int indice);
+//   74 
+//   75 void PROTOCOLO_decodifica_escreve_parametro(unsigned short int endereco,
+//   76                                             unsigned short int tamanho,
+//   77                                             unsigned char *pData);
+//   78 
+//   79 /***********************************************************************************
+//   80 *       Implementação das funções
+//   81 ***********************************************************************************/
+//   82 
+//   83 /***********************************************************************************
+//   84 *       Descrição       :       Inicialização da biblioteca
+//   85 *       Parametros      :       nenhum
+//   86 *       Retorno         :       nenhum
+//   87 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock0 Using cfiCommon0
           CFI Function PROTOCOLO_ini
         THUMB
-//   86 void PROTOCOLO_ini(void){
+//   88 void PROTOCOLO_ini(void){
 PROTOCOLO_ini:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//   87   
-//   88   UART_init(3,119200,NULL,NULL,NULL);    
+//   89   
+//   90   UART_init(3,119200,NULL,NULL,NULL);    
         MOVS     R0,#+0
         STR      R0,[SP, #+0]
         MOVS     R3,#+0
@@ -254,26 +256,26 @@ PROTOCOLO_ini:
         MOVS     R0,#+3
           CFI FunCall UART_init
         BL       UART_init
-//   89 }
+//   91 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock0
-//   90 /***********************************************************************************
-//   91 *       Descrição       :       Função para tratamento da interrupção
-//   92 *                               da uart3
-//   93 *       Parametros      :       nenhum
-//   94 *       Retorno         :       nenhum
-//   95 ***********************************************************************************/
+//   92 /***********************************************************************************
+//   93 *       Descrição       :       Função para tratamento da interrupção
+//   94 *                               da uart3
+//   95 *       Parametros      :       nenhum
+//   96 *       Retorno         :       nenhum
+//   97 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock1 Using cfiCommon0
           CFI Function PROTOCOLO_intVect
           CFI NoCalls
         THUMB
-//   96 void PROTOCOLO_intVect(void){  
-//   97   static unsigned char ultimoRecebido=0;
-//   98   unsigned char dummy;
-//   99   
-//  100   switch(U3IIR_bit.IID){
+//   98 void PROTOCOLO_intVect(void){  
+//   99   static unsigned char ultimoRecebido=0;
+//  100   unsigned char dummy;
+//  101   
+//  102   switch(U3IIR_bit.IID){
 PROTOCOLO_intVect:
         LDR.W    R0,??DataTable9_1  ;; 0x4009c008
         LDR      R0,[R0, #+0]
@@ -288,14 +290,14 @@ PROTOCOLO_intVect:
         CMP      R0,#+6
         BEQ.W    ??PROTOCOLO_intVect_3
         B.N      ??PROTOCOLO_intVect_4
-//  101     case THRE:
-//  102                if(PROTOCOLO_bytesParaEnviar){
+//  103     case THRE:
+//  104                if(PROTOCOLO_bytesParaEnviar){
 ??PROTOCOLO_intVect_0:
         LDR.W    R0,??DataTable9_2
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??PROTOCOLO_intVect_5
-//  103                  U3THR = PROTOCOLO_bufferTx[PROTOCOLO_bytesEnviados++];
+//  105                  U3THR = PROTOCOLO_bufferTx[PROTOCOLO_bytesEnviados++];
         LDR.W    R0,??DataTable9_3
         LDRB     R0,[R0, #+0]
         LDR.W    R1,??DataTable9_4
@@ -307,21 +309,21 @@ PROTOCOLO_intVect:
         ADDS     R0,R0,#+1
         LDR.W    R1,??DataTable9_3
         STRB     R0,[R1, #+0]
-//  104                  PROTOCOLO_bytesParaEnviar--;
+//  106                  PROTOCOLO_bytesParaEnviar--;
         LDR.W    R0,??DataTable9_2
         LDRB     R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable9_2
         STRB     R0,[R1, #+0]
-//  105                }
-//  106                break; 
+//  107                }
+//  108                break; 
 ??PROTOCOLO_intVect_5:
         B.N      ??PROTOCOLO_intVect_4
-//  107     case RDA : dummy = U3RBR;
+//  109     case RDA : dummy = U3RBR;
 ??PROTOCOLO_intVect_1:
         LDR.W    R0,??DataTable9_5  ;; 0x4009c000
         LDRB     R0,[R0, #+0]
-//  108                switch(dummy){
+//  110                switch(dummy){
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         MOVS     R1,R0
         CMP      R1,#+2
@@ -331,31 +333,31 @@ PROTOCOLO_intVect:
         CMP      R1,#+16
         BEQ.N    ??PROTOCOLO_intVect_8
         B.N      ??PROTOCOLO_intVect_9
-//  109                  case STX: // Quando receber [DLE]+[STX] - marca inicio de novo pacote
-//  110                            if(ultimoRecebido == DLE){
+//  111                  case STX: // Quando receber [DLE]+[STX] - marca inicio de novo pacote
+//  112                            if(ultimoRecebido == DLE){
 ??PROTOCOLO_intVect_6:
         LDR.W    R1,??DataTable9_6
         LDRB     R1,[R1, #+0]
         CMP      R1,#+16
         BNE.N    ??PROTOCOLO_intVect_10
-//  111                              PROTOCOLO_bytesRecebidos = 0;
+//  113                              PROTOCOLO_bytesRecebidos = 0;
         LDR.W    R0,??DataTable9_7
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
-//  112                              ultimoRecebido = 255;
+//  114                              ultimoRecebido = 255;
         LDR.W    R0,??DataTable9_6
         MOVS     R1,#+255
         STRB     R1,[R0, #+0]
         B.N      ??PROTOCOLO_intVect_11
-//  113                            }
-//  114                            else{
-//  115                              if(PROTOCOLO_bytesRecebidos<(TAM_BUF_RX-1)) 
+//  115                            }
+//  116                            else{
+//  117                              if(PROTOCOLO_bytesRecebidos<(TAM_BUF_RX-1)) 
 ??PROTOCOLO_intVect_10:
         LDR.W    R1,??DataTable9_7
         LDRB     R1,[R1, #+0]
         CMP      R1,#+127
         BGE.N    ??PROTOCOLO_intVect_12
-//  116                                PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos++] = dummy;                                                         
+//  118                                PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos++] = dummy;                                                         
         LDR.W    R1,??DataTable9_7
         LDRB     R1,[R1, #+0]
         LDR.W    R2,??DataTable9_8
@@ -365,42 +367,42 @@ PROTOCOLO_intVect:
         ADDS     R0,R0,#+1
         LDR.W    R1,??DataTable9_7
         STRB     R0,[R1, #+0]
-//  117                              
-//  118                              ultimoRecebido = STX;
+//  119                              
+//  120                              ultimoRecebido = STX;
 ??PROTOCOLO_intVect_12:
         LDR.W    R0,??DataTable9_6
         MOVS     R1,#+2
         STRB     R1,[R0, #+0]
-//  119                            }
-//  120                            
-//  121                            break;
+//  121                            }
+//  122                            
+//  123                            break;
 ??PROTOCOLO_intVect_11:
         B.N      ??PROTOCOLO_intVect_13
-//  122                  case ETX: // Quando receber [DLE]+[ETX] - marca fim do novo pacote
-//  123                            if(ultimoRecebido == DLE){
+//  124                  case ETX: // Quando receber [DLE]+[ETX] - marca fim do novo pacote
+//  125                            if(ultimoRecebido == DLE){
 ??PROTOCOLO_intVect_7:
         LDR.W    R1,??DataTable9_6
         LDRB     R1,[R1, #+0]
         CMP      R1,#+16
         BNE.N    ??PROTOCOLO_intVect_14
-//  124                              PROTOCOLO_novoPacote = 255;
+//  126                              PROTOCOLO_novoPacote = 255;
         LDR.W    R0,??DataTable9_9
         MOVS     R1,#+255
         STRB     R1,[R0, #+0]
-//  125                              ultimoRecebido = 255;
+//  127                              ultimoRecebido = 255;
         LDR.W    R0,??DataTable9_6
         MOVS     R1,#+255
         STRB     R1,[R0, #+0]
         B.N      ??PROTOCOLO_intVect_15
-//  126                            }
-//  127                            else{
-//  128                              if(PROTOCOLO_bytesRecebidos<(TAM_BUF_RX-1)) 
+//  128                            }
+//  129                            else{
+//  130                              if(PROTOCOLO_bytesRecebidos<(TAM_BUF_RX-1)) 
 ??PROTOCOLO_intVect_14:
         LDR.W    R1,??DataTable9_7
         LDRB     R1,[R1, #+0]
         CMP      R1,#+127
         BGE.N    ??PROTOCOLO_intVect_16
-//  129                                PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos++] = dummy;                                                         
+//  131                                PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos++] = dummy;                                                         
         LDR.N    R1,??DataTable9_7
         LDRB     R1,[R1, #+0]
         LDR.N    R2,??DataTable9_8
@@ -410,29 +412,29 @@ PROTOCOLO_intVect:
         ADDS     R0,R0,#+1
         LDR.N    R1,??DataTable9_7
         STRB     R0,[R1, #+0]
-//  130                              
-//  131                              ultimoRecebido = ETX;
+//  132                              
+//  133                              ultimoRecebido = ETX;
 ??PROTOCOLO_intVect_16:
         LDR.N    R0,??DataTable9_6
         MOVS     R1,#+3
         STRB     R1,[R0, #+0]
-//  132                            }                   
-//  133                            break;
+//  134                            }                   
+//  135                            break;
 ??PROTOCOLO_intVect_15:
         B.N      ??PROTOCOLO_intVect_13
-//  134                  case DLE: // Quando receber [DLE]+[DLE] recebe 0x10 dentro do buffer
-//  135                            if(ultimoRecebido == DLE){
+//  136                  case DLE: // Quando receber [DLE]+[DLE] recebe 0x10 dentro do buffer
+//  137                            if(ultimoRecebido == DLE){
 ??PROTOCOLO_intVect_8:
         LDR.N    R1,??DataTable9_6
         LDRB     R1,[R1, #+0]
         CMP      R1,#+16
         BNE.N    ??PROTOCOLO_intVect_17
-//  136                              if(PROTOCOLO_bytesRecebidos<(TAM_BUF_RX-1))
+//  138                              if(PROTOCOLO_bytesRecebidos<(TAM_BUF_RX-1))
         LDR.N    R1,??DataTable9_7
         LDRB     R1,[R1, #+0]
         CMP      R1,#+127
         BGE.N    ??PROTOCOLO_intVect_18
-//  137                                PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos++] = dummy;
+//  139                                PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos++] = dummy;
         LDR.N    R1,??DataTable9_7
         LDRB     R1,[R1, #+0]
         LDR.N    R2,??DataTable9_8
@@ -442,30 +444,30 @@ PROTOCOLO_intVect:
         ADDS     R0,R0,#+1
         LDR.N    R1,??DataTable9_7
         STRB     R0,[R1, #+0]
-//  138                              ultimoRecebido = 255;
+//  140                              ultimoRecebido = 255;
 ??PROTOCOLO_intVect_18:
         LDR.N    R0,??DataTable9_6
         MOVS     R1,#+255
         STRB     R1,[R0, #+0]
         B.N      ??PROTOCOLO_intVect_19
-//  139                            }                      
-//  140                            else
-//  141                              ultimoRecebido = DLE;
+//  141                            }                      
+//  142                            else
+//  143                              ultimoRecebido = DLE;
 ??PROTOCOLO_intVect_17:
         LDR.N    R0,??DataTable9_6
         MOVS     R1,#+16
         STRB     R1,[R0, #+0]
-//  142                            break;
+//  144                            break;
 ??PROTOCOLO_intVect_19:
         B.N      ??PROTOCOLO_intVect_13
-//  143                  default :
-//  144                            if(PROTOCOLO_bytesRecebidos<(TAM_BUF_RX-1)) 
+//  145                  default :
+//  146                            if(PROTOCOLO_bytesRecebidos<(TAM_BUF_RX-1)) 
 ??PROTOCOLO_intVect_9:
         LDR.N    R1,??DataTable9_7
         LDRB     R1,[R1, #+0]
         CMP      R1,#+127
         BGE.N    ??PROTOCOLO_intVect_20
-//  145                              PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos++] = dummy;                                                                            
+//  147                              PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos++] = dummy;                                                                            
         LDR.N    R1,??DataTable9_7
         LDRB     R1,[R1, #+0]
         LDR.N    R2,??DataTable9_8
@@ -475,31 +477,31 @@ PROTOCOLO_intVect:
         ADDS     R0,R0,#+1
         LDR.N    R1,??DataTable9_7
         STRB     R0,[R1, #+0]
-//  146                            break;
-//  147                }
-//  148                
-//  149                //ultimoRecebido = dummy;
-//  150                break;      
+//  148                            break;
+//  149                }
+//  150                
+//  151                //ultimoRecebido = dummy;
+//  152                break;      
 ??PROTOCOLO_intVect_20:
 ??PROTOCOLO_intVect_13:
         B.N      ??PROTOCOLO_intVect_4
-//  151     case RLS : 
-//  152                dummy = U3LSR;
+//  153     case RLS : 
+//  154                dummy = U3LSR;
 ??PROTOCOLO_intVect_2:
         LDR.N    R0,??DataTable9_10  ;; 0x4009c014
         LDRB     R0,[R0, #+0]
-//  153                dummy = U3RBR;               
+//  155                dummy = U3RBR;               
         LDR.N    R1,??DataTable9_5  ;; 0x4009c000
         LDRB     R1,[R1, #+0]
         MOVS     R0,R1
-//  154                break;      
-        B.N      ??PROTOCOLO_intVect_4
-//  155     case CTI :
 //  156                break;      
-//  157   }  
-//  158   
-//  159   //Apaga o flag de interrupção pendente
-//  160   CLRPEND0 |= (0x01)<<5;       
+        B.N      ??PROTOCOLO_intVect_4
+//  157     case CTI :
+//  158                break;      
+//  159   }  
+//  160   
+//  161   //Apaga o flag de interrupção pendente
+//  162   CLRPEND0 |= (0x01)<<5;       
 ??PROTOCOLO_intVect_3:
 ??PROTOCOLO_intVect_4:
         LDR.N    R0,??DataTable9_11  ;; 0xe000e280
@@ -507,7 +509,7 @@ PROTOCOLO_intVect:
         ORRS     R0,R0,#0x20
         LDR.N    R1,??DataTable9_11  ;; 0xe000e280
         STR      R0,[R1, #+0]
-//  161 }
+//  163 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock1
         REQUIRE U3RBRTHR
@@ -518,49 +520,49 @@ PROTOCOLO_intVect:
         SECTION `.bss`:DATA:REORDER:NOROOT(0)
 ??ultimoRecebido:
         DS8 1
-//  162 /***********************************************************************************
-//  163 *       Descrição       :       Tick de timer para a biblioteca do protocolo
-//  164 *       Parametros      :       nenhum
-//  165 *       Retorno         :       nenhum
-//  166 ***********************************************************************************/
+//  164 /***********************************************************************************
+//  165 *       Descrição       :       Tick de timer para a biblioteca do protocolo
+//  166 *       Parametros      :       nenhum
+//  167 *       Retorno         :       nenhum
+//  168 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function PROTOCOLO_timerTick
           CFI NoCalls
         THUMB
-//  167 void PROTOCOLO_timerTick(void){
-//  168   
-//  169   
+//  169 void PROTOCOLO_timerTick(void){
 //  170   
-//  171 }
+//  171   
+//  172   
+//  173 }
 PROTOCOLO_timerTick:
         BX       LR               ;; return
           CFI EndBlock cfiBlock2
-//  172 /***********************************************************************************
-//  173 *       Descrição       :       Calcula o checksum de um pacote de dados
-//  174 *       Parametros      :       (unsigned char*) ponteiro para o início do pacote
-//  175 *                               (unsigned short int) tamanho do pacote
-//  176 *       Retorno         :       (unsigned char) checksum do pacote
-//  177 ***********************************************************************************/
+//  174 /***********************************************************************************
+//  175 *       Descrição       :       Calcula o checksum de um pacote de dados
+//  176 *       Parametros      :       (unsigned char*) ponteiro para o início do pacote
+//  177 *                               (unsigned short int) tamanho do pacote
+//  178 *       Retorno         :       (unsigned char) checksum do pacote
+//  179 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock3 Using cfiCommon0
           CFI Function PROTOCOLO_checksum
           CFI NoCalls
         THUMB
-//  178 unsigned char PROTOCOLO_checksum(unsigned char*pData,unsigned short int tamanho){
+//  180 unsigned char PROTOCOLO_checksum(unsigned char*pData,unsigned short int tamanho){
 PROTOCOLO_checksum:
         PUSH     {R4}
           CFI R4 Frame(CFA, -4)
           CFI CFA R13+4
-//  179   unsigned short int soma=0;
+//  181   unsigned short int soma=0;
         MOVS     R2,#+0
-//  180 
-//  181   for(unsigned short int i=0;i<tamanho;i++)
+//  182 
+//  183   for(unsigned short int i=0;i<tamanho;i++)
         MOVS     R3,#+0
         B.N      ??PROTOCOLO_checksum_0
-//  182     soma+= pData[i];
+//  184     soma+= pData[i];
 ??PROTOCOLO_checksum_1:
         UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
         LDRB     R4,[R3, R0]
@@ -571,8 +573,8 @@ PROTOCOLO_checksum:
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         CMP      R3,R1
         BCC.N    ??PROTOCOLO_checksum_1
-//  183   
-//  184   return (unsigned char)(256-soma);    
+//  185   
+//  186   return (unsigned char)(256-soma);    
         RSBS     R0,R2,#+0
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         POP      {R4}
@@ -580,61 +582,61 @@ PROTOCOLO_checksum:
           CFI CFA R13+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock3
-//  185 }
-//  186 /***********************************************************************************
-//  187 *       Descrição       :       Thread do protocolo
-//  188 *       Protocolo       :       (void*) pPar
-//  189 *       Retorno         :       nenhum
-//  190 ***********************************************************************************/
+//  187 }
+//  188 /***********************************************************************************
+//  189 *       Descrição       :       Thread do protocolo
+//  190 *       Protocolo       :       (void*) pPar
+//  191 *       Retorno         :       nenhum
+//  192 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function PROTOCOLO_main
         THUMB
-//  191 void PROTOCOLO_main(void*pPar){
+//  193 void PROTOCOLO_main(void*pPar){
 PROTOCOLO_main:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  192   
-//  193   PROTOCOLO_ini();
+//  194   
+//  195   PROTOCOLO_ini();
           CFI FunCall PROTOCOLO_ini
         BL       PROTOCOLO_ini
         B.N      ??PROTOCOLO_main_0
-//  194   
-//  195   for(;;){        
-//  196     
-//  197     if(PROTOCOLO_novoPacote){
-//  198       
-//  199       PROTOCOLO_novoPacote = 0;
-//  200       if(PROTOCOLO_checksum(PROTOCOLO_bufferRx,PROTOCOLO_bufferRx[1]-1)==PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos-1]){      
-//  201         switch(PROTOCOLO_bufferRx[0]){      
-//  202           case DXTNET_GET_DEVICE:
-//  203                PROTOCOLO_get_device();
-//  204                break;
-//  205           case DXTNET_READ_PARAMETERS_TABLE_SIZE:
-//  206                PROTOCOLO_decodifica_tamanho_tabela();
-//  207                break;
-//  208           case DXTNET_READ_PARAMETERS:
-//  209                PROTOCOLO_decodifica_le_parametro(PROTOCOLO_bufferRx[2]<<8 | PROTOCOLO_bufferRx[3]);
-//  210                break;
-//  211           case DXTNET_WRITE_PARAMETERS:
-//  212                PROTOCOLO_decodifica_escreve_parametro(PROTOCOLO_bufferRx[2]<<8 | PROTOCOLO_bufferRx[3],PROTOCOLO_bufferRx[4]<<8 | PROTOCOLO_bufferRx[5],&PROTOCOLO_bufferRx[6]);
-//  213                break;
-//  214           case DXTNET_READ_FILE_TABLE:
+//  196   
+//  197   for(;;){        
+//  198     
+//  199     if(PROTOCOLO_novoPacote){
+//  200       
+//  201       PROTOCOLO_novoPacote = 0;
+//  202       if(PROTOCOLO_checksum(PROTOCOLO_bufferRx,PROTOCOLO_bufferRx[1]-1)==PROTOCOLO_bufferRx[PROTOCOLO_bytesRecebidos-1]){      
+//  203         switch(PROTOCOLO_bufferRx[0]){      
+//  204           case DXTNET_GET_DEVICE:
+//  205                PROTOCOLO_get_device();
+//  206                break;
+//  207           case DXTNET_READ_PARAMETERS_TABLE_SIZE:
+//  208                PROTOCOLO_decodifica_tamanho_tabela();
+//  209                break;
+//  210           case DXTNET_READ_PARAMETERS:
+//  211                PROTOCOLO_decodifica_le_parametro(PROTOCOLO_bufferRx[2]<<8 | PROTOCOLO_bufferRx[3]);
+//  212                break;
+//  213           case DXTNET_WRITE_PARAMETERS:
+//  214                PROTOCOLO_decodifica_escreve_parametro(PROTOCOLO_bufferRx[2]<<8 | PROTOCOLO_bufferRx[3],PROTOCOLO_bufferRx[4]<<8 | PROTOCOLO_bufferRx[5],&PROTOCOLO_bufferRx[6]);
 //  215                break;
-//  216           case DXTNET_WRITE_FILE_TABLE:
+//  216           case DXTNET_READ_FILE_TABLE:
 //  217                break;
-//  218           case DXTNET_DELETE_FILE_TABLE:
+//  218           case DXTNET_WRITE_FILE_TABLE:
 //  219                break;
-//  220           case DXTNET_READ_FILE:
+//  220           case DXTNET_DELETE_FILE_TABLE:
 //  221                break;
-//  222           case DXTNET_WRITE_FILE:
+//  222           case DXTNET_READ_FILE:
 //  223                break;
-//  224         }    
-//  225       }
-//  226     }
-//  227     vTaskDelay(1);
+//  224           case DXTNET_WRITE_FILE:
+//  225                break;
+//  226         }    
+//  227       }
+//  228     }
+//  229     vTaskDelay(1);
 ??PROTOCOLO_main_1:
 ??PROTOCOLO_main_2:
         MOVS     R0,#+1
@@ -725,59 +727,59 @@ PROTOCOLO_main:
 ??PROTOCOLO_main_10:
         B.N      ??PROTOCOLO_main_2
           CFI EndBlock cfiBlock4
-//  228   }    
-//  229 }
-//  230 /***********************************************************************************
-//  231 *       Descrição       :       Faz a decodificação do comando getdevice
-//  232 *       Parametros      :       nenhum
-//  233 *       Retorno         :       nenhum
-//  234 ***********************************************************************************/
+//  230   }    
+//  231 }
+//  232 /***********************************************************************************
+//  233 *       Descrição       :       Faz a decodificação do comando getdevice
+//  234 *       Parametros      :       nenhum
+//  235 *       Retorno         :       nenhum
+//  236 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function PROTOCOLO_get_device
         THUMB
-//  235 void PROTOCOLO_get_device(void){
+//  237 void PROTOCOLO_get_device(void){
 PROTOCOLO_get_device:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  236   
-//  237   PROTOCOLO_bufferTmp[0]  = DXTNET_GET_DEVICE;
+//  238   
+//  239   PROTOCOLO_bufferTmp[0]  = DXTNET_GET_DEVICE;
         LDR.N    R0,??DataTable9_13
         MOVS     R1,#+16
         STRB     R1,[R0, #+0]
-//  238   PROTOCOLO_bufferTmp[2]  = DXTNET_MAIS_PIPOCA_G2;
+//  240   PROTOCOLO_bufferTmp[2]  = DXTNET_MAIS_PIPOCA_G2;
         LDR.N    R0,??DataTable9_13
         MOVS     R1,#+2
         STRB     R1,[R0, #+2]
-//  239   
-//  240   sprintf((char*)&PROTOCOLO_bufferTmp[3],STRING_VERSAO_PROTOCOLO);
+//  241   
+//  242   sprintf((char*)&PROTOCOLO_bufferTmp[3],STRING_VERSAO_PROTOCOLO);
         LDR.N    R1,??DataTable9_14
         LDR.N    R0,??DataTable9_15
           CFI FunCall sprintf
         BL       sprintf
-//  241   PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,21);  
+//  243   PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,21);  
         MOVS     R1,#+21
         LDR.N    R0,??DataTable9_13
           CFI FunCall PROTOCOLO_enviaPacote
         BL       PROTOCOLO_enviaPacote
-//  242 }
+//  244 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock5
-//  243 /***********************************************************************************
-//  244 *       Descrição       :       Encapsula os dados que serão enviados
-//  245 *                               pela rede
-//  246 *       Parametros      :       (unsigned char*) ponteiro para os dados que serão
-//  247 *                                               enviados
-//  248 *       Retorno         :       nenhum
-//  249 ***********************************************************************************/
+//  245 /***********************************************************************************
+//  246 *       Descrição       :       Encapsula os dados que serão enviados
+//  247 *                               pela rede
+//  248 *       Parametros      :       (unsigned char*) ponteiro para os dados que serão
+//  249 *                                               enviados
+//  250 *       Retorno         :       nenhum
+//  251 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function PROTOCOLO_enviaPacote
         THUMB
-//  250 void PROTOCOLO_enviaPacote(unsigned char *pData,unsigned short int tamanho){
+//  252 void PROTOCOLO_enviaPacote(unsigned char *pData,unsigned short int tamanho){
 PROTOCOLO_enviaPacote:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -787,12 +789,12 @@ PROTOCOLO_enviaPacote:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  251   unsigned char indice=0;
+//  253   unsigned char indice=0;
         MOVS     R6,#+0
-//  252   
-//  253   pData[1] = tamanho;
+//  254   
+//  255   pData[1] = tamanho;
         STRB     R5,[R4, #+1]
-//  254   pData[tamanho-1] = PROTOCOLO_checksum(pData,tamanho-1);
+//  256   pData[tamanho-1] = PROTOCOLO_checksum(pData,tamanho-1);
         SUBS     R1,R5,#+1
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R4
@@ -801,28 +803,28 @@ PROTOCOLO_enviaPacote:
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
         ADDS     R1,R5,R4
         STRB     R0,[R1, #-1]
-//  255   
-//  256   PROTOCOLO_bufferTx[indice++] = DLE;
+//  257   
+//  258   PROTOCOLO_bufferTx[indice++] = DLE;
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         LDR.N    R0,??DataTable9_4
         MOVS     R1,#+16
         STRB     R1,[R6, R0]
         ADDS     R6,R6,#+1
-//  257   PROTOCOLO_bufferTx[indice++] = STX;
+//  259   PROTOCOLO_bufferTx[indice++] = STX;
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         LDR.N    R0,??DataTable9_4
         MOVS     R1,#+2
         STRB     R1,[R6, R0]
         ADDS     R6,R6,#+1
-//  258   for(unsigned char i=0;i<tamanho;i++)
+//  260   for(unsigned char i=0;i<tamanho;i++)
         MOVS     R0,#+0
         B.N      ??PROTOCOLO_enviaPacote_0
-//  259     if(pData[i]==DLE){
-//  260       PROTOCOLO_bufferTx[indice++] = DLE;
-//  261       PROTOCOLO_bufferTx[indice++] = DLE;
-//  262     }
-//  263     else
-//  264       PROTOCOLO_bufferTx[indice++] = pData[i];
+//  261     if(pData[i]==DLE){
+//  262       PROTOCOLO_bufferTx[indice++] = DLE;
+//  263       PROTOCOLO_bufferTx[indice++] = DLE;
+//  264     }
+//  265     else
+//  266       PROTOCOLO_bufferTx[indice++] = pData[i];
 ??PROTOCOLO_enviaPacote_1:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LDRB     R1,[R0, R4]
@@ -854,80 +856,80 @@ PROTOCOLO_enviaPacote:
         STRB     R2,[R6, R1]
         ADDS     R6,R6,#+1
         B.N      ??PROTOCOLO_enviaPacote_2
-//  265   
-//  266   PROTOCOLO_bufferTx[indice++] = DLE;
+//  267   
+//  268   PROTOCOLO_bufferTx[indice++] = DLE;
 ??PROTOCOLO_enviaPacote_3:
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         LDR.N    R0,??DataTable9_4
         MOVS     R1,#+16
         STRB     R1,[R6, R0]
         ADDS     R6,R6,#+1
-//  267   PROTOCOLO_bufferTx[indice++] = ETX;
+//  269   PROTOCOLO_bufferTx[indice++] = ETX;
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         LDR.N    R0,??DataTable9_4
         MOVS     R1,#+3
         STRB     R1,[R6, R0]
         ADDS     R6,R6,#+1
-//  268   
-//  269   PROTOCOLO_bytesParaEnviar = indice-1;
+//  270   
+//  271   PROTOCOLO_bytesParaEnviar = indice-1;
         SUBS     R0,R6,#+1
         LDR.N    R1,??DataTable9_2
         STRB     R0,[R1, #+0]
-//  270   PROTOCOLO_bytesEnviados = 1;
+//  272   PROTOCOLO_bytesEnviados = 1;
         LDR.N    R0,??DataTable9_3
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
-//  271   U3THR = PROTOCOLO_bufferTx[0];  
+//  273   U3THR = PROTOCOLO_bufferTx[0];  
         LDR.N    R0,??DataTable9_5  ;; 0x4009c000
         LDR.N    R1,??DataTable9_4
         LDRB     R1,[R1, #+0]
         STRB     R1,[R0, #+0]
-//  272 }
+//  274 }
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock6
         REQUIRE U3RBRTHR
-//  273 /***********************************************************************************
-//  274 *       Descrição       :       Verifica se o buffer de transmissão está vazio
-//  275 *       Parametros      :       nenhum
-//  276 *       Retorno         :       Tamanho do buffer de transmissão
-//  277 ***********************************************************************************/
+//  275 /***********************************************************************************
+//  276 *       Descrição       :       Verifica se o buffer de transmissão está vazio
+//  277 *       Parametros      :       nenhum
+//  278 *       Retorno         :       Tamanho do buffer de transmissão
+//  279 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function PROTOCOLO_bytesNoBufferTx
           CFI NoCalls
         THUMB
-//  278 unsigned short int PROTOCOLO_bytesNoBufferTx(void){
-//  279   
-//  280   return PROTOCOLO_bytesParaEnviar;
+//  280 unsigned short int PROTOCOLO_bytesNoBufferTx(void){
+//  281   
+//  282   return PROTOCOLO_bytesParaEnviar;
 PROTOCOLO_bytesNoBufferTx:
         LDR.N    R0,??DataTable9_2
         LDRB     R0,[R0, #+0]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         BX       LR               ;; return
           CFI EndBlock cfiBlock7
-//  281 }
-//  282 /***********************************************************************************
-//  283 *       Descrição       :       envia data direto
-//  284 *       Parametros      :       nenhum
-//  285 *       Retorno         :       nenhum
-//  286 ***********************************************************************************/
+//  283 }
+//  284 /***********************************************************************************
+//  285 *       Descrição       :       envia data direto
+//  286 *       Parametros      :       nenhum
+//  287 *       Retorno         :       nenhum
+//  288 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock8 Using cfiCommon0
           CFI Function PROTOCOLO_enviaDadosDireto
           CFI NoCalls
         THUMB
-//  287 void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho){
+//  289 void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho){
 PROTOCOLO_enviaDadosDireto:
         PUSH     {R4}
           CFI R4 Frame(CFA, -4)
           CFI CFA R13+4
-//  288   
-//  289   for(unsigned char i=0;i<tamanho;i++)
+//  290   
+//  291   for(unsigned char i=0;i<tamanho;i++)
         MOVS     R2,#+0
         B.N      ??PROTOCOLO_enviaDadosDireto_0
-//  290     PROTOCOLO_bufferTx[i] = buffer[i];
+//  292     PROTOCOLO_bufferTx[i] = buffer[i];
 ??PROTOCOLO_enviaDadosDireto_1:
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         LDRB     R3,[R2, R0]
@@ -940,92 +942,92 @@ PROTOCOLO_enviaDadosDireto:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         CMP      R2,R1
         BCC.N    ??PROTOCOLO_enviaDadosDireto_1
-//  291   
-//  292   PROTOCOLO_bytesParaEnviar = tamanho-1;
+//  293   
+//  294   PROTOCOLO_bytesParaEnviar = tamanho-1;
         SUBS     R1,R1,#+1
         LDR.N    R2,??DataTable9_2
         STRB     R1,[R2, #+0]
-//  293   PROTOCOLO_bytesEnviados = 1;
+//  295   PROTOCOLO_bytesEnviados = 1;
         LDR.N    R1,??DataTable9_3
         MOVS     R2,#+1
         STRB     R2,[R1, #+0]
-//  294   U3THR = buffer[0];    
+//  296   U3THR = buffer[0];    
         LDR.N    R1,??DataTable9_5  ;; 0x4009c000
         LDRB     R0,[R0, #+0]
         STRB     R0,[R1, #+0]
-//  295 }
+//  297 }
         POP      {R4}
           CFI R4 SameValue
           CFI CFA R13+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock8
         REQUIRE U3RBRTHR
-//  296 /***********************************************************************************
-//  297 *       Descrição       :       Lê a quantidade de parâmetros existentes
-//  298 *                               na tabela de parâmetros do sistema
-//  299 *       Parametros      :       nenhum
-//  300 *       Retorno         :       nenhum
-//  301 ***********************************************************************************/
+//  298 /***********************************************************************************
+//  299 *       Descrição       :       Lê a quantidade de parâmetros existentes
+//  300 *                               na tabela de parâmetros do sistema
+//  301 *       Parametros      :       nenhum
+//  302 *       Retorno         :       nenhum
+//  303 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock9 Using cfiCommon0
           CFI Function PROTOCOLO_decodifica_tamanho_tabela
         THUMB
-//  302 void PROTOCOLO_decodifica_tamanho_tabela(void){
+//  304 void PROTOCOLO_decodifica_tamanho_tabela(void){
 PROTOCOLO_decodifica_tamanho_tabela:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  303   unsigned short int quantidade = PARAMETROS_get_tamanho_lista();
+//  305   unsigned short int quantidade = PARAMETROS_get_tamanho_lista();
           CFI FunCall PARAMETROS_get_tamanho_lista
         BL       PARAMETROS_get_tamanho_lista
-//  304   
-//  305   PROTOCOLO_bufferTmp[0]  = DXTNET_READ_PARAMETERS_TABLE_SIZE;
+//  306   
+//  307   PROTOCOLO_bufferTmp[0]  = DXTNET_READ_PARAMETERS_TABLE_SIZE;
         LDR.N    R1,??DataTable9_13
         MOVS     R2,#+17
         STRB     R2,[R1, #+0]
-//  306   PROTOCOLO_bufferTmp[2]  = quantidade>>8;
+//  308   PROTOCOLO_bufferTmp[2]  = quantidade>>8;
         LDR.N    R1,??DataTable9_13
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         LSRS     R2,R0,#+8
         STRB     R2,[R1, #+2]
-//  307   PROTOCOLO_bufferTmp[3]  = quantidade;
+//  309   PROTOCOLO_bufferTmp[3]  = quantidade;
         LDR.N    R1,??DataTable9_13
         STRB     R0,[R1, #+3]
-//  308   
-//  309   PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,5);    
+//  310   
+//  311   PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,5);    
         MOVS     R1,#+5
         LDR.N    R0,??DataTable9_13
           CFI FunCall PROTOCOLO_enviaPacote
         BL       PROTOCOLO_enviaPacote
-//  310 }
+//  312 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock9
-//  311 /***********************************************************************************
-//  312 *       Descrição       :       Decodifica o comando para leitura
-//  313 *                               de um dos parâmetros da tabela
-//  314 *       Parametros      :       (unsigned short int) indice
-//  315 *       Retorno         :       nenhum
-//  316 ***********************************************************************************/
+//  313 /***********************************************************************************
+//  314 *       Descrição       :       Decodifica o comando para leitura
+//  315 *                               de um dos parâmetros da tabela
+//  316 *       Parametros      :       (unsigned short int) indice
+//  317 *       Retorno         :       nenhum
+//  318 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock10 Using cfiCommon0
           CFI Function PROTOCOLO_decodifica_le_parametro
         THUMB
-//  317 void PROTOCOLO_decodifica_le_parametro(unsigned short int indice){
+//  319 void PROTOCOLO_decodifica_le_parametro(unsigned short int indice){
 PROTOCOLO_decodifica_le_parametro:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+12
           CFI CFA R13+16
-//  318   unsigned short int tamanho;
-//  319   
-//  320   PROTOCOLO_bufferTmp[0] =  DXTNET_READ_PARAMETERS;      
+//  320   unsigned short int tamanho;
+//  321   
+//  322   PROTOCOLO_bufferTmp[0] =  DXTNET_READ_PARAMETERS;      
         LDR.N    R1,??DataTable9_13
         MOVS     R2,#+18
         STRB     R2,[R1, #+0]
-//  321   PARAMETROS_get_parametro_rec(indice,&tamanho,&PROTOCOLO_bufferTmp[4],&PROTOCOLO_bufferTmp[20],&PROTOCOLO_bufferTmp[23]);
+//  323   PARAMETROS_get_parametro_rec(indice,&tamanho,&PROTOCOLO_bufferTmp[4],&PROTOCOLO_bufferTmp[20],&PROTOCOLO_bufferTmp[23]);
         LDR.N    R1,??DataTable9_16
         STR      R1,[SP, #+0]
         LDR.N    R3,??DataTable9_17
@@ -1034,44 +1036,44 @@ PROTOCOLO_decodifica_le_parametro:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall PARAMETROS_get_parametro_rec
         BL       PARAMETROS_get_parametro_rec
-//  322   PROTOCOLO_bufferTmp[2] = tamanho>>8;
+//  324   PROTOCOLO_bufferTmp[2] = tamanho>>8;
         LDR.N    R0,??DataTable9_13
         LDRH     R1,[SP, #+4]
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         LSRS     R1,R1,#+8
         STRB     R1,[R0, #+2]
-//  323   PROTOCOLO_bufferTmp[3] = tamanho;
+//  325   PROTOCOLO_bufferTmp[3] = tamanho;
         LDR.N    R0,??DataTable9_13
         LDRH     R1,[SP, #+4]
         STRB     R1,[R0, #+3]
-//  324   
-//  325   PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,24+tamanho);
+//  326   
+//  327   PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,24+tamanho);
         LDRH     R0,[SP, #+4]
         ADDS     R1,R0,#+24
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         LDR.N    R0,??DataTable9_13
           CFI FunCall PROTOCOLO_enviaPacote
         BL       PROTOCOLO_enviaPacote
-//  326 }
+//  328 }
         POP      {R0-R2,PC}       ;; return
           CFI EndBlock cfiBlock10
-//  327 /***********************************************************************************
-//  328 *       Descrição       :       Decodifica o comando de escrita em um 
-//  329 *                               dos parâmetro da tabela de leitura
-//  330 *       Parametros      :       (unsigned short int) endereço
-//  331 *                               (unsigned short int) tamanho do parâmetro
-//  332 *                               (unsigned char*) ponteiro para o stream
-//  333 *
-//  334 *       Retorno         :       nenhum
-//  335 ***********************************************************************************/
+//  329 /***********************************************************************************
+//  330 *       Descrição       :       Decodifica o comando de escrita em um 
+//  331 *                               dos parâmetro da tabela de leitura
+//  332 *       Parametros      :       (unsigned short int) endereço
+//  333 *                               (unsigned short int) tamanho do parâmetro
+//  334 *                               (unsigned char*) ponteiro para o stream
+//  335 *
+//  336 *       Retorno         :       nenhum
+//  337 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock11 Using cfiCommon0
           CFI Function PROTOCOLO_decodifica_escreve_parametro
         THUMB
-//  336 void PROTOCOLO_decodifica_escreve_parametro(unsigned short int endereco,
-//  337                                             unsigned short int tamanho,
-//  338                                             unsigned char *pData){
+//  338 void PROTOCOLO_decodifica_escreve_parametro(unsigned short int endereco,
+//  339                                             unsigned short int tamanho,
+//  340                                             unsigned char *pData){
 PROTOCOLO_decodifica_escreve_parametro:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -1080,42 +1082,42 @@ PROTOCOLO_decodifica_escreve_parametro:
           CFI CFA R13+16
         MOVS     R5,R0
         MOVS     R4,R1
-//  339                                                     
-//  340   PROTOCOLO_bufferTmp[0] = DXTNET_WRITE_PARAMETERS;
+//  341                                                     
+//  342   PROTOCOLO_bufferTmp[0] = DXTNET_WRITE_PARAMETERS;
         LDR.N    R0,??DataTable9_13
         MOVS     R1,#+19
         STRB     R1,[R0, #+0]
-//  341   
-//  342   PARAMETROS_set_parametro_rec(endereco,tamanho,pData);
+//  343   
+//  344   PARAMETROS_set_parametro_rec(endereco,tamanho,pData);
         MOVS     R1,R4
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall PARAMETROS_set_parametro_rec
         BL       PARAMETROS_set_parametro_rec
-//  343   
-//  344   PROTOCOLO_bufferTmp[2] = endereco>>8;
+//  345   
+//  346   PROTOCOLO_bufferTmp[2] = endereco>>8;
         LDR.N    R0,??DataTable9_13
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
         LSRS     R1,R5,#+8
         STRB     R1,[R0, #+2]
-//  345   PROTOCOLO_bufferTmp[3] = endereco;
+//  347   PROTOCOLO_bufferTmp[3] = endereco;
         LDR.N    R0,??DataTable9_13
         STRB     R5,[R0, #+3]
-//  346   PROTOCOLO_bufferTmp[4] = tamanho>>8;
+//  348   PROTOCOLO_bufferTmp[4] = tamanho>>8;
         LDR.N    R0,??DataTable9_13
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         LSRS     R1,R4,#+8
         STRB     R1,[R0, #+4]
-//  347   PROTOCOLO_bufferTmp[5] = tamanho;
+//  349   PROTOCOLO_bufferTmp[5] = tamanho;
         LDR.N    R0,??DataTable9_13
         STRB     R4,[R0, #+5]
-//  348   PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,7);
+//  350   PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,7);
         MOVS     R1,#+7
         LDR.N    R0,??DataTable9_13
           CFI FunCall PROTOCOLO_enviaPacote
         BL       PROTOCOLO_enviaPacote
-//  349 }
+//  351 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock11
 
@@ -1251,9 +1253,9 @@ PROTOCOLO_decodifica_escreve_parametro:
         DC8 0, 0, 0
 
         END
-//  350 /***********************************************************************************
-//  351 *       Fim do arquivo
-//  352 ***********************************************************************************/
+//  352 /***********************************************************************************
+//  353 *       Fim do arquivo
+//  354 ***********************************************************************************/
 // 
 // 2 181 bytes in section .bss
 //    10 bytes in section .noinit (abs)

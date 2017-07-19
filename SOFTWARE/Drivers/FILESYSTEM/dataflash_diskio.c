@@ -63,7 +63,6 @@ unsigned int DF_disk_initialize(void){
     
   dfStatus |= STA_NOINIT;    
   return STA_NOINIT;
-   //ToDo: Inserir verificação do flag de proteção de escrita
 }
 /***********************************************************************************
 *     Descrição   :   Lê o status do disco passado no parametro

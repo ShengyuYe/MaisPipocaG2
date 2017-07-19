@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     14/Jul/2017  11:54:39 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     17/Jul/2017  16:19:05 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -149,7 +149,7 @@ main:
           CFI FunCall BOARD_ini
         BL       BOARD_ini
 //   57   
-//   58   xTaskCreate(APLICACAO_main ,"APLICACAO" ,768,NULL,1,NULL);
+//   58   xTaskCreate(APLICACAO_main ,"APLICACAO" ,256,NULL,1,NULL);
         MOVS     R0,#+0
         STR      R0,[SP, #+12]
         MOVS     R0,#+0
@@ -159,7 +159,7 @@ main:
         MOVS     R0,#+1
         STR      R0,[SP, #+0]
         MOVS     R3,#+0
-        MOV      R2,#+768
+        MOV      R2,#+256
         LDR.N    R1,??DataTable1_1
         LDR.N    R0,??DataTable1_2
           CFI FunCall xTaskGenericCreate

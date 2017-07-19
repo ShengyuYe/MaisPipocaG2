@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     12/Jul/2017  11:51:17 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     17/Jul/2017  10:55:01 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -41,11 +41,6 @@
         EXTERN DF_disk_status
         EXTERN DF_disk_write
         EXTERN RTC_getValue
-        EXTERN SD_disk_initialize
-        EXTERN SD_disk_ioctl
-        EXTERN SD_disk_read
-        EXTERN SD_disk_status
-        EXTERN SD_disk_write
 
         PUBLIC disk_initialize
         PUBLIC disk_ioctl
@@ -83,336 +78,385 @@
         
 // C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\FILESYSTEM\diskio.c
 //    1 /*__________________________________________________________________________________
-//    2 |	Chave Digital Tecnologia Eletronica Ltda. 
+//    2 |	Dextro soluções tecnológicas.
 //    3 |       
-//    4 |       Balneário Camboriú - SC
-//    5 |       www.chavedigital.com.br
+//    4 |       Itajaí/SC
+//    5 |       www.dextro-st.com.br
 //    6 | __________________________________________________________________________________
 //    7 |
-//    8 |       This source code was developed by Chave Digital and cannot be copied, in part 
-//    9 |       or in whole, or used, except when legally licensed by Chave Digital
+//    8 |       This source code was developed by Dextro and cannot be copied, in part 
+//    9 |       or in whole, or used, except when legally licensed by Dextro
 //   10 |       or its distributors.
 //   11 |
-//   12 |       Este código é propriedade da Chave Digital e não pode ser copiado, em parte 
+//   12 |       Este código é propriedade da Dextro e não pode ser copiado, em parte 
 //   13 |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
-//   14 |       Chave Digital ou por um de seus distribuidores.
+//   14 |       Dextro ou por um de seus distribuidores.
 //   15 | __________________________________________________________________________________
 //   16 |
 //   17 |       Arquivo            :  diskio.c
-//   18 |       Descrição          :  Middleware para o acesso à memória física
-//   19 |                             DATAFLASH OU SDCARD
-//   20 | 
-//   21 |       Autor              :  Marcos Aquino
-//   22 |       Data criação       :  01/08/2011
-//   23 |
-//   24 |       Revisões           :  1.0
+//   18 |       Descrição          :  Camada de acesso à mídia
+//   19 | 
+//   20 |       Autor              :  Marcos Aquino
+//   21 |       Data criação       :  17/07/2017
+//   22 |
+//   23 |       Revisões           :  1.0
+//   24 |
 //   25 |
-//   26 |
-//   27 | __________________________________________________________________________________
-//   28 */
+//   26 | __________________________________________________________________________________
+//   27 */
+//   28 
 //   29 /***********************************************************************************
-//   30 *		Includes
+//   30 *       Includes
 //   31 ***********************************************************************************/
-//   32 #include <nxp\iolpc1768.h>
-//   33 #include "diskio.h"
-//   34 #include "sd_diskio.h"
-//   35 #include "dataflash_diskio.h"
-//   36 #include "..\rtc\rtc.h"
-//   37 /***********************************************************************************
-//   38 *		Definições com constantes utilizadas no programa
-//   39 ***********************************************************************************/ 
-//   40 
-//   41 
-//   42 
-//   43 /***********************************************************************************
-//   44 *		Enumerações
-//   45 ***********************************************************************************/
-//   46 
+//   32 #include "diskio.h"		/* FatFs lower layer API */
+//   33 
+//   34 
+//   35 
+//   36 /***********************************************************************************
+//   37 *       Definições
+//   38 ***********************************************************************************/
+//   39 /* Definitions of physical drive number for each drive */
+//   40 #define DEV_RAM		0	/* Example: Map Ramdisk to physical drive 0 */
+//   41 #define DEV_MMC		1	/* Example: Map MMC/SD card to physical drive 1 */
+//   42 #define DEV_USB		2	/* Example: Map USB MSD to physical drive 2 */
+//   43 
+//   44 /***********************************************************************************
+//   45 *       Implementação das funções
+//   46 ***********************************************************************************/
 //   47 
 //   48 /***********************************************************************************
-//   49 *		Estruturas
-//   50 ***********************************************************************************/
-//   51 
-//   52 
-//   53 /***********************************************************************************
-//   54 *		Uniões
-//   55 ***********************************************************************************/
-//   56 
-//   57 
-//   58 /***********************************************************************************
-//   59 *		Constantes
-//   60 ***********************************************************************************/
-//   61 
-//   62 
-//   63 /***********************************************************************************
-//   64 *		Variaveis locais
-//   65 ***********************************************************************************/
-//   66 
-//   67 
-//   68 /***********************************************************************************
-//   69 *		Funções locais
-//   70 ***********************************************************************************/
-//   71  
-//   72 /***********************************************************************************
-//   73 *		Implementação
-//   74 ***********************************************************************************/
-//   75 
-//   76 /***********************************************************************************
-//   77 *   Descrição   :   Inicialização dos drives do sistema
-//   78 *   Parametros  :   (unsigned char) número do drive
-//   79 *   Retorno     :   (DSTATUS) 
-//   80 ***********************************************************************************/
+//   49 *       Descrição       :       Get drive status
+//   50 *       Parametros      :       nenhum
+//   51 *       Retorno         :       nenhum
+//   52 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock0 Using cfiCommon0
-          CFI Function disk_initialize
-        THUMB
-//   81 DSTATUS disk_initialize(unsigned char drv){
-disk_initialize:
-        PUSH     {R7,LR}
-          CFI R14 Frame(CFA, -4)
-          CFI CFA R13+8
-//   82   
-//   83   switch(drv){
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
-        BEQ.N    ??disk_initialize_0
-        CMP      R0,#+1
-        BEQ.N    ??disk_initialize_1
-        B.N      ??disk_initialize_2
-//   84    case DRIVE_SD        : return (DSTATUS)SD_disk_initialize();               
-??disk_initialize_0:
-          CFI FunCall SD_disk_initialize
-        BL       SD_disk_initialize
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        B.N      ??disk_initialize_3
-//   85    case DRIVE_DATAFLASH : return (DSTATUS)DF_disk_initialize();
-??disk_initialize_1:
-          CFI FunCall DF_disk_initialize
-        BL       DF_disk_initialize
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        B.N      ??disk_initialize_3
-//   86   }
-//   87   
-//   88   return STA_NOINIT;  
-??disk_initialize_2:
-        MOVS     R0,#+1
-??disk_initialize_3:
-        POP      {R1,PC}          ;; return
-          CFI EndBlock cfiBlock0
-//   89 }
-//   90 /***********************************************************************************
-//   91 *     Descrição   :   Lê o status do disco passado no parametro
-//   92 *     Parametros  :   (unsigned char) número do drive
-//   93 *     Retorno     :   nenhum
-//   94 ***********************************************************************************/
-
-        SECTION `.text`:CODE:NOROOT(1)
-          CFI Block cfiBlock1 Using cfiCommon0
           CFI Function disk_status
         THUMB
-//   95 DSTATUS disk_status (unsigned char drv){
+//   53 DSTATUS disk_status(BYTE pdrv){
 disk_status:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//   96 
-//   97   switch(drv){
+//   54   DSTATUS stat;
+//   55   int result;
+//   56 
+//   57   switch (pdrv) {
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BEQ.N    ??disk_status_0
-        CMP      R0,#+1
+        CMP      R0,#+2
         BEQ.N    ??disk_status_1
-        B.N      ??disk_status_2
-//   98    case DRIVE_SD        : return (DSTATUS)SD_disk_status();               
-??disk_status_0:
-          CFI FunCall SD_disk_status
-        BL       SD_disk_status
+        BCC.N    ??disk_status_2
         B.N      ??disk_status_3
-//   99    case DRIVE_DATAFLASH : return (DSTATUS)DF_disk_status();
-??disk_status_1:
+//   58     case DEV_RAM :
+//   59          return DF_disk_status();
+??disk_status_0:
           CFI FunCall DF_disk_status
         BL       DF_disk_status
-        B.N      ??disk_status_3
-//  100   }  
-//  101   
-//  102   return STA_NOINIT;  
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_status_4
+//   60     case DEV_MMC :
+//   61 	 //result = MMC_disk_status();
+//   62          // translate the reslut code here
+//   63          return stat;
 ??disk_status_2:
-        MOVS     R0,#+1
+        MOVS     R0,R1
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_status_4
+//   64     case DEV_USB :
+//   65          //result = USB_disk_status();
+//   66          // translate the reslut code here
+//   67          return stat;
+??disk_status_1:
+        MOVS     R0,R1
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_status_4
+//   68    }
+//   69   
+//   70    return STA_NOINIT;
 ??disk_status_3:
+        MOVS     R0,#+1
+??disk_status_4:
+        POP      {R1,PC}          ;; return
+          CFI EndBlock cfiBlock0
+//   71 }
+//   72 /***********************************************************************************
+//   73 *       Descrição       :       Inicialização do disco
+//   74 *       Parametros      :       nenhum
+//   75 *       Retorno         :       nenhum
+//   76 ***********************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(1)
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function disk_initialize
+        THUMB
+//   77 DSTATUS disk_initialize(BYTE pdrv){
+disk_initialize:
+        PUSH     {R7,LR}
+          CFI R14 Frame(CFA, -4)
+          CFI CFA R13+8
+//   78   DSTATUS stat;
+//   79   int result;
+//   80 
+//   81   switch (pdrv) {
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+0
+        BEQ.N    ??disk_initialize_0
+        CMP      R0,#+2
+        BEQ.N    ??disk_initialize_1
+        BCC.N    ??disk_initialize_2
+        B.N      ??disk_initialize_3
+//   82     case DEV_RAM :
+//   83          //result = RAM_disk_initialize();
+//   84          // translate the reslut code here
+//   85          return DF_disk_initialize();
+??disk_initialize_0:
+          CFI FunCall DF_disk_initialize
+        BL       DF_disk_initialize
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_initialize_4
+//   86     case DEV_MMC :
+//   87          //result = MMC_disk_initialize();
+//   88          // translate the reslut code here
+//   89          return stat;
+??disk_initialize_2:
+        MOVS     R0,R1
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_initialize_4
+//   90     case DEV_USB :
+//   91          //result = USB_disk_initialize();
+//   92          // translate the reslut code here
+//   93          return stat;
+??disk_initialize_1:
+        MOVS     R0,R1
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_initialize_4
+//   94    }
+//   95   
+//   96    return STA_NOINIT;
+??disk_initialize_3:
+        MOVS     R0,#+1
+??disk_initialize_4:
         POP      {R1,PC}          ;; return
           CFI EndBlock cfiBlock1
-//  103 }
-//  104 /***********************************************************************************
-//  105 *     Descrição   :   Lê um setor de uma das unidades de disco
-//  106 *     Parametros  :   (unsigned char) drive
-//  107 *                     (unsigned char*) buffer
-//  108 *                     (unsigned long int) setor
-//  109 *                     (unsigned char) tamanho do bloco lido
-//  110 *     Retorno     :   (DRESULT)
-//  111 ***********************************************************************************/
+//   97 }
+//   98 /***********************************************************************************
+//   99 *       Descrição       :       Lê um bloco do disco
+//  100 *       Parametros      :       nenhum
+//  101 *       Retorno         :       nenhum
+//  102 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function disk_read
         THUMB
-//  112 DRESULT disk_read (unsigned char drv,unsigned char *buffer,
-//  113                    DWORD sector,unsigned char count){/* Physical drive number (0) */
+//  103 DRESULT disk_read(BYTE pdrv,BYTE *buff,DWORD sector,UINT count){
 disk_read:
-        PUSH     {R4,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
         MOVS     R4,R1
         MOVS     R1,R2
         MOVS     R2,R3
-//  114 
-//  115   switch(drv){
+//  104   DRESULT res;
+//  105   int result;
+//  106 
+//  107   switch (pdrv) {
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BEQ.N    ??disk_read_0
-        CMP      R0,#+1
+        CMP      R0,#+2
         BEQ.N    ??disk_read_1
-        B.N      ??disk_read_2
-//  116    case DRIVE_SD        : return (DRESULT)SD_disk_read(buffer,sector,count);
-??disk_read_0:
-        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
-        MOVS     R0,R4
-          CFI FunCall SD_disk_read
-        BL       SD_disk_read
+        BCC.N    ??disk_read_2
         B.N      ??disk_read_3
-//  117    case DRIVE_DATAFLASH : return (DRESULT)DF_disk_read(buffer,sector,count);
-??disk_read_1:
-        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+//  108     case DEV_RAM :
+//  109                   // translate the arguments here
+//  110 		  result = DF_disk_read(buff, sector, count);
+??disk_read_0:
         MOVS     R0,R4
           CFI FunCall DF_disk_read
         BL       DF_disk_read
-        B.N      ??disk_read_3
-//  118   }                     
-//  119   
-//  120   return RES_NOTRDY;  
+        MOVS     R1,R0
+//  111 		  // translate the reslut code here
+//  112 		  return res; 
+        MOVS     R0,R5
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_read_4
+//  113     case DEV_MMC :
+//  114 	  	  // translate the arguments here
+//  115 		  //result = MMC_disk_read(buff, sector, count);
+//  116 		  // translate the reslut code here
+//  117 		  return res; 
 ??disk_read_2:
-        MOVS     R0,#+3
+        MOVS     R0,R5
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_read_4
+//  118     case DEV_USB :
+//  119 	  	  // translate the arguments here
+//  120 	          //result = USB_disk_read(buff, sector, count);
+//  121 		  // translate the reslut code here
+//  122 		  return res;
+??disk_read_1:
+        MOVS     R0,R5
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_read_4
+//  123   }
+//  124 
+//  125   return RES_PARERR;
 ??disk_read_3:
-        POP      {R4,PC}          ;; return
+        MOVS     R0,#+4
+??disk_read_4:
+        POP      {R1,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock2
-//  121 }
-//  122 /***********************************************************************************
-//  123 *     Descrição   :   Escreve em um setor de um determinado disco
-//  124 *     Parametros  :   (unsigned char) drive
-//  125 *                     (unsigned char*) buffer
-//  126 *                     (unsigned int) número do setor
-//  127 *                     (unsigned char) tamanho do bloco escrito
-//  128 *     Retorno     :   (DRESULT)
-//  129 ***********************************************************************************/
+//  126 }
+//  127 /***********************************************************************************
+//  128 *       Descrição       :       Escreve um bloco no disco
+//  129 *       Parametros      :       nenhum
+//  130 *       Retorno         :       nenhum
+//  131 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock3 Using cfiCommon0
           CFI Function disk_write
         THUMB
-//  130 DRESULT disk_write(unsigned char drv,const unsigned char *buff,
-//  131                    DWORD sector,unsigned char byte){
+//  132 DRESULT disk_write(BYTE pdrv,const BYTE *buff,DWORD sector,UINT count){
 disk_write:
-        PUSH     {R4,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
         MOVS     R4,R1
         MOVS     R1,R2
         MOVS     R2,R3
-//  132 
-//  133   switch(drv){
+//  133   DRESULT res;
+//  134   int result;
+//  135   
+//  136   switch (pdrv) {
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BEQ.N    ??disk_write_0
-        CMP      R0,#+1
+        CMP      R0,#+2
         BEQ.N    ??disk_write_1
-        B.N      ??disk_write_2
-//  134    case DRIVE_SD        : return (DRESULT)SD_disk_write((unsigned char*)buff,sector,byte);              
-??disk_write_0:
-        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
-        MOVS     R0,R4
-          CFI FunCall SD_disk_write
-        BL       SD_disk_write
+        BCC.N    ??disk_write_2
         B.N      ??disk_write_3
-//  135    case DRIVE_DATAFLASH : return (DRESULT)DF_disk_write((unsigned char*)buff,sector,byte);              
-??disk_write_1:
-        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+//  137     case DEV_RAM :
+//  138 		// translate the arguments here
+//  139 		result = DF_disk_write(buff, sector, count);
+??disk_write_0:
         MOVS     R0,R4
           CFI FunCall DF_disk_write
         BL       DF_disk_write
-        B.N      ??disk_write_3
-//  136   }                     
-//  137   
-//  138   return RES_NOTRDY;
+        MOVS     R1,R0
+//  140 		// translate the reslut code here
+//  141 		return res;
+        MOVS     R0,R5
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_write_4
+//  142     case DEV_MMC :
+//  143 		// translate the arguments here
+//  144 		//result = MMC_disk_write(buff, sector, count);
+//  145 		// translate the reslut code here
+//  146 		return res;
 ??disk_write_2:
-        MOVS     R0,#+3
+        MOVS     R0,R5
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_write_4
+//  147     case DEV_USB :
+//  148 		// translate the arguments here
+//  149 		//result = USB_disk_write(buff, sector, count);
+//  150 		// translate the reslut code here
+//  151 		return res;
+??disk_write_1:
+        MOVS     R0,R5
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_write_4
+//  152   }
+//  153 
+//  154   return RES_PARERR;
 ??disk_write_3:
-        POP      {R4,PC}          ;; return
+        MOVS     R0,#+4
+??disk_write_4:
+        POP      {R1,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock3
-//  139 }
-//  140 /***********************************************************************************
-//  141 *   Descrição   :   Controle de funções específicas do disco
-//  142 *   Parametros  :   (unsigned char) drive
-//  143 *                   (unsigned char) comando
-//  144 *                   (void*) ponteiro para a estrutura de controle do 
-//  145 *                   comando que será executado
-//  146 *   Retorno     :   nenhum
-//  147 ***********************************************************************************/
+//  155 }
+//  156 /***********************************************************************************
+//  157 *       Descrição       :       Verifica o status do disco
+//  158 *       Parametros      :       nenhum
+//  159 *       Retorno         :       nenhum
+//  160 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function disk_ioctl
         THUMB
-//  148 DRESULT disk_ioctl(unsigned char drv,unsigned char ctrl,void *buff){
+//  161 DRESULT disk_ioctl(BYTE pdrv,BYTE cmd,void *buff){
 disk_ioctl:
-        PUSH     {R7,LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
-        MOVS     R3,R1
+        MOVS     R3,R0
+        MOVS     R4,R1
         MOVS     R1,R2
-//  149 
-//  150   switch(drv){
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+//  162   DRESULT res;
+//  163   int result;
+//  164 
+//  165   switch (pdrv) {
+        UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+        CMP      R3,#+0
         BEQ.N    ??disk_ioctl_0
-        CMP      R0,#+1
+        CMP      R3,#+2
         BEQ.N    ??disk_ioctl_1
-        B.N      ??disk_ioctl_2
-//  151    case DRIVE_SD        : return (DRESULT)SD_disk_ioctl(ctrl,buff);               
-??disk_ioctl_0:
-        MOVS     R0,R3
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-          CFI FunCall SD_disk_ioctl
-        BL       SD_disk_ioctl
+        BCC.N    ??disk_ioctl_2
         B.N      ??disk_ioctl_3
-//  152    case DRIVE_DATAFLASH : return (DRESULT)DF_disk_ioctl(ctrl,buff);  
-??disk_ioctl_1:
-        MOVS     R0,R3
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+//  166     case DEV_RAM :
+//  167 		// Process of the command for the RAM drive
+//  168                 res = DF_disk_ioctl(cmd,buff);
+??disk_ioctl_0:
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        MOVS     R0,R4
           CFI FunCall DF_disk_ioctl
         BL       DF_disk_ioctl
-        B.N      ??disk_ioctl_3
-//  153   }  
-//  154   
-//  155   return RES_NOTRDY;
+//  169 		return res;
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_ioctl_4
+//  170     case DEV_MMC :
+//  171 		// Process of the command for the MMC/SD card
+//  172 		return res; 
 ??disk_ioctl_2:
-        MOVS     R0,#+3
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_ioctl_4
+//  173     case DEV_USB :
+//  174 		// Process of the command the USB drive
+//  175 		return res;
+??disk_ioctl_1:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??disk_ioctl_4
+//  176   }
+//  177 
+//  178   return RES_PARERR;
 ??disk_ioctl_3:
-        POP      {R1,PC}          ;; return
+        MOVS     R0,#+4
+??disk_ioctl_4:
+        POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock4
-//  156 }
-//  157 /***********************************************************************************
-//  158 *   Descrição   :   Função para leitura do relógio
-//  159 *   Parametros  :   nenhum
-//  160 *   Retorno     :   nenhum
-//  161 ***********************************************************************************/
+//  179 }
+//  180 /***********************************************************************************
+//  181 *   Descrição   :   Função para leitura do relógio
+//  182 *   Parametros  :   nenhum
+//  183 *   Retorno     :   nenhum
+//  184 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function get_fattime
         THUMB
-//  162 DWORD get_fattime(void){
+//  185 DWORD get_fattime(void){
 get_fattime:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -420,12 +464,12 @@ get_fattime:
           CFI CFA R13+8
         SUB      SP,SP,#+24
           CFI CFA R13+32
-//  163   unsigned char hora,minuto,segundo,dia,mes;
-//  164   unsigned int ano;  
-//  165   DWORD relogio=0;
+//  186   unsigned char hora,minuto,segundo,dia,mes;
+//  187   unsigned int ano;  
+//  188   DWORD relogio=0;
         MOVS     R4,#+0
-//  166   
-//  167   RTC_getValue(&hora,&minuto,&segundo,&dia,&mes,&ano);
+//  189   
+//  190   RTC_getValue(&hora,&minuto,&segundo,&dia,&mes,&ano);
         ADD      R0,SP,#+16
         STR      R0,[SP, #+4]
         ADD      R0,SP,#+8
@@ -436,115 +480,115 @@ get_fattime:
         ADD      R0,SP,#+12
           CFI FunCall RTC_getValue
         BL       RTC_getValue
-//  168   
-//  169   if(ano>2000)
+//  191   
+//  192   if(ano>2000)
         LDR      R0,[SP, #+16]
         CMP      R0,#+2000
         BLS.N    ??get_fattime_0
-//  170     ano-=2000;
+//  193     ano-=2000;
         LDR      R0,[SP, #+16]
         SUBS     R0,R0,#+2000
         STR      R0,[SP, #+16]
         B.N      ??get_fattime_1
-//  171   else
-//  172     ano = 32;
+//  194   else
+//  195     ano = 32;
 ??get_fattime_0:
         MOVS     R0,#+32
         STR      R0,[SP, #+16]
-//  173   ano&= 0x7F;
+//  196   ano&= 0x7F;
 ??get_fattime_1:
         LDR      R0,[SP, #+16]
         ANDS     R0,R0,#0x7F
         STR      R0,[SP, #+16]
-//  174   relogio = ano;
+//  197   relogio = ano;
         LDR      R4,[SP, #+16]
-//  175 
-//  176   if(mes>12)
+//  198 
+//  199   if(mes>12)
         LDRB     R0,[SP, #+8]
         CMP      R0,#+13
         BLT.N    ??get_fattime_2
-//  177     mes = 12;
+//  200     mes = 12;
         MOVS     R0,#+12
         STRB     R0,[SP, #+8]
-//  178   mes &= 0x0F;
+//  201   mes &= 0x0F;
 ??get_fattime_2:
         LDRB     R0,[SP, #+8]
         ANDS     R0,R0,#0xF
         STRB     R0,[SP, #+8]
-//  179   relogio<<=4;
+//  202   relogio<<=4;
         LSLS     R4,R4,#+4
-//  180   relogio|= mes;
+//  203   relogio|= mes;
         LDRB     R0,[SP, #+8]
         ORRS     R4,R0,R4
-//  181   
-//  182   if(dia>31)
+//  204   
+//  205   if(dia>31)
         LDRB     R0,[SP, #+10]
         CMP      R0,#+32
         BLT.N    ??get_fattime_3
-//  183     dia =31;
+//  206     dia =31;
         MOVS     R0,#+31
         STRB     R0,[SP, #+10]
-//  184   relogio<<=5;
+//  207   relogio<<=5;
 ??get_fattime_3:
         LSLS     R4,R4,#+5
-//  185   relogio|=dia;
+//  208   relogio|=dia;
         LDRB     R0,[SP, #+10]
         ORRS     R4,R0,R4
-//  186   
-//  187   if(hora>23)
+//  209   
+//  210   if(hora>23)
         LDRB     R0,[SP, #+12]
         CMP      R0,#+24
         BLT.N    ??get_fattime_4
-//  188     hora=23;
+//  211     hora=23;
         MOVS     R0,#+23
         STRB     R0,[SP, #+12]
-//  189   relogio<<=5;
+//  212   relogio<<=5;
 ??get_fattime_4:
         LSLS     R4,R4,#+5
-//  190   relogio |= hora;
+//  213   relogio |= hora;
         LDRB     R0,[SP, #+12]
         ORRS     R4,R0,R4
-//  191   
-//  192   if(minuto>59)
+//  214   
+//  215   if(minuto>59)
         LDRB     R0,[SP, #+11]
         CMP      R0,#+60
         BLT.N    ??get_fattime_5
-//  193     minuto = 59;
+//  216     minuto = 59;
         MOVS     R0,#+59
         STRB     R0,[SP, #+11]
-//  194   relogio<<=5;
+//  217   relogio<<=5;
 ??get_fattime_5:
         LSLS     R4,R4,#+5
-//  195   relogio|=minuto;
+//  218   relogio|=minuto;
         LDRB     R0,[SP, #+11]
         ORRS     R4,R0,R4
-//  196   
-//  197   if(segundo>59)
+//  219   
+//  220   if(segundo>59)
         LDRB     R0,[SP, #+9]
         CMP      R0,#+60
         BLT.N    ??get_fattime_6
-//  198     segundo=59;
+//  221     segundo=59;
         MOVS     R0,#+59
         STRB     R0,[SP, #+9]
-//  199   segundo>>=1;
+//  222   segundo>>=1;
 ??get_fattime_6:
         LDRB     R0,[SP, #+9]
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LSRS     R0,R0,#+1
         STRB     R0,[SP, #+9]
-//  200   relogio<<=4;
+//  223   relogio<<=4;
         LSLS     R4,R4,#+4
-//  201   relogio|= segundo;
+//  224   relogio|= segundo;
         LDRB     R0,[SP, #+9]
         ORRS     R4,R0,R4
-//  202   
-//  203   return relogio; 
+//  225   
+//  226   return relogio; 
         MOVS     R0,R4
         ADD      SP,SP,#+24
           CFI CFA R13+8
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock5
-//  204 }
+//  227 }
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -552,13 +596,14 @@ get_fattime:
         DC32 0
 
         END
-//  205 /***********************************************************************************
-//  206 *		Fim do arquivo
-//  207 ***********************************************************************************/
+//  228 /***********************************************************************************
+//  229 *       Fim do arquivo
+//  230 ***********************************************************************************/
+//  231 
 // 
-// 398 bytes in section .text
+// 434 bytes in section .text
 // 
-// 398 bytes of CODE memory
+// 434 bytes of CODE memory
 //
 //Errors: none
-//Warnings: none
+//Warnings: 16

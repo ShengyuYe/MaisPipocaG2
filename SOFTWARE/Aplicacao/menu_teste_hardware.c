@@ -132,10 +132,7 @@ void MTH_teste_rtc(void){
       case TECLA_ESC:
            return;
       case TECLA_INC:
-           RTC_setValue(23,59,30,0,0,0);
-           break;
       case TECLA_DEC:
-           RTC_setValue(0,0,0,0,0,0);
            break;
     }
     

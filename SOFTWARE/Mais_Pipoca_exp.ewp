@@ -572,7 +572,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>MaisPipoca_G2_2_1_1.HEX</state>
+          <state>MaisPipoca_G2_2_1_3.HEX</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1924,21 +1924,51 @@
       <name>FILESYSTEM</name>
       <file>
         <name>$PROJ_DIR$\Drivers\FILESYSTEM\dataflash_diskio.c</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
       </file>
       <file>
         <name>$PROJ_DIR$\Drivers\FILESYSTEM\diskio.c</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
       </file>
       <file>
         <name>$PROJ_DIR$\Drivers\FILESYSTEM\ff.c</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\FILESYSTEM\ffsystem.c</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\FILESYSTEM\ffunicode.c</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
       </file>
       <file>
         <name>$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
       </file>
       <file>
         <name>$PROJ_DIR$\Drivers\SDCARD\SDCARD.C</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
       </file>
       <file>
         <name>$PROJ_DIR$\Drivers\SDCARD\SPI_WRAPPER_SD.C</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
       </file>
     </group>
     <group>
@@ -1990,6 +2020,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$\Drivers\Protocolo\Protocolo.c</name>
+      </file>
+    </group>
+    <group>
+      <name>RECORD_FILE_SYSTEM</name>
+      <file>
+        <name>$PROJ_DIR$\Drivers\RECORD_FILE_SYSTEM\record_file_system.c</name>
       </file>
     </group>
     <group>

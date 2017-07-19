@@ -55,7 +55,7 @@ void main(void){
   lowLevelInit();
   BOARD_ini();
   
-  xTaskCreate(APLICACAO_main ,"APLICACAO" ,768,NULL,1,NULL);
+  xTaskCreate(APLICACAO_main ,"APLICACAO" ,256,NULL,1,NULL);
   xTaskCreate(BOARD_main     ,"IU"        ,128 ,NULL,1,NULL);  
   xTaskCreate(PAGAMENTOS_main,"PAGAMENTOS",128 ,NULL,1,NULL);  
   xTaskCreate(BV20_main      ,"BV20"      ,128 ,NULL,1,NULL);  

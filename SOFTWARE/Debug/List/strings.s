@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     14/Jul/2017  11:54:14 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     17/Jul/2017  16:19:59 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -211,13 +211,13 @@
 // __absolute char const *STRING_splash[7][2]
 STRING_splash:
         DATA
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
-        DC32 `?<Constant "  HEY POP   ">`, `?<Constant "VER. 2.1.1">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.1">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.3">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.3">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.3">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.3">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.3">`
+        DC32 `?<Constant "  HEY POP   ">`, `?<Constant "VER. 2.1.3">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.1.3">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
 // __absolute char const *STRING_titulo_menu_configuracao[7]
@@ -1638,9 +1638,9 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "VER. 2.1.1">`:
+`?<Constant "VER. 2.1.3">`:
         DATA
-        DC8 "VER. 2.1.1"
+        DC8 "VER. 2.1.3"
         DC8 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
