@@ -51,13 +51,13 @@
 //
 
 const char *STRING_splash[QTY_OF_LANGUAGES][2]={
-  [BRASIL]    = {"GRUPO ALTECH","VER. 2.0.17"},
-  [URUGUAI]   = {"GRUPO ALTECH","VER. 2.0.17"},
-  [ARGENTINA] = {"GRUPO ALTECH","VER. 2.0.17"},
-  [PARAGUAI]  = {"GRUPO ALTECH","VER. 2.0.17"},
-  [PERU]      = {"GRUPO ALTECH","VER. 2.0.17"},
-  [EUA]       = {"POPCORN KING","VER. 1.0.17"},
-  [CANADA]    = {"GRUPO ALTECH","VER. 2.0.17"}
+  [BRASIL]    = {"GRUPO ALTECH","VER. 2.0.18"},
+  [URUGUAI]   = {"GRUPO ALTECH","VER. 2.0.18"},
+  [ARGENTINA] = {"GRUPO ALTECH","VER. 2.0.18"},
+  [PARAGUAI]  = {"GRUPO ALTECH","VER. 2.0.18"},
+  [PERU]      = {"GRUPO ALTECH","VER. 2.0.18"},
+  [EUA]       = {"POPCORN KING","VER. 1.0.18"},
+  [CANADA]    = {"GRUPO ALTECH","VER. 2.0.18"}
 };
 
 const char *STRING_titulo_menu_configuracao[QTY_OF_LANGUAGES]={
@@ -1480,6 +1480,16 @@ const char *STRING_mensagem_moedeiro_mdb_offline[QTY_OF_LANGUAGES][2]={
   [CANADA]   = {"COIN MDB OFFLINE","E20"},
 };
 
+const char *STRING_mensagem_cartao_mdb_offline[QTY_OF_LANGUAGES][2]={
+  [BRASIL]   = {"CASHLESS MDB OFF","E20"},
+  [URUGUAI]  = {"CASHLESS MDB OFF","E20"},
+  [ARGENTINA]= {"CASHLESS MDB OFF","E20"},
+  [PARAGUAI] = {"CASHLESS MDB OFF","E20"},
+  [PERU]     = {"CASHLESS MDB OFF","E20"},
+  [EUA]      = {"CASHLESS MDB OFF","E20"},
+  [CANADA]   = {"CASHLESS MDB OFF","E20"},
+};
+
 const char *STRING_mensagem_cctalk_offline[QTY_OF_LANGUAGES][2]={
   [BRASIL]   = {"CCTALK OFFLINE","E21"},
   [URUGUAI]  = {"CCTALK OFFLINE","E21"},
@@ -1811,6 +1821,7 @@ extern const char *STRING_mensagem_reinicia_totalizadores_erro[QTY_OF_LANGUAGES]
 extern const char *STRING_titulo_edita_serial[QTY_OF_LANGUAGES];
 extern const char *STRING_titulo_edita_comissao[QTY_OF_LANGUAGES];
 extern const char *STRING_titulo_edita_flag_desumidifcador[QTY_OF_LANGUAGES];
+extern const char *STRING_mensagem_cartao_mdb_offline[QTY_OF_LANGUAGES][2];
 
 #endif
 

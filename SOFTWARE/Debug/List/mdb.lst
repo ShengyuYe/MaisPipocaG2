@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  15:52:30 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  16:38:54 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -779,62 +779,84 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\M
     316          eMDB_RESULTADO_SCAN MDB_checa_dispositivos(void){
    \                     MDB_checa_dispositivos:
    \   00000000   0xB580             PUSH     {R7,LR}
-    317            unsigned char flag_coin,flag_bill;
+    317            unsigned char flag_coin,flag_bill,flag_cashless;
     318            
     319            PARAMETROS_le(ADR_FLAG_MDB_BIL,(void*)&flag_bill);
-   \   00000002   0xA900             ADD      R1,SP,#+0
-   \   00000004   0x2004             MOVS     R0,#+4
-   \   00000006   0x.... 0x....      BL       PARAMETROS_le
+   \   00000002   0xF10D 0x0101      ADD      R1,SP,#+1
+   \   00000006   0x2004             MOVS     R0,#+4
+   \   00000008   0x.... 0x....      BL       PARAMETROS_le
     320            PARAMETROS_le(ADR_FLAG_MDB_COIN,(void*)&flag_coin);
-   \   0000000A   0xF10D 0x0101      ADD      R1,SP,#+1
-   \   0000000E   0x2005             MOVS     R0,#+5
-   \   00000010   0x.... 0x....      BL       PARAMETROS_le
-    321            
-    322            SMDB_wait();
-   \   00000014   0x.... 0x....      BL       SMDB_wait
-    323            
-    324            if(flag_bill && !SMDBILL_get_net_status()){
+   \   0000000C   0xF10D 0x0102      ADD      R1,SP,#+2
+   \   00000010   0x2005             MOVS     R0,#+5
+   \   00000012   0x.... 0x....      BL       PARAMETROS_le
+    321            PARAMETROS_le(ADR_FLAG_MDB_CASHLESS,(void*)&flag_cashless);
+   \   00000016   0xA900             ADD      R1,SP,#+0
+   \   00000018   0x2006             MOVS     R0,#+6
+   \   0000001A   0x.... 0x....      BL       PARAMETROS_le
+    322            
+    323            SMDB_wait();
+   \   0000001E   0x.... 0x....      BL       SMDB_wait
+    324            
+    325            if(flag_bill && !SMDBILL_get_net_status()){
                                     ^
 Warning[Pe223]: function "SMDBILL_get_net_status" declared implicitly
-   \   00000018   0xF89D 0x0000      LDRB     R0,[SP, #+0]
-   \   0000001C   0x2800             CMP      R0,#+0
-   \   0000001E   0xD007             BEQ.N    ??MDB_checa_dispositivos_0
-   \   00000020   0x.... 0x....      BL       SMDBILL_get_net_status
-   \   00000024   0x2800             CMP      R0,#+0
-   \   00000026   0xD103             BNE.N    ??MDB_checa_dispositivos_0
-    325              SMDB_release(); 
-   \   00000028   0x.... 0x....      BL       SMDB_release
-    326              return MDB_BILL_OFFLINE;
-   \   0000002C   0x2001             MOVS     R0,#+1
-   \   0000002E   0xE00E             B.N      ??MDB_checa_dispositivos_1
-    327            }
-    328            
-    329            if(flag_coin && !SMDBCOIN_verifica_net_status()){
+   \   00000022   0xF89D 0x0001      LDRB     R0,[SP, #+1]
+   \   00000026   0x2800             CMP      R0,#+0
+   \   00000028   0xD007             BEQ.N    ??MDB_checa_dispositivos_0
+   \   0000002A   0x.... 0x....      BL       SMDBILL_get_net_status
+   \   0000002E   0x2800             CMP      R0,#+0
+   \   00000030   0xD103             BNE.N    ??MDB_checa_dispositivos_0
+    326              SMDB_release(); 
+   \   00000032   0x.... 0x....      BL       SMDB_release
+    327              return MDB_BILL_OFFLINE;
+   \   00000036   0x2001             MOVS     R0,#+1
+   \   00000038   0xE01A             B.N      ??MDB_checa_dispositivos_1
+    328            }
+    329            
+    330            if(flag_coin && !SMDBCOIN_verifica_net_status()){
                                     ^
 Warning[Pe223]: function "SMDBCOIN_verifica_net_status" declared implicitly
    \                     ??MDB_checa_dispositivos_0:
-   \   00000030   0xF89D 0x0001      LDRB     R0,[SP, #+1]
-   \   00000034   0x2800             CMP      R0,#+0
-   \   00000036   0xD007             BEQ.N    ??MDB_checa_dispositivos_2
-   \   00000038   0x.... 0x....      BL       SMDBCOIN_verifica_net_status
-   \   0000003C   0x2800             CMP      R0,#+0
-   \   0000003E   0xD103             BNE.N    ??MDB_checa_dispositivos_2
-    330              SMDB_release(); 
-   \   00000040   0x.... 0x....      BL       SMDB_release
-    331              return MDB_COIN_OFFLINE;
-   \   00000044   0x2002             MOVS     R0,#+2
-   \   00000046   0xE002             B.N      ??MDB_checa_dispositivos_1
-    332            }
-    333           
-    334            SMDB_release(); 
+   \   0000003A   0xF89D 0x0002      LDRB     R0,[SP, #+2]
+   \   0000003E   0x2800             CMP      R0,#+0
+   \   00000040   0xD007             BEQ.N    ??MDB_checa_dispositivos_2
+   \   00000042   0x.... 0x....      BL       SMDBCOIN_verifica_net_status
+   \   00000046   0x2800             CMP      R0,#+0
+   \   00000048   0xD103             BNE.N    ??MDB_checa_dispositivos_2
+    331              SMDB_release(); 
+   \   0000004A   0x.... 0x....      BL       SMDB_release
+    332              return MDB_COIN_OFFLINE;
+   \   0000004E   0x2002             MOVS     R0,#+2
+   \   00000050   0xE00E             B.N      ??MDB_checa_dispositivos_1
+    333            }
+    334            
+    335            if(flag_cashless && !SMC_get_cashless_online()){
+                                        ^
+Warning[Pe223]: function "SMC_get_cashless_online" declared implicitly
    \                     ??MDB_checa_dispositivos_2:
-   \   00000048   0x.... 0x....      BL       SMDB_release
-    335            
-    336            return MDB_TODOS_ONLINE;
-   \   0000004C   0x2000             MOVS     R0,#+0
+   \   00000052   0xF89D 0x0000      LDRB     R0,[SP, #+0]
+   \   00000056   0x2800             CMP      R0,#+0
+   \   00000058   0xD007             BEQ.N    ??MDB_checa_dispositivos_3
+   \   0000005A   0x.... 0x....      BL       SMC_get_cashless_online
+   \   0000005E   0x2800             CMP      R0,#+0
+   \   00000060   0xD103             BNE.N    ??MDB_checa_dispositivos_3
+    336              SMDB_release(); 
+   \   00000062   0x.... 0x....      BL       SMDB_release
+    337              return MDB_CASHLESS_OFFLINE;
+   \   00000066   0x2003             MOVS     R0,#+3
+   \   00000068   0xE002             B.N      ??MDB_checa_dispositivos_1
+    338            }
+    339            
+    340           
+    341            SMDB_release(); 
+   \                     ??MDB_checa_dispositivos_3:
+   \   0000006A   0x.... 0x....      BL       SMDB_release
+    342            
+    343            return MDB_TODOS_ONLINE;
+   \   0000006E   0x2000             MOVS     R0,#+0
    \                     ??MDB_checa_dispositivos_1:
-   \   0000004E   0xBD02             POP      {R1,PC}          ;; return
-    337          }
+   \   00000070   0xBD02             POP      {R1,PC}          ;; return
+    344          }
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable3:
@@ -887,9 +909,9 @@ Warning[Pe223]: function "SMDBCOIN_verifica_net_status" declared implicitly
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable3_12:
    \   00000000   0x........         DC32     MDB_buffer_stream
-    338          /***********************************************************************************
-    339          *       Fim do arquivo
-    340          ***********************************************************************************/
+    345          /***********************************************************************************
+    346          *       Fim do arquivo
+    347          ***********************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -897,6 +919,7 @@ Warning[Pe223]: function "SMDBCOIN_verifica_net_status" declared implicitly
    ------- --------
        8   MDB_checa_dispositivos
          8   -> PARAMETROS_le
+         8   -> SMC_get_cashless_online
          8   -> SMDBCOIN_verifica_net_status
          8   -> SMDBILL_get_net_status
          8   -> SMDB_release
@@ -964,7 +987,7 @@ Warning[Pe223]: function "SMDBCOIN_verifica_net_status" declared implicitly
        4  ??DataTable3_8
        4  ??DataTable3_9
       36  MDB_buffer_stream
-      80  MDB_checa_dispositivos
+     114  MDB_checa_dispositivos
       32  MDB_chk_generate
       80  MDB_coin_check_tubes
       50  MDB_coin_dispenser
@@ -989,10 +1012,10 @@ Warning[Pe223]: function "SMDBCOIN_verifica_net_status" declared implicitly
 
  
   81 bytes in section .bss
- 946 bytes in section .text
+ 980 bytes in section .text
  
- 932 bytes of CODE memory (+ 14 bytes shared)
+ 966 bytes of CODE memory (+ 14 bytes shared)
   81 bytes of DATA memory
 
 Errors: none
-Warnings: 2
+Warnings: 3

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  15:52:30 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  16:38:54 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -50,6 +50,7 @@
         EXTERN MDBUART_ini
         EXTERN MDBUART_le_pacote
         EXTERN PARAMETROS_le
+        EXTERN SMC_get_cashless_online
         EXTERN SMDBCOIN_verifica_net_status
         EXTERN SMDBILL_get_net_status
         EXTERN SMDB_release
@@ -1064,67 +1065,90 @@ MDB_checa_dispositivos:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  317   unsigned char flag_coin,flag_bill;
+//  317   unsigned char flag_coin,flag_bill,flag_cashless;
 //  318   
 //  319   PARAMETROS_le(ADR_FLAG_MDB_BIL,(void*)&flag_bill);
-        ADD      R1,SP,#+0
+        ADD      R1,SP,#+1
         MOVS     R0,#+4
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  320   PARAMETROS_le(ADR_FLAG_MDB_COIN,(void*)&flag_coin);
-        ADD      R1,SP,#+1
+        ADD      R1,SP,#+2
         MOVS     R0,#+5
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  321   
-//  322   SMDB_wait();
+//  321   PARAMETROS_le(ADR_FLAG_MDB_CASHLESS,(void*)&flag_cashless);
+        ADD      R1,SP,#+0
+        MOVS     R0,#+6
+          CFI FunCall PARAMETROS_le
+        BL       PARAMETROS_le
+//  322   
+//  323   SMDB_wait();
           CFI FunCall SMDB_wait
         BL       SMDB_wait
-//  323   
-//  324   if(flag_bill && !SMDBILL_get_net_status()){
-        LDRB     R0,[SP, #+0]
+//  324   
+//  325   if(flag_bill && !SMDBILL_get_net_status()){
+        LDRB     R0,[SP, #+1]
         CMP      R0,#+0
         BEQ.N    ??MDB_checa_dispositivos_0
           CFI FunCall SMDBILL_get_net_status
         BL       SMDBILL_get_net_status
         CMP      R0,#+0
         BNE.N    ??MDB_checa_dispositivos_0
-//  325     SMDB_release(); 
+//  326     SMDB_release(); 
           CFI FunCall SMDB_release
         BL       SMDB_release
-//  326     return MDB_BILL_OFFLINE;
+//  327     return MDB_BILL_OFFLINE;
         MOVS     R0,#+1
         B.N      ??MDB_checa_dispositivos_1
-//  327   }
-//  328   
-//  329   if(flag_coin && !SMDBCOIN_verifica_net_status()){
+//  328   }
+//  329   
+//  330   if(flag_coin && !SMDBCOIN_verifica_net_status()){
 ??MDB_checa_dispositivos_0:
-        LDRB     R0,[SP, #+1]
+        LDRB     R0,[SP, #+2]
         CMP      R0,#+0
         BEQ.N    ??MDB_checa_dispositivos_2
           CFI FunCall SMDBCOIN_verifica_net_status
         BL       SMDBCOIN_verifica_net_status
         CMP      R0,#+0
         BNE.N    ??MDB_checa_dispositivos_2
-//  330     SMDB_release(); 
+//  331     SMDB_release(); 
           CFI FunCall SMDB_release
         BL       SMDB_release
-//  331     return MDB_COIN_OFFLINE;
+//  332     return MDB_COIN_OFFLINE;
         MOVS     R0,#+2
         B.N      ??MDB_checa_dispositivos_1
-//  332   }
-//  333  
-//  334   SMDB_release(); 
+//  333   }
+//  334   
+//  335   if(flag_cashless && !SMC_get_cashless_online()){
 ??MDB_checa_dispositivos_2:
+        LDRB     R0,[SP, #+0]
+        CMP      R0,#+0
+        BEQ.N    ??MDB_checa_dispositivos_3
+          CFI FunCall SMC_get_cashless_online
+        BL       SMC_get_cashless_online
+        CMP      R0,#+0
+        BNE.N    ??MDB_checa_dispositivos_3
+//  336     SMDB_release(); 
           CFI FunCall SMDB_release
         BL       SMDB_release
-//  335   
-//  336   return MDB_TODOS_ONLINE;
+//  337     return MDB_CASHLESS_OFFLINE;
+        MOVS     R0,#+3
+        B.N      ??MDB_checa_dispositivos_1
+//  338   }
+//  339   
+//  340  
+//  341   SMDB_release(); 
+??MDB_checa_dispositivos_3:
+          CFI FunCall SMDB_release
+        BL       SMDB_release
+//  342   
+//  343   return MDB_TODOS_ONLINE;
         MOVS     R0,#+0
 ??MDB_checa_dispositivos_1:
         POP      {R1,PC}          ;; return
           CFI EndBlock cfiBlock9
-//  337 }
+//  344 }
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1138,15 +1162,15 @@ MDB_checa_dispositivos:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  338 /***********************************************************************************
-//  339 *       Fim do arquivo
-//  340 ***********************************************************************************/
+//  345 /***********************************************************************************
+//  346 *       Fim do arquivo
+//  347 ***********************************************************************************/
 // 
 //  81 bytes in section .bss
-// 946 bytes in section .text
+// 980 bytes in section .text
 // 
-// 932 bytes of CODE memory (+ 14 bytes shared)
+// 966 bytes of CODE memory (+ 14 bytes shared)
 //  81 bytes of DATA memory
 //
 //Errors: none
-//Warnings: 2
+//Warnings: 3

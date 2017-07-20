@@ -298,5 +298,18 @@ void SMC_setter_bloqueio(unsigned char flag){
   SMC_flag_bloqueio = flag;
 }
 /***********************************************************************************
+*       Descrição       :       Verifica se o dispositivo cashless está
+*       Parametros      :       (nenhum)
+*       Retorno         :       (unsigned char) maior do que zero
+*                                               se o cashless estiver online
+***********************************************************************************/
+unsigned char SMC_get_cashless_online(void){
+  
+  if(SMC_estado_atual!=CASHLESS_STATE_OFFLINE)
+    return 1;
+  
+  return 0;
+}
+/***********************************************************************************
 *       Fim do arquivo
 ***********************************************************************************/

@@ -82,7 +82,7 @@ void SMDB_tick(void){
   vTaskDelay(5);  
   SMDBILL_tick(); // dentro do módulo ele verifica o bloqueio e habilitação do periférico
   SMDBCOIN_tick(); // 
-  //SMC_tick(); // Dentro do módulo ele verifica o bloqueio e habilitação do cartão
+  SMC_tick();
    
   xSemaphoreGive(SMDB_semaforo_barramento); 
 }

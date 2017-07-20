@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  15:52:10 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  16:44:38 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -50,6 +50,7 @@
         PUBLIC STRING_impressao_teste
         PUBLIC STRING_mensagem_cadastro_senha
         PUBLIC STRING_mensagem_cadastro_senha_erro
+        PUBLIC STRING_mensagem_cartao_mdb_offline
         PUBLIC STRING_mensagem_cctalk_offline
         PUBLIC STRING_mensagem_configura_fita_led
         PUBLIC STRING_mensagem_configura_free
@@ -211,13 +212,13 @@
 // __absolute char const *STRING_splash[7][2]
 STRING_splash:
         DATA
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.17">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.17">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.17">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.17">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.17">`
-        DC32 `?<Constant "POPCORN KING">`, `?<Constant "VER. 1.0.17">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.17">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
+        DC32 `?<Constant "POPCORN KING">`, `?<Constant "VER. 1.0.18">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
 // __absolute char const *STRING_titulo_menu_configuracao[7]
@@ -1230,6 +1231,18 @@ STRING_mensagem_moedeiro_mdb_offline:
         DC32 `?<Constant "COIN MDB OFFLINE">`, `?<Constant "E20">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
+// __absolute char const *STRING_mensagem_cartao_mdb_offline[7][2]
+STRING_mensagem_cartao_mdb_offline:
+        DATA
+        DC32 `?<Constant "CASHLESS MDB OFF">`, `?<Constant "E20">`
+        DC32 `?<Constant "CASHLESS MDB OFF">`, `?<Constant "E20">`
+        DC32 `?<Constant "CASHLESS MDB OFF">`, `?<Constant "E20">`
+        DC32 `?<Constant "CASHLESS MDB OFF">`, `?<Constant "E20">`
+        DC32 `?<Constant "CASHLESS MDB OFF">`, `?<Constant "E20">`
+        DC32 `?<Constant "CASHLESS MDB OFF">`, `?<Constant "E20">`
+        DC32 `?<Constant "CASHLESS MDB OFF">`, `?<Constant "E20">`
+
+        SECTION `.data`:DATA:REORDER:NOROOT(2)
 // __absolute char const *STRING_mensagem_cctalk_offline[7][2]
 STRING_mensagem_cctalk_offline:
         DATA
@@ -1645,9 +1658,9 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "VER. 2.0.17">`:
+`?<Constant "VER. 2.0.18">`:
         DATA
-        DC8 "VER. 2.0.17"
+        DC8 "VER. 2.0.18"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "POPCORN KING">`:
@@ -1656,9 +1669,9 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "VER. 1.0.17">`:
+`?<Constant "VER. 1.0.18">`:
         DATA
-        DC8 "VER. 1.0.17"
+        DC8 "VER. 1.0.18"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "CONFIGURACOES">`:
@@ -3451,6 +3464,12 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "CASHLESS MDB OFF">`:
+        DATA
+        DC8 "CASHLESS MDB OFF"
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "CCTALK OFFLINE">`:
         DATA
         DC8 "CCTALK OFFLINE"
@@ -3727,13 +3746,13 @@ STRING_write_to_external:
 //  117 *       Fim do arquivo
 //  118 ***********************************************************************************/
 // 
-// 5 628 bytes in section .data
-// 5 610 bytes in section .rodata
+// 5 684 bytes in section .data
+// 5 630 bytes in section .rodata
 //   200 bytes in section .text
 // 
 //   200 bytes of CODE  memory
-// 5 610 bytes of CONST memory
-// 5 628 bytes of DATA  memory
+// 5 630 bytes of CONST memory
+// 5 684 bytes of DATA  memory
 //
 //Errors: none
 //Warnings: none

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  15:51:51 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  16:44:21 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -58,6 +58,7 @@
         PUBLIC SMC_dispositivo_bloqueado
         PUBLIC SMC_estado_atual
         PUBLIC SMC_flag_bloqueio
+        PUBLIC SMC_get_cashless_online
         PUBLIC SMC_ini
         PUBLIC SMC_inicia_transacao
         PUBLIC SMC_offline_state
@@ -254,13 +255,13 @@ SMC_tick:
           CFI CFA R13+8
 //  108 
 //  109   SMC_estado_atual = MDBCASHLESS_funcs[SMC_estado_atual]();        
-        LDR.N    R0,??DataTable5
+        LDR.N    R0,??DataTable6
         LDRB     R0,[R0, #+0]
-        LDR.N    R1,??DataTable5_1
+        LDR.N    R1,??DataTable6_1
         LDR      R0,[R1, R0, LSL #+2]
           CFI FunCall
         BLX      R0
-        LDR.N    R1,??DataTable5
+        LDR.N    R1,??DataTable6
         STRB     R0,[R1, #+0]
 //  110 }
         POP      {R0,PC}          ;; return
@@ -288,7 +289,7 @@ SMC_desabilitado:
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  120   if(SMC_flag_bloqueio)
-        LDR.N    R0,??DataTable5_2
+        LDR.N    R0,??DataTable6_2
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??SMC_desabilitado_0
@@ -392,7 +393,7 @@ SMC_setup:
           CFI FunCall vTaskDelay
         BL       vTaskDelay
 //  151         SMC_time_out=TEMPO_BUSCA_OFFLINE;     
-        LDR.N    R0,??DataTable5_3
+        LDR.N    R0,??DataTable6_3
         MOVW     R1,#+30000
         STRH     R1,[R0, #+0]
 //  152         return CASHLESS_STATE_POLL;           
@@ -404,7 +405,7 @@ SMC_setup:
 //  156   else
 //  157     if(!SMC_time_out)
 ??SMC_setup_0:
-        LDR.N    R0,??DataTable5_3
+        LDR.N    R0,??DataTable6_3
         LDRH     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??SMC_setup_1
@@ -583,7 +584,7 @@ SMC_poll_interface:
 //  222     
 //  223     SMC_time_out=TEMPO_BUSCA_OFFLINE;    
 ??SMC_poll_interface_2:
-        LDR.N    R0,??DataTable5_3
+        LDR.N    R0,??DataTable6_3
         MOVW     R1,#+30000
         STRH     R1,[R0, #+0]
 //  224   }
@@ -613,7 +614,7 @@ SMC_dispositivo_bloqueado:
           CFI CFA R13+8
 //  234 
 //  235   if(!SMC_flag_bloqueio)
-        LDR.N    R0,??DataTable5_2
+        LDR.N    R0,??DataTable6_2
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??SMC_dispositivo_bloqueado_0
@@ -629,7 +630,7 @@ SMC_dispositivo_bloqueado:
         CMP      R0,#+0
         BNE.N    ??SMC_dispositivo_bloqueado_2
 //  239     SMC_time_out=TEMPO_BUSCA_OFFLINE;     
-        LDR.N    R0,??DataTable5_3
+        LDR.N    R0,??DataTable6_3
         MOVW     R1,#+30000
         STRH     R1,[R0, #+0]
 //  240     return CASHLESS_STATE_LOCKED;  
@@ -639,7 +640,7 @@ SMC_dispositivo_bloqueado:
 //  242   else
 //  243     if(!SMC_time_out)
 ??SMC_dispositivo_bloqueado_2:
-        LDR.N    R0,??DataTable5_3
+        LDR.N    R0,??DataTable6_3
         LDRH     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??SMC_dispositivo_bloqueado_3
@@ -752,34 +753,65 @@ SMC_transacao_completada:
 //  297   
 //  298   SMC_flag_bloqueio = flag;
 SMC_setter_bloqueio:
-        LDR.N    R1,??DataTable5_2
+        LDR.N    R1,??DataTable6_2
         STRB     R0,[R1, #+0]
 //  299 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock11
+//  300 /***********************************************************************************
+//  301 *       Descrição       :       Verifica se o dispositivo cashless está
+//  302 *       Parametros      :       (nenhum)
+//  303 *       Retorno         :       (unsigned char) maior do que zero
+//  304 *                                               se o cashless estiver online
+//  305 ***********************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(1)
+          CFI Block cfiBlock12 Using cfiCommon0
+          CFI Function SMC_get_cashless_online
+          CFI NoCalls
+        THUMB
+//  306 unsigned char SMC_get_cashless_online(void){
+//  307   
+//  308   if(SMC_estado_atual!=CASHLESS_STATE_OFFLINE)
+SMC_get_cashless_online:
+        LDR.N    R0,??DataTable6
+        LDRB     R0,[R0, #+0]
+        CMP      R0,#+2
+        BEQ.N    ??SMC_get_cashless_online_0
+//  309     return 1;
+        MOVS     R0,#+1
+        B.N      ??SMC_get_cashless_online_1
+//  310   
+//  311   return 0;
+??SMC_get_cashless_online_0:
+        MOVS     R0,#+0
+??SMC_get_cashless_online_1:
+        BX       LR               ;; return
+          CFI EndBlock cfiBlock12
+//  312 }
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5:
+??DataTable6:
         DC32     SMC_estado_atual
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_1:
+??DataTable6_1:
         DC32     MDBCASHLESS_funcs
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_2:
+??DataTable6_2:
         DC32     SMC_flag_bloqueio
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_3:
+??DataTable6_3:
         DC32     SMC_time_out
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
@@ -794,16 +826,16 @@ SMC_setter_bloqueio:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  300 /***********************************************************************************
-//  301 *       Fim do arquivo
-//  302 ***********************************************************************************/
+//  313 /***********************************************************************************
+//  314 *       Fim do arquivo
+//  315 ***********************************************************************************/
 // 
 //   6 bytes in section .bss
 //   3 bytes in section .data
 //  36 bytes in section .rodata
-// 444 bytes in section .text
+// 460 bytes in section .text
 // 
-// 444 bytes of CODE  memory
+// 460 bytes of CODE  memory
 //  36 bytes of CONST memory
 //   9 bytes of DATA  memory
 //

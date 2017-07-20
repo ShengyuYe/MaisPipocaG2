@@ -314,10 +314,11 @@ unsigned char MDB_coin_check_tubes(unsigned char* tubes){
 *       Retorno         :       nenhum
 ***********************************************************************************/
 eMDB_RESULTADO_SCAN MDB_checa_dispositivos(void){
-  unsigned char flag_coin,flag_bill;
+  unsigned char flag_coin,flag_bill,flag_cashless;
   
   PARAMETROS_le(ADR_FLAG_MDB_BIL,(void*)&flag_bill);
   PARAMETROS_le(ADR_FLAG_MDB_COIN,(void*)&flag_coin);
+  PARAMETROS_le(ADR_FLAG_MDB_CASHLESS,(void*)&flag_cashless);
   
   SMDB_wait();
   
@@ -330,6 +331,12 @@ eMDB_RESULTADO_SCAN MDB_checa_dispositivos(void){
     SMDB_release(); 
     return MDB_COIN_OFFLINE;
   }
+  
+  if(flag_cashless && !SMC_get_cashless_online()){
+    SMDB_release(); 
+    return MDB_CASHLESS_OFFLINE;
+  }
+  
  
   SMDB_release(); 
   

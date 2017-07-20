@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  15:51:51 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  16:44:21 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -179,12 +179,12 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
    \   00000000   0xB580             PUSH     {R7,LR}
     108          
     109            SMC_estado_atual = MDBCASHLESS_funcs[SMC_estado_atual]();        
-   \   00000002   0x....             LDR.N    R0,??DataTable5
+   \   00000002   0x....             LDR.N    R0,??DataTable6
    \   00000004   0x7800             LDRB     R0,[R0, #+0]
-   \   00000006   0x....             LDR.N    R1,??DataTable5_1
+   \   00000006   0x....             LDR.N    R1,??DataTable6_1
    \   00000008   0xF851 0x0020      LDR      R0,[R1, R0, LSL #+2]
    \   0000000C   0x4780             BLX      R0
-   \   0000000E   0x....             LDR.N    R1,??DataTable5
+   \   0000000E   0x....             LDR.N    R1,??DataTable6
    \   00000010   0x7008             STRB     R0,[R1, #+0]
     110          }
    \   00000012   0xBD01             POP      {R0,PC}          ;; return
@@ -205,7 +205,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
    \   00000004   0x2006             MOVS     R0,#+6
    \   00000006   0x.... 0x....      BL       PARAMETROS_le
     120            if(SMC_flag_bloqueio)
-   \   0000000A   0x....             LDR.N    R0,??DataTable5_2
+   \   0000000A   0x....             LDR.N    R0,??DataTable6_2
    \   0000000C   0x7800             LDRB     R0,[R0, #+0]
    \   0000000E   0x2800             CMP      R0,#+0
    \   00000010   0xD001             BEQ.N    ??SMC_desabilitado_0
@@ -294,7 +294,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
    \   00000060   0x2032             MOVS     R0,#+50
    \   00000062   0x.... 0x....      BL       vTaskDelay
     151                  SMC_time_out=TEMPO_BUSCA_OFFLINE;     
-   \   00000066   0x....             LDR.N    R0,??DataTable5_3
+   \   00000066   0x....             LDR.N    R0,??DataTable6_3
    \   00000068   0xF247 0x5130      MOVW     R1,#+30000
    \   0000006C   0x8001             STRH     R1,[R0, #+0]
     152                  return CASHLESS_STATE_POLL;           
@@ -306,7 +306,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
     156            else
     157              if(!SMC_time_out)
    \                     ??SMC_setup_0:
-   \   00000072   0x....             LDR.N    R0,??DataTable5_3
+   \   00000072   0x....             LDR.N    R0,??DataTable6_3
    \   00000074   0x8800             LDRH     R0,[R0, #+0]
    \   00000076   0x2800             CMP      R0,#+0
    \   00000078   0xD101             BNE.N    ??SMC_setup_1
@@ -459,7 +459,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
     222              
     223              SMC_time_out=TEMPO_BUSCA_OFFLINE;    
    \                     ??SMC_poll_interface_2:
-   \   00000082   0x....             LDR.N    R0,??DataTable5_3
+   \   00000082   0x....             LDR.N    R0,??DataTable6_3
    \   00000084   0xF247 0x5130      MOVW     R1,#+30000
    \   00000088   0x8001             STRH     R1,[R0, #+0]
     224            }
@@ -482,7 +482,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
    \   00000000   0xB580             PUSH     {R7,LR}
     234          
     235            if(!SMC_flag_bloqueio)
-   \   00000002   0x....             LDR.N    R0,??DataTable5_2
+   \   00000002   0x....             LDR.N    R0,??DataTable6_2
    \   00000004   0x7800             LDRB     R0,[R0, #+0]
    \   00000006   0x2800             CMP      R0,#+0
    \   00000008   0xD101             BNE.N    ??SMC_dispositivo_bloqueado_0
@@ -497,7 +497,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
    \   00000014   0x2800             CMP      R0,#+0
    \   00000016   0xD105             BNE.N    ??SMC_dispositivo_bloqueado_2
     239              SMC_time_out=TEMPO_BUSCA_OFFLINE;     
-   \   00000018   0x....             LDR.N    R0,??DataTable5_3
+   \   00000018   0x....             LDR.N    R0,??DataTable6_3
    \   0000001A   0xF247 0x5130      MOVW     R1,#+30000
    \   0000001E   0x8001             STRH     R1,[R0, #+0]
     240              return CASHLESS_STATE_LOCKED;  
@@ -507,7 +507,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
     242            else
     243              if(!SMC_time_out)
    \                     ??SMC_dispositivo_bloqueado_2:
-   \   00000024   0x....             LDR.N    R0,??DataTable5_3
+   \   00000024   0x....             LDR.N    R0,??DataTable6_3
    \   00000026   0x8800             LDRH     R0,[R0, #+0]
    \   00000028   0x2800             CMP      R0,#+0
    \   0000002A   0xD101             BNE.N    ??SMC_dispositivo_bloqueado_3
@@ -595,29 +595,55 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
     297            
     298            SMC_flag_bloqueio = flag;
    \                     SMC_setter_bloqueio:
-   \   00000000   0x....             LDR.N    R1,??DataTable5_2
+   \   00000000   0x....             LDR.N    R1,??DataTable6_2
    \   00000002   0x7008             STRB     R0,[R1, #+0]
     299          }
    \   00000004   0x4770             BX       LR               ;; return
+    300          /***********************************************************************************
+    301          *       Descrição       :       Verifica se o dispositivo cashless está
+    302          *       Parametros      :       (nenhum)
+    303          *       Retorno         :       (unsigned char) maior do que zero
+    304          *                                               se o cashless estiver online
+    305          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    306          unsigned char SMC_get_cashless_online(void){
+    307            
+    308            if(SMC_estado_atual!=CASHLESS_STATE_OFFLINE)
+   \                     SMC_get_cashless_online:
+   \   00000000   0x....             LDR.N    R0,??DataTable6
+   \   00000002   0x7800             LDRB     R0,[R0, #+0]
+   \   00000004   0x2802             CMP      R0,#+2
+   \   00000006   0xD001             BEQ.N    ??SMC_get_cashless_online_0
+    309              return 1;
+   \   00000008   0x2001             MOVS     R0,#+1
+   \   0000000A   0xE000             B.N      ??SMC_get_cashless_online_1
+    310            
+    311            return 0;
+   \                     ??SMC_get_cashless_online_0:
+   \   0000000C   0x2000             MOVS     R0,#+0
+   \                     ??SMC_get_cashless_online_1:
+   \   0000000E   0x4770             BX       LR               ;; return
+    312          }
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable5:
+   \                     ??DataTable6:
    \   00000000   0x........         DC32     SMC_estado_atual
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable5_1:
+   \                     ??DataTable6_1:
    \   00000000   0x........         DC32     MDBCASHLESS_funcs
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable5_2:
+   \                     ??DataTable6_2:
    \   00000000   0x........         DC32     SMC_flag_bloqueio
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable5_3:
+   \                     ??DataTable6_3:
    \   00000000   0x........         DC32     SMC_time_out
-    300          /***********************************************************************************
-    301          *       Fim do arquivo
-    302          ***********************************************************************************/
+    313          /***********************************************************************************
+    314          *       Fim do arquivo
+    315          ***********************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -627,6 +653,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
          8   -> PARAMETROS_le
        8   SMC_dispositivo_bloqueado
          8   -> MDBCASHLESS_enable_reader
+       0   SMC_get_cashless_online
        0   SMC_ini
        0   SMC_inicia_transacao
        8   SMC_offline_state
@@ -656,10 +683,10 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
 
    Bytes  Function/Label
    -----  --------------
-       4  ??DataTable5
-       4  ??DataTable5_1
-       4  ??DataTable5_2
-       4  ??DataTable5_3
+       4  ??DataTable6
+       4  ??DataTable6_1
+       4  ??DataTable6_2
+       4  ??DataTable6_3
       36  MDBCASHLESS_funcs
        1  SMC_ciclos
        4  SMC_contador
@@ -667,6 +694,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
       52  SMC_dispositivo_bloqueado
        1  SMC_estado_atual
        1  SMC_flag_bloqueio
+      16  SMC_get_cashless_online
        2  SMC_ini
        4  SMC_inicia_transacao
       18  SMC_offline_state
@@ -683,9 +711,9 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
    6 bytes in section .bss
    3 bytes in section .data
   36 bytes in section .rodata
- 444 bytes in section .text
+ 460 bytes in section .text
  
- 444 bytes of CODE  memory
+ 460 bytes of CODE  memory
   36 bytes of CONST memory
    9 bytes of DATA  memory
 

@@ -47,7 +47,7 @@ typedef enum{
 void SMC_ini(void);
 void SMC_tick(void);
 void SMC_setter_bloqueio(unsigned char flag);
-
+unsigned char SMC_get_cashless_online(void);
 
 
 

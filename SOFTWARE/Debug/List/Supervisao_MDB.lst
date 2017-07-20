@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  15:52:05 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  16:44:35 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -158,17 +158,18 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
    \   0000001A   0x.... 0x....      BL       SMDBILL_tick
      84            SMDBCOIN_tick(); // 
    \   0000001E   0x.... 0x....      BL       SMDBCOIN_tick
-     85            //SMC_tick(); // Dentro do módulo ele verifica o bloqueio e habilitação do cartão
+     85            SMC_tick();
+   \   00000022   0x.... 0x....      BL       SMC_tick
      86             
      87            xSemaphoreGive(SMDB_semaforo_barramento); 
-   \   00000022   0x2300             MOVS     R3,#+0
-   \   00000024   0x2200             MOVS     R2,#+0
-   \   00000026   0x2100             MOVS     R1,#+0
-   \   00000028   0x....             LDR.N    R0,??DataTable3
-   \   0000002A   0x6800             LDR      R0,[R0, #+0]
-   \   0000002C   0x.... 0x....      BL       xQueueGenericSend
+   \   00000026   0x2300             MOVS     R3,#+0
+   \   00000028   0x2200             MOVS     R2,#+0
+   \   0000002A   0x2100             MOVS     R1,#+0
+   \   0000002C   0x....             LDR.N    R0,??DataTable3
+   \   0000002E   0x6800             LDR      R0,[R0, #+0]
+   \   00000030   0x.... 0x....      BL       xQueueGenericSend
      88          }
-   \   00000030   0xBD01             POP      {R0,PC}          ;; return
+   \   00000034   0xBD01             POP      {R0,PC}          ;; return
      89          /***********************************************************************************
      90          *       Descrição       :       Wait para o barramento MDB
      91          *       Parametros      :       nenhum
@@ -297,6 +298,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
        8   SMDB_release
          8   -> xQueueGenericSend
        8   SMDB_tick
+         8   -> SMC_tick
          8   -> SMDBCOIN_tick
          8   -> SMDBILL_tick
          8   -> vTaskDelay
@@ -315,14 +317,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
       48  SMDB_ini
       18  SMDB_release
        4  SMDB_semaforo_barramento
-      50  SMDB_tick
+      54  SMDB_tick
       22  SMDB_wait
 
  
    4 bytes in section .bss
- 208 bytes in section .text
+ 212 bytes in section .text
  
- 208 bytes of CODE memory
+ 212 bytes of CODE memory
    4 bytes of DATA memory
 
 Errors: none

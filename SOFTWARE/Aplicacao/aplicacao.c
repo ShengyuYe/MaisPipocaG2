@@ -157,7 +157,7 @@ void APLICACAO_main(void*pPar){
            HD44780_init(LCD_DISPLAY_8X5 | LCD_2_LINHAS,LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);       
            HD44780_2_init(LCD_DISPLAY_8X5 | LCD_2_LINHAS,LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);              
            
-           APLICACAO_reset_hardware();           
+           APLICACAO_reset_hardware();                  
            break;
       case TECLA_ESC:
            break;
@@ -395,6 +395,7 @@ void APLICACAO_menu_falha(void){
           BOARD_liga_placa_instrucao(1);
           APLICACAO_release_lcd();             
           STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);                   
+          APLICACAO_reset_hardware();               
           break;
       case TECLA_ESC:
           break;
@@ -558,7 +559,8 @@ void APLICACAO_verifica_disponibilidade_troco(unsigned char idioma){
             BOARD_liga_placa_instrucao(1);
             idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
             APLICACAO_release_lcd();             
-            STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);        
+            STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);      
+            APLICACAO_reset_hardware();                           
             break;
         case TECLA_ESC:
             break;
@@ -593,6 +595,11 @@ void APLICACAO_verifica_MDB(void){
                                   (char*)STRING_mensagem_moedeiro_mdb_offline[idioma][0],
                                   (char*)STRING_mensagem_moedeiro_mdb_offline[idioma][1]);           
          break;
+    case MDB_CASHLESS_OFFLINE:
+         STRING_write_to_external(CLEAR_DISPLAY,
+                                  (char*)STRING_mensagem_cartao_mdb_offline[idioma][0],
+                                  (char*)STRING_mensagem_cartao_mdb_offline[idioma][1]);                 
+         break;    
   }  
   
   eTECLA tecla;
@@ -611,7 +618,8 @@ void APLICACAO_verifica_MDB(void){
             BOARD_liga_placa_instrucao(1);
             idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
             APLICACAO_release_lcd();             
-            STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);              
+            STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);     
+            APLICACAO_reset_hardware();                           
            break;
       case TECLA_ESC:
            break;
@@ -656,15 +664,16 @@ void APLICACAO_verifica_cctalk(void){
     tecla = TECLADO_getch();
     switch(tecla){
       case TECLA_ENTER:
-            BOARD_reset_tempo_propaganda();
-            APLIACAO_wait_lcd();
-            BOARD_liga_placa_instrucao(0);
-            MCFG_entry();                     
-            BOARD_liga_placa_instrucao(1);
-            idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
-            APLICACAO_release_lcd();             
-            STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);              
-            BOARD_reset_tempo_propaganda();
+           BOARD_reset_tempo_propaganda();
+           APLIACAO_wait_lcd();
+           BOARD_liga_placa_instrucao(0);
+           MCFG_entry();                     
+           BOARD_liga_placa_instrucao(1);
+           idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
+           APLICACAO_release_lcd();             
+           STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);              
+           BOARD_reset_tempo_propaganda();            
+           APLICACAO_reset_hardware();                           
            break;
       case TECLA_ESC:
            break;
@@ -769,8 +778,8 @@ void APLICACAO_reset_hardware(void){
   STRING_write_to_internal(CLEAR_DISPLAY,"reiniciando","sistema");
   STRING_write_to_external(CLEAR_DISPLAY,"reiniciando","sistema");
   
+  WATCHDOG_init();  
   __disable_interrupt();
-  WATCHDOG_init();
   for(;;);  
 }
 /***********************************************************************************

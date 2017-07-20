@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  15:52:05 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  16:44:35 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -39,6 +39,7 @@
 
         EXTERN MDBCASHLESS_start_vend
         EXTERN SMC_ini
+        EXTERN SMC_tick
         EXTERN SMDBCOIN_tick
         EXTERN SMDBILL_set_bloqueio
         EXTERN SMDBILL_tick
@@ -230,7 +231,9 @@ SMDB_tick:
 //   84   SMDBCOIN_tick(); // 
           CFI FunCall SMDBCOIN_tick
         BL       SMDBCOIN_tick
-//   85   //SMC_tick(); // Dentro do módulo ele verifica o bloqueio e habilitação do cartão
+//   85   SMC_tick();
+          CFI FunCall SMC_tick
+        BL       SMC_tick
 //   86    
 //   87   xSemaphoreGive(SMDB_semaforo_barramento); 
         MOVS     R3,#+0
@@ -398,9 +401,9 @@ SMDB_cashless_vend:
 //  135 ***********************************************************************************/
 // 
 //   4 bytes in section .bss
-// 208 bytes in section .text
+// 212 bytes in section .text
 // 
-// 208 bytes of CODE memory
+// 212 bytes of CODE memory
 //   4 bytes of DATA memory
 //
 //Errors: none
