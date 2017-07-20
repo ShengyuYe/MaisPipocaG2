@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  14:33:32 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  15:39:46 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -472,9 +472,9 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Board\Boa
    \   00000128   0x6800             LDR      R0,[R0, #+0]
    \   0000012A   0x2800             CMP      R0,#+0
    \   0000012C   0xD111             BNE.N    ??BOARD_timer_tick_11
-    193              APLICACAO_tempo_compensacao = 120000;
+    193              APLICACAO_tempo_compensacao = 3*60*1000;
    \   0000012E   0x.... 0x....      LDR.W    R0,??DataTable12_14
-   \   00000132   0x.... 0x....      LDR.W    R1,??DataTable12_15  ;; 0x1d4c0
+   \   00000132   0x.... 0x....      LDR.W    R1,??DataTable12_15  ;; 0x2bf20
    \   00000136   0x6001             STR      R1,[R0, #+0]
     194              if(PREPARACAO_compensador)
    \   00000138   0x.... 0x....      LDR.W    R0,??DataTable12_16
@@ -1417,7 +1417,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Board\Boa
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable12_15:
-   \   00000000   0x0001D4C0         DC32     0x1d4c0
+   \   00000000   0x0002BF20         DC32     0x2bf20
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable12_16:

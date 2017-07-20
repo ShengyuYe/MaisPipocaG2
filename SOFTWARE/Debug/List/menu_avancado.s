@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  14:40:43 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  15:39:24 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -490,54 +490,63 @@ MENUAVANCADO_padrao_fabrica:
         MOVS     R0,#+63
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  176   }
-//  177 }
+//  176     
+//  177     valor = 1;
+        MOVS     R0,#+1
+        STR      R0,[SP, #+0]
+//  178     PARAMETROS_grava(ADR_FATOR_COMPENSADOR,(void*)&valor);
+        ADD      R1,SP,#+0
+        MOVS     R0,#+65
+          CFI FunCall PARAMETROS_grava
+        BL       PARAMETROS_grava
+//  179   }
+//  180 }
 ??MENUAVANCADO_padrao_fabrica_0:
         ADD      SP,SP,#+32
           CFI CFA R13+8
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock1
-//  178 /***********************************************************************************
-//  179 *       Descrição       :       Tela para cadastro da nova senha de administrador
-//  180 *       Parametros      :       nenhum
-//  181 *       Retorno         :       nenhum
-//  182 ***********************************************************************************/
+//  181 /***********************************************************************************
+//  182 *       Descrição       :       Tela para cadastro da nova senha de administrador
+//  183 *       Parametros      :       nenhum
+//  184 *       Retorno         :       nenhum
+//  185 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function MENUAVANCADO_cadastra_senha_admin
         THUMB
-//  183 void MENUAVANCADO_cadastra_senha_admin(void){
+//  186 void MENUAVANCADO_cadastra_senha_admin(void){
 MENUAVANCADO_cadastra_senha_admin:
         PUSH     {R2-R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+16
-//  184   unsigned int senha;
-//  185   unsigned int s1,s2;
-//  186   unsigned char idioma = APLICACAO_carrega_idioma();  
+//  187   unsigned int senha;
+//  188   unsigned int s1,s2;
+//  189   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  187   
-//  188   PARAMETROS_le(ADR_SENHA_ADMIN,(void*)&senha);
+//  190   
+//  191   PARAMETROS_le(ADR_SENHA_ADMIN,(void*)&senha);
         ADD      R1,SP,#+0
         MOVS     R0,#+35
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  189   
-//  190   if(senha>9999)
+//  192   
+//  193   if(senha>9999)
         LDR      R0,[SP, #+0]
         MOVW     R1,#+10000
         CMP      R0,R1
         BCC.N    ??MENUAVANCADO_cadastra_senha_admin_0
-//  191     senha = 0;
+//  194     senha = 0;
         MOVS     R0,#+0
         STR      R0,[SP, #+0]
-//  192   
-//  193   // Senha para acesso,caso inválida
-//  194   // não abre o menu
-//  195   if(!TELASENHA_telaSenha(senha))
+//  195   
+//  196   // Senha para acesso,caso inválida
+//  197   // não abre o menu
+//  198   if(!TELASENHA_telaSenha(senha))
 ??MENUAVANCADO_cadastra_senha_admin_0:
         LDR      R0,[SP, #+0]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
@@ -545,9 +554,9 @@ MENUAVANCADO_cadastra_senha_admin:
         BL       TELASENHA_telaSenha
         CMP      R0,#+0
         BEQ.N    ??MENUAVANCADO_cadastra_senha_admin_1
-//  196     return;  
-//  197   
-//  198   s1 = TELASENHA_get_senha((char*)STRING_mensagem_inserir_senha[idioma]);
+//  199     return;  
+//  200   
+//  201   s1 = TELASENHA_get_senha((char*)STRING_mensagem_inserir_senha[idioma]);
 ??MENUAVANCADO_cadastra_senha_admin_2:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable7_8
@@ -555,22 +564,22 @@ MENUAVANCADO_cadastra_senha_admin:
           CFI FunCall TELASENHA_get_senha
         BL       TELASENHA_get_senha
         STR      R0,[SP, #+4]
-//  199   s2 = TELASENHA_get_senha((char*)STRING_mensagem_inserir_senha[idioma]);
+//  202   s2 = TELASENHA_get_senha((char*)STRING_mensagem_inserir_senha[idioma]);
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable7_8
         LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall TELASENHA_get_senha
         BL       TELASENHA_get_senha
-//  200   
-//  201   if(s1 == s2){
+//  203   
+//  204   if(s1 == s2){
         LDR      R1,[SP, #+4]
         CMP      R1,R0
         BNE.N    ??MENUAVANCADO_cadastra_senha_admin_3
-//  202     // Desenha a mensagem confirmando a gravação
-//  203     // da nova senha
-//  204     STRING_write_to_internal(CLEAR_DISPLAY,
-//  205                             (char*)STRING_mensagem_cadastro_senha[idioma][0],
-//  206                             (char*)STRING_mensagem_cadastro_senha[idioma][1]);
+//  205     // Desenha a mensagem confirmando a gravação
+//  206     // da nova senha
+//  207     STRING_write_to_internal(CLEAR_DISPLAY,
+//  208                             (char*)STRING_mensagem_cadastro_senha[idioma][0],
+//  209                             (char*)STRING_mensagem_cadastro_senha[idioma][1]);
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable7_9
         ADDS     R0,R0,R4, LSL #+3
@@ -581,19 +590,19 @@ MENUAVANCADO_cadastra_senha_admin:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  207     
-//  208     // Grava a nova senha na memória flash
-//  209     PARAMETROS_grava(ADR_SENHA_ADMIN,(void*)&s1);    
+//  210     
+//  211     // Grava a nova senha na memória flash
+//  212     PARAMETROS_grava(ADR_SENHA_ADMIN,(void*)&s1);    
         ADD      R1,SP,#+4
         MOVS     R0,#+35
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
         B.N      ??MENUAVANCADO_cadastra_senha_admin_4
-//  210   }
-//  211   else
-//  212     STRING_write_to_internal(CLEAR_DISPLAY,
-//  213                             (char*)STRING_mensagem_cadastro_senha_erro[idioma][0],
-//  214                             (char*)STRING_mensagem_cadastro_senha_erro[idioma][1]);
+//  213   }
+//  214   else
+//  215     STRING_write_to_internal(CLEAR_DISPLAY,
+//  216                             (char*)STRING_mensagem_cadastro_senha_erro[idioma][0],
+//  217                             (char*)STRING_mensagem_cadastro_senha_erro[idioma][1]);
 ??MENUAVANCADO_cadastra_senha_admin_3:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable7_10
@@ -605,47 +614,47 @@ MENUAVANCADO_cadastra_senha_admin:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  215    
-//  216   vTaskDelay(3000);
+//  218    
+//  219   vTaskDelay(3000);
 ??MENUAVANCADO_cadastra_senha_admin_4:
         MOVW     R0,#+3000
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  217 }
+//  220 }
 ??MENUAVANCADO_cadastra_senha_admin_1:
         POP      {R0,R1,R4,PC}    ;; return
           CFI EndBlock cfiBlock2
-//  218 /***********************************************************************************
-//  219 *       Descrição       :       Faz o reset dos totalizadores permanentes da 
-//  220 *                               máquina
-//  221 *       Parametros      :       nenhum
-//  222 *       Retorno         :       nenhum
-//  223 ***********************************************************************************/
+//  221 /***********************************************************************************
+//  222 *       Descrição       :       Faz o reset dos totalizadores permanentes da 
+//  223 *                               máquina
+//  224 *       Parametros      :       nenhum
+//  225 *       Retorno         :       nenhum
+//  226 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock3 Using cfiCommon0
           CFI Function MENUAVANCADO_reset_totalizadores_permanentes
         THUMB
-//  224 void MENUAVANCADO_reset_totalizadores_permanentes(void){
+//  227 void MENUAVANCADO_reset_totalizadores_permanentes(void){
 MENUAVANCADO_reset_totalizadores_permanentes:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
-//  225   unsigned char idioma = APLICACAO_carrega_idioma();    
+//  228   unsigned char idioma = APLICACAO_carrega_idioma();    
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  226   
-//  227   if(TELASENHA_checa_contrasenha(NULL)){    
+//  229   
+//  230   if(TELASENHA_checa_contrasenha(NULL)){    
         MOVS     R0,#+0
           CFI FunCall TELASENHA_checa_contrasenha
         BL       TELASENHA_checa_contrasenha
         CMP      R0,#+0
         BEQ.N    ??MENUAVANCADO_reset_totalizadores_permanentes_0
-//  228     STRING_write_to_internal(CLEAR_DISPLAY,
-//  229                             (char*)STRING_mensagem_reinicia_totalizadores[idioma][0],
-//  230                             (char*)STRING_mensagem_reinicia_totalizadores[idioma][1]);    
+//  231     STRING_write_to_internal(CLEAR_DISPLAY,
+//  232                             (char*)STRING_mensagem_reinicia_totalizadores[idioma][0],
+//  233                             (char*)STRING_mensagem_reinicia_totalizadores[idioma][1]);    
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable7_11
         ADDS     R0,R0,R4, LSL #+3
@@ -656,54 +665,54 @@ MENUAVANCADO_reset_totalizadores_permanentes:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  231            
-//  232     FATURAMENTO_set_contagem_parcial(0);
+//  234            
+//  235     FATURAMENTO_set_contagem_parcial(0);
         MOVS     R0,#+0
           CFI FunCall FATURAMENTO_set_contagem_parcial
         BL       FATURAMENTO_set_contagem_parcial
-//  233     FATURAMENTO_set_arrecadacao_parcial(0);
+//  236     FATURAMENTO_set_arrecadacao_parcial(0);
         MOVS     R0,#+0
           CFI FunCall FATURAMENTO_set_arrecadacao_parcial
         BL       FATURAMENTO_set_arrecadacao_parcial
-//  234     FATURAMENTO_set_contagem_cartao_parcial(0);
+//  237     FATURAMENTO_set_contagem_cartao_parcial(0);
         MOVS     R0,#+0
           CFI FunCall FATURAMENTO_set_contagem_cartao_parcial
         BL       FATURAMENTO_set_contagem_cartao_parcial
-//  235     FATURAMENTO_set_arrecadacao_cartao_parcial(0);
+//  238     FATURAMENTO_set_arrecadacao_cartao_parcial(0);
         MOVS     R0,#+0
           CFI FunCall FATURAMENTO_set_arrecadacao_cartao_parcial
         BL       FATURAMENTO_set_arrecadacao_cartao_parcial
-//  236         
-//  237     FATURAMENTO_set_contagem_total(0);
+//  239         
+//  240     FATURAMENTO_set_contagem_total(0);
         MOVS     R0,#+0
           CFI FunCall FATURAMENTO_set_contagem_total
         BL       FATURAMENTO_set_contagem_total
-//  238     FATURAMENTO_set_arrecadacao_total(0);
+//  241     FATURAMENTO_set_arrecadacao_total(0);
         MOVS     R0,#+0
           CFI FunCall FATURAMENTO_set_arrecadacao_total
         BL       FATURAMENTO_set_arrecadacao_total
-//  239     FATURAMENTO_set_contagem_cartao_total(0);
+//  242     FATURAMENTO_set_contagem_cartao_total(0);
         MOVS     R0,#+0
           CFI FunCall FATURAMENTO_set_contagem_cartao_total
         BL       FATURAMENTO_set_contagem_cartao_total
-//  240     FATURAMENTO_set_arrecadacao_cartao_total(0);    
+//  243     FATURAMENTO_set_arrecadacao_cartao_total(0);    
         MOVS     R0,#+0
           CFI FunCall FATURAMENTO_set_arrecadacao_cartao_total
         BL       FATURAMENTO_set_arrecadacao_cartao_total
-//  241     
-//  242     FTP_formata_fila(); // Apaga os eventos de troca de preço da pipoca
+//  244     
+//  245     FTP_formata_fila(); // Apaga os eventos de troca de preço da pipoca
           CFI FunCall FTP_formata_fila
         BL       FTP_formata_fila
-//  243     
-//  244     FATURAMENTO_reinicia_pipocas_teste();
+//  246     
+//  247     FATURAMENTO_reinicia_pipocas_teste();
           CFI FunCall FATURAMENTO_reinicia_pipocas_teste
         BL       FATURAMENTO_reinicia_pipocas_teste
         B.N      ??MENUAVANCADO_reset_totalizadores_permanentes_1
-//  245   }
-//  246   else{    
-//  247     STRING_write_to_internal(CLEAR_DISPLAY,
-//  248                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
-//  249                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
+//  248   }
+//  249   else{    
+//  250     STRING_write_to_internal(CLEAR_DISPLAY,
+//  251                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
+//  252                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
 ??MENUAVANCADO_reset_totalizadores_permanentes_0:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable7_12
@@ -715,54 +724,54 @@ MENUAVANCADO_reset_totalizadores_permanentes:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  250   }
-//  251   
-//  252   vTaskDelay(3000);
+//  253   }
+//  254   
+//  255   vTaskDelay(3000);
 ??MENUAVANCADO_reset_totalizadores_permanentes_1:
         MOVW     R0,#+3000
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  253 }
+//  256 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock3
-//  254 /***********************************************************************************
-//  255 *       Descrição       :       Entra no menu para configuração dos
-//  256 *                               ganhos do PID do motor
-//  257 *       Parametros      :       nenhum
-//  258 *       Retorno         :       nenhum
-//  259 ***********************************************************************************/
+//  257 /***********************************************************************************
+//  258 *       Descrição       :       Entra no menu para configuração dos
+//  259 *                               ganhos do PID do motor
+//  260 *       Parametros      :       nenhum
+//  261 *       Retorno         :       nenhum
+//  262 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function MENUAVANCADO_menu_ganhos_PID
         THUMB
-//  260 void MENUAVANCADO_menu_ganhos_PID(void){
+//  263 void MENUAVANCADO_menu_ganhos_PID(void){
 MENUAVANCADO_menu_ganhos_PID:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
-//  261   unsigned char idioma = APLICACAO_carrega_idioma();    
+//  264   unsigned char idioma = APLICACAO_carrega_idioma();    
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  262   
-//  263   // Menu para configuração 
-//  264   // dos parâmetros do PID
-//  265   // do motor
-//  266   if(TELASENHA_checa_contrasenha(NULL)){    
+//  265   
+//  266   // Menu para configuração 
+//  267   // dos parâmetros do PID
+//  268   // do motor
+//  269   if(TELASENHA_checa_contrasenha(NULL)){    
         MOVS     R0,#+0
           CFI FunCall TELASENHA_checa_contrasenha
         BL       TELASENHA_checa_contrasenha
         CMP      R0,#+0
         BNE.N    ??MENUAVANCADO_menu_ganhos_PID_0
-//  267     
-//  268     
-//  269   }
-//  270   else{    
-//  271     STRING_write_to_internal(CLEAR_DISPLAY,
-//  272                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
-//  273                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
+//  270     
+//  271     
+//  272   }
+//  273   else{    
+//  274     STRING_write_to_internal(CLEAR_DISPLAY,
+//  275                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
+//  276                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable7_12
         ADDS     R0,R0,R4, LSL #+3
@@ -773,76 +782,76 @@ MENUAVANCADO_menu_ganhos_PID:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  274   }
-//  275   
-//  276   vTaskDelay(3000);
+//  277   }
+//  278   
+//  279   vTaskDelay(3000);
 ??MENUAVANCADO_menu_ganhos_PID_0:
         MOVW     R0,#+3000
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  277 }
+//  280 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock4
-//  278 /***********************************************************************************
-//  279 *       Descrição       :       Configura o número de série da máquina
-//  280 *       Parametros      :       nenhum
-//  281 *       Retorno         :       nenhum
-//  282 ***********************************************************************************/
+//  281 /***********************************************************************************
+//  282 *       Descrição       :       Configura o número de série da máquina
+//  283 *       Parametros      :       nenhum
+//  284 *       Retorno         :       nenhum
+//  285 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function MENUAVANCADO_configura_numero_serie
         THUMB
-//  283 void MENUAVANCADO_configura_numero_serie(void){
+//  286 void MENUAVANCADO_configura_numero_serie(void){
 MENUAVANCADO_configura_numero_serie:
         PUSH     {R2-R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+16
-//  284   unsigned char idioma = APLICACAO_carrega_idioma();    
+//  287   unsigned char idioma = APLICACAO_carrega_idioma();    
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  285   
-//  286   if(TELASENHA_checa_contrasenha(NULL)){ 
+//  288   
+//  289   if(TELASENHA_checa_contrasenha(NULL)){ 
         MOVS     R0,#+0
           CFI FunCall TELASENHA_checa_contrasenha
         BL       TELASENHA_checa_contrasenha
         CMP      R0,#+0
         BEQ.N    ??MENUAVANCADO_configura_numero_serie_0
-//  287             
-//  288      unsigned int numero = 0;
+//  290             
+//  291      unsigned int numero = 0;
         MOVS     R0,#+0
         STR      R0,[SP, #+4]
-//  289      PARAMETROS_le(ADR_NUMERO_SERIE,(void*)&numero);
+//  292      PARAMETROS_le(ADR_NUMERO_SERIE,(void*)&numero);
         ADD      R1,SP,#+4
         MOVS     R0,#+36
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  290      
-//  291      if(numero>999999)
+//  293      
+//  294      if(numero>999999)
         LDR      R0,[SP, #+4]
         LDR.N    R1,??DataTable7_13  ;; 0xf4240
         CMP      R0,R1
         BCC.N    ??MENUAVANCADO_configura_numero_serie_1
-//  292        numero = 100;
+//  295        numero = 100;
         MOVS     R0,#+100
         STR      R0,[SP, #+4]
-//  293      
-//  294      if(numero<1200)
+//  296      
+//  297      if(numero<1200)
 ??MENUAVANCADO_configura_numero_serie_1:
         LDR      R0,[SP, #+4]
         CMP      R0,#+1200
         BCS.N    ??MENUAVANCADO_configura_numero_serie_2
-//  295        numero = 1200;
+//  298        numero = 1200;
         MOV      R0,#+1200
         STR      R0,[SP, #+4]
-//  296      
-//  297      numero = MEI_entry((char*)STRING_titulo_edita_serial[idioma],
-//  298                         "%06d",
-//  299                         numero,
-//  300                         1,
-//  301                         999999);
+//  299      
+//  300      numero = MEI_entry((char*)STRING_titulo_edita_serial[idioma],
+//  301                         "%06d",
+//  302                         numero,
+//  303                         1,
+//  304                         999999);
 ??MENUAVANCADO_configura_numero_serie_2:
         LDR.N    R0,??DataTable7_14  ;; 0xf423f
         STR      R0,[SP, #+0]
@@ -855,18 +864,18 @@ MENUAVANCADO_configura_numero_serie:
           CFI FunCall MEI_entry
         BL       MEI_entry
         STR      R0,[SP, #+4]
-//  302      
-//  303      PARAMETROS_grava(ADR_NUMERO_SERIE,(void*)&numero);
+//  305      
+//  306      PARAMETROS_grava(ADR_NUMERO_SERIE,(void*)&numero);
         ADD      R1,SP,#+4
         MOVS     R0,#+36
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
         B.N      ??MENUAVANCADO_configura_numero_serie_3
-//  304   }
-//  305   else{    
-//  306     STRING_write_to_internal(CLEAR_DISPLAY,
-//  307                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
-//  308                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
+//  307   }
+//  308   else{    
+//  309     STRING_write_to_internal(CLEAR_DISPLAY,
+//  310                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
+//  311                             (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
 ??MENUAVANCADO_configura_numero_serie_0:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable7_12
@@ -878,46 +887,46 @@ MENUAVANCADO_configura_numero_serie:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  309   }
-//  310 }
+//  312   }
+//  313 }
 ??MENUAVANCADO_configura_numero_serie_3:
         POP      {R0,R1,R4,PC}    ;; return
           CFI EndBlock cfiBlock5
-//  311 /***********************************************************************************
-//  312 *       Descrição       :       Tela para configuração da hora e data
-//  313 *                               do sistema
-//  314 *       Parametros      :       nenhum
-//  315 *       Retorno         :       nenhum
-//  316 ***********************************************************************************/
+//  314 /***********************************************************************************
+//  315 *       Descrição       :       Tela para configuração da hora e data
+//  316 *                               do sistema
+//  317 *       Parametros      :       nenhum
+//  318 *       Retorno         :       nenhum
+//  319 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function MENUAVANCADO_configura_hora_data
         THUMB
-//  317 void MENUAVANCADO_configura_hora_data(void){
+//  320 void MENUAVANCADO_configura_hora_data(void){
 MENUAVANCADO_configura_hora_data:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  318   
-//  319   IAR_entry();
+//  321   
+//  322   IAR_entry();
           CFI FunCall IAR_entry
         BL       IAR_entry
-//  320 }
+//  323 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock6
-//  321 /***********************************************************************************
-//  322 *       Descrição       :       Tela para configuração do flag que habilita
-//  323 *                               a correção de erro no motor do ar
-//  324 *       Parametros      :       nenhum
-//  325 *       Retorno         :       nenhum
-//  326 ***********************************************************************************/
+//  324 /***********************************************************************************
+//  325 *       Descrição       :       Tela para configuração do flag que habilita
+//  326 *                               a correção de erro no motor do ar
+//  327 *       Parametros      :       nenhum
+//  328 *       Retorno         :       nenhum
+//  329 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function MENUAVANCADO_configura_flag_correcao_erro
         THUMB
-//  327 void MENUAVANCADO_configura_flag_correcao_erro(void){
+//  330 void MENUAVANCADO_configura_flag_correcao_erro(void){
 MENUAVANCADO_configura_flag_correcao_erro:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -925,19 +934,19 @@ MENUAVANCADO_configura_flag_correcao_erro:
           CFI CFA R13+8
         SUB      SP,SP,#+8
           CFI CFA R13+16
-//  328   unsigned char idioma = APLICACAO_carrega_idioma();
+//  331   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  329   unsigned char flag;
-//  330   
-//  331   PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
+//  332   unsigned char flag;
+//  333   
+//  334   PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
         ADD      R1,SP,#+0
         MOVS     R0,#+64
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  332   
-//  333   flag = MEF_entry("ERRO MOTOR",flag,"ON ","OFF");    
+//  335   
+//  336   flag = MEF_entry("ERRO MOTOR",flag,"ON ","OFF");    
         ADR.N    R3,??DataTable7  ;; "OFF"
         ADR.N    R2,??DataTable7_1  ;; "ON "
         LDRB     R1,[SP, #+0]
@@ -945,42 +954,42 @@ MENUAVANCADO_configura_flag_correcao_erro:
           CFI FunCall MEF_entry
         BL       MEF_entry
         STRB     R0,[SP, #+0]
-//  334   
-//  335   PARAMETROS_grava(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
+//  337   
+//  338   PARAMETROS_grava(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
         ADD      R1,SP,#+0
         MOVS     R0,#+64
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  336 }
+//  339 }
         POP      {R0,R1,R4,PC}    ;; return
           CFI EndBlock cfiBlock7
-//  337 /***********************************************************************************
-//  338 *       Descrição       :      Tela para configuração do fator de compensação
-//  339 *                              do controle de temperatura
-//  340 *       Parametros      :       nenhum
-//  341 *       Retorno         :       nenhum
-//  342 ***********************************************************************************/
+//  340 /***********************************************************************************
+//  341 *       Descrição       :      Tela para configuração do fator de compensação
+//  342 *                              do controle de temperatura
+//  343 *       Parametros      :       nenhum
+//  344 *       Retorno         :       nenhum
+//  345 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock8 Using cfiCommon0
           CFI Function MENUAVANCADO_configura_fator_compensavao
         THUMB
-//  343 void MENUAVANCADO_configura_fator_compensavao(void){
+//  346 void MENUAVANCADO_configura_fator_compensavao(void){
 MENUAVANCADO_configura_fator_compensavao:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+12
           CFI CFA R13+16
-//  344   unsigned int valor;
-//  345 
-//  346   PARAMETROS_le(ADR_FATOR_COMPENSADOR,(void*)&valor);
+//  347   unsigned int valor;
+//  348 
+//  349   PARAMETROS_le(ADR_FATOR_COMPENSADOR,(void*)&valor);
         ADD      R1,SP,#+4
         MOVS     R0,#+65
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  347 
-//  348   valor = MEI_entry("FATOR TEMP","%1d oC",valor,1,3);    
+//  350 
+//  351   valor = MEI_entry("FATOR TEMP","%1d oC",valor,1,3);    
         MOVS     R0,#+3
         STR      R0,[SP, #+0]
         MOVS     R3,#+1
@@ -990,13 +999,13 @@ MENUAVANCADO_configura_fator_compensavao:
           CFI FunCall MEI_entry
         BL       MEI_entry
         STR      R0,[SP, #+4]
-//  349   
-//  350   PARAMETROS_grava(ADR_FATOR_COMPENSADOR,(void*)&valor);
+//  352   
+//  353   PARAMETROS_grava(ADR_FATOR_COMPENSADOR,(void*)&valor);
         ADD      R1,SP,#+4
         MOVS     R0,#+65
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  351 }
+//  354 }
         POP      {R0-R2,PC}       ;; return
           CFI EndBlock cfiBlock8
 
@@ -1132,14 +1141,14 @@ MENUAVANCADO_configura_fator_compensavao:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  352 /***********************************************************************************
-//  353 *       Fim do arquivo
-//  354 ***********************************************************************************/
+//  355 /***********************************************************************************
+//  356 *       Fim do arquivo
+//  357 ***********************************************************************************/
 // 
 // 104 bytes in section .rodata
-// 920 bytes in section .text
+// 932 bytes in section .text
 // 
-// 920 bytes of CODE  memory
+// 932 bytes of CODE  memory
 // 104 bytes of CONST memory
 //
 //Errors: none

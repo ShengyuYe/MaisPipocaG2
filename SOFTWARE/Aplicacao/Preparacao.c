@@ -45,7 +45,7 @@
 #define TEMPO_ABRIR_PACOTE              50*1000
 #define TEMPO_RAMPA                     3000
 #define THRESOLD_RESFRIAMENTO           1
-#define RELOAD_COMPENSADOR              2*60000 // 5 minutos
+#define RELOAD_COMPENSADOR              5*60000 // 5 minutos
 /**********************************************************************************
 *       Constantes
 **********************************************************************************/
@@ -118,16 +118,7 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   if(!compensador)
     compensador=1;
   if(compensador>3)
-    compensador=3;
-  
-  //Faz o ajuste de compensação da panela
-  //unsigned int ajuste = AA_calculaTemperatura();
-  if(PREPARACAO_contador_compensacao){
-    if(PREPARACAO_compensador<(5*compensador))
-      PREPARACAO_compensador+=compensador;
-  }
-  
-  PREPARACAO_contador_compensacao = RELOAD_COMPENSADOR;  
+    compensador=3;    
   
   temperatura_processo += PREPARACAO_compensador;
   
@@ -274,12 +265,16 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
  
   //----------------------------------------------
   // Fim da coleta dos dados de faturamento
-  //----------------------------------------------   
-  
+  //----------------------------------------------    
+  //Faz o ajuste de compensação da panela
+  //unsigned int ajuste = AA_calculaTemperatura();
+  if(PREPARACAO_contador_compensacao){
+    if(PREPARACAO_compensador<=(5*compensador))
+      PREPARACAO_compensador+=compensador;
+  }  
+  PREPARACAO_contador_compensacao = RELOAD_COMPENSADOR;     
   BOARD_liga_placa_instrucao(0);
-  BOARD_liga_placa_instrucao(1);  
-  
-  //PAGAMENTOS_set_bloqueio(0);
+  BOARD_liga_placa_instrucao(1);    
   
   return SUCESSO;
 }

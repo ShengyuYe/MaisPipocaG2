@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  14:40:43 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  15:39:24 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -204,7 +204,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   00000024   0xF640 0x408E      MOVW     R0,#+3214
    \   00000028   0x.... 0x....      BL       TELASENHA_telaSenha
    \   0000002C   0x2800             CMP      R0,#+0
-   \   0000002E   0xD064             BEQ.N    ??MENUAVANCADO_padrao_fabrica_0
+   \   0000002E   0xD06A             BEQ.N    ??MENUAVANCADO_padrao_fabrica_0
     121              
     122              STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_mensagem_reset_fabrica[idioma][0],
     123                                                     (char*)STRING_mensagem_reset_fabrica[idioma][1]);
@@ -336,74 +336,82 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   000000F2   0xA902             ADD      R1,SP,#+8
    \   000000F4   0x203F             MOVS     R0,#+63
    \   000000F6   0x.... 0x....      BL       PARAMETROS_grava
-    176            }
-    177          }
+    176              
+    177              valor = 1;
+   \   000000FA   0x2001             MOVS     R0,#+1
+   \   000000FC   0x9000             STR      R0,[SP, #+0]
+    178              PARAMETROS_grava(ADR_FATOR_COMPENSADOR,(void*)&valor);
+   \   000000FE   0xA900             ADD      R1,SP,#+0
+   \   00000100   0x2041             MOVS     R0,#+65
+   \   00000102   0x.... 0x....      BL       PARAMETROS_grava
+    179            }
+    180          }
    \                     ??MENUAVANCADO_padrao_fabrica_0:
-   \   000000FA   0xB008             ADD      SP,SP,#+32
-   \   000000FC   0xBD10             POP      {R4,PC}          ;; return
-    178          /***********************************************************************************
-    179          *       Descrição       :       Tela para cadastro da nova senha de administrador
-    180          *       Parametros      :       nenhum
-    181          *       Retorno         :       nenhum
-    182          ***********************************************************************************/
+   \   00000106   0xB008             ADD      SP,SP,#+32
+   \   00000108   0xBD10             POP      {R4,PC}          ;; return
+    181          /***********************************************************************************
+    182          *       Descrição       :       Tela para cadastro da nova senha de administrador
+    183          *       Parametros      :       nenhum
+    184          *       Retorno         :       nenhum
+    185          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    183          void MENUAVANCADO_cadastra_senha_admin(void){
+    186          void MENUAVANCADO_cadastra_senha_admin(void){
    \                     MENUAVANCADO_cadastra_senha_admin:
    \   00000000   0xB51C             PUSH     {R2-R4,LR}
-    184            unsigned int senha;
-    185            unsigned int s1,s2;
-    186            unsigned char idioma = APLICACAO_carrega_idioma();  
+    187            unsigned int senha;
+    188            unsigned int s1,s2;
+    189            unsigned char idioma = APLICACAO_carrega_idioma();  
    \   00000002   0x.... 0x....      BL       APLICACAO_carrega_idioma
    \   00000006   0x0004             MOVS     R4,R0
-    187            
-    188            PARAMETROS_le(ADR_SENHA_ADMIN,(void*)&senha);
+    190            
+    191            PARAMETROS_le(ADR_SENHA_ADMIN,(void*)&senha);
    \   00000008   0xA900             ADD      R1,SP,#+0
    \   0000000A   0x2023             MOVS     R0,#+35
    \   0000000C   0x.... 0x....      BL       PARAMETROS_le
-    189            
-    190            if(senha>9999)
+    192            
+    193            if(senha>9999)
    \   00000010   0x9800             LDR      R0,[SP, #+0]
    \   00000012   0xF242 0x7110      MOVW     R1,#+10000
    \   00000016   0x4288             CMP      R0,R1
    \   00000018   0xD301             BCC.N    ??MENUAVANCADO_cadastra_senha_admin_0
-    191              senha = 0;
+    194              senha = 0;
    \   0000001A   0x2000             MOVS     R0,#+0
    \   0000001C   0x9000             STR      R0,[SP, #+0]
-    192            
-    193            // Senha para acesso,caso inválida
-    194            // não abre o menu
-    195            if(!TELASENHA_telaSenha(senha))
+    195            
+    196            // Senha para acesso,caso inválida
+    197            // não abre o menu
+    198            if(!TELASENHA_telaSenha(senha))
    \                     ??MENUAVANCADO_cadastra_senha_admin_0:
    \   0000001E   0x9800             LDR      R0,[SP, #+0]
    \   00000020   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
    \   00000022   0x.... 0x....      BL       TELASENHA_telaSenha
    \   00000026   0x2800             CMP      R0,#+0
    \   00000028   0xD030             BEQ.N    ??MENUAVANCADO_cadastra_senha_admin_1
-    196              return;  
-    197            
-    198            s1 = TELASENHA_get_senha((char*)STRING_mensagem_inserir_senha[idioma]);
+    199              return;  
+    200            
+    201            s1 = TELASENHA_get_senha((char*)STRING_mensagem_inserir_senha[idioma]);
    \                     ??MENUAVANCADO_cadastra_senha_admin_2:
    \   0000002A   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   0000002C   0x....             LDR.N    R0,??DataTable7_8
    \   0000002E   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
    \   00000032   0x.... 0x....      BL       TELASENHA_get_senha
    \   00000036   0x9001             STR      R0,[SP, #+4]
-    199            s2 = TELASENHA_get_senha((char*)STRING_mensagem_inserir_senha[idioma]);
+    202            s2 = TELASENHA_get_senha((char*)STRING_mensagem_inserir_senha[idioma]);
    \   00000038   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   0000003A   0x....             LDR.N    R0,??DataTable7_8
    \   0000003C   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
    \   00000040   0x.... 0x....      BL       TELASENHA_get_senha
-    200            
-    201            if(s1 == s2){
+    203            
+    204            if(s1 == s2){
    \   00000044   0x9901             LDR      R1,[SP, #+4]
    \   00000046   0x4281             CMP      R1,R0
    \   00000048   0xD110             BNE.N    ??MENUAVANCADO_cadastra_senha_admin_3
-    202              // Desenha a mensagem confirmando a gravação
-    203              // da nova senha
-    204              STRING_write_to_internal(CLEAR_DISPLAY,
-    205                                      (char*)STRING_mensagem_cadastro_senha[idioma][0],
-    206                                      (char*)STRING_mensagem_cadastro_senha[idioma][1]);
+    205              // Desenha a mensagem confirmando a gravação
+    206              // da nova senha
+    207              STRING_write_to_internal(CLEAR_DISPLAY,
+    208                                      (char*)STRING_mensagem_cadastro_senha[idioma][0],
+    209                                      (char*)STRING_mensagem_cadastro_senha[idioma][1]);
    \   0000004A   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   0000004C   0x....             LDR.N    R0,??DataTable7_9
    \   0000004E   0xEB10 0x00C4      ADDS     R0,R0,R4, LSL #+3
@@ -413,18 +421,18 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   00000058   0xF850 0x1034      LDR      R1,[R0, R4, LSL #+3]
    \   0000005C   0x2000             MOVS     R0,#+0
    \   0000005E   0x.... 0x....      BL       STRING_write_to_internal
-    207              
-    208              // Grava a nova senha na memória flash
-    209              PARAMETROS_grava(ADR_SENHA_ADMIN,(void*)&s1);    
+    210              
+    211              // Grava a nova senha na memória flash
+    212              PARAMETROS_grava(ADR_SENHA_ADMIN,(void*)&s1);    
    \   00000062   0xA901             ADD      R1,SP,#+4
    \   00000064   0x2023             MOVS     R0,#+35
    \   00000066   0x.... 0x....      BL       PARAMETROS_grava
    \   0000006A   0xE00B             B.N      ??MENUAVANCADO_cadastra_senha_admin_4
-    210            }
-    211            else
-    212              STRING_write_to_internal(CLEAR_DISPLAY,
-    213                                      (char*)STRING_mensagem_cadastro_senha_erro[idioma][0],
-    214                                      (char*)STRING_mensagem_cadastro_senha_erro[idioma][1]);
+    213            }
+    214            else
+    215              STRING_write_to_internal(CLEAR_DISPLAY,
+    216                                      (char*)STRING_mensagem_cadastro_senha_erro[idioma][0],
+    217                                      (char*)STRING_mensagem_cadastro_senha_erro[idioma][1]);
    \                     ??MENUAVANCADO_cadastra_senha_admin_3:
    \   0000006C   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   0000006E   0x....             LDR.N    R0,??DataTable7_10
@@ -435,37 +443,37 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   0000007A   0xF850 0x1034      LDR      R1,[R0, R4, LSL #+3]
    \   0000007E   0x2000             MOVS     R0,#+0
    \   00000080   0x.... 0x....      BL       STRING_write_to_internal
-    215             
-    216            vTaskDelay(3000);
+    218             
+    219            vTaskDelay(3000);
    \                     ??MENUAVANCADO_cadastra_senha_admin_4:
    \   00000084   0xF640 0x30B8      MOVW     R0,#+3000
    \   00000088   0x.... 0x....      BL       vTaskDelay
-    217          }
+    220          }
    \                     ??MENUAVANCADO_cadastra_senha_admin_1:
    \   0000008C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
-    218          /***********************************************************************************
-    219          *       Descrição       :       Faz o reset dos totalizadores permanentes da 
-    220          *                               máquina
-    221          *       Parametros      :       nenhum
-    222          *       Retorno         :       nenhum
-    223          ***********************************************************************************/
+    221          /***********************************************************************************
+    222          *       Descrição       :       Faz o reset dos totalizadores permanentes da 
+    223          *                               máquina
+    224          *       Parametros      :       nenhum
+    225          *       Retorno         :       nenhum
+    226          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    224          void MENUAVANCADO_reset_totalizadores_permanentes(void){
+    227          void MENUAVANCADO_reset_totalizadores_permanentes(void){
    \                     MENUAVANCADO_reset_totalizadores_permanentes:
    \   00000000   0xB510             PUSH     {R4,LR}
-    225            unsigned char idioma = APLICACAO_carrega_idioma();    
+    228            unsigned char idioma = APLICACAO_carrega_idioma();    
    \   00000002   0x.... 0x....      BL       APLICACAO_carrega_idioma
    \   00000006   0x0004             MOVS     R4,R0
-    226            
-    227            if(TELASENHA_checa_contrasenha(NULL)){    
+    229            
+    230            if(TELASENHA_checa_contrasenha(NULL)){    
    \   00000008   0x2000             MOVS     R0,#+0
    \   0000000A   0x.... 0x....      BL       TELASENHA_checa_contrasenha
    \   0000000E   0x2800             CMP      R0,#+0
    \   00000010   0xD028             BEQ.N    ??MENUAVANCADO_reset_totalizadores_permanentes_0
-    228              STRING_write_to_internal(CLEAR_DISPLAY,
-    229                                      (char*)STRING_mensagem_reinicia_totalizadores[idioma][0],
-    230                                      (char*)STRING_mensagem_reinicia_totalizadores[idioma][1]);    
+    231              STRING_write_to_internal(CLEAR_DISPLAY,
+    232                                      (char*)STRING_mensagem_reinicia_totalizadores[idioma][0],
+    233                                      (char*)STRING_mensagem_reinicia_totalizadores[idioma][1]);    
    \   00000012   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   00000014   0x....             LDR.N    R0,??DataTable7_11
    \   00000016   0xEB10 0x00C4      ADDS     R0,R0,R4, LSL #+3
@@ -475,44 +483,44 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   00000020   0xF850 0x1034      LDR      R1,[R0, R4, LSL #+3]
    \   00000024   0x2000             MOVS     R0,#+0
    \   00000026   0x.... 0x....      BL       STRING_write_to_internal
-    231                     
-    232              FATURAMENTO_set_contagem_parcial(0);
+    234                     
+    235              FATURAMENTO_set_contagem_parcial(0);
    \   0000002A   0x2000             MOVS     R0,#+0
    \   0000002C   0x.... 0x....      BL       FATURAMENTO_set_contagem_parcial
-    233              FATURAMENTO_set_arrecadacao_parcial(0);
+    236              FATURAMENTO_set_arrecadacao_parcial(0);
    \   00000030   0x2000             MOVS     R0,#+0
    \   00000032   0x.... 0x....      BL       FATURAMENTO_set_arrecadacao_parcial
-    234              FATURAMENTO_set_contagem_cartao_parcial(0);
+    237              FATURAMENTO_set_contagem_cartao_parcial(0);
    \   00000036   0x2000             MOVS     R0,#+0
    \   00000038   0x.... 0x....      BL       FATURAMENTO_set_contagem_cartao_parcial
-    235              FATURAMENTO_set_arrecadacao_cartao_parcial(0);
+    238              FATURAMENTO_set_arrecadacao_cartao_parcial(0);
    \   0000003C   0x2000             MOVS     R0,#+0
    \   0000003E   0x.... 0x....      BL       FATURAMENTO_set_arrecadacao_cartao_parcial
-    236                  
-    237              FATURAMENTO_set_contagem_total(0);
+    239                  
+    240              FATURAMENTO_set_contagem_total(0);
    \   00000042   0x2000             MOVS     R0,#+0
    \   00000044   0x.... 0x....      BL       FATURAMENTO_set_contagem_total
-    238              FATURAMENTO_set_arrecadacao_total(0);
+    241              FATURAMENTO_set_arrecadacao_total(0);
    \   00000048   0x2000             MOVS     R0,#+0
    \   0000004A   0x.... 0x....      BL       FATURAMENTO_set_arrecadacao_total
-    239              FATURAMENTO_set_contagem_cartao_total(0);
+    242              FATURAMENTO_set_contagem_cartao_total(0);
    \   0000004E   0x2000             MOVS     R0,#+0
    \   00000050   0x.... 0x....      BL       FATURAMENTO_set_contagem_cartao_total
-    240              FATURAMENTO_set_arrecadacao_cartao_total(0);    
+    243              FATURAMENTO_set_arrecadacao_cartao_total(0);    
    \   00000054   0x2000             MOVS     R0,#+0
    \   00000056   0x.... 0x....      BL       FATURAMENTO_set_arrecadacao_cartao_total
-    241              
-    242              FTP_formata_fila(); // Apaga os eventos de troca de preço da pipoca
+    244              
+    245              FTP_formata_fila(); // Apaga os eventos de troca de preço da pipoca
    \   0000005A   0x.... 0x....      BL       FTP_formata_fila
-    243              
-    244              FATURAMENTO_reinicia_pipocas_teste();
+    246              
+    247              FATURAMENTO_reinicia_pipocas_teste();
    \   0000005E   0x.... 0x....      BL       FATURAMENTO_reinicia_pipocas_teste
    \   00000062   0xE00B             B.N      ??MENUAVANCADO_reset_totalizadores_permanentes_1
-    245            }
-    246            else{    
-    247              STRING_write_to_internal(CLEAR_DISPLAY,
-    248                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
-    249                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
+    248            }
+    249            else{    
+    250              STRING_write_to_internal(CLEAR_DISPLAY,
+    251                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
+    252                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
    \                     ??MENUAVANCADO_reset_totalizadores_permanentes_0:
    \   00000064   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   00000066   0x....             LDR.N    R0,??DataTable7_12
@@ -523,44 +531,44 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   00000072   0xF850 0x1034      LDR      R1,[R0, R4, LSL #+3]
    \   00000076   0x2000             MOVS     R0,#+0
    \   00000078   0x.... 0x....      BL       STRING_write_to_internal
-    250            }
-    251            
-    252            vTaskDelay(3000);
+    253            }
+    254            
+    255            vTaskDelay(3000);
    \                     ??MENUAVANCADO_reset_totalizadores_permanentes_1:
    \   0000007C   0xF640 0x30B8      MOVW     R0,#+3000
    \   00000080   0x.... 0x....      BL       vTaskDelay
-    253          }
+    256          }
    \   00000084   0xBD10             POP      {R4,PC}          ;; return
-    254          /***********************************************************************************
-    255          *       Descrição       :       Entra no menu para configuração dos
-    256          *                               ganhos do PID do motor
-    257          *       Parametros      :       nenhum
-    258          *       Retorno         :       nenhum
-    259          ***********************************************************************************/
+    257          /***********************************************************************************
+    258          *       Descrição       :       Entra no menu para configuração dos
+    259          *                               ganhos do PID do motor
+    260          *       Parametros      :       nenhum
+    261          *       Retorno         :       nenhum
+    262          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    260          void MENUAVANCADO_menu_ganhos_PID(void){
+    263          void MENUAVANCADO_menu_ganhos_PID(void){
    \                     MENUAVANCADO_menu_ganhos_PID:
    \   00000000   0xB510             PUSH     {R4,LR}
-    261            unsigned char idioma = APLICACAO_carrega_idioma();    
+    264            unsigned char idioma = APLICACAO_carrega_idioma();    
    \   00000002   0x.... 0x....      BL       APLICACAO_carrega_idioma
    \   00000006   0x0004             MOVS     R4,R0
-    262            
-    263            // Menu para configuração 
-    264            // dos parâmetros do PID
-    265            // do motor
-    266            if(TELASENHA_checa_contrasenha(NULL)){    
+    265            
+    266            // Menu para configuração 
+    267            // dos parâmetros do PID
+    268            // do motor
+    269            if(TELASENHA_checa_contrasenha(NULL)){    
    \   00000008   0x2000             MOVS     R0,#+0
    \   0000000A   0x.... 0x....      BL       TELASENHA_checa_contrasenha
    \   0000000E   0x2800             CMP      R0,#+0
    \   00000010   0xD10B             BNE.N    ??MENUAVANCADO_menu_ganhos_PID_0
-    267              
-    268              
-    269            }
-    270            else{    
-    271              STRING_write_to_internal(CLEAR_DISPLAY,
-    272                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
-    273                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
+    270              
+    271              
+    272            }
+    273            else{    
+    274              STRING_write_to_internal(CLEAR_DISPLAY,
+    275                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
+    276                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
    \   00000012   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   00000014   0x....             LDR.N    R0,??DataTable7_12
    \   00000016   0xEB10 0x00C4      ADDS     R0,R0,R4, LSL #+3
@@ -570,67 +578,67 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   00000020   0xF850 0x1034      LDR      R1,[R0, R4, LSL #+3]
    \   00000024   0x2000             MOVS     R0,#+0
    \   00000026   0x.... 0x....      BL       STRING_write_to_internal
-    274            }
-    275            
-    276            vTaskDelay(3000);
+    277            }
+    278            
+    279            vTaskDelay(3000);
    \                     ??MENUAVANCADO_menu_ganhos_PID_0:
    \   0000002A   0xF640 0x30B8      MOVW     R0,#+3000
    \   0000002E   0x.... 0x....      BL       vTaskDelay
-    277          }
+    280          }
    \   00000032   0xBD10             POP      {R4,PC}          ;; return
-    278          /***********************************************************************************
-    279          *       Descrição       :       Configura o número de série da máquina
-    280          *       Parametros      :       nenhum
-    281          *       Retorno         :       nenhum
-    282          ***********************************************************************************/
+    281          /***********************************************************************************
+    282          *       Descrição       :       Configura o número de série da máquina
+    283          *       Parametros      :       nenhum
+    284          *       Retorno         :       nenhum
+    285          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    283          void MENUAVANCADO_configura_numero_serie(void){
+    286          void MENUAVANCADO_configura_numero_serie(void){
    \                     MENUAVANCADO_configura_numero_serie:
    \   00000000   0xB51C             PUSH     {R2-R4,LR}
-    284            unsigned char idioma = APLICACAO_carrega_idioma();    
+    287            unsigned char idioma = APLICACAO_carrega_idioma();    
    \   00000002   0x.... 0x....      BL       APLICACAO_carrega_idioma
    \   00000006   0x0004             MOVS     R4,R0
-    285            
-    286            if(TELASENHA_checa_contrasenha(NULL)){ 
+    288            
+    289            if(TELASENHA_checa_contrasenha(NULL)){ 
    \   00000008   0x2000             MOVS     R0,#+0
    \   0000000A   0x.... 0x....      BL       TELASENHA_checa_contrasenha
    \   0000000E   0x2800             CMP      R0,#+0
    \   00000010   0xD023             BEQ.N    ??MENUAVANCADO_configura_numero_serie_0
-    287                      
-    288               unsigned int numero = 0;
+    290                      
+    291               unsigned int numero = 0;
    \   00000012   0x2000             MOVS     R0,#+0
    \   00000014   0x9001             STR      R0,[SP, #+4]
-    289               PARAMETROS_le(ADR_NUMERO_SERIE,(void*)&numero);
+    292               PARAMETROS_le(ADR_NUMERO_SERIE,(void*)&numero);
    \   00000016   0xA901             ADD      R1,SP,#+4
    \   00000018   0x2024             MOVS     R0,#+36
    \   0000001A   0x.... 0x....      BL       PARAMETROS_le
-    290               
-    291               if(numero>999999)
+    293               
+    294               if(numero>999999)
    \   0000001E   0x9801             LDR      R0,[SP, #+4]
    \   00000020   0x....             LDR.N    R1,??DataTable7_13  ;; 0xf4240
    \   00000022   0x4288             CMP      R0,R1
    \   00000024   0xD301             BCC.N    ??MENUAVANCADO_configura_numero_serie_1
-    292                 numero = 100;
+    295                 numero = 100;
    \   00000026   0x2064             MOVS     R0,#+100
    \   00000028   0x9001             STR      R0,[SP, #+4]
-    293               
-    294               if(numero<1200)
+    296               
+    297               if(numero<1200)
    \                     ??MENUAVANCADO_configura_numero_serie_1:
    \   0000002A   0x9801             LDR      R0,[SP, #+4]
    \   0000002C   0xF5B0 0x6F96      CMP      R0,#+1200
    \   00000030   0xD202             BCS.N    ??MENUAVANCADO_configura_numero_serie_2
-    295                 numero = 1200;
+    298                 numero = 1200;
    \   00000032   0xF44F 0x6096      MOV      R0,#+1200
    \   00000036   0x9001             STR      R0,[SP, #+4]
-    296               
-    297               numero = MEI_entry((char*)STRING_titulo_edita_serial[idioma],
+    299               
+    300               numero = MEI_entry((char*)STRING_titulo_edita_serial[idioma],
                                ^
 Warning[Pe223]: function "MEI_entry" declared implicitly
-    298                                  "%06d",
-    299                                  numero,
-    300                                  1,
-    301                                  999999);
+    301                                  "%06d",
+    302                                  numero,
+    303                                  1,
+    304                                  999999);
    \                     ??MENUAVANCADO_configura_numero_serie_2:
    \   00000038   0x....             LDR.N    R0,??DataTable7_14  ;; 0xf423f
    \   0000003A   0x9000             STR      R0,[SP, #+0]
@@ -642,17 +650,17 @@ Warning[Pe223]: function "MEI_entry" declared implicitly
    \   00000046   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
    \   0000004A   0x.... 0x....      BL       MEI_entry
    \   0000004E   0x9001             STR      R0,[SP, #+4]
-    302               
-    303               PARAMETROS_grava(ADR_NUMERO_SERIE,(void*)&numero);
+    305               
+    306               PARAMETROS_grava(ADR_NUMERO_SERIE,(void*)&numero);
    \   00000050   0xA901             ADD      R1,SP,#+4
    \   00000052   0x2024             MOVS     R0,#+36
    \   00000054   0x.... 0x....      BL       PARAMETROS_grava
    \   00000058   0xE00B             B.N      ??MENUAVANCADO_configura_numero_serie_3
-    304            }
-    305            else{    
-    306              STRING_write_to_internal(CLEAR_DISPLAY,
-    307                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
-    308                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
+    307            }
+    308            else{    
+    309              STRING_write_to_internal(CLEAR_DISPLAY,
+    310                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][0],
+    311                                      (char*)STRING_mensagem_reinicia_totalizadores_erro[idioma][1]);            
    \                     ??MENUAVANCADO_configura_numero_serie_0:
    \   0000005A   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   0000005C   0x....             LDR.N    R0,??DataTable7_12
@@ -663,51 +671,51 @@ Warning[Pe223]: function "MEI_entry" declared implicitly
    \   00000068   0xF850 0x1034      LDR      R1,[R0, R4, LSL #+3]
    \   0000006C   0x2000             MOVS     R0,#+0
    \   0000006E   0x.... 0x....      BL       STRING_write_to_internal
-    309            }
-    310          }
+    312            }
+    313          }
    \                     ??MENUAVANCADO_configura_numero_serie_3:
    \   00000072   0xBD13             POP      {R0,R1,R4,PC}    ;; return
-    311          /***********************************************************************************
-    312          *       Descrição       :       Tela para configuração da hora e data
-    313          *                               do sistema
-    314          *       Parametros      :       nenhum
-    315          *       Retorno         :       nenhum
-    316          ***********************************************************************************/
+    314          /***********************************************************************************
+    315          *       Descrição       :       Tela para configuração da hora e data
+    316          *                               do sistema
+    317          *       Parametros      :       nenhum
+    318          *       Retorno         :       nenhum
+    319          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    317          void MENUAVANCADO_configura_hora_data(void){
+    320          void MENUAVANCADO_configura_hora_data(void){
    \                     MENUAVANCADO_configura_hora_data:
    \   00000000   0xB580             PUSH     {R7,LR}
-    318            
-    319            IAR_entry();
+    321            
+    322            IAR_entry();
                    ^
 Warning[Pe223]: function "IAR_entry" declared implicitly
    \   00000002   0x.... 0x....      BL       IAR_entry
-    320          }
+    323          }
    \   00000006   0xBD01             POP      {R0,PC}          ;; return
-    321          /***********************************************************************************
-    322          *       Descrição       :       Tela para configuração do flag que habilita
-    323          *                               a correção de erro no motor do ar
-    324          *       Parametros      :       nenhum
-    325          *       Retorno         :       nenhum
-    326          ***********************************************************************************/
+    324          /***********************************************************************************
+    325          *       Descrição       :       Tela para configuração do flag que habilita
+    326          *                               a correção de erro no motor do ar
+    327          *       Parametros      :       nenhum
+    328          *       Retorno         :       nenhum
+    329          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    327          void MENUAVANCADO_configura_flag_correcao_erro(void){
+    330          void MENUAVANCADO_configura_flag_correcao_erro(void){
    \                     MENUAVANCADO_configura_flag_correcao_erro:
    \   00000000   0xB510             PUSH     {R4,LR}
    \   00000002   0xB082             SUB      SP,SP,#+8
-    328            unsigned char idioma = APLICACAO_carrega_idioma();
+    331            unsigned char idioma = APLICACAO_carrega_idioma();
    \   00000004   0x.... 0x....      BL       APLICACAO_carrega_idioma
    \   00000008   0x0004             MOVS     R4,R0
-    329            unsigned char flag;
-    330            
-    331            PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
+    332            unsigned char flag;
+    333            
+    334            PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
    \   0000000A   0xA900             ADD      R1,SP,#+0
    \   0000000C   0x2040             MOVS     R0,#+64
    \   0000000E   0x.... 0x....      BL       PARAMETROS_le
-    332            
-    333            flag = MEF_entry("ERRO MOTOR",flag,"ON ","OFF");    
+    335            
+    336            flag = MEF_entry("ERRO MOTOR",flag,"ON ","OFF");    
                           ^
 Warning[Pe223]: function "MEF_entry" declared implicitly
    \   00000012   0x....             ADR.N    R3,??DataTable7  ;; "OFF"
@@ -716,33 +724,33 @@ Warning[Pe223]: function "MEF_entry" declared implicitly
    \   0000001A   0x....             LDR.N    R0,??DataTable7_17
    \   0000001C   0x.... 0x....      BL       MEF_entry
    \   00000020   0xF88D 0x0000      STRB     R0,[SP, #+0]
-    334            
-    335            PARAMETROS_grava(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
+    337            
+    338            PARAMETROS_grava(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
    \   00000024   0xA900             ADD      R1,SP,#+0
    \   00000026   0x2040             MOVS     R0,#+64
    \   00000028   0x.... 0x....      BL       PARAMETROS_grava
-    336          }
+    339          }
    \   0000002C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
-    337          /***********************************************************************************
-    338          *       Descrição       :      Tela para configuração do fator de compensação
-    339          *                              do controle de temperatura
-    340          *       Parametros      :       nenhum
-    341          *       Retorno         :       nenhum
-    342          ***********************************************************************************/
+    340          /***********************************************************************************
+    341          *       Descrição       :      Tela para configuração do fator de compensação
+    342          *                              do controle de temperatura
+    343          *       Parametros      :       nenhum
+    344          *       Retorno         :       nenhum
+    345          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    343          void MENUAVANCADO_configura_fator_compensavao(void){
+    346          void MENUAVANCADO_configura_fator_compensavao(void){
    \                     MENUAVANCADO_configura_fator_compensavao:
    \   00000000   0xB500             PUSH     {LR}
    \   00000002   0xB083             SUB      SP,SP,#+12
-    344            unsigned int valor;
-    345          
-    346            PARAMETROS_le(ADR_FATOR_COMPENSADOR,(void*)&valor);
+    347            unsigned int valor;
+    348          
+    349            PARAMETROS_le(ADR_FATOR_COMPENSADOR,(void*)&valor);
    \   00000004   0xA901             ADD      R1,SP,#+4
    \   00000006   0x2041             MOVS     R0,#+65
    \   00000008   0x.... 0x....      BL       PARAMETROS_le
-    347          
-    348            valor = MEI_entry("FATOR TEMP","%1d oC",valor,1,3);    
+    350          
+    351            valor = MEI_entry("FATOR TEMP","%1d oC",valor,1,3);    
                            ^
 Warning[Pe223]: function "MEI_entry" declared implicitly
    \   0000000C   0x2003             MOVS     R0,#+3
@@ -753,12 +761,12 @@ Warning[Pe223]: function "MEI_entry" declared implicitly
    \   00000016   0x....             LDR.N    R0,??DataTable7_19
    \   00000018   0x.... 0x....      BL       MEI_entry
    \   0000001C   0x9001             STR      R0,[SP, #+4]
-    349            
-    350            PARAMETROS_grava(ADR_FATOR_COMPENSADOR,(void*)&valor);
+    352            
+    353            PARAMETROS_grava(ADR_FATOR_COMPENSADOR,(void*)&valor);
    \   0000001E   0xA901             ADD      R1,SP,#+4
    \   00000020   0x2041             MOVS     R0,#+65
    \   00000022   0x.... 0x....      BL       PARAMETROS_grava
-    351          }
+    354          }
    \   00000026   0xBD07             POP      {R0-R2,PC}       ;; return
 
    \                                 In section .text, align 4, keep-with-next
@@ -900,9 +908,9 @@ Warning[Pe223]: function "MEI_entry" declared implicitly
    \              0x6F 0x43    
    \              0x00         
    \   00000007   0x00               DC8 0
-    352          /***********************************************************************************
-    353          *       Fim do arquivo
-    354          ***********************************************************************************/
+    355          /***********************************************************************************
+    356          *       Fim do arquivo
+    357          ***********************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -1005,14 +1013,14 @@ Warning[Pe223]: function "MEI_entry" declared implicitly
       48  MENUAVANCADO_entry
       36  MENUAVANCADO_func
       52  MENUAVANCADO_menu_ganhos_PID
-     254  MENUAVANCADO_padrao_fabrica
+     266  MENUAVANCADO_padrao_fabrica
      134  MENUAVANCADO_reset_totalizadores_permanentes
 
  
  104 bytes in section .rodata
- 920 bytes in section .text
+ 932 bytes in section .text
  
- 920 bytes of CODE  memory
+ 932 bytes of CODE  memory
  104 bytes of CONST memory
 
 Errors: none

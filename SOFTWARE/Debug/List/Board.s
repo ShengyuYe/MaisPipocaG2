@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  14:33:32 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  15:39:46 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -612,9 +612,9 @@ BOARD_timer_tick:
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??BOARD_timer_tick_11
-//  193     APLICACAO_tempo_compensacao = 120000;
+//  193     APLICACAO_tempo_compensacao = 3*60*1000;
         LDR.W    R0,??DataTable12_14
-        LDR.W    R1,??DataTable12_15  ;; 0x1d4c0
+        LDR.W    R1,??DataTable12_15  ;; 0x2bf20
         STR      R1,[R0, #+0]
 //  194     if(PREPARACAO_compensador)
         LDR.W    R0,??DataTable12_16
@@ -1690,7 +1690,7 @@ BOARD_reset_tempo_propaganda:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_15:
-        DC32     0x1d4c0
+        DC32     0x2bf20
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0

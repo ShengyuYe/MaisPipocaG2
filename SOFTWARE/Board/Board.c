@@ -190,7 +190,7 @@ void BOARD_timer_tick(void){
     APLICACAO_tempo_mensagem--;
   
   if(!APLICACAO_tempo_compensacao){
-    APLICACAO_tempo_compensacao = 120000;
+    APLICACAO_tempo_compensacao = 3*60*1000;
     if(PREPARACAO_compensador)
       PREPARACAO_compensador--;
   }
