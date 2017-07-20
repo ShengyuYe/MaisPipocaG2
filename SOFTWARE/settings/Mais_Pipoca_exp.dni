@@ -87,16 +87,7 @@ Exclusions=
 mode=0
 [Breakpoints2]
 Bp0=_ 1 "EMUL_DATA" "BILL_INICIALIZA" 0 0 0 0 4294967295
-Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c}.112.3" 0 0 1 "" 0 "" 0
-Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c}.127.3" 0 0 1 "" 0 "" 0
-Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c}.142.3" 0 0 1 "" 0 "" 0
-Bp4=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Drivers\FILESYSTEM\diskio.c}.96.3" 0 0 1 "" 0 "" 0
-Bp5=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Drivers\FILESYSTEM\diskio.c}.114.3" 0 0 1 "" 0 "" 0
-Bp6=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Drivers\FILESYSTEM\diskio.c}.132.3" 0 0 1 "" 0 "" 0
-Bp7=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Drivers\FILESYSTEM\diskio.c}.149.3" 0 0 1 "" 0 "" 0
-Bp8=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c}.84.7" 0 0 1 "" 0 "" 0
-Bp9=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Drivers\FILESYSTEM\sd_diskio.c}.100.3" 0 0 1 "" 0 "" 0
-Count=10
+Count=1
 [Aliases]
 A0=_ "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.2\Kernel\list.c" ""
 A1=_ "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.2\Kernel\portasm.s" ""
