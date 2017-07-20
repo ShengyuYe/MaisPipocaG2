@@ -103,7 +103,7 @@
       <file>$PROJ_DIR$\Debug\Obj\port.o</file>
       <file>$PROJ_DIR$\Debug\List\mdb_coin.lst</file>
       <file>$PROJ_DIR$\Debug\List\menu_operacao.lst</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\SPI_WRAPPER.H</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\spi_wrapper.h</file>
       <file>$PROJ_DIR$\Debug\Obj\spi_wrapper.o</file>
       <file>$PROJ_DIR$\Kernel\queue.h</file>
       <file>$PROJ_DIR$\Potencia\controleTemperatura.h</file>
@@ -447,6 +447,7 @@
       <file>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_MDB.c</file>
       <file>$PROJ_DIR$\Debug\List\tasks.lst</file>
       <file>$PROJ_DIR$\Strings\strings.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\MaisPipoca_G2_2_0_18.HEX</file>
       <file>$PROJ_DIR$\Debug\Exe\MaisPipoca_G2_2_0_17.HEX</file>
     </outputs>
     <file>
@@ -812,10 +813,6 @@
           <name>ICCARM</name>
           <file> 303 68 232 139 278 188 334 358 84 144 165 370 306 345 123 315 263 122 361 402 88 151 63 152 155 167 86 53 164 99 268 66 440 427 228 201 362 154 350 324 371 173 291 267 203 194 124 214 109 196 242 323 260 292 366 200 414 70 72 246 207 437 415 341 385 386 132 104 100 205 112 313</file>
         </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 303 68 232 139 278 188 334 358 84 144 165 370 306 345 123 315 263 122 361 402 88 151 63 152 155 167 86 53 164 99 268 66 440 427 228 201 362 154 350 324 371 173 291 267 203 194 124 214 109 196 242 323 260 292 366 200 414 70 72 246 207 437 415 341 385 386 132 104 100 205 112 313</file>
-        </tool>
       </inputs>
     </file>
     <file>
@@ -856,6 +853,10 @@
       <inputs>
         <tool>
           <name>ICCARM</name>
+          <file> 303 68 232 139 278 188 334 358 84 144 165 370 306 345 123 315 263 122 361 402 88 151 63 152 155 167 86 53 164 99 268 66 440 427 228 201 362 154 350 324 371 173 291 267 203 194 124 214 109 196 242 323 260 292 366 200 414 70 72 246 207 437 415 341 385 386 132 104 100 205 112</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
           <file> 303 68 232 139 278 188 334 358 84 144 165 370 306 345 123 315 263 122 361 402 88 151 63 152 155 167 86 53 164 99 268 66 440 427 228 201 362 154 350 324 371 173 291 267 203 194 124 214 109 196 242 323 260 292 366 200 414 70 72 246 207 437 415 341 385 386 132 104 100 205 112</file>
         </tool>
       </inputs>

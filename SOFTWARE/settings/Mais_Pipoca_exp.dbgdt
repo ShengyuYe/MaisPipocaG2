@@ -44,7 +44,7 @@
         <expressions>
           
           
-        <item>PROTOCOLO_bufferRx</item><item>PROTOCOLO_bufferTx</item><item>PROTOCOLO_bufferTmp</item><item>PARAMETROS_buffer</item><item>buffer_filesystem</item><item>referencia_rampa</item><item/></expressions>
+        <item>PROTOCOLO_bufferRx</item><item>PROTOCOLO_bufferTx</item><item>PROTOCOLO_bufferTmp</item><item>PARAMETROS_buffer</item><item>buffer_filesystem</item><item>referencia_rampa</item><item>SMC_flag_bloqueio</item><item></item></expressions>
         <col-names>
           
           
@@ -63,7 +63,7 @@
       
       
       
-    <Wnd0>
+    <Wnd3>
         <Tabs>
           <Tab>
             <Identity>TabID-14705-24835</Identity>
@@ -71,24 +71,24 @@
             <Factory>Workspace</Factory>
             <Session>
               
-            <NodeDict><ExpandedNode>Mais_Pipoca_exp</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/APLICACAO</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/DRIVERS</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/DRIVERS/PROTOCOLO</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/PARAMETROS</ExpandedNode></NodeDict></Session>
+            <NodeDict><ExpandedNode>Mais_Pipoca_exp</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/APLICACAO</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/DRIVERS</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/PAGAMENTOS</ExpandedNode></NodeDict></Session>
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd0><Wnd1><Tabs><Tab><Identity>TabID-19344-3495</Identity><TabName>Terminal I/O</TabName><Factory>TerminalIO</Factory><Session/></Tab><Tab><Identity>TabID-18299-3515</Identity><TabName>Disassembly</TabName><Factory>Disassembly</Factory><Session/></Tab><Tab><Identity>TabID-9641-3472</Identity><TabName>Watch 1</TabName><Factory>WATCH_1</Factory></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd1></Windows>
+      <SelectedTab>0</SelectedTab></Wnd3><Wnd4><Tabs><Tab><Identity>TabID-19344-3495</Identity><TabName>Terminal I/O</TabName><Factory>TerminalIO</Factory><Session/></Tab><Tab><Identity>TabID-18299-3515</Identity><TabName>Disassembly</TabName><Factory>Disassembly</Factory><Session/></Tab><Tab><Identity>TabID-9641-3472</Identity><TabName>Watch 1</TabName><Factory>WATCH_1</Factory></Tab></Tabs><SelectedTab>1</SelectedTab></Wnd4><Wnd5><Tabs><Tab><Identity>TabID-18025-4122</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd5></Windows>
     <Editor>
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Aplicacao\Preparacao.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>252</YPos2><SelStart2>9987</SelStart2><SelEnd2>9987</SelEnd2></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Board\Board.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>174</YPos2><SelStart2>7331</SelStart2><SelEnd2>7331</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Kernel\portasm.s</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>87</YPos2><SelStart2>2756</SelStart2><SelEnd2>2756</SelEnd2></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Aplicacao\aplicacao.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>580</YPos2><SelStart2>24731</SelStart2><SelEnd2>24731</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Kernel\portasm.s</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>99</YPos2><SelStart2>3084</SelStart2><SelEnd2>3084</SelEnd2></Tab><ActiveTab>1</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\MDB\mdb.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>307</YPos2><SelStart2>12558</SelStart2><SelEnd2>12558</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\Pagamentos\supervisao_mdb_cashless.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>286</YPos2><SelStart2>11995</SelStart2><SelEnd2>12014</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\Pagamentos\supervisao_mdb_cashless.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>24</YPos2><SelStart2>1653</SelStart2><SelEnd2>1676</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\drivers\mdb\mdb.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>34</YPos2><SelStart2>1474</SelStart2><SelEnd2>1494</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\strings\mensagens.H</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>1803</YPos2><SelStart2>62175</SelStart2><SelEnd2>62209</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\Pagamentos\Supervisao_MDB.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>72</YPos2><SelStart2>3570</SelStart2><SelEnd2>3570</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\Pagamentos\Pagamentos.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>305</YPos2><SelStart2>13639</SelStart2><SelEnd2>13639</SelEnd2></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-032f4bc8><key>iaridepm.enu1</key></Toolbar-032f4bc8></Sizes></Row0><Row1><Sizes><Toolbar-0e164378><key>debuggergui.enu1</key></Toolbar-0e164378></Sizes></Row1></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>714</Bottom><Right>347</Right><x>-2</x><y>-2</y><xscreen>204</xscreen><yscreen>210</yscreen><sizeHorzCX>132813</sizeHorzCX><sizeHorzCY>268199</sizeHorzCY><sizeVertCX>227214</sizeVertCX><sizeVertCY>914432</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>714</Bottom><Right>364</Right><x>-2</x><y>-2</y><xscreen>202</xscreen><yscreen>205</yscreen><sizeHorzCX>131510</sizeHorzCX><sizeHorzCY>261814</sizeHorzCY><sizeVertCX>238281</sizeVertCX><sizeVertCY>914432</sizeVertCY></Rect></Wnd1></Sizes></Row0></Right><Bottom><Row0><Sizes/></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-02be5cd0><key>iaridepm.enu1</key></Toolbar-02be5cd0></Sizes></Row0><Row1><Sizes><Toolbar-12355d40><key>debuggergui.enu1</key></Toolbar-12355d40></Sizes></Row1></Top><Left><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>516</Bottom><Right>347</Right><x>-2</x><y>-2</y><xscreen>204</xscreen><yscreen>210</yscreen><sizeHorzCX>132813</sizeHorzCX><sizeHorzCY>268199</sizeHorzCY><sizeVertCX>227214</sizeVertCX><sizeVertCY>661558</sizeVertCY></Rect></Wnd3></Sizes></Row0></Left><Right><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>516</Bottom><Right>364</Right><x>-2</x><y>-2</y><xscreen>202</xscreen><yscreen>205</yscreen><sizeHorzCX>131510</sizeHorzCX><sizeHorzCY>261814</sizeHorzCY><sizeVertCX>238281</sizeVertCX><sizeVertCY>661558</sizeVertCY></Rect></Wnd4></Sizes></Row0></Right><Bottom><Row0><Sizes><Wnd5><Rect><Top>-2</Top><Left>-2</Left><Bottom>198</Bottom><Right>1538</Right><x>-2</x><y>-2</y><xscreen>1540</xscreen><yscreen>200</yscreen><sizeHorzCX>1002604</sizeHorzCX><sizeHorzCY>255428</sizeHorzCY><sizeVertCX>130208</sizeVertCX><sizeVertCY>255428</sizeVertCY></Rect></Wnd5></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Project>
 
