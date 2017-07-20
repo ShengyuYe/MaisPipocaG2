@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  11:07:00 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  13:24:13 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -334,20 +334,24 @@ SMDB_cashless_vend:
 //  116    unsigned char res=0;
         MOVS     R7,#+0
 //  117    eMDB_reply flag;
-//  118                                    
-//  119    SMDB_wait();
+//  118    eCASHLESS_VEND_RESULT resultado;
+//  119    unsigned short int pago;                                
+//  120    
+//  121    SMDB_wait();
           CFI FunCall SMDB_wait
         BL       SMDB_wait
-//  120    
-//  121    do flag = MDBCASHLESS_start_vend(valor,item);
+//  122    
+//  123    do flag = MDBCASHLESS_start_vend(&resultado,&pago,valor,item);
 ??SMDB_cashless_vend_0:
-        MOVS     R1,R5
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        MOVS     R0,R4
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        MOVS     R3,R5
+        UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+        MOVS     R2,R4
+        UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+        ADD      R1,SP,#+0
+        ADD      R0,SP,#+2
           CFI FunCall MDBCASHLESS_start_vend
         BL       MDBCASHLESS_start_vend
-//  122    while(flag!=MDB_OK && tentativas--);
+//  124    while(flag!=MDB_OK && tentativas--);
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BEQ.N    ??SMDB_cashless_vend_1
@@ -356,26 +360,26 @@ SMDB_cashless_vend:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         CMP      R1,#+0
         BNE.N    ??SMDB_cashless_vend_0
-//  123    
-//  124    if(flag==MDB_OK)
+//  125    
+//  126    if(flag==MDB_OK)
 ??SMDB_cashless_vend_1:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BNE.N    ??SMDB_cashless_vend_2
-//  125      res = 1;   
+//  127      res = 1;   
         MOVS     R7,#+1
-//  126    
-//  127    SMDB_release();      
+//  128    
+//  129    SMDB_release();      
 ??SMDB_cashless_vend_2:
           CFI FunCall SMDB_release
         BL       SMDB_release
-//  128    
-//  129    return res;
+//  130    
+//  131    return res;
         MOVS     R0,R7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         POP      {R1,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock4
-//  130 }
+//  132 }
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -389,14 +393,14 @@ SMDB_cashless_vend:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  131 /***********************************************************************************
-//  132 *       Fim do arquivo
-//  133 ***********************************************************************************/
+//  133 /***********************************************************************************
+//  134 *       Fim do arquivo
+//  135 ***********************************************************************************/
 // 
 //   4 bytes in section .bss
-// 202 bytes in section .text
+// 208 bytes in section .text
 // 
-// 202 bytes of CODE memory
+// 208 bytes of CODE memory
 //   4 bytes of DATA memory
 //
 //Errors: none
