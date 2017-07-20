@@ -639,6 +639,7 @@ void MTH_teste_musica(void){
   eTECLA tecla;
   char buffer_linha[17];
   unsigned char idioma = APLICACAO_carrega_idioma();    
+  unsigned char flag=0;
   
   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_menu_teste_musica[idioma],NULL);
       
@@ -647,15 +648,18 @@ void MTH_teste_musica(void){
     tecla = TECLADO_getch();
     switch(tecla){
       case TECLA_ENTER:
-           PLAYER_interrompeMusica();
-           vTaskDelay(5);
-           PLAYERWAVE_iniciaMusica(1,0);           
+           flag ^= 0xFF;
+           if(!flag)
+             PLAYER_interrompeMusica();             
            break;
       case TECLA_ESC:
            PLAYER_interrompeMusica();
            return;
     }
     
+    if(flag)
+      PLAYERWAVE_iniciaMusica(1,0);         
+
     sprintf(buffer_linha,"[%s]",PLAYERWAVE_verificaToque()?"PLAY":"STOP");
     STRING_write_to_internal(NO_CLEAR,NULL,buffer_linha);    
   }
@@ -672,6 +676,7 @@ void MTH_teste_locucoes(void){
   char buffer_linha[17];
   const char toques[3]={0,2,3};
   unsigned char indice=0;
+  unsigned char flag=0;
   
   
   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_menu_teste_vozes[idioma],NULL);
@@ -680,9 +685,9 @@ void MTH_teste_locucoes(void){
     tecla = TECLADO_getch();
     switch(tecla){
       case TECLA_ENTER:
-           PLAYER_interrompeMusica();        
-           vTaskDelay(5);
-           PLAYERWAVE_iniciaMusica(toques[indice],0);  
+           flag ^= 0xFF; 
+           if(!flag)
+             PLAYER_interrompeMusica();
            break;
       case TECLA_ESC:
            PLAYER_interrompeMusica();
@@ -697,6 +702,9 @@ void MTH_teste_locucoes(void){
              indice = 2;
            break;
     }
+    
+    if(flag&& !PLAYERWAVE_verificaToque())
+      PLAYERWAVE_iniciaMusica(toques[indice],0);              
     
     sprintf(buffer_linha,"[%s][i:%01d]",PLAYERWAVE_verificaToque()?"PLAY":"STOP",indice+1);
     STRING_write_to_internal(NO_CLEAR,NULL,buffer_linha);        

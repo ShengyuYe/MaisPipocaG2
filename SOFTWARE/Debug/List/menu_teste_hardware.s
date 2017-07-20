@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  15:39:30 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  15:52:31 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -1544,14 +1544,14 @@ MTH_tela_teste_p70:
 //  508     
 //  509     sprintf(buffer_linha,"%04d-[%s]",PAGAMENTOS_get_contagem_p70(),flag?"LOCK  ":"UNLOK");
 ??MTH_tela_teste_p70_1:
-        LDR.N    R5,??DataTable14_19
+        LDR.W    R5,??DataTable14_19
 ??MTH_tela_teste_p70_2:
           CFI FunCall PAGAMENTOS_get_contagem_p70
         BL       PAGAMENTOS_get_contagem_p70
         MOVS     R2,R0
         MOVS     R3,R5
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
-        LDR.N    R1,??DataTable14_20
+        LDR.W    R1,??DataTable14_20
         ADD      R0,SP,#+0
           CFI FunCall sprintf
         BL       sprintf
@@ -1994,18 +1994,21 @@ MTH_tela_teste_impressora:
         THUMB
 //  638 void MTH_teste_musica(void){
 MTH_teste_musica:
-        PUSH     {LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
-        SUB      SP,SP,#+20
-          CFI CFA R13+24
+          CFI R4 Frame(CFA, -8)
+          CFI CFA R13+8
+        SUB      SP,SP,#+24
+          CFI CFA R13+32
 //  639   eTECLA tecla;
 //  640   char buffer_linha[17];
 //  641   unsigned char idioma = APLICACAO_carrega_idioma();    
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
-//  642   
-//  643   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_menu_teste_musica[idioma],NULL);
+//  642   unsigned char flag=0;
+        MOVS     R4,#+0
+//  643   
+//  644   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_menu_teste_musica[idioma],NULL);
         MOVS     R2,#+0
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LDR.N    R1,??DataTable14_28
@@ -2014,22 +2017,25 @@ MTH_teste_musica:
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
         B.N      ??MTH_teste_musica_0
-//  644       
-//  645   for(;;){
-//  646             
-//  647     tecla = TECLADO_getch();
-//  648     switch(tecla){
-//  649       case TECLA_ENTER:
-//  650            PLAYER_interrompeMusica();
-//  651            vTaskDelay(5);
-//  652            PLAYERWAVE_iniciaMusica(1,0);           
-//  653            break;
-//  654       case TECLA_ESC:
-//  655            PLAYER_interrompeMusica();
-//  656            return;
-//  657     }
-//  658     
-//  659     sprintf(buffer_linha,"[%s]",PLAYERWAVE_verificaToque()?"PLAY":"STOP");
+//  645       
+//  646   for(;;){
+//  647             
+//  648     tecla = TECLADO_getch();
+//  649     switch(tecla){
+//  650       case TECLA_ENTER:
+//  651            flag ^= 0xFF;
+//  652            if(!flag)
+//  653              PLAYER_interrompeMusica();             
+//  654            break;
+//  655       case TECLA_ESC:
+//  656            PLAYER_interrompeMusica();
+//  657            return;
+//  658     }
+//  659     
+//  660     if(flag)
+//  661       PLAYERWAVE_iniciaMusica(1,0);         
+//  662 
+//  663     sprintf(buffer_linha,"[%s]",PLAYERWAVE_verificaToque()?"PLAY":"STOP");
 ??MTH_teste_musica_1:
         LDR.N    R2,??DataTable14_29
 ??MTH_teste_musica_2:
@@ -2037,7 +2043,7 @@ MTH_teste_musica:
         ADD      R0,SP,#+0
           CFI FunCall sprintf
         BL       sprintf
-//  660     STRING_write_to_internal(NO_CLEAR,NULL,buffer_linha);    
+//  664     STRING_write_to_internal(NO_CLEAR,NULL,buffer_linha);    
         ADD      R2,SP,#+0
         MOVS     R1,#+0
         MOVS     R0,#+1
@@ -2052,16 +2058,22 @@ MTH_teste_musica:
         CMP      R0,#+4
         BNE.N    ??MTH_teste_musica_4
 ??MTH_teste_musica_5:
+        EORS     R4,R4,#0xFF
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+0
+        BNE.N    ??MTH_teste_musica_6
           CFI FunCall PLAYER_interrompeMusica
         BL       PLAYER_interrompeMusica
-        MOVS     R0,#+5
-          CFI FunCall vTaskDelay
-        BL       vTaskDelay
+??MTH_teste_musica_6:
+??MTH_teste_musica_4:
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+0
+        BEQ.N    ??MTH_teste_musica_7
         MOVS     R1,#+0
         MOVS     R0,#+1
           CFI FunCall PLAYERWAVE_iniciaMusica
         BL       PLAYERWAVE_iniciaMusica
-??MTH_teste_musica_4:
+??MTH_teste_musica_7:
           CFI FunCall PLAYERWAVE_verificaToque
         BL       PLAYERWAVE_verificaToque
         CMP      R0,#+0
@@ -2071,46 +2083,49 @@ MTH_teste_musica:
 ??MTH_teste_musica_3:
           CFI FunCall PLAYER_interrompeMusica
         BL       PLAYER_interrompeMusica
-        ADD      SP,SP,#+20
-          CFI CFA R13+4
-        POP      {PC}             ;; return
+        ADD      SP,SP,#+24
+          CFI CFA R13+8
+        POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock14
-//  661   }
-//  662 }
-//  663 /***********************************************************************************
-//  664 *       Descrição       :       Interface para realizar o teste das
-//  665 *                               locuções
-//  666 *       Parametros      :       nenhum
-//  667 *       Retorno         :       nenhum
-//  668 ***********************************************************************************/
+//  665   }
+//  666 }
+//  667 /***********************************************************************************
+//  668 *       Descrição       :       Interface para realizar o teste das
+//  669 *                               locuções
+//  670 *       Parametros      :       nenhum
+//  671 *       Retorno         :       nenhum
+//  672 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock15 Using cfiCommon0
           CFI Function MTH_teste_locucoes
         THUMB
-//  669 void MTH_teste_locucoes(void){
+//  673 void MTH_teste_locucoes(void){
 MTH_teste_locucoes:
-        PUSH     {R4,LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
-        SUB      SP,SP,#+24
-          CFI CFA R13+32
-//  670   eTECLA tecla;
-//  671   unsigned char idioma = APLICACAO_carrega_idioma();    
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
+        SUB      SP,SP,#+28
+          CFI CFA R13+40
+//  674   eTECLA tecla;
+//  675   unsigned char idioma = APLICACAO_carrega_idioma();    
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
-//  672   char buffer_linha[17];
-//  673   const char toques[3]={0,2,3};
+//  676   char buffer_linha[17];
+//  677   const char toques[3]={0,2,3};
         ADD      R1,SP,#+0
         LDR.N    R2,??DataTable14_32
         LDR      R3,[R2, #0]
         STR      R3,[R1, #+0]
-//  674   unsigned char indice=0;
+//  678   unsigned char indice=0;
         MOVS     R4,#+0
-//  675   
-//  676   
-//  677   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_menu_teste_vozes[idioma],NULL);
+//  679   unsigned char flag=0;
+        MOVS     R5,#+0
+//  680   
+//  681   
+//  682   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_menu_teste_vozes[idioma],NULL);
         MOVS     R2,#+0
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LDR.N    R1,??DataTable14_33
@@ -2119,30 +2134,33 @@ MTH_teste_locucoes:
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
         B.N      ??MTH_teste_locucoes_0
-//  678   for(;;){
-//  679     
-//  680     tecla = TECLADO_getch();
-//  681     switch(tecla){
-//  682       case TECLA_ENTER:
-//  683            PLAYER_interrompeMusica();        
-//  684            vTaskDelay(5);
-//  685            PLAYERWAVE_iniciaMusica(toques[indice],0);  
-//  686            break;
-//  687       case TECLA_ESC:
-//  688            PLAYER_interrompeMusica();
-//  689            return;
-//  690       case TECLA_INC:
-//  691            indice = (indice+1) % 3;
-//  692            break;
-//  693       case TECLA_DEC:
-//  694            if(indice)
-//  695              indice--;
-//  696            else
-//  697              indice = 2;
-//  698            break;
-//  699     }
-//  700     
-//  701     sprintf(buffer_linha,"[%s][i:%01d]",PLAYERWAVE_verificaToque()?"PLAY":"STOP",indice+1);
+//  683   for(;;){
+//  684     
+//  685     tecla = TECLADO_getch();
+//  686     switch(tecla){
+//  687       case TECLA_ENTER:
+//  688            flag ^= 0xFF; 
+//  689            if(!flag)
+//  690              PLAYER_interrompeMusica();
+//  691            break;
+//  692       case TECLA_ESC:
+//  693            PLAYER_interrompeMusica();
+//  694            return;
+//  695       case TECLA_INC:
+//  696            indice = (indice+1) % 3;
+//  697            break;
+//  698       case TECLA_DEC:
+//  699            if(indice)
+//  700              indice--;
+//  701            else
+//  702              indice = 2;
+//  703            break;
+//  704     }
+//  705     
+//  706     if(flag&& !PLAYERWAVE_verificaToque())
+//  707       PLAYERWAVE_iniciaMusica(toques[indice],0);              
+//  708     
+//  709     sprintf(buffer_linha,"[%s][i:%01d]",PLAYERWAVE_verificaToque()?"PLAY":"STOP",indice+1);
 ??MTH_teste_locucoes_1:
         LDR.N    R2,??DataTable14_29
 ??MTH_teste_locucoes_2:
@@ -2152,7 +2170,7 @@ MTH_teste_locucoes:
         ADD      R0,SP,#+4
           CFI FunCall sprintf
         BL       sprintf
-//  702     STRING_write_to_internal(NO_CLEAR,NULL,buffer_linha);        
+//  710     STRING_write_to_internal(NO_CLEAR,NULL,buffer_linha);        
         ADD      R2,SP,#+4
         MOVS     R1,#+0
         MOVS     R0,#+1
@@ -2171,25 +2189,21 @@ MTH_teste_locucoes:
         CMP      R0,#+4
         BNE.N    ??MTH_teste_locucoes_4
 ??MTH_teste_locucoes_7:
+        EORS     R5,R5,#0xFF
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BNE.N    ??MTH_teste_locucoes_8
           CFI FunCall PLAYER_interrompeMusica
         BL       PLAYER_interrompeMusica
-        MOVS     R0,#+5
-          CFI FunCall vTaskDelay
-        BL       vTaskDelay
-        MOVS     R1,#+0
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        ADD      R0,SP,#+0
-        LDRB     R0,[R4, R0]
-          CFI FunCall PLAYERWAVE_iniciaMusica
-        BL       PLAYERWAVE_iniciaMusica
+??MTH_teste_locucoes_8:
         B.N      ??MTH_teste_locucoes_4
 ??MTH_teste_locucoes_3:
           CFI FunCall PLAYER_interrompeMusica
         BL       PLAYER_interrompeMusica
-        ADD      SP,SP,#+24
-          CFI CFA R13+8
-        POP      {R4,PC}          ;; return
-          CFI CFA R13+32
+        ADD      SP,SP,#+28
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
+          CFI CFA R13+40
 ??MTH_teste_locucoes_6:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         ADDS     R0,R4,#+1
@@ -2200,13 +2214,27 @@ MTH_teste_locucoes:
 ??MTH_teste_locucoes_5:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+0
-        BEQ.N    ??MTH_teste_locucoes_8
+        BEQ.N    ??MTH_teste_locucoes_9
         SUBS     R4,R4,#+1
-        B.N      ??MTH_teste_locucoes_9
-??MTH_teste_locucoes_8:
-        MOVS     R4,#+2
+        B.N      ??MTH_teste_locucoes_10
 ??MTH_teste_locucoes_9:
+        MOVS     R4,#+2
+??MTH_teste_locucoes_10:
 ??MTH_teste_locucoes_4:
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BEQ.N    ??MTH_teste_locucoes_11
+          CFI FunCall PLAYERWAVE_verificaToque
+        BL       PLAYERWAVE_verificaToque
+        CMP      R0,#+0
+        BNE.N    ??MTH_teste_locucoes_11
+        MOVS     R1,#+0
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        ADD      R0,SP,#+0
+        LDRB     R0,[R4, R0]
+          CFI FunCall PLAYERWAVE_iniciaMusica
+        BL       PLAYERWAVE_iniciaMusica
+??MTH_teste_locucoes_11:
           CFI FunCall PLAYERWAVE_verificaToque
         BL       PLAYERWAVE_verificaToque
         CMP      R0,#+0
@@ -2214,8 +2242,8 @@ MTH_teste_locucoes:
         LDR.N    R2,??DataTable14_31
         B.N      ??MTH_teste_locucoes_2
           CFI EndBlock cfiBlock15
-//  703   }  
-//  704 }
+//  711   }  
+//  712 }
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -2439,14 +2467,14 @@ MTH_teste_locucoes:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  705 /***********************************************************************************
-//  706 *       Fim do arquivo
-//  707 ***********************************************************************************/
+//  713 /***********************************************************************************
+//  714 *       Fim do arquivo
+//  715 ***********************************************************************************/
 // 
 //   316 bytes in section .rodata
-// 2 166 bytes in section .text
+// 2 202 bytes in section .text
 // 
-// 2 166 bytes of CODE  memory
+// 2 202 bytes of CODE  memory
 //   316 bytes of CONST memory
 //
 //Errors: none

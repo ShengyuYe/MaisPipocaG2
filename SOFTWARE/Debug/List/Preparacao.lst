@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  15:39:01 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  15:52:39 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -653,169 +653,167 @@ Warning[Pe223]: function "APLICACAO_tela_descanso" declared implicitly
     276            BOARD_liga_placa_instrucao(0);
    \   0000031A   0x2000             MOVS     R0,#+0
    \   0000031C   0x.... 0x....      BL       BOARD_liga_placa_instrucao
-    277            BOARD_liga_placa_instrucao(1);  
+    277            BOARD_liga_placa_instrucao(1);    
    \   00000320   0x2001             MOVS     R0,#+1
    \   00000322   0x.... 0x....      BL       BOARD_liga_placa_instrucao
     278            
-    279            //PAGAMENTOS_set_bloqueio(0);
-    280            
-    281            return SUCESSO;
+    279            return SUCESSO;
    \   00000326   0x2000             MOVS     R0,#+0
    \                     ??PREPARACAO_entry_9:
    \   00000328   0xB006             ADD      SP,SP,#+24
    \   0000032A   0xBD70             POP      {R4-R6,PC}       ;; return
-    282          }
-    283          /**********************************************************************************
-    284          *       Descrição       :       Atualiza o display frontal com o tempo restante
-    285          *                               do processo de preparo
-    286          *       Parametros      :       nenhum
-    287          *       Retorno         :       nenhum
-    288          **********************************************************************************/
+    280          }
+    281          /**********************************************************************************
+    282          *       Descrição       :       Atualiza o display frontal com o tempo restante
+    283          *                               do processo de preparo
+    284          *       Parametros      :       nenhum
+    285          *       Retorno         :       nenhum
+    286          **********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    289          void PREPARACAO_atualiza_info_tempo(unsigned char idioma,unsigned int tempo){
+    287          void PREPARACAO_atualiza_info_tempo(unsigned char idioma,unsigned int tempo){
    \                     PREPARACAO_atualiza_info_tempo:
    \   00000000   0xB510             PUSH     {R4,LR}
    \   00000002   0xB086             SUB      SP,SP,#+24
    \   00000004   0x0004             MOVS     R4,R0
-    290            char buffer_linha[17];
-    291            unsigned int minutos;
-    292            unsigned int segundos;
-    293            
-    294            minutos  = PREPARACAO_cnt_preparo/1000;
+    288            char buffer_linha[17];
+    289            unsigned int minutos;
+    290            unsigned int segundos;
+    291            
+    292            minutos  = PREPARACAO_cnt_preparo/1000;
    \   00000006   0x....             LDR.N    R0,??DataTable5_2
    \   00000008   0x6800             LDR      R0,[R0, #+0]
    \   0000000A   0xF44F 0x717A      MOV      R1,#+1000
    \   0000000E   0xFBB0 0xF2F1      UDIV     R2,R0,R1
-    295            segundos = minutos % 60;
+    293            segundos = minutos % 60;
    \   00000012   0x203C             MOVS     R0,#+60
    \   00000014   0xFBB2 0xF1F0      UDIV     R1,R2,R0
    \   00000018   0xFB00 0x2311      MLS      R3,R0,R1,R2
-    296            minutos  = minutos/60;
+    294            minutos  = minutos/60;
    \   0000001C   0x203C             MOVS     R0,#+60
    \   0000001E   0xFBB2 0xF2F0      UDIV     R2,R2,R0
-    297            
-    298            sprintf(buffer_linha,"  %01d:%02d  ",minutos,segundos);
+    295            
+    296            sprintf(buffer_linha,"  %01d:%02d  ",minutos,segundos);
    \   00000022   0x....             LDR.N    R1,??DataTable5_7
    \   00000024   0xA800             ADD      R0,SP,#+0
    \   00000026   0x.... 0x....      BL       sprintf
-    299            STRING_write_to_external(NO_CLEAR,(char*)STRING_mensagem_pipocas_prontas[idioma],buffer_linha);  
+    297            STRING_write_to_external(NO_CLEAR,(char*)STRING_mensagem_pipocas_prontas[idioma],buffer_linha);  
    \   0000002A   0xAA00             ADD      R2,SP,#+0
    \   0000002C   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   0000002E   0x....             LDR.N    R0,??DataTable5_8
    \   00000030   0xF850 0x1024      LDR      R1,[R0, R4, LSL #+2]
    \   00000034   0x2001             MOVS     R0,#+1
    \   00000036   0x.... 0x....      BL       STRING_write_to_external
-    300          }
+    298          }
    \   0000003A   0xB006             ADD      SP,SP,#+24
    \   0000003C   0xBD10             POP      {R4,PC}          ;; return
-    301          /**********************************************************************************
-    302          *       Descrição       :       Verifica se o ventilador está funcionando
-    303          *       Parametros      :       nenhum
-    304          *       Retorno         :       (unsigned char) maior do que zero se conseguir
-    305          *                               detectar o RPM do motor
-    306          **********************************************************************************/
+    299          /**********************************************************************************
+    300          *       Descrição       :       Verifica se o ventilador está funcionando
+    301          *       Parametros      :       nenhum
+    302          *       Retorno         :       (unsigned char) maior do que zero se conseguir
+    303          *                               detectar o RPM do motor
+    304          **********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    307          unsigned char PREPARACAO_verificaVentilador(void){
+    305          unsigned char PREPARACAO_verificaVentilador(void){
    \                     PREPARACAO_verificaVentilador:
    \   00000000   0xB510             PUSH     {R4,LR}
-    308            unsigned short int tempo=50000;  
+    306            unsigned short int tempo=50000;  
    \   00000002   0xF24C 0x3450      MOVW     R4,#+50000
-    309            
-    310            do{
-    311              
-    312              if(POTENCIA_getRPMmedido()>1000)
+    307            
+    308            do{
+    309              
+    310              if(POTENCIA_getRPMmedido()>1000)
    \                     ??PREPARACAO_verificaVentilador_0:
    \   00000006   0x.... 0x....      BL       POTENCIA_getRPMmedido
    \   0000000A   0xF5B0 0x7F7A      CMP      R0,#+1000
    \   0000000E   0xD901             BLS.N    ??PREPARACAO_verificaVentilador_1
-    313                return 1;
+    311                return 1;
    \   00000010   0x2001             MOVS     R0,#+1
    \   00000012   0xE008             B.N      ??PREPARACAO_verificaVentilador_2
-    314              else
-    315                vTaskDelay(1);
+    312              else
+    313                vTaskDelay(1);
    \                     ??PREPARACAO_verificaVentilador_1:
    \   00000014   0x2001             MOVS     R0,#+1
    \   00000016   0x.... 0x....      BL       vTaskDelay
-    316                  
-    317            }
-    318            while(tempo--);
+    314                  
+    315            }
+    316            while(tempo--);
    \   0000001A   0x0020             MOVS     R0,R4
    \   0000001C   0x1E44             SUBS     R4,R0,#+1
    \   0000001E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
    \   00000020   0x2800             CMP      R0,#+0
    \   00000022   0xD1F0             BNE.N    ??PREPARACAO_verificaVentilador_0
-    319            
-    320            return 0; 
+    317            
+    318            return 0; 
    \   00000024   0x2000             MOVS     R0,#+0
    \                     ??PREPARACAO_verificaVentilador_2:
    \   00000026   0xBD10             POP      {R4,PC}          ;; return
-    321          }
-    322          /**********************************************************************************
-    323          *       Descrição       :       Faz a verificação do aquecimento da resistência
-    324          *       Parametros      :       nenhum
-    325          *       Retorno         :       (unsigned char) maior do que zero se 
-    326          *                               conseguir aquecer a panela 2 graus em até 5 segundos
-    327          **********************************************************************************/
+    319          }
+    320          /**********************************************************************************
+    321          *       Descrição       :       Faz a verificação do aquecimento da resistência
+    322          *       Parametros      :       nenhum
+    323          *       Retorno         :       (unsigned char) maior do que zero se 
+    324          *                               conseguir aquecer a panela 2 graus em até 5 segundos
+    325          **********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    328          unsigned char PREPARACAO_verifica_resistencia(void){
+    326          unsigned char PREPARACAO_verifica_resistencia(void){
    \                     PREPARACAO_verifica_resistencia:
    \   00000000   0xB538             PUSH     {R3-R5,LR}
-    329            unsigned int temperaturaInicial;
-    330            unsigned short int tempo = 15000;
+    327            unsigned int temperaturaInicial;
+    328            unsigned short int tempo = 15000;
    \   00000002   0xF643 0x2598      MOVW     R5,#+15000
-    331            
-    332            temperaturaInicial = AA_calculaTemperatura();
+    329            
+    330            temperaturaInicial = AA_calculaTemperatura();
    \   00000006   0x.... 0x....      BL       AA_calculaTemperatura
    \   0000000A   0x0004             MOVS     R4,R0
-    333            
-    334            do{
-    335              
-    336              if(AA_calculaTemperatura()>(temperaturaInicial+2))
+    331            
+    332            do{
+    333              
+    334              if(AA_calculaTemperatura()>(temperaturaInicial+2))
    \                     ??PREPARACAO_verifica_resistencia_0:
    \   0000000C   0x.... 0x....      BL       AA_calculaTemperatura
    \   00000010   0x1CA1             ADDS     R1,R4,#+2
    \   00000012   0x4281             CMP      R1,R0
    \   00000014   0xD201             BCS.N    ??PREPARACAO_verifica_resistencia_1
-    337                return 1;
+    335                return 1;
    \   00000016   0x2001             MOVS     R0,#+1
    \   00000018   0xE008             B.N      ??PREPARACAO_verifica_resistencia_2
-    338              else
-    339                vTaskDelay(1);
+    336              else
+    337                vTaskDelay(1);
    \                     ??PREPARACAO_verifica_resistencia_1:
    \   0000001A   0x2001             MOVS     R0,#+1
    \   0000001C   0x.... 0x....      BL       vTaskDelay
-    340              
-    341            }
-    342            while(tempo--);
+    338              
+    339            }
+    340            while(tempo--);
    \   00000020   0x0028             MOVS     R0,R5
    \   00000022   0x1E45             SUBS     R5,R0,#+1
    \   00000024   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
    \   00000026   0x2800             CMP      R0,#+0
    \   00000028   0xD1F0             BNE.N    ??PREPARACAO_verifica_resistencia_0
-    343            
-    344            return 0;  
+    341            
+    342            return 0;  
    \   0000002A   0x2000             MOVS     R0,#+0
    \                     ??PREPARACAO_verifica_resistencia_2:
    \   0000002C   0xBD32             POP      {R1,R4,R5,PC}    ;; return
-    345          }
-    346          /**********************************************************************************
-    347          *       Descrição       :       Tela informativa do processo exibida
-    348          *                               no display interno
-    349          *       Parametros      :       nenhum
-    350          *       Retorno         :       nenhum
-    351          **********************************************************************************/
+    343          }
+    344          /**********************************************************************************
+    345          *       Descrição       :       Tela informativa do processo exibida
+    346          *                               no display interno
+    347          *       Parametros      :       nenhum
+    348          *       Retorno         :       nenhum
+    349          **********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    352          void PREPARACAO_tela_interna(void){
+    350          void PREPARACAO_tela_interna(void){
    \                     PREPARACAO_tela_interna:
    \   00000000   0xB510             PUSH     {R4,LR}
    \   00000002   0xB086             SUB      SP,SP,#+24
-    353            char buffer_linha[17];
-    354            
-    355            sprintf(buffer_linha,"%05d RPM-%03doC",POTENCIA_getRPMmedido(),AA_calculaTemperatura());
+    351            char buffer_linha[17];
+    352            
+    353            sprintf(buffer_linha,"%05d RPM-%03doC",POTENCIA_getRPMmedido(),AA_calculaTemperatura());
    \   00000004   0x.... 0x....      BL       AA_calculaTemperatura
    \   00000008   0x0004             MOVS     R4,R0
    \   0000000A   0x.... 0x....      BL       POTENCIA_getRPMmedido
@@ -825,35 +823,35 @@ Warning[Pe223]: function "APLICACAO_tela_descanso" declared implicitly
    \   00000014   0x....             LDR.N    R1,??DataTable5_9
    \   00000016   0xA800             ADD      R0,SP,#+0
    \   00000018   0x.... 0x....      BL       sprintf
-    356            STRING_write_to_internal(NO_CLEAR,buffer_linha,NULL);
+    354            STRING_write_to_internal(NO_CLEAR,buffer_linha,NULL);
    \   0000001C   0x2200             MOVS     R2,#+0
    \   0000001E   0xA900             ADD      R1,SP,#+0
    \   00000020   0x2001             MOVS     R0,#+1
    \   00000022   0x.... 0x....      BL       STRING_write_to_internal
-    357          }
+    355          }
    \   00000026   0xB006             ADD      SP,SP,#+24
    \   00000028   0xBD10             POP      {R4,PC}          ;; return
-    358          /**********************************************************************************
-    359          *       Descrição       :       Libera uma dose de milho na panela
-    360          *       Parametros      :       nenhum
-    361          *       Retorno         :       (unsigned char) maior do que zero
-    362          *                               se conseguir dosar
-    363          **********************************************************************************/
+    356          /**********************************************************************************
+    357          *       Descrição       :       Libera uma dose de milho na panela
+    358          *       Parametros      :       nenhum
+    359          *       Retorno         :       (unsigned char) maior do que zero
+    360          *                               se conseguir dosar
+    361          **********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    364          unsigned char PREPARACAO_dosagem_milho(void){
+    362          unsigned char PREPARACAO_dosagem_milho(void){
    \                     PREPARACAO_dosagem_milho:
    \   00000000   0xB510             PUSH     {R4,LR}
-    365            unsigned char sensor_dose; 
-    366            unsigned int tempo=2000; 
+    363            unsigned char sensor_dose; 
+    364            unsigned int tempo=2000; 
    \   00000002   0xF44F 0x64FA      MOV      R4,#+2000
-    367            
-    368            BOARD_set_motor_dose(DOSAR);
+    365            
+    366            BOARD_set_motor_dose(DOSAR);
    \   00000006   0x2001             MOVS     R0,#+1
    \   00000008   0x.... 0x....      BL       BOARD_set_motor_dose
    \   0000000C   0xE002             B.N      ??PREPARACAO_dosagem_milho_0
-    369            while(GET_SENSOR_DOSE() && tempo--)
-    370              vTaskDelay(1);
+    367            while(GET_SENSOR_DOSE() && tempo--)
+    368              vTaskDelay(1);
    \                     ??PREPARACAO_dosagem_milho_1:
    \   0000000E   0x2001             MOVS     R0,#+1
    \   00000010   0x.... 0x....      BL       vTaskDelay
@@ -866,74 +864,74 @@ Warning[Pe223]: function "APLICACAO_tela_descanso" declared implicitly
    \   00000020   0x1E44             SUBS     R4,R0,#+1
    \   00000022   0x2800             CMP      R0,#+0
    \   00000024   0xD1F3             BNE.N    ??PREPARACAO_dosagem_milho_1
-    371            
-    372            tempo = 15000;
+    369            
+    370            tempo = 15000;
    \                     ??PREPARACAO_dosagem_milho_2:
    \   00000026   0xF643 0x2498      MOVW     R4,#+15000
-    373                  
-    374            do{
-    375              
-    376              sensor_dose = GET_SENSOR_DOSE();  
+    371                  
+    372            do{
+    373              
+    374              sensor_dose = GET_SENSOR_DOSE();  
    \                     ??PREPARACAO_dosagem_milho_3:
    \   0000002A   0x2002             MOVS     R0,#+2
    \   0000002C   0x.... 0x....      BL       BOARD_get_sinal
-    377              if(sensor_dose){
+    375              if(sensor_dose){
    \   00000030   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   00000032   0x2800             CMP      R0,#+0
    \   00000034   0xD004             BEQ.N    ??PREPARACAO_dosagem_milho_4
-    378                BOARD_set_motor_dose(PARADO);
+    376                BOARD_set_motor_dose(PARADO);
    \   00000036   0x2000             MOVS     R0,#+0
    \   00000038   0x.... 0x....      BL       BOARD_set_motor_dose
-    379                return 1;
+    377                return 1;
    \   0000003C   0x2001             MOVS     R0,#+1
    \   0000003E   0xE00A             B.N      ??PREPARACAO_dosagem_milho_5
-    380              }
-    381              else
-    382                vTaskDelay(1);
+    378              }
+    379              else
+    380                vTaskDelay(1);
    \                     ??PREPARACAO_dosagem_milho_4:
    \   00000040   0x2001             MOVS     R0,#+1
    \   00000042   0x.... 0x....      BL       vTaskDelay
-    383              
-    384            }
-    385            while(tempo--);
+    381              
+    382            }
+    383            while(tempo--);
    \   00000046   0x0020             MOVS     R0,R4
    \   00000048   0x1E44             SUBS     R4,R0,#+1
    \   0000004A   0x2800             CMP      R0,#+0
    \   0000004C   0xD1ED             BNE.N    ??PREPARACAO_dosagem_milho_3
-    386            
-    387            BOARD_set_motor_dose(PARADO);  
+    384            
+    385            BOARD_set_motor_dose(PARADO);  
    \   0000004E   0x2000             MOVS     R0,#+0
    \   00000050   0x.... 0x....      BL       BOARD_set_motor_dose
-    388            //BOARD_set_motor_dose(DOSAR);          
-    389            //BOARD_set_motor_dose(REVERTER);
-    390            //BOARD_set_motor_dose(PARADO);
-    391            
-    392            return 0;
+    386            //BOARD_set_motor_dose(DOSAR);          
+    387            //BOARD_set_motor_dose(REVERTER);
+    388            //BOARD_set_motor_dose(PARADO);
+    389            
+    390            return 0;
    \   00000054   0x2000             MOVS     R0,#+0
    \                     ??PREPARACAO_dosagem_milho_5:
    \   00000056   0xBD10             POP      {R4,PC}          ;; return
-    393          }
-    394          /**********************************************************************************
-    395          *       Descrição       :       Limpeza da panela e agradecimento pela
-    396          *                               compra
-    397          *       Parametros      :       nenhum
-    398          *       Retorno         :       nenhum
-    399          **********************************************************************************/
+    391          }
+    392          /**********************************************************************************
+    393          *       Descrição       :       Limpeza da panela e agradecimento pela
+    394          *                               compra
+    395          *       Parametros      :       nenhum
+    396          *       Retorno         :       nenhum
+    397          **********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    400          void PREPARACAO_limpeza(unsigned char idioma){
+    398          void PREPARACAO_limpeza(unsigned char idioma){
    \                     PREPARACAO_limpeza:
    \   00000000   0xB510             PUSH     {R4,LR}
    \   00000002   0x0004             MOVS     R4,R0
-    401            
-    402            POTENCIA_set_neutro(1);
+    399            
+    400            POTENCIA_set_neutro(1);
    \   00000004   0x2001             MOVS     R0,#+1
    \   00000006   0x.... 0x....      BL       POTENCIA_set_neutro
-    403            POTENCIA_setRPM(13000);
+    401            POTENCIA_setRPM(13000);
    \   0000000A   0xF243 0x20C8      MOVW     R0,#+13000
    \   0000000E   0x.... 0x....      BL       POTENCIA_setRPM
-    404            
-    405            STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_limpeza[idioma][0],(char*)STRING_mensagem_limpeza[idioma][1]);
+    402            
+    403            STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_limpeza[idioma][0],(char*)STRING_mensagem_limpeza[idioma][1]);
    \   00000012   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   00000014   0x....             LDR.N    R0,??DataTable5_10
    \   00000016   0xEB10 0x00C4      ADDS     R0,R0,R4, LSL #+3
@@ -943,42 +941,42 @@ Warning[Pe223]: function "APLICACAO_tela_descanso" declared implicitly
    \   00000020   0xF850 0x1034      LDR      R1,[R0, R4, LSL #+3]
    \   00000024   0x2000             MOVS     R0,#+0
    \   00000026   0x.... 0x....      BL       STRING_write_to_external
-    406            vTaskDelay(7000);
+    404            vTaskDelay(7000);
    \   0000002A   0xF641 0x3058      MOVW     R0,#+7000
    \   0000002E   0x.... 0x....      BL       vTaskDelay
-    407            
-    408            POTENCIA_setRPM(0);
+    405            
+    406            POTENCIA_setRPM(0);
    \   00000032   0x2000             MOVS     R0,#+0
    \   00000034   0x.... 0x....      BL       POTENCIA_setRPM
-    409            POTENCIA_set_neutro(0);  
+    407            POTENCIA_set_neutro(0);  
    \   00000038   0x2000             MOVS     R0,#+0
    \   0000003A   0x.... 0x....      BL       POTENCIA_set_neutro
-    410          }
+    408          }
    \   0000003E   0xBD10             POP      {R4,PC}          ;; return
-    411          /**********************************************************************************
-    412          *       Descrição       :       Resfriamento do sistema
-    413          *       Parametros      :       nenhum
-    414          *       Retorno         :       nenhum
-    415          **********************************************************************************/
+    409          /**********************************************************************************
+    410          *       Descrição       :       Resfriamento do sistema
+    411          *       Parametros      :       nenhum
+    412          *       Retorno         :       nenhum
+    413          **********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    416          void PREPARACAO_resfriamento(unsigned char idioma){
+    414          void PREPARACAO_resfriamento(unsigned char idioma){
    \                     PREPARACAO_resfriamento:
    \   00000000   0xB510             PUSH     {R4,LR}
    \   00000002   0x0004             MOVS     R4,R0
-    417            
-    418            POTENCIA_set_neutro(1);
+    415            
+    416            POTENCIA_set_neutro(1);
    \   00000004   0x2001             MOVS     R0,#+1
    \   00000006   0x.... 0x....      BL       POTENCIA_set_neutro
-    419            vTaskDelay(500);  
+    417            vTaskDelay(500);  
    \   0000000A   0xF44F 0x70FA      MOV      R0,#+500
    \   0000000E   0x.... 0x....      BL       vTaskDelay
-    420            POTENCIA_setRPM(6000);
+    418            POTENCIA_setRPM(6000);
    \   00000012   0xF241 0x7070      MOVW     R0,#+6000
    \   00000016   0x.... 0x....      BL       POTENCIA_setRPM
-    421            
-    422            STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_resfriando[idioma][0],
-    423                                                   (char*)STRING_mensagem_resfriando[idioma][1]);
+    419            
+    420            STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_resfriando[idioma][0],
+    421                                                   (char*)STRING_mensagem_resfriando[idioma][1]);
    \   0000001A   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   0000001C   0x....             LDR.N    R0,??DataTable5_11
    \   0000001E   0xEB10 0x00C4      ADDS     R0,R0,R4, LSL #+3
@@ -988,42 +986,42 @@ Warning[Pe223]: function "APLICACAO_tela_descanso" declared implicitly
    \   00000028   0xF850 0x1034      LDR      R1,[R0, R4, LSL #+3]
    \   0000002C   0x2000             MOVS     R0,#+0
    \   0000002E   0x.... 0x....      BL       STRING_write_to_external
-    424            vTaskDelay(30000);
+    422            vTaskDelay(30000);
    \   00000032   0xF247 0x5030      MOVW     R0,#+30000
    \   00000036   0x.... 0x....      BL       vTaskDelay
-    425            
-    426            POTENCIA_setRPM(0);
+    423            
+    424            POTENCIA_setRPM(0);
    \   0000003A   0x2000             MOVS     R0,#+0
    \   0000003C   0x.... 0x....      BL       POTENCIA_setRPM
-    427            POTENCIA_set_neutro(0);  
+    425            POTENCIA_set_neutro(0);  
    \   00000040   0x2000             MOVS     R0,#+0
    \   00000042   0x.... 0x....      BL       POTENCIA_set_neutro
-    428          }
+    426          }
    \   00000046   0xBD10             POP      {R4,PC}          ;; return
-    429          /**********************************************************************************
-    430          *       Descrição       :       Limpeza da panela e agradecimento pela
-    431          *                               compra
-    432          *       Parametros      :       nenhum
-    433          *       Retorno         :       nenhum
-    434          **********************************************************************************/
+    427          /**********************************************************************************
+    428          *       Descrição       :       Limpeza da panela e agradecimento pela
+    429          *                               compra
+    430          *       Parametros      :       nenhum
+    431          *       Retorno         :       nenhum
+    432          **********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    435          void PREPARACAO_limpeza_inicial(unsigned char idioma){
+    433          void PREPARACAO_limpeza_inicial(unsigned char idioma){
    \                     PREPARACAO_limpeza_inicial:
    \   00000000   0xB510             PUSH     {R4,LR}
    \   00000002   0x0004             MOVS     R4,R0
-    436            
-    437            POTENCIA_set_neutro(1);
+    434            
+    435            POTENCIA_set_neutro(1);
    \   00000004   0x2001             MOVS     R0,#+1
    \   00000006   0x.... 0x....      BL       POTENCIA_set_neutro
-    438            vTaskDelay(500);
+    436            vTaskDelay(500);
    \   0000000A   0xF44F 0x70FA      MOV      R0,#+500
    \   0000000E   0x.... 0x....      BL       vTaskDelay
-    439            POTENCIA_setRPM(12000);
+    437            POTENCIA_setRPM(12000);
    \   00000012   0xF642 0x60E0      MOVW     R0,#+12000
    \   00000016   0x.... 0x....      BL       POTENCIA_setRPM
-    440            
-    441            STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_limpeza_inicial[idioma][0],(char*)STRING_mensagem_limpeza_inicial[idioma][1]);
+    438            
+    439            STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_limpeza_inicial[idioma][0],(char*)STRING_mensagem_limpeza_inicial[idioma][1]);
    \   0000001A   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   0000001C   0x....             LDR.N    R0,??DataTable5_12
    \   0000001E   0xEB10 0x00C4      ADDS     R0,R0,R4, LSL #+3
@@ -1033,17 +1031,17 @@ Warning[Pe223]: function "APLICACAO_tela_descanso" declared implicitly
    \   00000028   0xF850 0x1034      LDR      R1,[R0, R4, LSL #+3]
    \   0000002C   0x2000             MOVS     R0,#+0
    \   0000002E   0x.... 0x....      BL       STRING_write_to_external
-    442            vTaskDelay(7000);
+    440            vTaskDelay(7000);
    \   00000032   0xF641 0x3058      MOVW     R0,#+7000
    \   00000036   0x.... 0x....      BL       vTaskDelay
-    443            
-    444            POTENCIA_setRPM(0);
+    441            
+    442            POTENCIA_setRPM(0);
    \   0000003A   0x2000             MOVS     R0,#+0
    \   0000003C   0x.... 0x....      BL       POTENCIA_setRPM
-    445            POTENCIA_set_neutro(0);  
+    443            POTENCIA_set_neutro(0);  
    \   00000040   0x2000             MOVS     R0,#+0
    \   00000042   0x.... 0x....      BL       POTENCIA_set_neutro
-    446          }
+    444          }
    \   00000046   0xBD10             POP      {R4,PC}          ;; return
 
    \                                 In section .text, align 4, keep-with-next
@@ -1119,10 +1117,10 @@ Warning[Pe223]: function "APLICACAO_tela_descanso" declared implicitly
    \              0x30 0x33    
    \              0x64 0x6F    
    \              0x43 0x00    
-    447          /**********************************************************************************
-    448          *       Fim do arquivo
-    449          **********************************************************************************/
-    450          
+    445          /**********************************************************************************
+    446          *       Fim do arquivo
+    447          **********************************************************************************/
+    448          
 
    Maximum stack usage in bytes:
 

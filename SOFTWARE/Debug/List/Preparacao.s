@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  15:39:00 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  15:52:39 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -808,33 +808,31 @@ PREPARACAO_entry:
         MOVS     R0,#+0
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  277   BOARD_liga_placa_instrucao(1);  
+//  277   BOARD_liga_placa_instrucao(1);    
         MOVS     R0,#+1
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
 //  278   
-//  279   //PAGAMENTOS_set_bloqueio(0);
-//  280   
-//  281   return SUCESSO;
+//  279   return SUCESSO;
         MOVS     R0,#+0
 ??PREPARACAO_entry_9:
         ADD      SP,SP,#+24
           CFI CFA R13+16
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock0
-//  282 }
-//  283 /**********************************************************************************
-//  284 *       Descrição       :       Atualiza o display frontal com o tempo restante
-//  285 *                               do processo de preparo
-//  286 *       Parametros      :       nenhum
-//  287 *       Retorno         :       nenhum
-//  288 **********************************************************************************/
+//  280 }
+//  281 /**********************************************************************************
+//  282 *       Descrição       :       Atualiza o display frontal com o tempo restante
+//  283 *                               do processo de preparo
+//  284 *       Parametros      :       nenhum
+//  285 *       Retorno         :       nenhum
+//  286 **********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock1 Using cfiCommon0
           CFI Function PREPARACAO_atualiza_info_tempo
         THUMB
-//  289 void PREPARACAO_atualiza_info_tempo(unsigned char idioma,unsigned int tempo){
+//  287 void PREPARACAO_atualiza_info_tempo(unsigned char idioma,unsigned int tempo){
 PREPARACAO_atualiza_info_tempo:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -843,29 +841,29 @@ PREPARACAO_atualiza_info_tempo:
         SUB      SP,SP,#+24
           CFI CFA R13+32
         MOVS     R4,R0
-//  290   char buffer_linha[17];
-//  291   unsigned int minutos;
-//  292   unsigned int segundos;
-//  293   
-//  294   minutos  = PREPARACAO_cnt_preparo/1000;
+//  288   char buffer_linha[17];
+//  289   unsigned int minutos;
+//  290   unsigned int segundos;
+//  291   
+//  292   minutos  = PREPARACAO_cnt_preparo/1000;
         LDR.N    R0,??DataTable5_2
         LDR      R0,[R0, #+0]
         MOV      R1,#+1000
         UDIV     R2,R0,R1
-//  295   segundos = minutos % 60;
+//  293   segundos = minutos % 60;
         MOVS     R0,#+60
         UDIV     R1,R2,R0
         MLS      R3,R0,R1,R2
-//  296   minutos  = minutos/60;
+//  294   minutos  = minutos/60;
         MOVS     R0,#+60
         UDIV     R2,R2,R0
-//  297   
-//  298   sprintf(buffer_linha,"  %01d:%02d  ",minutos,segundos);
+//  295   
+//  296   sprintf(buffer_linha,"  %01d:%02d  ",minutos,segundos);
         LDR.N    R1,??DataTable5_7
         ADD      R0,SP,#+0
           CFI FunCall sprintf
         BL       sprintf
-//  299   STRING_write_to_external(NO_CLEAR,(char*)STRING_mensagem_pipocas_prontas[idioma],buffer_linha);  
+//  297   STRING_write_to_external(NO_CLEAR,(char*)STRING_mensagem_pipocas_prontas[idioma],buffer_linha);  
         ADD      R2,SP,#+0
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable5_8
@@ -873,135 +871,135 @@ PREPARACAO_atualiza_info_tempo:
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  300 }
+//  298 }
         ADD      SP,SP,#+24
           CFI CFA R13+8
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock1
-//  301 /**********************************************************************************
-//  302 *       Descrição       :       Verifica se o ventilador está funcionando
-//  303 *       Parametros      :       nenhum
-//  304 *       Retorno         :       (unsigned char) maior do que zero se conseguir
-//  305 *                               detectar o RPM do motor
-//  306 **********************************************************************************/
+//  299 /**********************************************************************************
+//  300 *       Descrição       :       Verifica se o ventilador está funcionando
+//  301 *       Parametros      :       nenhum
+//  302 *       Retorno         :       (unsigned char) maior do que zero se conseguir
+//  303 *                               detectar o RPM do motor
+//  304 **********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function PREPARACAO_verificaVentilador
         THUMB
-//  307 unsigned char PREPARACAO_verificaVentilador(void){
+//  305 unsigned char PREPARACAO_verificaVentilador(void){
 PREPARACAO_verificaVentilador:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
-//  308   unsigned short int tempo=50000;  
+//  306   unsigned short int tempo=50000;  
         MOVW     R4,#+50000
-//  309   
-//  310   do{
-//  311     
-//  312     if(POTENCIA_getRPMmedido()>1000)
+//  307   
+//  308   do{
+//  309     
+//  310     if(POTENCIA_getRPMmedido()>1000)
 ??PREPARACAO_verificaVentilador_0:
           CFI FunCall POTENCIA_getRPMmedido
         BL       POTENCIA_getRPMmedido
         CMP      R0,#+1000
         BLS.N    ??PREPARACAO_verificaVentilador_1
-//  313       return 1;
+//  311       return 1;
         MOVS     R0,#+1
         B.N      ??PREPARACAO_verificaVentilador_2
-//  314     else
-//  315       vTaskDelay(1);
+//  312     else
+//  313       vTaskDelay(1);
 ??PREPARACAO_verificaVentilador_1:
         MOVS     R0,#+1
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  316         
-//  317   }
-//  318   while(tempo--);
+//  314         
+//  315   }
+//  316   while(tempo--);
         MOVS     R0,R4
         SUBS     R4,R0,#+1
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         CMP      R0,#+0
         BNE.N    ??PREPARACAO_verificaVentilador_0
-//  319   
-//  320   return 0; 
+//  317   
+//  318   return 0; 
         MOVS     R0,#+0
 ??PREPARACAO_verificaVentilador_2:
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock2
-//  321 }
-//  322 /**********************************************************************************
-//  323 *       Descrição       :       Faz a verificação do aquecimento da resistência
-//  324 *       Parametros      :       nenhum
-//  325 *       Retorno         :       (unsigned char) maior do que zero se 
-//  326 *                               conseguir aquecer a panela 2 graus em até 5 segundos
-//  327 **********************************************************************************/
+//  319 }
+//  320 /**********************************************************************************
+//  321 *       Descrição       :       Faz a verificação do aquecimento da resistência
+//  322 *       Parametros      :       nenhum
+//  323 *       Retorno         :       (unsigned char) maior do que zero se 
+//  324 *                               conseguir aquecer a panela 2 graus em até 5 segundos
+//  325 **********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock3 Using cfiCommon0
           CFI Function PREPARACAO_verifica_resistencia
         THUMB
-//  328 unsigned char PREPARACAO_verifica_resistencia(void){
+//  326 unsigned char PREPARACAO_verifica_resistencia(void){
 PREPARACAO_verifica_resistencia:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
           CFI R5 Frame(CFA, -8)
           CFI R4 Frame(CFA, -12)
           CFI CFA R13+16
-//  329   unsigned int temperaturaInicial;
-//  330   unsigned short int tempo = 15000;
+//  327   unsigned int temperaturaInicial;
+//  328   unsigned short int tempo = 15000;
         MOVW     R5,#+15000
-//  331   
-//  332   temperaturaInicial = AA_calculaTemperatura();
+//  329   
+//  330   temperaturaInicial = AA_calculaTemperatura();
           CFI FunCall AA_calculaTemperatura
         BL       AA_calculaTemperatura
         MOVS     R4,R0
-//  333   
-//  334   do{
-//  335     
-//  336     if(AA_calculaTemperatura()>(temperaturaInicial+2))
+//  331   
+//  332   do{
+//  333     
+//  334     if(AA_calculaTemperatura()>(temperaturaInicial+2))
 ??PREPARACAO_verifica_resistencia_0:
           CFI FunCall AA_calculaTemperatura
         BL       AA_calculaTemperatura
         ADDS     R1,R4,#+2
         CMP      R1,R0
         BCS.N    ??PREPARACAO_verifica_resistencia_1
-//  337       return 1;
+//  335       return 1;
         MOVS     R0,#+1
         B.N      ??PREPARACAO_verifica_resistencia_2
-//  338     else
-//  339       vTaskDelay(1);
+//  336     else
+//  337       vTaskDelay(1);
 ??PREPARACAO_verifica_resistencia_1:
         MOVS     R0,#+1
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  340     
-//  341   }
-//  342   while(tempo--);
+//  338     
+//  339   }
+//  340   while(tempo--);
         MOVS     R0,R5
         SUBS     R5,R0,#+1
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         CMP      R0,#+0
         BNE.N    ??PREPARACAO_verifica_resistencia_0
-//  343   
-//  344   return 0;  
+//  341   
+//  342   return 0;  
         MOVS     R0,#+0
 ??PREPARACAO_verifica_resistencia_2:
         POP      {R1,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock3
-//  345 }
-//  346 /**********************************************************************************
-//  347 *       Descrição       :       Tela informativa do processo exibida
-//  348 *                               no display interno
-//  349 *       Parametros      :       nenhum
-//  350 *       Retorno         :       nenhum
-//  351 **********************************************************************************/
+//  343 }
+//  344 /**********************************************************************************
+//  345 *       Descrição       :       Tela informativa do processo exibida
+//  346 *                               no display interno
+//  347 *       Parametros      :       nenhum
+//  348 *       Retorno         :       nenhum
+//  349 **********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function PREPARACAO_tela_interna
         THUMB
-//  352 void PREPARACAO_tela_interna(void){
+//  350 void PREPARACAO_tela_interna(void){
 PREPARACAO_tela_interna:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -1009,9 +1007,9 @@ PREPARACAO_tela_interna:
           CFI CFA R13+8
         SUB      SP,SP,#+24
           CFI CFA R13+32
-//  353   char buffer_linha[17];
-//  354   
-//  355   sprintf(buffer_linha,"%05d RPM-%03doC",POTENCIA_getRPMmedido(),AA_calculaTemperatura());
+//  351   char buffer_linha[17];
+//  352   
+//  353   sprintf(buffer_linha,"%05d RPM-%03doC",POTENCIA_getRPMmedido(),AA_calculaTemperatura());
           CFI FunCall AA_calculaTemperatura
         BL       AA_calculaTemperatura
         MOVS     R4,R0
@@ -1024,45 +1022,45 @@ PREPARACAO_tela_interna:
         ADD      R0,SP,#+0
           CFI FunCall sprintf
         BL       sprintf
-//  356   STRING_write_to_internal(NO_CLEAR,buffer_linha,NULL);
+//  354   STRING_write_to_internal(NO_CLEAR,buffer_linha,NULL);
         MOVS     R2,#+0
         ADD      R1,SP,#+0
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  357 }
+//  355 }
         ADD      SP,SP,#+24
           CFI CFA R13+8
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock4
-//  358 /**********************************************************************************
-//  359 *       Descrição       :       Libera uma dose de milho na panela
-//  360 *       Parametros      :       nenhum
-//  361 *       Retorno         :       (unsigned char) maior do que zero
-//  362 *                               se conseguir dosar
-//  363 **********************************************************************************/
+//  356 /**********************************************************************************
+//  357 *       Descrição       :       Libera uma dose de milho na panela
+//  358 *       Parametros      :       nenhum
+//  359 *       Retorno         :       (unsigned char) maior do que zero
+//  360 *                               se conseguir dosar
+//  361 **********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function PREPARACAO_dosagem_milho
         THUMB
-//  364 unsigned char PREPARACAO_dosagem_milho(void){
+//  362 unsigned char PREPARACAO_dosagem_milho(void){
 PREPARACAO_dosagem_milho:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
-//  365   unsigned char sensor_dose; 
-//  366   unsigned int tempo=2000; 
+//  363   unsigned char sensor_dose; 
+//  364   unsigned int tempo=2000; 
         MOV      R4,#+2000
-//  367   
-//  368   BOARD_set_motor_dose(DOSAR);
+//  365   
+//  366   BOARD_set_motor_dose(DOSAR);
         MOVS     R0,#+1
           CFI FunCall BOARD_set_motor_dose
         BL       BOARD_set_motor_dose
         B.N      ??PREPARACAO_dosagem_milho_0
-//  369   while(GET_SENSOR_DOSE() && tempo--)
-//  370     vTaskDelay(1);
+//  367   while(GET_SENSOR_DOSE() && tempo--)
+//  368     vTaskDelay(1);
 ??PREPARACAO_dosagem_milho_1:
         MOVS     R0,#+1
           CFI FunCall vTaskDelay
@@ -1077,87 +1075,87 @@ PREPARACAO_dosagem_milho:
         SUBS     R4,R0,#+1
         CMP      R0,#+0
         BNE.N    ??PREPARACAO_dosagem_milho_1
-//  371   
-//  372   tempo = 15000;
+//  369   
+//  370   tempo = 15000;
 ??PREPARACAO_dosagem_milho_2:
         MOVW     R4,#+15000
-//  373         
-//  374   do{
-//  375     
-//  376     sensor_dose = GET_SENSOR_DOSE();  
+//  371         
+//  372   do{
+//  373     
+//  374     sensor_dose = GET_SENSOR_DOSE();  
 ??PREPARACAO_dosagem_milho_3:
         MOVS     R0,#+2
           CFI FunCall BOARD_get_sinal
         BL       BOARD_get_sinal
-//  377     if(sensor_dose){
+//  375     if(sensor_dose){
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BEQ.N    ??PREPARACAO_dosagem_milho_4
-//  378       BOARD_set_motor_dose(PARADO);
+//  376       BOARD_set_motor_dose(PARADO);
         MOVS     R0,#+0
           CFI FunCall BOARD_set_motor_dose
         BL       BOARD_set_motor_dose
-//  379       return 1;
+//  377       return 1;
         MOVS     R0,#+1
         B.N      ??PREPARACAO_dosagem_milho_5
-//  380     }
-//  381     else
-//  382       vTaskDelay(1);
+//  378     }
+//  379     else
+//  380       vTaskDelay(1);
 ??PREPARACAO_dosagem_milho_4:
         MOVS     R0,#+1
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  383     
-//  384   }
-//  385   while(tempo--);
+//  381     
+//  382   }
+//  383   while(tempo--);
         MOVS     R0,R4
         SUBS     R4,R0,#+1
         CMP      R0,#+0
         BNE.N    ??PREPARACAO_dosagem_milho_3
-//  386   
-//  387   BOARD_set_motor_dose(PARADO);  
+//  384   
+//  385   BOARD_set_motor_dose(PARADO);  
         MOVS     R0,#+0
           CFI FunCall BOARD_set_motor_dose
         BL       BOARD_set_motor_dose
-//  388   //BOARD_set_motor_dose(DOSAR);          
-//  389   //BOARD_set_motor_dose(REVERTER);
-//  390   //BOARD_set_motor_dose(PARADO);
-//  391   
-//  392   return 0;
+//  386   //BOARD_set_motor_dose(DOSAR);          
+//  387   //BOARD_set_motor_dose(REVERTER);
+//  388   //BOARD_set_motor_dose(PARADO);
+//  389   
+//  390   return 0;
         MOVS     R0,#+0
 ??PREPARACAO_dosagem_milho_5:
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock5
-//  393 }
-//  394 /**********************************************************************************
-//  395 *       Descrição       :       Limpeza da panela e agradecimento pela
-//  396 *                               compra
-//  397 *       Parametros      :       nenhum
-//  398 *       Retorno         :       nenhum
-//  399 **********************************************************************************/
+//  391 }
+//  392 /**********************************************************************************
+//  393 *       Descrição       :       Limpeza da panela e agradecimento pela
+//  394 *                               compra
+//  395 *       Parametros      :       nenhum
+//  396 *       Retorno         :       nenhum
+//  397 **********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function PREPARACAO_limpeza
         THUMB
-//  400 void PREPARACAO_limpeza(unsigned char idioma){
+//  398 void PREPARACAO_limpeza(unsigned char idioma){
 PREPARACAO_limpeza:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  401   
-//  402   POTENCIA_set_neutro(1);
+//  399   
+//  400   POTENCIA_set_neutro(1);
         MOVS     R0,#+1
           CFI FunCall POTENCIA_set_neutro
         BL       POTENCIA_set_neutro
-//  403   POTENCIA_setRPM(13000);
+//  401   POTENCIA_setRPM(13000);
         MOVW     R0,#+13000
           CFI FunCall POTENCIA_setRPM
         BL       POTENCIA_setRPM
-//  404   
-//  405   STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_limpeza[idioma][0],(char*)STRING_mensagem_limpeza[idioma][1]);
+//  402   
+//  403   STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_limpeza[idioma][0],(char*)STRING_mensagem_limpeza[idioma][1]);
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable5_10
         ADDS     R0,R0,R4, LSL #+3
@@ -1168,55 +1166,55 @@ PREPARACAO_limpeza:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  406   vTaskDelay(7000);
+//  404   vTaskDelay(7000);
         MOVW     R0,#+7000
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  407   
-//  408   POTENCIA_setRPM(0);
+//  405   
+//  406   POTENCIA_setRPM(0);
         MOVS     R0,#+0
           CFI FunCall POTENCIA_setRPM
         BL       POTENCIA_setRPM
-//  409   POTENCIA_set_neutro(0);  
+//  407   POTENCIA_set_neutro(0);  
         MOVS     R0,#+0
           CFI FunCall POTENCIA_set_neutro
         BL       POTENCIA_set_neutro
-//  410 }
+//  408 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock6
-//  411 /**********************************************************************************
-//  412 *       Descrição       :       Resfriamento do sistema
-//  413 *       Parametros      :       nenhum
-//  414 *       Retorno         :       nenhum
-//  415 **********************************************************************************/
+//  409 /**********************************************************************************
+//  410 *       Descrição       :       Resfriamento do sistema
+//  411 *       Parametros      :       nenhum
+//  412 *       Retorno         :       nenhum
+//  413 **********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function PREPARACAO_resfriamento
         THUMB
-//  416 void PREPARACAO_resfriamento(unsigned char idioma){
+//  414 void PREPARACAO_resfriamento(unsigned char idioma){
 PREPARACAO_resfriamento:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  417   
-//  418   POTENCIA_set_neutro(1);
+//  415   
+//  416   POTENCIA_set_neutro(1);
         MOVS     R0,#+1
           CFI FunCall POTENCIA_set_neutro
         BL       POTENCIA_set_neutro
-//  419   vTaskDelay(500);  
+//  417   vTaskDelay(500);  
         MOV      R0,#+500
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  420   POTENCIA_setRPM(6000);
+//  418   POTENCIA_setRPM(6000);
         MOVW     R0,#+6000
           CFI FunCall POTENCIA_setRPM
         BL       POTENCIA_setRPM
-//  421   
-//  422   STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_resfriando[idioma][0],
-//  423                                          (char*)STRING_mensagem_resfriando[idioma][1]);
+//  419   
+//  420   STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_resfriando[idioma][0],
+//  421                                          (char*)STRING_mensagem_resfriando[idioma][1]);
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable5_11
         ADDS     R0,R0,R4, LSL #+3
@@ -1227,55 +1225,55 @@ PREPARACAO_resfriamento:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  424   vTaskDelay(30000);
+//  422   vTaskDelay(30000);
         MOVW     R0,#+30000
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  425   
-//  426   POTENCIA_setRPM(0);
+//  423   
+//  424   POTENCIA_setRPM(0);
         MOVS     R0,#+0
           CFI FunCall POTENCIA_setRPM
         BL       POTENCIA_setRPM
-//  427   POTENCIA_set_neutro(0);  
+//  425   POTENCIA_set_neutro(0);  
         MOVS     R0,#+0
           CFI FunCall POTENCIA_set_neutro
         BL       POTENCIA_set_neutro
-//  428 }
+//  426 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock7
-//  429 /**********************************************************************************
-//  430 *       Descrição       :       Limpeza da panela e agradecimento pela
-//  431 *                               compra
-//  432 *       Parametros      :       nenhum
-//  433 *       Retorno         :       nenhum
-//  434 **********************************************************************************/
+//  427 /**********************************************************************************
+//  428 *       Descrição       :       Limpeza da panela e agradecimento pela
+//  429 *                               compra
+//  430 *       Parametros      :       nenhum
+//  431 *       Retorno         :       nenhum
+//  432 **********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock8 Using cfiCommon0
           CFI Function PREPARACAO_limpeza_inicial
         THUMB
-//  435 void PREPARACAO_limpeza_inicial(unsigned char idioma){
+//  433 void PREPARACAO_limpeza_inicial(unsigned char idioma){
 PREPARACAO_limpeza_inicial:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  436   
-//  437   POTENCIA_set_neutro(1);
+//  434   
+//  435   POTENCIA_set_neutro(1);
         MOVS     R0,#+1
           CFI FunCall POTENCIA_set_neutro
         BL       POTENCIA_set_neutro
-//  438   vTaskDelay(500);
+//  436   vTaskDelay(500);
         MOV      R0,#+500
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  439   POTENCIA_setRPM(12000);
+//  437   POTENCIA_setRPM(12000);
         MOVW     R0,#+12000
           CFI FunCall POTENCIA_setRPM
         BL       POTENCIA_setRPM
-//  440   
-//  441   STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_limpeza_inicial[idioma][0],(char*)STRING_mensagem_limpeza_inicial[idioma][1]);
+//  438   
+//  439   STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_limpeza_inicial[idioma][0],(char*)STRING_mensagem_limpeza_inicial[idioma][1]);
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable5_12
         ADDS     R0,R0,R4, LSL #+3
@@ -1286,20 +1284,20 @@ PREPARACAO_limpeza_inicial:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  442   vTaskDelay(7000);
+//  440   vTaskDelay(7000);
         MOVW     R0,#+7000
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  443   
-//  444   POTENCIA_setRPM(0);
+//  441   
+//  442   POTENCIA_setRPM(0);
         MOVS     R0,#+0
           CFI FunCall POTENCIA_setRPM
         BL       POTENCIA_setRPM
-//  445   POTENCIA_set_neutro(0);  
+//  443   POTENCIA_set_neutro(0);  
         MOVS     R0,#+0
           CFI FunCall POTENCIA_set_neutro
         BL       POTENCIA_set_neutro
-//  446 }
+//  444 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock8
 
@@ -1404,10 +1402,10 @@ PREPARACAO_limpeza_inicial:
         DC8 "%05d RPM-%03doC"
 
         END
-//  447 /**********************************************************************************
-//  448 *       Fim do arquivo
-//  449 **********************************************************************************/
-//  450 
+//  445 /**********************************************************************************
+//  446 *       Fim do arquivo
+//  447 **********************************************************************************/
+//  448 
 // 
 //    16 bytes in section .bss
 //    32 bytes in section .rodata
