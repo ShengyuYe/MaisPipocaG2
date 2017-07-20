@@ -252,36 +252,6 @@ void RELATORIO_entry(void){
   IMPRESSORA_envia_linha(buffer_linha);    
   // Linha 50
   sprintf(buffer_linha,REL_PT_BR_50);
-  IMPRESSORA_envia_linha(buffer_linha);    
-  // Linha 51
-  sprintf(buffer_linha,REL_PT_BR_51);
-  IMPRESSORA_envia_linha(buffer_linha);    
-  // Linha 52
-  sprintf(buffer_linha,REL_PT_BR_52);
-  IMPRESSORA_envia_linha(buffer_linha);      
-  // Linha 53
-  sprintf(buffer_linha,REL_PT_BR_53);
-  IMPRESSORA_envia_linha(buffer_linha);        
-  // Linha 54
-  sprintf(buffer_linha,REL_PT_BR_54);
-  IMPRESSORA_envia_linha(buffer_linha);          
-  // Linha 55
-  sprintf(buffer_linha,REL_PT_BR_55);
-  IMPRESSORA_envia_linha(buffer_linha);            
-  // Linha 56
-  sprintf(buffer_linha,REL_PT_BR_56);
-  IMPRESSORA_envia_linha(buffer_linha);              
-  // Linha 57
-  sprintf(buffer_linha,REL_PT_BR_57);
-  IMPRESSORA_envia_linha(buffer_linha);                
-  // Linha 58
-  sprintf(buffer_linha,REL_PT_BR_58);
-  IMPRESSORA_envia_linha(buffer_linha);                  
-  // Linha 59
-  sprintf(buffer_linha,REL_PT_BR_59);
-  IMPRESSORA_envia_linha(buffer_linha);                    
-  // Linha 60
-  sprintf(buffer_linha,REL_PT_BR_60);
   IMPRESSORA_envia_linha(buffer_linha);                      
 }
 /***********************************************************************************

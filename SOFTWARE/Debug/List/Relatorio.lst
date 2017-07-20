@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  13:55:38 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  14:33:18 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -315,458 +315,378 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
     146            // Linha 17
     147            sprintf(buffer_linha,REL_PT_BR_17);
    \   00000194   0x9A1C             LDR      R2,[SP, #+112]
-   \   00000196   0x.... 0x....      LDR.W    R1,??DataTable1_8
-   \   0000019A   0xA804             ADD      R0,SP,#+16
-   \   0000019C   0x.... 0x....      BL       sprintf
+   \   00000196   0x....             LDR.N    R1,??DataTable1_8
+   \   00000198   0xA804             ADD      R0,SP,#+16
+   \   0000019A   0x.... 0x....      BL       sprintf
     148            IMPRESSORA_envia_linha(buffer_linha);  
-   \   000001A0   0xA804             ADD      R0,SP,#+16
-   \   000001A2   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   0000019E   0xA804             ADD      R0,SP,#+16
+   \   000001A0   0x.... 0x....      BL       IMPRESSORA_envia_linha
     149            // Linha 18
     150            sprintf(buffer_linha,REL_PT_BR_18);
-   \   000001A6   0x9819             LDR      R0,[SP, #+100]
-   \   000001A8   0x2164             MOVS     R1,#+100
-   \   000001AA   0xFBB0 0xF2F1      UDIV     R2,R0,R1
-   \   000001AE   0xFB01 0x0312      MLS      R3,R1,R2,R0
-   \   000001B2   0x9819             LDR      R0,[SP, #+100]
-   \   000001B4   0x2164             MOVS     R1,#+100
-   \   000001B6   0xFBB0 0xF2F1      UDIV     R2,R0,R1
-   \   000001BA   0x.... 0x....      LDR.W    R1,??DataTable1_9
-   \   000001BE   0xA804             ADD      R0,SP,#+16
-   \   000001C0   0x.... 0x....      BL       sprintf
+   \   000001A4   0x9819             LDR      R0,[SP, #+100]
+   \   000001A6   0x2164             MOVS     R1,#+100
+   \   000001A8   0xFBB0 0xF2F1      UDIV     R2,R0,R1
+   \   000001AC   0xFB01 0x0312      MLS      R3,R1,R2,R0
+   \   000001B0   0x9819             LDR      R0,[SP, #+100]
+   \   000001B2   0x2164             MOVS     R1,#+100
+   \   000001B4   0xFBB0 0xF2F1      UDIV     R2,R0,R1
+   \   000001B8   0x....             LDR.N    R1,??DataTable1_9
+   \   000001BA   0xA804             ADD      R0,SP,#+16
+   \   000001BC   0x.... 0x....      BL       sprintf
     151            IMPRESSORA_envia_linha(buffer_linha);  
-   \   000001C4   0xA804             ADD      R0,SP,#+16
-   \   000001C6   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   000001C0   0xA804             ADD      R0,SP,#+16
+   \   000001C2   0x.... 0x....      BL       IMPRESSORA_envia_linha
     152            // Linha 19
     153            sprintf(buffer_linha,REL_PT_BR_19);
-   \   000001CA   0x.... 0x....      LDR.W    R1,??DataTable1_4
-   \   000001CE   0xA804             ADD      R0,SP,#+16
-   \   000001D0   0x.... 0x....      BL       sprintf
+   \   000001C6   0x....             LDR.N    R1,??DataTable1_4
+   \   000001C8   0xA804             ADD      R0,SP,#+16
+   \   000001CA   0x.... 0x....      BL       sprintf
     154            IMPRESSORA_envia_linha(buffer_linha);  
-   \   000001D4   0xA804             ADD      R0,SP,#+16
-   \   000001D6   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   000001CE   0xA804             ADD      R0,SP,#+16
+   \   000001D0   0x.... 0x....      BL       IMPRESSORA_envia_linha
     155            // Linha 20
     156            sprintf(buffer_linha,REL_PT_BR_20);
-   \   000001DA   0x.... 0x....      LDR.W    R1,??DataTable1_11
-   \   000001DE   0xA804             ADD      R0,SP,#+16
-   \   000001E0   0x.... 0x....      BL       sprintf
+   \   000001D4   0x....             LDR.N    R1,??DataTable1_11
+   \   000001D6   0xA804             ADD      R0,SP,#+16
+   \   000001D8   0x.... 0x....      BL       sprintf
     157            IMPRESSORA_envia_linha(buffer_linha);  
-   \   000001E4   0xA804             ADD      R0,SP,#+16
-   \   000001E6   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   000001DC   0xA804             ADD      R0,SP,#+16
+   \   000001DE   0x.... 0x....      BL       IMPRESSORA_envia_linha
     158            // Linha 21
     159            sprintf(buffer_linha,REL_PT_BR_21);
-   \   000001EA   0x9818             LDR      R0,[SP, #+96]
-   \   000001EC   0x2164             MOVS     R1,#+100
-   \   000001EE   0xFBB0 0xF2F1      UDIV     R2,R0,R1
-   \   000001F2   0xFB01 0x0312      MLS      R3,R1,R2,R0
-   \   000001F6   0x9818             LDR      R0,[SP, #+96]
-   \   000001F8   0x2164             MOVS     R1,#+100
-   \   000001FA   0xFBB0 0xF2F1      UDIV     R2,R0,R1
-   \   000001FE   0x.... 0x....      LDR.W    R1,??DataTable1_12
-   \   00000202   0xA804             ADD      R0,SP,#+16
-   \   00000204   0x.... 0x....      BL       sprintf
+   \   000001E2   0x9818             LDR      R0,[SP, #+96]
+   \   000001E4   0x2164             MOVS     R1,#+100
+   \   000001E6   0xFBB0 0xF2F1      UDIV     R2,R0,R1
+   \   000001EA   0xFB01 0x0312      MLS      R3,R1,R2,R0
+   \   000001EE   0x9818             LDR      R0,[SP, #+96]
+   \   000001F0   0x2164             MOVS     R1,#+100
+   \   000001F2   0xFBB0 0xF2F1      UDIV     R2,R0,R1
+   \   000001F6   0x....             LDR.N    R1,??DataTable1_12
+   \   000001F8   0xA804             ADD      R0,SP,#+16
+   \   000001FA   0x.... 0x....      BL       sprintf
     160            IMPRESSORA_envia_linha(buffer_linha);  
-   \   00000208   0xA804             ADD      R0,SP,#+16
-   \   0000020A   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   000001FE   0xA804             ADD      R0,SP,#+16
+   \   00000200   0x.... 0x....      BL       IMPRESSORA_envia_linha
     161            // Linha 22
     162            sprintf(buffer_linha,REL_PT_BR_22);
-   \   0000020E   0x9817             LDR      R0,[SP, #+92]
-   \   00000210   0x2164             MOVS     R1,#+100
-   \   00000212   0xFBB0 0xF2F1      UDIV     R2,R0,R1
-   \   00000216   0xFB01 0x0312      MLS      R3,R1,R2,R0
-   \   0000021A   0x9817             LDR      R0,[SP, #+92]
-   \   0000021C   0x2164             MOVS     R1,#+100
-   \   0000021E   0xFBB0 0xF2F1      UDIV     R2,R0,R1
-   \   00000222   0x.... 0x....      LDR.W    R1,??DataTable1_13
-   \   00000226   0xA804             ADD      R0,SP,#+16
-   \   00000228   0x.... 0x....      BL       sprintf
+   \   00000204   0x9817             LDR      R0,[SP, #+92]
+   \   00000206   0x2164             MOVS     R1,#+100
+   \   00000208   0xFBB0 0xF2F1      UDIV     R2,R0,R1
+   \   0000020C   0xFB01 0x0312      MLS      R3,R1,R2,R0
+   \   00000210   0x9817             LDR      R0,[SP, #+92]
+   \   00000212   0x2164             MOVS     R1,#+100
+   \   00000214   0xFBB0 0xF2F1      UDIV     R2,R0,R1
+   \   00000218   0x....             LDR.N    R1,??DataTable1_13
+   \   0000021A   0xA804             ADD      R0,SP,#+16
+   \   0000021C   0x.... 0x....      BL       sprintf
     163            IMPRESSORA_envia_linha(buffer_linha);  
-   \   0000022C   0xA804             ADD      R0,SP,#+16
-   \   0000022E   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   00000220   0xA804             ADD      R0,SP,#+16
+   \   00000222   0x.... 0x....      BL       IMPRESSORA_envia_linha
     164            // Linha 23
     165            sprintf(buffer_linha,REL_PT_BR_23);
-   \   00000232   0x....             LDR.N    R1,??DataTable1_4
-   \   00000234   0xA804             ADD      R0,SP,#+16
-   \   00000236   0x.... 0x....      BL       sprintf
+   \   00000226   0x....             LDR.N    R1,??DataTable1_4
+   \   00000228   0xA804             ADD      R0,SP,#+16
+   \   0000022A   0x.... 0x....      BL       sprintf
     166            IMPRESSORA_envia_linha(buffer_linha);  
-   \   0000023A   0xA804             ADD      R0,SP,#+16
-   \   0000023C   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   0000022E   0xA804             ADD      R0,SP,#+16
+   \   00000230   0x.... 0x....      BL       IMPRESSORA_envia_linha
     167            // Linha 24
     168            sprintf(buffer_linha,REL_PT_BR_24);
-   \   00000240   0x.... 0x....      LDR.W    R1,??DataTable1_14
-   \   00000244   0xA804             ADD      R0,SP,#+16
-   \   00000246   0x.... 0x....      BL       sprintf
+   \   00000234   0x....             LDR.N    R1,??DataTable1_14
+   \   00000236   0xA804             ADD      R0,SP,#+16
+   \   00000238   0x.... 0x....      BL       sprintf
     169            IMPRESSORA_envia_linha(buffer_linha);  
-   \   0000024A   0xA804             ADD      R0,SP,#+16
-   \   0000024C   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   0000023C   0xA804             ADD      R0,SP,#+16
+   \   0000023E   0x.... 0x....      BL       IMPRESSORA_envia_linha
     170            // Linha 25
     171            sprintf(buffer_linha,REL_PT_BR_25);
-   \   00000250   0x9A16             LDR      R2,[SP, #+88]
-   \   00000252   0x....             LDR.N    R1,??DataTable1_15
-   \   00000254   0xA804             ADD      R0,SP,#+16
-   \   00000256   0x.... 0x....      BL       sprintf
+   \   00000242   0x9A16             LDR      R2,[SP, #+88]
+   \   00000244   0x....             LDR.N    R1,??DataTable1_15
+   \   00000246   0xA804             ADD      R0,SP,#+16
+   \   00000248   0x.... 0x....      BL       sprintf
     172            IMPRESSORA_envia_linha(buffer_linha);  
-   \   0000025A   0xA804             ADD      R0,SP,#+16
-   \   0000025C   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   0000024C   0xA804             ADD      R0,SP,#+16
+   \   0000024E   0x.... 0x....      BL       IMPRESSORA_envia_linha
     173            // Linha 26
     174            sprintf(buffer_linha,REL_PT_BR_26);
-   \   00000260   0x2064             MOVS     R0,#+100
-   \   00000262   0xFBB4 0xF1F0      UDIV     R1,R4,R0
-   \   00000266   0xFB00 0x4311      MLS      R3,R0,R1,R4
-   \   0000026A   0x2064             MOVS     R0,#+100
-   \   0000026C   0xFBB4 0xF2F0      UDIV     R2,R4,R0
-   \   00000270   0x....             LDR.N    R1,??DataTable1_16
-   \   00000272   0xA804             ADD      R0,SP,#+16
-   \   00000274   0x.... 0x....      BL       sprintf
+   \   00000252   0x2064             MOVS     R0,#+100
+   \   00000254   0xFBB4 0xF1F0      UDIV     R1,R4,R0
+   \   00000258   0xFB00 0x4311      MLS      R3,R0,R1,R4
+   \   0000025C   0x2064             MOVS     R0,#+100
+   \   0000025E   0xFBB4 0xF2F0      UDIV     R2,R4,R0
+   \   00000262   0x....             LDR.N    R1,??DataTable1_16
+   \   00000264   0xA804             ADD      R0,SP,#+16
+   \   00000266   0x.... 0x....      BL       sprintf
     175            IMPRESSORA_envia_linha(buffer_linha);  
-   \   00000278   0xA804             ADD      R0,SP,#+16
-   \   0000027A   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   0000026A   0xA804             ADD      R0,SP,#+16
+   \   0000026C   0x.... 0x....      BL       IMPRESSORA_envia_linha
     176            // Linha 27
     177            sprintf(buffer_linha,REL_PT_BR_27);
-   \   0000027E   0x....             LDR.N    R1,??DataTable1_4
-   \   00000280   0xA804             ADD      R0,SP,#+16
-   \   00000282   0x.... 0x....      BL       sprintf
+   \   00000270   0x....             LDR.N    R1,??DataTable1_4
+   \   00000272   0xA804             ADD      R0,SP,#+16
+   \   00000274   0x.... 0x....      BL       sprintf
     178            IMPRESSORA_envia_linha(buffer_linha);  
-   \   00000286   0xA804             ADD      R0,SP,#+16
-   \   00000288   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   00000278   0xA804             ADD      R0,SP,#+16
+   \   0000027A   0x.... 0x....      BL       IMPRESSORA_envia_linha
     179            // Linha 28
     180            sprintf(buffer_linha,REL_PT_BR_28);
-   \   0000028C   0x....             LDR.N    R1,??DataTable1_17
-   \   0000028E   0xA804             ADD      R0,SP,#+16
-   \   00000290   0x.... 0x....      BL       sprintf
+   \   0000027E   0x....             LDR.N    R1,??DataTable1_17
+   \   00000280   0xA804             ADD      R0,SP,#+16
+   \   00000282   0x.... 0x....      BL       sprintf
     181            IMPRESSORA_envia_linha(buffer_linha);  
-   \   00000294   0xA804             ADD      R0,SP,#+16
-   \   00000296   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   00000286   0xA804             ADD      R0,SP,#+16
+   \   00000288   0x.... 0x....      BL       IMPRESSORA_envia_linha
     182            // Linha 29
     183            sprintf(buffer_linha,REL_PT_BR_29);
-   \   0000029A   0x981B             LDR      R0,[SP, #+108]
-   \   0000029C   0x9000             STR      R0,[SP, #+0]
-   \   0000029E   0xF89D 0x3008      LDRB     R3,[SP, #+8]
-   \   000002A2   0xF89D 0x2009      LDRB     R2,[SP, #+9]
-   \   000002A6   0x....             LDR.N    R1,??DataTable1_18
-   \   000002A8   0xA804             ADD      R0,SP,#+16
-   \   000002AA   0x.... 0x....      BL       sprintf
+   \   0000028C   0x981B             LDR      R0,[SP, #+108]
+   \   0000028E   0x9000             STR      R0,[SP, #+0]
+   \   00000290   0xF89D 0x3008      LDRB     R3,[SP, #+8]
+   \   00000294   0xF89D 0x2009      LDRB     R2,[SP, #+9]
+   \   00000298   0x....             LDR.N    R1,??DataTable1_18
+   \   0000029A   0xA804             ADD      R0,SP,#+16
+   \   0000029C   0x.... 0x....      BL       sprintf
     184            IMPRESSORA_envia_linha(buffer_linha);  
-   \   000002AE   0xA804             ADD      R0,SP,#+16
-   \   000002B0   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   000002A0   0xA804             ADD      R0,SP,#+16
+   \   000002A2   0x.... 0x....      BL       IMPRESSORA_envia_linha
     185            // Linha 30
     186            sprintf(buffer_linha,REL_PT_BR_30);
-   \   000002B4   0xF89D 0x000A      LDRB     R0,[SP, #+10]
-   \   000002B8   0x9000             STR      R0,[SP, #+0]
-   \   000002BA   0xF89D 0x300B      LDRB     R3,[SP, #+11]
-   \   000002BE   0xF89D 0x200C      LDRB     R2,[SP, #+12]
-   \   000002C2   0x....             LDR.N    R1,??DataTable1_19
-   \   000002C4   0xA804             ADD      R0,SP,#+16
-   \   000002C6   0x.... 0x....      BL       sprintf
+   \   000002A6   0xF89D 0x000A      LDRB     R0,[SP, #+10]
+   \   000002AA   0x9000             STR      R0,[SP, #+0]
+   \   000002AC   0xF89D 0x300B      LDRB     R3,[SP, #+11]
+   \   000002B0   0xF89D 0x200C      LDRB     R2,[SP, #+12]
+   \   000002B4   0x....             LDR.N    R1,??DataTable1_19
+   \   000002B6   0xA804             ADD      R0,SP,#+16
+   \   000002B8   0x.... 0x....      BL       sprintf
     187            IMPRESSORA_envia_linha(buffer_linha);  
-   \   000002CA   0xA804             ADD      R0,SP,#+16
-   \   000002CC   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   000002BC   0xA804             ADD      R0,SP,#+16
+   \   000002BE   0x.... 0x....      BL       IMPRESSORA_envia_linha
     188            // Linha 31
     189            sprintf(buffer_linha,REL_PT_BR_31);
-   \   000002D0   0x....             LDR.N    R1,??DataTable1_4
-   \   000002D2   0xA804             ADD      R0,SP,#+16
-   \   000002D4   0x.... 0x....      BL       sprintf
+   \   000002C2   0x....             LDR.N    R1,??DataTable1_4
+   \   000002C4   0xA804             ADD      R0,SP,#+16
+   \   000002C6   0x.... 0x....      BL       sprintf
     190            IMPRESSORA_envia_linha(buffer_linha);  
-   \   000002D8   0xA804             ADD      R0,SP,#+16
-   \   000002DA   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   000002CA   0xA804             ADD      R0,SP,#+16
+   \   000002CC   0x.... 0x....      BL       IMPRESSORA_envia_linha
     191            // Linha 32
     192            sprintf(buffer_linha,REL_PT_BR_32);
-   \   000002DE   0x....             LDR.N    R1,??DataTable1_20
-   \   000002E0   0xA804             ADD      R0,SP,#+16
-   \   000002E2   0x.... 0x....      BL       sprintf
+   \   000002D0   0x....             LDR.N    R1,??DataTable1_20
+   \   000002D2   0xA804             ADD      R0,SP,#+16
+   \   000002D4   0x.... 0x....      BL       sprintf
     193            IMPRESSORA_envia_linha(buffer_linha);  
-   \   000002E6   0xA804             ADD      R0,SP,#+16
-   \   000002E8   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   000002D8   0xA804             ADD      R0,SP,#+16
+   \   000002DA   0x.... 0x....      BL       IMPRESSORA_envia_linha
     194            // Linha 33
     195            sprintf(buffer_linha,REL_PT_BR_33);
-   \   000002EC   0x9815             LDR      R0,[SP, #+84]
-   \   000002EE   0x2164             MOVS     R1,#+100
-   \   000002F0   0xFBB0 0xF2F1      UDIV     R2,R0,R1
-   \   000002F4   0xFB01 0x0312      MLS      R3,R1,R2,R0
-   \   000002F8   0x9815             LDR      R0,[SP, #+84]
-   \   000002FA   0x2164             MOVS     R1,#+100
-   \   000002FC   0xFBB0 0xF2F1      UDIV     R2,R0,R1
-   \   00000300   0x....             LDR.N    R1,??DataTable1_21
-   \   00000302   0xA804             ADD      R0,SP,#+16
-   \   00000304   0x.... 0x....      BL       sprintf
+   \   000002DE   0x9815             LDR      R0,[SP, #+84]
+   \   000002E0   0x2164             MOVS     R1,#+100
+   \   000002E2   0xFBB0 0xF2F1      UDIV     R2,R0,R1
+   \   000002E6   0xFB01 0x0312      MLS      R3,R1,R2,R0
+   \   000002EA   0x9815             LDR      R0,[SP, #+84]
+   \   000002EC   0x2164             MOVS     R1,#+100
+   \   000002EE   0xFBB0 0xF2F1      UDIV     R2,R0,R1
+   \   000002F2   0x....             LDR.N    R1,??DataTable1_21
+   \   000002F4   0xA804             ADD      R0,SP,#+16
+   \   000002F6   0x.... 0x....      BL       sprintf
     196            IMPRESSORA_envia_linha(buffer_linha);  
-   \   00000308   0xA804             ADD      R0,SP,#+16
-   \   0000030A   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   000002FA   0xA804             ADD      R0,SP,#+16
+   \   000002FC   0x.... 0x....      BL       IMPRESSORA_envia_linha
     197            // Linha 34
     198            sprintf(buffer_linha,REL_PT_BR_34);
+   \   00000300   0x....             LDR.N    R1,??DataTable1_4
+   \   00000302   0xA804             ADD      R0,SP,#+16
+   \   00000304   0x.... 0x....      BL       sprintf
+    199            IMPRESSORA_envia_linha(buffer_linha);  
+   \   00000308   0xA804             ADD      R0,SP,#+16
+   \   0000030A   0x.... 0x....      BL       IMPRESSORA_envia_linha
+    200            // Linha 35
+    201            sprintf(buffer_linha,REL_PT_BR_35);
    \   0000030E   0x....             LDR.N    R1,??DataTable1_4
    \   00000310   0xA804             ADD      R0,SP,#+16
    \   00000312   0x.... 0x....      BL       sprintf
-    199            IMPRESSORA_envia_linha(buffer_linha);  
+    202            IMPRESSORA_envia_linha(buffer_linha);  
    \   00000316   0xA804             ADD      R0,SP,#+16
    \   00000318   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    200            // Linha 35
-    201            sprintf(buffer_linha,REL_PT_BR_35);
-   \   0000031C   0x....             LDR.N    R1,??DataTable1_4
-   \   0000031E   0xA804             ADD      R0,SP,#+16
-   \   00000320   0x.... 0x....      BL       sprintf
-    202            IMPRESSORA_envia_linha(buffer_linha);  
-   \   00000324   0xA804             ADD      R0,SP,#+16
-   \   00000326   0x.... 0x....      BL       IMPRESSORA_envia_linha
     203            // Linha 36
     204            sprintf(buffer_linha,REL_PT_BR_36);
-   \   0000032A   0x....             LDR.N    R1,??DataTable1_22
-   \   0000032C   0xA804             ADD      R0,SP,#+16
-   \   0000032E   0x.... 0x....      BL       sprintf
+   \   0000031C   0x....             LDR.N    R1,??DataTable1_22
+   \   0000031E   0xA804             ADD      R0,SP,#+16
+   \   00000320   0x.... 0x....      BL       sprintf
     205            IMPRESSORA_envia_linha(buffer_linha);  
-   \   00000332   0xA804             ADD      R0,SP,#+16
-   \   00000334   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   00000324   0xA804             ADD      R0,SP,#+16
+   \   00000326   0x.... 0x....      BL       IMPRESSORA_envia_linha
     206            // Linha 37
     207            sprintf(buffer_linha,REL_PT_BR_37);
-   \   00000338   0x9A1A             LDR      R2,[SP, #+104]
-   \   0000033A   0x....             LDR.N    R1,??DataTable1_23
-   \   0000033C   0xA804             ADD      R0,SP,#+16
-   \   0000033E   0x.... 0x....      BL       sprintf
+   \   0000032A   0x9A1A             LDR      R2,[SP, #+104]
+   \   0000032C   0x....             LDR.N    R1,??DataTable1_23
+   \   0000032E   0xA804             ADD      R0,SP,#+16
+   \   00000330   0x.... 0x....      BL       sprintf
     208            IMPRESSORA_envia_linha(buffer_linha);  
-   \   00000342   0xA804             ADD      R0,SP,#+16
-   \   00000344   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   00000334   0xA804             ADD      R0,SP,#+16
+   \   00000336   0x.... 0x....      BL       IMPRESSORA_envia_linha
     209            // Linha 38
     210            sprintf(buffer_linha,REL_PT_BR_38);
+   \   0000033A   0x....             LDR.N    R1,??DataTable1_4
+   \   0000033C   0xA804             ADD      R0,SP,#+16
+   \   0000033E   0x.... 0x....      BL       sprintf
+    211            IMPRESSORA_envia_linha(buffer_linha);  
+   \   00000342   0xA804             ADD      R0,SP,#+16
+   \   00000344   0x.... 0x....      BL       IMPRESSORA_envia_linha
+    212            // Linha 39
+    213            sprintf(buffer_linha,REL_PT_BR_39);
    \   00000348   0x....             LDR.N    R1,??DataTable1_4
    \   0000034A   0xA804             ADD      R0,SP,#+16
    \   0000034C   0x.... 0x....      BL       sprintf
-    211            IMPRESSORA_envia_linha(buffer_linha);  
+    214            IMPRESSORA_envia_linha(buffer_linha);
    \   00000350   0xA804             ADD      R0,SP,#+16
    \   00000352   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    212            // Linha 39
-    213            sprintf(buffer_linha,REL_PT_BR_39);
-   \   00000356   0x....             LDR.N    R1,??DataTable1_4
-   \   00000358   0xA804             ADD      R0,SP,#+16
-   \   0000035A   0x.... 0x....      BL       sprintf
-    214            IMPRESSORA_envia_linha(buffer_linha);
-   \   0000035E   0xA804             ADD      R0,SP,#+16
-   \   00000360   0x.... 0x....      BL       IMPRESSORA_envia_linha
     215            
     216            // Imprime os últimos 10 eventos de troca
     217            // no preço da pipoca
     218            RELATORIO_eventos_troca_preco();
-   \   00000364   0x.... 0x....      BL       RELATORIO_eventos_troca_preco
+   \   00000356   0x.... 0x....      BL       RELATORIO_eventos_troca_preco
     219            
     220            // Linha 40
     221            sprintf(buffer_linha,REL_PT_BR_40);
+   \   0000035A   0x....             LDR.N    R1,??DataTable1_4
+   \   0000035C   0xA804             ADD      R0,SP,#+16
+   \   0000035E   0x.... 0x....      BL       sprintf
+    222            IMPRESSORA_envia_linha(buffer_linha);  
+   \   00000362   0xA804             ADD      R0,SP,#+16
+   \   00000364   0x.... 0x....      BL       IMPRESSORA_envia_linha
+    223            // Linha 41
+    224            sprintf(buffer_linha,REL_PT_BR_41);
    \   00000368   0x....             LDR.N    R1,??DataTable1_4
    \   0000036A   0xA804             ADD      R0,SP,#+16
    \   0000036C   0x.... 0x....      BL       sprintf
-    222            IMPRESSORA_envia_linha(buffer_linha);  
+    225            IMPRESSORA_envia_linha(buffer_linha);  
    \   00000370   0xA804             ADD      R0,SP,#+16
    \   00000372   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    223            // Linha 41
-    224            sprintf(buffer_linha,REL_PT_BR_41);
+    226            // Linha 42
+    227            sprintf(buffer_linha,REL_PT_BR_42);
    \   00000376   0x....             LDR.N    R1,??DataTable1_4
    \   00000378   0xA804             ADD      R0,SP,#+16
    \   0000037A   0x.... 0x....      BL       sprintf
-    225            IMPRESSORA_envia_linha(buffer_linha);  
+    228            IMPRESSORA_envia_linha(buffer_linha);    
    \   0000037E   0xA804             ADD      R0,SP,#+16
    \   00000380   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    226            // Linha 42
-    227            sprintf(buffer_linha,REL_PT_BR_42);
+    229            // Linha 42
+    230            sprintf(buffer_linha,REL_PT_BR_42);
    \   00000384   0x....             LDR.N    R1,??DataTable1_4
    \   00000386   0xA804             ADD      R0,SP,#+16
    \   00000388   0x.... 0x....      BL       sprintf
-    228            IMPRESSORA_envia_linha(buffer_linha);    
+    231            IMPRESSORA_envia_linha(buffer_linha);    
    \   0000038C   0xA804             ADD      R0,SP,#+16
    \   0000038E   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    229            // Linha 42
-    230            sprintf(buffer_linha,REL_PT_BR_42);
+    232            // Linha 43
+    233            sprintf(buffer_linha,REL_PT_BR_43);
    \   00000392   0x....             LDR.N    R1,??DataTable1_4
    \   00000394   0xA804             ADD      R0,SP,#+16
    \   00000396   0x.... 0x....      BL       sprintf
-    231            IMPRESSORA_envia_linha(buffer_linha);    
+    234            IMPRESSORA_envia_linha(buffer_linha);    
    \   0000039A   0xA804             ADD      R0,SP,#+16
    \   0000039C   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    232            // Linha 43
-    233            sprintf(buffer_linha,REL_PT_BR_43);
+    235            // Linha 44
+    236            sprintf(buffer_linha,REL_PT_BR_44);
    \   000003A0   0x....             LDR.N    R1,??DataTable1_4
    \   000003A2   0xA804             ADD      R0,SP,#+16
    \   000003A4   0x.... 0x....      BL       sprintf
-    234            IMPRESSORA_envia_linha(buffer_linha);    
+    237            IMPRESSORA_envia_linha(buffer_linha);    
    \   000003A8   0xA804             ADD      R0,SP,#+16
    \   000003AA   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    235            // Linha 44
-    236            sprintf(buffer_linha,REL_PT_BR_44);
-   \   000003AE   0x....             LDR.N    R1,??DataTable1_4
-   \   000003B0   0xA804             ADD      R0,SP,#+16
-   \   000003B2   0x.... 0x....      BL       sprintf
-    237            IMPRESSORA_envia_linha(buffer_linha);    
-   \   000003B6   0xA804             ADD      R0,SP,#+16
-   \   000003B8   0x.... 0x....      BL       IMPRESSORA_envia_linha
     238            // Linha 45
     239            sprintf(buffer_linha,REL_PT_BR_45);
-   \   000003BC   0x....             LDR.N    R1,??DataTable1_24
-   \   000003BE   0xA804             ADD      R0,SP,#+16
-   \   000003C0   0x.... 0x....      BL       sprintf
+   \   000003AE   0x....             LDR.N    R1,??DataTable1_24
+   \   000003B0   0xA804             ADD      R0,SP,#+16
+   \   000003B2   0x.... 0x....      BL       sprintf
     240            IMPRESSORA_envia_linha(buffer_linha);    
-   \   000003C4   0xA804             ADD      R0,SP,#+16
-   \   000003C6   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   000003B6   0xA804             ADD      R0,SP,#+16
+   \   000003B8   0x.... 0x....      BL       IMPRESSORA_envia_linha
     241            // Linha 46
     242            sprintf(buffer_linha,REL_PT_BR_46);
-   \   000003CA   0x....             LDR.N    R1,??DataTable1_25
-   \   000003CC   0xA804             ADD      R0,SP,#+16
-   \   000003CE   0x.... 0x....      BL       sprintf
+   \   000003BC   0x....             LDR.N    R1,??DataTable1_25
+   \   000003BE   0xA804             ADD      R0,SP,#+16
+   \   000003C0   0x.... 0x....      BL       sprintf
     243            IMPRESSORA_envia_linha(buffer_linha);    
-   \   000003D2   0xA804             ADD      R0,SP,#+16
-   \   000003D4   0x.... 0x....      BL       IMPRESSORA_envia_linha
+   \   000003C4   0xA804             ADD      R0,SP,#+16
+   \   000003C6   0x.... 0x....      BL       IMPRESSORA_envia_linha
     244            // Linha 47
     245            sprintf(buffer_linha,REL_PT_BR_47);
+   \   000003CA   0x....             LDR.N    R1,??DataTable1_4
+   \   000003CC   0xA804             ADD      R0,SP,#+16
+   \   000003CE   0x.... 0x....      BL       sprintf
+    246            IMPRESSORA_envia_linha(buffer_linha);    
+   \   000003D2   0xA804             ADD      R0,SP,#+16
+   \   000003D4   0x.... 0x....      BL       IMPRESSORA_envia_linha
+    247            // Linha 48
+    248            sprintf(buffer_linha,REL_PT_BR_48);
    \   000003D8   0x....             LDR.N    R1,??DataTable1_4
    \   000003DA   0xA804             ADD      R0,SP,#+16
    \   000003DC   0x.... 0x....      BL       sprintf
-    246            IMPRESSORA_envia_linha(buffer_linha);    
+    249            IMPRESSORA_envia_linha(buffer_linha);    
    \   000003E0   0xA804             ADD      R0,SP,#+16
    \   000003E2   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    247            // Linha 48
-    248            sprintf(buffer_linha,REL_PT_BR_48);
+    250            // Linha 49
+    251            sprintf(buffer_linha,REL_PT_BR_49);
    \   000003E6   0x....             LDR.N    R1,??DataTable1_4
    \   000003E8   0xA804             ADD      R0,SP,#+16
    \   000003EA   0x.... 0x....      BL       sprintf
-    249            IMPRESSORA_envia_linha(buffer_linha);    
+    252            IMPRESSORA_envia_linha(buffer_linha);    
    \   000003EE   0xA804             ADD      R0,SP,#+16
    \   000003F0   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    250            // Linha 49
-    251            sprintf(buffer_linha,REL_PT_BR_49);
+    253            // Linha 50
+    254            sprintf(buffer_linha,REL_PT_BR_50);
    \   000003F4   0x....             LDR.N    R1,??DataTable1_4
    \   000003F6   0xA804             ADD      R0,SP,#+16
    \   000003F8   0x.... 0x....      BL       sprintf
-    252            IMPRESSORA_envia_linha(buffer_linha);    
+    255            IMPRESSORA_envia_linha(buffer_linha);                      
    \   000003FC   0xA804             ADD      R0,SP,#+16
    \   000003FE   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    253            // Linha 50
-    254            sprintf(buffer_linha,REL_PT_BR_50);
-   \   00000402   0x....             LDR.N    R1,??DataTable1
-   \   00000404   0xA804             ADD      R0,SP,#+16
-   \   00000406   0x.... 0x....      BL       sprintf
-    255            IMPRESSORA_envia_linha(buffer_linha);    
-   \   0000040A   0xA804             ADD      R0,SP,#+16
-   \   0000040C   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    256            // Linha 51
-    257            sprintf(buffer_linha,REL_PT_BR_51);
-   \   00000410   0x....             LDR.N    R1,??DataTable1_26
-   \   00000412   0xA804             ADD      R0,SP,#+16
-   \   00000414   0x.... 0x....      BL       sprintf
-    258            IMPRESSORA_envia_linha(buffer_linha);    
-   \   00000418   0xA804             ADD      R0,SP,#+16
-   \   0000041A   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    259            // Linha 52
-    260            sprintf(buffer_linha,REL_PT_BR_52);
-   \   0000041E   0x....             LDR.N    R1,??DataTable1_27
-   \   00000420   0xA804             ADD      R0,SP,#+16
-   \   00000422   0x.... 0x....      BL       sprintf
-    261            IMPRESSORA_envia_linha(buffer_linha);      
-   \   00000426   0xA804             ADD      R0,SP,#+16
-   \   00000428   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    262            // Linha 53
-    263            sprintf(buffer_linha,REL_PT_BR_53);
-   \   0000042C   0x....             LDR.N    R1,??DataTable1_4
-   \   0000042E   0xA804             ADD      R0,SP,#+16
-   \   00000430   0x.... 0x....      BL       sprintf
-    264            IMPRESSORA_envia_linha(buffer_linha);        
-   \   00000434   0xA804             ADD      R0,SP,#+16
-   \   00000436   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    265            // Linha 54
-    266            sprintf(buffer_linha,REL_PT_BR_54);
-   \   0000043A   0x....             LDR.N    R1,??DataTable1_4
-   \   0000043C   0xA804             ADD      R0,SP,#+16
-   \   0000043E   0x.... 0x....      BL       sprintf
-    267            IMPRESSORA_envia_linha(buffer_linha);          
-   \   00000442   0xA804             ADD      R0,SP,#+16
-   \   00000444   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    268            // Linha 55
-    269            sprintf(buffer_linha,REL_PT_BR_55);
-   \   00000448   0x....             LDR.N    R1,??DataTable1_4
-   \   0000044A   0xA804             ADD      R0,SP,#+16
-   \   0000044C   0x.... 0x....      BL       sprintf
-    270            IMPRESSORA_envia_linha(buffer_linha);            
-   \   00000450   0xA804             ADD      R0,SP,#+16
-   \   00000452   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    271            // Linha 56
-    272            sprintf(buffer_linha,REL_PT_BR_56);
-   \   00000456   0x....             LDR.N    R1,??DataTable1_4
-   \   00000458   0xA804             ADD      R0,SP,#+16
-   \   0000045A   0x.... 0x....      BL       sprintf
-    273            IMPRESSORA_envia_linha(buffer_linha);              
-   \   0000045E   0xA804             ADD      R0,SP,#+16
-   \   00000460   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    274            // Linha 57
-    275            sprintf(buffer_linha,REL_PT_BR_57);
-   \   00000464   0x....             LDR.N    R1,??DataTable1_4
-   \   00000466   0xA804             ADD      R0,SP,#+16
-   \   00000468   0x.... 0x....      BL       sprintf
-    276            IMPRESSORA_envia_linha(buffer_linha);                
-   \   0000046C   0xA804             ADD      R0,SP,#+16
-   \   0000046E   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    277            // Linha 58
-    278            sprintf(buffer_linha,REL_PT_BR_58);
-   \   00000472   0x....             LDR.N    R1,??DataTable1_4
-   \   00000474   0xA804             ADD      R0,SP,#+16
-   \   00000476   0x.... 0x....      BL       sprintf
-    279            IMPRESSORA_envia_linha(buffer_linha);                  
-   \   0000047A   0xA804             ADD      R0,SP,#+16
-   \   0000047C   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    280            // Linha 59
-    281            sprintf(buffer_linha,REL_PT_BR_59);
-   \   00000480   0x....             LDR.N    R1,??DataTable1_4
-   \   00000482   0xA804             ADD      R0,SP,#+16
-   \   00000484   0x.... 0x....      BL       sprintf
-    282            IMPRESSORA_envia_linha(buffer_linha);                    
-   \   00000488   0xA804             ADD      R0,SP,#+16
-   \   0000048A   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    283            // Linha 60
-    284            sprintf(buffer_linha,REL_PT_BR_60);
-   \   0000048E   0x....             LDR.N    R1,??DataTable1_4
-   \   00000490   0xA804             ADD      R0,SP,#+16
-   \   00000492   0x.... 0x....      BL       sprintf
-    285            IMPRESSORA_envia_linha(buffer_linha);                      
-   \   00000496   0xA804             ADD      R0,SP,#+16
-   \   00000498   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    286          }
-   \   0000049C   0xB020             ADD      SP,SP,#+128
-   \   0000049E   0xBD10             POP      {R4,PC}          ;; return
-    287          /***********************************************************************************
-    288          *       Descrição       :       Verifica se existem eventos de alteração
-    289          *                               no valor da pipoca
-    290          *       Parametros      :       nennhum
-    291          *       Retorno         :       nenhum
-    292          ***********************************************************************************/
+    256          }
+   \   00000402   0xB020             ADD      SP,SP,#+128
+   \   00000404   0xBD10             POP      {R4,PC}          ;; return
+    257          /***********************************************************************************
+    258          *       Descrição       :       Verifica se existem eventos de alteração
+    259          *                               no valor da pipoca
+    260          *       Parametros      :       nennhum
+    261          *       Retorno         :       nenhum
+    262          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    293          void RELATORIO_eventos_troca_preco(void){
+    263          void RELATORIO_eventos_troca_preco(void){
    \                     RELATORIO_eventos_troca_preco:
    \   00000000   0xB570             PUSH     {R4-R6,LR}
    \   00000002   0xB094             SUB      SP,SP,#+80
-    294            unsigned short int eventos;
-    295            unsigned short int novo_preco;
-    296            unsigned short int preco_antigo;
-    297            unsigned char hora,minuto,segundo;
-    298            unsigned char dia,mes;
-    299            unsigned int ano;
-    300            char buffer_linha[40];
-    301            
-    302            eventos = FTP_get_quantidade_novas_trocas();
+    264            unsigned short int eventos;
+    265            unsigned short int novo_preco;
+    266            unsigned short int preco_antigo;
+    267            unsigned char hora,minuto,segundo;
+    268            unsigned char dia,mes;
+    269            unsigned int ano;
+    270            char buffer_linha[40];
+    271            
+    272            eventos = FTP_get_quantidade_novas_trocas();
    \   00000004   0x.... 0x....      BL       FTP_get_quantidade_novas_trocas
    \   00000008   0x0004             MOVS     R4,R0
-    303            if(eventos){
+    273            if(eventos){
    \   0000000A   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
    \   0000000C   0x2C00             CMP      R4,#+0
    \   0000000E   0xD072             BEQ.N    ??RELATORIO_eventos_troca_preco_0
-    304              
-    305              sprintf(buffer_linha,LINHA_TROCA_PRECO);
-   \   00000010   0x....             LDR.N    R1,??DataTable1_28
+    274              
+    275              sprintf(buffer_linha,LINHA_TROCA_PRECO);
+   \   00000010   0x....             LDR.N    R1,??DataTable1_26
    \   00000012   0xA809             ADD      R0,SP,#+36
    \   00000014   0x.... 0x....      BL       sprintf
-    306              IMPRESSORA_envia_linha(buffer_linha);                 
+    276              IMPRESSORA_envia_linha(buffer_linha);                 
    \   00000018   0xA809             ADD      R0,SP,#+36
    \   0000001A   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    307                  
-    308              for(unsigned short int i=0,indice=eventos-1;i<eventos;i++,indice--){
+    277                  
+    278              for(unsigned short int i=0,indice=eventos-1;i<eventos;i++,indice--){
    \   0000001E   0x2500             MOVS     R5,#+0
    \   00000020   0x1E66             SUBS     R6,R4,#+1
    \   00000022   0xE05D             B.N      ??RELATORIO_eventos_troca_preco_1
-    309                
-    310                FTP_get_troca(indice,&novo_preco,&preco_antigo,&hora,&minuto,&segundo,&dia,&mes,&ano);
+    279                
+    280                FTP_get_troca(indice,&novo_preco,&preco_antigo,&hora,&minuto,&segundo,&dia,&mes,&ano);
    \                     ??RELATORIO_eventos_troca_preco_2:
    \   00000024   0xA808             ADD      R0,SP,#+32
    \   00000026   0x9004             STR      R0,[SP, #+16]
@@ -784,20 +704,20 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \   00000046   0x0030             MOVS     R0,R6
    \   00000048   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
    \   0000004A   0x.... 0x....      BL       FTP_get_troca
-    311                
-    312                sprintf(buffer_linha,"  [%02d de %02d]\n\r",i+1,eventos);
+    281                
+    282                sprintf(buffer_linha,"  [%02d de %02d]\n\r",i+1,eventos);
    \   0000004E   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
    \   00000050   0x0023             MOVS     R3,R4
    \   00000052   0xB2AD             UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
    \   00000054   0x1C6A             ADDS     R2,R5,#+1
-   \   00000056   0x....             LDR.N    R1,??DataTable1_29
+   \   00000056   0x....             LDR.N    R1,??DataTable1_27
    \   00000058   0xA809             ADD      R0,SP,#+36
    \   0000005A   0x.... 0x....      BL       sprintf
-    313                IMPRESSORA_envia_linha(buffer_linha);    
+    283                IMPRESSORA_envia_linha(buffer_linha);    
    \   0000005E   0xA809             ADD      R0,SP,#+36
    \   00000060   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    314                
-    315                sprintf(buffer_linha,"   Preco Antigo: R$ %02d,%02d\n\r\n\r",preco_antigo/100,preco_antigo%100);
+    284                
+    285                sprintf(buffer_linha,"   Preco Antigo: R$ %02d,%02d\n\r\n\r",preco_antigo/100,preco_antigo%100);
    \   00000064   0xF8BD 0x001A      LDRH     R0,[SP, #+26]
    \   00000068   0x2164             MOVS     R1,#+100
    \   0000006A   0xFB90 0xF2F1      SDIV     R2,R0,R1
@@ -805,14 +725,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \   00000072   0xF8BD 0x001A      LDRH     R0,[SP, #+26]
    \   00000076   0x2164             MOVS     R1,#+100
    \   00000078   0xFB90 0xF2F1      SDIV     R2,R0,R1
-   \   0000007C   0x....             LDR.N    R1,??DataTable1_30
+   \   0000007C   0x....             LDR.N    R1,??DataTable1_28
    \   0000007E   0xA809             ADD      R0,SP,#+36
    \   00000080   0x.... 0x....      BL       sprintf
-    316                IMPRESSORA_envia_linha(buffer_linha);   
+    286                IMPRESSORA_envia_linha(buffer_linha);   
    \   00000084   0xA809             ADD      R0,SP,#+36
    \   00000086   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    317                
-    318                sprintf(buffer_linha,"   Novo Preco: R$ %02d,%02d\n\r\n\r",novo_preco/100,novo_preco%100);
+    287                
+    288                sprintf(buffer_linha,"   Novo Preco: R$ %02d,%02d\n\r\n\r",novo_preco/100,novo_preco%100);
    \   0000008A   0xF8BD 0x001C      LDRH     R0,[SP, #+28]
    \   0000008E   0x2164             MOVS     R1,#+100
    \   00000090   0xFB90 0xF2F1      SDIV     R2,R0,R1
@@ -820,14 +740,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \   00000098   0xF8BD 0x001C      LDRH     R0,[SP, #+28]
    \   0000009C   0x2164             MOVS     R1,#+100
    \   0000009E   0xFB90 0xF2F1      SDIV     R2,R0,R1
-   \   000000A2   0x....             LDR.N    R1,??DataTable1_31
+   \   000000A2   0x....             LDR.N    R1,??DataTable1_29
    \   000000A4   0xA809             ADD      R0,SP,#+36
    \   000000A6   0x.... 0x....      BL       sprintf
-    319                IMPRESSORA_envia_linha(buffer_linha);   
+    289                IMPRESSORA_envia_linha(buffer_linha);   
    \   000000AA   0xA809             ADD      R0,SP,#+36
    \   000000AC   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    320                
-    321                sprintf(buffer_linha,"   Em %02d/%02d/%04d as %02d:%02d:%02d\n\r",dia,mes,ano,hora,minuto,segundo);
+    290                
+    291                sprintf(buffer_linha,"   Em %02d/%02d/%04d as %02d:%02d:%02d\n\r",dia,mes,ano,hora,minuto,segundo);
    \   000000B0   0xF89D 0x0016      LDRB     R0,[SP, #+22]
    \   000000B4   0x9003             STR      R0,[SP, #+12]
    \   000000B6   0xF89D 0x0017      LDRB     R0,[SP, #+23]
@@ -838,13 +758,13 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \   000000C4   0x9000             STR      R0,[SP, #+0]
    \   000000C6   0xF89D 0x3014      LDRB     R3,[SP, #+20]
    \   000000CA   0xF89D 0x2015      LDRB     R2,[SP, #+21]
-   \   000000CE   0x....             LDR.N    R1,??DataTable1_32
+   \   000000CE   0x....             LDR.N    R1,??DataTable1_30
    \   000000D0   0xA809             ADD      R0,SP,#+36
    \   000000D2   0x.... 0x....      BL       sprintf
-    322                IMPRESSORA_envia_linha(buffer_linha);   
+    292                IMPRESSORA_envia_linha(buffer_linha);   
    \   000000D6   0xA809             ADD      R0,SP,#+36
    \   000000D8   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    323              }
+    293              }
    \   000000DC   0x1C6D             ADDS     R5,R5,#+1
    \   000000DE   0x1E76             SUBS     R6,R6,#+1
    \                     ??RELATORIO_eventos_troca_preco_1:
@@ -852,16 +772,16 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \   000000E2   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
    \   000000E4   0x42A5             CMP      R5,R4
    \   000000E6   0xD39D             BCC.N    ??RELATORIO_eventos_troca_preco_2
-    324              
-    325              sprintf(buffer_linha,"\n\r\n\r\n\r\n\r\n\r");
-   \   000000E8   0x....             LDR.N    R1,??DataTable1_33
+    294              
+    295              sprintf(buffer_linha,"\n\r\n\r\n\r\n\r\n\r");
+   \   000000E8   0x....             LDR.N    R1,??DataTable1_31
    \   000000EA   0xA809             ADD      R0,SP,#+36
    \   000000EC   0x.... 0x....      BL       sprintf
-    326              IMPRESSORA_envia_linha(buffer_linha);       
+    296              IMPRESSORA_envia_linha(buffer_linha);       
    \   000000F0   0xA809             ADD      R0,SP,#+36
    \   000000F2   0x.... 0x....      BL       IMPRESSORA_envia_linha
-    327            }      
-    328          }
+    297            }      
+    298          }
    \                     ??RELATORIO_eventos_troca_preco_0:
    \   000000F6   0xB014             ADD      SP,SP,#+80
    \   000000F8   0xBD70             POP      {R4-R6,PC}       ;; return
@@ -872,7 +792,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable1_1:
-   \   00000000   0x........         DC32     `?<Constant "|  GRUPO ALTECH - MAI...">`
+   \   00000000   0x........         DC32     `?<Constant "|GRUPO ALTECH - MAIS ...">`
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable1_2:
@@ -968,49 +888,35 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable1_25:
-   \   00000000   0x........         DC32     `?<Constant "           Responsave...">`
+   \   00000000   0x........         DC32     `?<Constant "     Responsavel pelo...">`
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable1_26:
-   \   00000000   0x........         DC32     `?<Constant "|          www.maispi...">`
-
-   \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_27:
-   \   00000000   0x........         DC32     `?<Constant "+--------------------...">_1`
-
-   \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_28:
    \   00000000   0x........         DC32     `?<Constant "  [Troca de preco]\\n\\r">`
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_29:
+   \                     ??DataTable1_27:
    \   00000000   0x........         DC32     `?<Constant "  [%02d de %02d]\\n\\r">`
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_30:
+   \                     ??DataTable1_28:
    \   00000000   0x........         DC32     `?<Constant "   Preco Antigo: R$ %...">`
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_31:
+   \                     ??DataTable1_29:
    \   00000000   0x........         DC32     `?<Constant "   Novo Preco: R$ %02...">`
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_32:
+   \                     ??DataTable1_30:
    \   00000000   0x........         DC32     `?<Constant "   Em %02d/%02d/%04d ...">`
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_33:
+   \                     ??DataTable1_31:
    \   00000000   0x........         DC32     `?<Constant "\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r">`
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "+--------------------...">`:
-   \   00000000   0x2B 0x2D          DC8 "+----------------------------------------+\012\015"
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
+   \   00000000   0x2B 0x2D          DC8 "+----------------------------+\012\015"
    \              0x2D 0x2D    
    \              0x2D 0x2D    
    \              0x2D 0x2D    
@@ -1027,13 +933,12 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x2D 0x2B    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
-   \                     `?<Constant "|  GRUPO ALTECH - MAI...">`:
-   \   00000000   0x7C 0x20          DC8 "|  GRUPO ALTECH - MAIS PIPOCA            +\012\015"
-   \              0x20 0x47    
+   \                     `?<Constant "|GRUPO ALTECH - MAIS ...">`:
+   \   00000000   0x7C 0x47          DC8 "|GRUPO ALTECH - MAIS PIPOCA  +\012\015"
    \              0x52 0x55    
    \              0x50 0x4F    
    \              0x20 0x41    
@@ -1047,26 +952,15 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x49 0x50    
    \              0x4F 0x43    
    \              0x41 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x20 0x2B    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "+                    ...">`:
-   \   00000000   0x2B 0x20          DC8 "+                                        +\012\015"
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
+   \   00000000   0x2B 0x20          DC8 "+                            +\012\015"
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
@@ -1083,12 +977,12 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x2B    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "+  RELATORIO DE VENDA...">`:
-   \   00000000   0x2B 0x20          DC8 "+  RELATORIO DE VENDAS                   +\012\015"
+   \   00000000   0x2B 0x20          DC8 "+  RELATORIO DE VENDAS       +\012\015"
    \              0x20 0x52    
    \              0x45 0x4C    
    \              0x41 0x54    
@@ -1102,27 +996,15 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x20 0x2B    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "                     ...">`:
-   \   00000000   0x20 0x20          DC8 "                                          \012\015"
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
+   \   00000000   0x20 0x20          DC8 "                              \012\015"
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
@@ -1139,12 +1021,12 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "  [Numero de serie]  ...">`:
-   \   00000000   0x20 0x20          DC8 "  [Numero de serie]                       \012\015"
+   \   00000000   0x20 0x20          DC8 "  [Numero de serie]           \012\015"
    \              0x5B 0x4E    
    \              0x75 0x6D    
    \              0x65 0x72    
@@ -1159,20 +1041,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "  %06d               ...">`:
-   \   00000000   0x20 0x20          DC8 "  %06d                                    \012\015"
+   \   00000000   0x20 0x20          DC8 "  %06d                        \012\015"
    \              0x25 0x30    
    \              0x36 0x64    
    \              0x20 0x20    
@@ -1187,20 +1063,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "  [Faturamento parcia...">`:
-   \   00000000   0x20 0x20          DC8 "  [Faturamento parcial]                   \012\015"
+   \   00000000   0x20 0x20          DC8 "  [Faturamento parcial]       \012\015"
    \              0x5B 0x46    
    \              0x61 0x74    
    \              0x75 0x72    
@@ -1215,20 +1085,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "   unidades   : %d   ...">`:
-   \   00000000   0x20 0x20          DC8 "   unidades   : %d                        \012\015"
+   \   00000000   0x20 0x20          DC8 "   unidades   : %d            \012\015"
    \              0x20 0x75    
    \              0x6E 0x69    
    \              0x64 0x61    
@@ -1243,20 +1107,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "   arrecadacao: R$ %d...">`:
-   \   00000000   0x20 0x20          DC8 "   arrecadacao: R$ %d,%02d                \012\015"
+   \   00000000   0x20 0x20          DC8 "   arrecadacao: R$ %d,%02d    \012\015"
    \              0x20 0x61    
    \              0x72 0x72    
    \              0x65 0x63    
@@ -1271,20 +1129,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x32 0x64    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "  [Faturamento total]...">`:
-   \   00000000   0x20 0x20          DC8 "  [Faturamento total]                     \012\015"
+   \   00000000   0x20 0x20          DC8 "  [Faturamento total]         \012\015"
    \              0x5B 0x46    
    \              0x61 0x74    
    \              0x75 0x72    
@@ -1299,20 +1151,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "  [Faturamento cartao...">`:
-   \   00000000   0x20 0x20          DC8 "  [Faturamento cartao]                    \012\015"
+   \   00000000   0x20 0x20          DC8 "  [Faturamento cartao]        \012\015"
    \              0x5B 0x46    
    \              0x61 0x74    
    \              0x75 0x72    
@@ -1327,20 +1173,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "   parcial    : R$ %d...">`:
-   \   00000000   0x20 0x20          DC8 "   parcial    : R$ %d,%02d                \012\015"
+   \   00000000   0x20 0x20          DC8 "   parcial    : R$ %d,%02d    \012\015"
    \              0x20 0x70    
    \              0x61 0x72    
    \              0x63 0x69    
@@ -1355,20 +1195,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x32 0x64    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "   total      : R$ %d...">`:
-   \   00000000   0x20 0x20          DC8 "   total      : R$ %d,%02d                \012\015"
+   \   00000000   0x20 0x20          DC8 "   total      : R$ %d,%02d    \012\015"
    \              0x20 0x74    
    \              0x6F 0x74    
    \              0x61 0x6C    
@@ -1383,20 +1217,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x32 0x64    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "  [Comissao do ponto]...">`:
-   \   00000000   0x20 0x20          DC8 "  [Comissao do ponto]                     \012\015"
+   \   00000000   0x20 0x20          DC8 "  [Comissao do ponto]         \012\015"
    \              0x5B 0x43    
    \              0x6F 0x6D    
    \              0x69 0x73    
@@ -1411,20 +1239,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "   taxa       : %d %%...">`:
-   \   00000000   0x20 0x20          DC8 "   taxa       : %d %%                     \012\015"
+   \   00000000   0x20 0x20          DC8 "   taxa       : %d %%         \012\015"
    \              0x20 0x74    
    \              0x61 0x78    
    \              0x61 0x20    
@@ -1439,20 +1261,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "   montante   : R$ %d...">`:
-   \   00000000   0x20 0x20          DC8 "   montante   : R$ %d,%02d                \012\015"
+   \   00000000   0x20 0x20          DC8 "   montante   : R$ %d,%02d    \012\015"
    \              0x20 0x6D    
    \              0x6F 0x6E    
    \              0x74 0x61    
@@ -1467,20 +1283,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x32 0x64    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "  [Hora/Data do Relat...">`:
-   \   00000000   0x20 0x20          DC8 "  [Hora/Data do Relatorio]                \012\015"
+   \   00000000   0x20 0x20          DC8 "  [Hora/Data do Relatorio]    \012\015"
    \              0x5B 0x48    
    \              0x6F 0x72    
    \              0x61 0x2F    
@@ -1495,20 +1305,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x6F 0x5D    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "    %02d/%02d/%04d   ...">`:
-   \   00000000   0x20 0x20          DC8 "    %02d/%02d/%04d                        \012\015"
+   \   00000000   0x20 0x20          DC8 "    %02d/%02d/%04d            \012\015"
    \              0x20 0x20    
    \              0x25 0x30    
    \              0x32 0x64    
@@ -1523,20 +1327,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "    %02d:%02d:%02d   ...">`:
-   \   00000000   0x20 0x20          DC8 "    %02d:%02d:%02d                        \012\015"
+   \   00000000   0x20 0x20          DC8 "    %02d:%02d:%02d            \012\015"
    \              0x20 0x20    
    \              0x25 0x30    
    \              0x32 0x64    
@@ -1551,20 +1349,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "  [Valor da pipoca]  ...">`:
-   \   00000000   0x20 0x20          DC8 "  [Valor da pipoca]                       \012\015"
+   \   00000000   0x20 0x20          DC8 "  [Valor da pipoca]           \012\015"
    \              0x5B 0x56    
    \              0x61 0x6C    
    \              0x6F 0x72    
@@ -1579,20 +1371,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "    R$ %d,%02d       ...">`:
-   \   00000000   0x20 0x20          DC8 "    R$ %d,%02d                            \012\015"
+   \   00000000   0x20 0x20          DC8 "    R$ %d,%02d                \012\015"
    \              0x20 0x20    
    \              0x52 0x24    
    \              0x20 0x25    
@@ -1607,20 +1393,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "  [Pipocas teste]    ...">`:
-   \   00000000   0x20 0x20          DC8 "  [Pipocas teste]                         \012\015"
+   \   00000000   0x20 0x20          DC8 "  [Pipocas teste]             \012\015"
    \              0x5B 0x50    
    \              0x69 0x70    
    \              0x6F 0x63    
@@ -1635,20 +1415,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "    preparacoes: %d  ...">`:
-   \   00000000   0x20 0x20          DC8 "    preparacoes: %d                       \012\015"
+   \   00000000   0x20 0x20          DC8 "    preparacoes: %d           \012\015"
    \              0x20 0x20    
    \              0x70 0x72    
    \              0x65 0x70    
@@ -1663,26 +1437,14 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "  ___________________...">`:
-   \   00000000   0x20 0x20          DC8 "  ________________________________________\012\015"
-   \              0x5F 0x5F    
-   \              0x5F 0x5F    
-   \              0x5F 0x5F    
-   \              0x5F 0x5F    
-   \              0x5F 0x5F    
-   \              0x5F 0x5F    
+   \   00000000   0x20 0x20          DC8 "  ____________________________\012\015"
    \              0x5F 0x5F    
    \              0x5F 0x5F    
    \              0x5F 0x5F    
@@ -1699,15 +1461,12 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x5F 0x5F    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
-   \                     `?<Constant "           Responsave...">`:
-   \   00000000   0x20 0x20          DC8 "           Responsavel pelo ponto         \012\015"
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
+   \                     `?<Constant "     Responsavel pelo...">`:
+   \   00000000   0x20 0x20          DC8 "     Responsavel pelo ponto   \012\015"
    \              0x20 0x20    
    \              0x20 0x52    
    \              0x65 0x73    
@@ -1722,68 +1481,9 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x6E 0x74    
    \              0x6F 0x20    
    \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
    \              0x0A 0x0D    
    \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
-   \              0x00         
-
-   \                                 In section .rodata, align 4
-   \                     `?<Constant "|          www.maispi...">`:
-   \   00000000   0x7C 0x20          DC8 "|          www.maispipoca.com.br         |\012\015"
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x77    
-   \              0x77 0x77    
-   \              0x2E 0x6D    
-   \              0x61 0x69    
-   \              0x73 0x70    
-   \              0x69 0x70    
-   \              0x6F 0x63    
-   \              0x61 0x2E    
-   \              0x63 0x6F    
-   \              0x6D 0x2E    
-   \              0x62 0x72    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x20    
-   \              0x20 0x7C    
-   \              0x0A 0x0D    
-   \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
-   \              0x00         
-
-   \                                 In section .rodata, align 4
-   \                     `?<Constant "+--------------------...">_1`:
-   \   00000000   0x2B 0x2D          DC8 "+----------------------------------------|\012\015"
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x2D    
-   \              0x2D 0x7C    
-   \              0x0A 0x0D    
-   \              0x00         
-   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \   00000021   0x00 0x00          DC8 0, 0, 0
    \              0x00         
 
    \                                 In section .rodata, align 4
@@ -1891,9 +1591,9 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
    \              0x0A 0x0D    
    \              0x00         
    \   0000000B   0x00               DC8 0
-    329          /***********************************************************************************
-    330          *       Fim do arquivo
-    331          ***********************************************************************************/
+    299          /***********************************************************************************
+    300          *       Fim do arquivo
+    301          ***********************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -1916,40 +1616,38 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
 
    Bytes  Function/Label
    -----  --------------
-      48  ?<Constant "                     ...">
-      48  ?<Constant "           Responsave...">
-      48  ?<Constant "    %02d/%02d/%04d   ...">
-      48  ?<Constant "    %02d:%02d:%02d   ...">
-      48  ?<Constant "    R$ %d,%02d       ...">
-      48  ?<Constant "    preparacoes: %d  ...">
+      36  ?<Constant "                     ...">
+      36  ?<Constant "     Responsavel pelo...">
+      36  ?<Constant "    %02d/%02d/%04d   ...">
+      36  ?<Constant "    %02d:%02d:%02d   ...">
+      36  ?<Constant "    R$ %d,%02d       ...">
+      36  ?<Constant "    preparacoes: %d  ...">
       44  ?<Constant "   Em %02d/%02d/%04d ...">
       32  ?<Constant "   Novo Preco: R$ %02...">
       36  ?<Constant "   Preco Antigo: R$ %...">
-      48  ?<Constant "   arrecadacao: R$ %d...">
-      48  ?<Constant "   montante   : R$ %d...">
-      48  ?<Constant "   parcial    : R$ %d...">
-      48  ?<Constant "   taxa       : %d %%...">
-      48  ?<Constant "   total      : R$ %d...">
-      48  ?<Constant "   unidades   : %d   ...">
-      48  ?<Constant "  %06d               ...">
+      36  ?<Constant "   arrecadacao: R$ %d...">
+      36  ?<Constant "   montante   : R$ %d...">
+      36  ?<Constant "   parcial    : R$ %d...">
+      36  ?<Constant "   taxa       : %d %%...">
+      36  ?<Constant "   total      : R$ %d...">
+      36  ?<Constant "   unidades   : %d   ...">
+      36  ?<Constant "  %06d               ...">
       20  ?<Constant "  [%02d de %02d]\n\r">
-      48  ?<Constant "  [Comissao do ponto]...">
-      48  ?<Constant "  [Faturamento cartao...">
-      48  ?<Constant "  [Faturamento parcia...">
-      48  ?<Constant "  [Faturamento total]...">
-      48  ?<Constant "  [Hora/Data do Relat...">
-      48  ?<Constant "  [Numero de serie]  ...">
-      48  ?<Constant "  [Pipocas teste]    ...">
+      36  ?<Constant "  [Comissao do ponto]...">
+      36  ?<Constant "  [Faturamento cartao...">
+      36  ?<Constant "  [Faturamento parcia...">
+      36  ?<Constant "  [Faturamento total]...">
+      36  ?<Constant "  [Hora/Data do Relat...">
+      36  ?<Constant "  [Numero de serie]  ...">
+      36  ?<Constant "  [Pipocas teste]    ...">
       24  ?<Constant "  [Troca de preco]\n\r">
-      48  ?<Constant "  [Valor da pipoca]  ...">
-      48  ?<Constant "  ___________________...">
-      48  ?<Constant "+                    ...">
-      48  ?<Constant "+  RELATORIO DE VENDA...">
-      48  ?<Constant "+--------------------...">
-      48  ?<Constant "+--------------------...">_1
+      36  ?<Constant "  [Valor da pipoca]  ...">
+      36  ?<Constant "  ___________________...">
+      36  ?<Constant "+                    ...">
+      36  ?<Constant "+  RELATORIO DE VENDA...">
+      36  ?<Constant "+--------------------...">
       12  ?<Constant "\n\r\n\r\n\r\n\r\n\r">
-      48  ?<Constant "|          www.maispi...">
-      48  ?<Constant "|  GRUPO ALTECH - MAI...">
+      36  ?<Constant "|GRUPO ALTECH - MAIS ...">
        4  ??DataTable1
        4  ??DataTable1_1
        4  ??DataTable1_10
@@ -1976,23 +1674,21 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Relatorio
        4  ??DataTable1_3
        4  ??DataTable1_30
        4  ??DataTable1_31
-       4  ??DataTable1_32
-       4  ??DataTable1_33
        4  ??DataTable1_4
        4  ??DataTable1_5
        4  ??DataTable1_6
        4  ??DataTable1_7
        4  ??DataTable1_8
        4  ??DataTable1_9
-    1184  RELATORIO_entry
+    1030  RELATORIO_entry
      250  RELATORIO_eventos_troca_preco
 
  
- 1 512 bytes in section .rodata
- 1 570 bytes in section .text
+ 1 104 bytes in section .rodata
+ 1 408 bytes in section .text
  
- 1 570 bytes of CODE  memory
- 1 512 bytes of CONST memory
+ 1 408 bytes of CODE  memory
+ 1 104 bytes of CONST memory
 
 Errors: none
 Warnings: none

@@ -294,6 +294,12 @@ const sPARAMETROS tabela_parametros[]={
        .nome = "COMP_ERRO_MOTOR",
        .ext = "NUM",
        .default_value = (void*) 0x00    
+  },
+  [ADR_FATOR_COMPENSADOR]={
+       .length = DOUBLE_WORD,
+       .nome = "COMP_TEMP",
+       .ext = "NUM",
+       .default_value = (void*) 0x00        
   }
 };
 

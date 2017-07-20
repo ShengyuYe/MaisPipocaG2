@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  13:55:38 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  14:33:17 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -412,7 +412,7 @@ RELATORIO_entry:
 //  146   // Linha 17
 //  147   sprintf(buffer_linha,REL_PT_BR_17);
         LDR      R2,[SP, #+112]
-        LDR.W    R1,??DataTable1_8
+        LDR.N    R1,??DataTable1_8
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
@@ -429,7 +429,7 @@ RELATORIO_entry:
         LDR      R0,[SP, #+100]
         MOVS     R1,#+100
         UDIV     R2,R0,R1
-        LDR.W    R1,??DataTable1_9
+        LDR.N    R1,??DataTable1_9
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
@@ -439,7 +439,7 @@ RELATORIO_entry:
         BL       IMPRESSORA_envia_linha
 //  152   // Linha 19
 //  153   sprintf(buffer_linha,REL_PT_BR_19);
-        LDR.W    R1,??DataTable1_4
+        LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
@@ -449,7 +449,7 @@ RELATORIO_entry:
         BL       IMPRESSORA_envia_linha
 //  155   // Linha 20
 //  156   sprintf(buffer_linha,REL_PT_BR_20);
-        LDR.W    R1,??DataTable1_11
+        LDR.N    R1,??DataTable1_11
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
@@ -466,7 +466,7 @@ RELATORIO_entry:
         LDR      R0,[SP, #+96]
         MOVS     R1,#+100
         UDIV     R2,R0,R1
-        LDR.W    R1,??DataTable1_12
+        LDR.N    R1,??DataTable1_12
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
@@ -483,7 +483,7 @@ RELATORIO_entry:
         LDR      R0,[SP, #+92]
         MOVS     R1,#+100
         UDIV     R2,R0,R1
-        LDR.W    R1,??DataTable1_13
+        LDR.N    R1,??DataTable1_13
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
@@ -503,7 +503,7 @@ RELATORIO_entry:
         BL       IMPRESSORA_envia_linha
 //  167   // Linha 24
 //  168   sprintf(buffer_linha,REL_PT_BR_24);
-        LDR.W    R1,??DataTable1_14
+        LDR.N    R1,??DataTable1_14
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
@@ -802,131 +802,31 @@ RELATORIO_entry:
         BL       IMPRESSORA_envia_linha
 //  253   // Linha 50
 //  254   sprintf(buffer_linha,REL_PT_BR_50);
-        LDR.N    R1,??DataTable1
-        ADD      R0,SP,#+16
-          CFI FunCall sprintf
-        BL       sprintf
-//  255   IMPRESSORA_envia_linha(buffer_linha);    
-        ADD      R0,SP,#+16
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  256   // Linha 51
-//  257   sprintf(buffer_linha,REL_PT_BR_51);
-        LDR.N    R1,??DataTable1_26
-        ADD      R0,SP,#+16
-          CFI FunCall sprintf
-        BL       sprintf
-//  258   IMPRESSORA_envia_linha(buffer_linha);    
-        ADD      R0,SP,#+16
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  259   // Linha 52
-//  260   sprintf(buffer_linha,REL_PT_BR_52);
-        LDR.N    R1,??DataTable1_27
-        ADD      R0,SP,#+16
-          CFI FunCall sprintf
-        BL       sprintf
-//  261   IMPRESSORA_envia_linha(buffer_linha);      
-        ADD      R0,SP,#+16
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  262   // Linha 53
-//  263   sprintf(buffer_linha,REL_PT_BR_53);
         LDR.N    R1,??DataTable1_4
         ADD      R0,SP,#+16
           CFI FunCall sprintf
         BL       sprintf
-//  264   IMPRESSORA_envia_linha(buffer_linha);        
+//  255   IMPRESSORA_envia_linha(buffer_linha);                      
         ADD      R0,SP,#+16
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  265   // Linha 54
-//  266   sprintf(buffer_linha,REL_PT_BR_54);
-        LDR.N    R1,??DataTable1_4
-        ADD      R0,SP,#+16
-          CFI FunCall sprintf
-        BL       sprintf
-//  267   IMPRESSORA_envia_linha(buffer_linha);          
-        ADD      R0,SP,#+16
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  268   // Linha 55
-//  269   sprintf(buffer_linha,REL_PT_BR_55);
-        LDR.N    R1,??DataTable1_4
-        ADD      R0,SP,#+16
-          CFI FunCall sprintf
-        BL       sprintf
-//  270   IMPRESSORA_envia_linha(buffer_linha);            
-        ADD      R0,SP,#+16
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  271   // Linha 56
-//  272   sprintf(buffer_linha,REL_PT_BR_56);
-        LDR.N    R1,??DataTable1_4
-        ADD      R0,SP,#+16
-          CFI FunCall sprintf
-        BL       sprintf
-//  273   IMPRESSORA_envia_linha(buffer_linha);              
-        ADD      R0,SP,#+16
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  274   // Linha 57
-//  275   sprintf(buffer_linha,REL_PT_BR_57);
-        LDR.N    R1,??DataTable1_4
-        ADD      R0,SP,#+16
-          CFI FunCall sprintf
-        BL       sprintf
-//  276   IMPRESSORA_envia_linha(buffer_linha);                
-        ADD      R0,SP,#+16
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  277   // Linha 58
-//  278   sprintf(buffer_linha,REL_PT_BR_58);
-        LDR.N    R1,??DataTable1_4
-        ADD      R0,SP,#+16
-          CFI FunCall sprintf
-        BL       sprintf
-//  279   IMPRESSORA_envia_linha(buffer_linha);                  
-        ADD      R0,SP,#+16
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  280   // Linha 59
-//  281   sprintf(buffer_linha,REL_PT_BR_59);
-        LDR.N    R1,??DataTable1_4
-        ADD      R0,SP,#+16
-          CFI FunCall sprintf
-        BL       sprintf
-//  282   IMPRESSORA_envia_linha(buffer_linha);                    
-        ADD      R0,SP,#+16
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  283   // Linha 60
-//  284   sprintf(buffer_linha,REL_PT_BR_60);
-        LDR.N    R1,??DataTable1_4
-        ADD      R0,SP,#+16
-          CFI FunCall sprintf
-        BL       sprintf
-//  285   IMPRESSORA_envia_linha(buffer_linha);                      
-        ADD      R0,SP,#+16
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  286 }
+//  256 }
         ADD      SP,SP,#+128
           CFI CFA R13+8
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock0
-//  287 /***********************************************************************************
-//  288 *       Descrição       :       Verifica se existem eventos de alteração
-//  289 *                               no valor da pipoca
-//  290 *       Parametros      :       nennhum
-//  291 *       Retorno         :       nenhum
-//  292 ***********************************************************************************/
+//  257 /***********************************************************************************
+//  258 *       Descrição       :       Verifica se existem eventos de alteração
+//  259 *                               no valor da pipoca
+//  260 *       Parametros      :       nennhum
+//  261 *       Retorno         :       nenhum
+//  262 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock1 Using cfiCommon0
           CFI Function RELATORIO_eventos_troca_preco
         THUMB
-//  293 void RELATORIO_eventos_troca_preco(void){
+//  263 void RELATORIO_eventos_troca_preco(void){
 RELATORIO_eventos_troca_preco:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -936,39 +836,39 @@ RELATORIO_eventos_troca_preco:
           CFI CFA R13+16
         SUB      SP,SP,#+80
           CFI CFA R13+96
-//  294   unsigned short int eventos;
-//  295   unsigned short int novo_preco;
-//  296   unsigned short int preco_antigo;
-//  297   unsigned char hora,minuto,segundo;
-//  298   unsigned char dia,mes;
-//  299   unsigned int ano;
-//  300   char buffer_linha[40];
-//  301   
-//  302   eventos = FTP_get_quantidade_novas_trocas();
+//  264   unsigned short int eventos;
+//  265   unsigned short int novo_preco;
+//  266   unsigned short int preco_antigo;
+//  267   unsigned char hora,minuto,segundo;
+//  268   unsigned char dia,mes;
+//  269   unsigned int ano;
+//  270   char buffer_linha[40];
+//  271   
+//  272   eventos = FTP_get_quantidade_novas_trocas();
           CFI FunCall FTP_get_quantidade_novas_trocas
         BL       FTP_get_quantidade_novas_trocas
         MOVS     R4,R0
-//  303   if(eventos){
+//  273   if(eventos){
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         CMP      R4,#+0
         BEQ.N    ??RELATORIO_eventos_troca_preco_0
-//  304     
-//  305     sprintf(buffer_linha,LINHA_TROCA_PRECO);
-        LDR.N    R1,??DataTable1_28
+//  274     
+//  275     sprintf(buffer_linha,LINHA_TROCA_PRECO);
+        LDR.N    R1,??DataTable1_26
         ADD      R0,SP,#+36
           CFI FunCall sprintf
         BL       sprintf
-//  306     IMPRESSORA_envia_linha(buffer_linha);                 
+//  276     IMPRESSORA_envia_linha(buffer_linha);                 
         ADD      R0,SP,#+36
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  307         
-//  308     for(unsigned short int i=0,indice=eventos-1;i<eventos;i++,indice--){
+//  277         
+//  278     for(unsigned short int i=0,indice=eventos-1;i<eventos;i++,indice--){
         MOVS     R5,#+0
         SUBS     R6,R4,#+1
         B.N      ??RELATORIO_eventos_troca_preco_1
-//  309       
-//  310       FTP_get_troca(indice,&novo_preco,&preco_antigo,&hora,&minuto,&segundo,&dia,&mes,&ano);
+//  279       
+//  280       FTP_get_troca(indice,&novo_preco,&preco_antigo,&hora,&minuto,&segundo,&dia,&mes,&ano);
 ??RELATORIO_eventos_troca_preco_2:
         ADD      R0,SP,#+32
         STR      R0,[SP, #+16]
@@ -987,56 +887,56 @@ RELATORIO_eventos_troca_preco:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall FTP_get_troca
         BL       FTP_get_troca
-//  311       
-//  312       sprintf(buffer_linha,"  [%02d de %02d]\n\r",i+1,eventos);
+//  281       
+//  282       sprintf(buffer_linha,"  [%02d de %02d]\n\r",i+1,eventos);
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         MOVS     R3,R4
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
         ADDS     R2,R5,#+1
+        LDR.N    R1,??DataTable1_27
+        ADD      R0,SP,#+36
+          CFI FunCall sprintf
+        BL       sprintf
+//  283       IMPRESSORA_envia_linha(buffer_linha);    
+        ADD      R0,SP,#+36
+          CFI FunCall IMPRESSORA_envia_linha
+        BL       IMPRESSORA_envia_linha
+//  284       
+//  285       sprintf(buffer_linha,"   Preco Antigo: R$ %02d,%02d\n\r\n\r",preco_antigo/100,preco_antigo%100);
+        LDRH     R0,[SP, #+26]
+        MOVS     R1,#+100
+        SDIV     R2,R0,R1
+        MLS      R3,R1,R2,R0
+        LDRH     R0,[SP, #+26]
+        MOVS     R1,#+100
+        SDIV     R2,R0,R1
+        LDR.N    R1,??DataTable1_28
+        ADD      R0,SP,#+36
+          CFI FunCall sprintf
+        BL       sprintf
+//  286       IMPRESSORA_envia_linha(buffer_linha);   
+        ADD      R0,SP,#+36
+          CFI FunCall IMPRESSORA_envia_linha
+        BL       IMPRESSORA_envia_linha
+//  287       
+//  288       sprintf(buffer_linha,"   Novo Preco: R$ %02d,%02d\n\r\n\r",novo_preco/100,novo_preco%100);
+        LDRH     R0,[SP, #+28]
+        MOVS     R1,#+100
+        SDIV     R2,R0,R1
+        MLS      R3,R1,R2,R0
+        LDRH     R0,[SP, #+28]
+        MOVS     R1,#+100
+        SDIV     R2,R0,R1
         LDR.N    R1,??DataTable1_29
         ADD      R0,SP,#+36
           CFI FunCall sprintf
         BL       sprintf
-//  313       IMPRESSORA_envia_linha(buffer_linha);    
+//  289       IMPRESSORA_envia_linha(buffer_linha);   
         ADD      R0,SP,#+36
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  314       
-//  315       sprintf(buffer_linha,"   Preco Antigo: R$ %02d,%02d\n\r\n\r",preco_antigo/100,preco_antigo%100);
-        LDRH     R0,[SP, #+26]
-        MOVS     R1,#+100
-        SDIV     R2,R0,R1
-        MLS      R3,R1,R2,R0
-        LDRH     R0,[SP, #+26]
-        MOVS     R1,#+100
-        SDIV     R2,R0,R1
-        LDR.N    R1,??DataTable1_30
-        ADD      R0,SP,#+36
-          CFI FunCall sprintf
-        BL       sprintf
-//  316       IMPRESSORA_envia_linha(buffer_linha);   
-        ADD      R0,SP,#+36
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  317       
-//  318       sprintf(buffer_linha,"   Novo Preco: R$ %02d,%02d\n\r\n\r",novo_preco/100,novo_preco%100);
-        LDRH     R0,[SP, #+28]
-        MOVS     R1,#+100
-        SDIV     R2,R0,R1
-        MLS      R3,R1,R2,R0
-        LDRH     R0,[SP, #+28]
-        MOVS     R1,#+100
-        SDIV     R2,R0,R1
-        LDR.N    R1,??DataTable1_31
-        ADD      R0,SP,#+36
-          CFI FunCall sprintf
-        BL       sprintf
-//  319       IMPRESSORA_envia_linha(buffer_linha);   
-        ADD      R0,SP,#+36
-          CFI FunCall IMPRESSORA_envia_linha
-        BL       IMPRESSORA_envia_linha
-//  320       
-//  321       sprintf(buffer_linha,"   Em %02d/%02d/%04d as %02d:%02d:%02d\n\r",dia,mes,ano,hora,minuto,segundo);
+//  290       
+//  291       sprintf(buffer_linha,"   Em %02d/%02d/%04d as %02d:%02d:%02d\n\r",dia,mes,ano,hora,minuto,segundo);
         LDRB     R0,[SP, #+22]
         STR      R0,[SP, #+12]
         LDRB     R0,[SP, #+23]
@@ -1047,15 +947,15 @@ RELATORIO_eventos_troca_preco:
         STR      R0,[SP, #+0]
         LDRB     R3,[SP, #+20]
         LDRB     R2,[SP, #+21]
-        LDR.N    R1,??DataTable1_32
+        LDR.N    R1,??DataTable1_30
         ADD      R0,SP,#+36
           CFI FunCall sprintf
         BL       sprintf
-//  322       IMPRESSORA_envia_linha(buffer_linha);   
+//  292       IMPRESSORA_envia_linha(buffer_linha);   
         ADD      R0,SP,#+36
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  323     }
+//  293     }
         ADDS     R5,R5,#+1
         SUBS     R6,R6,#+1
 ??RELATORIO_eventos_troca_preco_1:
@@ -1063,18 +963,18 @@ RELATORIO_eventos_troca_preco:
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         CMP      R5,R4
         BCC.N    ??RELATORIO_eventos_troca_preco_2
-//  324     
-//  325     sprintf(buffer_linha,"\n\r\n\r\n\r\n\r\n\r");
-        LDR.N    R1,??DataTable1_33
+//  294     
+//  295     sprintf(buffer_linha,"\n\r\n\r\n\r\n\r\n\r");
+        LDR.N    R1,??DataTable1_31
         ADD      R0,SP,#+36
           CFI FunCall sprintf
         BL       sprintf
-//  326     IMPRESSORA_envia_linha(buffer_linha);       
+//  296     IMPRESSORA_envia_linha(buffer_linha);       
         ADD      R0,SP,#+36
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
-//  327   }      
-//  328 }
+//  297   }      
+//  298 }
 ??RELATORIO_eventos_troca_preco_0:
         ADD      SP,SP,#+80
           CFI CFA R13+16
@@ -1091,7 +991,7 @@ RELATORIO_eventos_troca_preco:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable1_1:
-        DC32     `?<Constant "|  GRUPO ALTECH - MAI...">`
+        DC32     `?<Constant "|GRUPO ALTECH - MAIS ...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1235,54 +1135,42 @@ RELATORIO_eventos_troca_preco:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable1_25:
-        DC32     `?<Constant "           Responsave...">`
+        DC32     `?<Constant "     Responsavel pelo...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable1_26:
-        DC32     `?<Constant "|          www.maispi...">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable1_27:
-        DC32     `?<Constant "+--------------------...">_1`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable1_28:
         DC32     `?<Constant "  [Troca de preco]\\n\\r">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_29:
+??DataTable1_27:
         DC32     `?<Constant "  [%02d de %02d]\\n\\r">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_30:
+??DataTable1_28:
         DC32     `?<Constant "   Preco Antigo: R$ %...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_31:
+??DataTable1_29:
         DC32     `?<Constant "   Novo Preco: R$ %02...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_32:
+??DataTable1_30:
         DC32     `?<Constant "   Em %02d/%02d/%04d ...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_33:
+??DataTable1_31:
         DC32     `?<Constant "\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r">`
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
@@ -1299,169 +1187,157 @@ RELATORIO_eventos_troca_preco:
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "+--------------------...">`:
         DATA
-        DC8 "+----------------------------------------+\012\015"
+        DC8 "+----------------------------+\012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "|  GRUPO ALTECH - MAI...">`:
+`?<Constant "|GRUPO ALTECH - MAIS ...">`:
         DATA
-        DC8 "|  GRUPO ALTECH - MAIS PIPOCA            +\012\015"
+        DC8 "|GRUPO ALTECH - MAIS PIPOCA  +\012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "+                    ...">`:
         DATA
-        DC8 "+                                        +\012\015"
+        DC8 "+                            +\012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "+  RELATORIO DE VENDA...">`:
         DATA
-        DC8 "+  RELATORIO DE VENDAS                   +\012\015"
+        DC8 "+  RELATORIO DE VENDAS       +\012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "                     ...">`:
         DATA
-        DC8 "                                          \012\015"
+        DC8 "                              \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "  [Numero de serie]  ...">`:
         DATA
-        DC8 "  [Numero de serie]                       \012\015"
+        DC8 "  [Numero de serie]           \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "  %06d               ...">`:
         DATA
-        DC8 "  %06d                                    \012\015"
+        DC8 "  %06d                        \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "  [Faturamento parcia...">`:
         DATA
-        DC8 "  [Faturamento parcial]                   \012\015"
+        DC8 "  [Faturamento parcial]       \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "   unidades   : %d   ...">`:
         DATA
-        DC8 "   unidades   : %d                        \012\015"
+        DC8 "   unidades   : %d            \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "   arrecadacao: R$ %d...">`:
         DATA
-        DC8 "   arrecadacao: R$ %d,%02d                \012\015"
+        DC8 "   arrecadacao: R$ %d,%02d    \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "  [Faturamento total]...">`:
         DATA
-        DC8 "  [Faturamento total]                     \012\015"
+        DC8 "  [Faturamento total]         \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "  [Faturamento cartao...">`:
         DATA
-        DC8 "  [Faturamento cartao]                    \012\015"
+        DC8 "  [Faturamento cartao]        \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "   parcial    : R$ %d...">`:
         DATA
-        DC8 "   parcial    : R$ %d,%02d                \012\015"
+        DC8 "   parcial    : R$ %d,%02d    \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "   total      : R$ %d...">`:
         DATA
-        DC8 "   total      : R$ %d,%02d                \012\015"
+        DC8 "   total      : R$ %d,%02d    \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "  [Comissao do ponto]...">`:
         DATA
-        DC8 "  [Comissao do ponto]                     \012\015"
+        DC8 "  [Comissao do ponto]         \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "   taxa       : %d %%...">`:
         DATA
-        DC8 "   taxa       : %d %%                     \012\015"
+        DC8 "   taxa       : %d %%         \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "   montante   : R$ %d...">`:
         DATA
-        DC8 "   montante   : R$ %d,%02d                \012\015"
+        DC8 "   montante   : R$ %d,%02d    \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "  [Hora/Data do Relat...">`:
         DATA
-        DC8 "  [Hora/Data do Relatorio]                \012\015"
+        DC8 "  [Hora/Data do Relatorio]    \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "    %02d/%02d/%04d   ...">`:
         DATA
-        DC8 "    %02d/%02d/%04d                        \012\015"
+        DC8 "    %02d/%02d/%04d            \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "    %02d:%02d:%02d   ...">`:
         DATA
-        DC8 "    %02d:%02d:%02d                        \012\015"
+        DC8 "    %02d:%02d:%02d            \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "  [Valor da pipoca]  ...">`:
         DATA
-        DC8 "  [Valor da pipoca]                       \012\015"
+        DC8 "  [Valor da pipoca]           \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "    R$ %d,%02d       ...">`:
         DATA
-        DC8 "    R$ %d,%02d                            \012\015"
+        DC8 "    R$ %d,%02d                \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "  [Pipocas teste]    ...">`:
         DATA
-        DC8 "  [Pipocas teste]                         \012\015"
+        DC8 "  [Pipocas teste]             \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "    preparacoes: %d  ...">`:
         DATA
-        DC8 "    preparacoes: %d                       \012\015"
+        DC8 "    preparacoes: %d           \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "  ___________________...">`:
         DATA
-        DC8 "  ________________________________________\012\015"
+        DC8 "  ____________________________\012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "           Responsave...">`:
+`?<Constant "     Responsavel pelo...">`:
         DATA
-        DC8 "           Responsavel pelo ponto         \012\015"
-        DC8 0, 0, 0
-
-        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "|          www.maispi...">`:
-        DATA
-        DC8 "|          www.maispipoca.com.br         |\012\015"
-        DC8 0, 0, 0
-
-        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "+--------------------...">_1`:
-        DATA
-        DC8 "+----------------------------------------|\012\015"
+        DC8 "     Responsavel pelo ponto   \012\015"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -1500,15 +1376,15 @@ RELATORIO_eventos_troca_preco:
         DC8 0
 
         END
-//  329 /***********************************************************************************
-//  330 *       Fim do arquivo
-//  331 ***********************************************************************************/
+//  299 /***********************************************************************************
+//  300 *       Fim do arquivo
+//  301 ***********************************************************************************/
 // 
-// 1 512 bytes in section .rodata
-// 1 570 bytes in section .text
+// 1 104 bytes in section .rodata
+// 1 408 bytes in section .text
 // 
-// 1 570 bytes of CODE  memory
-// 1 512 bytes of CONST memory
+// 1 408 bytes of CODE  memory
+// 1 104 bytes of CONST memory
 //
 //Errors: none
 //Warnings: none

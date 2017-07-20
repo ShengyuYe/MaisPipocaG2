@@ -88,6 +88,7 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   unsigned char delta=0;
   unsigned int valor_pipoca;
   unsigned char flag_correcao_erro;
+  unsigned int compensador;
   
   PAGAMENTOS_set_bloqueio(1);
   
@@ -97,6 +98,7 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   PARAMETROS_le(ADR_TEMPO_EMBALAGEM,(void*)&tempo_embalagem);
   PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valor_pipoca);  
   PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag_correcao_erro);    
+  PARAMETROS_le(ADR_FATOR_COMPENSADOR,(void*)&compensador);
 
   //-----------------------------------------------
   // Por falta de testes, deixei esse trecho abaixo
@@ -113,11 +115,16 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   
   BOARD_setter_led_instrucao(LED_INSIRA_DINHEIRO,ACESO);
        
+  if(!compensador)
+    compensador=1;
+  if(compensador>3)
+    compensador=3;
+  
   //Faz o ajuste de compensação da panela
   //unsigned int ajuste = AA_calculaTemperatura();
   if(PREPARACAO_contador_compensacao){
-    if(PREPARACAO_compensador<5)
-      PREPARACAO_compensador++;
+    if(PREPARACAO_compensador<(5*compensador))
+      PREPARACAO_compensador+=compensador;
   }
   
   PREPARACAO_contador_compensacao = RELOAD_COMPENSADOR;  

@@ -65,6 +65,7 @@ void MENUAVANCADO_configura_numero_serie(void);
 void MENUAVANCADO_menu_ganhos_PID(void);
 void MENUAVANCADO_configura_hora_data(void);
 void MENUAVANCADO_configura_flag_correcao_erro(void);
+void MENUAVANCADO_configura_fator_compensavao(void);
 
 /***********************************************************************************
 *       Tabela de funções
@@ -77,6 +78,7 @@ void(*const MENUAVANCADO_func[])(void)={
   MENUAVANCADO_configura_numero_serie,
   MENUAVANCADO_configura_hora_data,
   MENUAVANCADO_configura_flag_correcao_erro,
+  MENUAVANCADO_configura_fator_compensavao,
   NULL
 };
 /***********************************************************************************
@@ -171,6 +173,9 @@ void MENUAVANCADO_padrao_fabrica(void){
     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_02,(void*)msg_padrao);
     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_03,(void*)msg_padrao);
     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_04,(void*)msg_padrao);
+    
+    valor = 1;
+    PARAMETROS_grava(ADR_FATOR_COMPENSADOR,(void*)&valor);
   }
 }
 /***********************************************************************************
@@ -331,6 +336,21 @@ void MENUAVANCADO_configura_flag_correcao_erro(void){
   flag = MEF_entry("ERRO MOTOR",flag,"ON ","OFF");    
   
   PARAMETROS_grava(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
+}
+/***********************************************************************************
+*       Descrição       :      Tela para configuração do fator de compensação
+*                              do controle de temperatura
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
+***********************************************************************************/
+void MENUAVANCADO_configura_fator_compensavao(void){
+  unsigned int valor;
+
+  PARAMETROS_le(ADR_FATOR_COMPENSADOR,(void*)&valor);
+
+  valor = MEI_entry("FATOR TEMP","%1d oC",valor,1,3);    
+  
+  PARAMETROS_grava(ADR_FATOR_COMPENSADOR,(void*)&valor);
 }
 /***********************************************************************************
 *       Fim do arquivo
