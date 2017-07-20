@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  13:21:53 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  13:45:14 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -1336,20 +1336,11 @@ POTENCIA_calcula_derivada_erro:
 //  415     y = -12000;
         LDR.N    R0,??DataTable10_43  ;; 0xffffd120
 //  416   
-//  417   return y;  
+//  417   return y;   
 ??POTENCIA_calcula_derivada_erro_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock8
-//  418   /*
-//  419   static int ultimo_erro = 0;
-//  420   
-//  421   erro = erro - ultimo_erro;     
-//  422   ultimo_erro = erro;  
-//  423   
-//  424   //Trunca os limites  
-//  425   return erro;
-//  426   */
-//  427 }
+//  418 }
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
 ??buffer_z:
@@ -1358,103 +1349,103 @@ POTENCIA_calcula_derivada_erro:
         SECTION `.bss`:DATA:REORDER:NOROOT(1)
 ??indice:
         DS8 2
-//  428 /***********************************************************************************
-//  429 *       Descrição       :       Setter para a rotação do motor
-//  430 *       Parametros      :       (unsigned int) rpm do motor
-//  431 *       Retorno         :       nenhum
-//  432 ***********************************************************************************/
+//  419 /***********************************************************************************
+//  420 *       Descrição       :       Setter para a rotação do motor
+//  421 *       Parametros      :       (unsigned int) rpm do motor
+//  422 *       Retorno         :       nenhum
+//  423 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock9 Using cfiCommon0
           CFI Function POTENCIA_setRPM
         THUMB
-//  433 void POTENCIA_setRPM(unsigned int rpm){
+//  424 void POTENCIA_setRPM(unsigned int rpm){
 POTENCIA_setRPM:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  434   
-//  435   if(!rpm){
+//  425   
+//  426   if(!rpm){
         CMP      R4,#+0
         BNE.N    ??POTENCIA_setRPM_0
-//  436     POTENCIA_ligaMotor = 0;
+//  427     POTENCIA_ligaMotor = 0;
         LDR.N    R0,??DataTable10_44
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
         B.N      ??POTENCIA_setRPM_1
-//  437   }
-//  438   else{
-//  439     vTaskDelay(100);
+//  428   }
+//  429   else{
+//  430     vTaskDelay(100);
 ??POTENCIA_setRPM_0:
         MOVS     R0,#+100
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  440     POTENCIA_set_point = rpm;
+//  431     POTENCIA_set_point = rpm;
         LDR.N    R0,??DataTable10_45
         STR      R4,[R0, #+0]
-//  441     vTaskDelay(2);          // Pra não subir antes de ligar o motor....
+//  432     vTaskDelay(2);          // Pra não subir antes de ligar o motor....
         MOVS     R0,#+2
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  442     POTENCIA_ligaMotor = 1;
+//  433     POTENCIA_ligaMotor = 1;
         LDR.N    R0,??DataTable10_44
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
-//  443   }
-//  444 }
+//  434   }
+//  435 }
 ??POTENCIA_setRPM_1:
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock9
-//  445 /***********************************************************************************
-//  446 *       Descrição       :       Calcula o atraso para o gate para uma determinada
-//  447 *                               rotação
-//  448 *       Parametros      :       (unsigned int) rotação alvo
-//  449 *       Retorno         :       (unsigned int) atraso
-//  450 ***********************************************************************************/
+//  436 /***********************************************************************************
+//  437 *       Descrição       :       Calcula o atraso para o gate para uma determinada
+//  438 *                               rotação
+//  439 *       Parametros      :       (unsigned int) rotação alvo
+//  440 *       Retorno         :       (unsigned int) atraso
+//  441 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock10 Using cfiCommon0
           CFI Function POTENCIA_calculaAtrasoGate
           CFI NoCalls
         THUMB
-//  451 unsigned int POTENCIA_calculaAtrasoGate(int rotacao_rpm){    
-//  452   
-//  453 #ifdef FQ_REDE_60_HZ  
-//  454   long long int valor;
-//  455   
-//  456   valor = rotacao_rpm*2800;//4404;
+//  442 unsigned int POTENCIA_calculaAtrasoGate(int rotacao_rpm){    
+//  443   
+//  444 #ifdef FQ_REDE_60_HZ  
+//  445   long long int valor;
+//  446   
+//  447   valor = rotacao_rpm*2800;//4404;
 POTENCIA_calculaAtrasoGate:
         MOV      R1,#+2800
         MULS     R0,R1,R0
         ASRS     R1,R0,#+31
-//  457   valor>>= 15;
+//  448   valor>>= 15;
         LSRS     R0,R0,#+15
         ORR      R0,R0,R1, LSL #+17
         ASRS     R1,R1,#+15
-//  458   valor = 2499 - valor; 
+//  449   valor = 2499 - valor; 
         MOVW     R2,#+2499
         MOVS     R3,#+0
         SUBS     R0,R2,R0
         SBCS     R1,R3,R1
-//  459   
-//  460   // trunca os limites
-//  461   // do it que gera a interrução
-//  462   // para controlar o gate
-//  463   // esses valores foram levantado com o scope, então não
-//  464   // mudar sem critérios(13/11/2016)
-//  465   if(valor<ATRASO_MINIMO)
+//  450   
+//  451   // trunca os limites
+//  452   // do it que gera a interrução
+//  453   // para controlar o gate
+//  454   // esses valores foram levantado com o scope, então não
+//  455   // mudar sem critérios(13/11/2016)
+//  456   if(valor<ATRASO_MINIMO)
         CMP      R1,#+0
         BGT.N    ??POTENCIA_calculaAtrasoGate_0
         BLT.N    ??POTENCIA_calculaAtrasoGate_1
         CMP      R0,#+150
         BCS.N    ??POTENCIA_calculaAtrasoGate_0
-//  466     valor = ATRASO_MINIMO;
+//  457     valor = ATRASO_MINIMO;
 ??POTENCIA_calculaAtrasoGate_1:
         MOVS     R0,#+150
         MOVS     R1,#+0
-//  467   if(valor>ATRASO_MAXIMO)
+//  458   if(valor>ATRASO_MAXIMO)
 ??POTENCIA_calculaAtrasoGate_0:
         MOVW     R2,#+2501
         MOVS     R3,#+0
@@ -1463,37 +1454,37 @@ POTENCIA_calculaAtrasoGate:
         BGT.N    ??POTENCIA_calculaAtrasoGate_3
         CMP      R0,R2
         BCC.N    ??POTENCIA_calculaAtrasoGate_2
-//  468     valor = ATRASO_MAXIMO;
+//  459     valor = ATRASO_MAXIMO;
 ??POTENCIA_calculaAtrasoGate_3:
         MOVW     R0,#+2500
         MOVS     R1,#+0
-//  469   
-//  470   return valor;
+//  460   
+//  461   return valor;
 ??POTENCIA_calculaAtrasoGate_2:
         BX       LR               ;; return
           CFI EndBlock cfiBlock10
-//  471 #endif
-//  472   
-//  473 #ifdef FQ_REDE_50_HZ
-//  474   long long int valor;
-//  475   
-//  476   valor = rotacao_rpm * 5757;
-//  477   valor>>= 15;
-//  478   valor = ATRASO_MAXIMO - valor; 
-//  479   
-//  480   // trunca os limites
-//  481   // do it que gera a interrução
-//  482   // para controlar o gate
-//  483   // esses valores foram levantado com o scope, então não
-//  484   // mudar sem critérios(13/11/2016)
-//  485   if(valor<ATRASO_MINIMO)
-//  486     valor = ATRASO_MINIMO;
-//  487   if(valor>ATRASO_MAXIMO)
-//  488     valor = ATRASO_MAXIMO;
-//  489   
-//  490   return valor;
-//  491 #endif  
-//  492 }
+//  462 #endif
+//  463   
+//  464 #ifdef FQ_REDE_50_HZ
+//  465   long long int valor;
+//  466   
+//  467   valor = rotacao_rpm * 5757;
+//  468   valor>>= 15;
+//  469   valor = ATRASO_MAXIMO - valor; 
+//  470   
+//  471   // trunca os limites
+//  472   // do it que gera a interrução
+//  473   // para controlar o gate
+//  474   // esses valores foram levantado com o scope, então não
+//  475   // mudar sem critérios(13/11/2016)
+//  476   if(valor<ATRASO_MINIMO)
+//  477     valor = ATRASO_MINIMO;
+//  478   if(valor>ATRASO_MAXIMO)
+//  479     valor = ATRASO_MAXIMO;
+//  480   
+//  481   return valor;
+//  482 #endif  
+//  483 }
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock11 Using cfiCommon0
@@ -2051,28 +2042,28 @@ POTENCIA_controleVelocidade:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  493 /***********************************************************************************
-//  494 *       Descrição       :       Lê os RPMs do motor
-//  495 *       Parametros      :       nenhum
-//  496 *       Retorno         :       (unsigned int) RPM atual do motor
-//  497 ***********************************************************************************/
-//  498 unsigned int POTENCIA_getRPMmedido(void){  
-//  499   unsigned int media=0; 
-//  500   
-//  501   if(!POTENCIA_periodoCapturadoMotor)
-//  502     return 0;
-//  503 
-//  504   for(unsigned char i=0;i<TAM_BUF_VELOCIDADE;i++)
-//  505     media += POTENCIA_bufferRotacao[i];  
-//  506   media>>=DIV_MEDIA_VEL;
-//  507   
-//  508   media = 19962072/media;
-//  509    
-//  510   return media;
-//  511 }
-//  512 /***********************************************************************************
-//  513 *       Fim do arquivo
-//  514 ***********************************************************************************/
+//  484 /***********************************************************************************
+//  485 *       Descrição       :       Lê os RPMs do motor
+//  486 *       Parametros      :       nenhum
+//  487 *       Retorno         :       (unsigned int) RPM atual do motor
+//  488 ***********************************************************************************/
+//  489 unsigned int POTENCIA_getRPMmedido(void){  
+//  490   unsigned int media=0; 
+//  491   
+//  492   if(!POTENCIA_periodoCapturadoMotor)
+//  493     return 0;
+//  494 
+//  495   for(unsigned char i=0;i<TAM_BUF_VELOCIDADE;i++)
+//  496     media += POTENCIA_bufferRotacao[i];  
+//  497   media>>=DIV_MEDIA_VEL;
+//  498   
+//  499   media = 19962072/media;
+//  500    
+//  501   return media;
+//  502 }
+//  503 /***********************************************************************************
+//  504 *       Fim do arquivo
+//  505 ***********************************************************************************/
 // 
 //    62 bytes in section .bss
 //     4 bytes in section .data

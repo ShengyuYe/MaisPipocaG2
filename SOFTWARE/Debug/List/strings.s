@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  13:21:40 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  13:45:00 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -211,13 +211,13 @@
 // __absolute char const *STRING_splash[7][2]
 STRING_splash:
         DATA
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.15">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.15">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.15">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.15">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.15">`
-        DC32 `?<Constant "POPCORN KING">`, `?<Constant "VER. 1.0.15">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.15">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.16">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.16">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.16">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.16">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.16">`
+        DC32 `?<Constant "POPCORN KING">`, `?<Constant "VER. 1.0.16">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.16">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
 // __absolute char const *STRING_titulo_menu_configuracao[7]
@@ -261,7 +261,7 @@ STRING_menu_configuracao:
         DC32 `?<Constant "(3)PREPARATION  ">`, `?<Constant "(4)ACCESSORIES  ">`
         DC32 `?<Constant "(5)TELEMETRY    ">`, `?<Constant "(6)TESTE HW     ">`
         DC32 `?<Constant "(7)REGION       ">`, `?<Constant "(8)SERVICO      ">`
-        DC32 `?<Constant "(9)AVANCADO     ">`, `?<Constant "(10)SAIR        ">`
+        DC32 `?<Constant "(9)AVANCADO     ">`, `?<Constant "(10)EXIT        ">`
         DC32 `?<Constant "(1)OPERACAO     ">`, `?<Constant "(2)FATURAMENTO  ">`
         DC32 `?<Constant "(3)PREPARACAO   ">`, `?<Constant "(4)ACESSORIOS   ">`
         DC32 `?<Constant "(5)TELEMETRIA   ">`, `?<Constant "(6)TESTE HW     ">`
@@ -358,7 +358,7 @@ STRING_menu_teste_hardware:
         DC32 `?<Constant "(9)BILL PULSE   ">`, `?<Constant "(10)MDB         ">`
         DC32 `?<Constant "(11)PRINTER     ">`, `?<Constant "(12)MUSIC       ">`
         DC32 `?<Constant "(13)VOICE       ">`, `?<Constant "(14)LEDS        ">`
-        DC32 `?<Constant "(15)EXTERNAL LCD">`, `?<Constant "(16)VOLTAR      ">`
+        DC32 `?<Constant "(15)EXTERNAL LCD">`, `?<Constant "(16)EXIT        ">`
         DC32 `?<Constant "(1)HORA/DATA    ">`, `?<Constant "(2)DATAFLASH    ">`
         DC32 `?<Constant "(3)DISP. PAPEL  ">`, `?<Constant "(4)DOSADOR MILHO">`
         DC32 `?<Constant "(5)VENTILADOR   ">`, `?<Constant "(6)RESISTENCIA  ">`
@@ -510,14 +510,14 @@ STRING_menu_configuracao_operacao:
         DC32 `?<Constant "(11)MENSAGEM 01 ">`, `?<Constant "(12)MENSAGEM 02 ">`
         DC32 `?<Constant "(13)MENSAGEM 03 ">`, `?<Constant "(14)MENSAGEM 04 ">`
         DC32 `?<Constant "(15)DESUMIDIF.  ">`, `?<Constant "(16)VOLTAR      ">`
-        DC32 `?<Constant "(1) PRICE       ">`, `?<Constant "(2) CEDULAS     ">`
-        DC32 `?<Constant "(3) GRATIS      ">`, `?<Constant "(4) FITA LED    ">`
-        DC32 `?<Constant "(5) VOLUME MUS. ">`, `?<Constant "(6) VOLUME VOZ  ">`
-        DC32 `?<Constant "(7) PROPAGANDA  ">`, `?<Constant "(8) TEMPO EMB.  ">`
-        DC32 `?<Constant "(9) TROCO       ">`, `?<Constant "(10)COMISSAO    ">`
-        DC32 `?<Constant "(11)MENSAGEM 01 ">`, `?<Constant "(12)MENSAGEM 02 ">`
-        DC32 `?<Constant "(13)MENSAGEM 03 ">`, `?<Constant "(14)MENSAGEM 04 ">`
-        DC32 `?<Constant "(15)DESUMIDIF.  ">`, `?<Constant "(16)VOLTAR      ">`
+        DC32 `?<Constant "(1) PRICE       ">`, `?<Constant "(2) BILLS       ">`
+        DC32 `?<Constant "(3) FREE        ">`, `?<Constant "(4) LED STRIP   ">`
+        DC32 `?<Constant "(5) MUSIC LEVEL ">`, `?<Constant "(6) VOICE LEVEL ">`
+        DC32 `?<Constant "(7) ADVERTISING ">`, `?<Constant "(8) TIME OF CUP ">`
+        DC32 `?<Constant "(9) CHANGE      ">`, `?<Constant "(10)COMISSION   ">`
+        DC32 `?<Constant "(11)MESSAGE 01  ">`, `?<Constant "(12)MESSAGE 02  ">`
+        DC32 `?<Constant "(13)MESSAGE 03  ">`, `?<Constant "(14)MESSAGE 04  ">`
+        DC32 `?<Constant "(15)DESUMIDIF.  ">`, `?<Constant "(16)EXIT        ">`
         DC32 `?<Constant "(1) VALOR       ">`, `?<Constant "(2) CEDULAS     ">`
         DC32 `?<Constant "(3) GRATIS      ">`, `?<Constant "(4) FITA LED    ">`
         DC32 `?<Constant "(5) VOLUME MUS. ">`, `?<Constant "(6) VOLUME VOZ  ">`
@@ -550,7 +550,7 @@ STRING_titulo_configuracao_notas:
         DATA
         DC32 `?<Constant "NOTAS">`, `?<Constant "NOTAS">`
         DC32 `?<Constant "NOTAS">`, `?<Constant "NOTAS">`
-        DC32 `?<Constant "NOTAS">`, `?<Constant "BILSS">`
+        DC32 `?<Constant "NOTAS">`, `?<Constant "BILLS">`
         DC32 `?<Constant "NOTAS">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
@@ -738,7 +738,7 @@ STRING_opcoes_menu_mdb:
         DC32 `?<Constant "(3) COIN        ">`, `?<Constant "(4) CASHLESS    ">`
         DC32 `?<Constant "(5) VOLTAR      ">`, `?<Constant "(1) MDB DEVICES ">`
         DC32 `?<Constant "(2) BILL        ">`, `?<Constant "(3) COIN        ">`
-        DC32 `?<Constant "(4) CASHLESS    ">`, `?<Constant "(5) VOLTAR      ">`
+        DC32 `?<Constant "(4) CASHLESS    ">`, `?<Constant "(5) EXIT        ">`
         DC32 `?<Constant "(1) MDB DEVICES ">`, `?<Constant "(2) BILL        ">`
         DC32 `?<Constant "(3) COIN        ">`, `?<Constant "(4) CASHLESS    ">`
         DC32 `?<Constant "(5) VOLTAR      ">`
@@ -806,7 +806,7 @@ STRING_mensagem_saudacao_maquina:
         DC32 `?<Constant "Mais Pipoca">`, `?<Constant "Grupo Altech">`
         DC32 `?<Constant "Mais Pipoca">`, `?<Constant "Grupo Altech">`
         DC32 `?<Constant "Mais Pipoca">`, `?<Constant "Grupo Altech">`
-        DC32 `?<Constant "Mais Pipoca">`, `?<Constant "Grupo Altech">`
+        DC32 `?<Constant "Hey Pop">`, `?<Constant "www.heypopcorn.com">`
         DC32 `?<Constant "Mais Pipoca">`, `?<Constant "Grupo Altech">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
@@ -858,7 +858,7 @@ STRING_titulo_teste_impresora:
         DC32 `?<Constant "TESTE IMPRESSORA">`, `?<Constant "<enter>IMPRIME">`
         DC32 `?<Constant "TESTE IMPRESSORA">`, `?<Constant "<enter>IMPRIME">`
         DC32 `?<Constant "TESTE IMPRESSORA">`, `?<Constant "<enter>IMPRIME">`
-        DC32 `?<Constant "PRINTER TESTE">`, `?<Constant "<enter>PRINT">`
+        DC32 `?<Constant "PRINTER TEST">`, `?<Constant "<enter>PRINT">`
         DC32 `?<Constant "TESTE IMPRESSORA">`, `?<Constant "<enter>IMPRIME">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
@@ -936,7 +936,7 @@ STRING_titulo_edita_velocidade:
         DATA
         DC32 `?<Constant "VELOCIDADE">`, `?<Constant "VELOCIDADE">`
         DC32 `?<Constant "VELOCIDADE">`, `?<Constant "VELOCIDADE">`
-        DC32 `?<Constant "SPEED">`, `?<Constant "VELOCIDADE">`
+        DC32 `?<Constant "SPEED">`, `?<Constant "SPEEDDE">`
         DC32 `?<Constant "VELOCIDADE">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
@@ -1283,10 +1283,10 @@ STRING_menu_avancado:
         DC32 `?<Constant "(3) RESET GERAL ">`, `?<Constant "(4) MOTOR AC    ">`
         DC32 `?<Constant "(5) NUM SERIE   ">`, `?<Constant "(6) HORA/DATA   ">`
         DC32 `?<Constant "(7) ERRO MOTOR  ">`, `?<Constant "(8) VOLTAR      ">`
-        DC32 `?<Constant "(1) PADRAO FAB. ">`, `?<Constant "(2) SENHA ADMIN ">`
-        DC32 `?<Constant "(3) RESET GERAL ">`, `?<Constant "(4) MOTOR AC    ">`
-        DC32 `?<Constant "(5) NUM SERIE   ">`, `?<Constant "(6) HORA/DATA   ">`
-        DC32 `?<Constant "(7) MOTOR ERROR ">`, `?<Constant "(8) VOLTAR      ">`
+        DC32 `?<Constant "(1) FACT. STAND ">`, `?<Constant "(2) ADMIN PASS. ">`
+        DC32 `?<Constant "(3) GENERAL RST ">`, `?<Constant "(4) AC MOTOR    ">`
+        DC32 `?<Constant "(5) SERIAL NUMBE">`, `?<Constant "(6) HOUR/DATA   ">`
+        DC32 `?<Constant "(7) MOTOR ERROR ">`, `?<Constant "(8) EXIT        ">`
         DC32 `?<Constant "(1) PADRAO FAB. ">`, `?<Constant "(2) SENHA ADMIN ">`
         DC32 `?<Constant "(3) RESET GERAL ">`, `?<Constant "(4) MOTOR AC    ">`
         DC32 `?<Constant "(5) NUM SERIE   ">`, `?<Constant "(6) HORA/DATA   ">`
@@ -1641,9 +1641,9 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "VER. 2.0.15">`:
+`?<Constant "VER. 2.0.16">`:
         DATA
-        DC8 "VER. 2.0.15"
+        DC8 "VER. 2.0.16"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "POPCORN KING">`:
@@ -1652,9 +1652,9 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "VER. 1.0.15">`:
+`?<Constant "VER. 1.0.16">`:
         DATA
-        DC8 "VER. 1.0.15"
+        DC8 "VER. 1.0.16"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "CONFIGURACOES">`:
@@ -1768,6 +1768,12 @@ STRING_write_to_external:
 `?<Constant "(7)REGION       ">`:
         DATA
         DC8 "(7)REGION       "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(10)EXIT        ">`:
+        DATA
+        DC8 "(10)EXIT        "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -1999,6 +2005,12 @@ STRING_write_to_external:
 `?<Constant "(15)EXTERNAL LCD">`:
         DATA
         DC8 "(15)EXTERNAL LCD"
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(16)EXIT        ">`:
+        DATA
+        DC8 "(16)EXIT        "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -2287,6 +2299,84 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(2) BILLS       ">`:
+        DATA
+        DC8 "(2) BILLS       "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(3) FREE        ">`:
+        DATA
+        DC8 "(3) FREE        "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(4) LED STRIP   ">`:
+        DATA
+        DC8 "(4) LED STRIP   "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(5) MUSIC LEVEL ">`:
+        DATA
+        DC8 "(5) MUSIC LEVEL "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(6) VOICE LEVEL ">`:
+        DATA
+        DC8 "(6) VOICE LEVEL "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(7) ADVERTISING ">`:
+        DATA
+        DC8 "(7) ADVERTISING "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(8) TIME OF CUP ">`:
+        DATA
+        DC8 "(8) TIME OF CUP "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(9) CHANGE      ">`:
+        DATA
+        DC8 "(9) CHANGE      "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(10)COMISSION   ">`:
+        DATA
+        DC8 "(10)COMISSION   "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(11)MESSAGE 01  ">`:
+        DATA
+        DC8 "(11)MESSAGE 01  "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(12)MESSAGE 02  ">`:
+        DATA
+        DC8 "(12)MESSAGE 02  "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(13)MESSAGE 03  ">`:
+        DATA
+        DC8 "(13)MESSAGE 03  "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(14)MESSAGE 04  ">`:
+        DATA
+        DC8 "(14)MESSAGE 04  "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "VALOR PIPOCA">`:
         DATA
         DC8 "VALOR PIPOCA"
@@ -2339,9 +2429,9 @@ STRING_write_to_external:
         DC8 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "BILSS">`:
+`?<Constant "BILLS">`:
         DATA
-        DC8 "BILSS"
+        DC8 "BILLS"
         DC8 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -2624,6 +2714,12 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(5) EXIT        ">`:
+        DATA
+        DC8 "(5) EXIT        "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "DEVICES MDB">`:
         DATA
         DC8 "DEVICES MDB"
@@ -2676,6 +2772,17 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "Hey Pop">`:
+        DATA
+        DC8 "Hey Pop"
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "www.heypopcorn.com">`:
+        DATA
+        DC8 "www.heypopcorn.com"
+        DC8 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "TESTE LCD EXT">`:
         DATA
         DC8 "TESTE LCD EXT"
@@ -2722,10 +2829,10 @@ STRING_write_to_external:
         DC8 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "PRINTER TESTE">`:
+`?<Constant "PRINTER TEST">`:
         DATA
-        DC8 "PRINTER TESTE"
-        DC8 0, 0
+        DC8 "PRINTER TEST"
+        DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "<enter>PRINT">`:
@@ -2871,6 +2978,11 @@ STRING_write_to_external:
         DATA
         DC8 "SPEED"
         DC8 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "SPEEDDE">`:
+        DATA
+        DC8 "SPEEDDE"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "   PRONTAS EM  ">`:
@@ -3406,9 +3518,51 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(1) FACT. STAND ">`:
+        DATA
+        DC8 "(1) FACT. STAND "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(2) ADMIN PASS. ">`:
+        DATA
+        DC8 "(2) ADMIN PASS. "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(3) GENERAL RST ">`:
+        DATA
+        DC8 "(3) GENERAL RST "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(4) AC MOTOR    ">`:
+        DATA
+        DC8 "(4) AC MOTOR    "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(5) SERIAL NUMBE">`:
+        DATA
+        DC8 "(5) SERIAL NUMBE"
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(6) HOUR/DATA   ">`:
+        DATA
+        DC8 "(6) HOUR/DATA   "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "(7) MOTOR ERROR ">`:
         DATA
         DC8 "(7) MOTOR ERROR "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(8) EXIT        ">`:
+        DATA
+        DC8 "(8) EXIT        "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -3552,11 +3706,11 @@ STRING_write_to_external:
 //  118 ***********************************************************************************/
 // 
 // 5 600 bytes in section .data
-// 5 054 bytes in section .rodata
+// 5 550 bytes in section .rodata
 //   200 bytes in section .text
 // 
 //   200 bytes of CODE  memory
-// 5 054 bytes of CONST memory
+// 5 550 bytes of CONST memory
 // 5 600 bytes of DATA  memory
 //
 //Errors: none

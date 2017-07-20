@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ELF Linker V6.50.3.4676/W32 for ARM               20/Jul/2017  13:24:24 #
+# IAR ELF Linker V6.50.3.4676/W32 for ARM               20/Jul/2017  13:45:47 #
 # Copyright 2007-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Output file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPip #
@@ -496,7 +496,7 @@ __SystemLibrary = DLib
   Initializer bytes   ro data  0x0000dab8   0x296  <for P2 s0>
                              - 0x0000dd4e  0xda4e
 
-"P5":                                      0x17e4
+"P5":                                      0x1a28
   .text               ro code  0x00070000    0xa8  strings.o [1]
   .rodata             const    0x000700a8    0x18  strings.o [1]
   .rodata             const    0x000700c0    0x14  strings.o [1]
@@ -626,36 +626,30 @@ __SystemLibrary = DLib
   .rodata             const    0x00070a70    0x14  strings.o [1]
   .rodata             const    0x00070a84    0x14  strings.o [1]
   .rodata             const    0x00070a98    0x14  strings.o [1]
-  .rodata             const    0x00070aac    0x10  strings.o [1]
-  .rodata             const    0x00070abc    0x10  strings.o [1]
-  .rodata             const    0x00070acc    0x10  strings.o [1]
-  .rodata             const    0x00070adc    0x10  strings.o [1]
-  .rodata             const    0x00070aec    0x10  strings.o [1]
-  .rodata             const    0x00070afc    0x10  strings.o [1]
-  .rodata             const    0x00070b0c    0x10  strings.o [1]
-  .rodata             const    0x00070b1c    0x10  strings.o [1]
-  .rodata             const    0x00070b2c    0x10  strings.o [1]
-  .rodata             const    0x00070b3c    0x10  strings.o [1]
-  .rodata             const    0x00070b4c    0x10  strings.o [1]
-  .rodata             const    0x00070b5c    0x10  strings.o [1]
-  .rodata             const    0x00070b6c    0x10  strings.o [1]
-  .rodata             const    0x00070b7c    0x10  strings.o [1]
-  .rodata             const    0x00070b8c    0x10  strings.o [1]
-  .rodata             const    0x00070b9c    0x10  strings.o [1]
-  .rodata             const    0x00070bac    0x10  strings.o [1]
-  .rodata             const    0x00070bbc    0x10  strings.o [1]
-  .rodata             const    0x00070bcc    0x10  strings.o [1]
-  .rodata             const    0x00070bdc    0x10  strings.o [1]
-  .rodata             const    0x00070bec    0x10  strings.o [1]
-  .rodata             const    0x00070bfc    0x10  strings.o [1]
-  .rodata             const    0x00070c0c    0x10  strings.o [1]
-  .rodata             const    0x00070c1c    0x10  strings.o [1]
-  .rodata             const    0x00070c2c    0x10  strings.o [1]
-  .rodata             const    0x00070c3c    0x10  strings.o [1]
-  .rodata             const    0x00070c4c    0x10  strings.o [1]
-  .rodata             const    0x00070c5c    0x10  strings.o [1]
-  .rodata             const    0x00070c6c    0x10  strings.o [1]
-  .rodata             const    0x00070c7c    0x10  strings.o [1]
+  .rodata             const    0x00070aac    0x14  strings.o [1]
+  .rodata             const    0x00070ac0    0x14  strings.o [1]
+  .rodata             const    0x00070ad4    0x14  strings.o [1]
+  .rodata             const    0x00070ae8    0x14  strings.o [1]
+  .rodata             const    0x00070afc    0x14  strings.o [1]
+  .rodata             const    0x00070b10    0x14  strings.o [1]
+  .rodata             const    0x00070b24    0x14  strings.o [1]
+  .rodata             const    0x00070b38    0x14  strings.o [1]
+  .rodata             const    0x00070b4c    0x14  strings.o [1]
+  .rodata             const    0x00070b60    0x14  strings.o [1]
+  .rodata             const    0x00070b74    0x14  strings.o [1]
+  .rodata             const    0x00070b88    0x14  strings.o [1]
+  .rodata             const    0x00070b9c    0x14  strings.o [1]
+  .rodata             const    0x00070bb0    0x14  strings.o [1]
+  .rodata             const    0x00070bc4    0x14  strings.o [1]
+  .rodata             const    0x00070bd8    0x14  strings.o [1]
+  .rodata             const    0x00070bec    0x14  strings.o [1]
+  .rodata             const    0x00070c00    0x14  strings.o [1]
+  .rodata             const    0x00070c14    0x14  strings.o [1]
+  .rodata             const    0x00070c28    0x14  strings.o [1]
+  .rodata             const    0x00070c3c    0x14  strings.o [1]
+  .rodata             const    0x00070c50    0x14  strings.o [1]
+  .rodata             const    0x00070c64    0x14  strings.o [1]
+  .rodata             const    0x00070c78    0x14  strings.o [1]
   .rodata             const    0x00070c8c    0x10  strings.o [1]
   .rodata             const    0x00070c9c    0x10  strings.o [1]
   .rodata             const    0x00070cac    0x10  strings.o [1]
@@ -691,46 +685,36 @@ __SystemLibrary = DLib
   .rodata             const    0x00070e8c    0x10  strings.o [1]
   .rodata             const    0x00070e9c    0x10  strings.o [1]
   .rodata             const    0x00070eac    0x10  strings.o [1]
-  .rodata             const    0x00070ebc     0xc  strings.o [1]
-  .rodata             const    0x00070ec8     0xc  strings.o [1]
-  .rodata             const    0x00070ed4     0xc  strings.o [1]
-  .rodata             const    0x00070ee0     0xc  strings.o [1]
-  .rodata             const    0x00070eec     0xc  strings.o [1]
-  .rodata             const    0x00070ef8     0xc  strings.o [1]
-  .rodata             const    0x00070f04     0xc  strings.o [1]
-  .rodata             const    0x00070f10     0xc  strings.o [1]
-  .rodata             const    0x00070f1c     0xc  strings.o [1]
-  .rodata             const    0x00070f28     0xc  strings.o [1]
-  .rodata             const    0x00070f34     0xc  strings.o [1]
-  .rodata             const    0x00070f40     0xc  strings.o [1]
-  .rodata             const    0x00070f4c     0xc  strings.o [1]
-  .rodata             const    0x00070f58     0xc  strings.o [1]
-  .rodata             const    0x00070f64     0xc  strings.o [1]
-  .rodata             const    0x00070f70     0xc  strings.o [1]
-  .rodata             const    0x00070f7c     0xc  strings.o [1]
-  .rodata             const    0x00070f88     0xc  strings.o [1]
-  .rodata             const    0x00070f94     0xc  strings.o [1]
-  .rodata             const    0x00070fa0     0xc  strings.o [1]
-  .rodata             const    0x00070fac     0xc  strings.o [1]
-  .rodata             const    0x00070fb8     0xc  strings.o [1]
-  .rodata             const    0x00070fc4     0xc  strings.o [1]
-  .rodata             const    0x00070fd0     0xc  strings.o [1]
-  .rodata             const    0x00070fdc     0xc  strings.o [1]
-  .rodata             const    0x00070fe8     0xc  strings.o [1]
-  .rodata             const    0x00070ff4     0xc  strings.o [1]
-  .rodata             const    0x00071000     0xc  strings.o [1]
-  .rodata             const    0x0007100c     0xc  strings.o [1]
-  .rodata             const    0x00071018     0xc  strings.o [1]
-  .rodata             const    0x00071024     0xc  strings.o [1]
-  .rodata             const    0x00071030     0xc  strings.o [1]
-  .rodata             const    0x0007103c     0xc  strings.o [1]
-  .rodata             const    0x00071048     0xc  strings.o [1]
-  .rodata             const    0x00071054     0xc  strings.o [1]
-  .rodata             const    0x00071060     0xc  strings.o [1]
-  .rodata             const    0x0007106c     0xc  strings.o [1]
-  .rodata             const    0x00071078     0xc  strings.o [1]
-  .rodata             const    0x00071084     0xc  strings.o [1]
-  .rodata             const    0x00071090     0xc  strings.o [1]
+  .rodata             const    0x00070ebc    0x10  strings.o [1]
+  .rodata             const    0x00070ecc    0x10  strings.o [1]
+  .rodata             const    0x00070edc    0x10  strings.o [1]
+  .rodata             const    0x00070eec    0x10  strings.o [1]
+  .rodata             const    0x00070efc    0x10  strings.o [1]
+  .rodata             const    0x00070f0c    0x10  strings.o [1]
+  .rodata             const    0x00070f1c    0x10  strings.o [1]
+  .rodata             const    0x00070f2c    0x10  strings.o [1]
+  .rodata             const    0x00070f3c    0x10  strings.o [1]
+  .rodata             const    0x00070f4c    0x10  strings.o [1]
+  .rodata             const    0x00070f5c    0x10  strings.o [1]
+  .rodata             const    0x00070f6c    0x10  strings.o [1]
+  .rodata             const    0x00070f7c    0x10  strings.o [1]
+  .rodata             const    0x00070f8c    0x10  strings.o [1]
+  .rodata             const    0x00070f9c    0x10  strings.o [1]
+  .rodata             const    0x00070fac    0x10  strings.o [1]
+  .rodata             const    0x00070fbc    0x10  strings.o [1]
+  .rodata             const    0x00070fcc    0x10  strings.o [1]
+  .rodata             const    0x00070fdc    0x10  strings.o [1]
+  .rodata             const    0x00070fec    0x10  strings.o [1]
+  .rodata             const    0x00070ffc    0x10  strings.o [1]
+  .rodata             const    0x0007100c    0x10  strings.o [1]
+  .rodata             const    0x0007101c    0x10  strings.o [1]
+  .rodata             const    0x0007102c    0x10  strings.o [1]
+  .rodata             const    0x0007103c    0x10  strings.o [1]
+  .rodata             const    0x0007104c    0x10  strings.o [1]
+  .rodata             const    0x0007105c    0x10  strings.o [1]
+  .rodata             const    0x0007106c    0x10  strings.o [1]
+  .rodata             const    0x0007107c    0x10  strings.o [1]
+  .rodata             const    0x0007108c    0x10  strings.o [1]
   .rodata             const    0x0007109c     0xc  strings.o [1]
   .rodata             const    0x000710a8     0xc  strings.o [1]
   .rodata             const    0x000710b4     0xc  strings.o [1]
@@ -774,38 +758,80 @@ __SystemLibrary = DLib
   .rodata             const    0x0007127c     0xc  strings.o [1]
   .rodata             const    0x00071288     0xc  strings.o [1]
   .rodata             const    0x00071294     0xc  strings.o [1]
-  .rodata             const    0x000712a0     0x8  strings.o [1]
-  .rodata             const    0x000712a8     0x8  strings.o [1]
-  .rodata             const    0x000712b0     0x8  strings.o [1]
-  .rodata             const    0x000712b8     0x8  strings.o [1]
-  .rodata             const    0x000712c0     0x8  strings.o [1]
-  .rodata             const    0x000712c8     0x8  strings.o [1]
-  .rodata             const    0x000712d0     0x8  strings.o [1]
-  .rodata             const    0x000712d8     0x8  strings.o [1]
-  .rodata             const    0x000712e0     0x8  strings.o [1]
-  .rodata             const    0x000712e8     0x8  strings.o [1]
-  .rodata             const    0x000712f0     0x8  strings.o [1]
-  .rodata             const    0x000712f8     0x8  strings.o [1]
-  .rodata             const    0x00071300     0x8  strings.o [1]
-  .rodata             const    0x00071308     0x8  strings.o [1]
-  .rodata             const    0x00071310     0x8  strings.o [1]
-  .rodata             const    0x00071318     0x8  strings.o [1]
-  .rodata             const    0x00071320     0x8  strings.o [1]
-  .rodata             const    0x00071328     0x8  strings.o [1]
-  .rodata             const    0x00071330     0x8  strings.o [1]
-  .rodata             const    0x00071338     0x8  strings.o [1]
-  .rodata             const    0x00071340     0x8  strings.o [1]
-  .rodata             const    0x00071348     0x4  strings.o [1]
-  .rodata             const    0x0007134c     0x4  strings.o [1]
-  .rodata             const    0x00071350     0x4  strings.o [1]
-  .rodata             const    0x00071354     0x4  strings.o [1]
-  .rodata             const    0x00071358     0x4  strings.o [1]
-  .rodata             const    0x0007135c     0x4  strings.o [1]
-  .rodata             const    0x00071360     0x4  strings.o [1]
-  .rodata             const    0x00071364     0x4  strings.o [1]
-  .rodata             const    0x00071368     0x2  strings.o [1]
-  Initializer bytes   ro data  0x0007136a   0x477  <for P2 s1>
-                             - 0x000717e1  0x17e1
+  .rodata             const    0x000712a0     0xc  strings.o [1]
+  .rodata             const    0x000712ac     0xc  strings.o [1]
+  .rodata             const    0x000712b8     0xc  strings.o [1]
+  .rodata             const    0x000712c4     0xc  strings.o [1]
+  .rodata             const    0x000712d0     0xc  strings.o [1]
+  .rodata             const    0x000712dc     0xc  strings.o [1]
+  .rodata             const    0x000712e8     0xc  strings.o [1]
+  .rodata             const    0x000712f4     0xc  strings.o [1]
+  .rodata             const    0x00071300     0xc  strings.o [1]
+  .rodata             const    0x0007130c     0xc  strings.o [1]
+  .rodata             const    0x00071318     0xc  strings.o [1]
+  .rodata             const    0x00071324     0xc  strings.o [1]
+  .rodata             const    0x00071330     0xc  strings.o [1]
+  .rodata             const    0x0007133c     0xc  strings.o [1]
+  .rodata             const    0x00071348     0xc  strings.o [1]
+  .rodata             const    0x00071354     0xc  strings.o [1]
+  .rodata             const    0x00071360     0xc  strings.o [1]
+  .rodata             const    0x0007136c     0xc  strings.o [1]
+  .rodata             const    0x00071378     0xc  strings.o [1]
+  .rodata             const    0x00071384     0xc  strings.o [1]
+  .rodata             const    0x00071390     0xc  strings.o [1]
+  .rodata             const    0x0007139c     0xc  strings.o [1]
+  .rodata             const    0x000713a8     0xc  strings.o [1]
+  .rodata             const    0x000713b4     0xc  strings.o [1]
+  .rodata             const    0x000713c0     0xc  strings.o [1]
+  .rodata             const    0x000713cc     0xc  strings.o [1]
+  .rodata             const    0x000713d8     0xc  strings.o [1]
+  .rodata             const    0x000713e4     0xc  strings.o [1]
+  .rodata             const    0x000713f0     0xc  strings.o [1]
+  .rodata             const    0x000713fc     0xc  strings.o [1]
+  .rodata             const    0x00071408     0xc  strings.o [1]
+  .rodata             const    0x00071414     0xc  strings.o [1]
+  .rodata             const    0x00071420     0xc  strings.o [1]
+  .rodata             const    0x0007142c     0xc  strings.o [1]
+  .rodata             const    0x00071438     0xc  strings.o [1]
+  .rodata             const    0x00071444     0xc  strings.o [1]
+  .rodata             const    0x00071450     0xc  strings.o [1]
+  .rodata             const    0x0007145c     0xc  strings.o [1]
+  .rodata             const    0x00071468     0xc  strings.o [1]
+  .rodata             const    0x00071474     0xc  strings.o [1]
+  .rodata             const    0x00071480     0x8  strings.o [1]
+  .rodata             const    0x00071488     0x8  strings.o [1]
+  .rodata             const    0x00071490     0x8  strings.o [1]
+  .rodata             const    0x00071498     0x8  strings.o [1]
+  .rodata             const    0x000714a0     0x8  strings.o [1]
+  .rodata             const    0x000714a8     0x8  strings.o [1]
+  .rodata             const    0x000714b0     0x8  strings.o [1]
+  .rodata             const    0x000714b8     0x8  strings.o [1]
+  .rodata             const    0x000714c0     0x8  strings.o [1]
+  .rodata             const    0x000714c8     0x8  strings.o [1]
+  .rodata             const    0x000714d0     0x8  strings.o [1]
+  .rodata             const    0x000714d8     0x8  strings.o [1]
+  .rodata             const    0x000714e0     0x8  strings.o [1]
+  .rodata             const    0x000714e8     0x8  strings.o [1]
+  .rodata             const    0x000714f0     0x8  strings.o [1]
+  .rodata             const    0x000714f8     0x8  strings.o [1]
+  .rodata             const    0x00071500     0x8  strings.o [1]
+  .rodata             const    0x00071508     0x8  strings.o [1]
+  .rodata             const    0x00071510     0x8  strings.o [1]
+  .rodata             const    0x00071518     0x8  strings.o [1]
+  .rodata             const    0x00071520     0x8  strings.o [1]
+  .rodata             const    0x00071528     0x8  strings.o [1]
+  .rodata             const    0x00071530     0x8  strings.o [1]
+  .rodata             const    0x00071538     0x4  strings.o [1]
+  .rodata             const    0x0007153c     0x4  strings.o [1]
+  .rodata             const    0x00071540     0x4  strings.o [1]
+  .rodata             const    0x00071544     0x4  strings.o [1]
+  .rodata             const    0x00071548     0x4  strings.o [1]
+  .rodata             const    0x0007154c     0x4  strings.o [1]
+  .rodata             const    0x00071550     0x4  strings.o [1]
+  .rodata             const    0x00071554     0x4  strings.o [1]
+  .rodata             const    0x00071558     0x2  strings.o [1]
+  Initializer bytes   ro data  0x0007155a   0x4cd  <for P2 s1>
+                             - 0x00071a27  0x1a27
 
 "P2", part 1 of 4:                          0x354
   P2 s0                        0x10000000   0x351  <Init block>
@@ -1300,8 +1326,8 @@ Copy/lz77 (__iar_lz77_init3)
           0x10000000   0x351
 
 Copy/lz77 (__iar_lz77_init3)
-    1 source range, total size 0x477 (21% of destination):
-          0x0007136a   0x477
+    1 source range, total size 0x4cd (22% of destination):
+          0x0007155a   0x4cd
     1 destination range, total size 0x151c:
           0x10000354  0x151c
 
@@ -1373,13 +1399,13 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Debug\Obj
     serial_mux.o                   140                         12
     spi_wrapper.o                  416                 1       28
     sst25vf016b.o                  684
-    strings.o                      168    5 945    5 404
+    strings.o                      168    6 527    5 404
     supervisao_mdb_cashless.o        2                 4
     tasks.o                      2 024       28      256
     tela_senha.o                 1 010       84        4
     uart.o                         668                         85
     -------------------------------------------------------------
-    Total:                      41 178   13 522   30 395      311
+    Total:                      41 178   14 104   30 395      311
 
 command line: [2]
     -------------------------------------------------------------
@@ -1442,7 +1468,7 @@ shb_l.a: [6]
     Gaps                            44        2
     Linker created                           72      768
 -----------------------------------------------------------------
-    Grand Total:                48 490   13 705   31 303      311
+    Grand Total:                48 490   14 287   31 303      311
 
 
 *******************************************************************************
@@ -2585,7 +2611,7 @@ xTickCount              0x100076e0     0x4  Data  Gb  tasks.o [1]
 [6] = shb_l.a
 
   48 490 bytes of readonly  code memory
-  13 705 bytes of readonly  data memory
+  14 287 bytes of readonly  data memory
   31 303 bytes of readwrite data memory (+ 311 absolute)
 
 Errors: none

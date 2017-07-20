@@ -414,16 +414,7 @@ int POTENCIA_calcula_derivada_erro(int erro){
   if(y<-12000)
     y = -12000;
   
-  return y;  
-  /*
-  static int ultimo_erro = 0;
-  
-  erro = erro - ultimo_erro;     
-  ultimo_erro = erro;  
-  
-  //Trunca os limites  
-  return erro;
-  */
+  return y;   
 }
 /***********************************************************************************
 *       Descrição       :       Setter para a rotação do motor
