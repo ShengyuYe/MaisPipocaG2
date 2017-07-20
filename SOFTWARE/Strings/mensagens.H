@@ -135,8 +135,8 @@ const char *STRING_menu_configuracao[QTY_OF_LANGUAGES][TAM_OPCOES_CFG]={
                  "(5)TELEMETRY    ",
                  "(6)TESTE HW     ",
                  "(7)REGION       ",
-                 "(8)SERVICO      ",
-                 "(9)AVANCADO     ",
+                 "(8)SERVICE      ",
+                 "(9)ADVANCED     ",
                  "(10)EXIT        "},
   //-------------------------------
   [CANADA]    = {"(1)OPERACAO     ",

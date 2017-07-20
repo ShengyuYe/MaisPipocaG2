@@ -79,6 +79,7 @@ void APLICACAO_verifica_cctalk(void);
 void APLICACAO_verificao_ciclica(void);
 void APLICACAO_loop_falha_ciclica(void);
 void APLICACAO_ciclo_desumidificador(unsigned char flag);
+void APLICACAO_reset_hardware(void);
 
 /***********************************************************************************
 *       Implementação das funções
@@ -155,6 +156,8 @@ void APLICACAO_main(void*pPar){
            
            HD44780_init(LCD_DISPLAY_8X5 | LCD_2_LINHAS,LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);       
            HD44780_2_init(LCD_DISPLAY_8X5 | LCD_2_LINHAS,LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);              
+           
+           APLICACAO_reset_hardware();           
            break;
       case TECLA_ESC:
            break;
@@ -755,6 +758,20 @@ void APLICACAO_ciclo_desumidificador(unsigned char flag){
     APLICACAO_verifica_post();
     APLICACAO_tempo_desumidificador = TEMPO_DESUMIDIFICADOR;
   }
+}
+/***********************************************************************************
+*       Descrição       :       Tela para reiniciar o sistema
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
+***********************************************************************************/
+void APLICACAO_reset_hardware(void){
+  
+  STRING_write_to_internal(CLEAR_DISPLAY,"reiniciando","sistema");
+  STRING_write_to_external(CLEAR_DISPLAY,"reiniciando","sistema");
+  
+  __disable_interrupt();
+  WATCHDOG_init();
+  for(;;);  
 }
 /***********************************************************************************
 *       Fim do arquivo

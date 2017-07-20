@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  13:45:00 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  13:55:12 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -155,9 +155,9 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Strings\s
    \              0x........   
    \   000000D8   0x........         DC32 `?<Constant "(5)TELEMETRY    ">`, `?<Constant "(6)TESTE HW     ">`
    \              0x........   
-   \   000000E0   0x........         DC32 `?<Constant "(7)REGION       ">`, `?<Constant "(8)SERVICO      ">`
+   \   000000E0   0x........         DC32 `?<Constant "(7)REGION       ">`, `?<Constant "(8)SERVICE      ">`
    \              0x........   
-   \   000000E8   0x........         DC32 `?<Constant "(9)AVANCADO     ">`, `?<Constant "(10)EXIT        ">`
+   \   000000E8   0x........         DC32 `?<Constant "(9)ADVANCED     ">`, `?<Constant "(10)EXIT        ">`
    \              0x........   
    \   000000F0   0x........         DC32 `?<Constant "(1)OPERACAO     ">`, `?<Constant "(2)FATURAMENTO  ">`
    \              0x........   
@@ -2299,6 +2299,34 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Strings\s
    \              0x49 0x4F    
    \              0x4E 0x20    
    \              0x20 0x20    
+   \              0x20 0x20    
+   \              0x20 0x20    
+   \              0x00         
+   \   00000011   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "(8)SERVICE      ">`:
+   \   00000000   0x28 0x38          DC8 "(8)SERVICE      "
+   \              0x29 0x53    
+   \              0x45 0x52    
+   \              0x56 0x49    
+   \              0x43 0x45    
+   \              0x20 0x20    
+   \              0x20 0x20    
+   \              0x20 0x20    
+   \              0x00         
+   \   00000011   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "(9)ADVANCED     ">`:
+   \   00000000   0x28 0x39          DC8 "(9)ADVANCED     "
+   \              0x29 0x41    
+   \              0x44 0x56    
+   \              0x41 0x4E    
+   \              0x43 0x45    
+   \              0x44 0x20    
    \              0x20 0x20    
    \              0x20 0x20    
    \              0x00         
@@ -6245,10 +6273,12 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Strings\s
       20  ?<Constant "(8)COIN PULSE   ">
       20  ?<Constant "(8)EXIT         ">
       20  ?<Constant "(8)MOEDEIRO PULS">
+      20  ?<Constant "(8)SERVICE      ">
       20  ?<Constant "(8)SERVICO      ">
       20  ?<Constant "(8)VOLTAR       ">
       20  ?<Constant "(9) CHANGE      ">
       20  ?<Constant "(9) TROCO       ">
+      20  ?<Constant "(9)ADVANCED     ">
       20  ?<Constant "(9)AVANCADO     ">
       20  ?<Constant "(9)BILL PULSE   ">
       20  ?<Constant "(9)NOTEIRO PULSO">
@@ -6554,11 +6584,11 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Strings\s
 
  
  5 600 bytes in section .data
- 5 550 bytes in section .rodata
+ 5 590 bytes in section .rodata
    200 bytes in section .text
  
    200 bytes of CODE  memory
- 5 550 bytes of CONST memory
+ 5 590 bytes of CONST memory
  5 600 bytes of DATA  memory
 
 Errors: none

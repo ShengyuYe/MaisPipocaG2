@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  13:45:00 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  13:55:12 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -260,8 +260,8 @@ STRING_menu_configuracao:
         DC32 `?<Constant "(1)OPERATION    ">`, `?<Constant "(2)BILLING      ">`
         DC32 `?<Constant "(3)PREPARATION  ">`, `?<Constant "(4)ACCESSORIES  ">`
         DC32 `?<Constant "(5)TELEMETRY    ">`, `?<Constant "(6)TESTE HW     ">`
-        DC32 `?<Constant "(7)REGION       ">`, `?<Constant "(8)SERVICO      ">`
-        DC32 `?<Constant "(9)AVANCADO     ">`, `?<Constant "(10)EXIT        ">`
+        DC32 `?<Constant "(7)REGION       ">`, `?<Constant "(8)SERVICE      ">`
+        DC32 `?<Constant "(9)ADVANCED     ">`, `?<Constant "(10)EXIT        ">`
         DC32 `?<Constant "(1)OPERACAO     ">`, `?<Constant "(2)FATURAMENTO  ">`
         DC32 `?<Constant "(3)PREPARACAO   ">`, `?<Constant "(4)ACESSORIOS   ">`
         DC32 `?<Constant "(5)TELEMETRIA   ">`, `?<Constant "(6)TESTE HW     ">`
@@ -1768,6 +1768,18 @@ STRING_write_to_external:
 `?<Constant "(7)REGION       ">`:
         DATA
         DC8 "(7)REGION       "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(8)SERVICE      ">`:
+        DATA
+        DC8 "(8)SERVICE      "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(9)ADVANCED     ">`:
+        DATA
+        DC8 "(9)ADVANCED     "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -3706,11 +3718,11 @@ STRING_write_to_external:
 //  118 ***********************************************************************************/
 // 
 // 5 600 bytes in section .data
-// 5 550 bytes in section .rodata
+// 5 590 bytes in section .rodata
 //   200 bytes in section .text
 // 
 //   200 bytes of CODE  memory
-// 5 550 bytes of CONST memory
+// 5 590 bytes of CONST memory
 // 5 600 bytes of DATA  memory
 //
 //Errors: none
