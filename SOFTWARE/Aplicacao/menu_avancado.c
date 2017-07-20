@@ -64,6 +64,7 @@ void MENUAVANCADO_reset_totalizadores_permanentes(void);
 void MENUAVANCADO_configura_numero_serie(void);
 void MENUAVANCADO_menu_ganhos_PID(void);
 void MENUAVANCADO_configura_hora_data(void);
+void MENUAVANCADO_configura_flag_correcao_erro(void);
 
 /***********************************************************************************
 *       Tabela de funções
@@ -75,6 +76,7 @@ void(*const MENUAVANCADO_func[])(void)={
   MENUAVANCADO_menu_ganhos_PID,
   MENUAVANCADO_configura_numero_serie,
   MENUAVANCADO_configura_hora_data,
+  MENUAVANCADO_configura_flag_correcao_erro,
   NULL
 };
 /***********************************************************************************
@@ -313,6 +315,22 @@ void MENUAVANCADO_configura_numero_serie(void){
 void MENUAVANCADO_configura_hora_data(void){
   
   IAR_entry();
+}
+/***********************************************************************************
+*       Descrição       :       Tela para configuração do flag que habilita
+*                               a correção de erro no motor do ar
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
+***********************************************************************************/
+void MENUAVANCADO_configura_flag_correcao_erro(void){
+  unsigned char idioma = APLICACAO_carrega_idioma();
+  unsigned char flag;
+  
+  PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
+  
+  flag = MEF_entry("ERRO MOTOR",flag,"ON ","OFF");    
+  
+  PARAMETROS_grava(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
 }
 /***********************************************************************************
 *       Fim do arquivo

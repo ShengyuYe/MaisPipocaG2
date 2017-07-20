@@ -41,7 +41,7 @@
 #define QTD_OPCOES_FATURAMENTO          6
 #define QTD_OPCOES_PREPARACAO           3
 #define QTD_OPCOES_SERVICO              6
-#define QTD_OPCOES_AVANCADO             7
+#define QTD_OPCOES_AVANCADO             8
 
 #ifdef _GLOBAL_STRING_
 
@@ -1524,7 +1524,8 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) ERRO MOTOR  ",
+     "(8) VOLTAR      "
   },
   [URUGUAI]={
     //1234567890123456
@@ -1534,7 +1535,8 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) ERRO MOTOR  ",
+     "(8) VOLTAR      "
   },
   [ARGENTINA]={
     //1234567890123456
@@ -1544,7 +1546,8 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) ERRO MOTOR  ",
+     "(8) VOLTAR      "
   },
   [PARAGUAI]={
     //1234567890123456
@@ -1554,7 +1557,8 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) ERRO MOTOR  ",
+     "(8) VOLTAR      "
   },
   [PERU]={
     //1234567890123456
@@ -1564,7 +1568,8 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) ERRO MOTOR  ",
+     "(8) VOLTAR      "
   },
   [EUA]={
     //1234567890123456
@@ -1574,7 +1579,8 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) MOTOR ERROR ",
+     "(8) VOLTAR      "
   },
   [CANADA]={
     //1234567890123456
@@ -1584,7 +1590,8 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) MOTOR ERROR ",
+     "(8) VOLTAR      "
   },  
 };
 

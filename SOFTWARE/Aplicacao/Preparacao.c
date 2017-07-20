@@ -87,6 +87,7 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   unsigned char idioma;
   unsigned char delta=0;
   unsigned int valor_pipoca;
+  unsigned char flag_correcao_erro;
   
   PAGAMENTOS_set_bloqueio(1);
   
@@ -95,6 +96,7 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   PARAMETROS_le(ADR_VELOCIDADE_PREPARACAO,(void*)&velocidade_processo);
   PARAMETROS_le(ADR_TEMPO_EMBALAGEM,(void*)&tempo_embalagem);
   PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valor_pipoca);  
+  PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag_correcao_erro);    
 
   //-----------------------------------------------
   // Por falta de testes, deixei esse trecho abaixo
@@ -129,7 +131,10 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   // da rotação do motor
   POTENCIA_set_neutro(1);
   vTaskDelay(500);
-  POTENCIA_setRPM(2500);//velocidade_processo);
+  if(flag_correcao_erro)
+    POTENCIA_setRPM(2500);
+  else
+    POTENCIA_setRPM(4000);
 
   PREPARACAO_cnt_preparo = TEMPO_PREPARO;  
   // Faz a verificação do ventilador
@@ -145,15 +150,6 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   // Inicia o controlador de temperatura
   CT_set_temperatura(temperatura_processo);
   
-  // Faz a verificação da resistência
-  /*
-  if(!PREPARACAO_verifica_resistencia()){
-    POTENCIA_setRPM(0);
-    POTENCIA_set_neutro(0);
-    CT_set_temperatura(0);
-    return FALHA_RESISTENCIA;        
-  }
-  */
   // Aguarda até a temperatura de início de processo
   // chegar ao valor da inicial
   unsigned int timeout=60000;
@@ -168,10 +164,7 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
     POTENCIA_set_neutro(0);
     CT_set_temperatura(0);
     return FALHA_RESISTENCIA;   
-  }
-  
-  //POTENCIA_setRPM(4000);
-  //while(POTENCIA_getRPMmedido()>4200);
+  }  
   
   if(!PREPARACAO_dosagem_milho()){
     POTENCIA_setRPM(0);
@@ -181,7 +174,10 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   }
   
   POTENCIA_setRPM(velocidade_processo);
-  while(POTENCIA_getRPMmedido()<velocidade_processo);
+  if(flag_correcao_erro)
+    while(POTENCIA_getRPMmedido()<velocidade_processo);
+  else
+    while(POTENCIA_getRPMmedido()<(velocidade_processo-1000));
   
   BOARD_setter_led_instrucao(LED_PEGUE_PACOTE,PISCANDO); // Indica na plac ade instrução para pegar a embalagem
   //if(

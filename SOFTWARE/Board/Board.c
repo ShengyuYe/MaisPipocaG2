@@ -117,8 +117,9 @@ void BOARD_instrucao_leds(void);
 *       Parametros      :       nenhum
 *       Retorno         :       nenhum
 ***********************************************************************************/
-void BOARD_ini(void){
-  
+void BOARD_ini(void){  
+  INI_MOTOR_EMBALAGEM_PIN();
+    
   CCTALK_ini();
   PAGAMENTOS_ini();
   PAGAMENTOS_set_bloqueio(1);

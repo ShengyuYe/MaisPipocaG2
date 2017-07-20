@@ -288,6 +288,12 @@ const sPARAMETROS tabela_parametros[]={
        .nome = "SG_CLIENTE_04",
        .ext = "TXT",
        .default_value = (void*) "  GRUPO ALTECH  "    
+  },
+  [ADR_COMPENSADOR_ERRO_ROTACAO]={
+       .length = BYTE,
+       .nome = "COMP_ERRO_MOTOR",
+       .ext = "NUM",
+       .default_value = (void*) 0x00    
   }
 };
 

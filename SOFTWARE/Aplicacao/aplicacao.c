@@ -152,6 +152,9 @@ void APLICACAO_main(void*pPar){
            APLICACAO_release_lcd();  
            
            STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);
+           
+           HD44780_init(LCD_DISPLAY_8X5 | LCD_2_LINHAS,LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);       
+           HD44780_2_init(LCD_DISPLAY_8X5 | LCD_2_LINHAS,LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);              
            break;
       case TECLA_ESC:
            break;
@@ -328,6 +331,8 @@ void APLICACAO_verifica_preparacao(unsigned int valor_pipoca,unsigned char idiom
              PREPARACAO_resfriamento(idioma);
              STRING_write_to_external(CLEAR_DISPLAY,NULL,NULL);                
              PAGAMENTOS_set_bloqueio(0);
+             HD44780_init(LCD_DISPLAY_8X5   | LCD_2_LINHAS,LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);       
+             HD44780_2_init(LCD_DISPLAY_8X5 | LCD_2_LINHAS,LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);                
              break;
         case FALHA_VENTILADOR:
              STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_fora_servico[idioma],"E0:VENTILADOR");                       

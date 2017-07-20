@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     19/Jul/2017  15:04:06 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  11:08:04 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -1260,34 +1260,37 @@ STRING_titulo_configura_troco:
         DC32 `?<Constant "CHANGE USE">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
-// __absolute char const *STRING_menu_avancado[7][7]
+// __absolute char const *STRING_menu_avancado[7][8]
 STRING_menu_avancado:
         DATA
         DC32 `?<Constant "(1) PADRAO FAB. ">`, `?<Constant "(2) SENHA ADMIN ">`
         DC32 `?<Constant "(3) RESET GERAL ">`, `?<Constant "(4) MOTOR AC    ">`
         DC32 `?<Constant "(5) NUM SERIE   ">`, `?<Constant "(6) HORA/DATA   ">`
-        DC32 `?<Constant "(7) VOLTAR      ">`, `?<Constant "(1) PADRAO FAB. ">`
-        DC32 `?<Constant "(2) SENHA ADMIN ">`, `?<Constant "(3) RESET GERAL ">`
-        DC32 `?<Constant "(4) MOTOR AC    ">`, `?<Constant "(5) NUM SERIE   ">`
-        DC32 `?<Constant "(6) HORA/DATA   ">`, `?<Constant "(7) VOLTAR      ">`
+        DC32 `?<Constant "(7) ERRO MOTOR  ">`, `?<Constant "(8) VOLTAR      ">`
         DC32 `?<Constant "(1) PADRAO FAB. ">`, `?<Constant "(2) SENHA ADMIN ">`
         DC32 `?<Constant "(3) RESET GERAL ">`, `?<Constant "(4) MOTOR AC    ">`
         DC32 `?<Constant "(5) NUM SERIE   ">`, `?<Constant "(6) HORA/DATA   ">`
-        DC32 `?<Constant "(7) VOLTAR      ">`, `?<Constant "(1) PADRAO FAB. ">`
-        DC32 `?<Constant "(2) SENHA ADMIN ">`, `?<Constant "(3) RESET GERAL ">`
-        DC32 `?<Constant "(4) MOTOR AC    ">`, `?<Constant "(5) NUM SERIE   ">`
-        DC32 `?<Constant "(6) HORA/DATA   ">`, `?<Constant "(7) VOLTAR      ">`
+        DC32 `?<Constant "(7) ERRO MOTOR  ">`, `?<Constant "(8) VOLTAR      ">`
         DC32 `?<Constant "(1) PADRAO FAB. ">`, `?<Constant "(2) SENHA ADMIN ">`
         DC32 `?<Constant "(3) RESET GERAL ">`, `?<Constant "(4) MOTOR AC    ">`
         DC32 `?<Constant "(5) NUM SERIE   ">`, `?<Constant "(6) HORA/DATA   ">`
-        DC32 `?<Constant "(7) VOLTAR      ">`, `?<Constant "(1) PADRAO FAB. ">`
-        DC32 `?<Constant "(2) SENHA ADMIN ">`, `?<Constant "(3) RESET GERAL ">`
-        DC32 `?<Constant "(4) MOTOR AC    ">`, `?<Constant "(5) NUM SERIE   ">`
-        DC32 `?<Constant "(6) HORA/DATA   ">`, `?<Constant "(7) VOLTAR      ">`
+        DC32 `?<Constant "(7) ERRO MOTOR  ">`, `?<Constant "(8) VOLTAR      ">`
         DC32 `?<Constant "(1) PADRAO FAB. ">`, `?<Constant "(2) SENHA ADMIN ">`
         DC32 `?<Constant "(3) RESET GERAL ">`, `?<Constant "(4) MOTOR AC    ">`
         DC32 `?<Constant "(5) NUM SERIE   ">`, `?<Constant "(6) HORA/DATA   ">`
-        DC32 `?<Constant "(7) VOLTAR      ">`
+        DC32 `?<Constant "(7) ERRO MOTOR  ">`, `?<Constant "(8) VOLTAR      ">`
+        DC32 `?<Constant "(1) PADRAO FAB. ">`, `?<Constant "(2) SENHA ADMIN ">`
+        DC32 `?<Constant "(3) RESET GERAL ">`, `?<Constant "(4) MOTOR AC    ">`
+        DC32 `?<Constant "(5) NUM SERIE   ">`, `?<Constant "(6) HORA/DATA   ">`
+        DC32 `?<Constant "(7) ERRO MOTOR  ">`, `?<Constant "(8) VOLTAR      ">`
+        DC32 `?<Constant "(1) PADRAO FAB. ">`, `?<Constant "(2) SENHA ADMIN ">`
+        DC32 `?<Constant "(3) RESET GERAL ">`, `?<Constant "(4) MOTOR AC    ">`
+        DC32 `?<Constant "(5) NUM SERIE   ">`, `?<Constant "(6) HORA/DATA   ">`
+        DC32 `?<Constant "(7) MOTOR ERROR ">`, `?<Constant "(8) VOLTAR      ">`
+        DC32 `?<Constant "(1) PADRAO FAB. ">`, `?<Constant "(2) SENHA ADMIN ">`
+        DC32 `?<Constant "(3) RESET GERAL ">`, `?<Constant "(4) MOTOR AC    ">`
+        DC32 `?<Constant "(5) NUM SERIE   ">`, `?<Constant "(6) HORA/DATA   ">`
+        DC32 `?<Constant "(7) MOTOR ERROR ">`, `?<Constant "(8) VOLTAR      ">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
 // __absolute char const *STRING_titulo_menu_avancado[7]
@@ -3391,9 +3394,21 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(7) VOLTAR      ">`:
+`?<Constant "(7) ERRO MOTOR  ">`:
         DATA
-        DC8 "(7) VOLTAR      "
+        DC8 "(7) ERRO MOTOR  "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(8) VOLTAR      ">`:
+        DATA
+        DC8 "(8) VOLTAR      "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(7) MOTOR ERROR ">`:
+        DATA
+        DC8 "(7) MOTOR ERROR "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -3536,13 +3551,13 @@ STRING_write_to_external:
 //  117 *       Fim do arquivo
 //  118 ***********************************************************************************/
 // 
-// 5 572 bytes in section .data
-// 5 014 bytes in section .rodata
+// 5 600 bytes in section .data
+// 5 054 bytes in section .rodata
 //   200 bytes in section .text
 // 
 //   200 bytes of CODE  memory
-// 5 014 bytes of CONST memory
-// 5 572 bytes of DATA  memory
+// 5 054 bytes of CONST memory
+// 5 600 bytes of DATA  memory
 //
 //Errors: none
 //Warnings: none

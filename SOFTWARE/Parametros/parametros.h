@@ -78,6 +78,7 @@
 #define ADR_MENSAGEM_CLIENTE_02                 61
 #define ADR_MENSAGEM_CLIENTE_03                 62
 #define ADR_MENSAGEM_CLIENTE_04                 63
+#define ADR_COMPENSADOR_ERRO_ROTACAO            64
 
 #define ADR_AREA_TESTE                          100
 

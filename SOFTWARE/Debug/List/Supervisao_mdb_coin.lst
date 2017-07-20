@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      19/Jul/2017  15:05:39 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  11:07:13 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -419,7 +419,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
    \   00000024   0xD101             BNE.N    ??SMDBCOIN_estado_supervisao_0
     203              return COIN_DISABLED;
    \   00000026   0x2000             MOVS     R0,#+0
-   \   00000028   0xE032             B.N      ??SMDBCOIN_estado_supervisao_1
+   \   00000028   0xE036             B.N      ??SMDBCOIN_estado_supervisao_1
     204            if(SMDBCOIN_flag_bloqueio){
    \                     ??SMDBCOIN_estado_supervisao_0:
    \   0000002A   0x....             LDR.N    R0,??DataTable5
@@ -447,12 +447,12 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
    \   0000004A   0xD101             BNE.N    ??SMDBCOIN_estado_supervisao_5
     210                return COIN_LOCKED;
    \   0000004C   0x2002             MOVS     R0,#+2
-   \   0000004E   0xE01F             B.N      ??SMDBCOIN_estado_supervisao_1
+   \   0000004E   0xE023             B.N      ??SMDBCOIN_estado_supervisao_1
     211              else
     212                return COIN_OFFLINE;
    \                     ??SMDBCOIN_estado_supervisao_5:
    \   00000050   0x2004             MOVS     R0,#+4
-   \   00000052   0xE01D             B.N      ??SMDBCOIN_estado_supervisao_1
+   \   00000052   0xE021             B.N      ??SMDBCOIN_estado_supervisao_1
     213            }
     214          
     215            if(MDBCOIN_poll(&tipo_pacote,&status_pacote,&tipo_moeda,&quantidade_tubo)==MDB_OK){
@@ -463,7 +463,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
    \   0000005E   0xA800             ADD      R0,SP,#+0
    \   00000060   0x.... 0x....      BL       MDBCOIN_poll
    \   00000064   0x2800             CMP      R0,#+0
-   \   00000066   0xD115             BNE.N    ??SMDBCOIN_estado_supervisao_6
+   \   00000066   0xD119             BNE.N    ??SMDBCOIN_estado_supervisao_6
     216              
     217              SMDBCOIN_contador_timeout = RELOAD_COIN_TIMEOUT;     
    \   00000068   0x....             LDR.N    R0,??DataTable5_3
@@ -472,7 +472,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
     218              if(tipo_pacote==COIN_DEPOSITED){
    \   00000070   0xF89D 0x0000      LDRB     R0,[SP, #+0]
    \   00000074   0x2801             CMP      R0,#+1
-   \   00000076   0xD109             BNE.N    ??SMDBCOIN_estado_supervisao_7
+   \   00000076   0xD10D             BNE.N    ??SMDBCOIN_estado_supervisao_7
     219                //Aqui dentro é onde vem
     220                // o valor da moeda para somar ao pagamento
     221                unsigned short int valor = valores[tipo_moeda];
@@ -485,105 +485,108 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
     223                tipo_pacote = COIN_STATUS;
    \   00000086   0x2002             MOVS     R0,#+2
    \   00000088   0xF88D 0x0000      STRB     R0,[SP, #+0]
-    224              }
-    225            }
-    226            else{
-    227              if(SMDBCOIN_contador_timeout)
-    228                SMDBCOIN_contador_timeout--;
-    229              else
-    230                return COIN_OFFLINE;
-    231            }
-    232            
-    233            return estado;
+    224                vTaskDelay(500);
+   \   0000008C   0xF44F 0x70FA      MOV      R0,#+500
+   \   00000090   0x.... 0x....      BL       vTaskDelay
+    225              }
+    226            }
+    227            else{
+    228              if(SMDBCOIN_contador_timeout)
+    229                SMDBCOIN_contador_timeout--;
+    230              else
+    231                return COIN_OFFLINE;
+    232            }
+    233            
+    234            return estado;
    \                     ??SMDBCOIN_estado_supervisao_7:
-   \   0000008C   0x0020             MOVS     R0,R4
-   \   0000008E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000094   0x0020             MOVS     R0,R4
+   \   00000096   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \                     ??SMDBCOIN_estado_supervisao_1:
-   \   00000090   0xB005             ADD      SP,SP,#+20
-   \   00000092   0xBD30             POP      {R4,R5,PC}       ;; return
+   \   00000098   0xB005             ADD      SP,SP,#+20
+   \   0000009A   0xBD30             POP      {R4,R5,PC}       ;; return
    \                     ??SMDBCOIN_estado_supervisao_6:
-   \   00000094   0x....             LDR.N    R0,??DataTable5_3
-   \   00000096   0x8800             LDRH     R0,[R0, #+0]
-   \   00000098   0x2800             CMP      R0,#+0
-   \   0000009A   0xD005             BEQ.N    ??SMDBCOIN_estado_supervisao_8
    \   0000009C   0x....             LDR.N    R0,??DataTable5_3
    \   0000009E   0x8800             LDRH     R0,[R0, #+0]
-   \   000000A0   0x1E40             SUBS     R0,R0,#+1
-   \   000000A2   0x....             LDR.N    R1,??DataTable5_3
-   \   000000A4   0x8008             STRH     R0,[R1, #+0]
-   \   000000A6   0xE7F1             B.N      ??SMDBCOIN_estado_supervisao_7
+   \   000000A0   0x2800             CMP      R0,#+0
+   \   000000A2   0xD005             BEQ.N    ??SMDBCOIN_estado_supervisao_8
+   \   000000A4   0x....             LDR.N    R0,??DataTable5_3
+   \   000000A6   0x8800             LDRH     R0,[R0, #+0]
+   \   000000A8   0x1E40             SUBS     R0,R0,#+1
+   \   000000AA   0x....             LDR.N    R1,??DataTable5_3
+   \   000000AC   0x8008             STRH     R0,[R1, #+0]
+   \   000000AE   0xE7F1             B.N      ??SMDBCOIN_estado_supervisao_7
    \                     ??SMDBCOIN_estado_supervisao_8:
-   \   000000A8   0x2004             MOVS     R0,#+4
-   \   000000AA   0xE7F1             B.N      ??SMDBCOIN_estado_supervisao_1
-    234          }
-    235          /***********************************************************************************
-    236          *       Descrição       :       Estado em que o moedeiro está offline
-    237          *       Parametros      :       (eCOIN_SM_STATE) estado atual do moedeiro
-    238          *       Retorno         :       (eCOIN_SM_STATE) novo estado do moedeiro
-    239          ***********************************************************************************/
+   \   000000B0   0x2004             MOVS     R0,#+4
+   \   000000B2   0xE7F1             B.N      ??SMDBCOIN_estado_supervisao_1
+    235          }
+    236          /***********************************************************************************
+    237          *       Descrição       :       Estado em que o moedeiro está offline
+    238          *       Parametros      :       (eCOIN_SM_STATE) estado atual do moedeiro
+    239          *       Retorno         :       (eCOIN_SM_STATE) novo estado do moedeiro
+    240          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    240          eCOIN_SM_STATE SMDBCOIN_estado_offline(eCOIN_SM_STATE estado){
+    241          eCOIN_SM_STATE SMDBCOIN_estado_offline(eCOIN_SM_STATE estado){
    \                     SMDBCOIN_estado_offline:
    \   00000000   0xB510             PUSH     {R4,LR}
    \   00000002   0xB082             SUB      SP,SP,#+8
    \   00000004   0x0004             MOVS     R4,R0
-    241            unsigned char flag;
-    242            
-    243            PARAMETROS_le(ADR_FLAG_MDB_COIN,(void*)&flag);
+    242            unsigned char flag;
+    243            
+    244            PARAMETROS_le(ADR_FLAG_MDB_COIN,(void*)&flag);
    \   00000006   0xA900             ADD      R1,SP,#+0
    \   00000008   0x2005             MOVS     R0,#+5
    \   0000000A   0x.... 0x....      BL       PARAMETROS_le
-    244            
-    245            if(!flag)
+    245            
+    246            if(!flag)
    \   0000000E   0xF89D 0x0000      LDRB     R0,[SP, #+0]
    \   00000012   0x2800             CMP      R0,#+0
    \   00000014   0xD101             BNE.N    ??SMDBCOIN_estado_offline_0
-    246              return COIN_DISABLED;
+    247              return COIN_DISABLED;
    \   00000016   0x2000             MOVS     R0,#+0
    \   00000018   0xE007             B.N      ??SMDBCOIN_estado_offline_1
-    247            
-    248            if(MDBCOIN_get_device()==MDB_OK)
+    248            
+    249            if(MDBCOIN_get_device()==MDB_OK)
    \                     ??SMDBCOIN_estado_offline_0:
    \   0000001A   0x.... 0x....      BL       MDBCOIN_get_device
    \   0000001E   0x2800             CMP      R0,#+0
    \   00000020   0xD101             BNE.N    ??SMDBCOIN_estado_offline_2
-    249              return COIN_DISABLED;
+    250              return COIN_DISABLED;
    \   00000022   0x2000             MOVS     R0,#+0
    \   00000024   0xE001             B.N      ??SMDBCOIN_estado_offline_1
-    250                
-    251            return estado;
+    251                
+    252            return estado;
    \                     ??SMDBCOIN_estado_offline_2:
    \   00000026   0x0020             MOVS     R0,R4
    \   00000028   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \                     ??SMDBCOIN_estado_offline_1:
    \   0000002A   0xBD16             POP      {R1,R2,R4,PC}    ;; return
-    252          }
-    253          /***********************************************************************************
-    254          *       Descrição       :       Verifica se há conectivadade do moedeiro
-    255          *       Parametros      :       nenhum
-    256          *       Retorno         :       nenhum
-    257          ***********************************************************************************/
+    253          }
+    254          /***********************************************************************************
+    255          *       Descrição       :       Verifica se há conectivadade do moedeiro
+    256          *       Parametros      :       nenhum
+    257          *       Retorno         :       nenhum
+    258          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    258          unsigned char SMDBCOIN_verifica_net_status(void){
-    259            
-    260            if(SMDBCOIN_estado_atual != COIN_OFFLINE)
+    259          unsigned char SMDBCOIN_verifica_net_status(void){
+    260            
+    261            if(SMDBCOIN_estado_atual != COIN_OFFLINE)
    \                     SMDBCOIN_verifica_net_status:
    \   00000000   0x....             LDR.N    R0,??DataTable5_1
    \   00000002   0x7800             LDRB     R0,[R0, #+0]
    \   00000004   0x2804             CMP      R0,#+4
    \   00000006   0xD001             BEQ.N    ??SMDBCOIN_verifica_net_status_0
-    261              return 1;
+    262              return 1;
    \   00000008   0x2001             MOVS     R0,#+1
    \   0000000A   0xE000             B.N      ??SMDBCOIN_verifica_net_status_1
-    262            
-    263            return 0;
+    263            
+    264            return 0;
    \                     ??SMDBCOIN_verifica_net_status_0:
    \   0000000C   0x2000             MOVS     R0,#+0
    \                     ??SMDBCOIN_verifica_net_status_1:
    \   0000000E   0x4770             BX       LR               ;; return
-    264          }
+    265          }
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable5:
@@ -611,9 +614,9 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
    \              0x19 0x32    
    \              0x64 0x00    
    \              0x00 0x00    
-    265          /***********************************************************************************
-    266          *       Fim do arquivo
-    267          ***********************************************************************************/
+    266          /***********************************************************************************
+    267          *       Fim do arquivo
+    268          ***********************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -635,6 +638,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
         32   -> MDBCOIN_reset_device
         32   -> PAGAMENTOS_adiciona_valores
         32   -> PARAMETROS_le
+        32   -> vTaskDelay
        0   SMDBCOIN_set_flag_bloqueio
        8   SMDBCOIN_tick
          8   -- Indirect call
@@ -657,7 +661,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
       32  SMDBCOIN_estado_desabilitado
       44  SMDBCOIN_estado_offline
       84  SMDBCOIN_estado_reset
-     172  SMDBCOIN_estado_supervisao
+     180  SMDBCOIN_estado_supervisao
        1  SMDBCOIN_flag_bloqueio
       20  SMDBCOIN_func_table
        6  SMDBCOIN_set_flag_bloqueio
@@ -667,9 +671,9 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
  
    4 bytes in section .bss
   28 bytes in section .rodata
- 500 bytes in section .text
+ 508 bytes in section .text
  
- 500 bytes of CODE  memory
+ 508 bytes of CODE  memory
   28 bytes of CONST memory
    4 bytes of DATA  memory
 

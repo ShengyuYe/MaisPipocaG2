@@ -221,6 +221,7 @@ eCOIN_SM_STATE SMDBCOIN_estado_supervisao(eCOIN_SM_STATE estado){
       unsigned short int valor = valores[tipo_moeda];
       PAGAMENTOS_adiciona_valores(valor);
       tipo_pacote = COIN_STATUS;
+      vTaskDelay(500);
     }
   }
   else{

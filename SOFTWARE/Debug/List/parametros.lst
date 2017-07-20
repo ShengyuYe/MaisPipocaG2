@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      19/Jul/2017  15:05:35 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      20/Jul/2017  11:06:52 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -79,7 +79,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
      38          #include "tabela_parametros.h"
 
    \                                 In section .rodata, align 4
-   \   __absolute struct <unnamed> const tabela_parametros[64]
+   \   __absolute struct <unnamed> const tabela_parametros[65]
    \                     tabela_parametros:
    \   00000000   0x00000000         DC32 0H
    \   00000004   0x0001             DC16 1
@@ -1491,6 +1491,28 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x54         
    \   00000AFD   0x00 0x00          DC8 0, 0, 0
    \              0x00         
+   \   00000B00   0x00000000         DC32 0H
+   \   00000B04   0x0001             DC16 1
+   \   00000B06   0x43 0x4F          DC8 "COMP_ERRO_MOTOR"
+   \              0x4D 0x50    
+   \              0x5F 0x45    
+   \              0x52 0x52    
+   \              0x4F 0x5F    
+   \              0x4D 0x4F    
+   \              0x54 0x4F    
+   \              0x52 0x00    
+   \   00000B16   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \   00000B26   0x4E 0x55          DC8 4EH, 55H, 4DH
+   \              0x4D         
+   \   00000B29   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
      39          
      40          
      41          /***********************************************************************************
@@ -1792,15 +1814,15 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
      158  PARAMETROS_le
       34  PARAMETROS_resolve_endereco
       14  memcpy
-    2816  tabela_parametros
+    2860  tabela_parametros
 
  
    128 bytes in section .bss
- 2 836 bytes in section .rodata
+ 2 880 bytes in section .rodata
    324 bytes in section .text
  
    310 bytes of CODE  memory (+ 14 bytes shared)
- 2 836 bytes of CONST memory
+ 2 880 bytes of CONST memory
    128 bytes of DATA  memory
 
 Errors: none

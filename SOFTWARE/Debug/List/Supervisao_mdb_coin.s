@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     19/Jul/2017  15:05:39 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  11:07:13 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -44,6 +44,7 @@
         EXTERN MDBCOIN_reset_device
         EXTERN PAGAMENTOS_adiciona_valores
         EXTERN PARAMETROS_le
+        EXTERN vTaskDelay
 
         PUBLIC SMDBCOIN_contador_timeout
         PUBLIC SMDBCOIN_estado_atual
@@ -599,16 +600,20 @@ SMDBCOIN_estado_supervisao:
 //  223       tipo_pacote = COIN_STATUS;
         MOVS     R0,#+2
         STRB     R0,[SP, #+0]
-//  224     }
-//  225   }
-//  226   else{
-//  227     if(SMDBCOIN_contador_timeout)
-//  228       SMDBCOIN_contador_timeout--;
-//  229     else
-//  230       return COIN_OFFLINE;
-//  231   }
-//  232   
-//  233   return estado;
+//  224       vTaskDelay(500);
+        MOV      R0,#+500
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
+//  225     }
+//  226   }
+//  227   else{
+//  228     if(SMDBCOIN_contador_timeout)
+//  229       SMDBCOIN_contador_timeout--;
+//  230     else
+//  231       return COIN_OFFLINE;
+//  232   }
+//  233   
+//  234   return estado;
 ??SMDBCOIN_estado_supervisao_7:
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
@@ -632,18 +637,18 @@ SMDBCOIN_estado_supervisao:
         MOVS     R0,#+4
         B.N      ??SMDBCOIN_estado_supervisao_1
           CFI EndBlock cfiBlock5
-//  234 }
-//  235 /***********************************************************************************
-//  236 *       Descrição       :       Estado em que o moedeiro está offline
-//  237 *       Parametros      :       (eCOIN_SM_STATE) estado atual do moedeiro
-//  238 *       Retorno         :       (eCOIN_SM_STATE) novo estado do moedeiro
-//  239 ***********************************************************************************/
+//  235 }
+//  236 /***********************************************************************************
+//  237 *       Descrição       :       Estado em que o moedeiro está offline
+//  238 *       Parametros      :       (eCOIN_SM_STATE) estado atual do moedeiro
+//  239 *       Retorno         :       (eCOIN_SM_STATE) novo estado do moedeiro
+//  240 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function SMDBCOIN_estado_offline
         THUMB
-//  240 eCOIN_SM_STATE SMDBCOIN_estado_offline(eCOIN_SM_STATE estado){
+//  241 eCOIN_SM_STATE SMDBCOIN_estado_offline(eCOIN_SM_STATE estado){
 SMDBCOIN_estado_offline:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -652,70 +657,70 @@ SMDBCOIN_estado_offline:
         SUB      SP,SP,#+8
           CFI CFA R13+16
         MOVS     R4,R0
-//  241   unsigned char flag;
-//  242   
-//  243   PARAMETROS_le(ADR_FLAG_MDB_COIN,(void*)&flag);
+//  242   unsigned char flag;
+//  243   
+//  244   PARAMETROS_le(ADR_FLAG_MDB_COIN,(void*)&flag);
         ADD      R1,SP,#+0
         MOVS     R0,#+5
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  244   
-//  245   if(!flag)
+//  245   
+//  246   if(!flag)
         LDRB     R0,[SP, #+0]
         CMP      R0,#+0
         BNE.N    ??SMDBCOIN_estado_offline_0
-//  246     return COIN_DISABLED;
+//  247     return COIN_DISABLED;
         MOVS     R0,#+0
         B.N      ??SMDBCOIN_estado_offline_1
-//  247   
-//  248   if(MDBCOIN_get_device()==MDB_OK)
+//  248   
+//  249   if(MDBCOIN_get_device()==MDB_OK)
 ??SMDBCOIN_estado_offline_0:
           CFI FunCall MDBCOIN_get_device
         BL       MDBCOIN_get_device
         CMP      R0,#+0
         BNE.N    ??SMDBCOIN_estado_offline_2
-//  249     return COIN_DISABLED;
+//  250     return COIN_DISABLED;
         MOVS     R0,#+0
         B.N      ??SMDBCOIN_estado_offline_1
-//  250       
-//  251   return estado;
+//  251       
+//  252   return estado;
 ??SMDBCOIN_estado_offline_2:
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
 ??SMDBCOIN_estado_offline_1:
         POP      {R1,R2,R4,PC}    ;; return
           CFI EndBlock cfiBlock6
-//  252 }
-//  253 /***********************************************************************************
-//  254 *       Descrição       :       Verifica se há conectivadade do moedeiro
-//  255 *       Parametros      :       nenhum
-//  256 *       Retorno         :       nenhum
-//  257 ***********************************************************************************/
+//  253 }
+//  254 /***********************************************************************************
+//  255 *       Descrição       :       Verifica se há conectivadade do moedeiro
+//  256 *       Parametros      :       nenhum
+//  257 *       Retorno         :       nenhum
+//  258 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function SMDBCOIN_verifica_net_status
           CFI NoCalls
         THUMB
-//  258 unsigned char SMDBCOIN_verifica_net_status(void){
-//  259   
-//  260   if(SMDBCOIN_estado_atual != COIN_OFFLINE)
+//  259 unsigned char SMDBCOIN_verifica_net_status(void){
+//  260   
+//  261   if(SMDBCOIN_estado_atual != COIN_OFFLINE)
 SMDBCOIN_verifica_net_status:
         LDR.N    R0,??DataTable5_1
         LDRB     R0,[R0, #+0]
         CMP      R0,#+4
         BEQ.N    ??SMDBCOIN_verifica_net_status_0
-//  261     return 1;
+//  262     return 1;
         MOVS     R0,#+1
         B.N      ??SMDBCOIN_verifica_net_status_1
-//  262   
-//  263   return 0;
+//  263   
+//  264   return 0;
 ??SMDBCOIN_verifica_net_status_0:
         MOVS     R0,#+0
 ??SMDBCOIN_verifica_net_status_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock7
-//  264 }
+//  265 }
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -759,15 +764,15 @@ SMDBCOIN_verifica_net_status:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  265 /***********************************************************************************
-//  266 *       Fim do arquivo
-//  267 ***********************************************************************************/
+//  266 /***********************************************************************************
+//  267 *       Fim do arquivo
+//  268 ***********************************************************************************/
 // 
 //   4 bytes in section .bss
 //  28 bytes in section .rodata
-// 500 bytes in section .text
+// 508 bytes in section .text
 // 
-// 500 bytes of CODE  memory
+// 508 bytes of CODE  memory
 //  28 bytes of CONST memory
 //   4 bytes of DATA  memory
 //

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     19/Jul/2017  15:05:35 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  11:06:52 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -144,7 +144,7 @@ memcpy:
 //   38 #include "tabela_parametros.h"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-// __absolute struct <unnamed> const tabela_parametros[64]
+// __absolute struct <unnamed> const tabela_parametros[65]
 tabela_parametros:
         DATA
         DC32 0H
@@ -493,6 +493,12 @@ tabela_parametros:
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         DC8 54H, 58H, 54H
         DC8 0, 0, 0
+        DC32 0H
+        DC16 1
+        DC8 "COMP_ERRO_MOTOR"
+        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        DC8 4EH, 55H, 4DH
+        DC8 0, 0, 0
 //   39 
 //   40 
 //   41 /***********************************************************************************
@@ -805,11 +811,11 @@ PARAMETROS_le:
 //  131 ***********************************************************************************/
 // 
 //   128 bytes in section .bss
-// 2 836 bytes in section .rodata
+// 2 880 bytes in section .rodata
 //   324 bytes in section .text
 // 
 //   310 bytes of CODE  memory (+ 14 bytes shared)
-// 2 836 bytes of CONST memory
+// 2 880 bytes of CONST memory
 //   128 bytes of DATA  memory
 //
 //Errors: none
