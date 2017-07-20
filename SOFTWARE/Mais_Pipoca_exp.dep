@@ -151,7 +151,7 @@
       <file>$PROJ_DIR$\Debug\Obj\aplicacao.pbi</file>
       <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
       <file>$PROJ_DIR$\Debug\Obj\record_file_system.o</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\SPI_WRAPPER.H</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\spi_wrapper.h</file>
       <file>$PROJ_DIR$\Debug\List\spi_wrapper.lst</file>
       <file>$PROJ_DIR$\Debug\List\faturamento.s</file>
       <file>$PROJ_DIR$\Debug\List\mdb_cashless.lst</file>
@@ -978,7 +978,7 @@
       <outputs>
         <tool>
           <name>AARM</name>
-          <file> 208 421</file>
+          <file> 208</file>
         </tool>
       </outputs>
     </file>
@@ -1982,6 +1982,10 @@
       <inputs>
         <tool>
           <name>ICCARM</name>
+          <file> 129 43 399 170 448 215 264 354 201 292 226 52 356 434 245 405 437 200 342 281 75 251 137 177 100 239 238 425 445 217 431 38 13 192 266 228 179 85 44 387 449 193 229 290 84 131 39 258 132 178 344 280 348 138 204 130 450 374 409 112 118 376 197 10 77 451 273 153 151 427 173 47</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
           <file> 129 43 399 170 448 215 264 354 201 292 226 52 356 434 245 405 437 200 342 281 75 251 137 177 100 239 238 425 445 217 431 38 13 192 266 228 179 85 44 387 449 193 229 290 84 131 39 258 132 178 344 280 348 138 204 130 450 374 409 112 118 376 197 10 77 451 273 153 151 427 173 47</file>
         </tool>
       </inputs>
