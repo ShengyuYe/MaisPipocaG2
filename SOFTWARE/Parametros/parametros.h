@@ -78,6 +78,7 @@
 #define ADR_MENSAGEM_CLIENTE_02                 41
 #define ADR_MENSAGEM_CLIENTE_03                 42
 #define ADR_MENSAGEM_CLIENTE_04                 43
+#define ADR_DESLIGA_COMPENSACAO_ERRO_MOTOR      44        
 
 #define ADR_AREA_TESTE                          100
 

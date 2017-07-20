@@ -115,10 +115,12 @@ unsigned char SMDB_cashless_vend(unsigned short int valor,
    unsigned char tentativas=10;
    unsigned char res=0;
    eMDB_reply flag;
+   eCASHLESS_VEND_RESULT resultado;
+   unsigned short int pago;
                                    
    SMDB_wait();
    
-   do flag = MDBCASHLESS_start_vend(valor,item);
+   do flag = MDBCASHLESS_start_vend(&resultado,&pago,valor,item);
    while(flag!=MDB_OK && tentativas--);
    
    if(flag==MDB_OK)

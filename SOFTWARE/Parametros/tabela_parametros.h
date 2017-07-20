@@ -288,6 +288,12 @@ const sPARAMETROS tabela_parametros[]={
        .nome = "SG_CLIENTE_04",
        .ext = "TXT",
        .default_value = (void*) "  GRUPO ALTECH  "    
+  },
+  [ADR_DESLIGA_COMPENSACAO_ERRO_MOTOR]={
+       .length = PAR_BYTE,
+       .nome = "FLG_ERRO_MOTOR",
+       .ext = "I08",
+       .default_value = (void*) 0x00    
   }
 };
 

@@ -68,7 +68,16 @@ typedef enum{
   CASHLESS_DATA_ENTRY=0x12
 }eMDB_POLL_HEADER;
 
+typedef enum{
+  VEND_APPROVED=0x05,
+  VEND_DENIED=0x06
+}eCASHLESS_VEND_RESULT;
+
 #define REQUEST_VEND                            0x00
+#define CANCEL_VEND                             0x01
+#define SUCCESS_VEND                            0x02
+#define FAILURE_VEND                            0x03
+#define SESSION_COMPLETE                        0x04
 
 eMDB_reply CASHLESS_adreess(void);
 
@@ -90,11 +99,17 @@ eMDB_reply CASHLESS_set_min_and_max_price_in_device(unsigned short int min,
 
 eMDB_reply CASHLESS_poll_device(eMDB_POLL_HEADER *heder,unsigned char *args);
 
-eMDB_reply MDBCASHLESS_start_vend(unsigned short int valor,unsigned short int code);
+eMDB_reply MDBCASHLESS_start_vend(eCASHLESS_VEND_RESULT *resultado,
+                                  unsigned short int *pago,
+                                  unsigned short int valor,unsigned short int code);
 
+eMDB_reply MDBCASHLESS_vend_cancel(void);
 
+eMDB_reply MDBCASHLESS_vend_success(unsigned short int item);
 
+eMDB_reply MDBCASHLESS_enable_reader(unsigned char flag);
 
+eMDB_reply MDBCASHLESS_session_complete(void);
 /************************************************************************************
 *       Fim do arquivo
 ************************************************************************************/
