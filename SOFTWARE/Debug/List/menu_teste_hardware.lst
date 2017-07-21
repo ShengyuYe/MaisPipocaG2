@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jul/2017  09:35:10 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jul/2017  15:53:50 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -1553,7 +1553,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
     657                     return;
     658              }
     659              
-    660              if(flag)
+    660              if(flag && !PLAYERWAVE_verificaToque())
     661                PLAYERWAVE_iniciaMusica(1,0);         
     662          
     663              sprintf(buffer_linha,"[%s]",PLAYERWAVE_verificaToque()?"PLAY":"STOP");
@@ -1572,7 +1572,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   00000030   0x.... 0x....      BL       TECLADO_getch
    \   00000034   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   00000036   0x2801             CMP      R0,#+1
-   \   00000038   0xD015             BEQ.N    ??MTH_teste_musica_3
+   \   00000038   0xD019             BEQ.N    ??MTH_teste_musica_3
    \   0000003A   0x2804             CMP      R0,#+4
    \   0000003C   0xD106             BNE.N    ??MTH_teste_musica_4
    \                     ??MTH_teste_musica_5:
@@ -1585,20 +1585,23 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \                     ??MTH_teste_musica_4:
    \   0000004C   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
    \   0000004E   0x2C00             CMP      R4,#+0
-   \   00000050   0xD003             BEQ.N    ??MTH_teste_musica_7
-   \   00000052   0x2100             MOVS     R1,#+0
-   \   00000054   0x2001             MOVS     R0,#+1
-   \   00000056   0x.... 0x....      BL       PLAYERWAVE_iniciaMusica
+   \   00000050   0xD007             BEQ.N    ??MTH_teste_musica_7
+   \   00000052   0x.... 0x....      BL       PLAYERWAVE_verificaToque
+   \   00000056   0x2800             CMP      R0,#+0
+   \   00000058   0xD103             BNE.N    ??MTH_teste_musica_7
+   \   0000005A   0x2100             MOVS     R1,#+0
+   \   0000005C   0x2001             MOVS     R0,#+1
+   \   0000005E   0x.... 0x....      BL       PLAYERWAVE_iniciaMusica
    \                     ??MTH_teste_musica_7:
-   \   0000005A   0x.... 0x....      BL       PLAYERWAVE_verificaToque
-   \   0000005E   0x2800             CMP      R0,#+0
-   \   00000060   0xD0DC             BEQ.N    ??MTH_teste_musica_1
-   \   00000062   0x....             LDR.N    R2,??DataTable14_31
-   \   00000064   0xE7DB             B.N      ??MTH_teste_musica_2
+   \   00000062   0x.... 0x....      BL       PLAYERWAVE_verificaToque
+   \   00000066   0x2800             CMP      R0,#+0
+   \   00000068   0xD0D8             BEQ.N    ??MTH_teste_musica_1
+   \   0000006A   0x....             LDR.N    R2,??DataTable14_31
+   \   0000006C   0xE7D7             B.N      ??MTH_teste_musica_2
    \                     ??MTH_teste_musica_3:
-   \   00000066   0x.... 0x....      BL       PLAYER_interrompeMusica
-   \   0000006A   0xB006             ADD      SP,SP,#+24
-   \   0000006C   0xBD10             POP      {R4,PC}          ;; return
+   \   0000006E   0x.... 0x....      BL       PLAYER_interrompeMusica
+   \   00000072   0xB006             ADD      SP,SP,#+24
+   \   00000074   0xBD10             POP      {R4,PC}          ;; return
     665            }
     666          }
     667          /***********************************************************************************
@@ -2266,16 +2269,16 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
      150  MTH_teste_dispensador_papel
      140  MTH_teste_dosador_milho
      174  MTH_teste_locucoes
-     110  MTH_teste_musica
+     118  MTH_teste_musica
      154  MTH_teste_panela
      164  MTH_teste_rtc
      266  MTH_teste_ventilador
 
  
    316 bytes in section .rodata
- 2 202 bytes in section .text
+ 2 210 bytes in section .text
  
- 2 202 bytes of CODE  memory
+ 2 210 bytes of CODE  memory
    316 bytes of CONST memory
 
 Errors: none

@@ -113,7 +113,7 @@ void MENUAVANCADO_padrao_fabrica(void){
   unsigned char idioma = APLICACAO_carrega_idioma();
   unsigned int valor;  
   unsigned char flag;//1234567890123456 
-  char msg_padrao[17]="   Mais Pipoca  ";
+  char msg_padrao[17]=MENSAGEM_PADRAO_FABRICA;
   
   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_padrao_fabrica[idioma],NULL);
     

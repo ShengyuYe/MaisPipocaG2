@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  09:35:10 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  15:53:50 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -2032,7 +2032,7 @@ MTH_teste_musica:
 //  657            return;
 //  658     }
 //  659     
-//  660     if(flag)
+//  660     if(flag && !PLAYERWAVE_verificaToque())
 //  661       PLAYERWAVE_iniciaMusica(1,0);         
 //  662 
 //  663     sprintf(buffer_linha,"[%s]",PLAYERWAVE_verificaToque()?"PLAY":"STOP");
@@ -2069,6 +2069,10 @@ MTH_teste_musica:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+0
         BEQ.N    ??MTH_teste_musica_7
+          CFI FunCall PLAYERWAVE_verificaToque
+        BL       PLAYERWAVE_verificaToque
+        CMP      R0,#+0
+        BNE.N    ??MTH_teste_musica_7
         MOVS     R1,#+0
         MOVS     R0,#+1
           CFI FunCall PLAYERWAVE_iniciaMusica
@@ -2472,9 +2476,9 @@ MTH_teste_locucoes:
 //  715 ***********************************************************************************/
 // 
 //   316 bytes in section .rodata
-// 2 202 bytes in section .text
+// 2 210 bytes in section .text
 // 
-// 2 202 bytes of CODE  memory
+// 2 210 bytes of CODE  memory
 //   316 bytes of CONST memory
 //
 //Errors: none

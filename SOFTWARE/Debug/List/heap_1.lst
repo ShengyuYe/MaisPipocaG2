@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jul/2017  09:35:10 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jul/2017  15:53:53 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -83,7 +83,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Kernel\he
    \                                 In section .bss, align 8
      51          } xHeap;
    \                     xHeap:
-   \   00000000                      DS8 18432
+   \   00000000                      DS8 10240
      52          
 
    \                                 In section .bss, align 4
@@ -131,7 +131,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Kernel\he
    \   0000001A   0x....             LDR.N    R0,??DataTable2
    \   0000001C   0x6800             LDR      R0,[R0, #+0]
    \   0000001E   0x1828             ADDS     R0,R5,R0
-   \   00000020   0xF5B0 0x4F90      CMP      R0,#+18432
+   \   00000020   0xF5B0 0x5F20      CMP      R0,#+10240
    \   00000024   0xD20F             BCS.N    ??pvPortMalloc_1
    \   00000026   0x....             LDR.N    R0,??DataTable2
    \   00000028   0x6800             LDR      R0,[R0, #+0]
@@ -220,7 +220,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Kernel\he
    \                     xPortGetFreeHeapSize:
    \   00000000   0x....             LDR.N    R0,??DataTable2
    \   00000002   0x6800             LDR      R0,[R0, #+0]
-   \   00000004   0xF5D0 0x4090      RSBS     R0,R0,#+18432
+   \   00000004   0xF5D0 0x5020      RSBS     R0,R0,#+10240
    \   00000008   0x4770             BX       LR               ;; return
     130          }
 
@@ -259,16 +259,16 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Kernel\he
       78  pvPortMalloc
        2  vPortFree
        8  vPortInitialiseBlocks
-   18432  xHeap
+   10240  xHeap
        4  xNextFreeByte
       10  xPortGetFreeHeapSize
 
  
- 18 436 bytes in section .bss
+ 10 244 bytes in section .bss
     106 bytes in section .text
  
     106 bytes of CODE memory
- 18 436 bytes of DATA memory
+ 10 244 bytes of DATA memory
 
 Errors: none
 Warnings: none

@@ -1,24 +1,23 @@
 /*__________________________________________________________________________________
-|	DEXTRO SOLUÇÕES TECNOLÓGICAS
+|	Dextro Soluções Tecnológicas
 |       
-|       ITAJAÍ - SC
-|       www.dextro.ind.br
+|       Itajaí/SC
+|       www.dextro-st.com.br
 | __________________________________________________________________________________
 |
-|       This source code was developed by DEXTRO  and cannot be copied, in part 
-|       or in whole, or used, except when legally licensed by DEXTRO 
+|       This source code was developed by Dextro  and cannot be copied, in part 
+|       or in whole, or used, except when legally licensed by Dextro
 |       or its distributors.
 |
-|       Este código é propriedade da DEXTRO  e não pode ser copiado, em parte 
+|       Este código é propriedade da Dextro e não pode ser copiado, em parte 
 |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
-|       DEXTRO  ou por um de seus distribuidores.
+|       Dextro ou por um de seus distribuidores.
 | __________________________________________________________________________________
 |
-|       Arquivo            :  parametros.c
-|       Descrição          :  Menu para configuração do sistema
+|       Arquivo            :  Protocolo.c
 | 
 |       Autor              :  Marcos Aquino
-|       Data criação       :  30/12/2016
+|       Data criação       :  21/02/2014
 |
 |       Revisões           :  1.0.0.0
 |
@@ -125,6 +124,54 @@ void PARAMETROS_le(unsigned int endereco,void*parametro){
     for(unsigned char i=0;i<tabela_parametros[endereco].length;i++)
       ptr[i] = vlr[i];    
   }
+}
+/***********************************************************************************
+*       Descrição       :       Getter para o tamanho total da lista 
+*                               de parâmetros
+*       Parametros      :       nenhum
+*       Retorno         :       (unsigned short int) tamanho da lista
+*                               de parâmetros
+***********************************************************************************/
+unsigned short int PARAMETROS_get_tamanho_lista(void){
+  
+  return TAMANHO_PARAMETROS;
+}
+/***********************************************************************************
+*       Descrição       :       Lê as informações referentes a um 
+*                               determinado parâmetro
+*       Parametros      :       (unsigned short int) indice
+*                       :       (unsigned short int*)tamanho
+*                               (char*) nome
+*                               (char*) extensao
+*                               (void*) valor 
+*       Retorno         :       nenhum
+***********************************************************************************/
+void PARAMETROS_get_parametro_rec(unsigned short int indice,unsigned short int *tamanho,
+                                  char *nome,char *extensao,void *valor){
+                                    
+  *tamanho = tabela_parametros[indice].length;
+  memcpy(nome,tabela_parametros[indice].nome,16);
+  memcpy(extensao,tabela_parametros[indice].ext,3);  
+  PARAMETROS_le(indice,valor);
+}
+/***********************************************************************************
+*       Descrição       :       Escreve as informações referentes a um
+*                               determinado parâmetro
+*       Parametros      :       (unsigned short int) indice
+*                               (unsigned short int) quantidade de octetos
+*                               (unsigned char*) ponteiro para o buffer
+*                                               de dados
+*       Retorno         :       nenhum
+***********************************************************************************/
+void PARAMETROS_set_parametro_rec(unsigned short int indice,unsigned short int tamanho,
+                                  unsigned char *pData){
+                                    
+  if(tabela_parametros[indice].length>PAR_DOUBLE_WORD){
+    for(unsigned char i=tamanho-1;i<tabela_parametros[indice].length;i++)
+      pData[i] = ' ';
+  }
+  
+  PARAMETROS_grava(indice,pData);                                     
 }
 /***********************************************************************************
 *       Fim do arquivo

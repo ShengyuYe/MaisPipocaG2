@@ -36,7 +36,7 @@ ShowSource=1
 [JLinkDriver]
 CStepIntDis=_ 0
 [DebugChecksum]
-Checksum=1504090227
+Checksum=-43347026
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0

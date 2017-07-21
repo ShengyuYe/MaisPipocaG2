@@ -51,13 +51,13 @@
 //
 
 const char *STRING_splash[QTY_OF_LANGUAGES][2]={
-  [BRASIL]    = {"GRUPO ALTECH","VER. 2.0.18"},
-  [URUGUAI]   = {"GRUPO ALTECH","VER. 2.0.18"},
-  [ARGENTINA] = {"GRUPO ALTECH","VER. 2.0.18"},
-  [PARAGUAI]  = {"GRUPO ALTECH","VER. 2.0.18"},
-  [PERU]      = {"GRUPO ALTECH","VER. 2.0.18"},
-  [EUA]       = {"POPCORN KING","VER. 1.0.18"},
-  [CANADA]    = {"GRUPO ALTECH","VER. 2.0.18"}
+  [BRASIL]    = {"GRUPO ALTECH","VER. 2.0.19"},
+  [URUGUAI]   = {"GRUPO ALTECH","VER. 2.0.19"},
+  [ARGENTINA] = {"GRUPO ALTECH","VER. 2.0.19"},
+  [PARAGUAI]  = {"GRUPO ALTECH","VER. 2.0.19"},
+  [PERU]      = {"GRUPO ALTECH","VER. 2.0.19"},
+  [EUA]       = {"POPCORN","VER. 1.0.19"},
+  [CANADA]    = {"GRUPO ALTECH","VER. 2.0.19"}
 };
 
 const char *STRING_titulo_menu_configuracao[QTY_OF_LANGUAGES]={
@@ -1723,7 +1723,26 @@ const char *STRING_titulo_edita_flag_desumidifcador[QTY_OF_LANGUAGES]={
   [CANADA]    = {" HABILT. DESUM. "},
 };
 
+const char *STRING_mensagemtitulo_edita_comissao[QTY_OF_LANGUAGES]={
+  [BRASIL]    = {"COMISSAO PONTO"},
+  [URUGUAI]   = {"COMISSAO PONTO"},
+  [ARGENTINA] = {"COMISSAO PONTO"},
+  [PARAGUAI]  = {"COMISSAO PONTO"},
+  [PERU]      = {"COMISSAO PONTO"},
+  [EUA]       = {"COMISSAO PONTO"},
+  [CANADA]    = {"COMISSAO PONTO"},
+};
 
+
+const char *STRING_mensagem_reiniciando_sistema[QTY_OF_LANGUAGES][2]={
+  [BRASIL]   = {"REINCIANDO","SISTEMA"},
+  [URUGUAI]  = {"REINCIANDO","SISTEMA"},
+  [ARGENTINA]= {"REINCIANDO","SISTEMA"},
+  [PARAGUAI] = {"REINCIANDO","SISTEMA"},
+  [PERU]     = {"REINCIANDO","SISTEMA"},
+  [EUA]      = {"SYSTEM","RESET"},
+  [CANADA]   = {"SYSTEM","RESET,PLEASE"},
+};
 #else
 
 //
@@ -1822,6 +1841,7 @@ extern const char *STRING_titulo_edita_serial[QTY_OF_LANGUAGES];
 extern const char *STRING_titulo_edita_comissao[QTY_OF_LANGUAGES];
 extern const char *STRING_titulo_edita_flag_desumidifcador[QTY_OF_LANGUAGES];
 extern const char *STRING_mensagem_cartao_mdb_offline[QTY_OF_LANGUAGES][2];
+extern const char *STRING_mensagem_reiniciando_sistema[QTY_OF_LANGUAGES][2];
 
 #endif
 

@@ -657,7 +657,7 @@ void MTH_teste_musica(void){
            return;
     }
     
-    if(flag)
+    if(flag && !PLAYERWAVE_verificaToque())
       PLAYERWAVE_iniciaMusica(1,0);         
 
     sprintf(buffer_linha,"[%s]",PLAYERWAVE_verificaToque()?"PLAY":"STOP");

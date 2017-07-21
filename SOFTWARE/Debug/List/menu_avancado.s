@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  09:34:59 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  15:53:19 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -111,9 +111,9 @@
         
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "   Mais Pipoca  ">`:
+`?<Constant "POPCORN  MACHINE">`:
         DATA
-        DC8 "   Mais Pipoca  "
+        DC8 "POPCORN  MACHINE"
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -321,7 +321,7 @@ MENUAVANCADO_padrao_fabrica:
         MOVS     R4,R0
 //  114   unsigned int valor;  
 //  115   unsigned char flag;//1234567890123456 
-//  116   char msg_padrao[17]="   Mais Pipoca  ";
+//  116   char msg_padrao[17]=MENSAGEM_PADRAO_FABRICA;
         ADD      R0,SP,#+8
         LDR.N    R1,??DataTable7_5
         MOVS     R2,#+20
@@ -472,22 +472,22 @@ MENUAVANCADO_padrao_fabrica:
 //  171     // Grava as mensagens de cliente como Mais PIpoca
 //  172     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_01,(void*)msg_padrao);
         ADD      R1,SP,#+8
-        MOVS     R0,#+60
+        MOVS     R0,#+40
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  173     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_02,(void*)msg_padrao);
         ADD      R1,SP,#+8
-        MOVS     R0,#+61
+        MOVS     R0,#+41
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  174     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_03,(void*)msg_padrao);
         ADD      R1,SP,#+8
-        MOVS     R0,#+62
+        MOVS     R0,#+42
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  175     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_04,(void*)msg_padrao);
         ADD      R1,SP,#+8
-        MOVS     R0,#+63
+        MOVS     R0,#+43
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  176     
@@ -496,7 +496,7 @@ MENUAVANCADO_padrao_fabrica:
         STR      R0,[SP, #+0]
 //  178     PARAMETROS_grava(ADR_FATOR_COMPENSADOR,(void*)&valor);
         ADD      R1,SP,#+0
-        MOVS     R0,#+65
+        MOVS     R0,#+45
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  179   }
@@ -942,7 +942,7 @@ MENUAVANCADO_configura_flag_correcao_erro:
 //  333   
 //  334   PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
         ADD      R1,SP,#+0
-        MOVS     R0,#+64
+        MOVS     R0,#+44
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  335   
@@ -957,7 +957,7 @@ MENUAVANCADO_configura_flag_correcao_erro:
 //  337   
 //  338   PARAMETROS_grava(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag);
         ADD      R1,SP,#+0
-        MOVS     R0,#+64
+        MOVS     R0,#+44
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  339 }
@@ -985,7 +985,7 @@ MENUAVANCADO_configura_fator_compensavao:
 //  348 
 //  349   PARAMETROS_le(ADR_FATOR_COMPENSADOR,(void*)&valor);
         ADD      R1,SP,#+4
-        MOVS     R0,#+65
+        MOVS     R0,#+45
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  350 
@@ -1002,7 +1002,7 @@ MENUAVANCADO_configura_fator_compensavao:
 //  352   
 //  353   PARAMETROS_grava(ADR_FATOR_COMPENSADOR,(void*)&valor);
         ADD      R1,SP,#+4
-        MOVS     R0,#+65
+        MOVS     R0,#+45
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  354 }
@@ -1043,7 +1043,7 @@ MENUAVANCADO_configura_fator_compensavao:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable7_5:
-        DC32     `?<Constant "   Mais Pipoca  ">`
+        DC32     `?<Constant "POPCORN  MACHINE">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0

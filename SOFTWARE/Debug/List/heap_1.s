@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  09:35:10 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  15:53:53 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -125,7 +125,7 @@
         SECTION `.bss`:DATA:REORDER:NOROOT(3)
 //   51 } xHeap;
 xHeap:
-        DS8 18432
+        DS8 10240
 //   52 
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
@@ -181,7 +181,7 @@ pvPortMalloc:
         LDR.N    R0,??DataTable2
         LDR      R0,[R0, #+0]
         ADDS     R0,R5,R0
-        CMP      R0,#+18432
+        CMP      R0,#+10240
         BCS.N    ??pvPortMalloc_1
         LDR.N    R0,??DataTable2
         LDR      R0,[R0, #+0]
@@ -286,7 +286,7 @@ vPortInitialiseBlocks:
 xPortGetFreeHeapSize:
         LDR.N    R0,??DataTable2
         LDR      R0,[R0, #+0]
-        RSBS     R0,R0,#+18432
+        RSBS     R0,R0,#+10240
         BX       LR               ;; return
           CFI EndBlock cfiBlock3
 //  130 }
@@ -322,11 +322,11 @@ xPortGetFreeHeapSize:
 //  135 
 //  136 
 // 
-// 18 436 bytes in section .bss
+// 10 244 bytes in section .bss
 //    106 bytes in section .text
 // 
 //    106 bytes of CODE memory
-// 18 436 bytes of DATA memory
+// 10 244 bytes of DATA memory
 //
 //Errors: none
 //Warnings: none

@@ -774,9 +774,10 @@ void APLICACAO_ciclo_desumidificador(unsigned char flag){
 *       Retorno         :       nenhum
 ***********************************************************************************/
 void APLICACAO_reset_hardware(void){
+  eIDIOMA idioma  = (eIDIOMA)APLICACAO_carrega_idioma();  
   
-  STRING_write_to_internal(CLEAR_DISPLAY,"reiniciando","sistema");
-  STRING_write_to_external(CLEAR_DISPLAY,"reiniciando","sistema");
+  STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_mensagem_reiniciando_sistema[idioma][0],(char*)STRING_mensagem_reiniciando_sistema[idioma][1]);
+  STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_reiniciando_sistema[idioma][0],(char*)STRING_mensagem_reiniciando_sistema[idioma][1]);
   
   WATCHDOG_init();  
   __disable_interrupt();

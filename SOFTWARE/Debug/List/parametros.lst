@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jul/2017  09:35:31 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jul/2017  15:53:39 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -30,40 +30,39 @@
 
 C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametros\parametros.c
       1          /*__________________________________________________________________________________
-      2          |	DEXTRO SOLUÇÕES TECNOLÓGICAS
+      2          |	Dextro Soluções Tecnológicas
       3          |       
-      4          |       ITAJAÍ - SC
-      5          |       www.dextro.ind.br
+      4          |       Itajaí/SC
+      5          |       www.dextro-st.com.br
       6          | __________________________________________________________________________________
       7          |
-      8          |       This source code was developed by DEXTRO  and cannot be copied, in part 
-      9          |       or in whole, or used, except when legally licensed by DEXTRO 
+      8          |       This source code was developed by Dextro  and cannot be copied, in part 
+      9          |       or in whole, or used, except when legally licensed by Dextro
      10          |       or its distributors.
      11          |
-     12          |       Este código é propriedade da DEXTRO  e não pode ser copiado, em parte 
+     12          |       Este código é propriedade da Dextro e não pode ser copiado, em parte 
      13          |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
-     14          |       DEXTRO  ou por um de seus distribuidores.
+     14          |       Dextro ou por um de seus distribuidores.
      15          | __________________________________________________________________________________
      16          |
-     17          |       Arquivo            :  parametros.c
-     18          |       Descrição          :  Menu para configuração do sistema
-     19          | 
-     20          |       Autor              :  Marcos Aquino
-     21          |       Data criação       :  30/12/2016
-     22          |
-     23          |       Revisões           :  1.0.0.0
+     17          |       Arquivo            :  Protocolo.c
+     18          | 
+     19          |       Autor              :  Marcos Aquino
+     20          |       Data criação       :  21/02/2014
+     21          |
+     22          |       Revisões           :  1.0.0.0
+     23          |
      24          |
-     25          |
-     26          | __________________________________________________________________________________
-     27          */
-     28          
-     29          /***********************************************************************************
-     30          *       Includes
-     31          ***********************************************************************************/
-     32          #include <nxp\iolpc1768.h>
-     33          #include <stdio.h>
-     34          #include <stdlib.h>
-     35          #include <string.h>
+     25          | __________________________________________________________________________________
+     26          */
+     27          
+     28          /***********************************************************************************
+     29          *       Includes
+     30          ***********************************************************************************/
+     31          #include <nxp\iolpc1768.h>
+     32          #include <stdio.h>
+     33          #include <stdlib.h>
+     34          #include <string.h>
 
    \                                 In section .text, align 2
    \   __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
@@ -74,12 +73,12 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \   00000006   0x.... 0x....      BL       __aeabi_memcpy
    \   0000000A   0x0020             MOVS     R0,R4
    \   0000000C   0xBD10             POP      {R4,PC}          ;; return
-     36          #include "..\includes.h"
-     37          #include "parametros.h"
-     38          #include "tabela_parametros.h"
+     35          #include "..\includes.h"
+     36          #include "parametros.h"
+     37          #include "tabela_parametros.h"
 
    \                                 In section .rodata, align 4
-   \   __absolute struct <unnamed> const tabela_parametros[66]
+   \   __absolute struct <unnamed> const tabela_parametros[46]
    \                     tabela_parametros:
    \   00000000   0x00000000         DC32 0H
    \   00000004   0x0001             DC16 1
@@ -100,8 +99,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   00000026   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000026   0x49 0x30          DC8 49H, 30H, 38H
+   \              0x38         
    \   00000029   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   0000002C   0x00000000         DC32 0H
@@ -122,8 +121,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000052   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000052   0x49 0x30          DC8 49H, 30H, 38H
+   \              0x38         
    \   00000055   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000058   0x00000003         DC32 3H
@@ -145,8 +144,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   0000007E   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000007E   0x49 0x30          DC8 49H, 30H, 38H
+   \              0x38         
    \   00000081   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000084   0x0000000A         DC32 0AH
@@ -168,8 +167,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   000000AA   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000000AA   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   000000AD   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000000B0   0x00000000         DC32 0H
@@ -190,8 +189,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   000000D6   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000000D6   0x49 0x30          DC8 49H, 30H, 38H
+   \              0x38         
    \   000000D9   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000000DC   0x00000000         DC32 0H
@@ -212,8 +211,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000102   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000102   0x49 0x30          DC8 49H, 30H, 38H
+   \              0x38         
    \   00000105   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000108   0x00000000         DC32 0H
@@ -235,8 +234,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   0000012E   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000012E   0x49 0x30          DC8 49H, 30H, 38H
+   \              0x38         
    \   00000131   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000134   0x0000000A         DC32 0AH
@@ -258,8 +257,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   0000015A   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000015A   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   0000015D   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000160   0x0000000A         DC32 0AH
@@ -281,8 +280,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   00000186   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000186   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000189   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   0000018C   0x0000000A         DC32 0AH
@@ -303,8 +302,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   000001B2   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000001B2   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   000001B5   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000001B8   0x00000000         DC32 0H
@@ -326,8 +325,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   000001DE   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000001DE   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   000001E1   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000001E4   0x00000000         DC32 0H
@@ -349,8 +348,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   0000020A   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000020A   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   0000020D   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000210   0x00000000         DC32 0H
@@ -371,8 +370,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000236   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000236   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000239   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   0000023C   0x00000000         DC32 0H
@@ -393,8 +392,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000262   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000262   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000265   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000268   0x00000000         DC32 0H
@@ -416,8 +415,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   0000028E   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000028E   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000291   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000294   0x00000000         DC32 0H
@@ -439,8 +438,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   000002BA   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000002BA   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   000002BD   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000002C0   0x00000000         DC32 0H
@@ -462,8 +461,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   000002E6   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000002E6   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   000002E9   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000002EC   0x00000000         DC32 0H
@@ -485,8 +484,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   00000312   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000312   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000315   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000318   0x00000000         DC32 0H
@@ -507,8 +506,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   0000033E   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000033E   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000341   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000344   0x00000000         DC32 0H
@@ -529,8 +528,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   0000036A   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000036A   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   0000036D   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000370   0x00000000         DC32 0H
@@ -552,8 +551,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   00000396   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000396   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000399   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   0000039C   0x00000000         DC32 0H
@@ -575,8 +574,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   000003C2   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000003C2   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   000003C5   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000003C8   0x00000000         DC32 0H
@@ -598,8 +597,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   000003EE   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000003EE   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   000003F1   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000003F4   0x00000000         DC32 0H
@@ -621,8 +620,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   0000041A   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000041A   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   0000041D   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000420   0x00000000         DC32 0H
@@ -643,8 +642,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000446   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000446   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000449   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   0000044C   0x00000000         DC32 0H
@@ -665,8 +664,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000472   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000472   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000475   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000478   0x00000000         DC32 0H
@@ -687,8 +686,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   0000049E   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000049E   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   000004A1   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000004A4   0x00000000         DC32 0H
@@ -709,8 +708,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   000004CA   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000004CA   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   000004CD   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000004D0   0x00000000         DC32 0H
@@ -731,8 +730,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   000004F6   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000004F6   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   000004F9   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000004FC   0x00000000         DC32 0H
@@ -753,8 +752,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000522   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000522   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000525   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000528   0x00000000         DC32 0H
@@ -776,8 +775,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   0000054E   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000054E   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000551   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000554   0x00000000         DC32 0H
@@ -799,8 +798,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   0000057A   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000057A   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   0000057D   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000580   0x00000000         DC32 0H
@@ -822,8 +821,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   000005A6   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000005A6   0x49 0x30          DC8 49H, 30H, 38H
+   \              0x38         
    \   000005A9   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000005AC   0x00000000         DC32 0H
@@ -845,8 +844,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   000005D2   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000005D2   0x49 0x30          DC8 49H, 30H, 38H
+   \              0x38         
    \   000005D5   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000005D8   0x00000000         DC32 0H
@@ -867,8 +866,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   000005FE   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000005FE   0x49 0x30          DC8 49H, 30H, 38H
+   \              0x38         
    \   00000601   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000604   0x00000000         DC32 0H
@@ -889,8 +888,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   0000062A   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   0000062A   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   0000062D   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000630   0x00000000         DC32 0H
@@ -912,8 +911,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   00000656   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000656   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000659   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   0000065C   0x00000000         DC32 0H
@@ -935,8 +934,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00         
-   \   00000682   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   00000682   0x49 0x33          DC8 49H, 33H, 32H
+   \              0x32         
    \   00000685   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   00000688   0x00000000         DC32 0H
@@ -957,8 +956,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   000006AE   0x4E 0x55          DC8 4EH, 55H, 4DH
-   \              0x4D         
+   \   000006AE   0x49 0x30          DC8 49H, 30H, 38H
+   \              0x38         
    \   000006B1   0x00 0x00          DC8 0, 0, 0
    \              0x00         
    \   000006B4   0x00000000         DC32 0H
@@ -983,436 +982,16 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x4D         
    \   000006DD   0x00 0x00          DC8 0, 0, 0
    \              0x00         
-   \   000006E0   0x00000000         DC32 0H
-   \   000006E4   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000006F4   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000704   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   0000070C   0x00000000         DC32 0H
-   \   00000710   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000720   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000730   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000738   0x00000000         DC32 0H
-   \   0000073C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   0000074C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   0000075C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000764   0x00000000         DC32 0H
-   \   00000768   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000778   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000788   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000790   0x00000000         DC32 0H
-   \   00000794   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000007A4   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000007B4   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000007BC   0x00000000         DC32 0H
-   \   000007C0   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000007D0   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000007E0   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000007E8   0x00000000         DC32 0H
-   \   000007EC   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000007FC   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   0000080C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000814   0x00000000         DC32 0H
-   \   00000818   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000828   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000838   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000840   0x00000000         DC32 0H
-   \   00000844   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000854   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000864   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   0000086C   0x00000000         DC32 0H
-   \   00000870   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000880   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000890   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000898   0x00000000         DC32 0H
-   \   0000089C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000008AC   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000008BC   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000008C4   0x00000000         DC32 0H
-   \   000008C8   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000008D8   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000008E8   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000008F0   0x00000000         DC32 0H
-   \   000008F4   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000904   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000914   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   0000091C   0x00000000         DC32 0H
-   \   00000920   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000930   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000940   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000948   0x00000000         DC32 0H
-   \   0000094C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   0000095C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   0000096C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000974   0x00000000         DC32 0H
-   \   00000978   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000988   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000998   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000009A0   0x00000000         DC32 0H
-   \   000009A4   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000009B4   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000009C4   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000009CC   0x00000000         DC32 0H
-   \   000009D0   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000009E0   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000009F0   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   000009F8   0x00000000         DC32 0H
-   \   000009FC   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000A0C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000A1C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000A24   0x00000000         DC32 0H
-   \   00000A28   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000A38   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000A48   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \              0x00 0x00    
-   \   00000A50   0x........         DC32 `?<Constant "  GRUPO ALTECH  ">`
-   \   00000A54   0x0010             DC16 16
-   \   00000A56   0x53 0x47          DC8 "SG_CLIENTE_01"
+   \   000006E0   0x........         DC32 `?<Constant "  GRUPO ALTECH  ">`
+   \   000006E4   0x0010             DC16 16
+   \   000006E6   0x53 0x47          DC8 "SG_CLIENTE_01"
    \              0x5F 0x43    
    \              0x4C 0x49    
    \              0x45 0x4E    
    \              0x54 0x45    
    \              0x5F 0x30    
    \              0x31 0x00    
-   \   00000A64   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \   000006F4   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
@@ -1421,20 +1000,20 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000A76   0x54 0x58          DC8 54H, 58H, 54H
+   \   00000706   0x54 0x58          DC8 54H, 58H, 54H
    \              0x54         
-   \   00000A79   0x00 0x00          DC8 0, 0, 0
+   \   00000709   0x00 0x00          DC8 0, 0, 0
    \              0x00         
-   \   00000A7C   0x........         DC32 `?<Constant "  GRUPO ALTECH  ">`
-   \   00000A80   0x0010             DC16 16
-   \   00000A82   0x53 0x47          DC8 "SG_CLIENTE_02"
+   \   0000070C   0x........         DC32 `?<Constant "  GRUPO ALTECH  ">`
+   \   00000710   0x0010             DC16 16
+   \   00000712   0x53 0x47          DC8 "SG_CLIENTE_02"
    \              0x5F 0x43    
    \              0x4C 0x49    
    \              0x45 0x4E    
    \              0x54 0x45    
    \              0x5F 0x30    
    \              0x32 0x00    
-   \   00000A90   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \   00000720   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
@@ -1443,20 +1022,20 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000AA2   0x54 0x58          DC8 54H, 58H, 54H
+   \   00000732   0x54 0x58          DC8 54H, 58H, 54H
    \              0x54         
-   \   00000AA5   0x00 0x00          DC8 0, 0, 0
+   \   00000735   0x00 0x00          DC8 0, 0, 0
    \              0x00         
-   \   00000AA8   0x........         DC32 `?<Constant "  GRUPO ALTECH  ">`
-   \   00000AAC   0x0010             DC16 16
-   \   00000AAE   0x53 0x47          DC8 "SG_CLIENTE_03"
+   \   00000738   0x........         DC32 `?<Constant "  GRUPO ALTECH  ">`
+   \   0000073C   0x0010             DC16 16
+   \   0000073E   0x53 0x47          DC8 "SG_CLIENTE_03"
    \              0x5F 0x43    
    \              0x4C 0x49    
    \              0x45 0x4E    
    \              0x54 0x45    
    \              0x5F 0x30    
    \              0x33 0x00    
-   \   00000ABC   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \   0000074C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
@@ -1465,20 +1044,20 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000ACE   0x54 0x58          DC8 54H, 58H, 54H
+   \   0000075E   0x54 0x58          DC8 54H, 58H, 54H
    \              0x54         
-   \   00000AD1   0x00 0x00          DC8 0, 0, 0
+   \   00000761   0x00 0x00          DC8 0, 0, 0
    \              0x00         
-   \   00000AD4   0x........         DC32 `?<Constant "  GRUPO ALTECH  ">`
-   \   00000AD8   0x0010             DC16 16
-   \   00000ADA   0x53 0x47          DC8 "SG_CLIENTE_04"
+   \   00000764   0x........         DC32 `?<Constant "  GRUPO ALTECH  ">`
+   \   00000768   0x0010             DC16 16
+   \   0000076A   0x53 0x47          DC8 "SG_CLIENTE_04"
    \              0x5F 0x43    
    \              0x4C 0x49    
    \              0x45 0x4E    
    \              0x54 0x45    
    \              0x5F 0x30    
    \              0x34 0x00    
-   \   00000AE8   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \   00000778   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
@@ -1487,13 +1066,13 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000AFA   0x54 0x58          DC8 54H, 58H, 54H
+   \   0000078A   0x54 0x58          DC8 54H, 58H, 54H
    \              0x54         
-   \   00000AFD   0x00 0x00          DC8 0, 0, 0
+   \   0000078D   0x00 0x00          DC8 0, 0, 0
    \              0x00         
-   \   00000B00   0x00000000         DC32 0H
-   \   00000B04   0x0001             DC16 1
-   \   00000B06   0x43 0x4F          DC8 "COMP_ERRO_MOTOR"
+   \   00000790   0x00000000         DC32 0H
+   \   00000794   0x0001             DC16 1
+   \   00000796   0x43 0x4F          DC8 "COMP_ERRO_MOTOR"
    \              0x4D 0x50    
    \              0x5F 0x45    
    \              0x52 0x52    
@@ -1501,7 +1080,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x4D 0x4F    
    \              0x54 0x4F    
    \              0x52 0x00    
-   \   00000B16   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \   000007A6   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
@@ -1509,18 +1088,18 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000B26   0x4E 0x55          DC8 4EH, 55H, 4DH
+   \   000007B6   0x4E 0x55          DC8 4EH, 55H, 4DH
    \              0x4D         
-   \   00000B29   0x00 0x00          DC8 0, 0, 0
+   \   000007B9   0x00 0x00          DC8 0, 0, 0
    \              0x00         
-   \   00000B2C   0x00000000         DC32 0H
-   \   00000B30   0x0004             DC16 4
-   \   00000B32   0x43 0x4F          DC8 "COMP_TEMP"
+   \   000007BC   0x00000000         DC32 0H
+   \   000007C0   0x0004             DC16 4
+   \   000007C2   0x43 0x4F          DC8 "COMP_TEMP"
    \              0x4D 0x50    
    \              0x5F 0x54    
    \              0x45 0x4D    
    \              0x50 0x00    
-   \   00000B3C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \   000007CC   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
@@ -1531,75 +1110,75 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00 0x00    
    \              0x00 0x00    
    \              0x00 0x00    
-   \   00000B52   0x4E 0x55          DC8 4EH, 55H, 4DH
+   \   000007E2   0x4E 0x55          DC8 4EH, 55H, 4DH
    \              0x4D         
-   \   00000B55   0x00 0x00          DC8 0, 0, 0
+   \   000007E5   0x00 0x00          DC8 0, 0, 0
    \              0x00         
+     38          
      39          
-     40          
-     41          /***********************************************************************************
-     42          *       Constantes
-     43          ***********************************************************************************/
+     40          /***********************************************************************************
+     41          *       Constantes
+     42          ***********************************************************************************/
+     43          
      44          
-     45          
-     46          /***********************************************************************************
-     47          *       Definições
-     48          ***********************************************************************************/
+     45          /***********************************************************************************
+     46          *       Definições
+     47          ***********************************************************************************/
+     48          
      49          
-     50          
-     51          /***********************************************************************************
-     52          *       Variaveis locais
-     53          ***********************************************************************************/
+     50          /***********************************************************************************
+     51          *       Variaveis locais
+     52          ***********************************************************************************/
 
    \                                 In section .bss, align 4
-     54          unsigned char PARAMETROS_buffer[2][64];
+     53          unsigned char PARAMETROS_buffer[2][64];
    \                     PARAMETROS_buffer:
    \   00000000                      DS8 128
-     55          
-     56          /***********************************************************************************
-     57          *       Funções locais
-     58          ***********************************************************************************/
+     54          
+     55          /***********************************************************************************
+     56          *       Funções locais
+     57          ***********************************************************************************/
+     58          
      59          
-     60          
-     61          /***********************************************************************************
-     62          *       Implementação das funções
-     63          ***********************************************************************************/
-     64          
-     65          /***********************************************************************************
-     66          *       Descrição       :       Inicialização do gerenciador de parametros
-     67          *       Parametros      :       nenhum
-     68          *       Retorno         :       nenhum
-     69          ***********************************************************************************/
+     60          /***********************************************************************************
+     61          *       Implementação das funções
+     62          ***********************************************************************************/
+     63          
+     64          /***********************************************************************************
+     65          *       Descrição       :       Inicialização do gerenciador de parametros
+     66          *       Parametros      :       nenhum
+     67          *       Retorno         :       nenhum
+     68          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-     70          void PARAMETROS_ini(void){
+     69          void PARAMETROS_ini(void){
    \                     PARAMETROS_ini:
    \   00000000   0xB580             PUSH     {R7,LR}
-     71            
-     72            MEMORYWRAPPER_init();
+     70            
+     71            MEMORYWRAPPER_init();
    \   00000002   0x.... 0x....      BL       MEMORYWRAPPER_init
-     73          }
+     72          }
    \   00000006   0xBD01             POP      {R0,PC}          ;; return
-     74          /***********************************************************************************
-     75          *       Descrição       :       Resolve o endereço lógico para o físico
-     76          *       Parametros      :       (unsigned int) endereço físico do parâmetro
-     77          *       Retorno         :       (unsigned int) endereço lógico do parâmetro
-     78          ***********************************************************************************/
+     73          /***********************************************************************************
+     74          *       Descrição       :       Resolve o endereço lógico para o físico
+     75          *       Parametros      :       (unsigned int) endereço físico do parâmetro
+     76          *       Retorno         :       (unsigned int) endereço lógico do parâmetro
+     77          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-     79          unsigned int PARAMETROS_resolve_endereco(unsigned int endereco){
+     78          unsigned int PARAMETROS_resolve_endereco(unsigned int endereco){
    \                     PARAMETROS_resolve_endereco:
    \   00000000   0xB410             PUSH     {R4}
-     80            unsigned int endereco_fisico=0;
+     79            unsigned int endereco_fisico=0;
    \   00000002   0x2100             MOVS     R1,#+0
-     81          
-     82            for(unsigned int i=0;i<endereco;i++)
+     80          
+     81            for(unsigned int i=0;i<endereco;i++)
    \   00000004   0x2200             MOVS     R2,#+0
    \   00000006   0xE007             B.N      ??PARAMETROS_resolve_endereco_0
-     83              endereco_fisico+=(tabela_parametros[i].length+2); // 2 = CRC
+     82              endereco_fisico+=(tabela_parametros[i].length+2); // 2 = CRC
    \                     ??PARAMETROS_resolve_endereco_1:
    \   00000008   0x232C             MOVS     R3,#+44
-   \   0000000A   0x....             LDR.N    R4,??DataTable2
+   \   0000000A   0x....             LDR.N    R4,??DataTable4
    \   0000000C   0xFB03 0x4302      MLA      R3,R3,R2,R4
    \   00000010   0x889B             LDRH     R3,[R3, #+4]
    \   00000012   0x1C9B             ADDS     R3,R3,#+2
@@ -1608,149 +1187,149 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \                     ??PARAMETROS_resolve_endereco_0:
    \   00000018   0x4282             CMP      R2,R0
    \   0000001A   0xD3F5             BCC.N    ??PARAMETROS_resolve_endereco_1
-     84          
-     85            return endereco_fisico;  
+     83          
+     84            return endereco_fisico;  
    \   0000001C   0x0008             MOVS     R0,R1
    \   0000001E   0xBC10             POP      {R4}
    \   00000020   0x4770             BX       LR               ;; return
-     86          }
-     87          /***********************************************************************************
-     88          *       Descrição       :       Parametros      
-     89          *       Parametros      :       (unsigned int) endereço
-     90          *                               (void*) parametro
-     91          *       Retorno         :       nenhum
-     92          ***********************************************************************************/
+     85          }
+     86          /***********************************************************************************
+     87          *       Descrição       :       Parametros      
+     88          *       Parametros      :       (unsigned int) endereço
+     89          *                               (void*) parametro
+     90          *       Retorno         :       nenhum
+     91          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-     93          void PARAMETROS_grava(unsigned int endereco,void*parametro){
+     92          void PARAMETROS_grava(unsigned int endereco,void*parametro){
    \                     PARAMETROS_grava:
    \   00000000   0xB510             PUSH     {R4,LR}
    \   00000002   0x0004             MOVS     R4,R0
-     94            unsigned short int crc;  
-     95            
-     96            memcpy(&PARAMETROS_buffer[0][0],parametro,tabela_parametros[endereco].length);
+     93            unsigned short int crc;  
+     94            
+     95            memcpy(&PARAMETROS_buffer[0][0],parametro,tabela_parametros[endereco].length);
    \   00000004   0x202C             MOVS     R0,#+44
-   \   00000006   0x....             LDR.N    R2,??DataTable2
+   \   00000006   0x....             LDR.N    R2,??DataTable4
    \   00000008   0xFB00 0x2004      MLA      R0,R0,R4,R2
    \   0000000C   0x8882             LDRH     R2,[R0, #+4]
-   \   0000000E   0x....             LDR.N    R0,??DataTable2_1
+   \   0000000E   0x....             LDR.N    R0,??DataTable4_1
    \   00000010   0x.... 0x....      BL       memcpy
-     97            crc = CCTALK_calculaCRC(&PARAMETROS_buffer[0][0],0,tabela_parametros[endereco].length);
+     96            crc = CCTALK_calculaCRC(&PARAMETROS_buffer[0][0],0,tabela_parametros[endereco].length);
    \   00000014   0x202C             MOVS     R0,#+44
-   \   00000016   0x....             LDR.N    R1,??DataTable2
+   \   00000016   0x....             LDR.N    R1,??DataTable4
    \   00000018   0xFB00 0x1004      MLA      R0,R0,R4,R1
    \   0000001C   0x8882             LDRH     R2,[R0, #+4]
    \   0000001E   0x2100             MOVS     R1,#+0
-   \   00000020   0x....             LDR.N    R0,??DataTable2_1
+   \   00000020   0x....             LDR.N    R0,??DataTable4_1
    \   00000022   0x.... 0x....      BL       CCTALK_calculaCRC
-     98            PARAMETROS_buffer[0][tabela_parametros[endereco].length]   = crc>>8;
+     97            PARAMETROS_buffer[0][tabela_parametros[endereco].length]   = crc>>8;
    \   00000026   0x212C             MOVS     R1,#+44
-   \   00000028   0x....             LDR.N    R2,??DataTable2
+   \   00000028   0x....             LDR.N    R2,??DataTable4
    \   0000002A   0xFB01 0x2104      MLA      R1,R1,R4,R2
    \   0000002E   0x8889             LDRH     R1,[R1, #+4]
-   \   00000030   0x....             LDR.N    R2,??DataTable2_1
+   \   00000030   0x....             LDR.N    R2,??DataTable4_1
    \   00000032   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
    \   00000034   0x0A03             LSRS     R3,R0,#+8
    \   00000036   0x548B             STRB     R3,[R1, R2]
-     99            PARAMETROS_buffer[0][tabela_parametros[endereco].length+1] = crc;
+     98            PARAMETROS_buffer[0][tabela_parametros[endereco].length+1] = crc;
    \   00000038   0x212C             MOVS     R1,#+44
-   \   0000003A   0x....             LDR.N    R2,??DataTable2
+   \   0000003A   0x....             LDR.N    R2,??DataTable4
    \   0000003C   0xFB01 0x2104      MLA      R1,R1,R4,R2
    \   00000040   0x8889             LDRH     R1,[R1, #+4]
-   \   00000042   0x....             LDR.N    R2,??DataTable2_1
+   \   00000042   0x....             LDR.N    R2,??DataTable4_1
    \   00000044   0x1889             ADDS     R1,R1,R2
    \   00000046   0x7048             STRB     R0,[R1, #+1]
-    100           
-    101            MEMORYWRAPPER_writeBytes(PARAMETROS_resolve_endereco(endereco),
-    102                                     &PARAMETROS_buffer[0][0],
-    103                                     tabela_parametros[endereco].length+2);
+     99           
+    100            MEMORYWRAPPER_writeBytes(PARAMETROS_resolve_endereco(endereco),
+    101                                     &PARAMETROS_buffer[0][0],
+    102                                     tabela_parametros[endereco].length+2);
    \   00000048   0x0020             MOVS     R0,R4
    \   0000004A   0x.... 0x....      BL       PARAMETROS_resolve_endereco
    \   0000004E   0x212C             MOVS     R1,#+44
-   \   00000050   0x....             LDR.N    R2,??DataTable2
+   \   00000050   0x....             LDR.N    R2,??DataTable4
    \   00000052   0xFB01 0x2104      MLA      R1,R1,R4,R2
    \   00000056   0x8889             LDRH     R1,[R1, #+4]
    \   00000058   0x1C8A             ADDS     R2,R1,#+2
-   \   0000005A   0x....             LDR.N    R1,??DataTable2_1
+   \   0000005A   0x....             LDR.N    R1,??DataTable4_1
    \   0000005C   0x.... 0x....      BL       MEMORYWRAPPER_writeBytes
-    104          }
+    103          }
    \   00000060   0xBD10             POP      {R4,PC}          ;; return
-    105          /***********************************************************************************
-    106          *       Descrição       :       Parâmetros
-    107          *       Parametros      :       (unsigned int) endereço
-    108          *                               (void*) dados do parâmetro
-    109          *       Retorno         :       nenhum
-    110          ***********************************************************************************/
+    104          /***********************************************************************************
+    105          *       Descrição       :       Parâmetros
+    106          *       Parametros      :       (unsigned int) endereço
+    107          *                               (void*) dados do parâmetro
+    108          *       Retorno         :       nenhum
+    109          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    111          void PARAMETROS_le(unsigned int endereco,void*parametro){
+    110          void PARAMETROS_le(unsigned int endereco,void*parametro){
    \                     PARAMETROS_le:
    \   00000000   0xB570             PUSH     {R4-R6,LR}
    \   00000002   0x0004             MOVS     R4,R0
    \   00000004   0x000D             MOVS     R5,R1
-    112            unsigned short int crc;
-    113            
-    114            MEMORYWRAPPER_readBytes(PARAMETROS_resolve_endereco(endereco),
-    115                                    &PARAMETROS_buffer[1][0],
-    116                                    tabela_parametros[endereco].length+2);
+    111            unsigned short int crc;
+    112            
+    113            MEMORYWRAPPER_readBytes(PARAMETROS_resolve_endereco(endereco),
+    114                                    &PARAMETROS_buffer[1][0],
+    115                                    tabela_parametros[endereco].length+2);
    \   00000006   0x0020             MOVS     R0,R4
    \   00000008   0x.... 0x....      BL       PARAMETROS_resolve_endereco
    \   0000000C   0x212C             MOVS     R1,#+44
-   \   0000000E   0x....             LDR.N    R2,??DataTable2
+   \   0000000E   0x....             LDR.N    R2,??DataTable4
    \   00000010   0xFB01 0x2104      MLA      R1,R1,R4,R2
    \   00000014   0x8889             LDRH     R1,[R1, #+4]
    \   00000016   0x1C8A             ADDS     R2,R1,#+2
-   \   00000018   0x....             LDR.N    R1,??DataTable2_2
+   \   00000018   0x....             LDR.N    R1,??DataTable4_2
    \   0000001A   0x.... 0x....      BL       MEMORYWRAPPER_readBytes
-    117            
-    118            crc = CCTALK_calculaCRC(&PARAMETROS_buffer[1][0],0,tabela_parametros[endereco].length);
+    116            
+    117            crc = CCTALK_calculaCRC(&PARAMETROS_buffer[1][0],0,tabela_parametros[endereco].length);
    \   0000001E   0x202C             MOVS     R0,#+44
-   \   00000020   0x....             LDR.N    R1,??DataTable2
+   \   00000020   0x....             LDR.N    R1,??DataTable4
    \   00000022   0xFB00 0x1004      MLA      R0,R0,R4,R1
    \   00000026   0x8882             LDRH     R2,[R0, #+4]
    \   00000028   0x2100             MOVS     R1,#+0
-   \   0000002A   0x....             LDR.N    R0,??DataTable2_2
+   \   0000002A   0x....             LDR.N    R0,??DataTable4_2
    \   0000002C   0x.... 0x....      BL       CCTALK_calculaCRC
-    119            if(crc==(PARAMETROS_buffer[1][tabela_parametros[endereco].length]<<8 | PARAMETROS_buffer[1][tabela_parametros[endereco].length+1]))
+    118            if(crc==(PARAMETROS_buffer[1][tabela_parametros[endereco].length]<<8 | PARAMETROS_buffer[1][tabela_parametros[endereco].length+1]))
    \   00000030   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
    \   00000032   0x212C             MOVS     R1,#+44
-   \   00000034   0x....             LDR.N    R2,??DataTable2
+   \   00000034   0x....             LDR.N    R2,??DataTable4
    \   00000036   0xFB01 0x2104      MLA      R1,R1,R4,R2
    \   0000003A   0x8889             LDRH     R1,[R1, #+4]
-   \   0000003C   0x....             LDR.N    R2,??DataTable2_1
+   \   0000003C   0x....             LDR.N    R2,??DataTable4_1
    \   0000003E   0x1889             ADDS     R1,R1,R2
    \   00000040   0xF891 0x1040      LDRB     R1,[R1, #+64]
    \   00000044   0x222C             MOVS     R2,#+44
-   \   00000046   0x....             LDR.N    R3,??DataTable2
+   \   00000046   0x....             LDR.N    R3,??DataTable4
    \   00000048   0xFB02 0x3204      MLA      R2,R2,R4,R3
    \   0000004C   0x8892             LDRH     R2,[R2, #+4]
-   \   0000004E   0x....             LDR.N    R3,??DataTable2_1
+   \   0000004E   0x....             LDR.N    R3,??DataTable4_1
    \   00000050   0x18D2             ADDS     R2,R2,R3
    \   00000052   0xF892 0x2041      LDRB     R2,[R2, #+65]
    \   00000056   0xEA52 0x2101      ORRS     R1,R2,R1, LSL #+8
    \   0000005A   0x4288             CMP      R0,R1
    \   0000005C   0xD109             BNE.N    ??PARAMETROS_le_0
-    120              memcpy(parametro,&PARAMETROS_buffer[1][0],tabela_parametros[endereco].length);      
+    119              memcpy(parametro,&PARAMETROS_buffer[1][0],tabela_parametros[endereco].length);      
    \   0000005E   0x202C             MOVS     R0,#+44
-   \   00000060   0x....             LDR.N    R1,??DataTable2
+   \   00000060   0x....             LDR.N    R1,??DataTable4
    \   00000062   0xFB00 0x1004      MLA      R0,R0,R4,R1
    \   00000066   0x8882             LDRH     R2,[R0, #+4]
-   \   00000068   0x....             LDR.N    R1,??DataTable2_2
+   \   00000068   0x....             LDR.N    R1,??DataTable4_2
    \   0000006A   0x0028             MOVS     R0,R5
    \   0000006C   0x.... 0x....      BL       memcpy
    \   00000070   0xE014             B.N      ??PARAMETROS_le_1
-    121            else{
-    122              unsigned char *ptr = (unsigned char*)parametro;
-    123              unsigned char *vlr = (unsigned char*)&tabela_parametros[endereco].default_value;
+    120            else{
+    121              unsigned char *ptr = (unsigned char*)parametro;
+    122              unsigned char *vlr = (unsigned char*)&tabela_parametros[endereco].default_value;
    \                     ??PARAMETROS_le_0:
    \   00000072   0x202C             MOVS     R0,#+44
-   \   00000074   0x....             LDR.N    R1,??DataTable2
+   \   00000074   0x....             LDR.N    R1,??DataTable4
    \   00000076   0xFB00 0x1004      MLA      R0,R0,R4,R1
-    124              
-    125              for(unsigned char i=0;i<tabela_parametros[endereco].length;i++)
+    123              
+    124              for(unsigned char i=0;i<tabela_parametros[endereco].length;i++)
    \   0000007A   0x2100             MOVS     R1,#+0
    \   0000007C   0xE004             B.N      ??PARAMETROS_le_2
-    126                ptr[i] = vlr[i];    
+    125                ptr[i] = vlr[i];    
    \                     ??PARAMETROS_le_3:
    \   0000007E   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
    \   00000080   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -1761,27 +1340,148 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \   00000088   0x000A             MOVS     R2,R1
    \   0000008A   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
    \   0000008C   0x232C             MOVS     R3,#+44
-   \   0000008E   0x....             LDR.N    R6,??DataTable2
+   \   0000008E   0x....             LDR.N    R6,??DataTable4
    \   00000090   0xFB03 0x6304      MLA      R3,R3,R4,R6
    \   00000094   0x889B             LDRH     R3,[R3, #+4]
    \   00000096   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
    \   00000098   0x429A             CMP      R2,R3
    \   0000009A   0xD3F0             BCC.N    ??PARAMETROS_le_3
-    127            }
-    128          }
+    126            }
+    127          }
    \                     ??PARAMETROS_le_1:
    \   0000009C   0xBD70             POP      {R4-R6,PC}       ;; return
+    128          /***********************************************************************************
+    129          *       Descrição       :       Getter para o tamanho total da lista 
+    130          *                               de parâmetros
+    131          *       Parametros      :       nenhum
+    132          *       Retorno         :       (unsigned short int) tamanho da lista
+    133          *                               de parâmetros
+    134          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    135          unsigned short int PARAMETROS_get_tamanho_lista(void){
+    136            
+    137            return TAMANHO_PARAMETROS;
+   \                     PARAMETROS_get_tamanho_lista:
+   \   00000000   0x202E             MOVS     R0,#+46
+   \   00000002   0x4770             BX       LR               ;; return
+    138          }
+    139          /***********************************************************************************
+    140          *       Descrição       :       Lê as informações referentes a um 
+    141          *                               determinado parâmetro
+    142          *       Parametros      :       (unsigned short int) indice
+    143          *                       :       (unsigned short int*)tamanho
+    144          *                               (char*) nome
+    145          *                               (char*) extensao
+    146          *                               (void*) valor 
+    147          *       Retorno         :       nenhum
+    148          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    149          void PARAMETROS_get_parametro_rec(unsigned short int indice,unsigned short int *tamanho,
+    150                                            char *nome,char *extensao,void *valor){
+   \                     PARAMETROS_get_parametro_rec:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x0010             MOVS     R0,R2
+   \   00000006   0x001D             MOVS     R5,R3
+   \   00000008   0x9E04             LDR      R6,[SP, #+16]
+    151                                              
+    152            *tamanho = tabela_parametros[indice].length;
+   \   0000000A   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+   \   0000000C   0x222C             MOVS     R2,#+44
+   \   0000000E   0x....             LDR.N    R3,??DataTable4
+   \   00000010   0xFB02 0x3204      MLA      R2,R2,R4,R3
+   \   00000014   0x8892             LDRH     R2,[R2, #+4]
+   \   00000016   0x800A             STRH     R2,[R1, #+0]
+    153            memcpy(nome,tabela_parametros[indice].nome,16);
+   \   00000018   0x2210             MOVS     R2,#+16
+   \   0000001A   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+   \   0000001C   0x212C             MOVS     R1,#+44
+   \   0000001E   0x....             LDR.N    R3,??DataTable4
+   \   00000020   0xFB01 0x3104      MLA      R1,R1,R4,R3
+   \   00000024   0x1D89             ADDS     R1,R1,#+6
+   \   00000026   0x.... 0x....      BL       memcpy
+    154            memcpy(extensao,tabela_parametros[indice].ext,3);  
+   \   0000002A   0x2203             MOVS     R2,#+3
+   \   0000002C   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+   \   0000002E   0x202C             MOVS     R0,#+44
+   \   00000030   0x....             LDR.N    R1,??DataTable4
+   \   00000032   0xFB00 0x1004      MLA      R0,R0,R4,R1
+   \   00000036   0xF110 0x0126      ADDS     R1,R0,#+38
+   \   0000003A   0x0028             MOVS     R0,R5
+   \   0000003C   0x.... 0x....      BL       memcpy
+    155            PARAMETROS_le(indice,valor);
+   \   00000040   0x0031             MOVS     R1,R6
+   \   00000042   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+   \   00000044   0x0020             MOVS     R0,R4
+   \   00000046   0x.... 0x....      BL       PARAMETROS_le
+    156          }
+   \   0000004A   0xBD70             POP      {R4-R6,PC}       ;; return
+    157          /***********************************************************************************
+    158          *       Descrição       :       Escreve as informações referentes a um
+    159          *                               determinado parâmetro
+    160          *       Parametros      :       (unsigned short int) indice
+    161          *                               (unsigned short int) quantidade de octetos
+    162          *                               (unsigned char*) ponteiro para o buffer
+    163          *                                               de dados
+    164          *       Retorno         :       nenhum
+    165          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    166          void PARAMETROS_set_parametro_rec(unsigned short int indice,unsigned short int tamanho,
+    167                                            unsigned char *pData){
+   \                     PARAMETROS_set_parametro_rec:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+    168                                              
+    169            if(tabela_parametros[indice].length>PAR_DOUBLE_WORD){
+   \   00000002   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000004   0x232C             MOVS     R3,#+44
+   \   00000006   0x....             LDR.N    R4,??DataTable4
+   \   00000008   0xFB03 0x4300      MLA      R3,R3,R0,R4
+   \   0000000C   0x889B             LDRH     R3,[R3, #+4]
+   \   0000000E   0x2B05             CMP      R3,#+5
+   \   00000010   0xDB10             BLT.N    ??PARAMETROS_set_parametro_rec_0
+    170              for(unsigned char i=tamanho-1;i<tabela_parametros[indice].length;i++)
+   \   00000012   0x1E49             SUBS     R1,R1,#+1
+   \   00000014   0xE003             B.N      ??PARAMETROS_set_parametro_rec_1
+    171                pData[i] = ' ';
+   \                     ??PARAMETROS_set_parametro_rec_2:
+   \   00000016   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000018   0x2320             MOVS     R3,#+32
+   \   0000001A   0x548B             STRB     R3,[R1, R2]
+   \   0000001C   0x1C49             ADDS     R1,R1,#+1
+   \                     ??PARAMETROS_set_parametro_rec_1:
+   \   0000001E   0x000B             MOVS     R3,R1
+   \   00000020   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   00000022   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000024   0x242C             MOVS     R4,#+44
+   \   00000026   0x....             LDR.N    R5,??DataTable4
+   \   00000028   0xFB04 0x5400      MLA      R4,R4,R0,R5
+   \   0000002C   0x88A4             LDRH     R4,[R4, #+4]
+   \   0000002E   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   00000030   0x42A3             CMP      R3,R4
+   \   00000032   0xD3F0             BCC.N    ??PARAMETROS_set_parametro_rec_2
+    172            }
+    173            
+    174            PARAMETROS_grava(indice,pData);                                     
+   \                     ??PARAMETROS_set_parametro_rec_0:
+   \   00000034   0x0011             MOVS     R1,R2
+   \   00000036   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000038   0x.... 0x....      BL       PARAMETROS_grava
+    175          }
+   \   0000003C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable2:
+   \                     ??DataTable4:
    \   00000000   0x........         DC32     tabela_parametros
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable2_1:
+   \                     ??DataTable4_1:
    \   00000000   0x........         DC32     PARAMETROS_buffer
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable2_2:
+   \                     ??DataTable4_2:
    \   00000000   0x........         DC32     PARAMETROS_buffer+0x40
 
    \                                 In section .rodata, align 4
@@ -1797,14 +1497,18 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    \              0x00         
    \   00000011   0x00 0x00          DC8 0, 0, 0
    \              0x00         
-    129          /***********************************************************************************
-    130          *       Fim do arquivo
-    131          ***********************************************************************************/
+    176          /***********************************************************************************
+    177          *       Fim do arquivo
+    178          ***********************************************************************************/
 
    Maximum stack usage in bytes:
 
    .cstack Function
    ------- --------
+      16   PARAMETROS_get_parametro_rec
+        16   -> PARAMETROS_le
+        16   -> memcpy
+       0   PARAMETROS_get_tamanho_lista
        8   PARAMETROS_grava
          8   -> CCTALK_calculaCRC
          8   -> MEMORYWRAPPER_writeBytes
@@ -1818,6 +1522,8 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
         16   -> PARAMETROS_resolve_endereco
         16   -> memcpy
        4   PARAMETROS_resolve_endereco
+      16   PARAMETROS_set_parametro_rec
+        16   -> PARAMETROS_grava
        8   memcpy
          8   -> __aeabi_memcpy
 
@@ -1827,24 +1533,27 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Parametro
    Bytes  Function/Label
    -----  --------------
       20  ?<Constant "  GRUPO ALTECH  ">
-       4  ??DataTable2
-       4  ??DataTable2_1
-       4  ??DataTable2_2
+       4  ??DataTable4
+       4  ??DataTable4_1
+       4  ??DataTable4_2
      128  PARAMETROS_buffer
+      76  PARAMETROS_get_parametro_rec
+       4  PARAMETROS_get_tamanho_lista
       98  PARAMETROS_grava
        8  PARAMETROS_ini
      158  PARAMETROS_le
       34  PARAMETROS_resolve_endereco
+      62  PARAMETROS_set_parametro_rec
       14  memcpy
-    2904  tabela_parametros
+    2024  tabela_parametros
 
  
    128 bytes in section .bss
- 2 924 bytes in section .rodata
-   324 bytes in section .text
+ 2 044 bytes in section .rodata
+   466 bytes in section .text
  
-   310 bytes of CODE  memory (+ 14 bytes shared)
- 2 924 bytes of CONST memory
+   452 bytes of CODE  memory (+ 14 bytes shared)
+ 2 044 bytes of CONST memory
    128 bytes of DATA  memory
 
 Errors: none

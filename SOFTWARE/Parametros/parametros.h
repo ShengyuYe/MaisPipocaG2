@@ -32,7 +32,7 @@
 //
 // Endereço dos parâmetros
 //
-#define TAMANHO_PARAMETROS                      26
+#define TAMANHO_PARAMETROS                      46
 
 #define ADR_FLAG_IDIOMA                         0
 #define ADR_FLAG_BV20                           1
@@ -74,21 +74,21 @@
 #define ADR_COMISSAO_PONTO                      37
 #define ADR_FLAG_DESUMIDIFICADOR                38
 #define ADR_CONTADOR_PIPOCAS_TESTE              39
-#define ADR_MENSAGEM_CLIENTE_01                 60
-#define ADR_MENSAGEM_CLIENTE_02                 61
-#define ADR_MENSAGEM_CLIENTE_03                 62
-#define ADR_MENSAGEM_CLIENTE_04                 63
-#define ADR_COMPENSADOR_ERRO_ROTACAO            64
-#define ADR_FATOR_COMPENSADOR                   65
+#define ADR_MENSAGEM_CLIENTE_01                 40
+#define ADR_MENSAGEM_CLIENTE_02                 41
+#define ADR_MENSAGEM_CLIENTE_03                 42
+#define ADR_MENSAGEM_CLIENTE_04                 43
+#define ADR_COMPENSADOR_ERRO_ROTACAO            44
+#define ADR_FATOR_COMPENSADOR                   45
 
 #define ADR_AREA_TESTE                          100
 
 #define CARREGA_PARAMETRO(PARAMETRO,TIPO,SAIDA)        TIPO VAR; PARAMETROS_le(PARAMETRO,&VAR); SAIDA = VAR
 
 typedef enum{
-  BYTE=1,
-  WORD=2,
-  DOUBLE_WORD=4,
+  PAR_BYTE=1,
+  PAR_WORD=2,
+  PAR_DOUBLE_WORD=4,
 }ePARAMETRO;
 
 typedef struct{

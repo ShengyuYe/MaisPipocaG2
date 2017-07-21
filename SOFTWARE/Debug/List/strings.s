@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  09:35:06 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  15:53:54 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -71,6 +71,7 @@
         PUBLIC STRING_mensagem_preco
         PUBLIC STRING_mensagem_reinicia_totalizadores
         PUBLIC STRING_mensagem_reinicia_totalizadores_erro
+        PUBLIC STRING_mensagem_reiniciando_sistema
         PUBLIC STRING_mensagem_reset_fabrica
         PUBLIC STRING_mensagem_resfriando
         PUBLIC STRING_mensagem_retire_troco
@@ -80,6 +81,7 @@
         PUBLIC STRING_mensagem_teste_P70
         PUBLIC STRING_mensagem_teste_led_instrucao
         PUBLIC STRING_mensagem_teste_uca1
+        PUBLIC STRING_mensagemtitulo_edita_comissao
         PUBLIC STRING_menu_avancado
         PUBLIC STRING_menu_configuracao
         PUBLIC STRING_menu_configuracao_operacao
@@ -212,13 +214,13 @@
 // __absolute char const *STRING_splash[7][2]
 STRING_splash:
         DATA
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
-        DC32 `?<Constant "POPCORN KING">`, `?<Constant "VER. 1.0.18">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.18">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.19">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.19">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.19">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.19">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.19">`
+        DC32 `?<Constant "POPCORN">`, `?<Constant "VER. 1.0.19">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.19">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
 // __absolute char const *STRING_titulo_menu_configuracao[7]
@@ -1422,6 +1424,27 @@ STRING_titulo_edita_flag_desumidifcador:
         DC32 `?<Constant " HABILT. DESUM. ">`, `?<Constant " HABILT. DESUM. ">`
         DC32 `?<Constant " HABILT. DESUM. ">`, `?<Constant " HABILT. DESUM. ">`
         DC32 `?<Constant " HABILT. DESUM. ">`
+
+        SECTION `.data`:DATA:REORDER:NOROOT(2)
+// __absolute char const *STRING_mensagemtitulo_edita_comissao[7]
+STRING_mensagemtitulo_edita_comissao:
+        DATA
+        DC32 `?<Constant "COMISSAO PONTO">`, `?<Constant "COMISSAO PONTO">`
+        DC32 `?<Constant "COMISSAO PONTO">`, `?<Constant "COMISSAO PONTO">`
+        DC32 `?<Constant "COMISSAO PONTO">`, `?<Constant "COMISSAO PONTO">`
+        DC32 `?<Constant "COMISSAO PONTO">`
+
+        SECTION `.data`:DATA:REORDER:NOROOT(2)
+// __absolute char const *STRING_mensagem_reiniciando_sistema[7][2]
+STRING_mensagem_reiniciando_sistema:
+        DATA
+        DC32 `?<Constant "REINCIANDO">`, `?<Constant "SISTEMA">`
+        DC32 `?<Constant "REINCIANDO">`, `?<Constant "SISTEMA">`
+        DC32 `?<Constant "REINCIANDO">`, `?<Constant "SISTEMA">`
+        DC32 `?<Constant "REINCIANDO">`, `?<Constant "SISTEMA">`
+        DC32 `?<Constant "REINCIANDO">`, `?<Constant "SISTEMA">`
+        DC32 `?<Constant "SYSTEM">`, `?<Constant "RESET">`
+        DC32 `?<Constant "SYSTEM">`, `?<Constant "RESET,PLEASE">`
 //   38 
 //   39 /***********************************************************************************
 //   40 *       Constantes
@@ -1658,20 +1681,19 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "VER. 2.0.18">`:
+`?<Constant "VER. 2.0.19">`:
         DATA
-        DC8 "VER. 2.0.18"
+        DC8 "VER. 2.0.19"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "POPCORN KING">`:
+`?<Constant "POPCORN">`:
         DATA
-        DC8 "POPCORN KING"
-        DC8 0, 0, 0
+        DC8 "POPCORN"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "VER. 1.0.18">`:
+`?<Constant "VER. 1.0.19">`:
         DATA
-        DC8 "VER. 1.0.18"
+        DC8 "VER. 1.0.19"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "CONFIGURACOES">`:
@@ -3076,11 +3098,6 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "POPCORN">`:
-        DATA
-        DC8 "POPCORN"
-
-        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "   RESFRIANDO  ">`:
         DATA
         DC8 "   RESFRIANDO  "
@@ -3695,6 +3712,35 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "REINCIANDO">`:
+        DATA
+        DC8 "REINCIANDO"
+        DC8 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "SISTEMA">`:
+        DATA
+        DC8 "SISTEMA"
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "SYSTEM">`:
+        DATA
+        DC8 "SYSTEM"
+        DC8 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "RESET">`:
+        DATA
+        DC8 "RESET"
+        DC8 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "RESET,PLEASE">`:
+        DATA
+        DC8 "RESET,PLEASE"
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "BRASIL">`:
         DATA
         DC8 "BRASIL"
@@ -3746,13 +3792,13 @@ STRING_write_to_external:
 //  117 *       Fim do arquivo
 //  118 ***********************************************************************************/
 // 
-// 5 684 bytes in section .data
-// 5 630 bytes in section .rodata
+// 5 768 bytes in section .data
+// 5 666 bytes in section .rodata
 //   200 bytes in section .text
 // 
 //   200 bytes of CODE  memory
-// 5 630 bytes of CONST memory
-// 5 684 bytes of DATA  memory
+// 5 666 bytes of CONST memory
+// 5 768 bytes of DATA  memory
 //
 //Errors: none
 //Warnings: none

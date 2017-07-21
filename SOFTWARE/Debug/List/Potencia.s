@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  09:35:12 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  15:53:21 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -714,7 +714,7 @@ POTENCIA_ini:
 //  182   
 //  183   PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&PORTENCIA_correcao_erro);    
         LDR.W    R1,??DataTable10_22
-        MOVS     R0,#+64
+        MOVS     R0,#+44
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  184 }

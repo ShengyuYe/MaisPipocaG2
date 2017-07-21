@@ -1,17 +1,17 @@
 /*__________________________________________________________________________________
-|	Chave Digital Tecnologia Eletronica Ltda. 
+|	Dextro Soluções Tecnológicas
 |       
-|       Balenário Camboriú - SC
-|       www.chavedigital.com.br
+|       Itajaí/SC
+|       www.dextro-st.com.br
 | __________________________________________________________________________________
 |
-|       This source code was developed by Chave Digital and cannot be copied, in part 
-|       or in whole, or used, except when legally licensed by Chave Digital
+|       This source code was developed by Dextro  and cannot be copied, in part 
+|       or in whole, or used, except when legally licensed by Dextro
 |       or its distributors.
 |
-|       Este código é propriedade da Chave Digital e não pode ser copiado, em parte 
+|       Este código é propriedade da Dextro e não pode ser copiado, em parte 
 |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
-|       Chave Digital ou por um de seus distribuidores.
+|       Dextro ou por um de seus distribuidores.
 | __________________________________________________________________________________
 |
 |       Arquivo            :  Protocolo.h
@@ -27,16 +27,24 @@
 #ifndef _PROTOCOLO_H_
 #define _PROTOCOLO_H_
 
+#define STRING_VERSAO_PROTOCOLO                 "MPG2-2.1.0-BR-MA"
+
 typedef enum{
-   READ_DATA_FLASH_BLOCK=1,
-   WRITE_DATA_FLASH_BLOCK,
-   FORMAT_AUDIO_FLASH,
-   WRITE_MUSIC_TABLE,
-   READ_MUSIC_TABLE,
-   GET_PARAMETERS_LENGHT,
-   GET_PARAMETER_INFO,
-   GET_PARAMETER_DATA,
-   SET_PARAMETER_DATA
+  DXTNET_MAIS_PIPOCA_G1 = 1,
+  DXTNET_MAIS_PIPOCA_G2 = 2,
+  DXTNET_PEGA_BOLA_G2 = 3,  
+}eDXT_DEVICE;
+
+typedef enum{
+   DXTNET_GET_DEVICE=0x10,
+   DXTNET_READ_PARAMETERS_TABLE_SIZE,
+   DXTNET_READ_PARAMETERS,
+   DXTNET_WRITE_PARAMETERS,
+   DXTNET_READ_FILE_TABLE,
+   DXTNET_WRITE_FILE_TABLE,
+   DXTNET_DELETE_FILE_TABLE,
+   DXTNET_READ_FILE,
+   DXTNET_WRITE_FILE
 }PROTOCOLO_COMMANDS;
 
 typedef enum {
@@ -51,7 +59,7 @@ void PROTOCOLO_timerTick(void);
 void PROTOCOLO_main(void*pPar);
 void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho);
 unsigned short int PROTOCOLO_bytesNoBufferTx(void);
-
+void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho);
 
 
 #endif//_PROTOCOLO_H_

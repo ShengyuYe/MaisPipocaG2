@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  09:35:00 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  15:54:19 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -74,6 +74,7 @@
         EXTERN STRING_mensagem_noteiro_mdb_offline
         EXTERN STRING_mensagem_pago
         EXTERN STRING_mensagem_preco
+        EXTERN STRING_mensagem_reiniciando_sistema
         EXTERN STRING_mensagem_retire_troco
         EXTERN STRING_mensagem_saudacao_maquina
         EXTERN STRING_mensagem_sem_troco
@@ -907,7 +908,7 @@ APLICACAO_exibe_valor:
         ADD      R1,SP,#+4
         LDR.W    R0,??DataTable15_11
         LDRB     R0,[R0, #+0]
-        ADDS     R0,R0,#+60
+        ADDS     R0,R0,#+40
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  292     STRING_write_to_external(NO_CLEAR,NULL,buffer_linha);
@@ -1682,7 +1683,7 @@ APLICACAO_verifica_disponibilidade_troco:
 //  548                              (char*)STRING_mensagem_sem_troco[idioma][0],
 //  549                              (char*)STRING_mensagem_sem_troco[idioma][1]);    
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.N    R0,??DataTable15_20
+        LDR.W    R0,??DataTable15_20
         ADDS     R0,R0,R4, LSL #+3
         LDR      R2,[R0, #+4]
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
@@ -2347,33 +2348,48 @@ APLICACAO_ciclo_desumidificador:
         THUMB
 //  776 void APLICACAO_reset_hardware(void){
 APLICACAO_reset_hardware:
-        PUSH     {R7,LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
-//  777   
-//  778   STRING_write_to_internal(CLEAR_DISPLAY,"reiniciando","sistema");
-        LDR.N    R2,??DataTable15_33
-        LDR.N    R1,??DataTable15_34
+//  777   eIDIOMA idioma  = (eIDIOMA)APLICACAO_carrega_idioma();  
+          CFI FunCall APLICACAO_carrega_idioma
+        BL       APLICACAO_carrega_idioma
+        MOVS     R4,R0
+//  778   
+//  779   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_mensagem_reiniciando_sistema[idioma][0],(char*)STRING_mensagem_reiniciando_sistema[idioma][1]);
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.N    R0,??DataTable15_33
+        ADDS     R0,R0,R4, LSL #+3
+        LDR      R2,[R0, #+4]
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.N    R0,??DataTable15_33
+        LDR      R1,[R0, R4, LSL #+3]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  779   STRING_write_to_external(CLEAR_DISPLAY,"reiniciando","sistema");
-        LDR.N    R2,??DataTable15_33
-        LDR.N    R1,??DataTable15_34
+//  780   STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_reiniciando_sistema[idioma][0],(char*)STRING_mensagem_reiniciando_sistema[idioma][1]);
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.N    R0,??DataTable15_33
+        ADDS     R0,R0,R4, LSL #+3
+        LDR      R2,[R0, #+4]
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.N    R0,??DataTable15_33
+        LDR      R1,[R0, R4, LSL #+3]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  780   
-//  781   WATCHDOG_init();  
+//  781   
+//  782   WATCHDOG_init();  
           CFI FunCall WATCHDOG_init
         BL       WATCHDOG_init
-//  782   __disable_interrupt();
+//  783   __disable_interrupt();
         CPSID    I
-//  783   for(;;);  
+//  784   for(;;);  
 ??APLICACAO_reset_hardware_0:
         B.N      ??APLICACAO_reset_hardware_0
           CFI EndBlock cfiBlock18
-//  784 }
+//  785 }
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -2577,13 +2593,7 @@ APLICACAO_reset_hardware:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable15_33:
-        DC32     `?<Constant "sistema">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable15_34:
-        DC32     `?<Constant "reiniciando">`
+        DC32     STRING_mensagem_reiniciando_sistema
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -2681,28 +2691,18 @@ APLICACAO_reset_hardware:
         DATA
         DC8 "DESUMIDIFICACAO"
 
-        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "reiniciando">`:
-        DATA
-        DC8 "reiniciando"
-
-        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "sistema">`:
-        DATA
-        DC8 "sistema"
-
         END
-//  785 /***********************************************************************************
-//  786 *       Fim do arquivo
-//  787 ***********************************************************************************/
+//  786 /***********************************************************************************
+//  787 *       Fim do arquivo
+//  788 ***********************************************************************************/
 // 
 //    25 bytes in section .bss
 //     4 bytes in section .data
-//   232 bytes in section .rodata
-// 2 644 bytes in section .text
+//   212 bytes in section .rodata
+// 2 676 bytes in section .text
 // 
-// 2 644 bytes of CODE  memory
-//   232 bytes of CONST memory
+// 2 676 bytes of CODE  memory
+//   212 bytes of CONST memory
 //    29 bytes of DATA  memory
 //
 //Errors: none

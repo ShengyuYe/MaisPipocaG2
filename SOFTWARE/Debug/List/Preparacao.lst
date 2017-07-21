@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jul/2017  09:35:24 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jul/2017  15:54:14 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -170,11 +170,11 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Aplicacao
    \   00000032   0x.... 0x....      BL       PARAMETROS_le
     100            PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag_correcao_erro);    
    \   00000036   0xF10D 0x0101      ADD      R1,SP,#+1
-   \   0000003A   0x2040             MOVS     R0,#+64
+   \   0000003A   0x202C             MOVS     R0,#+44
    \   0000003C   0x.... 0x....      BL       PARAMETROS_le
     101            PARAMETROS_le(ADR_FATOR_COMPENSADOR,(void*)&compensador);
    \   00000040   0xA902             ADD      R1,SP,#+8
-   \   00000042   0x2041             MOVS     R0,#+65
+   \   00000042   0x202D             MOVS     R0,#+45
    \   00000044   0x.... 0x....      BL       PARAMETROS_le
     102          
     103            //-----------------------------------------------

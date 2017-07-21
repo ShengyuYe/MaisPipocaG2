@@ -43,6 +43,7 @@
 #define PADRAO_TEMPERATURA                              85
 #define PADRAO_ROTACAO_PREPARO                          5700
 #define PADRAO_SENHA_ADMIN                              0
+#define MENSAGEM_PADRAO_FABRICA                         "POPCORN  MACHINE"
 
 /**********************************************************************************
 *       Fim do arquivo

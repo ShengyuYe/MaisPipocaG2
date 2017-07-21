@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  09:35:07 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  15:53:47 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -1211,7 +1211,7 @@ MENUOP_configura_mensagem_cliente:
 //  414   
 //  415   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_01,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
-        MOVS     R0,#+60
+        MOVS     R0,#+40
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  416   if(MENUOP_edita_mensagem("MSG CLIENTE 01",buffer_mensagem)){
@@ -1223,7 +1223,7 @@ MENUOP_configura_mensagem_cliente:
         BEQ.N    ??MENUOP_configura_mensagem_cliente_0
 //  417     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_01,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
-        MOVS     R0,#+60
+        MOVS     R0,#+40
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  418   }
@@ -1255,7 +1255,7 @@ MENUOP_configura_mensagem_cliente_02:
 //  428   
 //  429   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_02,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
-        MOVS     R0,#+61
+        MOVS     R0,#+41
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  430   if(MENUOP_edita_mensagem("MSG CLIENTE 02",buffer_mensagem)){
@@ -1267,7 +1267,7 @@ MENUOP_configura_mensagem_cliente_02:
         BEQ.N    ??MENUOP_configura_mensagem_cliente_02_0
 //  431     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_02,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
-        MOVS     R0,#+61
+        MOVS     R0,#+41
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  432   }
@@ -1299,7 +1299,7 @@ MENUOP_configura_mensagem_cliente_03:
 //  442   
 //  443   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_03,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
-        MOVS     R0,#+62
+        MOVS     R0,#+42
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  444   if(MENUOP_edita_mensagem("MSG CLIENTE 03",buffer_mensagem)){
@@ -1311,7 +1311,7 @@ MENUOP_configura_mensagem_cliente_03:
         BEQ.N    ??MENUOP_configura_mensagem_cliente_03_0
 //  445     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_03,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
-        MOVS     R0,#+62
+        MOVS     R0,#+42
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  446   }
@@ -1343,7 +1343,7 @@ MENUOP_configura_mensagem_cliente_04:
 //  456   
 //  457   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_04,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
-        MOVS     R0,#+63
+        MOVS     R0,#+43
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  458   if(MENUOP_edita_mensagem("MSG CLIENTE 04",buffer_mensagem)){
@@ -1355,7 +1355,7 @@ MENUOP_configura_mensagem_cliente_04:
         BEQ.N    ??MENUOP_configura_mensagem_cliente_04_0
 //  459     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_04,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
-        MOVS     R0,#+63
+        MOVS     R0,#+43
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
 //  460   }   

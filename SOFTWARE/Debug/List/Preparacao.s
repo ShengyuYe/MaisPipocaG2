@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  09:35:24 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  15:54:14 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -267,12 +267,12 @@ PREPARACAO_entry:
         BL       PARAMETROS_le
 //  100   PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag_correcao_erro);    
         ADD      R1,SP,#+1
-        MOVS     R0,#+64
+        MOVS     R0,#+44
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  101   PARAMETROS_le(ADR_FATOR_COMPENSADOR,(void*)&compensador);
         ADD      R1,SP,#+8
-        MOVS     R0,#+65
+        MOVS     R0,#+45
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
 //  102 
