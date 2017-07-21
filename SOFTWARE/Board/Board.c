@@ -138,7 +138,7 @@ void BOARD_ini(void){
   SERIALMUX_ini();
   // Deixa a porta serial RS232
   // habilitada direto
-  SERIALMUX_seleciona(SERIALMUX_RS232);
+  SERIALMUX_seleciona(SERIALMUX_USB);
 }
 /***********************************************************************************
 *       Descrição       :       Tick de timer para o módulo board

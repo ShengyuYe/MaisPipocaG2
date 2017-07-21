@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  16:44:19 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  09:35:23 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -415,8 +415,8 @@ BOARD_ini:
         BL       SERIALMUX_ini
 //  139   // Deixa a porta serial RS232
 //  140   // habilitada direto
-//  141   SERIALMUX_seleciona(SERIALMUX_RS232);
-        MOVS     R0,#+0
+//  141   SERIALMUX_seleciona(SERIALMUX_USB);
+        MOVS     R0,#+2
           CFI FunCall SERIALMUX_seleciona
         BL       SERIALMUX_seleciona
 //  142 }
