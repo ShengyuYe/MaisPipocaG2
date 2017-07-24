@@ -41,7 +41,7 @@
 #define BLOCK_READ(X,Y,Z)                       MEMORYWRAPPER_readBytes(X,Y,Z)
 #define BLOCK_WRITE(X,Y,Z)                      MEMORYWRAPPER_writeBytes(X,Y,Z)
 
-#define ENDERECO_INICIAL_FLASH                  AREA_ARQUIVOS
+
 
 /************************************************************************************
 *       Variaveis locais
@@ -89,7 +89,7 @@ void FSA_write_memory_data(unsigned int start_address,
 *       Retorno         :       nenhum
 ************************************************************************************/
 void FSA_format_audio_memory(void){
-  unsigned long int enderecoInicial=ENDERECO_INICIAL_FLASH;
+  unsigned long int enderecoInicial=AREA_ARQUIVOS;
   
   for(unsigned short int i=0;i<599;i++){
     SST_erase4kbSector(enderecoInicial);

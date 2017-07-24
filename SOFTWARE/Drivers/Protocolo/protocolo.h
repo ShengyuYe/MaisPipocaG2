@@ -40,7 +40,9 @@ typedef enum{
    DXTNET_READ_PARAMETERS_TABLE_SIZE,
    DXTNET_READ_PARAMETERS,
    DXTNET_WRITE_PARAMETERS,
-   DXTNET_FILE_FORMAT
+   DXTNET_FILE_FORMAT,
+   DXTNET_WRITE_BLOCK,
+   DXTNET_READ_BLOCK,
 }PROTOCOLO_COMMANDS;
 
 typedef enum {
@@ -51,12 +53,19 @@ typedef enum {
 
 
 void PROTOCOLO_ini(void);
+
 void PROTOCOLO_timerTick(void);
+
 void PROTOCOLO_main(void*pPar);
-void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho);
-unsigned short int PROTOCOLO_bytesNoBufferTx(void);
+
 void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho);
 
+unsigned short int PROTOCOLO_bytesNoBufferTx(void);
+
+void PROTOCOLO_enviaDadosDireto(unsigned char *buffer,unsigned char tamanho);
+
+void PROTOCOLO_decodifica_write_block(unsigned int endereco,unsigned char *pData,
+                                      unsigned short int size);
 
 #endif//_PROTOCOLO_H_
 /************************************************************************************

@@ -41,12 +41,13 @@
 *       Definições locais
 ***********************************************************************************/
 #define TAM_BUF_TX                              128
-#define TAM_BUF_RX                              1024
+#define TAM_BUF_RX                              1280
 
 #define STX                                     0x02
 #define ETX                                     0x03
 #define DLE                                     0x10
 
+#define ENDERECO_INICIAL_FLASH                  AREA_ARQUIVOS
 /***********************************************************************************
 *       Variaveis locais
 ***********************************************************************************/
@@ -77,6 +78,9 @@ void PROTOCOLO_decodifica_escreve_parametro(unsigned short int endereco,
                                             unsigned char *pData);
 
 void PROTOCOLO_decodifica_format(void);
+
+void PROTOCOLO_decodifica_write_block(unsigned int endereco,unsigned char *pData,
+                                      unsigned short int size);
 /***********************************************************************************
 *       Implementação das funções
 ***********************************************************************************/
@@ -217,6 +221,14 @@ void PROTOCOLO_main(void*pPar){
           case DXTNET_FILE_FORMAT:
                PROTOCOLO_decodifica_format();
                break;
+          case DXTNET_WRITE_BLOCK:
+               PROTOCOLO_decodifica_write_block(PROTOCOLO_bufferRx[2]<<24 | PROTOCOLO_bufferRx[3]<<16 | PROTOCOLO_bufferRx[4]<<8 | PROTOCOLO_bufferRx[5],
+                                                &PROTOCOLO_bufferRx[8],
+                                                PROTOCOLO_bufferRx[6]<<8 | PROTOCOLO_bufferRx[7]);
+               break;
+          case DXTNET_READ_BLOCK:
+            
+               break;
         }    
       }
     }
@@ -348,12 +360,34 @@ void PROTOCOLO_decodifica_escreve_parametro(unsigned short int endereco,
 *       Parametros      :       nenhum
 *       Retorno         :       nenhum
 ***********************************************************************************/
-void PROTOCOLO_decodifica_format(void){
-  
-  FSA_format_audio_memory();
+void PROTOCOLO_decodifica_format(void){  
   
   PROTOCOLO_bufferTmp[0] = DXTNET_FILE_FORMAT;
-  PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,1);  
+  PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,3);  
+  
+  FSA_format_audio_memory();  
+}
+/***********************************************************************************
+*       Descrição       :       Decodifica o comando para escrita de um bloco
+*                               na memória flash de dados
+*       Parametros      :       (unsigned int) endereço
+*                               (unsigned char*) ponteiro para os dados
+*                               (unsigned short int) tamanho do bloco de dados
+*       Retorno         :       nenhum
+***********************************************************************************/
+void PROTOCOLO_decodifica_write_block(unsigned int endereco,unsigned char *pData,
+                                      unsigned short int size){
+                                        
+  PROTOCOLO_bufferTmp[0] = DXTNET_WRITE_BLOCK;
+  PROTOCOLO_bufferTmp[2] = (endereco>>24);
+  PROTOCOLO_bufferTmp[3] = (endereco>>16);
+  PROTOCOLO_bufferTmp[4] = (endereco>>8);
+  PROTOCOLO_bufferTmp[5] = endereco;
+  PROTOCOLO_bufferTmp[6] = size>>8;
+  PROTOCOLO_bufferTmp[7] = size;
+  
+  PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,9);  
+  SST_writeAutoAddressInc(endereco+ENDERECO_INICIAL_FLASH,pData,size);                                        
 }
 /***********************************************************************************
 *       Fim do arquivo

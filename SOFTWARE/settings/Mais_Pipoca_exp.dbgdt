@@ -44,7 +44,7 @@
         <expressions>
           
           
-        <item>PROTOCOLO_bufferRx</item><item>PROTOCOLO_bufferTx</item><item>PROTOCOLO_bufferTmp</item><item>PARAMETROS_buffer</item><item>buffer_filesystem</item><item>referencia_rampa</item><item>SMC_flag_bloqueio</item><item/></expressions>
+        <item>PROTOCOLO_bufferRx</item><item>PROTOCOLO_bufferTx</item><item>PROTOCOLO_bufferTmp</item><item>PARAMETROS_buffer</item><item>buffer_filesystem</item><item>referencia_rampa</item><item>SMC_flag_bloqueio</item><item></item></expressions>
         <col-names>
           
           
@@ -63,7 +63,7 @@
       
       
       
-    <Wnd0>
+    <Wnd3>
         <Tabs>
           <Tab>
             <Identity>TabID-14705-24835</Identity>
@@ -75,20 +75,20 @@
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd0><Wnd2><Tabs><Tab><Identity>TabID-19344-3495</Identity><TabName>Terminal I/O</TabName><Factory>TerminalIO</Factory><Session/></Tab><Tab><Identity>TabID-18299-3515</Identity><TabName>Disassembly</TabName><Factory>Disassembly</Factory><Session/></Tab><Tab><Identity>TabID-9641-3472</Identity><TabName>Watch 1</TabName><Factory>WATCH_1</Factory></Tab></Tabs><SelectedTab>1</SelectedTab></Wnd2><Wnd1><Tabs><Tab><Identity>TabID-17850-19368</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd1></Windows>
+      <SelectedTab>0</SelectedTab></Wnd3><Wnd4><Tabs><Tab><Identity>TabID-19344-3495</Identity><TabName>Terminal I/O</TabName><Factory>TerminalIO</Factory><Session/></Tab><Tab><Identity>TabID-18299-3515</Identity><TabName>Disassembly</TabName><Factory>Disassembly</Factory><Session/></Tab><Tab><Identity>TabID-9641-3472</Identity><TabName>Watch 1</TabName><Factory>WATCH_1</Factory></Tab></Tabs><SelectedTab>2</SelectedTab></Wnd4></Windows>
     <Editor>
       
       
       
       
-    <Pane/><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\Protocolo\Protocolo.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>353</YPos2><SelStart2>17837</SelStart2><SelEnd2>17837</SelEnd2></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\protocolo\protocolo.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>30</YPos2><SelStart2>1675</SelStart2><SelEnd2>1675</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\Protocolo\File_system_adapter.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>60</YPos2><SelStart2>4267</SelStart2><SelEnd2>4267</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Kernel\portasm.s</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>87</YPos2><SelStart2>3084</SelStart2><SelEnd2>3084</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\sst25vf016b\SST25VF016B.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>44</YPos2><SelStart2>2315</SelStart2><SelEnd2>2315</SelEnd2></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-02655088><key>iaridepm.enu1</key></Toolbar-02655088></Sizes></Row0><Row1><Sizes><Toolbar-151e3878><key>debuggergui.enu1</key></Toolbar-151e3878></Sizes></Row1></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>516</Bottom><Right>347</Right><x>-2</x><y>-2</y><xscreen>204</xscreen><yscreen>210</yscreen><sizeHorzCX>132813</sizeHorzCX><sizeHorzCY>268199</sizeHorzCY><sizeVertCX>227214</sizeVertCX><sizeVertCY>661558</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>516</Bottom><Right>364</Right><x>-2</x><y>-2</y><xscreen>202</xscreen><yscreen>205</yscreen><sizeHorzCX>131510</sizeHorzCX><sizeHorzCY>261814</sizeHorzCY><sizeVertCX>238281</sizeVertCX><sizeVertCY>661558</sizeVertCY></Rect></Wnd2></Sizes></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>198</Bottom><Right>1538</Right><x>-2</x><y>-2</y><xscreen>1540</xscreen><yscreen>200</yscreen><sizeHorzCX>1002604</sizeHorzCX><sizeHorzCY>255428</sizeHorzCY><sizeVertCX>130208</sizeVertCX><sizeVertCY>255428</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-03315cd0><key>iaridepm.enu1</key></Toolbar-03315cd0></Sizes></Row0><Row1><Sizes><Toolbar-05aaf968><key>debuggergui.enu1</key></Toolbar-05aaf968></Sizes></Row1></Top><Left><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>714</Bottom><Right>347</Right><x>-2</x><y>-2</y><xscreen>204</xscreen><yscreen>210</yscreen><sizeHorzCX>132813</sizeHorzCX><sizeHorzCY>268199</sizeHorzCY><sizeVertCX>227214</sizeVertCX><sizeVertCY>914432</sizeVertCY></Rect></Wnd3></Sizes></Row0></Left><Right><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>714</Bottom><Right>286</Right><x>-2</x><y>-2</y><xscreen>202</xscreen><yscreen>205</yscreen><sizeHorzCX>131510</sizeHorzCX><sizeHorzCY>261814</sizeHorzCY><sizeVertCX>187500</sizeVertCX><sizeVertCY>914432</sizeVertCY></Rect></Wnd4></Sizes></Row0></Right><Bottom><Row0><Sizes/></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Project>
 

@@ -264,7 +264,7 @@
       <file>$PROJ_DIR$\Debug\List\spi_wrapper.s</file>
       <file>$PROJ_DIR$\Debug\List\mdb_bill.lst</file>
       <file>$PROJ_DIR$\Debug\List\Mais_Pipoca_exp.map</file>
-      <file>$PROJ_DIR$\Drivers\protocolo\protocolo.h</file>
+      <file>$PROJ_DIR$\Drivers\Protocolo\protocolo.h</file>
       <file>$PROJ_DIR$\Debug\List\main.lst</file>
       <file>$PROJ_DIR$\Debug\Obj\menu_seleciona_lista.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\WH1602_2.pbi</file>
@@ -423,7 +423,7 @@
       <file>$PROJ_DIR$\Debug\Obj\port.o</file>
       <file>$PROJ_DIR$\Debug\Obj\Supervisao_mdb_bill.o</file>
       <file>$PROJ_DIR$\Debug\List\Preparacao.s</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\spi_wrapper.h</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\SPI_WRAPPER.H</file>
       <file>$PROJ_DIR$\Debug\List\Board.s</file>
       <file>$PROJ_DIR$\Drivers\RTC\RTC.H</file>
       <file>$PROJ_DIR$\Debug\List\Preparacao.lst</file>
@@ -962,6 +962,10 @@
       <inputs>
         <tool>
           <name>ICCARM</name>
+          <file> 186 152 319 34 377 169 389 295 208 31 121 327 370 296 147 143 321 140 170 288 135 200 430 219 33 185 27 176 180 216 161 111 134 344 217 51 61 265 29 323 113 419 201 299 192 334 291 158 125 428 270 119 126 230 258 250 373 333 156 379 203 189 330 55 395 42 405 282 279 120 131 117 129 425</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
           <file> 186 152 319 34 377 169 389 295 208 31 121 327 370 296 147 143 321 140 170 288 135 200 430 219 33 185 27 176 180 216 161 111 134 344 217 51 61 265 29 323 113 419 201 299 192 334 291 158 125 428 270 119 126 230 258 250 373 333 156 379 203 189 330 55 395 42 405 282 279 120 131 117 129 425</file>
         </tool>
       </inputs>

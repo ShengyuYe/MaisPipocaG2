@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      24/Jul/2017  15:06:49 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      24/Jul/2017  16:53:36 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -72,7 +72,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
      41          #define BLOCK_READ(X,Y,Z)                       MEMORYWRAPPER_readBytes(X,Y,Z)
      42          #define BLOCK_WRITE(X,Y,Z)                      MEMORYWRAPPER_writeBytes(X,Y,Z)
      43          
-     44          #define ENDERECO_INICIAL_FLASH                  AREA_ARQUIVOS
+     44          
      45          
      46          /************************************************************************************
      47          *       Variaveis locais
@@ -132,7 +132,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
      91          void FSA_format_audio_memory(void){
    \                     FSA_format_audio_memory:
    \   00000000   0xB538             PUSH     {R3-R5,LR}
-     92            unsigned long int enderecoInicial=ENDERECO_INICIAL_FLASH;
+     92            unsigned long int enderecoInicial=AREA_ARQUIVOS;
    \   00000002   0xF44F 0x5400      MOV      R4,#+8192
      93            
      94            for(unsigned short int i=0;i<599;i++){
