@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  15:54:22 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     24/Jul/2017  15:06:40 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -147,7 +147,7 @@
 //   62 sFlashQueueData FTP_fila_troca_preco={
 FTP_fila_troca_preco:
         DATA
-        DC32 3584
+        DC32 1600
         DC16 10
         DC8 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 //   63   .inicio_flash = AREA_TABELA,

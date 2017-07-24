@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jul/2017  15:53:22 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      24/Jul/2017  15:06:01 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -157,10 +157,10 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
      51          *       Variaveis locais
      52          ***********************************************************************************/
 
-   \                                 In section .data, align 4
-     53          unsigned int enderecoInicialMusica=AREA_AUDIO;
+   \                                 In section .bss, align 4
+     53          unsigned int enderecoInicialMusica=0;//AREA_AUDIO;
    \                     enderecoInicialMusica:
-   \   00000000   0x00003000         DC32 12288
+   \   00000000                      DS8 4
 
    \                                 In section .bss, align 4
      54          unsigned int tamanhoMusica;
@@ -748,8 +748,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\P
        2  volume
 
  
-   9 bytes in section .bss
-   4 bytes in section .data
+  13 bytes in section .bss
   60 bytes in section .noinit (abs)
  618 bytes in section .text
  

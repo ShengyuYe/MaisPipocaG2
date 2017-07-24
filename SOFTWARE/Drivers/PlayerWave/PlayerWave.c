@@ -50,7 +50,7 @@
 /***********************************************************************************
 *       Variaveis locais
 ***********************************************************************************/
-unsigned int enderecoInicialMusica=AREA_AUDIO;
+unsigned int enderecoInicialMusica=0;//AREA_AUDIO;
 unsigned int tamanhoMusica;
 unsigned short int volume;
 unsigned short int dadoMusica;

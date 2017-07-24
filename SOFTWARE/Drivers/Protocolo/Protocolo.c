@@ -40,8 +40,8 @@
 /***********************************************************************************
 *       Definições locais
 ***********************************************************************************/
-#define TAM_BUF_TX                              1024
-#define TAM_BUF_RX                              128
+#define TAM_BUF_TX                              128
+#define TAM_BUF_RX                              1024
 
 #define STX                                     0x02
 #define ETX                                     0x03
@@ -53,10 +53,10 @@
 unsigned char PROTOCOLO_bufferTx[TAM_BUF_TX];
 unsigned char PROTOCOLO_bufferRx[TAM_BUF_RX];
 unsigned char PROTOCOLO_bufferTmp[TAM_BUF_TX];
-unsigned char PROTOCOLO_bytesRecebidos;
 unsigned char PROTOCOLO_bytesParaEnviar;
 unsigned char PROTOCOLO_bytesEnviados;
 unsigned char PROTOCOLO_novoPacote=0;
+unsigned short int PROTOCOLO_bytesRecebidos;
 
 
 /***********************************************************************************
@@ -76,6 +76,7 @@ void PROTOCOLO_decodifica_escreve_parametro(unsigned short int endereco,
                                             unsigned short int tamanho,
                                             unsigned char *pData);
 
+void PROTOCOLO_decodifica_format(void);
 /***********************************************************************************
 *       Implementação das funções
 ***********************************************************************************/
@@ -213,15 +214,8 @@ void PROTOCOLO_main(void*pPar){
           case DXTNET_WRITE_PARAMETERS:
                PROTOCOLO_decodifica_escreve_parametro(PROTOCOLO_bufferRx[2]<<8 | PROTOCOLO_bufferRx[3],PROTOCOLO_bufferRx[4]<<8 | PROTOCOLO_bufferRx[5],&PROTOCOLO_bufferRx[6]);
                break;
-          case DXTNET_READ_FILE_TABLE:
-               break;
-          case DXTNET_WRITE_FILE_TABLE:
-               break;
-          case DXTNET_DELETE_FILE_TABLE:
-               break;
-          case DXTNET_READ_FILE:
-               break;
-          case DXTNET_WRITE_FILE:
+          case DXTNET_FILE_FORMAT:
+               PROTOCOLO_decodifica_format();
                break;
         }    
       }
@@ -348,6 +342,18 @@ void PROTOCOLO_decodifica_escreve_parametro(unsigned short int endereco,
   PROTOCOLO_bufferTmp[4] = tamanho>>8;
   PROTOCOLO_bufferTmp[5] = tamanho;
   PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,7);
+}
+/***********************************************************************************
+*       Descrição       :       Decodifica o comando format
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
+***********************************************************************************/
+void PROTOCOLO_decodifica_format(void){
+  
+  FSA_format_audio_memory();
+  
+  PROTOCOLO_bufferTmp[0] = DXTNET_FILE_FORMAT;
+  PROTOCOLO_enviaPacote(PROTOCOLO_bufferTmp,1);  
 }
 /***********************************************************************************
 *       Fim do arquivo

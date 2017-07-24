@@ -1965,6 +1965,9 @@
     <group>
       <name>PROTOCOLO</name>
       <file>
+        <name>$PROJ_DIR$\Drivers\Protocolo\File_system_adapter.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\Drivers\Protocolo\Protocolo.c</name>
       </file>
     </group>

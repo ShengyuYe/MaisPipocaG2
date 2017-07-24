@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jul/2017  15:53:22 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     24/Jul/2017  15:06:01 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -237,11 +237,10 @@ _A_DACR:
 //   51 *       Variaveis locais
 //   52 ***********************************************************************************/
 
-        SECTION `.data`:DATA:REORDER:NOROOT(2)
-//   53 unsigned int enderecoInicialMusica=AREA_AUDIO;
+        SECTION `.bss`:DATA:REORDER:NOROOT(2)
+//   53 unsigned int enderecoInicialMusica=0;//AREA_AUDIO;
 enderecoInicialMusica:
-        DATA
-        DC32 12288
+        DS8 4
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
 //   54 unsigned int tamanhoMusica;
@@ -851,8 +850,7 @@ PLAYERWAVE_verificaToque:
 //  196 ***********************************************************************************/
 //  197 
 // 
-//   9 bytes in section .bss
-//   4 bytes in section .data
+//  13 bytes in section .bss
 //  60 bytes in section .noinit (abs)
 // 618 bytes in section .text
 // 

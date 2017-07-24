@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jul/2017  15:54:23 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      24/Jul/2017  15:06:40 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -94,7 +94,7 @@ C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Historico
    \                                 In section .data, align 4
      62          sFlashQueueData FTP_fila_troca_preco={
    \                     FTP_fila_troca_preco:
-   \   00000000   0x00000E00         DC32 3584
+   \   00000000   0x00000640         DC32 1600
    \   00000004   0x000A             DC16 10
    \   00000006   0x10 0x00          DC8 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
    \              0x00 0x00    
