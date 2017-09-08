@@ -44,7 +44,7 @@
         <expressions>
           
           
-        <item>PROTOCOLO_bufferRx</item><item>PROTOCOLO_bufferTx</item><item>PROTOCOLO_bufferTmp</item><item>PARAMETROS_buffer</item><item>buffer_filesystem</item><item>referencia_rampa</item><item>SMC_flag_bloqueio</item><item></item></expressions>
+        <item>PROTOCOLO_bufferRx</item><item>PROTOCOLO_bufferTx</item><item>PROTOCOLO_bufferTmp</item><item>PARAMETROS_buffer</item><item>buffer_filesystem</item><item>referencia_rampa</item><item>SMC_flag_bloqueio</item><item/></expressions>
         <col-names>
           
           
