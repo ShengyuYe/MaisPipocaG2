@@ -1,15 +1,15 @@
 ###############################################################################
 #                                                                             #
-#     IAR Assembler V6.50.3.4676/W32 for ARM 20/Jul/2017  13:08:10            #
+#     IAR Assembler V6.50.3.4676/W32 for ARM 08/Sep/2017  15:30:38            #
 #     Copyright 1999-2013 IAR Systems AB.                                     #
 #                                                                             #
-#           Source file   =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Kernel\portasm.s#
-#           List file     =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Debug\List\portasm.lst#
-#           Object file   =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Debug\Obj\portasm.o#
-#           Command line  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Kernel\portasm.s #
-#                            -OC:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Debug\Obj\ #
+#           Source file   =  C:\repositorios\MaisPipocaG2\SOFTWARE\Kernel\portasm.s#
+#           List file     =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\portasm.lst#
+#           Object file   =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\portasm.o#
+#           Command line  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Kernel\portasm.s #
+#                            -OC:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\ #
 #                            -s+ -M<> -w+ -r                                  #
-#                            -LC:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Debug\List\ #
+#                            -LC:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\ #
 #                            -t8 --cpu Cortex-M3 --fpu None                   #
 #                                                                             #
 ###############################################################################

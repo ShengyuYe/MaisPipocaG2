@@ -1,27 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     20/Jul/2017  13:07:46 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  15:30:31 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
-//                    pocaG2\SOFTWARE\Drivers\sst25vf016b\memoryWrapper.c     /
-//    Command line =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
-//                    pocaG2\SOFTWARE\Drivers\sst25vf016b\memoryWrapper.c     /
-//                    -lC C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\Ma /
-//                    isPipocaG2\SOFTWARE\Debug\List\ -lA                     /
-//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
-//                    pocaG2\SOFTWARE\Debug\List\ -o                          /
-//                    C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
-//                    pocaG2\SOFTWARE\Debug\Obj\ --no_cse --no_unroll         /
-//                    --no_inline --no_code_motion --no_tbaa --no_clustering  /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\sst25vf01 /
+//                    6b\memoryWrapper.c                                      /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\sst25vf01 /
+//                    6b\memoryWrapper.c -lC C:\repositorios\MaisPipocaG2\SOF /
+//                    TWARE\Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFT /
+//                    WARE\Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWA /
+//                    RE\Debug\Obj\ --no_cse --no_unroll --no_inline          /
+//                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
 //                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPi /
-//                    pocaG2\SOFTWARE\Debug\List\memoryWrapper.s              /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\memory /
+//                    Wrapper.s                                               /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -86,7 +83,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Reps\Dextro\IBA\Hardware\MaisPipocaG2\SOFTWARE\Drivers\sst25vf016b\memoryWrapper.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\sst25vf016b\memoryWrapper.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
