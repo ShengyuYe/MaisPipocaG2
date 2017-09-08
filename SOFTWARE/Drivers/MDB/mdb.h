@@ -131,6 +131,9 @@ unsigned char MDB_coin_dispenser(unsigned char tipo,unsigned char quantidade);
 unsigned char MDB_coin_check_tubes(unsigned char* tubes);
 
 eMDB_RESULTADO_SCAN MDB_checa_dispositivos(void);
+
+eMDB_reply MDB_checa_valor_moedas(unsigned char *escala,unsigned char *canais);
+
 /************************************************************************************
 *       Fim do arquivo
 ************************************************************************************/

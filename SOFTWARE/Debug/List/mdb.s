@@ -1,28 +1,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:05 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  20:00:28 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb.c        /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb.c" -lC  /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA        /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb.c /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb.c /
+//                     -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\  /
+//                    -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\   /
+//                    -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\     /
+//                    --no_cse --no_unroll --no_inline --no_code_motion       /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\mdb.s         /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\mdb.s  /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -60,6 +54,7 @@
 
         PUBLIC MDB_buffer_stream
         PUBLIC MDB_checa_dispositivos
+        PUBLIC MDB_checa_valor_moedas
         PUBLIC MDB_chk_generate
         PUBLIC MDB_coin_check_tubes
         PUBLIC MDB_coin_dispenser
@@ -109,7 +104,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -152,16 +147,22 @@
         THUMB
 // __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
 memcpy:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
+        MOVS     R2,R6
+        MOVS     R1,R5
         MOVS     R0,R4
           CFI FunCall __aeabi_memcpy
         BL       __aeabi_memcpy
         MOVS     R0,R4
-        POP      {R4,PC}          ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock0
 //   35 
 //   36 #include "mdb.h"
@@ -290,11 +291,11 @@ MDB_ini:
         THUMB
 //   90 void MDB_main(void*pPAR){
 MDB_main:
-        PUSH     {LR}
+        PUSH     {R2-R4,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
-        SUB      SP,SP,#+12
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+16
+        MOVS     R4,R0
 //   91   
 //   92   vTaskDelay(5000);
         MOVW     R0,#+5000
@@ -395,26 +396,26 @@ MDB_chk_generate:
         PUSH     {R4}
           CFI R4 Frame(CFA, -4)
           CFI CFA R13+4
+        MOVS     R2,R0
 //  138   unsigned char chk=0;
-        MOVS     R2,#+0
+        MOVS     R0,#+0
 //  139   
 //  140   for(unsigned char i=0;i<size;i++)
         MOVS     R3,#+0
-        B.N      ??MDB_chk_generate_0
-//  141     chk+=pData[i];
-??MDB_chk_generate_1:
-        UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
-        LDRB     R4,[R3, R0]
-        ADDS     R2,R4,R2
-        ADDS     R3,R3,#+1
 ??MDB_chk_generate_0:
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         CMP      R3,R1
-        BCC.N    ??MDB_chk_generate_1
+        BCS.N    ??MDB_chk_generate_1
+//  141     chk+=pData[i];
+        UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+        LDRB     R4,[R3, R2]
+        ADDS     R0,R4,R0
+        ADDS     R3,R3,#+1
+        B.N      ??MDB_chk_generate_0
 //  142   
 //  143   return chk;
-        MOVS     R0,R2
+??MDB_chk_generate_1:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         POP      {R4}
           CFI R4 SameValue
@@ -442,24 +443,25 @@ MDB_chk_generate:
 //  157                             unsigned char send_ack,
 //  158                             unsigned char *pRx,unsigned char *rx_length){
 MDB_send_package:
-        PUSH     {R4-R10,LR}
+        PUSH     {R0,R3-R11,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R10 Frame(CFA, -8)
-          CFI R9 Frame(CFA, -12)
-          CFI R8 Frame(CFA, -16)
-          CFI R7 Frame(CFA, -20)
-          CFI R6 Frame(CFA, -24)
-          CFI R5 Frame(CFA, -28)
-          CFI R4 Frame(CFA, -32)
-          CFI CFA R13+32
-        MOV      R8,R0
-        MOV      R9,R1
-        MOV      R10,R2
-        MOVS     R4,R3
-        LDR      R5,[SP, #+32]
-        LDR      R6,[SP, #+36]
+          CFI R11 Frame(CFA, -8)
+          CFI R10 Frame(CFA, -12)
+          CFI R9 Frame(CFA, -16)
+          CFI R8 Frame(CFA, -20)
+          CFI R7 Frame(CFA, -24)
+          CFI R6 Frame(CFA, -28)
+          CFI R5 Frame(CFA, -32)
+          CFI R4 Frame(CFA, -36)
+          CFI CFA R13+44
+        SUB      SP,SP,#+4
+          CFI CFA R13+48
+        MOVS     R4,R1
+        MOVS     R5,R2
+        LDR      R6,[SP, #+48]
+        LDR      R7,[SP, #+52]
 //  159   unsigned short int time_out=TIMEOUT_WAIT_MESSAGE;
-        MOVS     R7,#+50
+        MOVS     R9,#+50
 //  160   unsigned char flag;  
 //  161   
 //  162   //flag = U2RBR;
@@ -467,29 +469,28 @@ MDB_send_package:
 //  164   //U2FCR |= (0x02);  
 //  165     
 //  166   memcpy(MDB_buffer_stream,pData,data_length);
-        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
-        MOV      R2,R10
-        MOV      R1,R9
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        MOVS     R2,R5
+        MOVS     R1,R4
         LDR.N    R0,??DataTable3_12
           CFI FunCall memcpy
         BL       memcpy
 //  167   MDB_buffer_stream[data_length] = MDB_chk_generate(pData,data_length);
-        MOV      R1,R10
+        MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        MOV      R0,R9
+        MOVS     R0,R4
           CFI FunCall MDB_chk_generate
         BL       MDB_chk_generate
-        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R1,??DataTable3_12
-        STRB     R0,[R10, R1]
+        STRB     R0,[R5, R1]
 //  168       
 //  169   MDBUART_envia_pacote(first_is_address,MDB_buffer_stream,data_length+1);     
-        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
-        ADDS     R2,R10,#+1
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R2,R5,#+1
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
         LDR.N    R1,??DataTable3_12
-        MOV      R0,R8
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        LDRB     R0,[SP, #+4]
           CFI FunCall MDBUART_envia_pacote
         BL       MDBUART_envia_pacote
 //  170   
@@ -508,8 +509,8 @@ MDB_send_package:
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
         CMP      R8,#+0
         BNE.N    ??MDB_send_package_1
-        MOVS     R0,R7
-        SUBS     R7,R0,#+1
+        MOV      R0,R9
+        SUBS     R9,R0,#+1
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         CMP      R0,#+0
         BNE.N    ??MDB_send_package_0
@@ -523,16 +524,16 @@ MDB_send_package:
 //  179     unsigned char recebidos = MDBUART_get_bytes_recebidos();
           CFI FunCall MDBUART_get_bytes_recebidos
         BL       MDBUART_get_bytes_recebidos
-        MOV      R8,R0
+        MOV      R10,R0
 //  180     
 //  181     MDBUART_le_pacote(MDB_buffer_stream,recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:recebidos);          
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        CMP      R8,#+37
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        CMP      R10,#+37
         BLT.N    ??MDB_send_package_3
         MOVS     R1,#+36
         B.N      ??MDB_send_package_4
 ??MDB_send_package_3:
-        MOV      R1,R8
+        MOV      R1,R10
 ??MDB_send_package_4:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         LDR.N    R0,??DataTable3_12
@@ -540,41 +541,41 @@ MDB_send_package:
         BL       MDBUART_le_pacote
 //  182         
 //  183     unsigned char checksum = MDB_chk_generate(MDB_buffer_stream,recebidos-1);
-        SUBS     R1,R8,#+1
+        SUBS     R1,R10,#+1
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         LDR.N    R0,??DataTable3_12
           CFI FunCall MDB_chk_generate
         BL       MDB_chk_generate
-        MOVS     R7,R0
+        MOV      R11,R0
 //  184       
 //  185     memcpy(pRx,MDB_buffer_stream,recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:recebidos);
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        CMP      R8,#+37
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        CMP      R10,#+37
         BLT.N    ??MDB_send_package_5
         MOVS     R2,#+36
         B.N      ??MDB_send_package_6
 ??MDB_send_package_5:
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        MOV      R2,R8
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        MOV      R2,R10
 ??MDB_send_package_6:
         LDR.N    R1,??DataTable3_12
-        MOVS     R0,R5
+        MOVS     R0,R6
           CFI FunCall memcpy
         BL       memcpy
 //  186     *rx_length = recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:(recebidos-1);
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        CMP      R8,#+37
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        CMP      R10,#+37
         BLT.N    ??MDB_send_package_7
         MOVS     R0,#+36
         B.N      ??MDB_send_package_8
 ??MDB_send_package_7:
-        SUBS     R0,R8,#+1
+        SUBS     R0,R10,#+1
 ??MDB_send_package_8:
-        STRB     R0,[R6, #+0]
+        STRB     R0,[R7, #+0]
 //  187      
 //  188     if(send_ack)     
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
+        LDRB     R0,[SP, #+8]
+        CMP      R0,#+0
         BEQ.N    ??MDB_send_package_9
 //  189       MDB_send_ack();              
           CFI FunCall MDB_send_ack
@@ -582,15 +583,15 @@ MDB_send_package:
 //  190     
 //  191     if(recebidos || MDB_buffer_stream[recebidos-1] == checksum)
 ??MDB_send_package_9:
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        CMP      R8,#+0
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        CMP      R10,#+0
         BNE.N    ??MDB_send_package_10
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
         LDR.N    R0,??DataTable3_12
-        ADDS     R0,R8,R0
+        ADDS     R0,R10,R0
         LDRB     R0,[R0, #-1]
-        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-        CMP      R0,R7
+        UXTB     R11,R11          ;; ZeroExt  R11,R11,#+24,#+24
+        CMP      R0,R11
         BNE.N    ??MDB_send_package_11
 //  192       return MDB_OK;     
 ??MDB_send_package_10:
@@ -607,7 +608,7 @@ MDB_send_package:
 ??MDB_send_package_2:
         MOVS     R0,#+2
 ??MDB_send_package_12:
-        POP      {R4-R10,PC}      ;; return
+        POP      {R1-R11,PC}      ;; return
           CFI EndBlock cfiBlock4
 //  198 }
 //  199 /***********************************************************************************
@@ -630,50 +631,50 @@ MDB_send_package:
 //  211                                  unsigned char send_ack,
 //  212                                  unsigned char *pRx,unsigned char *rx_length){
 MDB_send_package_long:
-        PUSH     {R4-R10,LR}
+        PUSH     {R0,R3-R11,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R10 Frame(CFA, -8)
-          CFI R9 Frame(CFA, -12)
-          CFI R8 Frame(CFA, -16)
-          CFI R7 Frame(CFA, -20)
-          CFI R6 Frame(CFA, -24)
-          CFI R5 Frame(CFA, -28)
-          CFI R4 Frame(CFA, -32)
-          CFI CFA R13+32
-        MOV      R8,R0
-        MOV      R9,R1
-        MOV      R10,R2
-        MOVS     R4,R3
-        LDR      R5,[SP, #+32]
-        LDR      R6,[SP, #+36]
+          CFI R11 Frame(CFA, -8)
+          CFI R10 Frame(CFA, -12)
+          CFI R9 Frame(CFA, -16)
+          CFI R8 Frame(CFA, -20)
+          CFI R7 Frame(CFA, -24)
+          CFI R6 Frame(CFA, -28)
+          CFI R5 Frame(CFA, -32)
+          CFI R4 Frame(CFA, -36)
+          CFI CFA R13+44
+        SUB      SP,SP,#+4
+          CFI CFA R13+48
+        MOVS     R4,R1
+        MOVS     R5,R2
+        LDR      R6,[SP, #+48]
+        LDR      R7,[SP, #+52]
 //  213   unsigned short int time_out=2000;
-        MOV      R7,#+2000
+        MOV      R9,#+2000
 //  214   unsigned char flag;  
 //  215                               
 //  216   memcpy(MDB_buffer_stream,pData,data_length);
-        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
-        MOV      R2,R10
-        MOV      R1,R9
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        MOVS     R2,R5
+        MOVS     R1,R4
         LDR.N    R0,??DataTable3_12
           CFI FunCall memcpy
         BL       memcpy
 //  217   MDB_buffer_stream[data_length] = MDB_chk_generate(pData,data_length);
-        MOV      R1,R10
+        MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        MOV      R0,R9
+        MOVS     R0,R4
           CFI FunCall MDB_chk_generate
         BL       MDB_chk_generate
-        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R1,??DataTable3_12
-        STRB     R0,[R10, R1]
+        STRB     R0,[R5, R1]
 //  218   
 //  219   MDBUART_envia_pacote(first_is_address,MDB_buffer_stream,data_length+1);     
-        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
-        ADDS     R2,R10,#+1
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R2,R5,#+1
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
         LDR.N    R1,??DataTable3_12
-        MOV      R0,R8
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        LDRB     R0,[SP, #+4]
           CFI FunCall MDBUART_envia_pacote
         BL       MDBUART_envia_pacote
 //  220   
@@ -692,8 +693,8 @@ MDB_send_package_long:
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
         CMP      R8,#+0
         BNE.N    ??MDB_send_package_long_1
-        MOVS     R0,R7
-        SUBS     R7,R0,#+1
+        MOV      R0,R9
+        SUBS     R9,R0,#+1
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         CMP      R0,#+0
         BNE.N    ??MDB_send_package_long_0
@@ -707,16 +708,16 @@ MDB_send_package_long:
 //  229     unsigned char recebidos = MDBUART_get_bytes_recebidos();
           CFI FunCall MDBUART_get_bytes_recebidos
         BL       MDBUART_get_bytes_recebidos
-        MOV      R8,R0
+        MOV      R10,R0
 //  230     
 //  231     MDBUART_le_pacote(MDB_buffer_stream,recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:recebidos);          
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        CMP      R8,#+37
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        CMP      R10,#+37
         BLT.N    ??MDB_send_package_long_3
         MOVS     R1,#+36
         B.N      ??MDB_send_package_long_4
 ??MDB_send_package_long_3:
-        MOV      R1,R8
+        MOV      R1,R10
 ??MDB_send_package_long_4:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         LDR.N    R0,??DataTable3_12
@@ -724,41 +725,41 @@ MDB_send_package_long:
         BL       MDBUART_le_pacote
 //  232         
 //  233     unsigned char checksum = MDB_chk_generate(MDB_buffer_stream,recebidos-1);
-        SUBS     R1,R8,#+1
+        SUBS     R1,R10,#+1
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         LDR.N    R0,??DataTable3_12
           CFI FunCall MDB_chk_generate
         BL       MDB_chk_generate
-        MOVS     R7,R0
+        MOV      R11,R0
 //  234       
 //  235     memcpy(pRx,MDB_buffer_stream,recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:recebidos);
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        CMP      R8,#+37
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        CMP      R10,#+37
         BLT.N    ??MDB_send_package_long_5
         MOVS     R2,#+36
         B.N      ??MDB_send_package_long_6
 ??MDB_send_package_long_5:
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        MOV      R2,R8
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        MOV      R2,R10
 ??MDB_send_package_long_6:
         LDR.N    R1,??DataTable3_12
-        MOVS     R0,R5
+        MOVS     R0,R6
           CFI FunCall memcpy
         BL       memcpy
 //  236     *rx_length = recebidos>MAX_PACKAGE_SIZE?MAX_PACKAGE_SIZE:(recebidos-1);
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        CMP      R8,#+37
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        CMP      R10,#+37
         BLT.N    ??MDB_send_package_long_7
         MOVS     R0,#+36
         B.N      ??MDB_send_package_long_8
 ??MDB_send_package_long_7:
-        SUBS     R0,R8,#+1
+        SUBS     R0,R10,#+1
 ??MDB_send_package_long_8:
-        STRB     R0,[R6, #+0]
+        STRB     R0,[R7, #+0]
 //  237      
 //  238     if(send_ack)     
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
+        LDRB     R0,[SP, #+8]
+        CMP      R0,#+0
         BEQ.N    ??MDB_send_package_long_9
 //  239       MDB_send_ack();              
           CFI FunCall MDB_send_ack
@@ -766,15 +767,15 @@ MDB_send_package_long:
 //  240     
 //  241     if(recebidos == 1 || MDB_buffer_stream[recebidos-1] == checksum)
 ??MDB_send_package_long_9:
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        CMP      R8,#+1
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+        CMP      R10,#+1
         BEQ.N    ??MDB_send_package_long_10
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
         LDR.N    R0,??DataTable3_12
-        ADDS     R0,R8,R0
+        ADDS     R0,R10,R0
         LDRB     R0,[R0, #-1]
-        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-        CMP      R0,R7
+        UXTB     R11,R11          ;; ZeroExt  R11,R11,#+24,#+24
+        CMP      R0,R11
         BNE.N    ??MDB_send_package_long_11
 //  242       return MDB_OK;     
 ??MDB_send_package_long_10:
@@ -791,7 +792,7 @@ MDB_send_package_long:
 ??MDB_send_package_long_2:
         MOVS     R0,#+2
 ??MDB_send_package_long_12:
-        POP      {R4-R10,PC}      ;; return
+        POP      {R1-R11,PC}      ;; return
           CFI EndBlock cfiBlock5
 //  248 }
 //  249 /***********************************************************************************
@@ -916,10 +917,11 @@ MDB_send_ack:
         THUMB
 //  267 unsigned char MDB_coin_dispenser(unsigned char tipo,unsigned char quantidade){
 MDB_coin_dispenser:
-        PUSH     {R3-R5,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
@@ -940,15 +942,15 @@ MDB_coin_dispenser:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall MDBCOIN_coin_dispense
         BL       MDBCOIN_coin_dispense
-        MOVS     R4,R0
+        MOVS     R6,R0
 //  274     
 //  275   SMDB_release();
           CFI FunCall SMDB_release
         BL       SMDB_release
 //  276   
 //  277   if(flag==MDB_OK)
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BNE.N    ??MDB_coin_dispenser_0
 //  278     return 1;
         MOVS     R0,#+1
@@ -958,7 +960,7 @@ MDB_coin_dispenser:
 ??MDB_coin_dispenser_0:
         MOVS     R0,#+0
 ??MDB_coin_dispenser_1:
-        POP      {R1,R4,R5,PC}    ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock7
 //  281 }
 //  282 /***********************************************************************************
@@ -1022,20 +1024,20 @@ MDB_coin_check_tubes:
 //  302     
 //  303     for(unsigned char i=0;i<16;i++)
         MOVS     R0,#+0
-        B.N      ??MDB_coin_check_tubes_3
+??MDB_coin_check_tubes_3:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+16
+        BGE.N    ??MDB_coin_check_tubes_4
 //  304       tubes[i] = tubos[i];
-??MDB_coin_check_tubes_4:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         ADD      R1,SP,#+4
         LDRB     R1,[R0, R1]
         STRB     R1,[R0, R4]
         ADDS     R0,R0,#+1
-??MDB_coin_check_tubes_3:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+16
-        BLT.N    ??MDB_coin_check_tubes_4
+        B.N      ??MDB_coin_check_tubes_3
 //  305     return 1;
+??MDB_coin_check_tubes_4:
         MOVS     R0,#+1
         B.N      ??MDB_coin_check_tubes_5
 //  306   }  
@@ -1126,6 +1128,77 @@ MDB_checa_dispositivos:
         POP      {R1,PC}          ;; return
           CFI EndBlock cfiBlock9
 //  337 }
+//  338 /***********************************************************************************
+//  339 *       Descrição       :       Veririca se os dispositivos MDB habilitados
+//  340 *                               estão presentes no barramento
+//  341 *       Parametros      :       nenhum
+//  342 *       Retorno         :       nenhum
+//  343 ***********************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(1)
+          CFI Block cfiBlock10 Using cfiCommon0
+          CFI Function MDB_checa_valor_moedas
+        THUMB
+//  344 eMDB_reply MDB_checa_valor_moedas(unsigned char *escala,unsigned char *canais){
+MDB_checa_valor_moedas:
+        PUSH     {R4-R7,LR}
+          CFI R14 Frame(CFA, -4)
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
+        SUB      SP,SP,#+20
+          CFI CFA R13+40
+        MOVS     R4,R0
+        MOVS     R5,R1
+//  345   eMDB_reply res;
+//  346   unsigned char tentativas=10;
+        MOVS     R7,#+10
+//  347   unsigned char level;
+//  348   unsigned short int pais;
+//  349   unsigned char casas_decimais;
+//  350   unsigned short int roteamento;
+//  351   
+//  352   SMDB_wait();
+          CFI FunCall SMDB_wait
+        BL       SMDB_wait
+//  353   
+//  354   do res = MDBCOIN_get_setup_from_device(&level,&pais,escala,&casas_decimais,&roteamento,canais);
+??MDB_checa_valor_moedas_0:
+        STR      R5,[SP, #+4]
+        ADD      R0,SP,#+10
+        STR      R0,[SP, #+0]
+        ADD      R3,SP,#+8
+        MOVS     R2,R4
+        ADD      R1,SP,#+12
+        ADD      R0,SP,#+9
+          CFI FunCall MDBCOIN_get_setup_from_device
+        BL       MDBCOIN_get_setup_from_device
+        MOVS     R6,R0
+//  355   while(res!=MDB_OK && tentativas--);
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
+        BEQ.N    ??MDB_checa_valor_moedas_1
+        MOVS     R0,R7
+        SUBS     R7,R0,#+1
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+0
+        BNE.N    ??MDB_checa_valor_moedas_0
+//  356    
+//  357   SMDB_release();   
+??MDB_checa_valor_moedas_1:
+          CFI FunCall SMDB_release
+        BL       SMDB_release
+//  358   
+//  359   return res;
+        MOVS     R0,R6
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADD      SP,SP,#+20
+          CFI CFA R13+20
+        POP      {R4-R7,PC}       ;; return
+          CFI EndBlock cfiBlock10
+//  360 }
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1139,14 +1212,14 @@ MDB_checa_dispositivos:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  338 /***********************************************************************************
-//  339 *       Fim do arquivo
-//  340 ***********************************************************************************/
+//  361 /***********************************************************************************
+//  362 *       Fim do arquivo
+//  363 ***********************************************************************************/
 // 
-//  81 bytes in section .bss
-// 946 bytes in section .text
+//    81 bytes in section .bss
+// 1 010 bytes in section .text
 // 
-// 932 bytes of CODE memory (+ 14 bytes shared)
+// 988 bytes of CODE memory (+ 22 bytes shared)
 //  81 bytes of DATA memory
 //
 //Errors: none

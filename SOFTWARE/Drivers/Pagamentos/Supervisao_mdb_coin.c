@@ -58,6 +58,9 @@ typedef enum{
 unsigned char SMDBCOIN_flag_bloqueio=0;
 eCOIN_SM_STATE SMDBCOIN_estado_atual;
 unsigned short int SMDBCOIN_contador_timeout=0;
+unsigned char SMDBCOIN_coin_credit[16]={0};
+unsigned char SMDBCOIN_scale_factor=0x00;
+unsigned char SMDBCOIN_decimal_places;
 
 /***********************************************************************************
 *       Funções locais
@@ -131,17 +134,37 @@ eCOIN_SM_STATE SMDBCOIN_estado_desabilitado(eCOIN_SM_STATE estado){
 eCOIN_SM_STATE SMDBCOIN_estado_reset(eCOIN_SM_STATE estado){
   unsigned char tentativas=10;
   eMDB_reply flag;
+  unsigned char mdb_message_leve;
+  unsigned short int country;
+  unsigned short int coin_type_routing;
+  unsigned short int cfg_moedas;
+  
+  PARAMETROS_le(ADR_TIPOS_MOEDAS,(void*)&cfg_moedas);  
+
   
   do flag = MDBCOIN_reset_device();   
   while(flag!=MDB_OK && tentativas--);
   
   if(flag==MDB_OK){
+    
     tentativas = 10;
-    do flag = MDBCOIN_coin_type_setup(0x0F,0x0F);
-    while(flag!=MDB_OK && tentativas--);
-    if(flag==MDB_OK){
-      SMDBCOIN_contador_timeout = 10;
-      return COIN_SUPERVISAO;       
+    do flag = MDBCOIN_get_setup_from_device(&mdb_message_leve,&country,&SMDBCOIN_scale_factor,
+                                            &SMDBCOIN_decimal_places,&coin_type_routing,SMDBCOIN_coin_credit);
+    while(flag!=MDB_OK && --tentativas);
+    
+    if(flag==MDB_OK){      
+      
+      
+      
+      tentativas = 10;
+      do flag = MDBCOIN_coin_type_setup(cfg_moedas,cfg_moedas);
+      while(flag!=MDB_OK && tentativas--);
+      if(flag==MDB_OK){
+        SMDBCOIN_contador_timeout = 10;
+        return COIN_SUPERVISAO;       
+      }
+      else
+        return COIN_OFFLINE;
     }
     else
       return COIN_OFFLINE;
@@ -194,7 +217,6 @@ eCOIN_SM_STATE SMDBCOIN_estado_supervisao(eCOIN_SM_STATE estado){
   eMDB_COIN_POOL_STATUS status_pacote;
   unsigned char tipo_moeda;
   unsigned char quantidade_tubo;  
-  const unsigned char valores[]={5,10,25,50,100};
   eMDB_reply ack;
   unsigned char tentativas=10;
   
@@ -215,12 +237,14 @@ eCOIN_SM_STATE SMDBCOIN_estado_supervisao(eCOIN_SM_STATE estado){
   if(MDBCOIN_poll(&tipo_pacote,&status_pacote,&tipo_moeda,&quantidade_tubo)==MDB_OK){
     
     SMDBCOIN_contador_timeout = RELOAD_COIN_TIMEOUT;     
-    if(tipo_pacote==COIN_DEPOSITED){
-      //Aqui dentro é onde vem
-      // o valor da moeda para somar ao pagamento
-      unsigned short int valor = valores[tipo_moeda];
-      PAGAMENTOS_adiciona_valores(valor);
-      tipo_pacote = COIN_STATUS;
+    if(tipo_pacote!=COIN_ACK){
+       if(tipo_pacote==COIN_DEPOSITED){
+        //Aqui dentro é onde vem
+        // o valor da moeda para somar ao pagamento
+        unsigned short int valor = SMDBCOIN_coin_credit[tipo_moeda]*SMDBCOIN_scale_factor;
+        PAGAMENTOS_adiciona_valores(valor);
+        tipo_pacote = COIN_STATUS;
+      }
     }
   }
   else{

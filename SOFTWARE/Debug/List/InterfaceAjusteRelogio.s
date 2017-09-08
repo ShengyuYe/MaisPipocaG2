@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:06 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:40 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\InterfaceAjust /
-//                    eRelogio.c                                              /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\InterfaceAjus /
-//                    teRelogio.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01 /
-//                    -Firmware\01_mais_pipoca_exp\MaisPipoca -               /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\Interfa /
+//                    ceAjusteRelogio.c                                       /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\Interfa /
+//                    ceAjusteRelogio.c -lC C:\repositorios\MaisPipocaG2\SOFT /
+//                    WARE\Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTW /
+//                    ARE\Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWAR /
+//                    E\Debug\Obj\ --no_cse --no_unroll --no_inline           /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\InterfaceAjus /
-//                    teRelogio.s                                             /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\Interf /
+//                    aceAjusteRelogio.s                                      /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -87,7 +81,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\InterfaceAjusteRelogio.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\InterfaceAjusteRelogio.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Ltda.
 //    3 |       
@@ -131,16 +125,22 @@
         THUMB
 // __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
 memcpy:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
+        MOVS     R2,R6
+        MOVS     R1,R5
         MOVS     R0,R4
           CFI FunCall __aeabi_memcpy
         BL       __aeabi_memcpy
         MOVS     R0,R4
-        POP      {R4,PC}          ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -259,20 +259,21 @@ tamanhos:
         THUMB
 //   94 void IAR_entry(void){
 IAR_entry:
-        PUSH     {R4-R6,LR}
+        PUSH     {R4-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
-        SUB      SP,SP,#+112
-          CFI CFA R13+128
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
+        SUB      SP,SP,#+116
+          CFI CFA R13+136
 //   95   eTECLA tecla;
 //   96   unsigned char hora,minuto,segundo,dia,mes;
 //   97   unsigned int ano;
 //   98   unsigned int valores[6];
 //   99   unsigned char ponteiro=0;
-        MOVS     R4,#+0
+        MOVS     R7,#+0
 //  100   unsigned char refreshTime=1;
         MOVS     R5,#+1
 //  101   unsigned char toogle=0x00;
@@ -391,49 +392,103 @@ IAR_entry:
         MOVS     R0,#+12
           CFI FunCall HD44780_writeChar
         BL       HD44780_writeChar
-        B.N      ??IAR_entry_9
 //  135     
 //  136   for(;TECLADO_getContadorInatividade();){
+??IAR_entry_9:
+          CFI FunCall TECLADO_getContadorInatividade
+        BL       TECLADO_getContadorInatividade
+        CMP      R0,#+0
+        BEQ.W    ??IAR_entry_10
 //  137     
 //  138     tecla = TECLADO_getch();
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  139     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??IAR_entry_11
+        BCC.N    ??IAR_entry_12
+        CMP      R4,#+3
+        BEQ.N    ??IAR_entry_13
+        BCC.N    ??IAR_entry_14
+        CMP      R4,#+4
+        BEQ.N    ??IAR_entry_15
+        B.N      ??IAR_entry_12
 //  140       case TECLA_INC:
 //  141            (valores[ponteiro]>=limites[ponteiro][1])?(valores[ponteiro]=limites[ponteiro][0]):(valores[ponteiro]++);
-??IAR_entry_10:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+??IAR_entry_14:
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         ADD      R0,SP,#+20
-        LDR      R0,[R0, R4, LSL #+2]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.W    R1,??DataTable1
-        ADDS     R1,R1,R4, LSL #+3
+        LDR      R0,[R0, R7, LSL #+2]
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        LDR.N    R1,??DataTable1
+        ADDS     R1,R1,R7, LSL #+3
         LDR      R1,[R1, #+4]
         CMP      R0,R1
-        BCC.N    ??IAR_entry_11
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.W    R0,??DataTable1
-        LDR      R0,[R0, R4, LSL #+3]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        BCC.N    ??IAR_entry_16
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        LDR.N    R0,??DataTable1
+        LDR      R0,[R0, R7, LSL #+3]
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         ADD      R1,SP,#+20
-        STR      R0,[R1, R4, LSL #+2]
-        B.N      ??IAR_entry_12
-??IAR_entry_11:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        STR      R0,[R1, R7, LSL #+2]
+        B.N      ??IAR_entry_17
+??IAR_entry_16:
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         ADD      R0,SP,#+20
-        LDR      R0,[R0, R4, LSL #+2]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR      R0,[R0, R7, LSL #+2]
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         ADD      R1,SP,#+20
-        LDR      R1,[R1, R4, LSL #+2]
+        LDR      R1,[R1, R7, LSL #+2]
         ADDS     R1,R1,#+1
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         ADD      R2,SP,#+20
-        STR      R1,[R2, R4, LSL #+2]
+        STR      R1,[R2, R7, LSL #+2]
 //  142            break;
+??IAR_entry_17:
+        B.N      ??IAR_entry_12
 //  143       case TECLA_DEC:
 //  144            (valores[ponteiro]<=limites[ponteiro][0])?(valores[ponteiro]=limites[ponteiro][1]):(valores[ponteiro]--);
+??IAR_entry_13:
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        LDR.N    R0,??DataTable1
+        LDR      R0,[R0, R7, LSL #+3]
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        ADD      R1,SP,#+20
+        LDR      R1,[R1, R7, LSL #+2]
+        CMP      R0,R1
+        BCC.N    ??IAR_entry_18
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        LDR.N    R0,??DataTable1
+        ADDS     R0,R0,R7, LSL #+3
+        LDR      R0,[R0, #+4]
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        ADD      R1,SP,#+20
+        STR      R0,[R1, R7, LSL #+2]
+        B.N      ??IAR_entry_19
+??IAR_entry_18:
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        ADD      R0,SP,#+20
+        LDR      R0,[R0, R7, LSL #+2]
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        ADD      R1,SP,#+20
+        LDR      R1,[R1, R7, LSL #+2]
+        SUBS     R1,R1,#+1
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        ADD      R2,SP,#+20
+        STR      R1,[R2, R7, LSL #+2]
 //  145            break;
+??IAR_entry_19:
+        B.N      ??IAR_entry_12
 //  146       case TECLA_ENTER:
 //  147            if(ponteiro<5)
+??IAR_entry_15:
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        CMP      R7,#+5
+        BGE.N    ??IAR_entry_20
 //  148              ponteiro++;
+        ADDS     R7,R7,#+1
 //  149            else{
 //  150              hora = valores[0];
 //  151              minuto = valores[1];
@@ -445,20 +500,47 @@ IAR_entry:
 //  157              return;
 //  158            }        
 //  159            break;
+        B.N      ??IAR_entry_12
+??IAR_entry_20:
+        LDR      R0,[SP, #+20]
+        STRB     R0,[SP, #+12]
+        LDR      R0,[SP, #+24]
+        STRB     R0,[SP, #+11]
+        LDR      R0,[SP, #+28]
+        STRB     R0,[SP, #+10]
+        LDR      R0,[SP, #+32]
+        STRB     R0,[SP, #+9]
+        LDR      R0,[SP, #+36]
+        STRB     R0,[SP, #+8]
+        LDR      R0,[SP, #+40]
+        STR      R0,[SP, #+16]
+        LDR      R0,[SP, #+16]
+        STR      R0,[SP, #+4]
+        LDRB     R0,[SP, #+8]
+        STR      R0,[SP, #+0]
+        LDRB     R3,[SP, #+9]
+        LDRB     R2,[SP, #+10]
+        LDRB     R1,[SP, #+11]
+        LDRB     R0,[SP, #+12]
+          CFI FunCall RTC_setValue
+        BL       RTC_setValue
+        B.N      ??IAR_entry_21
 //  160       case TECLA_ESC:
 //  161            return;
+??IAR_entry_11:
+        B.N      ??IAR_entry_21
 //  162     }
 //  163     
 //  164     if(!--refreshTime){
 ??IAR_entry_12:
-??IAR_entry_13:
         SUBS     R5,R5,#+1
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
-        BNE.N    ??IAR_entry_14
+        BNE.N    ??IAR_entry_22
 //  165       refreshTime = 2;
-        MOVS     R5,#+2
+        MOVS     R0,#+2
+        MOVS     R5,R0
 //  166       toogle = ~toogle;
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         MVNS     R6,R6
@@ -503,23 +585,23 @@ IAR_entry:
 //  175       if(toogle)
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         CMP      R6,#+0
-        BEQ.N    ??IAR_entry_15
+        BEQ.N    ??IAR_entry_23
 //  176         memcpy(strings[ponteiro],tracos[ponteiro],tamanhos[ponteiro]);
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         LDR.N    R0,??DataTable1_3
-        LDRB     R2,[R4, R0]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDRB     R2,[R7, R0]
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         LDR.N    R0,??DataTable1_4
-        LDR      R1,[R0, R4, LSL #+2]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR      R1,[R0, R7, LSL #+2]
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         MOVS     R0,#+5
         ADD      R3,SP,#+44
-        MLA      R0,R0,R4,R3
+        MLA      R0,R0,R7,R3
           CFI FunCall memcpy
         BL       memcpy
 //  177         
 //  178       sprintf(bufferLinhas[0],"%s:%s:%s",strings[0],strings[1],strings[2]);
-??IAR_entry_15:
+??IAR_entry_23:
         ADD      R0,SP,#+54
         STR      R0,[SP, #+0]
         ADD      R3,SP,#+49
@@ -546,97 +628,19 @@ IAR_entry:
 //  182     }
 //  183                
 //  184     vTaskDelay(50);
-??IAR_entry_14:
+??IAR_entry_22:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??IAR_entry_9:
-          CFI FunCall TECLADO_getContadorInatividade
-        BL       TECLADO_getContadorInatividade
-        CMP      R0,#+0
-        BEQ.N    ??IAR_entry_16
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??IAR_entry_17
-        BCC.N    ??IAR_entry_13
-        CMP      R0,#+3
-        BEQ.N    ??IAR_entry_18
-        BCC.W    ??IAR_entry_10
-        CMP      R0,#+4
-        BEQ.N    ??IAR_entry_19
-        B.N      ??IAR_entry_13
-??IAR_entry_18:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.N    R0,??DataTable1
-        LDR      R0,[R0, R4, LSL #+3]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        ADD      R1,SP,#+20
-        LDR      R1,[R1, R4, LSL #+2]
-        CMP      R0,R1
-        BCC.N    ??IAR_entry_20
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.N    R0,??DataTable1
-        ADDS     R0,R0,R4, LSL #+3
-        LDR      R0,[R0, #+4]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        ADD      R1,SP,#+20
-        STR      R0,[R1, R4, LSL #+2]
-        B.N      ??IAR_entry_21
-??IAR_entry_20:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        ADD      R0,SP,#+20
-        LDR      R0,[R0, R4, LSL #+2]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        ADD      R1,SP,#+20
-        LDR      R1,[R1, R4, LSL #+2]
-        SUBS     R1,R1,#+1
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        ADD      R2,SP,#+20
-        STR      R1,[R2, R4, LSL #+2]
-??IAR_entry_21:
-        B.N      ??IAR_entry_13
-??IAR_entry_19:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+5
-        BGE.N    ??IAR_entry_22
-        ADDS     R4,R4,#+1
-        B.N      ??IAR_entry_13
-??IAR_entry_22:
-        LDR      R0,[SP, #+20]
-        STRB     R0,[SP, #+12]
-        LDR      R0,[SP, #+24]
-        STRB     R0,[SP, #+11]
-        LDR      R0,[SP, #+28]
-        STRB     R0,[SP, #+10]
-        LDR      R0,[SP, #+32]
-        STRB     R0,[SP, #+9]
-        LDR      R0,[SP, #+36]
-        STRB     R0,[SP, #+8]
-        LDR      R0,[SP, #+40]
-        STR      R0,[SP, #+16]
-        LDR      R0,[SP, #+16]
-        STR      R0,[SP, #+4]
-        LDRB     R0,[SP, #+8]
-        STR      R0,[SP, #+0]
-        LDRB     R3,[SP, #+9]
-        LDRB     R2,[SP, #+10]
-        LDRB     R1,[SP, #+11]
-        LDRB     R0,[SP, #+12]
-          CFI FunCall RTC_setValue
-        BL       RTC_setValue
-        B.N      ??IAR_entry_23
-??IAR_entry_17:
-        B.N      ??IAR_entry_23
+        B.N      ??IAR_entry_9
 //  185     
 //  186   }// Fim do for;; 
 //  187 }
-??IAR_entry_16:
-??IAR_entry_23:
-        ADD      SP,SP,#+112
-          CFI CFA R13+16
-        POP      {R4-R6,PC}       ;; return
+??IAR_entry_10:
+??IAR_entry_21:
+        ADD      SP,SP,#+116
+          CFI CFA R13+20
+        POP      {R4-R7,PC}       ;; return
           CFI EndBlock cfiBlock1
 //  188 /***********************************************************************************
 //  189 *       Descrição       :       Desenha os dados no LCD
@@ -692,24 +696,25 @@ IAR_desenhaDados:
         THUMB
 //  206 void IAR_testeRTC(void){
 IAR_testeRTC:
-        PUSH     {R4-R6,LR}
+        PUSH     {R4-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
-        SUB      SP,SP,#+112
-          CFI CFA R13+128
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
+        SUB      SP,SP,#+116
+          CFI CFA R13+136
 //  207   eTECLA tecla;
 //  208   unsigned char hora,minuto,segundo,dia,mes;
 //  209   unsigned int ano;
 //  210   unsigned int valores[6];
 //  211   unsigned char ponteiro=0;
-        MOVS     R4,#+0
+        MOVS     R5,#+0
 //  212   unsigned char refreshTime=1;
-        MOVS     R5,#+1
+        MOVS     R6,#+1
 //  213   unsigned char toogle=0x00;
-        MOVS     R6,#+0
+        MOVS     R7,#+0
 //  214   char strings[6][5];
 //  215   char bufferLinhas[2][17];
 //  216   
@@ -824,18 +829,28 @@ IAR_testeRTC:
         MOVS     R0,#+12
           CFI FunCall HD44780_writeChar
         BL       HD44780_writeChar
-        B.N      ??IAR_testeRTC_9
 //  247     
 //  248   for(;TECLADO_getContadorInatividade();){
+??IAR_testeRTC_9:
+          CFI FunCall TECLADO_getContadorInatividade
+        BL       TECLADO_getContadorInatividade
+        CMP      R0,#+0
+        BEQ.N    ??IAR_testeRTC_10
 //  249     
 //  250     tecla = TECLADO_getch();
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  251     switch(tecla){      
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??IAR_testeRTC_11
 //  252       case TECLA_ESC:
 //  253         return;
 //  254     }
 //  255     
 //  256     RTC_getValue(&hora,&minuto,&segundo,&dia,&mes,&ano);
-??IAR_testeRTC_10:
+??IAR_testeRTC_12:
         ADD      R0,SP,#+16
         STR      R0,[SP, #+4]
         ADD      R0,SP,#+8
@@ -866,16 +881,17 @@ IAR_testeRTC:
         STR      R0,[SP, #+40]
 //  263     
 //  264     if(!--refreshTime){
-        SUBS     R5,R5,#+1
-        MOVS     R0,R5
+        SUBS     R6,R6,#+1
+        MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
-        BNE.N    ??IAR_testeRTC_11
+        BNE.N    ??IAR_testeRTC_13
 //  265       refreshTime = 2;
-        MOVS     R5,#+2
+        MOVS     R0,#+2
+        MOVS     R6,R0
 //  266       toogle = ~toogle;
-        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-        MVNS     R6,R6
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        MVNS     R7,R7
 //  267       
 //  268       sprintf(strings[0],"%02d",valores[0]);
         LDR      R2,[SP, #+20]
@@ -915,25 +931,25 @@ IAR_testeRTC:
         BL       sprintf
 //  274         
 //  275       if(toogle)
-        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-        CMP      R6,#+0
-        BEQ.N    ??IAR_testeRTC_12
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        CMP      R7,#+0
+        BEQ.N    ??IAR_testeRTC_14
 //  276         memcpy(strings[ponteiro],tracos[ponteiro],tamanhos[ponteiro]);
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R0,??DataTable1_3
-        LDRB     R2,[R4, R0]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDRB     R2,[R5, R0]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R0,??DataTable1_4
-        LDR      R1,[R0, R4, LSL #+2]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR      R1,[R0, R5, LSL #+2]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         MOVS     R0,#+5
         ADD      R3,SP,#+44
-        MLA      R0,R0,R4,R3
+        MLA      R0,R0,R5,R3
           CFI FunCall memcpy
         BL       memcpy
 //  277         
 //  278       sprintf(bufferLinhas[0],"%s:%s:%s",strings[0],strings[1],strings[2]);
-??IAR_testeRTC_12:
+??IAR_testeRTC_14:
         ADD      R0,SP,#+54
         STR      R0,[SP, #+0]
         ADD      R3,SP,#+49
@@ -960,29 +976,19 @@ IAR_testeRTC:
 //  282     }
 //  283                
 //  284     vTaskDelay(50);
-??IAR_testeRTC_11:
+??IAR_testeRTC_13:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??IAR_testeRTC_9:
-          CFI FunCall TECLADO_getContadorInatividade
-        BL       TECLADO_getContadorInatividade
-        CMP      R0,#+0
-        BEQ.N    ??IAR_testeRTC_13
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BNE.W    ??IAR_testeRTC_10
-        B.N      ??IAR_testeRTC_14
+        B.N      ??IAR_testeRTC_9
 //  285     
 //  286   }// Fim do for;; 
 //  287 }
-??IAR_testeRTC_13:
-??IAR_testeRTC_14:
-        ADD      SP,SP,#+112
-          CFI CFA R13+16
-        POP      {R4-R6,PC}       ;; return
+??IAR_testeRTC_10:
+??IAR_testeRTC_11:
+        ADD      SP,SP,#+116
+          CFI CFA R13+20
+        POP      {R4-R7,PC}       ;; return
           CFI EndBlock cfiBlock3
 
         SECTION `.text`:CODE:NOROOT(2)
@@ -1045,9 +1051,9 @@ IAR_testeRTC:
 // 
 //    24 bytes in section .data
 //   108 bytes in section .rodata
-// 1 186 bytes in section .text
+// 1 196 bytes in section .text
 // 
-// 1 172 bytes of CODE  memory (+ 14 bytes shared)
+// 1 174 bytes of CODE  memory (+ 22 bytes shared)
 //   108 bytes of CONST memory
 //    24 bytes of DATA  memory
 //

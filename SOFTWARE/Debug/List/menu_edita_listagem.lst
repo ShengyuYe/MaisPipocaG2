@@ -1,37 +1,31 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:58:31 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      08/Sep/2017  19:51:37 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
 #    Endian       =  little                                                   #
-#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_edita_lista #
-#                    gem.c                                                    #
-#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_edita_list #
-#                    agem.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmw #
-#                    are\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\"  #
-#                    -lA "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_m #
-#                    ais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o       #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
-#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
-#                    --no_clustering --no_scheduling --debug --endian=little  #
-#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
-#                    Files (x86)\IAR Systems\Embedded Workbench               #
-#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
-#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\menu_edita_list #
-#                    agem.lst                                                 #
-#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\menu_edita_lista #
-#                    gem.o                                                    #
+#    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_edi #
+#                    ta_listagem.c                                            #
+#    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_edi #
+#                    ta_listagem.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\ #
+#                    Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\De #
+#                    bug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug #
+#                    \Obj\ --no_cse --no_unroll --no_inline --no_code_motion  #
+#                    --no_tbaa --no_clustering --no_scheduling --debug        #
+#                    --endian=little --cpu=Cortex-M3 -e --fpu=None            #
+#                    --dlib_config "C:\Program Files (x86)\IAR                #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -On                                               #
+#    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\menu_ed #
+#                    ita_listagem.lst                                         #
+#    Object file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\menu_edi #
+#                    ta_listagem.o                                            #
 #                                                                             #
 #                                                                             #
 ###############################################################################
 
-C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_edita_listagem.c
+C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_edita_listagem.c
       1          /*__________________________________________________________________________________
       2          |	DEXTRO SOLUÇÕES TECNOLÓGICAS
       3          |       
@@ -105,131 +99,135 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \                                 In section .text, align 2, keep-with-next
      70          void MEL_entry(char *titulo,char** labels,unsigned char *flags,unsigned char size){
    \                     MEL_entry:
-   \   00000000   0xE92D 0x43F8      PUSH     {R3-R9,LR}
-   \   00000004   0x4681             MOV      R9,R0
-   \   00000006   0x000C             MOVS     R4,R1
-   \   00000008   0x0015             MOVS     R5,R2
-   \   0000000A   0x001E             MOVS     R6,R3
+   \   00000000   0xE92D 0x4FF8      PUSH     {R3-R11,LR}
+   \   00000004   0x0004             MOVS     R4,R0
+   \   00000006   0x000D             MOVS     R5,R1
+   \   00000008   0x0016             MOVS     R6,R2
+   \   0000000A   0x001F             MOVS     R7,R3
      71            eTECLA tecla;
      72            unsigned char indice=0;
-   \   0000000C   0x2700             MOVS     R7,#+0
+   \   0000000C   0xF05F 0x0900      MOVS     R9,#+0
      73            unsigned char ultimoIndice=255;
-   \   0000000E   0xF04F 0x08FF      MOV      R8,#+255
+   \   00000010   0xF04F 0x0AFF      MOV      R10,#+255
      74            
      75            HD44780_clearText();
-   \   00000012   0x200C             MOVS     R0,#+12
-   \   00000014   0x.... 0x....      BL       HD44780_writeChar
+   \   00000014   0x200C             MOVS     R0,#+12
+   \   00000016   0x.... 0x....      BL       HD44780_writeChar
      76            unsigned char tam = strlen(titulo);
-   \   00000018   0x4648             MOV      R0,R9
-   \   0000001A   0x.... 0x....      BL       strlen
+   \   0000001A   0x0020             MOVS     R0,R4
+   \   0000001C   0x.... 0x....      BL       strlen
+   \   00000020   0x4683             MOV      R11,R0
      77            HD44780_posicionaTexto((16-tam)>>1,0);
-   \   0000001E   0x2100             MOVS     R1,#+0
-   \   00000020   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000022   0xF1D0 0x0010      RSBS     R0,R0,#+16
-   \   00000026   0x1040             ASRS     R0,R0,#+1
-   \   00000028   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   0000002A   0x.... 0x....      BL       HD44780_posicionaTexto
+   \   00000022   0x2100             MOVS     R1,#+0
+   \   00000024   0xFA5F 0xFB8B      UXTB     R11,R11          ;; ZeroExt  R11,R11,#+24,#+24
+   \   00000028   0xF1DB 0x0010      RSBS     R0,R11,#+16
+   \   0000002C   0x1040             ASRS     R0,R0,#+1
+   \   0000002E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000030   0x.... 0x....      BL       HD44780_posicionaTexto
      78            HD44780_writeString(titulo);
-   \   0000002E   0x4648             MOV      R0,R9
-   \   00000030   0x.... 0x....      BL       HD44780_writeString
-   \   00000034   0xE010             B.N      ??MEL_entry_0
+   \   00000034   0x0020             MOVS     R0,R4
+   \   00000036   0x.... 0x....      BL       HD44780_writeString
      79            
      80            for(;TECLADO_getContadorInatividade();){
+   \                     ??MEL_entry_0:
+   \   0000003A   0x.... 0x....      BL       TECLADO_getContadorInatividade
+   \   0000003E   0x2800             CMP      R0,#+0
+   \   00000040   0xD04F             BEQ.N    ??MEL_entry_1
      81            
      82              tecla = TECLADO_getch();
+   \   00000042   0x.... 0x....      BL       TECLADO_getch
+   \   00000046   0x4680             MOV      R8,R0
      83              switch(tecla){
+   \   00000048   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   0000004C   0xF1B8 0x0F01      CMP      R8,#+1
+   \   00000050   0xD01D             BEQ.N    ??MEL_entry_2
+   \   00000052   0xD331             BCC.N    ??MEL_entry_3
+   \   00000054   0xF1B8 0x0F03      CMP      R8,#+3
+   \   00000058   0xD024             BEQ.N    ??MEL_entry_4
+   \   0000005A   0xD319             BCC.N    ??MEL_entry_5
+   \   0000005C   0xF1B8 0x0F04      CMP      R8,#+4
+   \   00000060   0xD12A             BNE.N    ??MEL_entry_3
      84                case TECLA_ENTER:
      85                     flags[indice]?(flags[indice]=0):(flags[indice]=255);
+   \                     ??MEL_entry_6:
+   \   00000062   0xFA5F 0xF989      UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+   \   00000066   0xF819 0x0006      LDRB     R0,[R9, R6]
+   \   0000006A   0x2800             CMP      R0,#+0
+   \   0000006C   0xD006             BEQ.N    ??MEL_entry_7
+   \   0000006E   0x2000             MOVS     R0,#+0
+   \   00000070   0xFA5F 0xF989      UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+   \   00000074   0xF809 0x0006      STRB     R0,[R9, R6]
+   \   00000078   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000007A   0xE005             B.N      ??MEL_entry_8
+   \                     ??MEL_entry_7:
+   \   0000007C   0x20FF             MOVS     R0,#+255
+   \   0000007E   0xFA5F 0xF989      UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+   \   00000082   0xF809 0x0006      STRB     R0,[R9, R6]
+   \   00000086   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
      86                     ultimoIndice = 255;
+   \                     ??MEL_entry_8:
+   \   00000088   0x20FF             MOVS     R0,#+255
+   \   0000008A   0x4682             MOV      R10,R0
      87                     break;
+   \   0000008C   0xE014             B.N      ??MEL_entry_3
      88                case TECLA_ESC:
      89                     return;
+   \                     ??MEL_entry_2:
+   \   0000008E   0xE028             B.N      ??MEL_entry_9
      90                case TECLA_INC:
      91                     indice = (indice+1) % size;
+   \                     ??MEL_entry_5:
+   \   00000090   0xFA5F 0xF989      UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+   \   00000094   0xF119 0x0001      ADDS     R0,R9,#+1
+   \   00000098   0xB2FF             UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+   \   0000009A   0xFB90 0xF1F7      SDIV     R1,R0,R7
+   \   0000009E   0xFB07 0x0911      MLS      R9,R7,R1,R0
      92                     break;
+   \   000000A2   0xE009             B.N      ??MEL_entry_3
      93                case TECLA_DEC: 
      94                     if(indice>0)
+   \                     ??MEL_entry_4:
+   \   000000A4   0xFA5F 0xF989      UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+   \   000000A8   0xF1B9 0x0F00      CMP      R9,#+0
+   \   000000AC   0xD002             BEQ.N    ??MEL_entry_10
      95                       indice--;
+   \   000000AE   0xF1B9 0x0901      SUBS     R9,R9,#+1
+   \   000000B2   0xE001             B.N      ??MEL_entry_11
      96                     else
      97                       indice = size - 1;
-   \                     ??MEL_entry_1:
-   \   00000036   0x1E77             SUBS     R7,R6,#+1
+   \                     ??MEL_entry_10:
+   \   000000B4   0x1E78             SUBS     R0,R7,#+1
+   \   000000B6   0x4681             MOV      R9,R0
      98                     break;
      99              }
     100               
     101              if(ultimoIndice!=indice)
-   \                     ??MEL_entry_2:
+   \                     ??MEL_entry_11:
    \                     ??MEL_entry_3:
-   \   00000038   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-   \   0000003C   0xB2FF             UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-   \   0000003E   0x45B8             CMP      R8,R7
-   \   00000040   0xD006             BEQ.N    ??MEL_entry_4
+   \   000000B8   0xFA5F 0xFA8A      UXTB     R10,R10          ;; ZeroExt  R10,R10,#+24,#+24
+   \   000000BC   0xFA5F 0xF989      UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+   \   000000C0   0x45CA             CMP      R10,R9
+   \   000000C2   0xD009             BEQ.N    ??MEL_entry_12
     102                MEL_escreve_flag((char*)labels[indice],flags[indice]);    
-   \   00000042   0xB2FF             UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-   \   00000044   0x5D79             LDRB     R1,[R7, R5]
-   \   00000046   0xB2FF             UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-   \   00000048   0xF854 0x0027      LDR      R0,[R4, R7, LSL #+2]
-   \   0000004C   0x.... 0x....      BL       MEL_escreve_flag
+   \   000000C4   0xFA5F 0xF989      UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+   \   000000C8   0xF819 0x1006      LDRB     R1,[R9, R6]
+   \   000000CC   0xFA5F 0xF989      UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+   \   000000D0   0xF855 0x0029      LDR      R0,[R5, R9, LSL #+2]
+   \   000000D4   0x.... 0x....      BL       MEL_escreve_flag
     103              
     104              ultimoIndice = indice;
-   \                     ??MEL_entry_4:
-   \   00000050   0x46B8             MOV      R8,R7
+   \                     ??MEL_entry_12:
+   \   000000D8   0x46CA             MOV      R10,R9
     105              
     106              vTaskDelay(50); 
-   \   00000052   0x2032             MOVS     R0,#+50
-   \   00000054   0x.... 0x....      BL       vTaskDelay
-   \                     ??MEL_entry_0:
-   \   00000058   0x.... 0x....      BL       TECLADO_getContadorInatividade
-   \   0000005C   0x2800             CMP      R0,#+0
-   \   0000005E   0xD028             BEQ.N    ??MEL_entry_5
-   \   00000060   0x.... 0x....      BL       TECLADO_getch
-   \   00000064   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000066   0x2801             CMP      R0,#+1
-   \   00000068   0xD015             BEQ.N    ??MEL_entry_6
-   \   0000006A   0xD3E5             BCC.N    ??MEL_entry_3
-   \   0000006C   0x2803             CMP      R0,#+3
-   \   0000006E   0xD01B             BEQ.N    ??MEL_entry_7
-   \   00000070   0xD312             BCC.N    ??MEL_entry_8
-   \   00000072   0x2804             CMP      R0,#+4
-   \   00000074   0xD1E0             BNE.N    ??MEL_entry_3
-   \                     ??MEL_entry_9:
-   \   00000076   0xB2FF             UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-   \   00000078   0x5D78             LDRB     R0,[R7, R5]
-   \   0000007A   0x2800             CMP      R0,#+0
-   \   0000007C   0xD004             BEQ.N    ??MEL_entry_10
-   \   0000007E   0x2000             MOVS     R0,#+0
-   \   00000080   0xB2FF             UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-   \   00000082   0x5578             STRB     R0,[R7, R5]
-   \   00000084   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000086   0xE003             B.N      ??MEL_entry_11
-   \                     ??MEL_entry_10:
-   \   00000088   0x20FF             MOVS     R0,#+255
-   \   0000008A   0xB2FF             UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-   \   0000008C   0x5578             STRB     R0,[R7, R5]
-   \   0000008E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \                     ??MEL_entry_11:
-   \   00000090   0xF04F 0x08FF      MOV      R8,#+255
-   \   00000094   0xE7D0             B.N      ??MEL_entry_3
-   \                     ??MEL_entry_6:
-   \   00000096   0xE00C             B.N      ??MEL_entry_12
-   \                     ??MEL_entry_8:
-   \   00000098   0xB2FF             UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-   \   0000009A   0x1C78             ADDS     R0,R7,#+1
-   \   0000009C   0xB2F6             UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-   \   0000009E   0xFB90 0xF1F6      SDIV     R1,R0,R6
-   \   000000A2   0xFB06 0x0711      MLS      R7,R6,R1,R0
-   \   000000A6   0xE7C7             B.N      ??MEL_entry_3
-   \                     ??MEL_entry_7:
-   \   000000A8   0xB2FF             UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-   \   000000AA   0x2F00             CMP      R7,#+0
-   \   000000AC   0xD0C3             BEQ.N    ??MEL_entry_1
-   \   000000AE   0x1E7F             SUBS     R7,R7,#+1
-   \   000000B0   0xE7C2             B.N      ??MEL_entry_2
+   \   000000DA   0x2032             MOVS     R0,#+50
+   \   000000DC   0x.... 0x....      BL       vTaskDelay
+   \   000000E0   0xE7AB             B.N      ??MEL_entry_0
     107            }  
     108          }
-   \                     ??MEL_entry_5:
-   \                     ??MEL_entry_12:
-   \   000000B2   0xE8BD 0x83F1      POP      {R0,R4-R9,PC}    ;; return
+   \                     ??MEL_entry_1:
+   \                     ??MEL_entry_9:
+   \   000000E2   0xE8BD 0x8FF1      POP      {R0,R4-R11,PC}   ;; return
     109          /***********************************************************************************
     110          *       Descrição       :       Escreve o flag em uma linha
     111          *       Parametros      :       (unsigned char*) label
@@ -313,15 +311,15 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
 
    .cstack Function
    ------- --------
-      32   MEL_entry
-        32   -> HD44780_posicionaTexto
-        32   -> HD44780_writeChar
-        32   -> HD44780_writeString
-        32   -> MEL_escreve_flag
-        32   -> TECLADO_getContadorInatividade
-        32   -> TECLADO_getch
-        32   -> strlen
-        32   -> vTaskDelay
+      40   MEL_entry
+        40   -> HD44780_posicionaTexto
+        40   -> HD44780_writeChar
+        40   -> HD44780_writeString
+        40   -> MEL_escreve_flag
+        40   -> TECLADO_getContadorInatividade
+        40   -> TECLADO_getch
+        40   -> strlen
+        40   -> vTaskDelay
       32   MEL_escreve_flag
         32   -> HD44780_posicionaTexto
         32   -> HD44780_writeString
@@ -336,14 +334,14 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
        8  ?<Constant "[%c] %s">
        4  ??DataTable0
        4  ??DataTable0_1
-     182  MEL_entry
+     230  MEL_entry
       62  MEL_escreve_flag
 
  
   28 bytes in section .rodata
- 252 bytes in section .text
+ 300 bytes in section .text
  
- 252 bytes of CODE  memory
+ 300 bytes of CODE  memory
   28 bytes of CONST memory
 
 Errors: none

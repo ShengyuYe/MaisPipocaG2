@@ -67,7 +67,8 @@ typedef enum{
 typedef enum{
   COIN_DISPENSE_MANUALLY=0,
   COIN_DEPOSITED,
-  COIN_STATUS
+  COIN_STATUS,
+  COIN_ACK
 }eMDB_COIN_POOL_TYPE;
 
 //------------------------------------------------------------------------------

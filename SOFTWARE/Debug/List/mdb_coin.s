@@ -1,28 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jun/2017  11:11:27 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:50 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_coin.c   /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_coin.c" /
-//                     -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01 /
-//                    _mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA   /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_c /
+//                    oin.c                                                   /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_c /
+//                    oin.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\L /
+//                    ist\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Li /
+//                    st\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\ /
+//                     --no_cse --no_unroll --no_inline --no_code_motion      /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\mdb_coin.s    /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\mdb_co /
+//                    in.s                                                    /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -78,7 +74,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_coin.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_coin.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -120,16 +116,22 @@
         THUMB
 // __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
 memcpy:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
+        MOVS     R2,R6
+        MOVS     R1,R5
         MOVS     R0,R4
           CFI FunCall __aeabi_memcpy
         BL       __aeabi_memcpy
         MOVS     R0,R4
-        POP      {R4,PC}          ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock0
 //   34 #include "mdb_uart.h"
 //   35 #include "mdb.h"
@@ -288,19 +290,23 @@ MDBCOIN_reset_device:
 //  111                                          unsigned short int *coin_type_routing,
 //  112                                          unsigned char *coin_credit){
 MDBCOIN_get_setup_from_device:
-        PUSH     {R4-R7,LR}
+        PUSH     {R4-R9,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R7 Frame(CFA, -8)
-          CFI R6 Frame(CFA, -12)
-          CFI R5 Frame(CFA, -16)
-          CFI R4 Frame(CFA, -20)
-          CFI CFA R13+20
+          CFI R9 Frame(CFA, -8)
+          CFI R8 Frame(CFA, -12)
+          CFI R7 Frame(CFA, -16)
+          CFI R6 Frame(CFA, -20)
+          CFI R5 Frame(CFA, -24)
+          CFI R4 Frame(CFA, -28)
+          CFI CFA R13+28
         SUB      SP,SP,#+52
-          CFI CFA R13+72
-        MOVS     R7,R0
-        MOVS     R4,R1
-        MOVS     R5,R2
-        MOVS     R6,R3
+          CFI CFA R13+80
+        MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
+        MOVS     R7,R3
+        LDR      R8,[SP, #+80]
+        LDR      R9,[SP, #+84]
 //  113   unsigned char setup[36];
 //  114   unsigned char size;
 //  115   
@@ -323,57 +329,56 @@ MDBCOIN_get_setup_from_device:
         BNE.N    ??MDBCOIN_get_setup_from_device_0
 //  119     
 //  120     if(mdb_message_leve!=NULL)
-        CMP      R7,#+0
+        CMP      R4,#+0
         BEQ.N    ??MDBCOIN_get_setup_from_device_1
 //  121       *mdb_message_leve = setup[Z1];
         LDRB     R0,[SP, #+12]
-        STRB     R0,[R7, #+0]
+        STRB     R0,[R4, #+0]
 //  122      
 //  123     if(country!=NULL)
 ??MDBCOIN_get_setup_from_device_1:
-        CMP      R4,#+0
+        CMP      R5,#+0
         BEQ.N    ??MDBCOIN_get_setup_from_device_2
 //  124       *country = setup[Z2]<<8 | setup[Z3];
         LDRB     R0,[SP, #+13]
         LDRB     R1,[SP, #+14]
         ORRS     R0,R1,R0, LSL #+8
-        STRH     R0,[R4, #+0]
+        STRH     R0,[R5, #+0]
 //  125     
 //  126     if(scale_factor!=NULL)
 ??MDBCOIN_get_setup_from_device_2:
-        CMP      R5,#+0
+        CMP      R6,#+0
         BEQ.N    ??MDBCOIN_get_setup_from_device_3
 //  127       *scale_factor = setup[Z4];
         LDRB     R0,[SP, #+15]
-        STRB     R0,[R5, #+0]
+        STRB     R0,[R6, #+0]
 //  128     
 //  129     if(decimal_places!=NULL)
 ??MDBCOIN_get_setup_from_device_3:
-        CMP      R6,#+0
+        CMP      R7,#+0
         BEQ.N    ??MDBCOIN_get_setup_from_device_4
 //  130       *decimal_places = setup[Z5];
         LDRB     R0,[SP, #+16]
-        STRB     R0,[R6, #+0]
-??MDBCOIN_get_setup_from_device_4:
-        LDR      R0,[SP, #+72]
+        STRB     R0,[R7, #+0]
 //  131     
 //  132     if(coin_type_routing!=NULL)
-        CMP      R0,#+0
+??MDBCOIN_get_setup_from_device_4:
+        CMP      R8,#+0
         BEQ.N    ??MDBCOIN_get_setup_from_device_5
 //  133       *coin_type_routing = setup[Z6]<<8 | setup[Z7];
-        LDRB     R1,[SP, #+17]
-        LDRB     R2,[SP, #+18]
-        ORRS     R1,R2,R1, LSL #+8
-        STRH     R1,[R0, #+0]
-??MDBCOIN_get_setup_from_device_5:
-        LDR      R0,[SP, #+76]
+        LDRB     R0,[SP, #+17]
+        LDRB     R1,[SP, #+18]
+        ORRS     R0,R1,R0, LSL #+8
+        STRH     R0,[R8, #+0]
 //  134     
 //  135     if(coin_credit!=NULL)
-        CMP      R0,#+0
+??MDBCOIN_get_setup_from_device_5:
+        CMP      R9,#+0
         BEQ.N    ??MDBCOIN_get_setup_from_device_6
 //  136       memcpy(coin_credit,&setup[Z8],16);    
         MOVS     R2,#+16
         ADD      R1,SP,#+19
+        MOV      R0,R9
           CFI FunCall memcpy
         BL       memcpy
 //  137     
@@ -388,8 +393,8 @@ MDBCOIN_get_setup_from_device:
         MOVS     R0,#+2
 ??MDBCOIN_get_setup_from_device_7:
         ADD      SP,SP,#+52
-          CFI CFA R13+20
-        POP      {R4-R7,PC}       ;; return
+          CFI CFA R13+28
+        POP      {R4-R9,PC}       ;; return
           CFI EndBlock cfiBlock3
 //  142 }
 //  143 /***********************************************************************************
@@ -489,27 +494,35 @@ MDBCOIN_get_tube_status_from_device:
         THUMB
 //  180 eMDB_reply MDBCOIN_coin_type_setup(unsigned short int channels,unsigned short int manual_dispense){
 MDBCOIN_coin_type_setup:
-        PUSH     {LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
         SUB      SP,SP,#+20
-          CFI CFA R13+24
+          CFI CFA R13+32
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  181   unsigned char types[5];  
 //  182   unsigned char size;
 //  183   
 //  184   types[0] = COIN_TYPE;
-        MOVS     R2,#+12
-        STRB     R2,[SP, #+12]
-//  185   types[1] = (unsigned char)channels>>8;
-        MOVS     R2,#+0
-        STRB     R2,[SP, #+13]
+        MOVS     R0,#+12
+        STRB     R0,[SP, #+12]
+//  185   types[1] = (unsigned char)(channels>>8);
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        LSRS     R0,R4,#+8
+        STRB     R0,[SP, #+13]
 //  186   types[2] = (unsigned char)channels;
+        MOVS     R0,R4
         STRB     R0,[SP, #+14]
-//  187   types[3] = (unsigned char)manual_dispense>>8;
-        MOVS     R0,#+0
+//  187   types[3] = (unsigned char)(manual_dispense>>8);
+        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        LSRS     R0,R5,#+8
         STRB     R0,[SP, #+15]
 //  188   types[4] = (unsigned char)manual_dispense;
-        STRB     R1,[SP, #+16]
+        MOVS     R0,R5
+        STRB     R0,[SP, #+16]
 //  189   
 //  190   if(MDB_send_package_long(1,types,5,0,types,&size)==MDB_OK){
         ADD      R0,SP,#+8
@@ -535,8 +548,8 @@ MDBCOIN_coin_type_setup:
         MOVS     R0,#+2
 ??MDBCOIN_coin_type_setup_1:
         ADD      SP,SP,#+20
-          CFI CFA R13+4
-        POP      {PC}             ;; return
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
           CFI EndBlock cfiBlock5
 //  196 }
 //  197 /***********************************************************************************
@@ -552,18 +565,22 @@ MDBCOIN_coin_type_setup:
         THUMB
 //  203 eMDB_reply MDBCOIN_coin_dispense(unsigned char quantidade,unsigned char coin_code){
 MDBCOIN_coin_dispense:
-        PUSH     {R5-R7,LR}
+        PUSH     {R1-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+16
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+24
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  204   unsigned char coin[2];
 //  205   unsigned char size;
 //  206   
 //  207   coin[0] = COIN_DISPENSE;
-        MOVS     R2,#+13
-        STRB     R2,[SP, #+8]
+        MOVS     R0,#+13
+        STRB     R0,[SP, #+8]
 //  208   coin[1] = ((quantidade&0x0F)<<4) | (coin_code&0x0F);
-        ANDS     R1,R1,#0xF
-        ORRS     R0,R1,R0, LSL #+4
+        ANDS     R0,R5,#0xF
+        ORRS     R0,R0,R4, LSL #+4
         STRB     R0,[SP, #+9]
 //  209     
 //  210   if(MDB_send_package_long(1,coin,2,0,coin,&size)==MDB_OK){
@@ -589,7 +606,7 @@ MDBCOIN_coin_dispense:
 ??MDBCOIN_coin_dispense_0:
         MOVS     R0,#+2
 ??MDBCOIN_coin_dispense_1:
-        POP      {R1-R3,PC}       ;; return
+        POP      {R1-R5,PC}       ;; return
           CFI EndBlock cfiBlock6
 //  216 }
 //  217 /***********************************************************************************
@@ -643,15 +660,19 @@ MDBCOIN_poll:
         CMP      R0,#+0
         BNE.N    ??MDBCOIN_poll_0
 //  234     
-//  235     if(!size)
+//  235     if(!size){
         LDRB     R0,[SP, #+8]
         CMP      R0,#+0
         BNE.N    ??MDBCOIN_poll_1
-//  236       return MDB_OK;
+//  236       *tipo_evento = COIN_ACK;
+        MOVS     R0,#+3
+        STRB     R0,[R4, #+0]
+//  237       return MDB_OK;
         MOVS     R0,#+0
         B.N      ??MDBCOIN_poll_2
-//  237     
-//  238       if(size==2 || size==1){
+//  238     }
+//  239     
+//  240       if(size==2 || size==1){
 ??MDBCOIN_poll_1:
         LDRB     R0,[SP, #+8]
         CMP      R0,#+2
@@ -659,77 +680,77 @@ MDBCOIN_poll:
         LDRB     R0,[SP, #+8]
         CMP      R0,#+1
         BNE.N    ??MDBCOIN_poll_0
-//  239       // Evento de moeda dispensada
-//  240       // pelo teclado do moedeiro
-//  241       if(poll[0]&0x80){
+//  241       // Evento de moeda dispensada
+//  242       // pelo teclado do moedeiro
+//  243       if(poll[0]&0x80){
 ??MDBCOIN_poll_3:
         LDRB     R0,[SP, #+12]
         LSLS     R0,R0,#+24
         BPL.N    ??MDBCOIN_poll_4
-//  242         *tipo_evento = COIN_DISPENSE_MANUALLY;
+//  244         *tipo_evento = COIN_DISPENSE_MANUALLY;
         MOVS     R0,#+0
         STRB     R0,[R4, #+0]
-//  243         *status = COIN_POSSIBLE_CREDIT_REMOVAL;
+//  245         *status = COIN_POSSIBLE_CREDIT_REMOVAL;
         MOVS     R0,#+13
         STRB     R0,[R5, #+0]
-//  244         *tipo_moeda = (poll[0]&0x70)>>4;
+//  246         *tipo_moeda = (poll[0]&0x70)>>4;
         LDRB     R0,[SP, #+12]
         UBFX     R0,R0,#+4,#+3
         STRB     R0,[R6, #+0]
-//  245         *quantidade_tubo = poll[1];
+//  247         *quantidade_tubo = poll[1];
         LDRB     R0,[SP, #+13]
         STRB     R0,[R7, #+0]
         B.N      ??MDBCOIN_poll_5
-//  246       }
-//  247       else
-//  248         // Evento de crédito da moeda
-//  249         if(poll[0]&0x40){
+//  248       }
+//  249       else
+//  250         // Evento de crédito da moeda
+//  251         if(poll[0]&0x40){
 ??MDBCOIN_poll_4:
         LDRB     R0,[SP, #+12]
         LSLS     R0,R0,#+25
         BPL.N    ??MDBCOIN_poll_6
-//  250           *tipo_evento = COIN_DEPOSITED;
+//  252           *tipo_evento = COIN_DEPOSITED;
         MOVS     R0,#+1
         STRB     R0,[R4, #+0]
-//  251           *status = (eMDB_COIN_POOL_STATUS)((poll[0]&0x03)>>4);
+//  253           *status = (eMDB_COIN_POOL_STATUS)((poll[0]&0x03)>>4);
         MOVS     R0,#+0
         STRB     R0,[R5, #+0]
-//  252           *tipo_moeda = poll[0]&0x0F;
+//  254           *tipo_moeda = poll[0]&0x0F;
         LDRB     R0,[SP, #+12]
         ANDS     R0,R0,#0xF
         STRB     R0,[R6, #+0]
-//  253           *quantidade_tubo = poll[1];
+//  255           *quantidade_tubo = poll[1];
         LDRB     R0,[SP, #+13]
         STRB     R0,[R7, #+0]
         B.N      ??MDBCOIN_poll_5
-//  254         }      
-//  255         else{
-//  256           // Evento com alteração
-//  257           // no status do moedeiro
-//  258           *tipo_evento = COIN_STATUS;
+//  256         }      
+//  257         else{
+//  258           // Evento com alteração
+//  259           // no status do moedeiro
+//  260           *tipo_evento = COIN_STATUS;
 ??MDBCOIN_poll_6:
         MOVS     R0,#+2
         STRB     R0,[R4, #+0]
-//  259           *status = (eMDB_COIN_POOL_STATUS)poll[0];
+//  261           *status = (eMDB_COIN_POOL_STATUS)poll[0];
         LDRB     R0,[SP, #+12]
         STRB     R0,[R5, #+0]
-//  260           *tipo_moeda = 0;
+//  262           *tipo_moeda = 0;
         MOVS     R0,#+0
         STRB     R0,[R6, #+0]
-//  261           *quantidade_tubo = 0;
+//  263           *quantidade_tubo = 0;
         MOVS     R0,#+0
         STRB     R0,[R7, #+0]
-//  262         }              
-//  263       
-//  264       return MDB_OK;        
+//  264         }              
+//  265       
+//  266       return MDB_OK;        
 ??MDBCOIN_poll_5:
         MOVS     R0,#+0
         B.N      ??MDBCOIN_poll_2
-//  265     }    
-//  266     
-//  267   }              
-//  268   
-//  269   return MDB_TIMEOUT;                            
+//  267     }    
+//  268     
+//  269   }              
+//  270   
+//  271   return MDB_TIMEOUT;                            
 ??MDBCOIN_poll_0:
         MOVS     R0,#+2
 ??MDBCOIN_poll_2:
@@ -737,7 +758,7 @@ MDBCOIN_poll:
           CFI CFA R13+20
         POP      {R4-R7,PC}       ;; return
           CFI EndBlock cfiBlock7
-//  270 }
+//  272 }
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -751,13 +772,13 @@ MDBCOIN_poll:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  271 /***********************************************************************************
-//  272 *       Fim do arquivo
-//  273 ***********************************************************************************/
+//  273 /***********************************************************************************
+//  274 *       Fim do arquivo
+//  275 ***********************************************************************************/
 // 
-// 624 bytes in section .text
+// 668 bytes in section .text
 // 
-// 610 bytes of CODE memory (+ 14 bytes shared)
+// 646 bytes of CODE memory (+ 22 bytes shared)
 //
 //Errors: none
 //Warnings: none

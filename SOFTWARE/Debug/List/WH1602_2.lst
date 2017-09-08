@@ -1,35 +1,31 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:58:09 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      08/Sep/2017  19:51:38 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
 #    Endian       =  little                                                   #
-#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Drivers\WH1602_2\WH1602_2. #
-#                    C                                                        #
-#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\WH1602_2\WH1602_2 #
-#                    .C" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\ #
-#                    01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA  #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o           #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
-#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
-#                    --no_clustering --no_scheduling --debug --endian=little  #
-#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
-#                    Files (x86)\IAR Systems\Embedded Workbench               #
-#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
-#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\WH1602_2.lst    #
-#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\WH1602_2.o       #
+#    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\WH1602_2\W #
+#                    H1602_2.C                                                #
+#    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\WH1602_2\W #
+#                    H1602_2.C -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debu #
+#                    g\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\ #
+#                    List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj #
+#                    \ --no_cse --no_unroll --no_inline --no_code_motion      #
+#                    --no_tbaa --no_clustering --no_scheduling --debug        #
+#                    --endian=little --cpu=Cortex-M3 -e --fpu=None            #
+#                    --dlib_config "C:\Program Files (x86)\IAR                #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -On                                               #
+#    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\WH1602_ #
+#                    2.lst                                                    #
+#    Object file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\WH1602_2 #
+#                    .o                                                       #
 #                                                                             #
 #                                                                             #
 ###############################################################################
 
-C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\WH1602_2\WH1602_2.C
+C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\WH1602_2\WH1602_2.C
       1          /*__________________________________________________________________________________
       2          |	Quark Tecnologia Eletrônica Embarcada
       3          |       
@@ -182,69 +178,70 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \   0000007A   0x.... 0x....      BL       vTaskDelay
      85          
      86            for(i=0;i<3;i++){
-   \   0000007E   0x2600             MOVS     R6,#+0
-   \   00000080   0xE006             B.N      ??HD44780_2_init_0
-     87              HD44780_2_enviaNibble(0x03);
-   \                     ??HD44780_2_init_1:
-   \   00000082   0x2003             MOVS     R0,#+3
-   \   00000084   0x.... 0x....      BL       HD44780_2_enviaNibble
-     88              HD44780_2_delay_ms(100);  
-   \   00000088   0x2064             MOVS     R0,#+100
-   \   0000008A   0x.... 0x....      BL       vTaskDelay
-     89            }
-   \   0000008E   0x1C76             ADDS     R6,R6,#+1
+   \   0000007E   0x2000             MOVS     R0,#+0
+   \   00000080   0x0006             MOVS     R6,R0
    \                     ??HD44780_2_init_0:
-   \   00000090   0xB2F6             UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-   \   00000092   0x2E03             CMP      R6,#+3
-   \   00000094   0xDBF5             BLT.N    ??HD44780_2_init_1
+   \   00000082   0xB2F6             UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+   \   00000084   0x2E03             CMP      R6,#+3
+   \   00000086   0xDA07             BGE.N    ??HD44780_2_init_1
+     87              HD44780_2_enviaNibble(0x03);
+   \   00000088   0x2003             MOVS     R0,#+3
+   \   0000008A   0x.... 0x....      BL       HD44780_2_enviaNibble
+     88              HD44780_2_delay_ms(100);  
+   \   0000008E   0x2064             MOVS     R0,#+100
+   \   00000090   0x.... 0x....      BL       vTaskDelay
+     89            }
+   \   00000094   0x1C76             ADDS     R6,R6,#+1
+   \   00000096   0xE7F4             B.N      ??HD44780_2_init_0
      90            
      91            HD44780_2_enviaNibble(0x02);
-   \   00000096   0x2002             MOVS     R0,#+2
-   \   00000098   0x.... 0x....      BL       HD44780_2_enviaNibble
+   \                     ??HD44780_2_init_1:
+   \   00000098   0x2002             MOVS     R0,#+2
+   \   0000009A   0x.... 0x....      BL       HD44780_2_enviaNibble
      92            HD44780_2_delay_ms(20);      
-   \   0000009C   0x2014             MOVS     R0,#+20
-   \   0000009E   0x.... 0x....      BL       vTaskDelay
+   \   0000009E   0x2014             MOVS     R0,#+20
+   \   000000A0   0x.... 0x....      BL       vTaskDelay
      93            
      94            
      95            HD44780_2_enviaByte(0,0x20 | modo1);
-   \   000000A2   0xF054 0x0120      ORRS     R1,R4,#0x20
-   \   000000A6   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   000000A8   0x2000             MOVS     R0,#+0
-   \   000000AA   0x.... 0x....      BL       HD44780_2_enviaByte
+   \   000000A4   0xF054 0x0120      ORRS     R1,R4,#0x20
+   \   000000A8   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   000000AA   0x2000             MOVS     R0,#+0
+   \   000000AC   0x.... 0x....      BL       HD44780_2_enviaByte
      96            HD44780_2_delay_ms(20);        
-   \   000000AE   0x2014             MOVS     R0,#+20
-   \   000000B0   0x.... 0x....      BL       vTaskDelay
+   \   000000B0   0x2014             MOVS     R0,#+20
+   \   000000B2   0x.... 0x....      BL       vTaskDelay
      97            HD44780_2_enviaByte(0,0x08 | modo2);
-   \   000000B4   0xF055 0x0108      ORRS     R1,R5,#0x8
-   \   000000B8   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   000000BA   0x2000             MOVS     R0,#+0
-   \   000000BC   0x.... 0x....      BL       HD44780_2_enviaByte
+   \   000000B6   0xF055 0x0108      ORRS     R1,R5,#0x8
+   \   000000BA   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   000000BC   0x2000             MOVS     R0,#+0
+   \   000000BE   0x.... 0x....      BL       HD44780_2_enviaByte
      98            HD44780_2_delay_ms(20);        
-   \   000000C0   0x2014             MOVS     R0,#+20
-   \   000000C2   0x.... 0x....      BL       vTaskDelay
+   \   000000C2   0x2014             MOVS     R0,#+20
+   \   000000C4   0x.... 0x....      BL       vTaskDelay
      99            
     100            LCD2_controleLcd = 0x08 | modo2;
-   \   000000C6   0xF055 0x0008      ORRS     R0,R5,#0x8
-   \   000000CA   0x.... 0x....      LDR.W    R1,??DataTable9_1
-   \   000000CE   0x7008             STRB     R0,[R1, #+0]
+   \   000000C8   0xF055 0x0008      ORRS     R0,R5,#0x8
+   \   000000CC   0x.... 0x....      LDR.W    R1,??DataTable9_1
+   \   000000D0   0x7008             STRB     R0,[R1, #+0]
     101            
     102            HD44780_2_enviaByte(0,0x10);
-   \   000000D0   0x2110             MOVS     R1,#+16
-   \   000000D2   0x2000             MOVS     R0,#+0
-   \   000000D4   0x.... 0x....      BL       HD44780_2_enviaByte
+   \   000000D2   0x2110             MOVS     R1,#+16
+   \   000000D4   0x2000             MOVS     R0,#+0
+   \   000000D6   0x.... 0x....      BL       HD44780_2_enviaByte
     103            HD44780_2_delay_ms(10);          
-   \   000000D8   0x200A             MOVS     R0,#+10
-   \   000000DA   0x.... 0x....      BL       vTaskDelay
+   \   000000DA   0x200A             MOVS     R0,#+10
+   \   000000DC   0x.... 0x....      BL       vTaskDelay
     104            HD44780_2_enviaByte(0,0x06);   
-   \   000000DE   0x2106             MOVS     R1,#+6
-   \   000000E0   0x2000             MOVS     R0,#+0
-   \   000000E2   0x.... 0x....      BL       HD44780_2_enviaByte
+   \   000000E0   0x2106             MOVS     R1,#+6
+   \   000000E2   0x2000             MOVS     R0,#+0
+   \   000000E4   0x.... 0x....      BL       HD44780_2_enviaByte
     105            HD44780_2_delay_ms(10);          
-   \   000000E6   0x200A             MOVS     R0,#+10
-   \   000000E8   0x.... 0x....      BL       vTaskDelay
+   \   000000E8   0x200A             MOVS     R0,#+10
+   \   000000EA   0x.... 0x....      BL       vTaskDelay
     106          }
-   \   000000EC   0xBD70             POP      {R4-R6,PC}       ;; return
-   \   000000EE                      REQUIRE _A_FIO2DIR
+   \   000000EE   0xBD70             POP      {R4-R6,PC}       ;; return
+   \   000000F0                      REQUIRE _A_FIO2DIR
     107          /***********************************************************************************
     108          *    Descrição   :   Envia um nibble para o controlador do LCD
     109          *    Parametros  :   (unsigned char) valor que será escrito no display
@@ -346,20 +343,20 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \   000000B4   0x....             LDR.N    R2,??DataTable9_3  ;; 0x2009c05c
    \   000000B6   0x6011             STR      R1,[R2, #+0]
    \                     ??HD44780_2_enviaNibble_5:
-   \   000000B8   0x0700             LSLS     R0,R0,#+28
+   \   000000B8   0x0701             LSLS     R1,R0,#+28
    \   000000BA   0xD506             BPL.N    ??HD44780_2_enviaNibble_6
-   \   000000BC   0x....             LDR.N    R0,??DataTable9_2  ;; 0x2009c058
-   \   000000BE   0x6800             LDR      R0,[R0, #+0]
-   \   000000C0   0xF450 0x7000      ORRS     R0,R0,#0x200
-   \   000000C4   0x....             LDR.N    R1,??DataTable9_2  ;; 0x2009c058
-   \   000000C6   0x6008             STR      R0,[R1, #+0]
+   \   000000BC   0x....             LDR.N    R1,??DataTable9_2  ;; 0x2009c058
+   \   000000BE   0x6809             LDR      R1,[R1, #+0]
+   \   000000C0   0xF451 0x7100      ORRS     R1,R1,#0x200
+   \   000000C4   0x....             LDR.N    R2,??DataTable9_2  ;; 0x2009c058
+   \   000000C6   0x6011             STR      R1,[R2, #+0]
    \   000000C8   0xE005             B.N      ??HD44780_2_enviaNibble_7
    \                     ??HD44780_2_enviaNibble_6:
-   \   000000CA   0x....             LDR.N    R0,??DataTable9_3  ;; 0x2009c05c
-   \   000000CC   0x6800             LDR      R0,[R0, #+0]
-   \   000000CE   0xF450 0x7000      ORRS     R0,R0,#0x200
-   \   000000D2   0x....             LDR.N    R1,??DataTable9_3  ;; 0x2009c05c
-   \   000000D4   0x6008             STR      R0,[R1, #+0]
+   \   000000CA   0x....             LDR.N    R1,??DataTable9_3  ;; 0x2009c05c
+   \   000000CC   0x6809             LDR      R1,[R1, #+0]
+   \   000000CE   0xF451 0x7100      ORRS     R1,R1,#0x200
+   \   000000D2   0x....             LDR.N    R2,??DataTable9_3  ;; 0x2009c05c
+   \   000000D4   0x6011             STR      R1,[R2, #+0]
     116            BLOCO_SUPER_NOP;
    \                     ??HD44780_2_enviaNibble_7:
    \   000000D6   0xBF00             Nop      
@@ -407,11 +404,11 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \   0000012A   0xBF00             Nop      
    \   0000012C   0xBF00             Nop      
     117            SET_LCD_2_ENABLE;   
-   \   0000012E   0x....             LDR.N    R0,??DataTable9_2  ;; 0x2009c058
-   \   00000130   0x6800             LDR      R0,[R0, #+0]
-   \   00000132   0xF050 0x0010      ORRS     R0,R0,#0x10
-   \   00000136   0x....             LDR.N    R1,??DataTable9_2  ;; 0x2009c058
-   \   00000138   0x6008             STR      R0,[R1, #+0]
+   \   0000012E   0x....             LDR.N    R1,??DataTable9_2  ;; 0x2009c058
+   \   00000130   0x6809             LDR      R1,[R1, #+0]
+   \   00000132   0xF051 0x0110      ORRS     R1,R1,#0x10
+   \   00000136   0x....             LDR.N    R2,??DataTable9_2  ;; 0x2009c058
+   \   00000138   0x6011             STR      R1,[R2, #+0]
     118            BLOCO_SUPER_NOP;
    \   0000013A   0xBF00             Nop      
    \   0000013C   0xBF00             Nop      
@@ -458,11 +455,11 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \   0000018E   0xBF00             Nop      
    \   00000190   0xBF00             Nop      
     119            CLR_LCD_2_ENABLE;   
-   \   00000192   0x....             LDR.N    R0,??DataTable9_3  ;; 0x2009c05c
-   \   00000194   0x6800             LDR      R0,[R0, #+0]
-   \   00000196   0xF050 0x0010      ORRS     R0,R0,#0x10
-   \   0000019A   0x....             LDR.N    R1,??DataTable9_3  ;; 0x2009c05c
-   \   0000019C   0x6008             STR      R0,[R1, #+0]
+   \   00000192   0x....             LDR.N    R1,??DataTable9_3  ;; 0x2009c05c
+   \   00000194   0x6809             LDR      R1,[R1, #+0]
+   \   00000196   0xF051 0x0110      ORRS     R1,R1,#0x10
+   \   0000019A   0x....             LDR.N    R2,??DataTable9_3  ;; 0x2009c05c
+   \   0000019C   0x6011             STR      R1,[R2, #+0]
     120            BLOCO_SUPER_NOP;
    \   0000019E   0xBF00             Nop      
    \   000001A0   0xBF00             Nop      
@@ -522,32 +519,32 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \                                 In section .text, align 2, keep-with-next
     128          void HD44780_2_enviaByte(unsigned char endereco,unsigned char value){
    \                     HD44780_2_enviaByte:
-   \   00000000   0xB510             PUSH     {R4,LR}
-   \   00000002   0x000C             MOVS     R4,R1
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
     129          
     130            (endereco)?(SET_LCD_2_RS):(CLR_LCD_2_RS);                              
-   \   00000004   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000006   0x2800             CMP      R0,#+0
-   \   00000008   0xD006             BEQ.N    ??HD44780_2_enviaByte_0
-   \   0000000A   0x....             LDR.N    R0,??DataTable9_2  ;; 0x2009c058
-   \   0000000C   0x6800             LDR      R0,[R0, #+0]
-   \   0000000E   0xF050 0x0020      ORRS     R0,R0,#0x20
-   \   00000012   0x....             LDR.N    R1,??DataTable9_2  ;; 0x2009c058
-   \   00000014   0x6008             STR      R0,[R1, #+0]
-   \   00000016   0xE005             B.N      ??HD44780_2_enviaByte_1
+   \   00000006   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   00000008   0x2C00             CMP      R4,#+0
+   \   0000000A   0xD006             BEQ.N    ??HD44780_2_enviaByte_0
+   \   0000000C   0x....             LDR.N    R0,??DataTable9_2  ;; 0x2009c058
+   \   0000000E   0x6800             LDR      R0,[R0, #+0]
+   \   00000010   0xF050 0x0020      ORRS     R0,R0,#0x20
+   \   00000014   0x....             LDR.N    R1,??DataTable9_2  ;; 0x2009c058
+   \   00000016   0x6008             STR      R0,[R1, #+0]
+   \   00000018   0xE005             B.N      ??HD44780_2_enviaByte_1
    \                     ??HD44780_2_enviaByte_0:
-   \   00000018   0x....             LDR.N    R0,??DataTable9_3  ;; 0x2009c05c
-   \   0000001A   0x6800             LDR      R0,[R0, #+0]
-   \   0000001C   0xF050 0x0020      ORRS     R0,R0,#0x20
-   \   00000020   0x....             LDR.N    R1,??DataTable9_3  ;; 0x2009c05c
-   \   00000022   0x6008             STR      R0,[R1, #+0]
+   \   0000001A   0x....             LDR.N    R0,??DataTable9_3  ;; 0x2009c05c
+   \   0000001C   0x6800             LDR      R0,[R0, #+0]
+   \   0000001E   0xF050 0x0020      ORRS     R0,R0,#0x20
+   \   00000022   0x....             LDR.N    R1,??DataTable9_3  ;; 0x2009c05c
+   \   00000024   0x6008             STR      R0,[R1, #+0]
     131            HD44780_2_enviaNibble(value>>4);
    \                     ??HD44780_2_enviaByte_1:
-   \   00000024   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-   \   00000026   0x0920             LSRS     R0,R4,#+4
-   \   00000028   0x.... 0x....      BL       HD44780_2_enviaNibble
+   \   00000026   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000028   0x0928             LSRS     R0,R5,#+4
+   \   0000002A   0x.... 0x....      BL       HD44780_2_enviaNibble
     132            BLOCO_SUPER_NOP;
-   \   0000002C   0xBF00             Nop      
    \   0000002E   0xBF00             Nop      
    \   00000030   0xBF00             Nop      
    \   00000032   0xBF00             Nop      
@@ -591,18 +588,19 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \   0000007E   0xBF00             Nop      
    \   00000080   0xBF00             Nop      
    \   00000082   0xBF00             Nop      
+   \   00000084   0xBF00             Nop      
     133            HD44780_2_enviaNibble(value);  
-   \   00000084   0x0020             MOVS     R0,R4
-   \   00000086   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000088   0x.... 0x....      BL       HD44780_2_enviaNibble
+   \   00000086   0x0028             MOVS     R0,R5
+   \   00000088   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000008A   0x.... 0x....      BL       HD44780_2_enviaNibble
     134            
     135            HD44780_2_delay_ms(2);  
-   \   0000008C   0x2002             MOVS     R0,#+2
-   \   0000008E   0x.... 0x....      BL       vTaskDelay
+   \   0000008E   0x2002             MOVS     R0,#+2
+   \   00000090   0x.... 0x....      BL       vTaskDelay
     136          }
-   \   00000092   0xBD10             POP      {R4,PC}          ;; return
-   \   00000094                      REQUIRE _A_FIO2SET
-   \   00000094                      REQUIRE _A_FIO2CLR
+   \   00000094   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+   \   00000096                      REQUIRE _A_FIO2SET
+   \   00000096                      REQUIRE _A_FIO2CLR
     137          /***********************************************************************************
     138          *     Descrição   :   Posiciona o cursor em uma determinada linha do display   
     139          *     Parametros  :   (unsigned char) X
@@ -613,39 +611,41 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \                                 In section .text, align 2, keep-with-next
     143          void HD44780_2_posicionaTexto(unsigned char x,unsigned char y){
    \                     HD44780_2_posicionaTexto:
-   \   00000000   0xB580             PUSH     {R7,LR}
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
     144              
     145            if(x<16 && y==0)
-   \   00000002   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000004   0x2810             CMP      R0,#+16
-   \   00000006   0xDA09             BGE.N    ??HD44780_2_posicionaTexto_0
-   \   00000008   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   0000000A   0x2900             CMP      R1,#+0
-   \   0000000C   0xD106             BNE.N    ??HD44780_2_posicionaTexto_0
+   \   00000006   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   00000008   0x2C10             CMP      R4,#+16
+   \   0000000A   0xDA09             BGE.N    ??HD44780_2_posicionaTexto_0
+   \   0000000C   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   0000000E   0x2D00             CMP      R5,#+0
+   \   00000010   0xD106             BNE.N    ??HD44780_2_posicionaTexto_0
     146               HD44780_2_enviaByte(0,0x80 + x);
-   \   0000000E   0xF1B0 0x0180      SUBS     R1,R0,#+128
-   \   00000012   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   00000014   0x2000             MOVS     R0,#+0
-   \   00000016   0x.... 0x....      BL       HD44780_2_enviaByte
-   \   0000001A   0xE008             B.N      ??HD44780_2_posicionaTexto_1
+   \   00000012   0xF1B4 0x0180      SUBS     R1,R4,#+128
+   \   00000016   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000018   0x2000             MOVS     R0,#+0
+   \   0000001A   0x.... 0x....      BL       HD44780_2_enviaByte
+   \   0000001E   0xE008             B.N      ??HD44780_2_posicionaTexto_1
     147            else
     148              if(y==1)
    \                     ??HD44780_2_posicionaTexto_0:
-   \   0000001C   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   0000001E   0x2901             CMP      R1,#+1
-   \   00000020   0xD105             BNE.N    ??HD44780_2_posicionaTexto_1
+   \   00000020   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000022   0x2D01             CMP      R5,#+1
+   \   00000024   0xD105             BNE.N    ??HD44780_2_posicionaTexto_1
     149                HD44780_2_enviaByte(0,0xC0 + x);
-   \   00000022   0xF1B0 0x0140      SUBS     R1,R0,#+64
-   \   00000026   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   00000028   0x2000             MOVS     R0,#+0
-   \   0000002A   0x.... 0x....      BL       HD44780_2_enviaByte
+   \   00000026   0xF1B4 0x0140      SUBS     R1,R4,#+64
+   \   0000002A   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000002C   0x2000             MOVS     R0,#+0
+   \   0000002E   0x.... 0x....      BL       HD44780_2_enviaByte
     150              
     151            HD44780_2_delay_ms(4);      
    \                     ??HD44780_2_posicionaTexto_1:
-   \   0000002E   0x2004             MOVS     R0,#+4
-   \   00000030   0x.... 0x....      BL       vTaskDelay
+   \   00000032   0x2004             MOVS     R0,#+4
+   \   00000034   0x.... 0x....      BL       vTaskDelay
     152          }
-   \   00000034   0xBD01             POP      {R0,PC}          ;; return
+   \   00000038   0xBD31             POP      {R0,R4,R5,PC}    ;; return
     153          /***********************************************************************************
     154          *     Descrição    :  Escreve um caracter no display
     155          *     Parametrs    :  (char)
@@ -655,47 +655,48 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \                                 In section .text, align 2, keep-with-next
     158          void HD44780_2_writeChar(char c){
    \                     HD44780_2_writeChar:
-   \   00000000   0xB580             PUSH     {R7,LR}
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
     159            
     160            switch(c){
-   \   00000002   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000004   0x0001             MOVS     R1,R0
-   \   00000006   0x290A             CMP      R1,#+10
-   \   00000008   0xD00C             BEQ.N    ??HD44780_2_writeChar_0
-   \   0000000A   0x290C             CMP      R1,#+12
-   \   0000000C   0xD002             BEQ.N    ??HD44780_2_writeChar_1
-   \   0000000E   0x290D             CMP      R1,#+13
-   \   00000010   0xD008             BEQ.N    ??HD44780_2_writeChar_0
-   \   00000012   0xE00C             B.N      ??HD44780_2_writeChar_2
+   \   00000004   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   00000006   0x0020             MOVS     R0,R4
+   \   00000008   0x280A             CMP      R0,#+10
+   \   0000000A   0xD00C             BEQ.N    ??HD44780_2_writeChar_0
+   \   0000000C   0x280C             CMP      R0,#+12
+   \   0000000E   0xD002             BEQ.N    ??HD44780_2_writeChar_1
+   \   00000010   0x280D             CMP      R0,#+13
+   \   00000012   0xD008             BEQ.N    ??HD44780_2_writeChar_0
+   \   00000014   0xE00C             B.N      ??HD44780_2_writeChar_2
     161              case '\f':  HD44780_2_enviaByte(0,1);
    \                     ??HD44780_2_writeChar_1:
-   \   00000014   0x2101             MOVS     R1,#+1
-   \   00000016   0x2000             MOVS     R0,#+0
-   \   00000018   0x.... 0x....      BL       HD44780_2_enviaByte
+   \   00000016   0x2101             MOVS     R1,#+1
+   \   00000018   0x2000             MOVS     R0,#+0
+   \   0000001A   0x.... 0x....      BL       HD44780_2_enviaByte
     162                          HD44780_2_delay_ms(12);
-   \   0000001C   0x200C             MOVS     R0,#+12
-   \   0000001E   0x.... 0x....      BL       vTaskDelay
+   \   0000001E   0x200C             MOVS     R0,#+12
+   \   00000020   0x.... 0x....      BL       vTaskDelay
     163                          break;    
-   \   00000022   0xE009             B.N      ??HD44780_2_writeChar_3
+   \   00000024   0xE009             B.N      ??HD44780_2_writeChar_3
     164              case '\n':    
     165              case '\r':  HD44780_2_enviaByte(1,2);
    \                     ??HD44780_2_writeChar_0:
-   \   00000024   0x2102             MOVS     R1,#+2
-   \   00000026   0x2001             MOVS     R0,#+1
-   \   00000028   0x.... 0x....      BL       HD44780_2_enviaByte
+   \   00000026   0x2102             MOVS     R1,#+2
+   \   00000028   0x2001             MOVS     R0,#+1
+   \   0000002A   0x.... 0x....      BL       HD44780_2_enviaByte
     166                          break;    
-   \   0000002C   0xE004             B.N      ??HD44780_2_writeChar_3
+   \   0000002E   0xE004             B.N      ??HD44780_2_writeChar_3
     167              default  :  HD44780_2_enviaByte(1,c);
    \                     ??HD44780_2_writeChar_2:
-   \   0000002E   0x0001             MOVS     R1,R0
-   \   00000030   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   00000032   0x2001             MOVS     R0,#+1
-   \   00000034   0x.... 0x....      BL       HD44780_2_enviaByte
+   \   00000030   0x0021             MOVS     R1,R4
+   \   00000032   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000034   0x2001             MOVS     R0,#+1
+   \   00000036   0x.... 0x....      BL       HD44780_2_enviaByte
     168                          break;
     169            }
     170          }
    \                     ??HD44780_2_writeChar_3:
-   \   00000038   0xBD01             POP      {R0,PC}          ;; return
+   \   0000003A   0xBD10             POP      {R4,PC}          ;; return
     171          /***********************************************************************************
     172          *     Descrição   :   Escreve uma string no display
     173          *     Parametros  :   (char*) Ponteiro para a string
@@ -712,7 +713,7 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \   00000004   0x....             LDR.N    R0,??DataTable9_4
    \   00000006   0x6800             LDR      R0,[R0, #+0]
    \   00000008   0x2800             CMP      R0,#+0
-   \   0000000A   0xD10F             BNE.N    ??HD44780_2_writeString_0
+   \   0000000A   0xD10A             BNE.N    ??HD44780_2_writeString_0
     179              
     180              HD44780_2_tempoRefreshSegundoLCD = 30000;
    \   0000000C   0x....             LDR.N    R0,??DataTable9_4
@@ -726,20 +727,20 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
     183              HD44780_2_clearText();    
    \   0000001C   0x200C             MOVS     R0,#+12
    \   0000001E   0x.... 0x....      BL       HD44780_2_writeChar
-   \   00000022   0xE003             B.N      ??HD44780_2_writeString_0
     184            }  
     185            
     186            while(*string)
-    187              HD44780_2_writeChar(*string++);      
-   \                     ??HD44780_2_writeString_1:
-   \   00000024   0x7820             LDRB     R0,[R4, #+0]
-   \   00000026   0x.... 0x....      BL       HD44780_2_writeChar
-   \   0000002A   0x1C64             ADDS     R4,R4,#+1
    \                     ??HD44780_2_writeString_0:
-   \   0000002C   0x7820             LDRB     R0,[R4, #+0]
-   \   0000002E   0x2800             CMP      R0,#+0
-   \   00000030   0xD1F8             BNE.N    ??HD44780_2_writeString_1
+   \   00000022   0x7820             LDRB     R0,[R4, #+0]
+   \   00000024   0x2800             CMP      R0,#+0
+   \   00000026   0xD004             BEQ.N    ??HD44780_2_writeString_1
+    187              HD44780_2_writeChar(*string++);      
+   \   00000028   0x7820             LDRB     R0,[R4, #+0]
+   \   0000002A   0x.... 0x....      BL       HD44780_2_writeChar
+   \   0000002E   0x1C64             ADDS     R4,R4,#+1
+   \   00000030   0xE7F7             B.N      ??HD44780_2_writeString_0
     188          }
+   \                     ??HD44780_2_writeString_1:
    \   00000032   0xBD10             POP      {R4,PC}          ;; return
     189          /***********************************************************************************
     190          *     Descrição   :   Liga o display
@@ -919,9 +920,9 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
          8   -> HD44780_2_enviaByte
        8   HD44780_2_desligaDisplay
          8   -> HD44780_2_enviaByte
-       8   HD44780_2_enviaByte
-         8   -> HD44780_2_enviaNibble
-         8   -> vTaskDelay
+      16   HD44780_2_enviaByte
+        16   -> HD44780_2_enviaNibble
+        16   -> vTaskDelay
        0   HD44780_2_enviaNibble
       16   HD44780_2_init
         16   -> HD44780_2_enviaByte
@@ -933,9 +934,9 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
          8   -> HD44780_2_enviaByte
        8   HD44780_2_ligaDisplay
          8   -> HD44780_2_enviaByte
-       8   HD44780_2_posicionaTexto
-         8   -> HD44780_2_enviaByte
-         8   -> vTaskDelay
+      16   HD44780_2_posicionaTexto
+        16   -> HD44780_2_enviaByte
+        16   -> vTaskDelay
        8   HD44780_2_writeChar
          8   -> HD44780_2_enviaByte
          8   -> vTaskDelay
@@ -956,15 +957,15 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
       26  HD44780_2_desligaCursor
       26  HD44780_2_desligaCursorPiscante
       26  HD44780_2_desligaDisplay
-     148  HD44780_2_enviaByte
+     150  HD44780_2_enviaByte
      504  HD44780_2_enviaNibble
-     238  HD44780_2_init
+     240  HD44780_2_init
       26  HD44780_2_ligaCursor
       26  HD44780_2_ligaCursorPiscante
       26  HD44780_2_ligaDisplay
-      54  HD44780_2_posicionaTexto
+      58  HD44780_2_posicionaTexto
        4  HD44780_2_tempoRefreshSegundoLCD
-      58  HD44780_2_writeChar
+      60  HD44780_2_writeChar
       52  HD44780_2_writeString
        1  LCD2_controleLcd
        4  _A_FIO2CLR
@@ -974,9 +975,9 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
  
      5 bytes in section .bss
     12 bytes in section .noinit (abs)
- 1 230 bytes in section .text
+ 1 240 bytes in section .text
  
- 1 230 bytes of CODE memory
+ 1 240 bytes of CODE memory
      5 bytes of DATA memory (+ 12 bytes shared)
 
 Errors: none

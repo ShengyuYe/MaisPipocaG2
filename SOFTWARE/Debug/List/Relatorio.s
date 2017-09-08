@@ -1,28 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:18 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:43 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Relatorio\Relatorio.c    /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Relatorio\Relatorio.c"  /
-//                    -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_ /
-//                    mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA    /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Relatorio\Relator /
+//                    io.c                                                    /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Relatorio\Relator /
+//                    io.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Li /
+//                    st\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Lis /
+//                    t\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\  /
+//                    --no_cse --no_unroll --no_inline --no_code_motion       /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\Relatorio.s   /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\Relato /
+//                    rio.s                                                   /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -76,7 +72,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Relatorio\Relatorio.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Relatorio\Relatorio.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -236,7 +232,8 @@ RELATORIO_entry:
 //   95   faturamento_ponto = comissao_ponto * arrecadacao_parcial;
         LDR      R0,[SP, #+88]
         LDR      R1,[SP, #+80]
-        MUL      R4,R1,R0
+        MULS     R0,R1,R0
+        MOVS     R4,R0
 //   96   faturamento_ponto/= 100;
         MOVS     R0,#+100
         UDIV     R4,R4,R0
@@ -967,10 +964,13 @@ RELATORIO_eventos_troca_preco:
 //  308     for(unsigned short int i=0,indice=eventos-1;i<eventos;i++,indice--){
         MOVS     R5,#+0
         SUBS     R6,R4,#+1
-        B.N      ??RELATORIO_eventos_troca_preco_1
+??RELATORIO_eventos_troca_preco_1:
+        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        CMP      R5,R4
+        BCS.N    ??RELATORIO_eventos_troca_preco_2
 //  309       
 //  310       FTP_get_troca(indice,&novo_preco,&preco_antigo,&hora,&minuto,&segundo,&dia,&mes,&ano);
-??RELATORIO_eventos_troca_preco_2:
         ADD      R0,SP,#+32
         STR      R0,[SP, #+16]
         ADD      R0,SP,#+20
@@ -1059,13 +1059,10 @@ RELATORIO_eventos_troca_preco:
 //  323     }
         ADDS     R5,R5,#+1
         SUBS     R6,R6,#+1
-??RELATORIO_eventos_troca_preco_1:
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
-        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
-        CMP      R5,R4
-        BCC.N    ??RELATORIO_eventos_troca_preco_2
+        B.N      ??RELATORIO_eventos_troca_preco_1
 //  324     
 //  325     sprintf(buffer_linha,"\n\r\n\r\n\r\n\r\n\r");
+??RELATORIO_eventos_troca_preco_2:
         LDR.N    R1,??DataTable1_33
         ADD      R0,SP,#+36
           CFI FunCall sprintf

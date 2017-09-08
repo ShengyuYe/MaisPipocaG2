@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:24 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:50 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_cashless /
-//                    .c                                                      /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_cashles /
-//                    s.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmwar /
-//                    e\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\"   /
-//                    -lA "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_ /
-//                    mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o     /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_c /
+//                    ashless.c                                               /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_c /
+//                    ashless.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Deb /
+//                    ug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debu /
+//                    g\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\ /
+//                    Obj\ --no_cse --no_unroll --no_inline --no_code_motion  /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\mdb_cashless. /
-//                    s                                                       /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\mdb_ca /
+//                    shless.s                                                /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -76,7 +70,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_cashless.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_cashless.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -279,11 +273,27 @@ CASHLESS_reset_device:
 //  123                                                      unsigned char *tempo_maximo_transacao,
 //  124                                                      unsigned char *opcoes_gerais){
 CASHLESS_set_and_get_setup_from_to_device:
-        PUSH     {LR}
+        PUSH     {R0,R1,R4-R11,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
+          CFI R11 Frame(CFA, -8)
+          CFI R10 Frame(CFA, -12)
+          CFI R9 Frame(CFA, -16)
+          CFI R8 Frame(CFA, -20)
+          CFI R7 Frame(CFA, -24)
+          CFI R6 Frame(CFA, -28)
+          CFI R5 Frame(CFA, -32)
+          CFI R4 Frame(CFA, -36)
+          CFI CFA R13+44
         SUB      SP,SP,#+52
-          CFI CFA R13+56
+          CFI CFA R13+96
+        MOVS     R4,R2
+        MOVS     R5,R3
+        LDR      R6,[SP, #+96]
+        LDR      R7,[SP, #+100]
+        LDR      R8,[SP, #+104]
+        LDR      R9,[SP, #+108]
+        LDR      R10,[SP, #+112]
+        LDR      R11,[SP, #+116]
 //  125   unsigned char buffer[36];
 //  126   unsigned char recebidos;
 //  127   
@@ -327,61 +337,55 @@ CASHLESS_set_and_get_setup_from_to_device:
         LDRB     R0,[SP, #+8]
         CMP      R0,#+2
         BLT.N    ??CASHLESS_set_and_get_setup_from_to_device_1
-        LDR      R0,[SP, #+56]
 //  138       
 //  139       if(nivel_configurado!=NULL)
-        CMP      R0,#+0
+        CMP      R6,#+0
         BEQ.N    ??CASHLESS_set_and_get_setup_from_to_device_2
 //  140         *nivel_configurado = buffer[Z2];
-        LDRB     R1,[SP, #+13]
-        STRB     R1,[R0, #+0]
-??CASHLESS_set_and_get_setup_from_to_device_2:
-        LDR      R0,[SP, #+60]
+        LDRB     R0,[SP, #+13]
+        STRB     R0,[R6, #+0]
 //  141       
 //  142       if(pais!=NULL)
-        CMP      R0,#+0
+??CASHLESS_set_and_get_setup_from_to_device_2:
+        CMP      R7,#+0
         BEQ.N    ??CASHLESS_set_and_get_setup_from_to_device_3
 //  143         *pais = buffer[Z3]<<8 | buffer[Z4];
-        LDRB     R1,[SP, #+14]
-        LDRB     R2,[SP, #+15]
-        ORRS     R1,R2,R1, LSL #+8
-        STRH     R1,[R0, #+0]
-??CASHLESS_set_and_get_setup_from_to_device_3:
-        LDR      R0,[SP, #+64]
+        LDRB     R0,[SP, #+14]
+        LDRB     R1,[SP, #+15]
+        ORRS     R0,R1,R0, LSL #+8
+        STRH     R0,[R7, #+0]
 //  144       
 //  145       if(escala!=NULL)
-        CMP      R0,#+0
+??CASHLESS_set_and_get_setup_from_to_device_3:
+        CMP      R8,#+0
         BEQ.N    ??CASHLESS_set_and_get_setup_from_to_device_4
 //  146         *escala = buffer[Z5];
-        LDRB     R1,[SP, #+16]
-        STRB     R1,[R0, #+0]
-??CASHLESS_set_and_get_setup_from_to_device_4:
-        LDR      R0,[SP, #+68]
+        LDRB     R0,[SP, #+16]
+        STRB     R0,[R8, #+0]
 //  147       
 //  148       if(casas_decimais!=NULL)
-        CMP      R0,#+0
+??CASHLESS_set_and_get_setup_from_to_device_4:
+        CMP      R9,#+0
         BEQ.N    ??CASHLESS_set_and_get_setup_from_to_device_5
 //  149         *casas_decimais = buffer[Z6];
-        LDRB     R1,[SP, #+17]
-        STRB     R1,[R0, #+0]
-??CASHLESS_set_and_get_setup_from_to_device_5:
-        LDR      R0,[SP, #+72]
+        LDRB     R0,[SP, #+17]
+        STRB     R0,[R9, #+0]
 //  150       
 //  151       if(tempo_maximo_transacao!=NULL)
-        CMP      R0,#+0
+??CASHLESS_set_and_get_setup_from_to_device_5:
+        CMP      R10,#+0
         BEQ.N    ??CASHLESS_set_and_get_setup_from_to_device_6
 //  152         *tempo_maximo_transacao = buffer[Z7];
-        LDRB     R1,[SP, #+18]
-        STRB     R1,[R0, #+0]
-??CASHLESS_set_and_get_setup_from_to_device_6:
-        LDR      R0,[SP, #+76]
+        LDRB     R0,[SP, #+18]
+        STRB     R0,[R10, #+0]
 //  153       
 //  154       if(opcoes_gerais!=NULL)
-        CMP      R0,#+0
+??CASHLESS_set_and_get_setup_from_to_device_6:
+        CMP      R11,#+0
         BEQ.N    ??CASHLESS_set_and_get_setup_from_to_device_7
 //  155         *opcoes_gerais = buffer[Z8];      
-        LDRB     R1,[SP, #+19]
-        STRB     R1,[R0, #+0]
+        LDRB     R0,[SP, #+19]
+        STRB     R0,[R11, #+0]
 //  156       
 //  157       return MDB_OK;  
 ??CASHLESS_set_and_get_setup_from_to_device_7:
@@ -399,9 +403,9 @@ CASHLESS_set_and_get_setup_from_to_device:
 ??CASHLESS_set_and_get_setup_from_to_device_0:
         MOVS     R0,#+2
 ??CASHLESS_set_and_get_setup_from_to_device_8:
-        ADD      SP,SP,#+52
-          CFI CFA R13+4
-        POP      {PC}             ;; return
+        ADD      SP,SP,#+60
+          CFI CFA R13+36
+        POP      {R4-R11,PC}      ;; return
           CFI EndBlock cfiBlock2
 //  164 }
 //  165 /***********************************************************************************
@@ -418,32 +422,37 @@ CASHLESS_set_and_get_setup_from_to_device:
 //  171 eMDB_reply CASHLESS_set_min_and_max_price_in_device(unsigned short int min,
 //  172                                                     unsigned short int max){
 CASHLESS_set_min_and_max_price_in_device:
-        PUSH     {LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
         SUB      SP,SP,#+52
-          CFI CFA R13+56
+          CFI CFA R13+64
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  173   unsigned char buffer[36];
 //  174   unsigned char recebidos;
 //  175   
 //  176   buffer[0] = CASHLESS_SETUP;
-        MOVS     R2,#+17
-        STRB     R2,[SP, #+12]
+        MOVS     R0,#+17
+        STRB     R0,[SP, #+12]
 //  177   buffer[1] = 0x01;
-        MOVS     R2,#+1
-        STRB     R2,[SP, #+13]
+        MOVS     R0,#+1
+        STRB     R0,[SP, #+13]
 //  178   buffer[2] = max>>8;
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        LSRS     R1,R1,#+8
-        STRB     R1,[SP, #+14]
+        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        LSRS     R0,R5,#+8
+        STRB     R0,[SP, #+14]
 //  179   buffer[3] = max>>16;
-        MOVS     R1,#+0
-        STRB     R1,[SP, #+15]
+        MOVS     R0,#+0
+        STRB     R0,[SP, #+15]
 //  180   buffer[4] = min>>8;
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        LSRS     R1,R0,#+8
-        STRB     R1,[SP, #+16]
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        LSRS     R0,R4,#+8
+        STRB     R0,[SP, #+16]
 //  181   buffer[5] = min;
+        MOVS     R0,R4
         STRB     R0,[SP, #+17]
 //  182   
 //  183   if(MDB_send_package(1,buffer,6,0,buffer,&recebidos)==MDB_OK){
@@ -479,8 +488,8 @@ CASHLESS_set_min_and_max_price_in_device:
         MOVS     R0,#+2
 ??CASHLESS_set_min_and_max_price_in_device_2:
         ADD      SP,SP,#+52
-          CFI CFA R13+4
-        POP      {PC}             ;; return
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
           CFI EndBlock cfiBlock3
 //  192 }
 //  193 /***********************************************************************************
@@ -495,13 +504,13 @@ CASHLESS_set_min_and_max_price_in_device:
         THUMB
 //  198 eMDB_reply CASHLESS_poll_device(eMDB_POLL_HEADER *header,unsigned char *args){
 CASHLESS_poll_device:
-        PUSH     {R4,LR}
+        PUSH     {R1-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
-        SUB      SP,SP,#+16
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
           CFI CFA R13+24
         MOVS     R4,R0
+        MOVS     R5,R1
 //  199   unsigned char buffer[2];
 //  200   unsigned char recebidos;
 //  201   
@@ -649,9 +658,7 @@ CASHLESS_poll_device:
 ??CASHLESS_poll_device_0:
         MOVS     R0,#+2
 ??CASHLESS_poll_device_20:
-        ADD      SP,SP,#+16
-          CFI CFA R13+8
-        POP      {R4,PC}          ;; return
+        POP      {R1-R5,PC}       ;; return
           CFI EndBlock cfiBlock4
 //  251 }
 //  252 /***********************************************************************************
@@ -668,30 +675,36 @@ CASHLESS_poll_device:
         THUMB
 //  259 eMDB_reply MDBCASHLESS_start_vend(unsigned short int valor,unsigned short int code){
 MDBCASHLESS_start_vend:
-        PUSH     {LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
         SUB      SP,SP,#+20
-          CFI CFA R13+24
+          CFI CFA R13+32
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  260   unsigned char buffer[6];
 //  261   unsigned char recebidos;                      
 //  262   
 //  263   buffer[0] = CASHLESS_VEND;
-        MOVS     R2,#+19
-        STRB     R2,[SP, #+12]
+        MOVS     R0,#+19
+        STRB     R0,[SP, #+12]
 //  264   buffer[1] = REQUEST_VEND;
-        MOVS     R2,#+0
-        STRB     R2,[SP, #+13]
+        MOVS     R0,#+0
+        STRB     R0,[SP, #+13]
 //  265   buffer[2] = (unsigned char)valor>>8;
-        MOVS     R2,#+0
-        STRB     R2,[SP, #+14]
+        MOVS     R0,#+0
+        STRB     R0,[SP, #+14]
 //  266   buffer[3] = valor;
+        MOVS     R0,R4
         STRB     R0,[SP, #+15]
 //  267   buffer[4] = (unsigned char)code>>8;
         MOVS     R0,#+0
         STRB     R0,[SP, #+16]
 //  268   buffer[5] = code;
-        STRB     R1,[SP, #+17]
+        MOVS     R0,R5
+        STRB     R0,[SP, #+17]
 //  269   
 //  270   if(MDB_send_package(1,buffer,6,0,buffer,&recebidos)==MDB_OK){
         ADD      R0,SP,#+8
@@ -719,8 +732,8 @@ MDBCASHLESS_start_vend:
         MOVS     R0,#+2
 ??MDBCASHLESS_start_vend_1:
         ADD      SP,SP,#+20
-          CFI CFA R13+4
-        POP      {PC}             ;; return
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
           CFI EndBlock cfiBlock5
 //  278 }
 
@@ -740,9 +753,9 @@ MDBCASHLESS_start_vend:
 //  280 *       Fim do arquivo
 //  281 ***********************************************************************************/
 // 
-// 604 bytes in section .text
+// 648 bytes in section .text
 // 
-// 604 bytes of CODE memory
+// 648 bytes of CODE memory
 //
 //Errors: none
 //Warnings: none

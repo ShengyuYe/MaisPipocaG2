@@ -1,28 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:57:51 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:51 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_uart.c   /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_uart.c" /
-//                     -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01 /
-//                    _mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA   /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_u /
+//                    art.c                                                   /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_u /
+//                    art.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\L /
+//                    ist\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Li /
+//                    st\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\ /
+//                     --no_cse --no_unroll --no_inline --no_code_motion      /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\mdb_uart.s    /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\mdb_ua /
+//                    rt.s                                                    /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -87,7 +83,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_uart.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_uart.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -246,74 +242,74 @@ MDBUART_ini:
 //   77         
 //   78   switch(U2IIR_bit.IID){
 MDBUART_irq:
-        LDR.N    R0,??DataTable4  ;; 0x40098008
-        LDR      R0,[R0, #+0]
-        LSRS     R0,R0,#+1
-        ANDS     R0,R0,#0x7
-        CMP      R0,#+1
+        LDR.N    R1,??DataTable4  ;; 0x40098008
+        LDR      R1,[R1, #+0]
+        LSRS     R1,R1,#+1
+        ANDS     R1,R1,#0x7
+        CMP      R1,#+1
         BEQ.N    ??MDBUART_irq_0
-        CMP      R0,#+2
+        CMP      R1,#+2
         BEQ.N    ??MDBUART_irq_1
-        CMP      R0,#+3
+        CMP      R1,#+3
         BEQ.N    ??MDBUART_irq_2
-        CMP      R0,#+6
+        CMP      R1,#+6
         BEQ.N    ??MDBUART_irq_2
         B.N      ??MDBUART_irq_3
 //   79     case THRE:                  
 //   80                U2LCR_bit.PE = 1; // Habilita o bit de paridade
 ??MDBUART_irq_0:
-        LDR.N    R0,??DataTable4_1  ;; 0x4009800c
-        LDRB     R0,[R0, #+0]
-        ORRS     R0,R0,#0x8
         LDR.N    R1,??DataTable4_1  ;; 0x4009800c
-        STRB     R0,[R1, #+0]
+        LDRB     R1,[R1, #+0]
+        ORRS     R1,R1,#0x8
+        LDR.N    R2,??DataTable4_1  ;; 0x4009800c
+        STRB     R1,[R2, #+0]
 //   81                
 //   82                if(MDBUART_bytes_to_send){
-        LDR.N    R0,??DataTable4_2
-        LDRB     R0,[R0, #+0]
-        CMP      R0,#+0
+        LDR.N    R1,??DataTable4_2
+        LDRB     R1,[R1, #+0]
+        CMP      R1,#+0
         BEQ.N    ??MDBUART_irq_4
 //   83                  U2LCR_bit.PS = 0x03; // Força em 0                             
-        LDR.N    R0,??DataTable4_1  ;; 0x4009800c
-        LDRB     R0,[R0, #+0]
-        ORRS     R0,R0,#0x30
         LDR.N    R1,??DataTable4_1  ;; 0x4009800c
-        STRB     R0,[R1, #+0]
+        LDRB     R1,[R1, #+0]
+        ORRS     R1,R1,#0x30
+        LDR.N    R2,??DataTable4_1  ;; 0x4009800c
+        STRB     R1,[R2, #+0]
 //   84                  MDBUART_bytes_to_send--;
-        LDR.N    R0,??DataTable4_2
-        LDRB     R0,[R0, #+0]
-        SUBS     R0,R0,#+1
         LDR.N    R1,??DataTable4_2
-        STRB     R0,[R1, #+0]
+        LDRB     R1,[R1, #+0]
+        SUBS     R1,R1,#+1
+        LDR.N    R2,??DataTable4_2
+        STRB     R1,[R2, #+0]
 //   85                  U2THR = *MDBUART_pOut++;  
-        LDR.N    R0,??DataTable4_3  ;; 0x40098000
+        LDR.N    R1,??DataTable4_3  ;; 0x40098000
+        LDR.N    R2,??DataTable4_4
+        LDR      R2,[R2, #+0]
+        LDRB     R2,[R2, #+0]
+        STRB     R2,[R1, #+0]
         LDR.N    R1,??DataTable4_4
         LDR      R1,[R1, #+0]
-        LDRB     R1,[R1, #+0]
-        STRB     R1,[R0, #+0]
-        LDR.N    R0,??DataTable4_4
-        LDR      R0,[R0, #+0]
-        ADDS     R0,R0,#+1
-        LDR.N    R1,??DataTable4_4
-        STR      R0,[R1, #+0]
+        ADDS     R1,R1,#+1
+        LDR.N    R2,??DataTable4_4
+        STR      R1,[R2, #+0]
 //   86                  MDBUART_silent_time = 250;
-        LDR.N    R0,??DataTable4_5
-        MOVS     R1,#+250
-        STRB     R1,[R0, #+0]
+        LDR.N    R1,??DataTable4_5
+        MOVS     R2,#+250
+        STRB     R2,[R1, #+0]
         B.N      ??MDBUART_irq_5
 //   87                }          
 //   88                else{
 //   89                  U2LCR_bit.PS = 0x03; // Paridade par
 ??MDBUART_irq_4:
-        LDR.N    R0,??DataTable4_1  ;; 0x4009800c
-        LDRB     R0,[R0, #+0]
-        ORRS     R0,R0,#0x30
         LDR.N    R1,??DataTable4_1  ;; 0x4009800c
-        STRB     R0,[R1, #+0]
+        LDRB     R1,[R1, #+0]
+        ORRS     R1,R1,#0x30
+        LDR.N    R2,??DataTable4_1  ;; 0x4009800c
+        STRB     R1,[R2, #+0]
 //   90                  MDBUART_silent_time = 250;
-        LDR.N    R0,??DataTable4_5
-        MOVS     R1,#+250
-        STRB     R1,[R0, #+0]
+        LDR.N    R1,??DataTable4_5
+        MOVS     R2,#+250
+        STRB     R2,[R1, #+0]
 //   91                }
 //   92                
 //   93                break; 
@@ -322,21 +318,22 @@ MDBUART_irq:
 //   94     case RDA : 
 //   95                if(U2LSR_bit.PE)
 ??MDBUART_irq_1:
-        LDR.N    R0,??DataTable4_6  ;; 0x40098014
-        LDRB     R0,[R0, #+0]
-        UBFX     R0,R0,#+2,#+1
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        LDR.N    R1,??DataTable4_6  ;; 0x40098014
+        LDRB     R1,[R1, #+0]
+        UBFX     R1,R1,#+2,#+1
+        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+        CMP      R1,#+0
         BEQ.N    ??MDBUART_irq_6
 //   96                  MDBUART_novo_pacote = 1;
-        LDR.N    R0,??DataTable4_7
-        MOVS     R1,#+1
-        STRB     R1,[R0, #+0]
+        LDR.N    R1,??DataTable4_7
+        MOVS     R2,#+1
+        STRB     R2,[R1, #+0]
 //   97                
 //   98                dummy = U2RBR;               
 ??MDBUART_irq_6:
-        LDR.N    R0,??DataTable4_3  ;; 0x40098000
-        LDRB     R0,[R0, #+0]
+        LDR.N    R1,??DataTable4_3  ;; 0x40098000
+        LDRB     R1,[R1, #+0]
+        MOVS     R0,R1
 //   99     
 //  100                if(MDBUART_bytes_recebidos<(TAM_BUF_IN-1))
         LDR.N    R1,??DataTable4_8
@@ -348,11 +345,11 @@ MDBUART_irq:
         LDRB     R1,[R1, #+0]
         LDR.N    R2,??DataTable4_9
         STRB     R0,[R1, R2]
-        LDR.N    R0,??DataTable4_8
-        LDRB     R0,[R0, #+0]
-        ADDS     R0,R0,#+1
         LDR.N    R1,??DataTable4_8
-        STRB     R0,[R1, #+0]
+        LDRB     R1,[R1, #+0]
+        ADDS     R1,R1,#+1
+        LDR.N    R2,??DataTable4_8
+        STRB     R1,[R2, #+0]
 //  102                
 //  103                break;      
 ??MDBUART_irq_7:
@@ -361,8 +358,9 @@ MDBUART_irq:
 //  105     case CTI :
 //  106                dummy = U2LSR;         
 ??MDBUART_irq_2:
-        LDR.N    R0,??DataTable4_6  ;; 0x40098014
-        LDRB     R0,[R0, #+0]
+        LDR.N    R1,??DataTable4_6  ;; 0x40098014
+        LDRB     R1,[R1, #+0]
+        MOVS     R0,R1
 //  107                dummy = U2RBR;         
         LDR.N    R1,??DataTable4_3  ;; 0x40098000
         LDRB     R1,[R1, #+0]
@@ -373,11 +371,11 @@ MDBUART_irq:
 //  111   //Apaga o flag de interrupção pendente
 //  112   CLRPEND0 |= (0x01)<<7;               
 ??MDBUART_irq_3:
-        LDR.N    R0,??DataTable4_10  ;; 0xe000e280
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x80
         LDR.N    R1,??DataTable4_10  ;; 0xe000e280
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x80
+        LDR.N    R2,??DataTable4_10  ;; 0xe000e280
+        STR      R1,[R2, #+0]
 //  113 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock1
@@ -416,43 +414,44 @@ MDBUART_envia_pacote:
         CMP      R0,#+0
         BEQ.N    ??MDBUART_envia_pacote_0
 //  125     U2LCR_bit.PS = 0x02; // Força em 1
-        MOVS     R0,#+2
+        MOVS     R3,#+2
+        LDR.N    R4,??DataTable4_1  ;; 0x4009800c
+        LDRB     R4,[R4, #+0]
+        BFI      R4,R3,#+4,#+2
         LDR.N    R3,??DataTable4_1  ;; 0x4009800c
-        LDRB     R3,[R3, #+0]
-        BFI      R3,R0,#+4,#+2
-        LDR.N    R0,??DataTable4_1  ;; 0x4009800c
-        STRB     R3,[R0, #+0]
+        STRB     R4,[R3, #+0]
         B.N      ??MDBUART_envia_pacote_1
 //  126   else
 //  127     U2LCR_bit.PS = 0x03; // Força em 0
 ??MDBUART_envia_pacote_0:
-        LDR.N    R0,??DataTable4_1  ;; 0x4009800c
-        LDRB     R0,[R0, #+0]
-        ORRS     R0,R0,#0x30
         LDR.N    R3,??DataTable4_1  ;; 0x4009800c
-        STRB     R0,[R3, #+0]
+        LDRB     R3,[R3, #+0]
+        ORRS     R3,R3,#0x30
+        LDR.N    R4,??DataTable4_1  ;; 0x4009800c
+        STRB     R3,[R4, #+0]
 //  128   
 //  129   MDBUART_bytes_recebidos = 0;
 ??MDBUART_envia_pacote_1:
-        LDR.N    R0,??DataTable4_8
-        MOVS     R3,#+0
-        STRB     R3,[R0, #+0]
+        LDR.N    R3,??DataTable4_8
+        MOVS     R4,#+0
+        STRB     R4,[R3, #+0]
 //  130   MDBUART_novo_pacote = 0;
-        LDR.N    R0,??DataTable4_7
-        MOVS     R3,#+0
-        STRB     R3,[R0, #+0]
+        LDR.N    R3,??DataTable4_7
+        MOVS     R4,#+0
+        STRB     R4,[R3, #+0]
 //  131   MDBUART_pOut = (pacote+1);
-        ADDS     R0,R1,#+1
-        LDR.N    R3,??DataTable4_4
-        STR      R0,[R3, #+0]
+        ADDS     R3,R1,#+1
+        LDR.N    R4,??DataTable4_4
+        STR      R3,[R4, #+0]
 //  132   MDBUART_bytes_to_send = tamanho-1;
-        SUBS     R0,R2,#+1
-        LDR.N    R2,??DataTable4_2
-        STRB     R0,[R2, #+0]
+        MOVS     R3,R2
+        SUBS     R3,R3,#+1
+        LDR.N    R4,??DataTable4_2
+        STRB     R3,[R4, #+0]
 //  133   U2THR = *pacote;  
-        LDR.N    R0,??DataTable4_3  ;; 0x40098000
-        LDRB     R1,[R1, #+0]
-        STRB     R1,[R0, #+0]
+        LDR.N    R3,??DataTable4_3  ;; 0x40098000
+        LDRB     R4,[R1, #+0]
+        STRB     R4,[R3, #+0]
 //  134 }
         POP      {R4}
           CFI R4 SameValue
@@ -478,21 +477,21 @@ MDBUART_envia_pacote:
 //  143   for(unsigned char i=0;i<tamanho;i++)
 MDBUART_le_pacote:
         MOVS     R2,#+0
-        B.N      ??MDBUART_le_pacote_0
+??MDBUART_le_pacote_0:
+        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+        CMP      R2,R1
+        BCS.N    ??MDBUART_le_pacote_1
 //  144     pData[i] = MDBUART_buffer_in[i];
-??MDBUART_le_pacote_1:
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         LDR.N    R3,??DataTable4_9
         LDRB     R3,[R2, R3]
         STRB     R3,[R2, R0]
         ADDS     R2,R2,#+1
-??MDBUART_le_pacote_0:
-        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        CMP      R2,R1
-        BCC.N    ??MDBUART_le_pacote_1
+        B.N      ??MDBUART_le_pacote_0
 //  145 }
+??MDBUART_le_pacote_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock3
 //  146 /***********************************************************************************
@@ -615,16 +614,19 @@ MDBUART_has_new_package:
         THUMB
 //  171 void MDBAURT_sleep(unsigned short int cicles){
 MDBAURT_sleep:
-        PUSH     {R7,LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
+        MOVS     R4,R0
 //  172   
 //  173   vTaskDelay(cicles);
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        MOVS     R0,R4
           CFI FunCall vTaskDelay
         BL       vTaskDelay
 //  174 }
-        POP      {R0,PC}          ;; return
+        POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock6
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
@@ -645,9 +647,9 @@ MDBAURT_sleep:
 // 
 //  60 bytes in section .bss
 //  11 bytes in section .noinit (abs)
-// 390 bytes in section .text
+// 400 bytes in section .text
 // 
-// 390 bytes of CODE memory
+// 400 bytes of CODE memory
 //  60 bytes of DATA memory (+ 11 bytes shared)
 //
 //Errors: none

@@ -1,29 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:20 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:45 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\Teclado\Teclado. /
-//                    c                                                       /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\Teclado\Teclado /
-//                    .c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware /
-//                    \01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\"    /
-//                    -lA "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_ /
-//                    mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o     /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Teclado\T /
+//                    eclado.c                                                /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Teclado\T /
+//                    eclado.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debu /
+//                    g\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug /
+//                    \List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\O /
+//                    bj\ --no_cse --no_unroll --no_inline --no_code_motion   /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\Teclado.s     /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\Teclad /
+//                    o.s                                                     /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -78,7 +73,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\Teclado\Teclado.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Teclado\Teclado.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -415,12 +410,15 @@ TECLADO_getch:
 //  128   static unsigned char teclaLivre=0;
 //  129   
 //  130   contador=0;
-        MOVS     R1,#+0
+        MOVS     R0,#+0
+        MOVS     R1,R0
 //  131   for(unsigned char i=0;i<TAM_BUF_TECLADO;i++)    
         MOVS     R0,#+0
-        B.N      ??TECLADO_getch_0
+??TECLADO_getch_0:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+8
+        BGE.N    ??TECLADO_getch_1
 //  132     if((TECLADO_bufferAmostragem[i]&0x09)==0x09)
-??TECLADO_getch_1:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LDR.N    R2,??DataTable5_4
         LDRB     R2,[R0, R2]
@@ -431,12 +429,10 @@ TECLADO_getch:
         ADDS     R1,R1,#+1
 ??TECLADO_getch_2:
         ADDS     R0,R0,#+1
-??TECLADO_getch_0:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+8
-        BLT.N    ??TECLADO_getch_1
+        B.N      ??TECLADO_getch_0
 //  134   
 //  135   if(contador>(TAM_BUF_TECLADO>>1))
+??TECLADO_getch_1:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         CMP      R1,#+5
         BLT.N    ??TECLADO_getch_3
@@ -447,66 +443,64 @@ TECLADO_getch:
 //  138   for(unsigned char i=0;i<5;i++){
 ??TECLADO_getch_3:
         MOVS     R0,#+0
-        B.N      ??TECLADO_getch_5
-??TECLADO_getch_6:
-        ADDS     R0,R0,#+1
 ??TECLADO_getch_5:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+5
-        BGE.N    ??TECLADO_getch_7
+        BGE.N    ??TECLADO_getch_6
 //  139     // inicia a contagem em zero
 //  140     contador=0;
-        MOVS     R1,#+0
+        MOVS     R2,#+0
+        MOVS     R1,R2
 //  141     // Conta as ocorrências da 
 //  142     // tecla no buffer
 //  143     for(unsigned char j=0;j<TAM_BUF_TECLADO;j++)
         MOVS     R2,#+0
-        B.N      ??TECLADO_getch_8
+??TECLADO_getch_7:
+        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+        CMP      R2,#+8
+        BGE.N    ??TECLADO_getch_8
 //  144       if(TECLADO_bufferAmostragem[j]&(0x01<<i))
-??TECLADO_getch_9:
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         LDR.N    R3,??DataTable5_4
         LDRB     R3,[R2, R3]
         MOVS     R4,#+1
         LSLS     R4,R4,R0
         TST      R3,R4
-        BEQ.N    ??TECLADO_getch_10
+        BEQ.N    ??TECLADO_getch_9
 //  145         contador++;
         ADDS     R1,R1,#+1
-??TECLADO_getch_10:
+??TECLADO_getch_9:
         ADDS     R2,R2,#+1
-??TECLADO_getch_8:
-        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
-        CMP      R2,#+8
-        BLT.N    ??TECLADO_getch_9
+        B.N      ??TECLADO_getch_7
 //  146       
 //  147      if(contador>(TAM_BUF_TECLADO>>1)){
+??TECLADO_getch_8:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         CMP      R1,#+5
-        BLT.N    ??TECLADO_getch_6
+        BLT.N    ??TECLADO_getch_10
 //  148                      
 //  149        if(!TECLADO_contadorRepeticao){                 
-        LDR.N    R1,??DataTable5_1
-        LDRH     R1,[R1, #+0]
-        CMP      R1,#+0
+        LDR.N    R2,??DataTable5_1
+        LDRH     R2,[R2, #+0]
+        CMP      R2,#+0
         BNE.N    ??TECLADO_getch_11
 //  150          if(teclaLivre){
-        LDR.N    R1,??DataTable5_7
-        LDRB     R1,[R1, #+0]
-        CMP      R1,#+0
+        LDR.N    R2,??DataTable5_7
+        LDRB     R2,[R2, #+0]
+        CMP      R2,#+0
         BEQ.N    ??TECLADO_getch_12
 //  151             teclaLivre = 0;
-        LDR.N    R1,??DataTable5_7
-        MOVS     R2,#+0
-        STRB     R2,[R1, #+0]
+        LDR.N    R2,??DataTable5_7
+        MOVS     R3,#+0
+        STRB     R3,[R2, #+0]
 //  152             TECLADO_contadorRepeticao = RELOAD_CONTADOR_REPETICAO;
-        LDR.N    R1,??DataTable5_1
-        MOV      R2,#+2000
-        STRH     R2,[R1, #+0]
+        LDR.N    R2,??DataTable5_1
+        MOV      R3,#+2000
+        STRH     R3,[R2, #+0]
 //  153             TECLADO_contadorTimeout = RELOAD_CONTADOR_TIMEOUT;
-        LDR.N    R1,??DataTable5
-        MOVW     R2,#+60000
-        STR      R2,[R1, #+0]
+        LDR.N    R2,??DataTable5
+        MOVW     R3,#+60000
+        STR      R3,[R2, #+0]
 //  154             //ultimaTecla = (eTECLA)(i+1);           
 //  155             return (eTECLA)(i+1);           
         ADDS     R0,R0,#+1
@@ -516,13 +510,13 @@ TECLADO_getch:
 //  157          else{
 //  158             TECLADO_contadorRepeticao = RELOAD_REPETICAO;
 ??TECLADO_getch_12:
-        LDR.N    R1,??DataTable5_1
-        MOVS     R2,#+50
-        STRH     R2,[R1, #+0]
+        LDR.N    R2,??DataTable5_1
+        MOVS     R3,#+50
+        STRH     R3,[R2, #+0]
 //  159             TECLADO_contadorTimeout = RELOAD_CONTADOR_TIMEOUT;
-        LDR.N    R1,??DataTable5
-        MOVW     R2,#+60000
-        STR      R2,[R1, #+0]
+        LDR.N    R2,??DataTable5
+        MOVW     R3,#+60000
+        STR      R3,[R2, #+0]
 //  160             //ultimaTecla = (eTECLA)(i+1);           
 //  161             return (eTECLA)(i+1);           
         ADDS     R0,R0,#+1
@@ -533,22 +527,22 @@ TECLADO_getch:
 //  164        else{
 //  165          if(teclaLivre){
 ??TECLADO_getch_11:
-        LDR.N    R1,??DataTable5_7
-        LDRB     R1,[R1, #+0]
-        CMP      R1,#+0
+        LDR.N    R2,??DataTable5_7
+        LDRB     R2,[R2, #+0]
+        CMP      R2,#+0
         BEQ.N    ??TECLADO_getch_13
 //  166             teclaLivre = 0;
-        LDR.N    R1,??DataTable5_7
-        MOVS     R2,#+0
-        STRB     R2,[R1, #+0]
+        LDR.N    R2,??DataTable5_7
+        MOVS     R3,#+0
+        STRB     R3,[R2, #+0]
 //  167             TECLADO_contadorRepeticao = RELOAD_CONTADOR_REPETICAO;
-        LDR.N    R1,??DataTable5_1
-        MOV      R2,#+2000
-        STRH     R2,[R1, #+0]
+        LDR.N    R2,??DataTable5_1
+        MOV      R3,#+2000
+        STRH     R3,[R2, #+0]
 //  168             TECLADO_contadorTimeout = RELOAD_CONTADOR_TIMEOUT;
-        LDR.N    R1,??DataTable5
-        MOVW     R2,#+60000
-        STR      R2,[R1, #+0]
+        LDR.N    R2,??DataTable5
+        MOVW     R3,#+60000
+        STR      R3,[R2, #+0]
 //  169             //ultimaTecla = (eTECLA)(i+1);           
 //  170             return (eTECLA)(i+1);                      
         ADDS     R0,R0,#+1
@@ -563,13 +557,16 @@ TECLADO_getch:
 //  174        }
 //  175      }
 //  176   }       
+??TECLADO_getch_10:
+        ADDS     R0,R0,#+1
+        B.N      ??TECLADO_getch_5
 //  177   
 //  178   //ultimaTecla = NENHUMA_TECLA;
 //  179   teclaLivre = 1;
-??TECLADO_getch_7:
+??TECLADO_getch_6:
         LDR.N    R0,??DataTable5_7
-        MOVS     R1,#+1
-        STRB     R1,[R0, #+0]
+        MOVS     R2,#+1
+        STRB     R2,[R0, #+0]
 //  180   return NENHUMA_TECLA;
         MOVS     R0,#+0
 ??TECLADO_getch_4:
@@ -646,9 +643,11 @@ TECLADO_getChavePorta:
 //  211   
 //  212   for(unsigned char i=0;i<TAM_BUF_TECLADO;i++)
         MOVS     R1,#+0
-        B.N      ??TECLADO_getChavePorta_0
+??TECLADO_getChavePorta_0:
+        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+        CMP      R1,#+8
+        BGE.N    ??TECLADO_getChavePorta_1
 //  213     if(TECLADO_bufferAmostragem[i]&64)
-??TECLADO_getChavePorta_1:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         LDR.N    R2,??DataTable5_4
         LDRB     R2,[R1, R2]
@@ -658,12 +657,10 @@ TECLADO_getChavePorta:
         ADDS     R0,R0,#+1
 ??TECLADO_getChavePorta_2:
         ADDS     R1,R1,#+1
-??TECLADO_getChavePorta_0:
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        CMP      R1,#+8
-        BLT.N    ??TECLADO_getChavePorta_1
+        B.N      ??TECLADO_getChavePorta_0
 //  215   
 //  216   return (soma>(TAM_BUF_TECLADO>>1));
+??TECLADO_getChavePorta_1:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+5
         BLT.N    ??TECLADO_getChavePorta_3
@@ -695,9 +692,11 @@ TECLADO_getChaveReservaPapel:
 //  226   
 //  227   for(unsigned char i=0;i<TAM_BUF_TECLADO;i++)
         MOVS     R1,#+0
-        B.N      ??TECLADO_getChaveReservaPapel_0
+??TECLADO_getChaveReservaPapel_0:
+        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+        CMP      R1,#+8
+        BGE.N    ??TECLADO_getChaveReservaPapel_1
 //  228     if(TECLADO_bufferAmostragem[i]&32)
-??TECLADO_getChaveReservaPapel_1:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         LDR.N    R2,??DataTable5_4
         LDRB     R2,[R1, R2]
@@ -707,12 +706,10 @@ TECLADO_getChaveReservaPapel:
         ADDS     R0,R0,#+1
 ??TECLADO_getChaveReservaPapel_2:
         ADDS     R1,R1,#+1
-??TECLADO_getChaveReservaPapel_0:
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        CMP      R1,#+8
-        BLT.N    ??TECLADO_getChaveReservaPapel_1
+        B.N      ??TECLADO_getChaveReservaPapel_0
 //  230   
 //  231   return (soma>(TAM_BUF_TECLADO>>1)); 
+??TECLADO_getChaveReservaPapel_1:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+5
         BLT.N    ??TECLADO_getChaveReservaPapel_3
@@ -831,9 +828,9 @@ TECLADO_getChaveReservaPapel:
 //  28 bytes in section .data
 //   8 bytes in section .noinit (abs)
 //  48 bytes in section .rodata
-// 602 bytes in section .text
+// 606 bytes in section .text
 // 
-// 602 bytes of CODE  memory
+// 606 bytes of CODE  memory
 //  48 bytes of CONST memory
 //  42 bytes of DATA  memory (+ 8 bytes shared)
 //

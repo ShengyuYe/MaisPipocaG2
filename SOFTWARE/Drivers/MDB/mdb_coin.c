@@ -182,9 +182,9 @@ eMDB_reply MDBCOIN_coin_type_setup(unsigned short int channels,unsigned short in
   unsigned char size;
   
   types[0] = COIN_TYPE;
-  types[1] = (unsigned char)channels>>8;
+  types[1] = (unsigned char)(channels>>8);
   types[2] = (unsigned char)channels;
-  types[3] = (unsigned char)manual_dispense>>8;
+  types[3] = (unsigned char)(manual_dispense>>8);
   types[4] = (unsigned char)manual_dispense;
   
   if(MDB_send_package_long(1,types,5,0,types,&size)==MDB_OK){
@@ -232,8 +232,10 @@ eMDB_reply MDBCOIN_poll(eMDB_COIN_POOL_TYPE *tipo_evento,
                           
   if(MDB_send_package(1,poll,1,1,poll,&size)==MDB_OK){
     
-    if(!size)
+    if(!size){
+      *tipo_evento = COIN_ACK;
       return MDB_OK;
+    }
     
       if(size==2 || size==1){
       // Evento de moeda dispensada

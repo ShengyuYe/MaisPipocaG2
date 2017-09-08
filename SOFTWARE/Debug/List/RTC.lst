@@ -1,34 +1,28 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:58:17 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      08/Sep/2017  19:51:43 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
 #    Endian       =  little                                                   #
-#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Drivers\RTC\RTC.C          #
-#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\RTC\RTC.C" -lC    #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA          #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o           #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
-#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
-#                    --no_clustering --no_scheduling --debug --endian=little  #
-#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
-#                    Files (x86)\IAR Systems\Embedded Workbench               #
-#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
-#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\RTC.lst         #
-#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\RTC.o            #
+#    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\RTC\RTC.C  #
+#    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\RTC\RTC.C  #
+#                    -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\    #
+#                    -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\    #
+#                    -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\      #
+#                    --no_cse --no_unroll --no_inline --no_code_motion        #
+#                    --no_tbaa --no_clustering --no_scheduling --debug        #
+#                    --endian=little --cpu=Cortex-M3 -e --fpu=None            #
+#                    --dlib_config "C:\Program Files (x86)\IAR                #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -On                                               #
+#    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\RTC.lst #
+#    Object file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\RTC.o    #
 #                                                                             #
 #                                                                             #
 ###############################################################################
 
-C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\RTC\RTC.C
+C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\RTC\RTC.C
       1          /*__________________________________________________________________________________
       2          |	Quark Tecnologia Eletrônica Ltda.
       3          |       
@@ -199,24 +193,24 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \   00000008   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
    \   0000000A   0x6032             STR      R2,[R6, #+0]
     102            RTCMIN = minute;
-   \   0000000C   0x....             LDR.N    R2,??DataTable2_3  ;; 0x40024024
+   \   0000000C   0x....             LDR.N    R6,??DataTable2_3  ;; 0x40024024
    \   0000000E   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   00000010   0x6011             STR      R1,[R2, #+0]
+   \   00000010   0x6031             STR      R1,[R6, #+0]
     103            RTCHOUR = hour;
-   \   00000012   0x....             LDR.N    R1,??DataTable2_4  ;; 0x40024028
+   \   00000012   0x....             LDR.N    R6,??DataTable2_4  ;; 0x40024028
    \   00000014   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000016   0x6008             STR      R0,[R1, #+0]
+   \   00000016   0x6030             STR      R0,[R6, #+0]
     104            RTCDOM = day;
-   \   00000018   0x....             LDR.N    R0,??DataTable2_5  ;; 0x4002402c
+   \   00000018   0x....             LDR.N    R6,??DataTable2_5  ;; 0x4002402c
    \   0000001A   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
-   \   0000001C   0x6003             STR      R3,[R0, #+0]
+   \   0000001C   0x6033             STR      R3,[R6, #+0]
     105            RTCMONTH = month;
-   \   0000001E   0x....             LDR.N    R0,??DataTable2_6  ;; 0x40024038
+   \   0000001E   0x....             LDR.N    R6,??DataTable2_6  ;; 0x40024038
    \   00000020   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-   \   00000022   0x6004             STR      R4,[R0, #+0]
+   \   00000022   0x6034             STR      R4,[R6, #+0]
     106            RTCYEAR = year;                                      
-   \   00000024   0x....             LDR.N    R0,??DataTable2_7  ;; 0x4002403c
-   \   00000026   0x6005             STR      R5,[R0, #+0]
+   \   00000024   0x....             LDR.N    R6,??DataTable2_7  ;; 0x4002403c
+   \   00000026   0x6035             STR      R5,[R6, #+0]
     107          }
    \   00000028   0xBC70             POP      {R4-R6}
    \   0000002A   0x4770             BX       LR               ;; return
@@ -242,33 +236,33 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
     119                            unsigned char *day,unsigned char *month,unsigned int *year){
    \                     RTC_getValue:
    \   00000000   0xB470             PUSH     {R4-R6}
-   \   00000002   0x9D03             LDR      R5,[SP, #+12]
-   \   00000004   0x9C04             LDR      R4,[SP, #+16]
+   \   00000002   0x9C03             LDR      R4,[SP, #+12]
+   \   00000004   0x9D04             LDR      R5,[SP, #+16]
     120                              
     121            *second = RTCSEC;
    \   00000006   0x....             LDR.N    R6,??DataTable2_2  ;; 0x40024020
    \   00000008   0x6836             LDR      R6,[R6, #+0]
    \   0000000A   0x7016             STRB     R6,[R2, #+0]
     122            *minute = RTCMIN;
-   \   0000000C   0x....             LDR.N    R2,??DataTable2_3  ;; 0x40024024
-   \   0000000E   0x6812             LDR      R2,[R2, #+0]
-   \   00000010   0x700A             STRB     R2,[R1, #+0]
+   \   0000000C   0x....             LDR.N    R6,??DataTable2_3  ;; 0x40024024
+   \   0000000E   0x6836             LDR      R6,[R6, #+0]
+   \   00000010   0x700E             STRB     R6,[R1, #+0]
     123            *hour = RTCHOUR;
-   \   00000012   0x....             LDR.N    R1,??DataTable2_4  ;; 0x40024028
-   \   00000014   0x6809             LDR      R1,[R1, #+0]
-   \   00000016   0x7001             STRB     R1,[R0, #+0]
+   \   00000012   0x....             LDR.N    R6,??DataTable2_4  ;; 0x40024028
+   \   00000014   0x6836             LDR      R6,[R6, #+0]
+   \   00000016   0x7006             STRB     R6,[R0, #+0]
     124            *day = RTCDOM;
-   \   00000018   0x....             LDR.N    R0,??DataTable2_5  ;; 0x4002402c
-   \   0000001A   0x6800             LDR      R0,[R0, #+0]
-   \   0000001C   0x7018             STRB     R0,[R3, #+0]
+   \   00000018   0x....             LDR.N    R6,??DataTable2_5  ;; 0x4002402c
+   \   0000001A   0x6836             LDR      R6,[R6, #+0]
+   \   0000001C   0x701E             STRB     R6,[R3, #+0]
     125            *month = RTCMONTH;
-   \   0000001E   0x....             LDR.N    R0,??DataTable2_6  ;; 0x40024038
-   \   00000020   0x6800             LDR      R0,[R0, #+0]
-   \   00000022   0x7028             STRB     R0,[R5, #+0]
+   \   0000001E   0x....             LDR.N    R6,??DataTable2_6  ;; 0x40024038
+   \   00000020   0x6836             LDR      R6,[R6, #+0]
+   \   00000022   0x7026             STRB     R6,[R4, #+0]
     126            *year = RTCYEAR;                    
-   \   00000024   0x....             LDR.N    R0,??DataTable2_7  ;; 0x4002403c
-   \   00000026   0x6800             LDR      R0,[R0, #+0]
-   \   00000028   0x6020             STR      R0,[R4, #+0]
+   \   00000024   0x....             LDR.N    R6,??DataTable2_7  ;; 0x4002403c
+   \   00000026   0x6836             LDR      R6,[R6, #+0]
+   \   00000028   0x602E             STR      R6,[R5, #+0]
     127          }
    \   0000002A   0xBC70             POP      {R4-R6}
    \   0000002C   0x4770             BX       LR               ;; return

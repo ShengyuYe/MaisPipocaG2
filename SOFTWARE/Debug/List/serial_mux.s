@@ -1,29 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:36 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:57 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\SERIAL_MUX\seria /
-//                    l_mux.c                                                 /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\SERIAL_MUX\seri /
-//                    al_mux.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Fi /
-//                    rmware\01_mais_pipoca_exp\MaisPipoca -                  /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\SERIAL_MU /
+//                    X\serial_mux.c                                          /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\SERIAL_MU /
+//                    X\serial_mux.c -lC C:\repositorios\MaisPipocaG2\SOFTWAR /
+//                    E\Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE /
+//                    \Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\D /
+//                    ebug\Obj\ --no_cse --no_unroll --no_inline              /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\serial_mux.s  /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\serial /
+//                    _mux.s                                                  /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -74,7 +69,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\SERIAL_MUX\serial_mux.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\SERIAL_MUX\serial_mux.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -227,49 +222,49 @@ SERIALMUX_seleciona:
 //   85     case SERIALMUX_RS232:
 //   86          SET_SINAL_MUX_A(0);
 ??SERIALMUX_seleciona_0:
-        LDR.N    R0,??DataTable1_2  ;; 0x2009c03c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x8000000
         LDR.N    R1,??DataTable1_2  ;; 0x2009c03c
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x8000000
+        LDR.N    R2,??DataTable1_2  ;; 0x2009c03c
+        STR      R1,[R2, #+0]
 //   87          SET_SINAL_MUX_B(0);
-        LDR.N    R0,??DataTable1_2  ;; 0x2009c03c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x400000
         LDR.N    R1,??DataTable1_2  ;; 0x2009c03c
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x400000
+        LDR.N    R2,??DataTable1_2  ;; 0x2009c03c
+        STR      R1,[R2, #+0]
 //   88          break;
         B.N      ??SERIALMUX_seleciona_3
 //   89     case SERIALMUX_DEX:
 //   90          SET_SINAL_MUX_A(1);
 ??SERIALMUX_seleciona_2:
-        LDR.N    R0,??DataTable1_3  ;; 0x2009c038
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x8000000
         LDR.N    R1,??DataTable1_3  ;; 0x2009c038
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x8000000
+        LDR.N    R2,??DataTable1_3  ;; 0x2009c038
+        STR      R1,[R2, #+0]
 //   91          SET_SINAL_MUX_B(0);      
-        LDR.N    R0,??DataTable1_2  ;; 0x2009c03c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x400000
         LDR.N    R1,??DataTable1_2  ;; 0x2009c03c
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x400000
+        LDR.N    R2,??DataTable1_2  ;; 0x2009c03c
+        STR      R1,[R2, #+0]
 //   92          break;
         B.N      ??SERIALMUX_seleciona_3
 //   93     case SERIALMUX_USB:
 //   94          SET_SINAL_MUX_A(0);
 ??SERIALMUX_seleciona_1:
-        LDR.N    R0,??DataTable1_2  ;; 0x2009c03c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x8000000
         LDR.N    R1,??DataTable1_2  ;; 0x2009c03c
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x8000000
+        LDR.N    R2,??DataTable1_2  ;; 0x2009c03c
+        STR      R1,[R2, #+0]
 //   95          SET_SINAL_MUX_B(1);            
-        LDR.N    R0,??DataTable1_4  ;; 0x2009c018
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x400000
         LDR.N    R1,??DataTable1_4  ;; 0x2009c018
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x400000
+        LDR.N    R2,??DataTable1_4  ;; 0x2009c018
+        STR      R1,[R2, #+0]
 //   96          break;
 //   97   }
 //   98 }

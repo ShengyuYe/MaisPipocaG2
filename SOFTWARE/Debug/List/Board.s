@@ -1,28 +1,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:12 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:39 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Board\Board.c            /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Board\Board.c" -lC      /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA        /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Board\Board.c     /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Board\Board.c     /
+//                    -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\   /
+//                    -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\   /
+//                    -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\     /
+//                    --no_cse --no_unroll --no_inline --no_code_motion       /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\Board.s       /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\Board. /
+//                    s                                                       /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -126,7 +121,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Board\Board.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Board\Board.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -671,14 +666,14 @@ BOARD_timer_tick:
         THUMB
 //  211 void BOARD_main(void*pPar){
 BOARD_main:
-        PUSH     {R4,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
-        SUB      SP,SP,#+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
           CFI CFA R13+16
+        MOVS     R4,R0
 //  212   unsigned char toggle=0;
-        MOVS     R4,#+0
+        MOVS     R5,#+0
 //  213   unsigned char flag;
 //  214   
 //  215   PARAMETROS_le(ADR_INTERVALO_TEMPO_PROP,(void*)&BOARD_intervalo_propaganda);
@@ -702,29 +697,89 @@ BOARD_main:
         MOVS     R0,#+33
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-        B.N      ??BOARD_main_1
 //  220   
 //  221   for(;;){
 //  222   
 //  223     toggle ^= 255;
+??BOARD_main_1:
+        EORS     R5,R5,#0xFF
 //  224     
 //  225     if(flag){
+        LDRB     R0,[SP, #+0]
+        CMP      R0,#+0
+        BEQ.N    ??BOARD_main_2
 //  226       if(toggle){
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BEQ.N    ??BOARD_main_3
 //  227         SET_LED_STATUS(1);
+        LDR.W    R0,??DataTable12_20  ;; 0x2009c038
+        LDR      R0,[R0, #+0]
+        ORRS     R0,R0,#0x10000
+        LDR.W    R1,??DataTable12_20  ;; 0x2009c038
+        STR      R0,[R1, #+0]
 //  228         SET_FITA_LED_01(1);
+        LDR.W    R0,??DataTable12_21  ;; 0x2009c098
+        LDR      R0,[R0, #+0]
+        ORRS     R0,R0,#0x10000000
+        LDR.W    R1,??DataTable12_21  ;; 0x2009c098
+        STR      R0,[R1, #+0]
 //  229         SET_FITA_LED_02(0);
+        LDR.W    R0,??DataTable12_22  ;; 0x2009c09c
+        LDR      R0,[R0, #+0]
+        ORRS     R0,R0,#0x20000000
+        LDR.W    R1,??DataTable12_22  ;; 0x2009c09c
+        STR      R0,[R1, #+0]
+        B.N      ??BOARD_main_4
 //  230       }
 //  231       else{           
 //  232         SET_LED_STATUS(0);
+??BOARD_main_3:
+        LDR.W    R0,??DataTable12_1  ;; 0x2009c03c
+        LDR      R0,[R0, #+0]
+        ORRS     R0,R0,#0x10000
+        LDR.W    R1,??DataTable12_1  ;; 0x2009c03c
+        STR      R0,[R1, #+0]
 //  233         SET_FITA_LED_01(0);
+        LDR.W    R0,??DataTable12_22  ;; 0x2009c09c
+        LDR      R0,[R0, #+0]
+        ORRS     R0,R0,#0x10000000
+        LDR.W    R1,??DataTable12_22  ;; 0x2009c09c
+        STR      R0,[R1, #+0]
 //  234         SET_FITA_LED_02(1);      
+        LDR.W    R0,??DataTable12_21  ;; 0x2009c098
+        LDR      R0,[R0, #+0]
+        ORRS     R0,R0,#0x20000000
+        LDR.W    R1,??DataTable12_21  ;; 0x2009c098
+        STR      R0,[R1, #+0]
+        B.N      ??BOARD_main_4
 //  235       }
 //  236     }
 //  237     else{
 //  238       SET_FITA_LED_01(0);      
-//  239       SET_FITA_LED_02(0);
-//  240       SET_LED_STATUS(toggle);
 ??BOARD_main_2:
+        LDR.W    R0,??DataTable12_22  ;; 0x2009c09c
+        LDR      R0,[R0, #+0]
+        ORRS     R0,R0,#0x10000000
+        LDR.W    R1,??DataTable12_22  ;; 0x2009c09c
+        STR      R0,[R1, #+0]
+//  239       SET_FITA_LED_02(0);
+        LDR.W    R0,??DataTable12_22  ;; 0x2009c09c
+        LDR      R0,[R0, #+0]
+        ORRS     R0,R0,#0x20000000
+        LDR.W    R1,??DataTable12_22  ;; 0x2009c09c
+        STR      R0,[R1, #+0]
+//  240       SET_LED_STATUS(toggle);
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BEQ.N    ??BOARD_main_5
+        LDR.W    R0,??DataTable12_20  ;; 0x2009c038
+        LDR      R0,[R0, #+0]
+        ORRS     R0,R0,#0x10000
+        LDR.W    R1,??DataTable12_20  ;; 0x2009c038
+        STR      R0,[R1, #+0]
+        B.N      ??BOARD_main_4
+??BOARD_main_5:
         LDR.W    R0,??DataTable12_1  ;; 0x2009c03c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000
@@ -733,7 +788,7 @@ BOARD_main:
 //  241     }
 //  242     
 //  243     vTaskDelay(250);       
-??BOARD_main_3:
+??BOARD_main_4:
         MOVS     R0,#+250
           CFI FunCall vTaskDelay
         BL       vTaskDelay
@@ -753,7 +808,7 @@ BOARD_main:
         LDR.W    R0,??DataTable12_19
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
-        BEQ.N    ??BOARD_main_4
+        BEQ.N    ??BOARD_main_6
 //  251         PLAYERWAVE_iniciaMusica(AUDIO_PROPAGANDA,0);        
         MOVS     R1,#+0
         MOVS     R0,#+3
@@ -761,80 +816,20 @@ BOARD_main:
         BL       PLAYERWAVE_iniciaMusica
 //  252       }
 //  253       BOARD_contador_propaganda = BOARD_intervalo_propaganda*60000;
-??BOARD_main_4:
+??BOARD_main_6:
         LDR.W    R0,??DataTable12_19
         LDR      R0,[R0, #+0]
         MOVW     R1,#+60000
         MULS     R0,R1,R0
         LDR.W    R1,??DataTable12_7
         STR      R0,[R1, #+0]
-//  254     }
-??BOARD_main_1:
-        EORS     R4,R4,#0xFF
-        LDRB     R0,[SP, #+0]
-        CMP      R0,#+0
-        BEQ.N    ??BOARD_main_5
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
-        BEQ.N    ??BOARD_main_6
-        LDR.W    R0,??DataTable12_20  ;; 0x2009c038
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x10000
-        LDR.W    R1,??DataTable12_20  ;; 0x2009c038
-        STR      R0,[R1, #+0]
-        LDR.W    R0,??DataTable12_21  ;; 0x2009c098
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x10000000
-        LDR.W    R1,??DataTable12_21  ;; 0x2009c098
-        STR      R0,[R1, #+0]
-        LDR.W    R0,??DataTable12_22  ;; 0x2009c09c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x20000000
-        LDR.W    R1,??DataTable12_22  ;; 0x2009c09c
-        STR      R0,[R1, #+0]
-        B.N      ??BOARD_main_3
-??BOARD_main_6:
-        LDR.W    R0,??DataTable12_1  ;; 0x2009c03c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x10000
-        LDR.W    R1,??DataTable12_1  ;; 0x2009c03c
-        STR      R0,[R1, #+0]
-        LDR.W    R0,??DataTable12_22  ;; 0x2009c09c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x10000000
-        LDR.W    R1,??DataTable12_22  ;; 0x2009c09c
-        STR      R0,[R1, #+0]
-        LDR.W    R0,??DataTable12_21  ;; 0x2009c098
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x20000000
-        LDR.W    R1,??DataTable12_21  ;; 0x2009c098
-        STR      R0,[R1, #+0]
-        B.N      ??BOARD_main_3
-??BOARD_main_5:
-        LDR.W    R0,??DataTable12_22  ;; 0x2009c09c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x10000000
-        LDR.W    R1,??DataTable12_22  ;; 0x2009c09c
-        STR      R0,[R1, #+0]
-        LDR.W    R0,??DataTable12_22  ;; 0x2009c09c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x20000000
-        LDR.W    R1,??DataTable12_22  ;; 0x2009c09c
-        STR      R0,[R1, #+0]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
-        BEQ.N    ??BOARD_main_2
-        LDR.W    R0,??DataTable12_20  ;; 0x2009c038
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x10000
-        LDR.W    R1,??DataTable12_20  ;; 0x2009c038
-        STR      R0,[R1, #+0]
-        B.N      ??BOARD_main_3
+        B.N      ??BOARD_main_1
           CFI EndBlock cfiBlock2
         REQUIRE _A_FIO1SET
         REQUIRE _A_FIO4SET
         REQUIRE _A_FIO4CLR
         REQUIRE _A_FIO1CLR
+//  254     }
 //  255     
 //  256   }// Fim for(;;)
 //  257 }
@@ -855,33 +850,34 @@ BOARD_get_sinal:
         PUSH     {R4}
           CFI R4 Frame(CFA, -4)
           CFI CFA R13+4
+        MOVS     R1,R0
 //  265   unsigned char contador=0;  
-        MOVS     R1,#+0
+        MOVS     R2,#+0
 //  266   
 //  267   for(unsigned char i=0;i<TAM_BUFFER_SENSORES;i++)
-        MOVS     R2,#+0
-        B.N      ??BOARD_get_sinal_0
+        MOVS     R0,#+0
+??BOARD_get_sinal_0:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+16
+        BGE.N    ??BOARD_get_sinal_1
 //  268     if(BOARD_buffer_entradas_digitais[i]&(0x01<<sinal))
-??BOARD_get_sinal_1:
-        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LDR.W    R3,??DataTable12_18
-        LDRH     R3,[R3, R2, LSL #+1]
+        LDRH     R3,[R3, R0, LSL #+1]
         MOVS     R4,#+1
-        LSLS     R4,R4,R0
+        LSLS     R4,R4,R1
         TST      R3,R4
         BEQ.N    ??BOARD_get_sinal_2
 //  269       contador++;
-        ADDS     R1,R1,#+1
-??BOARD_get_sinal_2:
         ADDS     R2,R2,#+1
-??BOARD_get_sinal_0:
-        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
-        CMP      R2,#+16
-        BLT.N    ??BOARD_get_sinal_1
+??BOARD_get_sinal_2:
+        ADDS     R0,R0,#+1
+        B.N      ??BOARD_get_sinal_0
 //  270   
 //  271   if(contador>(TAM_BUFFER_SENSORES>>1))
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        CMP      R1,#+9
+??BOARD_get_sinal_1:
+        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+        CMP      R2,#+9
         BLT.N    ??BOARD_get_sinal_3
 //  272     return 1;
         MOVS     R0,#+1
@@ -915,18 +911,18 @@ BOARD_set_motor_embalagem:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BEQ.N    ??BOARD_set_motor_embalagem_0
-        LDR.W    R0,??DataTable12_20  ;; 0x2009c038
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x1
         LDR.W    R1,??DataTable12_20  ;; 0x2009c038
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x1
+        LDR.W    R2,??DataTable12_20  ;; 0x2009c038
+        STR      R1,[R2, #+0]
         B.N      ??BOARD_set_motor_embalagem_1
 ??BOARD_set_motor_embalagem_0:
-        LDR.N    R0,??DataTable12_1  ;; 0x2009c03c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x1
         LDR.N    R1,??DataTable12_1  ;; 0x2009c03c
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x1
+        LDR.N    R2,??DataTable12_1  ;; 0x2009c03c
+        STR      R1,[R2, #+0]
 //  284 }
 ??BOARD_set_motor_embalagem_1:
         BX       LR               ;; return
@@ -945,15 +941,17 @@ BOARD_set_motor_embalagem:
         THUMB
 //  290 void BOARD_set_motor_dose(eMOTOR_DOSE sentido){
 BOARD_set_motor_dose:
-        PUSH     {R7,LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
+        MOVS     R4,R0
 //  291   
 //  292   switch(sentido){
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+0
         BEQ.N    ??BOARD_set_motor_dose_0
-        CMP      R0,#+2
+        CMP      R4,#+2
         BEQ.N    ??BOARD_set_motor_dose_1
         BCC.N    ??BOARD_set_motor_dose_2
         B.N      ??BOARD_set_motor_dose_3
@@ -1051,7 +1049,7 @@ BOARD_set_motor_dose:
 //  313   }
 //  314 }
 ??BOARD_set_motor_dose_3:
-        POP      {R0,PC}          ;; return
+        POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock5
         REQUIRE _A_FIO1CLR
         REQUIRE _A_FIO1SET
@@ -1451,38 +1449,37 @@ BOARD_liga_placa_instrucao:
 //  431   
 //  432   for(unsigned char i=0;i<8;i++)
         MOVS     R5,#+0
-        B.N      ??BOARD_liga_placa_instrucao_0
+??BOARD_liga_placa_instrucao_0:
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+8
+        BGE.N    ??BOARD_liga_placa_instrucao_1
 //  433     LEDS_setter_led(i,0);
-??BOARD_liga_placa_instrucao_1:
         MOVS     R1,#+0
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         ADDS     R5,R5,#+1
-??BOARD_liga_placa_instrucao_0:
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+8
-        BLT.N    ??BOARD_liga_placa_instrucao_1
+        B.N      ??BOARD_liga_placa_instrucao_0
 //  434   
 //  435   if(!flag)
+??BOARD_liga_placa_instrucao_1:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+0
         BNE.N    ??BOARD_liga_placa_instrucao_2
 //  436     for(unsigned char i=0;i<8;i++)
         MOVS     R0,#+0
-        B.N      ??BOARD_liga_placa_instrucao_3
+??BOARD_liga_placa_instrucao_3:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+8
+        BGE.N    ??BOARD_liga_placa_instrucao_2
 //  437       BOARD_estado_leds[i] = APAGADO;
-??BOARD_liga_placa_instrucao_4:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LDR.N    R1,??DataTable12_25
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         ADDS     R0,R0,#+1
-??BOARD_liga_placa_instrucao_3:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+8
-        BLT.N    ??BOARD_liga_placa_instrucao_4
+        B.N      ??BOARD_liga_placa_instrucao_3
 //  438   
 //  439   BOARD_leds_instrucao = flag;
 ??BOARD_liga_placa_instrucao_2:
@@ -1509,12 +1506,12 @@ BOARD_setter_contador_propaganda:
         CMP      R0,#+0
         BNE.N    ??BOARD_setter_contador_propaganda_0
 //  449     BOARD_contador_propaganda = 60000*BOARD_intervalo_propaganda;
-        LDR.N    R0,??DataTable12_19
-        LDR      R0,[R0, #+0]
-        MOVW     R1,#+60000
-        MULS     R0,R1,R0
-        LDR.N    R1,??DataTable12_7
-        STR      R0,[R1, #+0]
+        LDR.N    R1,??DataTable12_19
+        LDR      R1,[R1, #+0]
+        MOVW     R2,#+60000
+        MULS     R1,R2,R1
+        LDR.N    R2,??DataTable12_7
+        STR      R1,[R2, #+0]
         B.N      ??BOARD_setter_contador_propaganda_1
 //  450   else
 //  451     BOARD_contador_propaganda = contagem;
@@ -1725,9 +1722,9 @@ BOARD_reset_tempo_propaganda:
 //    54 bytes in section .bss
 //     5 bytes in section .data
 //    32 bytes in section .noinit (abs)
-// 1 730 bytes in section .text
+// 1 734 bytes in section .text
 // 
-// 1 730 bytes of CODE memory
+// 1 734 bytes of CODE memory
 //    59 bytes of DATA memory (+ 32 bytes shared)
 //
 //Errors: none

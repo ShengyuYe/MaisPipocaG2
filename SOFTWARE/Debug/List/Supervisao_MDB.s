@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:19 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:44 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Super /
-//                    visao_MDB.c                                             /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Supe /
-//                    rvisao_MDB.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\0 /
-//                    1-Firmware\01_mais_pipoca_exp\MaisPipoca -              /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamento /
+//                    s\Supervisao_MDB.c                                      /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamento /
+//                    s\Supervisao_MDB.c -lC C:\repositorios\MaisPipocaG2\SOF /
+//                    TWARE\Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFT /
+//                    WARE\Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWA /
+//                    RE\Debug\Obj\ --no_cse --no_unroll --no_inline          /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\Supervisao_MD /
-//                    B.s                                                     /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\Superv /
+//                    isao_MDB.s                                              /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -84,7 +78,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Supervisao_MDB.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\Supervisao_MDB.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -323,12 +317,13 @@ SMDB_release:
 //  113 unsigned char SMDB_cashless_vend(unsigned short int valor,
 //  114                                  unsigned short int item){
 SMDB_cashless_vend:
-        PUSH     {R3-R7,LR}
+        PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R7 Frame(CFA, -8)
-          CFI R6 Frame(CFA, -12)
-          CFI R5 Frame(CFA, -16)
-          CFI R4 Frame(CFA, -20)
+          CFI R8 Frame(CFA, -8)
+          CFI R7 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -16)
+          CFI R5 Frame(CFA, -20)
+          CFI R4 Frame(CFA, -24)
           CFI CFA R13+24
         MOVS     R4,R0
         MOVS     R5,R1
@@ -350,23 +345,25 @@ SMDB_cashless_vend:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall MDBCASHLESS_start_vend
         BL       MDBCASHLESS_start_vend
+        MOV      R8,R0
 //  122    while(flag!=MDB_OK && tentativas--);
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        CMP      R8,#+0
+        BEQ.N    ??SMDB_cashless_vend_1
+        MOVS     R0,R6
+        SUBS     R6,R0,#+1
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
-        BEQ.N    ??SMDB_cashless_vend_1
-        MOVS     R1,R6
-        SUBS     R6,R1,#+1
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        CMP      R1,#+0
         BNE.N    ??SMDB_cashless_vend_0
 //  123    
 //  124    if(flag==MDB_OK)
 ??SMDB_cashless_vend_1:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        CMP      R8,#+0
         BNE.N    ??SMDB_cashless_vend_2
 //  125      res = 1;   
-        MOVS     R7,#+1
+        MOVS     R0,#+1
+        MOVS     R7,R0
 //  126    
 //  127    SMDB_release();      
 ??SMDB_cashless_vend_2:
@@ -376,7 +373,7 @@ SMDB_cashless_vend:
 //  129    return res;
         MOVS     R0,R7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        POP      {R1,R4-R7,PC}    ;; return
+        POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock4
 //  130 }
 
@@ -397,9 +394,9 @@ SMDB_cashless_vend:
 //  133 ***********************************************************************************/
 // 
 //   4 bytes in section .bss
-// 202 bytes in section .text
+// 218 bytes in section .text
 // 
-// 202 bytes of CODE memory
+// 218 bytes of CODE memory
 //   4 bytes of DATA memory
 //
 //Errors: none

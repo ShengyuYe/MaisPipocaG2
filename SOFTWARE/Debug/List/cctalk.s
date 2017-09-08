@@ -1,28 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:03 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:46 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\CCTALK\cctalk.c  /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\CCTALK\cctalk.c /
-//                    " -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\0 /
-//                    1_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA  /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\CCTALK\cc /
+//                    talk.c                                                  /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\CCTALK\cc /
+//                    talk.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\ /
+//                    List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\L /
+//                    ist\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj /
+//                    \ --no_cse --no_unroll --no_inline --no_code_motion     /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\cctalk.s      /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\cctalk /
+//                    .s                                                      /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -91,7 +87,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\CCTALK\cctalk.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\CCTALK\cctalk.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -316,33 +312,33 @@ CCTALK_calculaCRC:
           CFI R5 Frame(CFA, -8)
           CFI R4 Frame(CFA, -12)
           CFI CFA R13+12
+        MOVS     R3,R0
 //  119   unsigned short int crc=0;
-        MOVS     R3,#+0
+        MOVS     R0,#+0
 //  120   
 //  121   for(unsigned short int i=0;i<tamanho;i++)
         MOVS     R4,#+0
-        B.N      ??CCTALK_calculaCRC_0
-//  122     crc = (crc<<8) ^ crc_ccitt_lockup[(crc>>8) ^ pData[i+offset]];
-??CCTALK_calculaCRC_1:
-        MOVS     R5,R3
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
-        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        ADDS     R6,R1,R4
-        LDRB     R6,[R6, R0]
-        EORS     R5,R6,R5, ASR #+8
-        LDR.N    R6,??DataTable4
-        LDRH     R5,[R6, R5, LSL #+1]
-        EORS     R3,R5,R3, LSL #+8
-        ADDS     R4,R4,#+1
 ??CCTALK_calculaCRC_0:
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
         CMP      R4,R2
-        BCC.N    ??CCTALK_calculaCRC_1
+        BCS.N    ??CCTALK_calculaCRC_1
+//  122     crc = (crc<<8) ^ crc_ccitt_lockup[(crc>>8) ^ pData[i+offset]];
+        MOVS     R5,R0
+        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+        ADDS     R6,R1,R4
+        LDRB     R6,[R6, R3]
+        EORS     R5,R6,R5, ASR #+8
+        LDR.W    R6,??DataTable4
+        LDRH     R5,[R6, R5, LSL #+1]
+        EORS     R0,R5,R0, LSL #+8
+        ADDS     R4,R4,#+1
+        B.N      ??CCTALK_calculaCRC_0
 //  123                                                                               
 //  124   return crc;
-        MOVS     R0,R3
+??CCTALK_calculaCRC_1:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         POP      {R4-R6}
           CFI R4 SameValue
@@ -369,52 +365,53 @@ CCTALK_calculaCRC:
 //  134   
 //  135   switch(U0IIR_bit.IID){
 CCTALK_irqUart:
-        LDR.N    R0,??DataTable4_1  ;; 0x4000c008
-        LDR      R0,[R0, #+0]
-        LSRS     R0,R0,#+1
-        ANDS     R0,R0,#0x7
-        CMP      R0,#+1
+        LDR.N    R1,??DataTable4_1  ;; 0x4000c008
+        LDR      R1,[R1, #+0]
+        LSRS     R1,R1,#+1
+        ANDS     R1,R1,#0x7
+        CMP      R1,#+1
         BEQ.N    ??CCTALK_irqUart_0
-        CMP      R0,#+2
+        CMP      R1,#+2
         BEQ.N    ??CCTALK_irqUart_1
-        CMP      R0,#+3
+        CMP      R1,#+3
         BEQ.N    ??CCTALK_irqUart_2
-        CMP      R0,#+6
+        CMP      R1,#+6
         BEQ.N    ??CCTALK_irqUart_3
         B.N      ??CCTALK_irqUart_4
 //  136     case THRE:
 //  137                if(CCTALK_bytesParaEnviar){
 ??CCTALK_irqUart_0:
-        LDR.N    R0,??DataTable4_2
-        LDRB     R0,[R0, #+0]
-        CMP      R0,#+0
+        LDR.N    R1,??DataTable4_2
+        LDRB     R1,[R1, #+0]
+        CMP      R1,#+0
         BEQ.N    ??CCTALK_irqUart_5
 //  138                  U0THR = CCTALK_bufferTxd[CCTALK_bytesEnviados++];
-        LDR.N    R0,??DataTable4_3
-        LDRB     R0,[R0, #+0]
-        LDR.N    R1,??DataTable4_4
-        LDRB     R0,[R0, R1]
-        LDR.N    R1,??DataTable4_5  ;; 0x4000c000
-        STRB     R0,[R1, #+0]
-        LDR.N    R0,??DataTable4_3
-        LDRB     R0,[R0, #+0]
-        ADDS     R0,R0,#+1
         LDR.N    R1,??DataTable4_3
-        STRB     R0,[R1, #+0]
+        LDRB     R1,[R1, #+0]
+        LDR.N    R2,??DataTable4_4
+        LDRB     R1,[R1, R2]
+        LDR.N    R2,??DataTable4_5  ;; 0x4000c000
+        STRB     R1,[R2, #+0]
+        LDR.N    R1,??DataTable4_3
+        LDRB     R1,[R1, #+0]
+        ADDS     R1,R1,#+1
+        LDR.N    R2,??DataTable4_3
+        STRB     R1,[R2, #+0]
 //  139                  CCTALK_bytesParaEnviar--;
-        LDR.N    R0,??DataTable4_2
-        LDRB     R0,[R0, #+0]
-        SUBS     R0,R0,#+1
         LDR.N    R1,??DataTable4_2
-        STRB     R0,[R1, #+0]
+        LDRB     R1,[R1, #+0]
+        SUBS     R1,R1,#+1
+        LDR.N    R2,??DataTable4_2
+        STRB     R1,[R2, #+0]
 //  140                }
 //  141                break; 
 ??CCTALK_irqUart_5:
         B.N      ??CCTALK_irqUart_4
 //  142     case RDA : dummy = U0RBR;
 ??CCTALK_irqUart_1:
-        LDR.N    R0,??DataTable4_5  ;; 0x4000c000
-        LDRB     R0,[R0, #+0]
+        LDR.N    R1,??DataTable4_5  ;; 0x4000c000
+        LDRB     R1,[R1, #+0]
+        MOVS     R0,R1
 //  143                if(CCTALK_recebidos<(TAM_BUF_IN-1))
         LDR.N    R1,??DataTable4_6
         LDRB     R1,[R1, #+0]
@@ -425,11 +422,11 @@ CCTALK_irqUart:
         LDRB     R1,[R1, #+0]
         LDR.N    R2,??DataTable4_7
         STRB     R0,[R1, R2]
-        LDR.N    R0,??DataTable4_6
-        LDRB     R0,[R0, #+0]
-        ADDS     R0,R0,#+1
         LDR.N    R1,??DataTable4_6
-        STRB     R0,[R1, #+0]
+        LDRB     R1,[R1, #+0]
+        ADDS     R1,R1,#+1
+        LDR.N    R2,??DataTable4_6
+        STRB     R1,[R2, #+0]
 //  145                
 //  146                break;      
 ??CCTALK_irqUart_6:
@@ -437,8 +434,9 @@ CCTALK_irqUart:
 //  147     case RLS : 
 //  148                dummy = U0LSR;
 ??CCTALK_irqUart_2:
-        LDR.N    R0,??DataTable4_8  ;; 0x4000c014
-        LDRB     R0,[R0, #+0]
+        LDR.N    R1,??DataTable4_8  ;; 0x4000c014
+        LDRB     R1,[R1, #+0]
+        MOVS     R0,R1
 //  149                dummy = U0RBR;               
         LDR.N    R1,??DataTable4_5  ;; 0x4000c000
         LDRB     R1,[R1, #+0]
@@ -453,11 +451,11 @@ CCTALK_irqUart:
 //  156   CLRPEND0 |= (0x01)<<5;    
 ??CCTALK_irqUart_3:
 ??CCTALK_irqUart_4:
-        LDR.N    R0,??DataTable4_9  ;; 0xe000e280
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x20
         LDR.N    R1,??DataTable4_9  ;; 0xe000e280
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x20
+        LDR.N    R2,??DataTable4_9  ;; 0xe000e280
+        STR      R1,[R2, #+0]
 //  157 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock2
@@ -485,18 +483,19 @@ CCTALK_enviaPacoteSerial:
         STRB     R2,[R1, #+0]
 //  166   
 //  167   CCTALK_bytesParaEnviar = tamanho-1;
-        SUBS     R0,R0,#+1
-        LDR.N    R1,??DataTable4_2
-        STRB     R0,[R1, #+0]
+        MOVS     R1,R0
+        SUBS     R1,R1,#+1
+        LDR.N    R2,??DataTable4_2
+        STRB     R1,[R2, #+0]
 //  168   CCTALK_bytesEnviados = 1;
-        LDR.N    R0,??DataTable4_3
-        MOVS     R1,#+1
-        STRB     R1,[R0, #+0]
+        LDR.N    R1,??DataTable4_3
+        MOVS     R2,#+1
+        STRB     R2,[R1, #+0]
 //  169   U0THR = CCTALK_bufferTxd[0];    
-        LDR.N    R0,??DataTable4_5  ;; 0x4000c000
-        LDR.N    R1,??DataTable4_4
-        LDRB     R1,[R1, #+0]
-        STRB     R1,[R0, #+0]
+        LDR.N    R1,??DataTable4_5  ;; 0x4000c000
+        LDR.N    R2,??DataTable4_4
+        LDRB     R2,[R2, #+0]
+        STRB     R2,[R1, #+0]
 //  170 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock3
@@ -536,134 +535,139 @@ CCTALK_tick:
 //  189 unsigned char CCTALK_enviaPacote(unsigned char*pacote,unsigned char tamanho,
 //  190                                  unsigned char*recebido,unsigned short int *qtdRecebidos){
 CCTALK_enviaPacote:
-        PUSH     {R3-R7,LR}
+        PUSH     {R3-R11,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R7 Frame(CFA, -8)
-          CFI R6 Frame(CFA, -12)
-          CFI R5 Frame(CFA, -16)
-          CFI R4 Frame(CFA, -20)
-          CFI CFA R13+24
-        MOVS     R6,R0
-        MOVS     R7,R1
-        MOVS     R4,R2
+          CFI R11 Frame(CFA, -8)
+          CFI R10 Frame(CFA, -12)
+          CFI R9 Frame(CFA, -16)
+          CFI R8 Frame(CFA, -20)
+          CFI R7 Frame(CFA, -24)
+          CFI R6 Frame(CFA, -28)
+          CFI R5 Frame(CFA, -32)
+          CFI R4 Frame(CFA, -36)
+          CFI CFA R13+40
+        MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
+        MOVS     R7,R3
 //  191   unsigned short int crc = CCTALK_calculaCRC(pacote, 0, tamanho);
-        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-        MOVS     R2,R7
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        MOVS     R2,R5
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
         MOVS     R1,#+0
-        MOVS     R0,R6
+        MOVS     R0,R4
           CFI FunCall CCTALK_calculaCRC
         BL       CCTALK_calculaCRC
+        MOV      R8,R0
 //  192   unsigned short int offset=tamanho+2;
-        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-        ADDS     R5,R7,#+2
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R9,R5,#+2
 //  193    
 //  194   CCTALK_bufferTxd[0] = pacote[0];
-        LDR.N    R1,??DataTable4_4
-        LDRB     R2,[R6, #+0]
-        STRB     R2,[R1, #+0]
+        LDR.N    R0,??DataTable4_4
+        LDRB     R1,[R4, #+0]
+        STRB     R1,[R0, #+0]
 //  195   CCTALK_bufferTxd[1] = pacote[1];
-        LDR.N    R1,??DataTable4_4
-        LDRB     R2,[R6, #+1]
-        STRB     R2,[R1, #+1]
+        LDR.N    R0,??DataTable4_4
+        LDRB     R1,[R4, #+1]
+        STRB     R1,[R0, #+1]
 //  196   CCTALK_bufferTxd[2] = (unsigned char)crc;
-        LDR.N    R1,??DataTable4_4
-        STRB     R0,[R1, #+2]
+        LDR.N    R0,??DataTable4_4
+        STRB     R8,[R0, #+2]
 //  197   CCTALK_bufferTxd[3] = pacote[2];
-        LDR.N    R1,??DataTable4_4
-        LDRB     R2,[R6, #+2]
-        STRB     R2,[R1, #+3]
+        LDR.N    R0,??DataTable4_4
+        LDRB     R1,[R4, #+2]
+        STRB     R1,[R0, #+3]
 //  198 
 //  199   for(unsigned short int i=0;i<pacote[1];i++)
-        MOVS     R1,#+0
-        B.N      ??CCTALK_enviaPacote_0
-//  200     CCTALK_bufferTxd[4+i] = pacote[3+i];
-??CCTALK_enviaPacote_1:
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        ADDS     R2,R1,R6
-        LDRB     R2,[R2, #+3]
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        LDR.N    R3,??DataTable4_4
-        ADDS     R3,R1,R3
-        STRB     R2,[R3, #+4]
-        ADDS     R1,R1,#+1
+        MOVS     R0,#+0
 ??CCTALK_enviaPacote_0:
-        LDRB     R2,[R6, #+1]
+        LDRB     R1,[R4, #+1]
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
-        CMP      R1,R2
-        BCC.N    ??CCTALK_enviaPacote_1
+        CMP      R0,R1
+        BCS.N    ??CCTALK_enviaPacote_1
+//  200     CCTALK_bufferTxd[4+i] = pacote[3+i];
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        ADDS     R1,R0,R4
+        LDRB     R1,[R1, #+3]
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        LDR.N    R2,??DataTable4_4
+        ADDS     R2,R0,R2
+        STRB     R1,[R2, #+4]
+        ADDS     R0,R0,#+1
+        B.N      ??CCTALK_enviaPacote_0
 //  201 
 //  202   CCTALK_bufferTxd[4 + pacote[1]] = (unsigned char)(crc>>8);
-        LDRB     R1,[R6, #+1]
-        LDR.N    R2,??DataTable4_4
-        ADDS     R1,R1,R2
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        LSRS     R0,R0,#+8
-        STRB     R0,[R1, #+4]
+??CCTALK_enviaPacote_1:
+        LDRB     R0,[R4, #+1]
+        LDR.N    R1,??DataTable4_4
+        ADDS     R0,R0,R1
+        UXTH     R8,R8            ;; ZeroExt  R8,R8,#+16,#+16
+        LSRS     R1,R8,#+8
+        STRB     R1,[R0, #+4]
 //  203   CCTALK_enviaPacoteSerial(tamanho+2);
-        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-        ADDS     R0,R7,#+2
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R0,R5,#+2
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall CCTALK_enviaPacoteSerial
         BL       CCTALK_enviaPacoteSerial
-        B.N      ??CCTALK_enviaPacote_2
 //  204   
 //  205   while(CCTALK_bytesParaEnviar)
-//  206     vTaskDelay(1);
-??CCTALK_enviaPacote_3:
-        MOVS     R0,#+1
-          CFI FunCall vTaskDelay
-        BL       vTaskDelay
 ??CCTALK_enviaPacote_2:
         LDR.N    R0,??DataTable4_2
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
-        BNE.N    ??CCTALK_enviaPacote_3
+        BEQ.N    ??CCTALK_enviaPacote_3
+//  206     vTaskDelay(1);
+        MOVS     R0,#+1
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
+        B.N      ??CCTALK_enviaPacote_2
 //  207   
 //  208   vTaskDelay(50);
+??CCTALK_enviaPacote_3:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
 //  209   
 //  210   unsigned short int timeout=2000;
-        MOV      R6,#+2000
-        B.N      ??CCTALK_enviaPacote_4
+        MOV      R10,#+2000
 //  211   while(!CCTALK_recebidos && timeout--)
-//  212     vTaskDelay(1);
-??CCTALK_enviaPacote_5:
-        MOVS     R0,#+1
-          CFI FunCall vTaskDelay
-        BL       vTaskDelay
 ??CCTALK_enviaPacote_4:
         LDR.N    R0,??DataTable4_6
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
-        BNE.N    ??CCTALK_enviaPacote_6
-        MOVS     R0,R6
-        SUBS     R6,R0,#+1
+        BNE.N    ??CCTALK_enviaPacote_5
+        MOV      R0,R10
+        SUBS     R10,R0,#+1
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         CMP      R0,#+0
-        BNE.N    ??CCTALK_enviaPacote_5
+        BEQ.N    ??CCTALK_enviaPacote_5
+//  212     vTaskDelay(1);
+        MOVS     R0,#+1
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
+        B.N      ??CCTALK_enviaPacote_4
 //  213  
 //  214   if(CCTALK_recebidos)
-??CCTALK_enviaPacote_6:
+??CCTALK_enviaPacote_5:
         LDR.N    R0,??DataTable4_6
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
-        BEQ.N    ??CCTALK_enviaPacote_7
+        BEQ.N    ??CCTALK_enviaPacote_6
 //  215     if(CCTALK_bufferRxd[offset+0]==1 && CCTALK_bufferRxd[offset+3]==0){
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
         LDR.N    R0,??DataTable4_7
-        LDRB     R0,[R5, R0]
+        LDRB     R0,[R9, R0]
         CMP      R0,#+1
-        BNE.N    ??CCTALK_enviaPacote_7
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        BNE.N    ??CCTALK_enviaPacote_6
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
         LDR.N    R0,??DataTable4_7
-        ADDS     R0,R5,R0
+        ADDS     R0,R9,R0
         LDRB     R0,[R0, #+3]
         CMP      R0,#+0
-        BNE.N    ??CCTALK_enviaPacote_7
+        BNE.N    ??CCTALK_enviaPacote_6
 //  216       
 //  217       unsigned short int crcRecebido = CCTALK_bufferRxd[CCTALK_recebidos-1]<<8 | CCTALK_bufferRxd[offset+2];
         LDR.N    R0,??DataTable4_6
@@ -671,78 +675,78 @@ CCTALK_enviaPacote:
         LDR.N    R1,??DataTable4_7
         ADDS     R0,R0,R1
         LDRB     R0,[R0, #-1]
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
         LDR.N    R1,??DataTable4_7
-        ADDS     R1,R5,R1
+        ADDS     R1,R9,R1
         LDRB     R1,[R1, #+2]
-        ORRS     R6,R1,R0, LSL #+8
+        ORRS     R11,R1,R0, LSL #+8
 //  218       
 //  219       recebido[0] = CCTALK_bufferRxd[offset+0];
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
         LDR.N    R0,??DataTable4_7
-        LDRB     R0,[R5, R0]
-        STRB     R0,[R4, #+0]
+        LDRB     R0,[R9, R0]
+        STRB     R0,[R6, #+0]
 //  220       recebido[1] = CCTALK_bufferRxd[offset+1];
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
         LDR.N    R0,??DataTable4_7
-        ADDS     R0,R5,R0
+        ADDS     R0,R9,R0
         LDRB     R0,[R0, #+1]
-        STRB     R0,[R4, #+1]
+        STRB     R0,[R6, #+1]
 //  221       recebido[2] = CCTALK_bufferRxd[offset+3];
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
         LDR.N    R0,??DataTable4_7
-        ADDS     R0,R5,R0
+        ADDS     R0,R9,R0
         LDRB     R0,[R0, #+3]
-        STRB     R0,[R4, #+2]
+        STRB     R0,[R6, #+2]
 //  222       for(unsigned short int i=0;i<CCTALK_bufferRxd[1+offset];i++)
         MOVS     R0,#+0
-        B.N      ??CCTALK_enviaPacote_8
-//  223         recebido[3+i] = CCTALK_bufferRxd[offset+4+i];
-??CCTALK_enviaPacote_9:
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        ADDS     R1,R0,R5
-        LDR.N    R2,??DataTable4_7
-        ADDS     R1,R1,R2
-        LDRB     R1,[R1, #+4]
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        ADDS     R2,R0,R4
-        STRB     R1,[R2, #+3]
-        ADDS     R0,R0,#+1
-??CCTALK_enviaPacote_8:
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+??CCTALK_enviaPacote_7:
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
         LDR.N    R1,??DataTable4_7
-        ADDS     R1,R5,R1
+        ADDS     R1,R9,R1
         LDRB     R1,[R1, #+1]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         CMP      R0,R1
-        BCC.N    ??CCTALK_enviaPacote_9
+        BCS.N    ??CCTALK_enviaPacote_8
+//  223         recebido[3+i] = CCTALK_bufferRxd[offset+4+i];
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        ADDS     R1,R0,R9
+        LDR.N    R2,??DataTable4_7
+        ADDS     R1,R1,R2
+        LDRB     R1,[R1, #+4]
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        ADDS     R2,R0,R6
+        STRB     R1,[R2, #+3]
+        ADDS     R0,R0,#+1
+        B.N      ??CCTALK_enviaPacote_7
 //  224       
 //  225       if(CCTALK_calculaCRC(recebido,0,CCTALK_bufferRxd[1+offset]+3)==crcRecebido)
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+??CCTALK_enviaPacote_8:
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
         LDR.N    R0,??DataTable4_7
-        ADDS     R0,R5,R0
+        ADDS     R0,R9,R0
         LDRB     R0,[R0, #+1]
         ADDS     R2,R0,#+3
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
         MOVS     R1,#+0
-        MOVS     R0,R4
+        MOVS     R0,R6
           CFI FunCall CCTALK_calculaCRC
         BL       CCTALK_calculaCRC
-        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
-        CMP      R0,R6
-        BNE.N    ??CCTALK_enviaPacote_7
+        UXTH     R11,R11          ;; ZeroExt  R11,R11,#+16,#+16
+        CMP      R0,R11
+        BNE.N    ??CCTALK_enviaPacote_6
 //  226         return 255;           
         MOVS     R0,#+255
-        B.N      ??CCTALK_enviaPacote_10
+        B.N      ??CCTALK_enviaPacote_9
 //  227     }
 //  228   
 //  229   return 0; 
-??CCTALK_enviaPacote_7:
+??CCTALK_enviaPacote_6:
         MOVS     R0,#+0
-??CCTALK_enviaPacote_10:
-        POP      {R1,R4-R7,PC}    ;; return
+??CCTALK_enviaPacote_9:
+        POP      {R1,R4-R11,PC}   ;; return
           CFI EndBlock cfiBlock5
 //  230 }
 //  231 /***********************************************************************************
@@ -761,21 +765,23 @@ CCTALK_enviaPacote:
 //  239 unsigned char CCTALK_leFilaEventos(unsigned char endereco,unsigned char*qtdEventos,
 //  240                                    unsigned short int *eventos){
 CCTALK_leFilaEventos:
-        PUSH     {R4,R5,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
-          CFI CFA R13+12
-        SUB      SP,SP,#+36
-          CFI CFA R13+48
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
+        SUB      SP,SP,#+40
+          CFI CFA R13+56
+        MOVS     R4,R0
         MOVS     R5,R1
-        MOVS     R4,R2
+        MOVS     R6,R2
 //  241   unsigned char buffer[10];
 //  242   unsigned char resposta[20];
 //  243   unsigned short int recebidos;
 //  244   
 //  245   buffer[0] = endereco;
-        STRB     R0,[SP, #+4]
+        STRB     R4,[SP, #+4]
 //  246   buffer[1] = 0;
         MOVS     R0,#+0
         STRB     R0,[SP, #+5]
@@ -800,9 +806,11 @@ CCTALK_leFilaEventos:
 //  253     for(unsigned char i=0,j=0;i<5;i++,j+=2)      
         MOVS     R0,#+0
         MOVS     R1,#+0
-        B.N      ??CCTALK_leFilaEventos_1
+??CCTALK_leFilaEventos_1:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+5
+        BGE.N    ??CCTALK_leFilaEventos_2
 //  254       eventos[i] = resposta[5+j]<<8 | resposta[4+j];    
-??CCTALK_leFilaEventos_2:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         ADD      R2,SP,#+16
         ADDS     R2,R1,R2
@@ -813,15 +821,13 @@ CCTALK_leFilaEventos:
         LDRB     R3,[R3, #+4]
         ORRS     R2,R3,R2, LSL #+8
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        STRH     R2,[R4, R0, LSL #+1]
+        STRH     R2,[R6, R0, LSL #+1]
         ADDS     R0,R0,#+1
         ADDS     R1,R1,#+2
-??CCTALK_leFilaEventos_1:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+5
-        BLT.N    ??CCTALK_leFilaEventos_2
+        B.N      ??CCTALK_leFilaEventos_1
 //  255     
 //  256     return 255;
+??CCTALK_leFilaEventos_2:
         MOVS     R0,#+255
         B.N      ??CCTALK_leFilaEventos_3
 //  257   }   
@@ -830,9 +836,9 @@ CCTALK_leFilaEventos:
 ??CCTALK_leFilaEventos_0:
         MOVS     R0,#+0
 ??CCTALK_leFilaEventos_3:
-        ADD      SP,SP,#+36
-          CFI CFA R13+12
-        POP      {R4,R5,PC}       ;; return
+        ADD      SP,SP,#+40
+          CFI CFA R13+16
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock6
 //  260 }
 //  261 /***********************************************************************************
@@ -848,17 +854,17 @@ CCTALK_leFilaEventos:
         THUMB
 //  267 unsigned char CCTALK_rotacionaValidador(unsigned char endereco){
 CCTALK_rotacionaValidador:
-        PUSH     {LR}
+        PUSH     {R0-R4,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
-        SUB      SP,SP,#+20
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+24
+        MOVS     R4,R0
 //  268   unsigned char buffer[4];
 //  269   unsigned char resposta[5];
 //  270   unsigned short int recebidos;  
 //  271   
 //  272   buffer[0] = endereco;
-        STRB     R0,[SP, #+0]
+        STRB     R4,[SP, #+0]
 //  273   buffer[1] = 1;
         MOVS     R0,#+1
         STRB     R0,[SP, #+1]
@@ -888,9 +894,9 @@ CCTALK_rotacionaValidador:
 ??CCTALK_rotacionaValidador_0:
         MOVS     R0,#+0
 ??CCTALK_rotacionaValidador_1:
-        ADD      SP,SP,#+20
-          CFI CFA R13+4
-        POP      {PC}             ;; return
+        ADD      SP,SP,#+16
+          CFI CFA R13+8
+        POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock7
 //  283 }
 //  284 /***********************************************************************************
@@ -908,17 +914,21 @@ CCTALK_rotacionaValidador:
 //  291 unsigned char CCTALK_setBitsHabilitacaoCanal(unsigned char endereco,
 //  292                                              unsigned short int mascara){
 CCTALK_setBitsHabilitacaoCanal:
-        PUSH     {LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
         SUB      SP,SP,#+20
-          CFI CFA R13+24
+          CFI CFA R13+32
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  293   unsigned char buffer[5];                                             
 //  294   unsigned char resposta[5];
 //  295   unsigned short int recebidos;
 //  296   
 //  297   buffer[0] = endereco;
-        STRB     R0,[SP, #+0]
+        STRB     R4,[SP, #+0]
 //  298   buffer[1] = 2;
         MOVS     R0,#+2
         STRB     R0,[SP, #+1]
@@ -926,11 +936,11 @@ CCTALK_setBitsHabilitacaoCanal:
         MOVS     R0,#+231
         STRB     R0,[SP, #+2]
 //  300   buffer[3] = mascara;
-        MOVS     R0,R1
+        MOVS     R0,R5
         STRB     R0,[SP, #+3]
 //  301   buffer[4] = mascara>>8;
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        LSRS     R0,R1,#+8
+        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        LSRS     R0,R5,#+8
         STRB     R0,[SP, #+4]
 //  302   
 //  303   if(CCTALK_enviaPacote(buffer,5,resposta,&recebidos)){
@@ -954,8 +964,8 @@ CCTALK_setBitsHabilitacaoCanal:
         MOVS     R0,#+0
 ??CCTALK_setBitsHabilitacaoCanal_1:
         ADD      SP,SP,#+20
-          CFI CFA R13+4
-        POP      {PC}             ;; return
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
           CFI EndBlock cfiBlock8
 //  310 }
 //  311 /***********************************************************************************
@@ -973,17 +983,21 @@ CCTALK_setBitsHabilitacaoCanal:
 //  318 unsigned char CCTALK_setFlagHabilitacaoGeral(unsigned char endereco,
 //  319                                              unsigned char flagBloqueio){
 CCTALK_setFlagHabilitacaoGeral:
-        PUSH     {LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
         SUB      SP,SP,#+20
-          CFI CFA R13+24
+          CFI CFA R13+32
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  320   unsigned char buffer[4];
 //  321   unsigned char resposta[5];
 //  322   unsigned short int recebidos;
 //  323   
 //  324   buffer[0] = endereco;
-        STRB     R0,[SP, #+0]
+        STRB     R4,[SP, #+0]
 //  325   buffer[1] = 1;
         MOVS     R0,#+1
         STRB     R0,[SP, #+1]
@@ -991,7 +1005,7 @@ CCTALK_setFlagHabilitacaoGeral:
         MOVS     R0,#+228
         STRB     R0,[SP, #+2]
 //  327   buffer[3] = flagBloqueio;
-        STRB     R1,[SP, #+3]
+        STRB     R5,[SP, #+3]
 //  328   
 //  329   if(CCTALK_enviaPacote(buffer,4,resposta,&recebidos)){
         ADD      R3,SP,#+4
@@ -1014,8 +1028,8 @@ CCTALK_setFlagHabilitacaoGeral:
         MOVS     R0,#+0
 ??CCTALK_setFlagHabilitacaoGeral_1:
         ADD      SP,SP,#+20
-          CFI CFA R13+4
-        POP      {PC}             ;; return
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
           CFI EndBlock cfiBlock9
 //  336 }
 //  337 /***********************************************************************************
@@ -1318,9 +1332,9 @@ CCTAK_msg_to_string:
 // 512 bytes in section .data
 //  10 bytes in section .noinit (abs)
 // 628 bytes in section .rodata
-// 872 bytes in section .text
+// 946 bytes in section .text
 // 
-// 872 bytes of CODE  memory
+// 946 bytes of CODE  memory
 // 628 bytes of CONST memory
 // 643 bytes of DATA  memory (+ 10 bytes shared)
 //

@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:32 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:36 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_faturamen /
-//                    to.c                                                    /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_faturame /
-//                    nto.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmw /
-//                    are\01_mais_pipoca_exp\MaisPipoca -                     /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_fa /
+//                    turamento.c                                             /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_fa /
+//                    turamento.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\D /
+//                    ebug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\De /
+//                    bug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debu /
+//                    g\Obj\ --no_cse --no_unroll --no_inline                 /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\menu_faturame /
-//                    nto.s                                                   /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\menu_f /
+//                    aturamento.s                                            /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -138,7 +132,7 @@
 `?<Constant "ESC P/ SAIR">`:
         DATA
         DC8 "ESC P/ SAIR"
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_faturamento.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_faturamento.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -243,6 +237,7 @@ MENUFAT_entry:
 //   85   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R4,R0
 //   86   
 //   87   MENUROLAGEM_show((char*)STRING_titulo_menu_faturamento[idioma],
 //   88                    (char**)STRING_opcoes_menu_faturamento[idioma],
@@ -250,13 +245,13 @@ MENUFAT_entry:
 //   90                    (void(**)(void))MFAT_entry);    
         LDR.N    R3,??DataTable3
         MOVS     R2,#+6
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        MOVS     R1,#+24
-        LDR.N    R4,??DataTable3_1
-        MLA      R1,R1,R0,R4
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R4,??DataTable3_2
-        LDR      R0,[R4, R0, LSL #+2]
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        MOVS     R0,#+24
+        LDR.N    R1,??DataTable3_1
+        MLA      R1,R0,R4,R1
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.N    R0,??DataTable3_2
+        LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall MENUROLAGEM_show
         BL       MENUROLAGEM_show
 //   91 }
@@ -276,22 +271,25 @@ MENUFAT_entry:
         THUMB
 //   99 void MENUFAT_exibe_info_int(unsigned int parcial,unsigned int total){
 MENUFAT_exibe_info_int:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         SUB      SP,SP,#+24
-          CFI CFA R13+32
-        MOVS     R4,R1
+          CFI CFA R13+40
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  100   eTECLA tecla;
 //  101   char buffer_linha[17];
 //  102   
 //  103   sprintf(buffer_linha,"P:%d,%d",parcial/100,parcial%100);
-        MOVS     R1,#+100
-        UDIV     R2,R0,R1
-        MLS      R3,R1,R2,R0
-        MOVS     R1,#+100
-        UDIV     R2,R0,R1
+        MOVS     R0,#+100
+        UDIV     R1,R4,R0
+        MLS      R3,R0,R1,R4
+        MOVS     R0,#+100
+        UDIV     R2,R4,R0
         LDR.N    R1,??DataTable3_3
         ADD      R0,SP,#+0
           CFI FunCall sprintf
@@ -305,10 +303,10 @@ MENUFAT_exibe_info_int:
 //  105   
 //  106   sprintf(buffer_linha,"T:%d,%d",total/100,total%100);
         MOVS     R0,#+100
-        UDIV     R1,R4,R0
-        MLS      R3,R0,R1,R4
+        UDIV     R1,R5,R0
+        MLS      R3,R0,R1,R5
         MOVS     R0,#+100
-        UDIV     R2,R4,R0
+        UDIV     R2,R5,R0
         LDR.N    R1,??DataTable3_4
         ADD      R0,SP,#+0
           CFI FunCall sprintf
@@ -319,46 +317,47 @@ MENUFAT_exibe_info_int:
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MENUFAT_exibe_info_int_0
 //  108   
 //  109   for(;TECLADO_getContadorInatividade();){
-//  110    
-//  111     tecla = TECLADO_getch();
-//  112     switch(tecla){
-//  113       case TECLA_ENTER:
-//  114            break;
-??MENUFAT_exibe_info_int_1:
 ??MENUFAT_exibe_info_int_0:
           CFI FunCall TECLADO_getContadorInatividade
         BL       TECLADO_getContadorInatividade
         CMP      R0,#+0
-        BEQ.N    ??MENUFAT_exibe_info_int_2
+        BEQ.N    ??MENUFAT_exibe_info_int_1
+//  110    
+//  111     tecla = TECLADO_getch();
           CFI FunCall TECLADO_getch
         BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        MOVS     R6,R0
+//  112     switch(tecla){
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        MOVS     R0,R6
         CMP      R0,#+1
-        BEQ.N    ??MENUFAT_exibe_info_int_3
+        BEQ.N    ??MENUFAT_exibe_info_int_2
         CMP      R0,#+2
-        BEQ.N    ??MENUFAT_exibe_info_int_4
+        BEQ.N    ??MENUFAT_exibe_info_int_3
         CMP      R0,#+4
-        BEQ.N    ??MENUFAT_exibe_info_int_1
+        BNE.N    ??MENUFAT_exibe_info_int_0
+//  113       case TECLA_ENTER:
+//  114            break;
+??MENUFAT_exibe_info_int_4:
         B.N      ??MENUFAT_exibe_info_int_0
 //  115       case TECLA_ESC:
 //  116            return;
-??MENUFAT_exibe_info_int_3:
+??MENUFAT_exibe_info_int_2:
         B.N      ??MENUFAT_exibe_info_int_5
 //  117       case TECLA_INC:
 //  118            break;
-??MENUFAT_exibe_info_int_4:
+??MENUFAT_exibe_info_int_3:
         B.N      ??MENUFAT_exibe_info_int_0
 //  119     }    
 //  120   }    
 //  121 }
-??MENUFAT_exibe_info_int_2:
+??MENUFAT_exibe_info_int_1:
 ??MENUFAT_exibe_info_int_5:
         ADD      SP,SP,#+24
-          CFI CFA R13+8
-        POP      {R4,PC}          ;; return
+          CFI CFA R13+16
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock1
 //  122 /***********************************************************************************
 //  123 *       Descrição       :       Exibe o faturamento parcial
@@ -564,13 +563,14 @@ MENUFAT_reinicia_totalizadores:
         THUMB
 //  191 void MENUFAT_reinicia_parcial(void){
 MENUFAT_reinicia_parcial:
-        PUSH     {R4,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
 //  192   eTECLA tecla;
 //  193   unsigned char loop=1;
-        MOVS     R4,#+1
+        MOVS     R5,#+1
 //  194   
 //  195   STRING_write_to_internal(CLEAR_DISPLAY,"ENTER P/ IMPRIM.","ESC P/ SAIR");
         LDR.N    R2,??DataTable3_9
@@ -578,39 +578,41 @@ MENUFAT_reinicia_parcial:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MENUFAT_reinicia_parcial_0
 //  196     
 //  197   for(;loop;){
+??MENUFAT_reinicia_parcial_0:
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BEQ.N    ??MENUFAT_reinicia_parcial_1
 //  198     tecla = TECLADO_getch();
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  199     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        MOVS     R0,R4
+        CMP      R0,#+1
+        BEQ.N    ??MENUFAT_reinicia_parcial_2
+        CMP      R0,#+4
+        BNE.N    ??MENUFAT_reinicia_parcial_0
 //  200       case TECLA_ENTER: RELATORIO_entry();
-??MENUFAT_reinicia_parcial_1:
+??MENUFAT_reinicia_parcial_3:
           CFI FunCall RELATORIO_entry
         BL       RELATORIO_entry
 //  201                         break;
-??MENUFAT_reinicia_parcial_0:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
-        BEQ.N    ??MENUFAT_reinicia_parcial_2
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MENUFAT_reinicia_parcial_3
-        CMP      R0,#+4
-        BEQ.N    ??MENUFAT_reinicia_parcial_1
         B.N      ??MENUFAT_reinicia_parcial_0
 //  202       case TECLA_ESC:   loop = 0;
-??MENUFAT_reinicia_parcial_3:
-        MOVS     R4,#+0
+??MENUFAT_reinicia_parcial_2:
+        MOVS     R0,#+0
+        MOVS     R5,R0
 //  203                         break;
         B.N      ??MENUFAT_reinicia_parcial_0
 //  204     }  
 //  205     
 //  206   }  
 //  207 }
-??MENUFAT_reinicia_parcial_2:
-        POP      {R4,PC}          ;; return
+??MENUFAT_reinicia_parcial_1:
+        POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock6
 
         SECTION `.text`:CODE:NOROOT(2)
@@ -696,9 +698,9 @@ MENUFAT_reinicia_parcial:
 //  210 ***********************************************************************************/
 // 
 // 112 bytes in section .rodata
-// 416 bytes in section .text
+// 426 bytes in section .text
 // 
-// 416 bytes of CODE  memory
+// 426 bytes of CODE  memory
 // 112 bytes of CONST memory
 //
 //Errors: none

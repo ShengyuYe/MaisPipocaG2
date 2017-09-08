@@ -1,28 +1,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jun/2017  15:48:43 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:36 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\UARTS\uart.c     /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\UARTS\uart.c"   /
-//                    -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_ /
-//                    mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA    /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\UARTS\uar /
+//                    t.c                                                     /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\UARTS\uar /
+//                    t.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Lis /
+//                    t\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List /
+//                    \ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\   /
+//                    --no_cse --no_unroll --no_inline --no_code_motion       /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\uart.s        /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\uart.s /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -99,7 +94,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\UARTS\uart.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\UARTS\uart.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -371,10 +366,15 @@ UART_funcoesVetores:
         THUMB
 //   86 void UART_init(unsigned char uart,unsigned long int baudrate,void(*funcRxd)(unsigned char data),
 //   87                unsigned char*(*funcTxd)(void),void(*enableFunc)(unsigned char state)){
+UART_init:
+        PUSH     {R4-R6}
+          CFI R6 Frame(CFA, -4)
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
 //   88   unsigned long int Fdiv;
 //   89         
 //   90   switch(uart){
-UART_init:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BEQ.N    ??UART_init_0
@@ -387,313 +387,322 @@ UART_init:
 //   91     case UART_0: 
 //   92                  PINSEL0_bit.P0_2 = 0x01;  // Função alternativa para os pinos da COM 0
 ??UART_init_0:
-        MOVS     R0,#+1
-        LDR.W    R2,??DataTable2  ;; 0x4002c000
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+4,#+2
-        LDR.W    R0,??DataTable2  ;; 0x4002c000
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.W    R6,??DataTable2  ;; 0x4002c000
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+4,#+2
+        LDR.W    R5,??DataTable2  ;; 0x4002c000
+        STR      R6,[R5, #+0]
 //   93                  PINSEL0_bit.P0_3 = 0x01;
-        MOVS     R0,#+1
-        LDR.W    R2,??DataTable2  ;; 0x4002c000
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+6,#+2
-        LDR.W    R0,??DataTable2  ;; 0x4002c000
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.W    R6,??DataTable2  ;; 0x4002c000
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+6,#+2
+        LDR.W    R5,??DataTable2  ;; 0x4002c000
+        STR      R6,[R5, #+0]
 //   94   
 //   95                  PCONP_bit.PCUART0 = 1;
-        LDR.N    R0,??DataTable2_1  ;; 0x400fc0c4
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x8
-        LDR.N    R2,??DataTable2_1  ;; 0x400fc0c4
-        STR      R0,[R2, #+0]
+        LDR.W    R5,??DataTable2_1  ;; 0x400fc0c4
+        LDR      R5,[R5, #+0]
+        ORRS     R5,R5,#0x8
+        LDR.W    R6,??DataTable2_1  ;; 0x400fc0c4
+        STR      R5,[R6, #+0]
 //   96                  PCLKSEL0_bit.PCLK_UART0 = 1;
-        MOVS     R0,#+1
-        LDR.N    R2,??DataTable2_2  ;; 0x400fc1a8
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+6,#+2
-        LDR.N    R0,??DataTable2_2  ;; 0x400fc1a8
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.W    R6,??DataTable2_2  ;; 0x400fc1a8
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+6,#+2
+        LDR.N    R5,??DataTable2_2  ;; 0x400fc1a8
+        STR      R6,[R5, #+0]
 //   97                  
 //   98                  U0LCR = 0x83;   /* 8 bits, no Parity, 1 Stop bit */
-        LDR.N    R0,??DataTable2_3  ;; 0x4000c00c
-        MOVS     R2,#+131
-        STRB     R2,[R0, #+0]
+        LDR.N    R5,??DataTable2_3  ;; 0x4000c00c
+        MOVS     R6,#+131
+        STRB     R6,[R5, #+0]
 //   99                  Fdiv = ( PCLK / 16 ) / baudrate ;  /*baud rate */
-        LDR.N    R0,??DataTable2_4  ;; 0x5e758c
-        UDIV     R0,R0,R1
+        LDR.N    R5,??DataTable2_4  ;; 0x5e758c
+        UDIV     R5,R5,R1
+        MOVS     R4,R5
 //  100                  U0DLM = Fdiv / 256;
-        LSRS     R1,R0,#+8
-        LDR.N    R2,??DataTable2_5  ;; 0x4000c004
-        STR      R1,[R2, #+0]
+        LSRS     R5,R4,#+8
+        LDR.N    R6,??DataTable2_5  ;; 0x4000c004
+        STR      R5,[R6, #+0]
 //  101                  U0DLL = Fdiv % 256;
-        MOV      R1,#+256
-        UDIV     R2,R0,R1
-        MLS      R2,R2,R1,R0
-        LDR.N    R0,??DataTable2_6  ;; 0x4000c000
-        STRB     R2,[R0, #+0]
+        MOV      R5,#+256
+        UDIV     R6,R4,R5
+        MLS      R6,R6,R5,R4
+        LDR.N    R5,??DataTable2_6  ;; 0x4000c000
+        STRB     R6,[R5, #+0]
 //  102                  U0LCR = 0x03;   /* DLAB = 0 */
-        LDR.N    R0,??DataTable2_3  ;; 0x4000c00c
-        MOVS     R1,#+3
-        STRB     R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_3  ;; 0x4000c00c
+        MOVS     R6,#+3
+        STRB     R6,[R5, #+0]
 //  103                  U0FCR = 0x07;   /* Enable and reset TX and RX FIFO. */
-        LDR.N    R0,??DataTable2_7  ;; 0x4000c008
-        MOVS     R1,#+7
-        STR      R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_7  ;; 0x4000c008
+        MOVS     R6,#+7
+        STR      R6,[R5, #+0]
 //  104 
 //  105                  SETENA0 |= (0x01)<<5;
-        LDR.N    R0,??DataTable2_8  ;; 0xe000e100
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x20
-        LDR.N    R1,??DataTable2_8  ;; 0xe000e100
-        STR      R0,[R1, #+0]
+        LDR.N    R5,??DataTable2_8  ;; 0xe000e100
+        LDR      R5,[R5, #+0]
+        ORRS     R5,R5,#0x20
+        LDR.N    R6,??DataTable2_8  ;; 0xe000e100
+        STR      R5,[R6, #+0]
 //  106                  IP1_bit.PRI_5 = 1;
-        MOVS     R0,#+1
-        LDR.N    R1,??DataTable2_9  ;; 0xe000e404
-        LDR      R1,[R1, #+0]
-        BFI      R1,R0,#+8,#+8
-        LDR.N    R0,??DataTable2_9  ;; 0xe000e404
-        STR      R1,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.N    R6,??DataTable2_9  ;; 0xe000e404
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+8,#+8
+        LDR.N    R5,??DataTable2_9  ;; 0xe000e404
+        STR      R6,[R5, #+0]
 //  107                  
 //  108                  U0IER = IER_RBR | IER_THRE | IER_RLS; /* Enable UART0 interrupt */                   
-        LDR.N    R0,??DataTable2_5  ;; 0x4000c004
-        MOVS     R1,#+7
-        STR      R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_5  ;; 0x4000c004
+        MOVS     R6,#+7
+        STR      R6,[R5, #+0]
 //  109                  break;
         B.N      ??UART_init_4
 //  110     case UART_1: 
 //  111                  PINSEL4_bit.P2_0 = 0x02;  // Função alternativa para os pinos da COM 1
 ??UART_init_2:
-        MOVS     R0,#+2
-        LDR.N    R2,??DataTable2_10  ;; 0x4002c010
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+0,#+2
-        LDR.N    R0,??DataTable2_10  ;; 0x4002c010
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+2
+        LDR.N    R6,??DataTable2_10  ;; 0x4002c010
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+0,#+2
+        LDR.N    R5,??DataTable2_10  ;; 0x4002c010
+        STR      R6,[R5, #+0]
 //  112                  PINSEL4_bit.P2_1 = 0x02;  // utilizada no protocolo TELET
-        MOVS     R0,#+2
-        LDR.N    R2,??DataTable2_10  ;; 0x4002c010
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+2,#+2
-        LDR.N    R0,??DataTable2_10  ;; 0x4002c010
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+2
+        LDR.N    R6,??DataTable2_10  ;; 0x4002c010
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+2,#+2
+        LDR.N    R5,??DataTable2_10  ;; 0x4002c010
+        STR      R6,[R5, #+0]
 //  113   
 //  114                  PCONP_bit.PCUART1 = 1;
-        LDR.N    R0,??DataTable2_1  ;; 0x400fc0c4
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x10
-        LDR.N    R2,??DataTable2_1  ;; 0x400fc0c4
-        STR      R0,[R2, #+0]
+        LDR.N    R5,??DataTable2_1  ;; 0x400fc0c4
+        LDR      R5,[R5, #+0]
+        ORRS     R5,R5,#0x10
+        LDR.N    R6,??DataTable2_1  ;; 0x400fc0c4
+        STR      R5,[R6, #+0]
 //  115                  PCLKSEL0_bit.PCLK_UART1 = 1;
-        MOVS     R0,#+1
-        LDR.N    R2,??DataTable2_2  ;; 0x400fc1a8
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+8,#+2
-        LDR.N    R0,??DataTable2_2  ;; 0x400fc1a8
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.N    R6,??DataTable2_2  ;; 0x400fc1a8
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+8,#+2
+        LDR.N    R5,??DataTable2_2  ;; 0x400fc1a8
+        STR      R6,[R5, #+0]
 //  116                  
 //  117                  U1LCR = 0x83;   /* 8 bits, no Parity, 1 Stop bit */
-        LDR.N    R0,??DataTable2_11  ;; 0x4001000c
-        MOVS     R2,#+131
-        STRB     R2,[R0, #+0]
+        LDR.N    R5,??DataTable2_11  ;; 0x4001000c
+        MOVS     R6,#+131
+        STRB     R6,[R5, #+0]
 //  118                  Fdiv = ( PCLK / 16 ) / baudrate ;  /*baud rate */
-        LDR.N    R0,??DataTable2_4  ;; 0x5e758c
-        UDIV     R0,R0,R1
+        LDR.N    R5,??DataTable2_4  ;; 0x5e758c
+        UDIV     R5,R5,R1
+        MOVS     R4,R5
 //  119                  U1DLM = Fdiv / 256;
-        LSRS     R1,R0,#+8
-        LDR.N    R2,??DataTable2_12  ;; 0x40010004
-        STR      R1,[R2, #+0]
+        LSRS     R5,R4,#+8
+        LDR.N    R6,??DataTable2_12  ;; 0x40010004
+        STR      R5,[R6, #+0]
 //  120                  U1DLL = Fdiv % 256;
-        MOV      R1,#+256
-        UDIV     R2,R0,R1
-        MLS      R2,R2,R1,R0
-        LDR.N    R0,??DataTable2_13  ;; 0x40010000
-        STRB     R2,[R0, #+0]
+        MOV      R5,#+256
+        UDIV     R6,R4,R5
+        MLS      R6,R6,R5,R4
+        LDR.N    R5,??DataTable2_13  ;; 0x40010000
+        STRB     R6,[R5, #+0]
 //  121                  U1LCR = 0x03;   /* DLAB = 0 */
-        LDR.N    R0,??DataTable2_11  ;; 0x4001000c
-        MOVS     R1,#+3
-        STRB     R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_11  ;; 0x4001000c
+        MOVS     R6,#+3
+        STRB     R6,[R5, #+0]
 //  122                  U1FCR = 0x07;   /* Enable and reset TX and RX FIFO. */
-        LDR.N    R0,??DataTable2_14  ;; 0x40010008
-        MOVS     R1,#+7
-        STR      R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_14  ;; 0x40010008
+        MOVS     R6,#+7
+        STR      R6,[R5, #+0]
 //  123 
 //  124                  SETENA0 |= (0x01)<<6;
-        LDR.N    R0,??DataTable2_8  ;; 0xe000e100
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x40
-        LDR.N    R1,??DataTable2_8  ;; 0xe000e100
-        STR      R0,[R1, #+0]
+        LDR.N    R5,??DataTable2_8  ;; 0xe000e100
+        LDR      R5,[R5, #+0]
+        ORRS     R5,R5,#0x40
+        LDR.N    R6,??DataTable2_8  ;; 0xe000e100
+        STR      R5,[R6, #+0]
 //  125                  IP1_bit.PRI_6 = 1;
-        MOVS     R0,#+1
-        LDR.N    R1,??DataTable2_9  ;; 0xe000e404
-        LDR      R1,[R1, #+0]
-        BFI      R1,R0,#+16,#+8
-        LDR.N    R0,??DataTable2_9  ;; 0xe000e404
-        STR      R1,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.N    R6,??DataTable2_9  ;; 0xe000e404
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+16,#+8
+        LDR.N    R5,??DataTable2_9  ;; 0xe000e404
+        STR      R6,[R5, #+0]
 //  126                  
 //  127                  U1IER = IER_RBR | IER_THRE | IER_RLS; /* Enable UART0 interrupt */             
-        LDR.N    R0,??DataTable2_12  ;; 0x40010004
-        MOVS     R1,#+7
-        STR      R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_12  ;; 0x40010004
+        MOVS     R6,#+7
+        STR      R6,[R5, #+0]
 //  128                  break;      
         B.N      ??UART_init_4
 //  129     case UART_2:
 //  130                  PINSEL0_bit.P0_10 = 1;
 ??UART_init_1:
-        MOVS     R0,#+1
-        LDR.N    R2,??DataTable2  ;; 0x4002c000
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+20,#+2
-        LDR.N    R0,??DataTable2  ;; 0x4002c000
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.N    R6,??DataTable2  ;; 0x4002c000
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+20,#+2
+        LDR.N    R5,??DataTable2  ;; 0x4002c000
+        STR      R6,[R5, #+0]
 //  131                  PINSEL0_bit.P0_11 = 1;
-        MOVS     R0,#+1
-        LDR.N    R2,??DataTable2  ;; 0x4002c000
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+22,#+2
-        LDR.N    R0,??DataTable2  ;; 0x4002c000
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.N    R6,??DataTable2  ;; 0x4002c000
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+22,#+2
+        LDR.N    R5,??DataTable2  ;; 0x4002c000
+        STR      R6,[R5, #+0]
 //  132       
 //  133                  PCONP_bit.PCUART2 = 1;
-        LDR.N    R0,??DataTable2_1  ;; 0x400fc0c4
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x1000000
-        LDR.N    R2,??DataTable2_1  ;; 0x400fc0c4
-        STR      R0,[R2, #+0]
+        LDR.N    R5,??DataTable2_1  ;; 0x400fc0c4
+        LDR      R5,[R5, #+0]
+        ORRS     R5,R5,#0x1000000
+        LDR.N    R6,??DataTable2_1  ;; 0x400fc0c4
+        STR      R5,[R6, #+0]
 //  134                  PCLKSEL1_bit.PCLK_UART2 = 1;
-        MOVS     R0,#+1
-        LDR.N    R2,??DataTable2_15  ;; 0x400fc1ac
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+16,#+2
-        LDR.N    R0,??DataTable2_15  ;; 0x400fc1ac
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.N    R6,??DataTable2_15  ;; 0x400fc1ac
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+16,#+2
+        LDR.N    R5,??DataTable2_15  ;; 0x400fc1ac
+        STR      R6,[R5, #+0]
 //  135                  
 //  136                  U2LCR = 0x83;   /* 8 bits, no Parity, 1 Stop bit */
-        LDR.N    R0,??DataTable2_16  ;; 0x4009800c
-        MOVS     R2,#+131
-        STRB     R2,[R0, #+0]
+        LDR.N    R5,??DataTable2_16  ;; 0x4009800c
+        MOVS     R6,#+131
+        STRB     R6,[R5, #+0]
 //  137                  Fdiv = ( PCLK / 16 ) / baudrate ;  /*baud rate */
-        LDR.N    R0,??DataTable2_4  ;; 0x5e758c
-        UDIV     R0,R0,R1
+        LDR.N    R5,??DataTable2_4  ;; 0x5e758c
+        UDIV     R5,R5,R1
+        MOVS     R4,R5
 //  138                  U2DLM = Fdiv / 256;
-        LSRS     R1,R0,#+8
-        LDR.N    R2,??DataTable2_17  ;; 0x40098004
-        STR      R1,[R2, #+0]
+        LSRS     R5,R4,#+8
+        LDR.N    R6,??DataTable2_17  ;; 0x40098004
+        STR      R5,[R6, #+0]
 //  139                  U2DLL = Fdiv % 256;
-        MOV      R1,#+256
-        UDIV     R2,R0,R1
-        MLS      R2,R2,R1,R0
-        LDR.N    R0,??DataTable2_18  ;; 0x40098000
-        STRB     R2,[R0, #+0]
+        MOV      R5,#+256
+        UDIV     R6,R4,R5
+        MLS      R6,R6,R5,R4
+        LDR.N    R5,??DataTable2_18  ;; 0x40098000
+        STRB     R6,[R5, #+0]
 //  140                  U2LCR = 0x03;   /* DLAB = 0 */
-        LDR.N    R0,??DataTable2_16  ;; 0x4009800c
-        MOVS     R1,#+3
-        STRB     R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_16  ;; 0x4009800c
+        MOVS     R6,#+3
+        STRB     R6,[R5, #+0]
 //  141                  U2FCR = 0x00;
-        LDR.N    R0,??DataTable2_19  ;; 0x40098008
-        MOVS     R1,#+0
-        STR      R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_19  ;; 0x40098008
+        MOVS     R6,#+0
+        STR      R6,[R5, #+0]
 //  142 
 //  143                  SETENA0 |= (0x01)<<7;
-        LDR.N    R0,??DataTable2_8  ;; 0xe000e100
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x80
-        LDR.N    R1,??DataTable2_8  ;; 0xe000e100
-        STR      R0,[R1, #+0]
+        LDR.N    R5,??DataTable2_8  ;; 0xe000e100
+        LDR      R5,[R5, #+0]
+        ORRS     R5,R5,#0x80
+        LDR.N    R6,??DataTable2_8  ;; 0xe000e100
+        STR      R5,[R6, #+0]
 //  144                  IP1_bit.PRI_7 = 1;
-        MOVS     R0,#+1
-        LDR.N    R1,??DataTable2_9  ;; 0xe000e404
-        LDR      R1,[R1, #+0]
-        BFI      R1,R0,#+24,#+8
-        LDR.N    R0,??DataTable2_9  ;; 0xe000e404
-        STR      R1,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.N    R6,??DataTable2_9  ;; 0xe000e404
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+24,#+8
+        LDR.N    R5,??DataTable2_9  ;; 0xe000e404
+        STR      R6,[R5, #+0]
 //  145                  
 //  146                  U2IER = IER_RBR | IER_THRE;// | IER_RLS; /* Enable UART0 interrupt */         
-        LDR.N    R0,??DataTable2_17  ;; 0x40098004
-        MOVS     R1,#+3
-        STR      R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_17  ;; 0x40098004
+        MOVS     R6,#+3
+        STR      R6,[R5, #+0]
 //  147                  break;      
         B.N      ??UART_init_4
 //  148     case UART_3:
 //  149                  PINSEL0_bit.P0_0 = 0x02;  // Função alternativa para os pinos da com 3
 ??UART_init_3:
-        MOVS     R0,#+2
-        LDR.N    R2,??DataTable2  ;; 0x4002c000
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+0,#+2
-        LDR.N    R0,??DataTable2  ;; 0x4002c000
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+2
+        LDR.N    R6,??DataTable2  ;; 0x4002c000
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+0,#+2
+        LDR.N    R5,??DataTable2  ;; 0x4002c000
+        STR      R6,[R5, #+0]
 //  150                  PINSEL0_bit.P0_1 = 0x02;
-        MOVS     R0,#+2
-        LDR.N    R2,??DataTable2  ;; 0x4002c000
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+2,#+2
-        LDR.N    R0,??DataTable2  ;; 0x4002c000
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+2
+        LDR.N    R6,??DataTable2  ;; 0x4002c000
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+2,#+2
+        LDR.N    R5,??DataTable2  ;; 0x4002c000
+        STR      R6,[R5, #+0]
 //  151   
 //  152                  PCONP_bit.PCUART3 = 1;
-        LDR.N    R0,??DataTable2_1  ;; 0x400fc0c4
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x2000000
-        LDR.N    R2,??DataTable2_1  ;; 0x400fc0c4
-        STR      R0,[R2, #+0]
+        LDR.N    R5,??DataTable2_1  ;; 0x400fc0c4
+        LDR      R5,[R5, #+0]
+        ORRS     R5,R5,#0x2000000
+        LDR.N    R6,??DataTable2_1  ;; 0x400fc0c4
+        STR      R5,[R6, #+0]
 //  153                  PCLKSEL1_bit.PCLK_UART3 = 1;
-        MOVS     R0,#+1
-        LDR.N    R2,??DataTable2_15  ;; 0x400fc1ac
-        LDR      R2,[R2, #+0]
-        BFI      R2,R0,#+18,#+2
-        LDR.N    R0,??DataTable2_15  ;; 0x400fc1ac
-        STR      R2,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.N    R6,??DataTable2_15  ;; 0x400fc1ac
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+18,#+2
+        LDR.N    R5,??DataTable2_15  ;; 0x400fc1ac
+        STR      R6,[R5, #+0]
 //  154                                   
 //  155                  U3LCR = 0x83;   /* 8 bits, no Parity, 1 Stop bit */
-        LDR.N    R0,??DataTable2_20  ;; 0x4009c00c
-        MOVS     R2,#+131
-        STRB     R2,[R0, #+0]
+        LDR.N    R5,??DataTable2_20  ;; 0x4009c00c
+        MOVS     R6,#+131
+        STRB     R6,[R5, #+0]
 //  156                  Fdiv = ( PCLK / 16 ) / baudrate ;  /*baud rate */
-        LDR.N    R0,??DataTable2_4  ;; 0x5e758c
-        UDIV     R0,R0,R1
+        LDR.N    R5,??DataTable2_4  ;; 0x5e758c
+        UDIV     R5,R5,R1
+        MOVS     R4,R5
 //  157                  U3DLM = Fdiv / 256;
-        LSRS     R1,R0,#+8
-        LDR.N    R2,??DataTable2_21  ;; 0x4009c004
-        STR      R1,[R2, #+0]
+        LSRS     R5,R4,#+8
+        LDR.N    R6,??DataTable2_21  ;; 0x4009c004
+        STR      R5,[R6, #+0]
 //  158                  U3DLL = Fdiv % 256;
-        MOV      R1,#+256
-        UDIV     R2,R0,R1
-        MLS      R2,R2,R1,R0
-        LDR.N    R0,??DataTable2_22  ;; 0x4009c000
-        STRB     R2,[R0, #+0]
+        MOV      R5,#+256
+        UDIV     R6,R4,R5
+        MLS      R6,R6,R5,R4
+        LDR.N    R5,??DataTable2_22  ;; 0x4009c000
+        STRB     R6,[R5, #+0]
 //  159                  U3LCR = 0x03;   /* DLAB = 0 */
-        LDR.N    R0,??DataTable2_20  ;; 0x4009c00c
-        MOVS     R1,#+3
-        STRB     R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_20  ;; 0x4009c00c
+        MOVS     R6,#+3
+        STRB     R6,[R5, #+0]
 //  160                  U3FCR = 0x07;   /* Enable and reset TX and RX FIFO. */
-        LDR.N    R0,??DataTable2_23  ;; 0x4009c008
-        MOVS     R1,#+7
-        STR      R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_23  ;; 0x4009c008
+        MOVS     R6,#+7
+        STR      R6,[R5, #+0]
 //  161 
 //  162                  SETENA0 |= (0x01)<<8;// Habilitação da interrupção...
-        LDR.N    R0,??DataTable2_8  ;; 0xe000e100
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x100
-        LDR.N    R1,??DataTable2_8  ;; 0xe000e100
-        STR      R0,[R1, #+0]
+        LDR.N    R5,??DataTable2_8  ;; 0xe000e100
+        LDR      R5,[R5, #+0]
+        ORRS     R5,R5,#0x100
+        LDR.N    R6,??DataTable2_8  ;; 0xe000e100
+        STR      R5,[R6, #+0]
 //  163                  IP2_bit.PRI_8 = 1;
-        MOVS     R0,#+1
-        LDR.N    R1,??DataTable2_24  ;; 0xe000e408
-        LDR      R1,[R1, #+0]
-        BFI      R1,R0,#+0,#+8
-        LDR.N    R0,??DataTable2_24  ;; 0xe000e408
-        STR      R1,[R0, #+0]
+        MOVS     R5,#+1
+        LDR.N    R6,??DataTable2_24  ;; 0xe000e408
+        LDR      R6,[R6, #+0]
+        BFI      R6,R5,#+0,#+8
+        LDR.N    R5,??DataTable2_24  ;; 0xe000e408
+        STR      R6,[R5, #+0]
 //  164                  
 //  165                  U3IER = IER_RBR | IER_THRE | IER_RLS; /* Enable UART0 interrupt */               
-        LDR.N    R0,??DataTable2_21  ;; 0x4009c004
-        MOVS     R1,#+7
-        STR      R1,[R0, #+0]
+        LDR.N    R5,??DataTable2_21  ;; 0x4009c004
+        MOVS     R6,#+7
+        STR      R6,[R5, #+0]
 //  166                  break;      
 //  167   }  
 //  168 }
 ??UART_init_4:
+        POP      {R4-R6}
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI CFA R13+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock0
         REQUIRE _A_PINSEL0
@@ -732,10 +741,11 @@ UART_init:
         THUMB
 //  174 void UART_irq_uart_1(void){
 UART_irq_uart_1:
-        PUSH     {R4,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
 //  175   unsigned char dummy,*pointer;
 //  176   
 //  177   switch(U1IIR_bit.IID){
@@ -759,9 +769,9 @@ UART_irq_uart_1:
         LDR      R0,[R0, #+16]
           CFI FunCall
         BLX      R0
-        MOVS     R4,R0
+        MOVS     R5,R0
 //  180                if(pointer != NULL){
-        CMP      R4,#+0
+        CMP      R5,#+0
         BEQ.N    ??UART_irq_uart_1_5
 //  181                   if(UART_funcoesVetores[1].enableFunction)
         LDR.N    R0,??DataTable2_25
@@ -777,7 +787,7 @@ UART_irq_uart_1:
 //  183                   U1THR = *pointer;
 ??UART_irq_uart_1_6:
         LDR.N    R0,??DataTable2_13  ;; 0x40010000
-        LDRB     R1,[R4, #+0]
+        LDRB     R1,[R5, #+0]
         STRB     R1,[R0, #+0]
         B.N      ??UART_irq_uart_1_7
 //  184                }
@@ -801,7 +811,9 @@ UART_irq_uart_1:
 ??UART_irq_uart_1_1:
         LDR.N    R0,??DataTable2_13  ;; 0x40010000
         LDRB     R0,[R0, #+0]
+        MOVS     R4,R0
 //  190                UART_funcoesVetores[1].funcaoRxd(dummy);
+        MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LDR.N    R1,??DataTable2_25
         LDR      R1,[R1, #+12]
@@ -814,10 +826,11 @@ UART_irq_uart_1:
 ??UART_irq_uart_1_2:
         LDR.N    R0,??DataTable2_26  ;; 0x40010014
         LDRB     R0,[R0, #+0]
+        MOVS     R4,R0
 //  194                dummy = U1RBR;               
-        LDR.N    R1,??DataTable2_13  ;; 0x40010000
-        LDRB     R1,[R1, #+0]
-        MOVS     R0,R1
+        LDR.N    R0,??DataTable2_13  ;; 0x40010000
+        LDRB     R0,[R0, #+0]
+        MOVS     R4,R0
 //  195                break;      
         B.N      ??UART_irq_uart_1_4
 //  196     case CTI :
@@ -834,7 +847,7 @@ UART_irq_uart_1:
         LDR.N    R1,??DataTable2_27  ;; 0xe000e280
         STR      R0,[R1, #+0]
 //  202 }
-        POP      {R4,PC}          ;; return
+        POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock1
         REQUIRE U1RBRTHR
         REQUIRE _A_U1LSR
@@ -897,9 +910,11 @@ UART_irq_uart_2:
         THUMB
 //  244 void UART_irq_uart_3(void){
 UART_irq_uart_3:
-        PUSH     {R7,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
 //  245   unsigned char dummy,*pointer;
 //  246   
 //  247   switch(U3IIR_bit.IID){
@@ -923,19 +938,20 @@ UART_irq_uart_3:
         LDR      R0,[R0, #+40]
           CFI FunCall
         BLX      R0
+        MOVS     R5,R0
 //  250                if(pointer != NULL){
-        CMP      R0,#+0
+        CMP      R5,#+0
         BEQ.N    ??UART_irq_uart_3_5
 //  251                   SET_TXD_ENABLE_3;
+        LDR.N    R0,??DataTable2_28  ;; 0x2009c018
+        LDR      R0,[R0, #+0]
+        ORRS     R0,R0,#0x8000000
         LDR.N    R1,??DataTable2_28  ;; 0x2009c018
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x8000000
-        LDR.N    R2,??DataTable2_28  ;; 0x2009c018
-        STR      R1,[R2, #+0]
+        STR      R0,[R1, #+0]
 //  252                   U3THR = *pointer;
-        LDR.N    R1,??DataTable2_22  ;; 0x4009c000
-        LDRB     R0,[R0, #+0]
-        STRB     R0,[R1, #+0]
+        LDR.N    R0,??DataTable2_22  ;; 0x4009c000
+        LDRB     R1,[R5, #+0]
+        STRB     R1,[R0, #+0]
         B.N      ??UART_irq_uart_3_6
 //  253                }
 //  254                else                 
@@ -953,7 +969,9 @@ UART_irq_uart_3:
 ??UART_irq_uart_3_1:
         LDR.N    R0,??DataTable2_22  ;; 0x4009c000
         LDRB     R0,[R0, #+0]
+        MOVS     R4,R0
 //  258                UART_funcoesVetores[3].funcaoRxd(dummy);
+        MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LDR.N    R1,??DataTable2_25
         LDR      R1,[R1, #+36]
@@ -966,10 +984,11 @@ UART_irq_uart_3:
 ??UART_irq_uart_3_2:
         LDR.N    R0,??DataTable2_30  ;; 0x4009c014
         LDRB     R0,[R0, #+0]
+        MOVS     R4,R0
 //  262                dummy = U3RBR;               
-        LDR.N    R1,??DataTable2_22  ;; 0x4009c000
-        LDRB     R1,[R1, #+0]
-        MOVS     R0,R1
+        LDR.N    R0,??DataTable2_22  ;; 0x4009c000
+        LDRB     R0,[R0, #+0]
+        MOVS     R4,R0
 //  263                break;      
         B.N      ??UART_irq_uart_3_4
 //  264     case CTI :
@@ -986,7 +1005,7 @@ UART_irq_uart_3:
         LDR.N    R1,??DataTable2_27  ;; 0xe000e280
         STR      R0,[R1, #+0]
 //  270 }
-        POP      {R0,PC}          ;; return
+        POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock3
         REQUIRE _A_FIO0SET
         REQUIRE U3RBRTHR
@@ -1199,9 +1218,9 @@ UART_irq_uart_3:
 // 
 //  48 bytes in section .bss
 //  86 bytes in section .noinit (abs)
-// 930 bytes in section .text
+// 962 bytes in section .text
 // 
-// 930 bytes of CODE memory
+// 962 bytes of CODE memory
 //  48 bytes of DATA memory (+ 86 bytes shared)
 //
 //Errors: none

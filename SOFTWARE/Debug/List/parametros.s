@@ -1,28 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:35 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:56 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Parametros\parametros.c  /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Parametros\parametros.c /
-//                    " -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\0 /
-//                    1_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA  /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Parametros\parame /
+//                    tros.c                                                  /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Parametros\parame /
+//                    tros.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\ /
+//                    List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\L /
+//                    ist\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj /
+//                    \ --no_cse --no_unroll --no_inline --no_code_motion     /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\parametros.s  /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\parame /
+//                    tros.s                                                  /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,7 +75,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Parametros\parametros.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Parametros\parametros.c
 //    1 /*__________________________________________________________________________________
 //    2 |	DEXTRO SOLUÇÕES TECNOLÓGICAS
 //    3 |       
@@ -123,16 +119,22 @@
         THUMB
 // __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
 memcpy:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
+        MOVS     R2,R6
+        MOVS     R1,R5
         MOVS     R0,R4
           CFI FunCall __aeabi_memcpy
         BL       __aeabi_memcpy
         MOVS     R0,R4
-        POP      {R4,PC}          ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -145,7 +147,7 @@ memcpy:
 //   38 #include "tabela_parametros.h"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-// __absolute struct <unnamed> const tabela_parametros[64]
+// __absolute struct <unnamed> const tabela_parametros[65]
 tabela_parametros:
         DATA
         DC32 0H
@@ -494,6 +496,12 @@ tabela_parametros:
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         DC8 54H, 58H, 54H
         DC8 0, 0, 0
+        DC32 `?<Constant "  GRUPO ALTECH  ">`
+        DC16 2
+        DC8 "TIPOS_MONEADA"
+        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        DC8 69H, 31H, 36H
+        DC8 0, 0, 0
 //   39 
 //   40 
 //   41 /***********************************************************************************
@@ -562,27 +570,27 @@ PARAMETROS_resolve_endereco:
         PUSH     {R4}
           CFI R4 Frame(CFA, -4)
           CFI CFA R13+4
+        MOVS     R1,R0
 //   80   unsigned int endereco_fisico=0;
-        MOVS     R1,#+0
+        MOVS     R0,#+0
 //   81 
 //   82   for(unsigned int i=0;i<endereco;i++)
         MOVS     R2,#+0
-        B.N      ??PARAMETROS_resolve_endereco_0
+??PARAMETROS_resolve_endereco_0:
+        CMP      R2,R1
+        BCS.N    ??PARAMETROS_resolve_endereco_1
 //   83     endereco_fisico+=(tabela_parametros[i].length+2); // 2 = CRC
-??PARAMETROS_resolve_endereco_1:
         MOVS     R3,#+44
         LDR.N    R4,??DataTable2
         MLA      R3,R3,R2,R4
         LDRH     R3,[R3, #+4]
         ADDS     R3,R3,#+2
-        ADDS     R1,R3,R1
+        ADDS     R0,R3,R0
         ADDS     R2,R2,#+1
-??PARAMETROS_resolve_endereco_0:
-        CMP      R2,R0
-        BCC.N    ??PARAMETROS_resolve_endereco_1
+        B.N      ??PARAMETROS_resolve_endereco_0
 //   84 
 //   85   return endereco_fisico;  
-        MOVS     R0,R1
+??PARAMETROS_resolve_endereco_1:
         POP      {R4}
           CFI R4 SameValue
           CFI CFA R13+0
@@ -602,18 +610,22 @@ PARAMETROS_resolve_endereco:
         THUMB
 //   93 void PARAMETROS_grava(unsigned int endereco,void*parametro){
 PARAMETROS_grava:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         MOVS     R4,R0
+        MOVS     R5,R1
 //   94   unsigned short int crc;  
 //   95   
 //   96   memcpy(&PARAMETROS_buffer[0][0],parametro,tabela_parametros[endereco].length);
         MOVS     R0,#+44
-        LDR.N    R2,??DataTable2
-        MLA      R0,R0,R4,R2
+        LDR.N    R1,??DataTable2
+        MLA      R0,R0,R4,R1
         LDRH     R2,[R0, #+4]
+        MOVS     R1,R5
         LDR.N    R0,??DataTable2_1
           CFI FunCall memcpy
         BL       memcpy
@@ -626,23 +638,24 @@ PARAMETROS_grava:
         LDR.N    R0,??DataTable2_1
           CFI FunCall CCTALK_calculaCRC
         BL       CCTALK_calculaCRC
+        MOVS     R6,R0
 //   98   PARAMETROS_buffer[0][tabela_parametros[endereco].length]   = crc>>8;
-        MOVS     R1,#+44
-        LDR.N    R2,??DataTable2
-        MLA      R1,R1,R4,R2
-        LDRH     R1,[R1, #+4]
-        LDR.N    R2,??DataTable2_1
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        LSRS     R3,R0,#+8
-        STRB     R3,[R1, R2]
+        MOVS     R0,#+44
+        LDR.N    R1,??DataTable2
+        MLA      R0,R0,R4,R1
+        LDRH     R0,[R0, #+4]
+        LDR.N    R1,??DataTable2_1
+        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
+        LSRS     R2,R6,#+8
+        STRB     R2,[R0, R1]
 //   99   PARAMETROS_buffer[0][tabela_parametros[endereco].length+1] = crc;
-        MOVS     R1,#+44
-        LDR.N    R2,??DataTable2
-        MLA      R1,R1,R4,R2
-        LDRH     R1,[R1, #+4]
-        LDR.N    R2,??DataTable2_1
-        ADDS     R1,R1,R2
-        STRB     R0,[R1, #+1]
+        MOVS     R0,#+44
+        LDR.N    R1,??DataTable2
+        MLA      R0,R0,R4,R1
+        LDRH     R0,[R0, #+4]
+        LDR.N    R1,??DataTable2_1
+        ADDS     R0,R0,R1
+        STRB     R6,[R0, #+1]
 //  100  
 //  101   MEMORYWRAPPER_writeBytes(PARAMETROS_resolve_endereco(endereco),
 //  102                            &PARAMETROS_buffer[0][0],
@@ -659,7 +672,7 @@ PARAMETROS_grava:
           CFI FunCall MEMORYWRAPPER_writeBytes
         BL       MEMORYWRAPPER_writeBytes
 //  104 }
-        POP      {R4,PC}          ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock3
 //  105 /***********************************************************************************
 //  106 *       Descrição       :       Parâmetros
@@ -674,12 +687,13 @@ PARAMETROS_grava:
         THUMB
 //  111 void PARAMETROS_le(unsigned int endereco,void*parametro){
 PARAMETROS_le:
-        PUSH     {R4-R6,LR}
+        PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+24
         MOVS     R4,R0
         MOVS     R5,R1
 //  112   unsigned short int crc;
@@ -708,24 +722,25 @@ PARAMETROS_le:
         LDR.N    R0,??DataTable2_2
           CFI FunCall CCTALK_calculaCRC
         BL       CCTALK_calculaCRC
+        MOVS     R6,R0
 //  119   if(crc==(PARAMETROS_buffer[1][tabela_parametros[endereco].length]<<8 | PARAMETROS_buffer[1][tabela_parametros[endereco].length+1]))
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
+        MOVS     R0,#+44
+        LDR.N    R1,??DataTable2
+        MLA      R0,R0,R4,R1
+        LDRH     R0,[R0, #+4]
+        LDR.N    R1,??DataTable2_1
+        ADDS     R0,R0,R1
+        LDRB     R0,[R0, #+64]
         MOVS     R1,#+44
         LDR.N    R2,??DataTable2
         MLA      R1,R1,R4,R2
         LDRH     R1,[R1, #+4]
         LDR.N    R2,??DataTable2_1
         ADDS     R1,R1,R2
-        LDRB     R1,[R1, #+64]
-        MOVS     R2,#+44
-        LDR.N    R3,??DataTable2
-        MLA      R2,R2,R4,R3
-        LDRH     R2,[R2, #+4]
-        LDR.N    R3,??DataTable2_1
-        ADDS     R2,R2,R3
-        LDRB     R2,[R2, #+65]
-        ORRS     R1,R2,R1, LSL #+8
-        CMP      R0,R1
+        LDRB     R1,[R1, #+65]
+        ORRS     R0,R1,R0, LSL #+8
+        CMP      R6,R0
         BNE.N    ??PARAMETROS_le_0
 //  120     memcpy(parametro,&PARAMETROS_buffer[1][0],tabela_parametros[endereco].length);      
         MOVS     R0,#+44
@@ -739,36 +754,36 @@ PARAMETROS_le:
         B.N      ??PARAMETROS_le_1
 //  121   else{
 //  122     unsigned char *ptr = (unsigned char*)parametro;
-//  123     unsigned char *vlr = (unsigned char*)&tabela_parametros[endereco].default_value;
 ??PARAMETROS_le_0:
-        MOVS     R0,#+44
-        LDR.N    R1,??DataTable2
-        MLA      R0,R0,R4,R1
+        MOVS     R0,R5
+//  123     unsigned char *vlr = (unsigned char*)&tabela_parametros[endereco].default_value;
+        MOVS     R1,#+44
+        LDR.N    R2,??DataTable2
+        MLA      R1,R1,R4,R2
 //  124     
 //  125     for(unsigned char i=0;i<tabela_parametros[endereco].length;i++)
-        MOVS     R1,#+0
-        B.N      ??PARAMETROS_le_2
-//  126       ptr[i] = vlr[i];    
-??PARAMETROS_le_3:
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        LDRB     R2,[R1, R0]
-        STRB     R2,[R1, R5]
-        ADDS     R1,R1,#+1
+        MOVS     R2,#+0
 ??PARAMETROS_le_2:
-        MOVS     R2,R1
+        MOVS     R3,R2
+        UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+        MOVS     R7,#+44
+        LDR.W    R12,??DataTable2
+        MLA      R7,R7,R4,R12
+        LDRH     R7,[R7, #+4]
+        UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+        CMP      R3,R7
+        BCS.N    ??PARAMETROS_le_1
+//  126       ptr[i] = vlr[i];    
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
-        MOVS     R3,#+44
-        LDR.N    R6,??DataTable2
-        MLA      R3,R3,R4,R6
-        LDRH     R3,[R3, #+4]
-        UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
-        CMP      R2,R3
-        BCC.N    ??PARAMETROS_le_3
+        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+        LDRB     R3,[R2, R1]
+        STRB     R3,[R2, R0]
+        ADDS     R2,R2,#+1
+        B.N      ??PARAMETROS_le_2
 //  127   }
 //  128 }
 ??PARAMETROS_le_1:
-        POP      {R4-R6,PC}       ;; return
+        POP      {R0,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock4
 
         SECTION `.text`:CODE:NOROOT(2)
@@ -806,11 +821,11 @@ PARAMETROS_le:
 //  131 ***********************************************************************************/
 // 
 //   128 bytes in section .bss
-// 2 836 bytes in section .rodata
-//   324 bytes in section .text
+// 2 880 bytes in section .rodata
+//   344 bytes in section .text
 // 
-//   310 bytes of CODE  memory (+ 14 bytes shared)
-// 2 836 bytes of CONST memory
+//   322 bytes of CODE  memory (+ 22 bytes shared)
+// 2 880 bytes of CONST memory
 //   128 bytes of DATA  memory
 //
 //Errors: none

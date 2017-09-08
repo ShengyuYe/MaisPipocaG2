@@ -1,28 +1,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:37 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:36 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Strings\strings.c        /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Strings\strings.c" -lC  /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA        /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Strings\strings.c /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Strings\strings.c /
+//                     -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\  /
+//                    -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\   /
+//                    -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\     /
+//                    --no_cse --no_unroll --no_inline --no_code_motion       /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\strings.s     /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\string /
+//                    s.s                                                     /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -169,7 +164,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Strings\strings.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Strings\strings.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -468,65 +463,69 @@ STRING_titulo_menu_operacao:
         DC32 `?<Constant "OPERACAO">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
-// __absolute char const *STRING_menu_configuracao_operacao[7][16]
+// __absolute char const *STRING_menu_configuracao_operacao[7][17]
 STRING_menu_configuracao_operacao:
         DATA
         DC32 `?<Constant "(1) VALOR       ">`, `?<Constant "(2) CEDULAS     ">`
-        DC32 `?<Constant "(3) GRATIS      ">`, `?<Constant "(4) FITA LED    ">`
-        DC32 `?<Constant "(5) VOLUME MUS. ">`, `?<Constant "(6) VOLUME VOZ  ">`
-        DC32 `?<Constant "(7) PROPAGANDA  ">`, `?<Constant "(8) TEMPO EMB.  ">`
-        DC32 `?<Constant "(9) TROCO       ">`, `?<Constant "(10)COMISSAO    ">`
-        DC32 `?<Constant "(11)MENSAGEM 01 ">`, `?<Constant "(12)MENSAGEM 02 ">`
-        DC32 `?<Constant "(13)MENSAGEM 03 ">`, `?<Constant "(14)MENSAGEM 04 ">`
-        DC32 `?<Constant "(15)DESUMIDIF.  ">`, `?<Constant "(16)VOLTAR      ">`
+        DC32 `?<Constant "(3) MOEDAS MDB  ">`, `?<Constant "(4) GRATIS      ">`
+        DC32 `?<Constant "(5) FITA LED    ">`, `?<Constant "(6) VOLUME MUS. ">`
+        DC32 `?<Constant "(7) VOLUME VOZ  ">`, `?<Constant "(8) PROPAGANDA  ">`
+        DC32 `?<Constant "(9) TEMPO EMB.  ">`, `?<Constant "(10)TROCO       ">`
+        DC32 `?<Constant "(11)COMISSAO    ">`, `?<Constant "(12)MENSAGEM 01 ">`
+        DC32 `?<Constant "(13)MENSAGEM 02 ">`, `?<Constant "(14)MENSAGEM 03 ">`
+        DC32 `?<Constant "(15)MENSAGEM 04 ">`, `?<Constant "(16)DESUMIDIF.  ">`
+        DC32 `?<Constant "(17)VOLTAR      ">`, `?<Constant "(1) VALOR       ">`
+        DC32 `?<Constant "(2) CEDULAS     ">`, `?<Constant "(3) MOEDAS MDB  ">`
+        DC32 `?<Constant "(4) GRATIS      ">`, `?<Constant "(5) FITA LED    ">`
+        DC32 `?<Constant "(6) VOLUME MUS. ">`, `?<Constant "(7) VOLUME VOZ  ">`
+        DC32 `?<Constant "(8) PROPAGANDA  ">`, `?<Constant "(9) TEMPO EMB.  ">`
+        DC32 `?<Constant "(10)TROCO       ">`, `?<Constant "(11)COMISSAO    ">`
+        DC32 `?<Constant "(12)MENSAGEM 01 ">`, `?<Constant "(13)MENSAGEM 02 ">`
+        DC32 `?<Constant "(14)MENSAGEM 03 ">`, `?<Constant "(15)MENSAGEM 04 ">`
+        DC32 `?<Constant "(16)DESUMIDIF.  ">`, `?<Constant "(17)VOLTAR      ">`
         DC32 `?<Constant "(1) VALOR       ">`, `?<Constant "(2) CEDULAS     ">`
-        DC32 `?<Constant "(3) GRATIS      ">`, `?<Constant "(4) FITA LED    ">`
-        DC32 `?<Constant "(5) VOLUME MUS. ">`, `?<Constant "(6) VOLUME VOZ  ">`
-        DC32 `?<Constant "(7) PROPAGANDA  ">`, `?<Constant "(8) TEMPO EMB.  ">`
-        DC32 `?<Constant "(9) TROCO       ">`, `?<Constant "(10)COMISSAO    ">`
-        DC32 `?<Constant "(11)MENSAGEM 01 ">`, `?<Constant "(12)MENSAGEM 02 ">`
-        DC32 `?<Constant "(13)MENSAGEM 03 ">`, `?<Constant "(14)MENSAGEM 04 ">`
-        DC32 `?<Constant "(15)DESUMIDIF.  ">`, `?<Constant "(16)VOLTAR      ">`
+        DC32 `?<Constant "(3) MOEDAS MDB  ">`, `?<Constant "(4) GRATIS      ">`
+        DC32 `?<Constant "(5) FITA LED    ">`, `?<Constant "(6) VOLUME MUS. ">`
+        DC32 `?<Constant "(7) VOLUME VOZ  ">`, `?<Constant "(8) PROPAGANDA  ">`
+        DC32 `?<Constant "(9) TEMPO EMB.  ">`, `?<Constant "(10)TROCO       ">`
+        DC32 `?<Constant "(11)COMISSAO    ">`, `?<Constant "(12)MENSAGEM 01 ">`
+        DC32 `?<Constant "(13)MENSAGEM 02 ">`, `?<Constant "(14)MENSAGEM 03 ">`
+        DC32 `?<Constant "(15)MENSAGEM 04 ">`, `?<Constant "(16)DESUMIDIF.  ">`
+        DC32 `?<Constant "(17)VOLTAR      ">`, `?<Constant "(1) VALOR       ">`
+        DC32 `?<Constant "(2) CEDULAS     ">`, `?<Constant "(3) MOEDAS MDB  ">`
+        DC32 `?<Constant "(4) GRATIS      ">`, `?<Constant "(5) FITA LED    ">`
+        DC32 `?<Constant "(6) VOLUME MUS. ">`, `?<Constant "(7) VOLUME VOZ  ">`
+        DC32 `?<Constant "(8) PROPAGANDA  ">`, `?<Constant "(9) TEMPO EMB.  ">`
+        DC32 `?<Constant "(10)TROCO       ">`, `?<Constant "(11)COMISSAO    ">`
+        DC32 `?<Constant "(12)MENSAGEM 01 ">`, `?<Constant "(13)MENSAGEM 02 ">`
+        DC32 `?<Constant "(14)MENSAGEM 03 ">`, `?<Constant "(15)MENSAGEM 04 ">`
+        DC32 `?<Constant "(16)DESUMIDIF.  ">`, `?<Constant "(17)VOLTAR      ">`
         DC32 `?<Constant "(1) VALOR       ">`, `?<Constant "(2) CEDULAS     ">`
-        DC32 `?<Constant "(3) GRATIS      ">`, `?<Constant "(4) FITA LED    ">`
-        DC32 `?<Constant "(5) VOLUME MUS. ">`, `?<Constant "(6) VOLUME VOZ  ">`
-        DC32 `?<Constant "(7) PROPAGANDA  ">`, `?<Constant "(8) TEMPO EMB.  ">`
-        DC32 `?<Constant "(9) TROCO       ">`, `?<Constant "(10)COMISSAO    ">`
-        DC32 `?<Constant "(11)MENSAGEM 01 ">`, `?<Constant "(12)MENSAGEM 02 ">`
-        DC32 `?<Constant "(13)MENSAGEM 03 ">`, `?<Constant "(14)MENSAGEM 04 ">`
-        DC32 `?<Constant "(15)DESUMIDIF.  ">`, `?<Constant "(16)VOLTAR      ">`
+        DC32 `?<Constant "(3) MOEDAS MDB  ">`, `?<Constant "(4) GRATIS      ">`
+        DC32 `?<Constant "(5) FITA LED    ">`, `?<Constant "(6) VOLUME MUS. ">`
+        DC32 `?<Constant "(7) VOLUME VOZ  ">`, `?<Constant "(8) PROPAGANDA  ">`
+        DC32 `?<Constant "(9) TEMPO EMB.  ">`, `?<Constant "(10)TROCO       ">`
+        DC32 `?<Constant "(11)COMISSAO    ">`, `?<Constant "(12)MENSAGEM 01 ">`
+        DC32 `?<Constant "(13)MENSAGEM 02 ">`, `?<Constant "(14)MENSAGEM 03 ">`
+        DC32 `?<Constant "(15)MENSAGEM 04 ">`, `?<Constant "(16)DESUMIDIF.  ">`
+        DC32 `?<Constant "(17)VOLTAR      ">`, `?<Constant "(1) PRICE       ">`
+        DC32 `?<Constant "(2) CEDULAS     ">`, `?<Constant "(3) MOEDAS MDB  ">`
+        DC32 `?<Constant "(4) GRATIS      ">`, `?<Constant "(5) FITA LED    ">`
+        DC32 `?<Constant "(6) VOLUME MUS. ">`, `?<Constant "(7) VOLUME VOZ  ">`
+        DC32 `?<Constant "(8) PROPAGANDA  ">`, `?<Constant "(9) TEMPO EMB.  ">`
+        DC32 `?<Constant "(10)TROCO       ">`, `?<Constant "(11)COMISSAO    ">`
+        DC32 `?<Constant "(12)MENSAGEM 01 ">`, `?<Constant "(13)MENSAGEM 02 ">`
+        DC32 `?<Constant "(14)MENSAGEM 03 ">`, `?<Constant "(15)MENSAGEM 04 ">`
+        DC32 `?<Constant "(16)DESUMIDIF.  ">`, `?<Constant "(17)VOLTAR      ">`
         DC32 `?<Constant "(1) VALOR       ">`, `?<Constant "(2) CEDULAS     ">`
-        DC32 `?<Constant "(3) GRATIS      ">`, `?<Constant "(4) FITA LED    ">`
-        DC32 `?<Constant "(5) VOLUME MUS. ">`, `?<Constant "(6) VOLUME VOZ  ">`
-        DC32 `?<Constant "(7) PROPAGANDA  ">`, `?<Constant "(8) TEMPO EMB.  ">`
-        DC32 `?<Constant "(9) TROCO       ">`, `?<Constant "(10)COMISSAO    ">`
-        DC32 `?<Constant "(11)MENSAGEM 01 ">`, `?<Constant "(12)MENSAGEM 02 ">`
-        DC32 `?<Constant "(13)MENSAGEM 03 ">`, `?<Constant "(14)MENSAGEM 04 ">`
-        DC32 `?<Constant "(15)DESUMIDIF.  ">`, `?<Constant "(16)VOLTAR      ">`
-        DC32 `?<Constant "(1) VALOR       ">`, `?<Constant "(2) CEDULAS     ">`
-        DC32 `?<Constant "(3) GRATIS      ">`, `?<Constant "(4) FITA LED    ">`
-        DC32 `?<Constant "(5) VOLUME MUS. ">`, `?<Constant "(6) VOLUME VOZ  ">`
-        DC32 `?<Constant "(7) PROPAGANDA  ">`, `?<Constant "(8) TEMPO EMB.  ">`
-        DC32 `?<Constant "(9) TROCO       ">`, `?<Constant "(10)COMISSAO    ">`
-        DC32 `?<Constant "(11)MENSAGEM 01 ">`, `?<Constant "(12)MENSAGEM 02 ">`
-        DC32 `?<Constant "(13)MENSAGEM 03 ">`, `?<Constant "(14)MENSAGEM 04 ">`
-        DC32 `?<Constant "(15)DESUMIDIF.  ">`, `?<Constant "(16)VOLTAR      ">`
-        DC32 `?<Constant "(1) PRICE       ">`, `?<Constant "(2) CEDULAS     ">`
-        DC32 `?<Constant "(3) GRATIS      ">`, `?<Constant "(4) FITA LED    ">`
-        DC32 `?<Constant "(5) VOLUME MUS. ">`, `?<Constant "(6) VOLUME VOZ  ">`
-        DC32 `?<Constant "(7) PROPAGANDA  ">`, `?<Constant "(8) TEMPO EMB.  ">`
-        DC32 `?<Constant "(9) TROCO       ">`, `?<Constant "(10)COMISSAO    ">`
-        DC32 `?<Constant "(11)MENSAGEM 01 ">`, `?<Constant "(12)MENSAGEM 02 ">`
-        DC32 `?<Constant "(13)MENSAGEM 03 ">`, `?<Constant "(14)MENSAGEM 04 ">`
-        DC32 `?<Constant "(15)DESUMIDIF.  ">`, `?<Constant "(16)VOLTAR      ">`
-        DC32 `?<Constant "(1) VALOR       ">`, `?<Constant "(2) CEDULAS     ">`
-        DC32 `?<Constant "(3) GRATIS      ">`, `?<Constant "(4) FITA LED    ">`
-        DC32 `?<Constant "(5) VOLUME MUS. ">`, `?<Constant "(6) VOLUME VOZ  ">`
-        DC32 `?<Constant "(7) PROPAGANDA  ">`, `?<Constant "(8) TEMPO EMB.  ">`
-        DC32 `?<Constant "(9) TROCO       ">`, `?<Constant "(10)COMISSAO    ">`
-        DC32 `?<Constant "(11)MENSAGEM 01 ">`, `?<Constant "(12)MENSAGEM 02 ">`
-        DC32 `?<Constant "(13)MENSAGEM 03 ">`, `?<Constant "(14)MENSAGEM 04 ">`
-        DC32 `?<Constant "(15)DESUMIDIF.  ">`, `?<Constant "(16)VOLTAR      ">`
+        DC32 `?<Constant "(3) MOEDAS MDB  ">`, `?<Constant "(4) GRATIS      ">`
+        DC32 `?<Constant "(5) FITA LED    ">`, `?<Constant "(6) VOLUME MUS. ">`
+        DC32 `?<Constant "(7) VOLUME VOZ  ">`, `?<Constant "(8) PROPAGANDA  ">`
+        DC32 `?<Constant "(9) TEMPO EMB.  ">`, `?<Constant "(10)TROCO       ">`
+        DC32 `?<Constant "(11)COMISSAO    ">`, `?<Constant "(12)MENSAGEM 01 ">`
+        DC32 `?<Constant "(13)MENSAGEM 02 ">`, `?<Constant "(14)MENSAGEM 03 ">`
+        DC32 `?<Constant "(15)MENSAGEM 04 ">`, `?<Constant "(16)DESUMIDIF.  ">`
+        DC32 `?<Constant "(17)VOLTAR      ">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
 // __absolute char const *STRING_titulo_ajusta_valor[7]
@@ -1477,18 +1476,21 @@ STRING_idioma_to_string:
         THUMB
 //   74 void STRING_write_to_internal(eCLEAR clear,char* l1,char* l2){
 STRING_write_to_internal:
-        PUSH     {R3-R5,LR}
+        PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
-          CFI CFA R13+16
-        MOVS     R4,R1
-        MOVS     R5,R2
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+24
+        MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
 //   75   unsigned short int tam;
 //   76   
 //   77   if(clear==CLEAR_DISPLAY)
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+0
         BNE.N    ??STRING_write_to_internal_0
 //   78     HD44780_clearText();
         MOVS     R0,#+12
@@ -1497,50 +1499,52 @@ STRING_write_to_internal:
 //   79     
 //   80   if(l1!=NULL){
 ??STRING_write_to_internal_0:
-        CMP      R4,#+0
+        CMP      R5,#+0
         BEQ.N    ??STRING_write_to_internal_1
 //   81     tam = strlen(l1);    
-        MOVS     R0,R4
+        MOVS     R0,R5
           CFI FunCall strlen
         BL       strlen
+        MOVS     R7,R0
 //   82     HD44780_posicionaTexto((16-tam)>>1,0);
         MOVS     R1,#+0
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        RSBS     R0,R0,#+16
+        UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
+        RSBS     R0,R7,#+16
         ASRS     R0,R0,#+1
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall HD44780_posicionaTexto
         BL       HD44780_posicionaTexto
 //   83     HD44780_writeString(l1);
-        MOVS     R0,R4
+        MOVS     R0,R5
           CFI FunCall HD44780_writeString
         BL       HD44780_writeString
 //   84   }
 //   85   
 //   86   if(l2!=NULL){
 ??STRING_write_to_internal_1:
-        CMP      R5,#+0
+        CMP      R6,#+0
         BEQ.N    ??STRING_write_to_internal_2
 //   87     tam = strlen(l2);
-        MOVS     R0,R5
+        MOVS     R0,R6
           CFI FunCall strlen
         BL       strlen
+        MOVS     R7,R0
 //   88     HD44780_posicionaTexto((16-tam)>>1,1);
         MOVS     R1,#+1
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        RSBS     R0,R0,#+16
+        UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
+        RSBS     R0,R7,#+16
         ASRS     R0,R0,#+1
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall HD44780_posicionaTexto
         BL       HD44780_posicionaTexto
 //   89     HD44780_writeString(l2);
-        MOVS     R0,R5
+        MOVS     R0,R6
           CFI FunCall HD44780_writeString
         BL       HD44780_writeString
 //   90   }  
 //   91 }
 ??STRING_write_to_internal_2:
-        POP      {R0,R4,R5,PC}    ;; return
+        POP      {R0,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock1
 //   92 /***********************************************************************************
 //   93 *       Descrição       :       Escreve uma mensagem no LCD externo
@@ -1555,18 +1559,21 @@ STRING_write_to_internal:
         THUMB
 //   98 void STRING_write_to_external(eCLEAR clear,char* l1,char* l2){
 STRING_write_to_external:
-        PUSH     {R3-R5,LR}
+        PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
-          CFI CFA R13+16
-        MOVS     R4,R1
-        MOVS     R5,R2
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+24
+        MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
 //   99   unsigned short int tam;
 //  100   
 //  101   if(clear==CLEAR_DISPLAY)
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+0
         BNE.N    ??STRING_write_to_external_0
 //  102     HD44780_2_clearText();
         MOVS     R0,#+12
@@ -1575,50 +1582,52 @@ STRING_write_to_external:
 //  103     
 //  104   if(l1!=NULL){
 ??STRING_write_to_external_0:
-        CMP      R4,#+0
+        CMP      R5,#+0
         BEQ.N    ??STRING_write_to_external_1
 //  105     tam = strlen(l1);    
-        MOVS     R0,R4
+        MOVS     R0,R5
           CFI FunCall strlen
         BL       strlen
+        MOVS     R7,R0
 //  106     HD44780_2_posicionaTexto((16-tam)>>1,0);
         MOVS     R1,#+0
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        RSBS     R0,R0,#+16
+        UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
+        RSBS     R0,R7,#+16
         ASRS     R0,R0,#+1
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall HD44780_2_posicionaTexto
         BL       HD44780_2_posicionaTexto
 //  107     HD44780_2_writeString(l1);
-        MOVS     R0,R4
+        MOVS     R0,R5
           CFI FunCall HD44780_2_writeString
         BL       HD44780_2_writeString
 //  108   }
 //  109   
 //  110   if(l2!=NULL){
 ??STRING_write_to_external_1:
-        CMP      R5,#+0
+        CMP      R6,#+0
         BEQ.N    ??STRING_write_to_external_2
 //  111     tam = strlen(l2);
-        MOVS     R0,R5
+        MOVS     R0,R6
           CFI FunCall strlen
         BL       strlen
+        MOVS     R7,R0
 //  112     HD44780_2_posicionaTexto((16-tam)>>1,1);
         MOVS     R1,#+1
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        RSBS     R0,R0,#+16
+        UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
+        RSBS     R0,R7,#+16
         ASRS     R0,R0,#+1
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall HD44780_2_posicionaTexto
         BL       HD44780_2_posicionaTexto
 //  113     HD44780_2_writeString(l2);
-        MOVS     R0,R5
+        MOVS     R0,R6
           CFI FunCall HD44780_2_writeString
         BL       HD44780_2_writeString
 //  114   }   
 //  115 }
 ??STRING_write_to_external_2:
-        POP      {R0,R4,R5,PC}    ;; return
+        POP      {R0,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock2
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
@@ -2201,81 +2210,93 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(3) GRATIS      ">`:
+`?<Constant "(3) MOEDAS MDB  ">`:
         DATA
-        DC8 "(3) GRATIS      "
+        DC8 "(3) MOEDAS MDB  "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(4) FITA LED    ">`:
+`?<Constant "(4) GRATIS      ">`:
         DATA
-        DC8 "(4) FITA LED    "
+        DC8 "(4) GRATIS      "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(5) VOLUME MUS. ">`:
+`?<Constant "(5) FITA LED    ">`:
         DATA
-        DC8 "(5) VOLUME MUS. "
+        DC8 "(5) FITA LED    "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(6) VOLUME VOZ  ">`:
+`?<Constant "(6) VOLUME MUS. ">`:
         DATA
-        DC8 "(6) VOLUME VOZ  "
+        DC8 "(6) VOLUME MUS. "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(7) PROPAGANDA  ">`:
+`?<Constant "(7) VOLUME VOZ  ">`:
         DATA
-        DC8 "(7) PROPAGANDA  "
+        DC8 "(7) VOLUME VOZ  "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(8) TEMPO EMB.  ">`:
+`?<Constant "(8) PROPAGANDA  ">`:
         DATA
-        DC8 "(8) TEMPO EMB.  "
+        DC8 "(8) PROPAGANDA  "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(9) TROCO       ">`:
+`?<Constant "(9) TEMPO EMB.  ">`:
         DATA
-        DC8 "(9) TROCO       "
+        DC8 "(9) TEMPO EMB.  "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(10)COMISSAO    ">`:
+`?<Constant "(10)TROCO       ">`:
         DATA
-        DC8 "(10)COMISSAO    "
+        DC8 "(10)TROCO       "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(11)MENSAGEM 01 ">`:
+`?<Constant "(11)COMISSAO    ">`:
         DATA
-        DC8 "(11)MENSAGEM 01 "
+        DC8 "(11)COMISSAO    "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(12)MENSAGEM 02 ">`:
+`?<Constant "(12)MENSAGEM 01 ">`:
         DATA
-        DC8 "(12)MENSAGEM 02 "
+        DC8 "(12)MENSAGEM 01 "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(13)MENSAGEM 03 ">`:
+`?<Constant "(13)MENSAGEM 02 ">`:
         DATA
-        DC8 "(13)MENSAGEM 03 "
+        DC8 "(13)MENSAGEM 02 "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(14)MENSAGEM 04 ">`:
+`?<Constant "(14)MENSAGEM 03 ">`:
         DATA
-        DC8 "(14)MENSAGEM 04 "
+        DC8 "(14)MENSAGEM 03 "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "(15)DESUMIDIF.  ">`:
+`?<Constant "(15)MENSAGEM 04 ">`:
         DATA
-        DC8 "(15)DESUMIDIF.  "
+        DC8 "(15)MENSAGEM 04 "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(16)DESUMIDIF.  ">`:
+        DATA
+        DC8 "(16)DESUMIDIF.  "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "(17)VOLTAR      ">`:
+        DATA
+        DC8 "(17)VOLTAR      "
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -3537,13 +3558,13 @@ STRING_write_to_external:
 //  117 *       Fim do arquivo
 //  118 ***********************************************************************************/
 // 
-// 5 572 bytes in section .data
-// 5 014 bytes in section .rodata
-//   200 bytes in section .text
+// 5 600 bytes in section .data
+// 5 054 bytes in section .rodata
+//   212 bytes in section .text
 // 
-//   200 bytes of CODE  memory
-// 5 014 bytes of CONST memory
-// 5 572 bytes of DATA  memory
+//   212 bytes of CODE  memory
+// 5 054 bytes of CONST memory
+// 5 600 bytes of DATA  memory
 //
 //Errors: none
 //Warnings: none

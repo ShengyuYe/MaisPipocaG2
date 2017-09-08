@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:26 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:51 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_acessorio /
-//                    s.c                                                     /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_acessori /
-//                    os.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmwa /
-//                    re\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\"  /
-//                    -lA "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_ /
-//                    mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o     /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
-//                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
-//                    --dlib_config "C:\Program Files (x86)\IAR               /
-//                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\menu_acessori /
-//                    os.s                                                    /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_ac /
+//                    essorios.c                                              /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_ac /
+//                    essorios.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\De /
+//                    bug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Deb /
+//                    ug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug /
+//                    \Obj\ --no_cse --no_unroll --no_inline                  /
+//                    --no_code_motion --no_tbaa --no_clustering              /
+//                    --no_scheduling --debug --endian=little                 /
+//                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
+//                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\menu_a /
+//                    cessorios.s                                             /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -186,7 +180,7 @@
         DATA
         DC8 "%04d"
         DC8 0, 0, 0
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_acessorios.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_acessorios.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -295,6 +289,7 @@ MACESS_entry:
 //   88   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R4,R0
 //   89   
 //   90   MENUROLAGEM_show((char*)STRING_titulo_menu_acessorios[idioma],
 //   91                    (char**)STRING_opcoes_menu_acessorios[idioma],
@@ -302,12 +297,12 @@ MACESS_entry:
 //   93                    (void(**)(void))MACESS_func);         
         LDR.N    R3,??DataTable7_2
         MOVS     R2,#+8
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R1,??DataTable7_3
-        ADDS     R1,R1,R0, LSL #+5
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R4,??DataTable7_4
-        LDR      R0,[R4, R0, LSL #+2]
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.N    R0,??DataTable7_3
+        ADDS     R1,R0,R4, LSL #+5
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.N    R0,??DataTable7_4
+        LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall MENUROLAGEM_show
         BL       MENUROLAGEM_show
 //   94 }
@@ -484,9 +479,11 @@ MACESS_configura_baud_impressora:
         STR      R0,[SP, #+0]
 //  152   for(unsigned char i=0;i<10;i++)
         MOVS     R0,#+0
-        B.N      ??MACESS_configura_baud_impressora_12
+??MACESS_configura_baud_impressora_12:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+10
+        BGE.N    ??MACESS_configura_baud_impressora_13
 //  153     if(flags[i])
-??MACESS_configura_baud_impressora_13:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         ADD      R1,SP,#+4
         LDRB     R1,[R0, R1]
@@ -499,12 +496,10 @@ MACESS_configura_baud_impressora:
         STR      R1,[SP, #+0]
 ??MACESS_configura_baud_impressora_14:
         ADDS     R0,R0,#+1
-??MACESS_configura_baud_impressora_12:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+10
-        BLT.N    ??MACESS_configura_baud_impressora_13
+        B.N      ??MACESS_configura_baud_impressora_12
 //  155   
 //  156   PARAMETROS_grava(ADR_BAUDRATE_IMPRESSORA,&baud);  
+??MACESS_configura_baud_impressora_13:
         ADD      R1,SP,#+0
         MOVS     R0,#+7
           CFI FunCall PARAMETROS_grava
@@ -938,9 +933,9 @@ MACESS_configura_pulso_noteiro:
 //  258 ***********************************************************************************/
 // 
 // 220 bytes in section .rodata
-// 700 bytes in section .text
+// 702 bytes in section .text
 // 
-// 700 bytes of CODE  memory
+// 702 bytes of CODE  memory
 // 220 bytes of CONST memory
 //
 //Errors: none

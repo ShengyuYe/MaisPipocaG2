@@ -1,29 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:57:54 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:48 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Historico_precos\flash_q /
-//                    ueue.c                                                  /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Historico_precos\flash_ /
-//                    queue.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Fir /
-//                    mware\01_mais_pipoca_exp\MaisPipoca -                   /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Historico_precos\ /
+//                    flash_queue.c                                           /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Historico_precos\ /
+//                    flash_queue.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE /
+//                    \Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\ /
+//                    Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\De /
+//                    bug\Obj\ --no_cse --no_unroll --no_inline               /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\flash_queue.s /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\flash_ /
+//                    queue.s                                                 /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -84,7 +79,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Historico_precos\flash_queue.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Historico_precos\flash_queue.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Dextro Soluções Tecnológicas
 //    3 |       
@@ -375,10 +370,11 @@ FLASHQUEUE_saveControl:
           CFI NoCalls
         THUMB
 //  169 unsigned char FLASHQUEUE_init(sFlashQueueData* queue){
+FLASHQUEUE_init:
+        MOVS     R1,R0
 //  170   
 //  171   
 //  172   return 0;  
-FLASHQUEUE_init:
         MOVS     R0,#+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock2
@@ -397,10 +393,11 @@ FLASHQUEUE_init:
         THUMB
 //  181 unsigned char FLASHQUEUE_append(sFlashQueueData* queue,void *pData){
 FLASHQUEUE_append:
-        PUSH     {R3-R5,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
@@ -422,16 +419,16 @@ FLASHQUEUE_append:
 //  194   
 //  195   unsigned int inicioAreaDados = queue->inicio_flash+(PAGE_SIZE<<1);
         LDR      R0,[R4, #+0]
-        ADDS     R0,R0,#+256
+        ADDS     R6,R0,#+256
 //  196   
 //  197   LLW_blockWrite(inicioAreaDados + (queue->controleFlash[0].indiceBlocoInserido*queue->tamanhoBloco),
 //  198                  pData,
 //  199                  queue->tamanhoBloco);
         LDRB     R2,[R4, #+6]
         MOVS     R1,R5
-        LDRH     R3,[R4, #+8]
-        LDRB     R5,[R4, #+6]
-        MLA      R0,R5,R3,R0
+        LDRH     R0,[R4, #+8]
+        LDRB     R3,[R4, #+6]
+        MLA      R0,R3,R0,R6
           CFI FunCall MEMORYWRAPPER_writeBytes
         BL       MEMORYWRAPPER_writeBytes
 //  200                  
@@ -493,7 +490,7 @@ FLASHQUEUE_append:
 //  218   
 //  219   return 0;
         MOVS     R0,#+0
-        POP      {R1,R4,R5,PC}    ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock3
 //  220 }
 //  221 /***********************************************************************************
@@ -511,15 +508,17 @@ FLASHQUEUE_append:
 //  228 unsigned char FLASHQUEUE_readFromFirst(sFlashQueueData* queue,unsigned short int offset,
 //  229                                        void *pData){
 FLASHQUEUE_readFromFirst:
-        PUSH     {R4-R6,LR}
+        PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
+          CFI R8 Frame(CFA, -8)
+          CFI R7 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -16)
+          CFI R5 Frame(CFA, -20)
+          CFI R4 Frame(CFA, -24)
+          CFI CFA R13+24
         MOVS     R4,R0
-        MOVS     R6,R1
-        MOVS     R5,R2
+        MOVS     R5,R1
+        MOVS     R6,R2
 //  230                                          
 //  231   FLASHQUEUE_loadControl(queue);                                         
         MOVS     R0,R4
@@ -528,8 +527,8 @@ FLASHQUEUE_readFromFirst:
 //  232   if(offset>queue->posicoes-1)
         LDRH     R0,[R4, #+4]
         SUBS     R0,R0,#+1
-        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
-        CMP      R0,R6
+        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        CMP      R0,R5
         BGE.N    ??FLASHQUEUE_readFromFirst_0
 //  233     return 0xFF;
         MOVS     R0,#+255
@@ -540,36 +539,38 @@ FLASHQUEUE_readFromFirst:
 //  237   if(queue->controleFlash[0].indiceBlocoInserido>offset)
 ??FLASHQUEUE_readFromFirst_0:
         LDRH     R0,[R4, #+8]
-        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
-        CMP      R6,R0
+        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        CMP      R5,R0
         BCS.N    ??FLASHQUEUE_readFromFirst_2
 //  238     indiceHistorico = (queue->controleFlash[0].indiceBlocoInserido-1) - offset;
         LDRH     R0,[R4, #+8]
         SUBS     R0,R0,#+1
-        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
-        SUBS     R0,R0,R6
+        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        SUBS     R0,R0,R5
+        MOVS     R7,R0
         B.N      ??FLASHQUEUE_readFromFirst_3
 //  239   else
 //  240     indiceHistorico = queue->posicoes - (offset - queue->controleFlash[0].indiceBlocoInserido);
 ??FLASHQUEUE_readFromFirst_2:
         LDRH     R0,[R4, #+4]
-        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
-        SUBS     R0,R0,R6
+        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        SUBS     R0,R0,R5
         LDRH     R1,[R4, #+8]
         ADDS     R0,R1,R0
+        MOVS     R7,R0
 //  241    
 //  242   unsigned int inicioAreaDados = queue->inicio_flash+(PAGE_SIZE<<1);
 ??FLASHQUEUE_readFromFirst_3:
-        LDR      R1,[R4, #+0]
-        ADDS     R3,R1,#+256
+        LDR      R0,[R4, #+0]
+        ADDS     R8,R0,#+256
 //  243   
 //  244   LLW_blockRead(inicioAreaDados + (indiceHistorico*queue->tamanhoBloco),
 //  245                 (unsigned char*)pData,
 //  246                 queue->tamanhoBloco);                                       
         LDRB     R2,[R4, #+6]
-        MOVS     R1,R5
-        LDRB     R5,[R4, #+6]
-        MLA      R0,R5,R0,R3
+        MOVS     R1,R6
+        LDRB     R0,[R4, #+6]
+        MLA      R0,R0,R7,R8
           CFI FunCall MEMORYWRAPPER_readBytes
         BL       MEMORYWRAPPER_readBytes
 //  247                                          
@@ -580,7 +581,7 @@ FLASHQUEUE_readFromFirst:
 //  249   return 0;  
         MOVS     R0,#+0
 ??FLASHQUEUE_readFromFirst_1:
-        POP      {R4-R6,PC}       ;; return
+        POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock4
 //  250 }
 //  251 /***********************************************************************************
@@ -598,12 +599,13 @@ FLASHQUEUE_readFromFirst:
 //  258 unsigned char FLASHQUEUE_readFromLast(sFlashQueueData *queue,unsigned short int offSet,
 //  259                                       void *pData){
 FLASHQUEUE_readFromLast:
-        PUSH     {R4-R6,LR}
+        PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+24
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
@@ -628,24 +630,24 @@ FLASHQUEUE_readFromLast:
 //  269   unsigned int inicioAreaDados = queue->inicio_flash+(PAGE_SIZE<<1);
 ??FLASHQUEUE_readFromLast_0:
         LDR      R0,[R4, #+0]
-        ADDS     R0,R0,#+256
+        ADDS     R7,R0,#+256
 //  270   
 //  271   LLW_blockRead(inicioAreaDados + ((queue->controleFlash[0].indiceBlocoLido+offSet)*queue->tamanhoBloco),
 //  272                 (unsigned char*)pData,
 //  273                 queue->tamanhoBloco);                                                                                                                             
         LDRB     R2,[R4, #+6]
         MOVS     R1,R6
-        LDRH     R3,[R4, #+10]
+        LDRH     R0,[R4, #+10]
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
-        ADDS     R3,R5,R3
-        LDRB     R4,[R4, #+6]
-        MLA      R0,R4,R3,R0
+        ADDS     R0,R5,R0
+        LDRB     R3,[R4, #+6]
+        MLA      R0,R3,R0,R7
           CFI FunCall MEMORYWRAPPER_readBytes
         BL       MEMORYWRAPPER_readBytes
 //  274   return 0;                                        
         MOVS     R0,#+0
 ??FLASHQUEUE_readFromLast_1:
-        POP      {R4-R6,PC}       ;; return
+        POP      {R1,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock5
 //  275 }
 //  276 /***********************************************************************************
@@ -737,30 +739,33 @@ FLASHQUEUE_ajustaPonteiro:
         THUMB
 //  318 unsigned char FLASHQUEUE_formata(sFlashQueueData *queue){
 FLASHQUEUE_formata:
-        PUSH     {R7,LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
+        MOVS     R4,R0
 //  319     
 //  320   queue->controleFlash[0].indiceBlocoInserido = 0;
-        MOVS     R1,#+0
-        STRH     R1,[R0, #+8]
+        MOVS     R0,#+0
+        STRH     R0,[R4, #+8]
 //  321   queue->controleFlash[0].indiceBlocoLido = 0;
-        MOVS     R1,#+0
-        STRH     R1,[R0, #+10]
+        MOVS     R0,#+0
+        STRH     R0,[R4, #+10]
 //  322   queue->controleFlash[0].quantidadeBlocoFila = 0;
-        MOVS     R1,#+0
-        STRH     R1,[R0, #+12]
+        MOVS     R0,#+0
+        STRH     R0,[R4, #+12]
 //  323   queue->controleFlash[0].quantidadeNovosBlocos = 0;  
-        MOVS     R1,#+0
-        STRH     R1,[R0, #+14]
+        MOVS     R0,#+0
+        STRH     R0,[R4, #+14]
 //  324   
 //  325   FLASHQUEUE_saveControl(queue);   
+        MOVS     R0,R4
           CFI FunCall FLASHQUEUE_saveControl
         BL       FLASHQUEUE_saveControl
 //  326   
 //  327   return 0;  
         MOVS     R0,#+0
-        POP      {R1,PC}          ;; return
+        POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock7
 //  328 }
 //  329 /***********************************************************************************
@@ -780,26 +785,27 @@ FLASHQUEUE_checksum:
         PUSH     {R4}
           CFI R4 Frame(CFA, -4)
           CFI CFA R13+4
+        MOVS     R2,R0
 //  336   unsigned short int soma=0;    
-        MOVS     R2,#+0
+        MOVS     R0,#+0
 //  337     
 //  338   for(unsigned short int i=0;i<size;i++)
         MOVS     R3,#+0
-        B.N      ??FLASHQUEUE_checksum_0
-//  339     soma+=buffer[i];
-??FLASHQUEUE_checksum_1:
-        UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
-        LDRB     R4,[R3, R0]
-        ADDS     R2,R4,R2
-        ADDS     R3,R3,#+1
 ??FLASHQUEUE_checksum_0:
         UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         CMP      R3,R1
-        BCC.N    ??FLASHQUEUE_checksum_1
+        BCS.N    ??FLASHQUEUE_checksum_1
+//  339     soma+=buffer[i];
+        UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+        LDRB     R4,[R3, R2]
+        ADDS     R0,R4,R0
+        ADDS     R3,R3,#+1
+        B.N      ??FLASHQUEUE_checksum_0
 //  340 
 //  341   return (unsigned char)((unsigned short int)256 - soma);
-        RSBS     R0,R2,#+0
+??FLASHQUEUE_checksum_1:
+        RSBS     R0,R0,#+0
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         POP      {R4}
           CFI R4 SameValue
@@ -885,9 +891,9 @@ FLASHQUEUE_getRealSize:
 //  365 ***********************************************************************************/
 // 
 //  32 bytes in section .rodata
-// 586 bytes in section .text
+// 602 bytes in section .text
 // 
-// 586 bytes of CODE  memory
+// 602 bytes of CODE  memory
 //  32 bytes of CONST memory
 //
 //Errors: none

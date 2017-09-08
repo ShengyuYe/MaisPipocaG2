@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:57:58 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:54 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_preparaca /
-//                    o.c                                                     /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_preparac /
-//                    ao.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmwa /
-//                    re\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\"  /
-//                    -lA "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_ /
-//                    mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o     /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
-//                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
-//                    --dlib_config "C:\Program Files (x86)\IAR               /
-//                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\menu_preparac /
-//                    ao.s                                                    /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_pr /
+//                    eparacao.c                                              /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_pr /
+//                    eparacao.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\De /
+//                    bug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Deb /
+//                    ug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug /
+//                    \Obj\ --no_cse --no_unroll --no_inline                  /
+//                    --no_code_motion --no_tbaa --no_clustering              /
+//                    --no_scheduling --debug --endian=little                 /
+//                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
+//                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\menu_p /
+//                    reparacao.s                                             /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -95,7 +89,7 @@
         DATA
         DC8 "%05d RPM"
         DC8 0, 0, 0
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_preparacao.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_preparacao.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -195,6 +189,7 @@ MPREP_entry:
 //   82   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R4,R0
 //   83   
 //   84   MENUROLAGEM_show((char*)STRING_titulo_menu_preparacao[idioma],
 //   85                    (char**)STRING_opcoes_menu_preparacao[idioma],
@@ -202,13 +197,13 @@ MPREP_entry:
 //   87                    (void(**)(void))MPREP_funcs);   
         LDR.N    R3,??DataTable2
         MOVS     R2,#+3
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        MOVS     R1,#+12
-        LDR.N    R4,??DataTable2_1
-        MLA      R1,R1,R0,R4
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R4,??DataTable2_2
-        LDR      R0,[R4, R0, LSL #+2]
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        MOVS     R0,#+12
+        LDR.N    R1,??DataTable2_1
+        MLA      R1,R0,R4,R1
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.N    R0,??DataTable2_2
+        LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall MENUROLAGEM_show
         BL       MENUROLAGEM_show
 //   88 }
@@ -401,9 +396,9 @@ MPREP_edita_velocidade:
 //  133 ***********************************************************************************/
 // 
 //  32 bytes in section .rodata
-// 198 bytes in section .text
+// 200 bytes in section .text
 // 
-// 198 bytes of CODE  memory
+// 200 bytes of CODE  memory
 //  32 bytes of CONST memory
 //
 //Errors: none

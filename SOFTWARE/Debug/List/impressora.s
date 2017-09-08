@@ -1,29 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:07 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:37 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\Impressora\impre /
-//                    ssora.c                                                 /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\Impressora\impr /
-//                    essora.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Fi /
-//                    rmware\01_mais_pipoca_exp\MaisPipoca -                  /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Impressor /
+//                    a\impressora.c                                          /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Impressor /
+//                    a\impressora.c -lC C:\repositorios\MaisPipocaG2\SOFTWAR /
+//                    E\Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE /
+//                    \Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\D /
+//                    ebug\Obj\ --no_cse --no_unroll --no_inline              /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\impressora.s  /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\impres /
+//                    sora.s                                                  /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -78,7 +73,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\Impressora\impressora.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Impressora\impressora.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -160,10 +155,13 @@ IMPRESSORA_ini:
         THUMB
 //   66 void IMPRESSORA_envia_linha(char *texto){
 IMPRESSORA_envia_linha:
-        PUSH     {R2-R4,LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+16
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
+        SUB      SP,SP,#+12
+          CFI CFA R13+24
         MOVS     R4,R0
 //   67   unsigned int  baudrate;
 //   68   
@@ -186,8 +184,9 @@ IMPRESSORA_envia_linha:
         MOVS     R0,R4
           CFI FunCall strlen
         BL       strlen
+        MOVS     R5,R0
 //   73   PROTOCOLO_enviaDadosDireto((unsigned char*)texto,tamanho);
-        MOVS     R1,R0
+        MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall PROTOCOLO_enviaDadosDireto
@@ -211,7 +210,7 @@ IMPRESSORA_envia_linha:
           CFI FunCall UART_init
         BL       UART_init
 //   79 }
-        POP      {R0,R1,R4,PC}    ;; return
+        POP      {R0-R2,R4,R5,PC}  ;; return
           CFI EndBlock cfiBlock1
 //   80 /**********************************************************************************
 //   81 *       Descrição       :       Gera o relatório de faturamento da máquina
@@ -265,9 +264,11 @@ IMPRESSORA_impressora_teste:
         BL       PARAMETROS_le
 //   99   for(unsigned char i=0;i<QTD_LINHAS_IMPRESSAO_TESTE;i++)
         MOVS     R4,#+0
-        B.N      ??IMPRESSORA_impressora_teste_0
+??IMPRESSORA_impressora_teste_0:
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+4
+        BGE.N    ??IMPRESSORA_impressora_teste_1
 //  100     IMPRESSORA_envia_linha((char*)STRING_impressao_teste[idioma][i]);  
-??IMPRESSORA_impressora_teste_1:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDRB     R0,[SP, #+0]
         LDR.N    R1,??DataTable0
@@ -276,11 +277,9 @@ IMPRESSORA_impressora_teste:
           CFI FunCall IMPRESSORA_envia_linha
         BL       IMPRESSORA_envia_linha
         ADDS     R4,R4,#+1
-??IMPRESSORA_impressora_teste_0:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+4
-        BLT.N    ??IMPRESSORA_impressora_teste_1
+        B.N      ??IMPRESSORA_impressora_teste_0
 //  101 }
+??IMPRESSORA_impressora_teste_1:
         POP      {R0,R1,R4,PC}    ;; return
           CFI EndBlock cfiBlock3
 
@@ -306,9 +305,9 @@ IMPRESSORA_impressora_teste:
 //  103 *       Fim do arquivo
 //  104 **********************************************************************************/
 // 
-// 136 bytes in section .text
+// 140 bytes in section .text
 // 
-// 136 bytes of CODE memory
+// 140 bytes of CODE memory
 //
 //Errors: none
 //Warnings: none

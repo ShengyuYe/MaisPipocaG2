@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:57:57 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:47 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Historico_precos\fila_tr /
-//                    oca_preco.c                                             /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Historico_precos\fila_t /
-//                    roca_preco.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\0 /
-//                    1-Firmware\01_mais_pipoca_exp\MaisPipoca -              /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Historico_precos\ /
+//                    fila_troca_preco.c                                      /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Historico_precos\ /
+//                    fila_troca_preco.c -lC C:\repositorios\MaisPipocaG2\SOF /
+//                    TWARE\Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFT /
+//                    WARE\Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWA /
+//                    RE\Debug\Obj\ --no_cse --no_unroll --no_inline          /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\fila_troca_pr /
-//                    eco.s                                                   /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\fila_t /
+//                    roca_preco.s                                            /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -83,7 +77,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Historico_precos\fila_troca_preco.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Historico_precos\fila_troca_preco.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica 
 //    3 |       
@@ -191,17 +185,21 @@ FTP_fila_troca_preco:
         THUMB
 //   94 void FTP_novo_preco(unsigned short int novo_preco,unsigned short int preco_antigo){  
 FTP_novo_preco:
-        PUSH     {LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
         SUB      SP,SP,#+28
-          CFI CFA R13+32
+          CFI CFA R13+40
+        MOVS     R4,R0
+        MOVS     R5,R1
 //   95   sTROCA_PRECO dados;
 //   96                       
 //   97   dados.novo_preco = novo_preco;
-        STRH     R0,[SP, #+8]
+        STRH     R4,[SP, #+8]
 //   98   dados.preco_antigo = preco_antigo;
-        STRH     R1,[SP, #+10]
+        STRH     R5,[SP, #+10]
 //   99   
 //  100   //Carrega o horário da alteração
 //  101   RTC_getValue(&dados.hora,&dados.minuto,&dados.segundo,&dados.dia,&dados.mes,&dados.ano);  
@@ -224,8 +222,8 @@ FTP_novo_preco:
         BL       FLASHQUEUE_append
 //  105 }
         ADD      SP,SP,#+28
-          CFI CFA R13+4
-        POP      {PC}             ;; return
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
           CFI EndBlock cfiBlock0
 //  106 /***********************************************************************************
 //  107 *       Descrição       :       Verifica quantos novos eventos de troca
@@ -298,7 +296,7 @@ FTP_get_quantidade_historico_trocas:
 //  141                             unsigned char *hora,unsigned char *minuto,unsigned char *segundo,
 //  142                             unsigned char *dia,unsigned char *mes,unsigned int *ano){
 FTP_get_troca:
-        PUSH     {R4-R11,LR}
+        PUSH     {R0,R1,R4-R11,LR}
           CFI R14 Frame(CFA, -4)
           CFI R11 Frame(CFA, -8)
           CFI R10 Frame(CFA, -12)
@@ -308,56 +306,57 @@ FTP_get_troca:
           CFI R6 Frame(CFA, -28)
           CFI R5 Frame(CFA, -32)
           CFI R4 Frame(CFA, -36)
-          CFI CFA R13+36
+          CFI CFA R13+44
         SUB      SP,SP,#+20
-          CFI CFA R13+56
-        MOVS     R4,R1
-        MOVS     R5,R2
-        MOVS     R6,R3
-        LDR      R7,[SP, #+56]
-        LDR      R8,[SP, #+60]
-        LDR      R9,[SP, #+64]
-        LDR      R10,[SP, #+68]
-        LDR      R11,[SP, #+72]
+          CFI CFA R13+64
+        MOVS     R4,R2
+        MOVS     R5,R3
+        LDR      R6,[SP, #+64]
+        LDR      R7,[SP, #+68]
+        LDR      R8,[SP, #+72]
+        LDR      R9,[SP, #+76]
+        LDR      R10,[SP, #+80]
 //  143   sTROCA_PRECO dados;
 //  144   unsigned char flag;
 //  145   
 //  146   flag = FLASHQUEUE_readFromLast(&FTP_fila_troca_preco,indice,(void*)&dados);
         ADD      R2,SP,#+0
-        MOVS     R1,R0
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+        LDRH     R1,[SP, #+20]
         LDR.N    R0,??DataTable5
           CFI FunCall FLASHQUEUE_readFromLast
         BL       FLASHQUEUE_readFromLast
+        MOV      R11,R0
 //  147               
 //  148   *novo_preco = dados.novo_preco;
+        LDR      R0,[SP, #+24]
         LDRH     R1,[SP, #+0]
-        STRH     R1,[R4, #+0]
+        STRH     R1,[R0, #+0]
 //  149   *preco_antigo = dados.preco_antigo;
-        LDRH     R1,[SP, #+2]
-        STRH     R1,[R5, #+0]
+        LDRH     R0,[SP, #+2]
+        STRH     R0,[R4, #+0]
 //  150   *hora = dados.hora;
-        LDRB     R1,[SP, #+4]
-        STRB     R1,[R6, #+0]
+        LDRB     R0,[SP, #+4]
+        STRB     R0,[R5, #+0]
 //  151   *minuto = dados.minuto;
-        LDRB     R1,[SP, #+5]
-        STRB     R1,[R7, #+0]
+        LDRB     R0,[SP, #+5]
+        STRB     R0,[R6, #+0]
 //  152   *segundo = dados.segundo;
-        LDRB     R1,[SP, #+6]
-        STRB     R1,[R8, #+0]
+        LDRB     R0,[SP, #+6]
+        STRB     R0,[R7, #+0]
 //  153   *dia = dados.dia;
-        LDRB     R1,[SP, #+7]
-        STRB     R1,[R9, #+0]
+        LDRB     R0,[SP, #+7]
+        STRB     R0,[R8, #+0]
 //  154   *mes = dados.mes;
-        LDRB     R1,[SP, #+8]
-        STRB     R1,[R10, #+0]
+        LDRB     R0,[SP, #+8]
+        STRB     R0,[R9, #+0]
 //  155   *ano = dados.ano;
-        LDR      R1,[SP, #+12]
-        STR      R1,[R11, #+0]
+        LDR      R0,[SP, #+12]
+        STR      R0,[R10, #+0]
 //  156   
 //  157   return flag;                     
+        MOV      R0,R11
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        ADD      SP,SP,#+20
+        ADD      SP,SP,#+28
           CFI CFA R13+36
         POP      {R4-R11,PC}      ;; return
           CFI EndBlock cfiBlock3
@@ -438,9 +437,9 @@ FTP_formata_fila:
 //  181 ***********************************************************************************/
 // 
 //  28 bytes in section .data
-// 206 bytes in section .text
+// 210 bytes in section .text
 // 
-// 206 bytes of CODE memory
+// 210 bytes of CODE memory
 //  28 bytes of DATA memory
 //
 //Errors: none

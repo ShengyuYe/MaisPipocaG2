@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:29 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:52 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_configura /
-//                    cao.c                                                   /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_configur /
-//                    acao.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firm /
-//                    ware\01_mais_pipoca_exp\MaisPipoca -                    /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_co /
+//                    nfiguracao.c                                            /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_co /
+//                    nfiguracao.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\ /
+//                    Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\D /
+//                    ebug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Deb /
+//                    ug\Obj\ --no_cse --no_unroll --no_inline                /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\menu_configur /
-//                    acao.s                                                  /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\menu_c /
+//                    onfiguracao.s                                           /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -96,7 +90,7 @@
         DATA
         DC8 "LOCATION"
         DC8 0, 0, 0
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_configuracao.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_configuracao.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -207,6 +201,7 @@ MCFG_entry:
 //   91   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R4,R0
 //   92   
 //   93   MENUROLAGEM_show((char*)STRING_titulo_menu_configuracao[idioma],
 //   94                    (char**)STRING_menu_configuracao[idioma],
@@ -214,13 +209,13 @@ MCFG_entry:
 //   96                    (void(**)(void))MCF_funcoes);                                  
         LDR.N    R3,??DataTable1
         MOVS     R2,#+10
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        MOVS     R1,#+40
-        LDR.N    R4,??DataTable1_1
-        MLA      R1,R1,R0,R4
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R4,??DataTable1_2
-        LDR      R0,[R4, R0, LSL #+2]
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        MOVS     R0,#+40
+        LDR.N    R1,??DataTable1_1
+        MLA      R1,R0,R4,R1
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.N    R0,??DataTable1_2
+        LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall MENUROLAGEM_show
         BL       MENUROLAGEM_show
 //   97 }
@@ -282,9 +277,11 @@ MCFG_seleciona_idioma:
         STRB     R0,[SP, #+0]
 //  117   for(unsigned char i=0;i<QTY_OF_LANGUAGES;i++)
         MOVS     R0,#+0
-        B.N      ??MCFG_seleciona_idioma_1
+??MCFG_seleciona_idioma_1:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+7
+        BGE.N    ??MCFG_seleciona_idioma_2
 //  118     if(flags[i])
-??MCFG_seleciona_idioma_2:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         ADD      R1,SP,#+4
         LDRB     R1,[R0, R1]
@@ -294,12 +291,10 @@ MCFG_seleciona_idioma:
         STRB     R0,[SP, #+0]
 ??MCFG_seleciona_idioma_3:
         ADDS     R0,R0,#+1
-??MCFG_seleciona_idioma_1:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+7
-        BLT.N    ??MCFG_seleciona_idioma_2
+        B.N      ??MCFG_seleciona_idioma_1
 //  120 
 //  121   PARAMETROS_grava(ADR_FLAG_IDIOMA,(void*)&idioma);      
+??MCFG_seleciona_idioma_2:
         ADD      R1,SP,#+0
         MOVS     R0,#+0
           CFI FunCall PARAMETROS_grava
@@ -355,9 +350,9 @@ MCFG_seleciona_idioma:
 //  125 ***********************************************************************************/
 // 
 //  60 bytes in section .rodata
-// 152 bytes in section .text
+// 154 bytes in section .text
 // 
-// 152 bytes of CODE  memory
+// 154 bytes of CODE  memory
 //  60 bytes of CONST memory
 //
 //Errors: none

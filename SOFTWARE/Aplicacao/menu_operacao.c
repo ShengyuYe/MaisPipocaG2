@@ -67,6 +67,7 @@ void MENUOP_configura_mensagem_cliente(void);
 void MENUOP_configura_mensagem_cliente_02(void);
 void MENUOP_configura_mensagem_cliente_03(void);
 void MENUOP_configura_mensagem_cliente_04(void);
+void MENUOP_configura_canais_moeda(void);
 
 /***********************************************************************************
 *       Tabela de funções
@@ -74,6 +75,7 @@ void MENUOP_configura_mensagem_cliente_04(void);
 void(*MENUOP_funcs[])(void)={
   MENUOP_configura_valor,
   MENUOP_configura_notas,
+  MENUOP_configura_canais_moeda,
   MENUOP_configura_modo_free,
   MENUOP_configura_fita_led,
   MENUOP_configura_volume_musica,
@@ -543,6 +545,61 @@ unsigned char MENUOP_edita_mensagem(char *titulo,char* buffer_mensagem){
     
     vTaskDelay(50);
   }      
+}
+/***********************************************************************************
+*       Descrição       :       Configura os canais de moeda MDB habilitados
+*                               na operação
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
+***********************************************************************************/
+void MENUOP_configura_canais_moeda(void){
+  unsigned char escala;
+  unsigned char canais[16];
+
+  if(MDB_checa_valor_moedas(&escala,canais)!=MDB_OK){
+    STRING_write_to_internal(CLEAR_DISPLAY,"Falha ao","ler MDB COIN");
+    vTaskDelay(3000);
+  }
+  
+  unsigned short int cfg_moedas;
+  PARAMETROS_le(ADR_TIPOS_MOEDAS,(void*)&cfg_moedas);
+  eTECLA tecla;
+  unsigned char indice=0;
+  char linha[17];
+  unsigned char inteiro;
+  unsigned char fracionario;
+  
+  STRING_write_to_internal(CLEAR_DISPLAY,"COINS MDB",NULL);
+  
+  for(;;){
+    
+    tecla = TECLADO_getch();
+    switch(tecla){
+      case TECLA_ENTER:
+           cfg_moedas^=(0x01<<indice);
+           break;
+      case TECLA_ESC:
+           PARAMETROS_grava(ADR_TIPOS_MOEDAS,(void*)&cfg_moedas); 
+           return;
+      case TECLA_INC:
+           indice = (indice+1)%16;
+           break;
+      case TECLA_DEC:
+           if(indice)
+             indice--;
+           else
+             indice = 15;
+           break;
+    }        
+    
+    inteiro = (canais[indice]*escala)/100;
+    fracionario = (canais[indice]*escala)%100;
+    
+    sprintf(linha,"[%c] CH %02d-%01d,%02d",(cfg_moedas&(1<<indice))?'X':' ',indice+1,inteiro,fracionario);
+    STRING_write_to_internal(NO_CLEAR,NULL,linha);
+    
+    vTaskDelay(50);
+  }           
 }
 /***********************************************************************************
 *       Fim do arquivo

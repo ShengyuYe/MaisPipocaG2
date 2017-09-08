@@ -1,29 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jun/2017  11:11:53 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:36 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\sst25vf016b\sst2 /
-//                    5vf016b.c                                               /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\sst25vf016b\sst /
-//                    25vf016b.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01- /
-//                    Firmware\01_mais_pipoca_exp\MaisPipoca -                /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\sst25vf01 /
+//                    6b\sst25vf016b.c                                        /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\sst25vf01 /
+//                    6b\sst25vf016b.c -lC C:\repositorios\MaisPipocaG2\SOFTW /
+//                    ARE\Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWA /
+//                    RE\Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE /
+//                    \Debug\Obj\ --no_cse --no_unroll --no_inline            /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\sst25vf016b.s /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\sst25v /
+//                    f016b.s                                                 /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -84,7 +79,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\sst25vf016b\sst25vf016b.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\sst25vf016b\sst25vf016b.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -178,17 +173,17 @@ _A_FIO0CLR:
 //   73   
 //   74   UNSEL_CS_01;  
 SST25VF_init:
-        LDR.W    R0,??DataTable12  ;; 0x2009c018
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x10000
         LDR.W    R1,??DataTable12  ;; 0x2009c018
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x10000
+        LDR.W    R2,??DataTable12  ;; 0x2009c018
+        STR      R1,[R2, #+0]
 //   75   UNSEL_CS_02;
-        LDR.W    R0,??DataTable12  ;; 0x2009c018
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x200000
         LDR.W    R1,??DataTable12  ;; 0x2009c018
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x200000
+        LDR.W    R2,??DataTable12  ;; 0x2009c018
+        STR      R1,[R2, #+0]
 //   76 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock0
@@ -312,10 +307,10 @@ SST25VF_writeStatus:
           CFI FunCall SPI_sendBytes
         BL       SPI_sendBytes
 //  117   UNSEL_CS_01;
-        LDR.N    R0,??DataTable12  ;; 0x2009c018
+        LDR.W    R0,??DataTable12  ;; 0x2009c018
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000
-        LDR.N    R1,??DataTable12  ;; 0x2009c018
+        LDR.W    R1,??DataTable12  ;; 0x2009c018
         STR      R0,[R1, #+0]
 //  118   
 //  119   buffer[0] = SST_WRITE_STATUS;
@@ -529,34 +524,35 @@ SST_writeDisable:
 //  187 void SST_highSpeedRead(unsigned int endereco,unsigned char *buffer,
 //  188                        unsigned short int size){
 SST_highSpeedRead:
-        PUSH     {R4,R5,LR}
+        PUSH     {R2-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
-          CFI CFA R13+12
-        SUB      SP,SP,#+12
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
           CFI CFA R13+24
-        MOVS     R4,R1
-        MOVS     R5,R2
+        MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
 //  189   unsigned char comandos[5];
 //  190   
 //  191   SEL_CS_01;
+        LDR.N    R0,??DataTable12_1  ;; 0x2009c01c
+        LDR      R0,[R0, #+0]
+        ORRS     R0,R0,#0x10000
         LDR.N    R1,??DataTable12_1  ;; 0x2009c01c
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x10000
-        LDR.N    R2,??DataTable12_1  ;; 0x2009c01c
-        STR      R1,[R2, #+0]
+        STR      R0,[R1, #+0]
 //  192 
 //  193   comandos[0] = SST_HIGH_SPEED_READ; 
-        MOVS     R1,#+11
-        STRB     R1,[SP, #+0]
+        MOVS     R0,#+11
+        STRB     R0,[SP, #+0]
 //  194   comandos[1] = (unsigned char)(endereco>>16);
-        LSRS     R1,R0,#+16
-        STRB     R1,[SP, #+1]
+        LSRS     R0,R4,#+16
+        STRB     R0,[SP, #+1]
 //  195   comandos[2] = (unsigned char)(endereco>>8);
-        LSRS     R1,R0,#+8
-        STRB     R1,[SP, #+2]
+        LSRS     R0,R4,#+8
+        STRB     R0,[SP, #+2]
 //  196   comandos[3] = (unsigned char)endereco;
+        MOVS     R0,R4
         STRB     R0,[SP, #+3]
 //  197   comandos[4] = 0x00;
         MOVS     R0,#+0
@@ -567,9 +563,9 @@ SST_highSpeedRead:
           CFI FunCall SPI_sendBytes
         BL       SPI_sendBytes
 //  199   SPI_getBytes(buffer,size);
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
-        MOVS     R1,R5
-        MOVS     R0,R4
+        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
+        MOVS     R1,R6
+        MOVS     R0,R5
           CFI FunCall SPI_getBytes
         BL       SPI_getBytes
 //  200       
@@ -580,7 +576,7 @@ SST_highSpeedRead:
         LDR.N    R1,??DataTable12  ;; 0x2009c018
         STR      R0,[R1, #+0]
 //  202 }
-        POP      {R0-R2,R4,R5,PC}  ;; return
+        POP      {R0,R1,R4-R6,PC}  ;; return
           CFI EndBlock cfiBlock7
         REQUIRE _A_FIO0CLR
         REQUIRE _A_FIO0SET
@@ -604,8 +600,8 @@ SST_writeByte:
           CFI CFA R13+12
         SUB      SP,SP,#+12
           CFI CFA R13+24
-        MOVS     R5,R0
-        MOVS     R4,R1
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  210   unsigned char comandos[5];    
 //  211   
 //  212   SST_writeEnable(); // Habilita a escrita na memória
@@ -623,15 +619,16 @@ SST_writeByte:
         MOVS     R0,#+2
         STRB     R0,[SP, #+0]
 //  217   comandos[1] = (unsigned char)(endereco>>16);
-        LSRS     R0,R5,#+16
+        LSRS     R0,R4,#+16
         STRB     R0,[SP, #+1]
 //  218   comandos[2] = (unsigned char)(endereco>>8);
-        LSRS     R0,R5,#+8
+        LSRS     R0,R4,#+8
         STRB     R0,[SP, #+2]
 //  219   comandos[3] = (unsigned char) endereco;
-        STRB     R5,[SP, #+3]
+        MOVS     R0,R4
+        STRB     R0,[SP, #+3]
 //  220   comandos[4] = valor;
-        STRB     R4,[SP, #+4]
+        STRB     R5,[SP, #+4]
 //  221   SPI_sendBytes(comandos,5);
         MOVS     R1,#+5
         ADD      R0,SP,#+0
@@ -668,15 +665,18 @@ SST_writeByte:
 //  234 void SST_writeAutoAddressInc(unsigned int endereco,unsigned char *pData,
 //  235                              unsigned short int size){
 SST_writeAutoAddressInc:
-        PUSH     {R2-R6,LR}
+        PUSH     {R4-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+24
-        MOVS     R6,R0
-        MOVS     R4,R1
-        MOVS     R5,R2
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
+        SUB      SP,SP,#+12
+          CFI CFA R13+32
+        MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
 //  236   unsigned char comando[6];
 //  237   
 //  238   SST_writeEnable();// Habilita a escrita na memória
@@ -687,18 +687,19 @@ SST_writeAutoAddressInc:
         MOVS     R0,#+173
         STRB     R0,[SP, #+0]
 //  241   comando[1] = (unsigned char)(endereco>>16);
-        LSRS     R0,R6,#+16
+        LSRS     R0,R4,#+16
         STRB     R0,[SP, #+1]
 //  242   comando[2] = (unsigned char)(endereco>>8);
-        LSRS     R0,R6,#+8
+        LSRS     R0,R4,#+8
         STRB     R0,[SP, #+2]
 //  243   comando[3] = (unsigned char)endereco;
-        STRB     R6,[SP, #+3]
+        MOVS     R0,R4
+        STRB     R0,[SP, #+3]
 //  244   comando[4] = pData[0];
-        LDRB     R0,[R4, #+0]
+        LDRB     R0,[R5, #+0]
         STRB     R0,[SP, #+4]
 //  245   comando[5] = pData[1];
-        LDRB     R0,[R4, #+1]
+        LDRB     R0,[R5, #+1]
         STRB     R0,[SP, #+5]
 //  246   
 //  247   SEL_CS_01;
@@ -714,11 +715,15 @@ SST_writeAutoAddressInc:
         BL       SPI_sendBytes
 //  249   
 //  250   for(unsigned short int i=0;i<(size-2);i+=2){
-        MOVS     R6,#+0
-        B.N      ??SST_writeAutoAddressInc_0
+        MOVS     R7,#+0
+??SST_writeAutoAddressInc_0:
+        UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
+        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
+        SUBS     R0,R6,#+2
+        CMP      R7,R0
+        BGE.N    ??SST_writeAutoAddressInc_1
 //  251       
 //  252     SST_busyWait();
-??SST_writeAutoAddressInc_1:
           CFI FunCall SST_busyWait
         BL       SST_busyWait
 //  253 
@@ -726,13 +731,13 @@ SST_writeAutoAddressInc:
         MOVS     R0,#+173
         STRB     R0,[SP, #+0]
 //  255     comando[1] = pData[2+i];
-        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
-        ADDS     R0,R6,R4
+        UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
+        ADDS     R0,R7,R5
         LDRB     R0,[R0, #+2]
         STRB     R0,[SP, #+1]
 //  256     comando[2] = pData[3+i];
-        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
-        ADDS     R0,R6,R4
+        UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
+        ADDS     R0,R7,R5
         LDRB     R0,[R0, #+3]
         STRB     R0,[SP, #+2]
 //  257           
@@ -754,15 +759,11 @@ SST_writeAutoAddressInc:
         LDR.N    R1,??DataTable12  ;; 0x2009c018
         STR      R0,[R1, #+0]
 //  261   }
-        ADDS     R6,R6,#+2
-??SST_writeAutoAddressInc_0:
-        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
-        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
-        SUBS     R0,R5,#+2
-        CMP      R6,R0
-        BLT.N    ??SST_writeAutoAddressInc_1
+        ADDS     R7,R7,#+2
+        B.N      ??SST_writeAutoAddressInc_0
 //  262   
 //  263   SST_busyWait();  
+??SST_writeAutoAddressInc_1:
           CFI FunCall SST_busyWait
         BL       SST_busyWait
 //  264     
@@ -770,7 +771,7 @@ SST_writeAutoAddressInc:
           CFI FunCall SST_writeDisable
         BL       SST_writeDisable
 //  266 }
-        POP      {R0,R1,R4-R6,PC}  ;; return
+        POP      {R0-R2,R4-R7,PC}  ;; return
           CFI EndBlock cfiBlock9
         REQUIRE _A_FIO0CLR
         REQUIRE _A_FIO0SET
@@ -840,7 +841,8 @@ SST_erase4kbSector:
         LSRS     R0,R4,#+8
         STRB     R0,[SP, #+6]
 //  291   comando[3] = (unsigned char) sector;
-        STRB     R4,[SP, #+7]
+        MOVS     R0,R4
+        STRB     R0,[SP, #+7]
 //  292   SPI_sendBytes(comando,4);
         MOVS     R1,#+4
         ADD      R0,SP,#+4
@@ -908,7 +910,8 @@ SST_erase32kbSector:
         LSRS     R0,R4,#+8
         STRB     R0,[SP, #+2]
 //  315   comando[3] = (unsigned char) sector;
-        STRB     R4,[SP, #+3]
+        MOVS     R0,R4
+        STRB     R0,[SP, #+3]
 //  316   SPI_sendBytes(comando,4);
         MOVS     R1,#+4
         ADD      R0,SP,#+0
@@ -976,7 +979,8 @@ SST_erase64kbSector:
         LSRS     R0,R4,#+8
         STRB     R0,[SP, #+2]
 //  339   comando[3] = (unsigned char) sector;
-        STRB     R4,[SP, #+3]
+        MOVS     R0,R4
+        STRB     R0,[SP, #+3]
 //  340   SPI_sendBytes(comando,4);
         MOVS     R1,#+4
         ADD      R0,SP,#+0
@@ -1079,9 +1083,9 @@ SST_chipErase:
 //  368 ********************************************************************************/
 // 
 //     8 bytes in section .noinit (abs)
-// 1 042 bytes in section .text
+// 1 060 bytes in section .text
 // 
-// 1 042 bytes of CODE memory
+// 1 060 bytes of CODE memory
 //     0 bytes of DATA memory (+ 8 bytes shared)
 //
 //Errors: none

@@ -1,28 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:00 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:46 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\WH1602\WH1602.C  /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\WH1602\WH1602.C /
-//                    " -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\0 /
-//                    1_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA  /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\WH1602\WH /
+//                    1602.C                                                  /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\WH1602\WH /
+//                    1602.C -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\ /
+//                    List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\L /
+//                    ist\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj /
+//                    \ --no_cse --no_unroll --no_inline --no_code_motion     /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\WH1602.s      /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\WH1602 /
+//                    .s                                                      /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -88,7 +84,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\WH1602\WH1602.C
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\WH1602\WH1602.C
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -251,10 +247,13 @@ HD44780_init:
         BL       vTaskDelay
 //   69 
 //   70   for(i=0;i<3;i++){
-        MOVS     R6,#+0
-        B.N      ??HD44780_init_0
+        MOVS     R0,#+0
+        MOVS     R6,R0
+??HD44780_init_0:
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+3
+        BGE.N    ??HD44780_init_1
 //   71     HD44780_enviaNibble(0x03);
-??HD44780_init_1:
         MOVS     R0,#+3
           CFI FunCall HD44780_enviaNibble
         BL       HD44780_enviaNibble
@@ -264,12 +263,10 @@ HD44780_init:
         BL       vTaskDelay
 //   73   }
         ADDS     R6,R6,#+1
-??HD44780_init_0:
-        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-        CMP      R6,#+3
-        BLT.N    ??HD44780_init_1
+        B.N      ??HD44780_init_0
 //   74   
 //   75   HD44780_enviaNibble(0x02);
+??HD44780_init_1:
         MOVS     R0,#+2
           CFI FunCall HD44780_enviaNibble
         BL       HD44780_enviaNibble
@@ -406,20 +403,20 @@ HD44780_enviaNibble:
         LDR.N    R2,??DataTable9_6  ;; 0x2009c01c
         STR      R1,[R2, #+0]
 ??HD44780_enviaNibble_5:
-        LSLS     R0,R0,#+28
+        LSLS     R1,R0,#+28
         BPL.N    ??HD44780_enviaNibble_6
-        LDR.N    R0,??DataTable9_5  ;; 0x2009c018
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x10
         LDR.N    R1,??DataTable9_5  ;; 0x2009c018
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x10
+        LDR.N    R2,??DataTable9_5  ;; 0x2009c018
+        STR      R1,[R2, #+0]
         B.N      ??HD44780_enviaNibble_7
 ??HD44780_enviaNibble_6:
-        LDR.N    R0,??DataTable9_6  ;; 0x2009c01c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x10
         LDR.N    R1,??DataTable9_6  ;; 0x2009c01c
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x10
+        LDR.N    R2,??DataTable9_6  ;; 0x2009c01c
+        STR      R1,[R2, #+0]
 //  106   __no_operation();
 ??HD44780_enviaNibble_7:
         Nop      
@@ -435,11 +432,11 @@ HD44780_enviaNibble:
         Nop      
 //  112                          
 //  113   CLR_LCD_ENABLE;   
-        LDR.N    R0,??DataTable9_4  ;; 0x2009c03c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x20000
         LDR.N    R1,??DataTable9_4  ;; 0x2009c03c
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x20000
+        LDR.N    R2,??DataTable9_4  ;; 0x2009c03c
+        STR      R1,[R2, #+0]
 //  114 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock1
@@ -460,15 +457,17 @@ HD44780_enviaNibble:
         THUMB
 //  121 void HD44780_enviaByte(unsigned char endereco,unsigned char value){
 HD44780_enviaByte:
-        PUSH     {R4,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
-        MOVS     R4,R1
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  122 
 //  123   (endereco)?(SET_LCD_RS):(CLR_LCD_RS);                              
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+0
         BEQ.N    ??HD44780_enviaByte_0
         LDR.N    R0,??DataTable9_5  ;; 0x2009c018
         LDR      R0,[R0, #+0]
@@ -484,12 +483,12 @@ HD44780_enviaByte:
         STR      R0,[R1, #+0]
 //  124   HD44780_enviaNibble(value>>4);
 ??HD44780_enviaByte_1:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LSRS     R0,R4,#+4
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LSRS     R0,R5,#+4
           CFI FunCall HD44780_enviaNibble
         BL       HD44780_enviaNibble
 //  125   HD44780_enviaNibble(value);  
-        MOVS     R0,R4
+        MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall HD44780_enviaNibble
         BL       HD44780_enviaNibble
@@ -499,7 +498,7 @@ HD44780_enviaByte:
           CFI FunCall vTaskDelay
         BL       vTaskDelay
 //  128 }
-        POP      {R4,PC}          ;; return
+        POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock2
         REQUIRE _A_FIO0SET
         REQUIRE _A_FIO0CLR
@@ -529,19 +528,23 @@ HD44780_enviaByte:
         THUMB
 //  148 void HD44780_posicionaTexto(unsigned char x,unsigned char y){
 HD44780_posicionaTexto:
-        PUSH     {R7,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  149     
 //  150   if(x<16 && y==0)
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+16
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+16
         BGE.N    ??HD44780_posicionaTexto_0
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        CMP      R1,#+0
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
         BNE.N    ??HD44780_posicionaTexto_0
 //  151      HD44780_enviaByte(0,0x80 + x);
-        SUBS     R1,R0,#+128
+        SUBS     R1,R4,#+128
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,#+0
           CFI FunCall HD44780_enviaByte
@@ -550,11 +553,11 @@ HD44780_posicionaTexto:
 //  152   else
 //  153     if(y==1)
 ??HD44780_posicionaTexto_0:
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        CMP      R1,#+1
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+1
         BNE.N    ??HD44780_posicionaTexto_1
 //  154       HD44780_enviaByte(0,0xC0 + x);
-        SUBS     R1,R0,#+64
+        SUBS     R1,R4,#+64
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,#+0
           CFI FunCall HD44780_enviaByte
@@ -566,7 +569,7 @@ HD44780_posicionaTexto:
           CFI FunCall vTaskDelay
         BL       vTaskDelay
 //  157 }
-        POP      {R0,PC}          ;; return
+        POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock3
 //  158 /***********************************************************************************
 //  159 *     Descrição    :  Escreve um caracter no display
@@ -580,18 +583,20 @@ HD44780_posicionaTexto:
         THUMB
 //  163 void HD44780_writeChar(char c){
 HD44780_writeChar:
-        PUSH     {R7,LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
+        MOVS     R4,R0
 //  164   
 //  165   switch(c){
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        MOVS     R1,R0
-        CMP      R1,#+10
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        MOVS     R0,R4
+        CMP      R0,#+10
         BEQ.N    ??HD44780_writeChar_0
-        CMP      R1,#+12
+        CMP      R0,#+12
         BEQ.N    ??HD44780_writeChar_1
-        CMP      R1,#+13
+        CMP      R0,#+13
         BEQ.N    ??HD44780_writeChar_0
         B.N      ??HD44780_writeChar_2
 //  166     case '\f':  HD44780_enviaByte(0,1);
@@ -617,7 +622,7 @@ HD44780_writeChar:
         B.N      ??HD44780_writeChar_3
 //  172     default  :  HD44780_enviaByte(1,c);
 ??HD44780_writeChar_2:
-        MOVS     R1,R0
+        MOVS     R1,R4
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,#+1
           CFI FunCall HD44780_enviaByte
@@ -626,7 +631,7 @@ HD44780_writeChar:
 //  174   }
 //  175 }
 ??HD44780_writeChar_3:
-        POP      {R0,PC}          ;; return
+        POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock4
 //  176 /***********************************************************************************
 //  177 *     Descrição   :   Escreve uma string no display
@@ -645,20 +650,20 @@ HD44780_writeString:
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-        B.N      ??HD44780_writeString_0
 //  182   
 //  183   while(*string)
+??HD44780_writeString_0:
+        LDRB     R0,[R4, #+0]
+        CMP      R0,#+0
+        BEQ.N    ??HD44780_writeString_1
 //  184     HD44780_writeChar(*string++);      
-??HD44780_writeString_1:
         LDRB     R0,[R4, #+0]
           CFI FunCall HD44780_writeChar
         BL       HD44780_writeChar
         ADDS     R4,R4,#+1
-??HD44780_writeString_0:
-        LDRB     R0,[R4, #+0]
-        CMP      R0,#+0
-        BNE.N    ??HD44780_writeString_1
+        B.N      ??HD44780_writeString_0
 //  185 }
+??HD44780_writeString_1:
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock5
 //  186 /***********************************************************************************
@@ -990,9 +995,9 @@ teste_lcd:
 //   1 byte  in section .bss
 //  24 bytes in section .noinit (abs)
 //  40 bytes in section .rodata
-// 826 bytes in section .text
+// 836 bytes in section .text
 // 
-// 826 bytes of CODE  memory
+// 836 bytes of CODE  memory
 //  40 bytes of CONST memory
 //   1 byte  of DATA  memory (+ 24 bytes shared)
 //

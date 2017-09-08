@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:02 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:40 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Potencia\ControleTempera /
-//                    tura.c                                                  /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Potencia\ControleTemper /
-//                    atura.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Fir /
-//                    mware\01_mais_pipoca_exp\MaisPipoca -                   /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Potencia\Controle /
+//                    Temperatura.c                                           /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Potencia\Controle /
+//                    Temperatura.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE /
+//                    \Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\ /
+//                    Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\De /
+//                    bug\Obj\ --no_cse --no_unroll --no_inline               /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\ControleTempe /
-//                    ratura.s                                                /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\Contro /
+//                    leTemperatura.s                                         /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -77,7 +71,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Potencia\ControleTemperatura.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Potencia\ControleTemperatura.c
 //    1 /*__________________________________________________________________________________
 //    2 |	DEXTRO SOLUÇÕES TECNOLÓGICAS
 //    3 |       
@@ -195,8 +189,9 @@ CT_ini:
         THUMB
 //   74 void CT_timer_tick(void){
 CT_timer_tick:
-        PUSH     {R7,LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
 //   75   unsigned short int temperatura;
 //   76   
@@ -208,12 +203,13 @@ CT_timer_tick:
 //   78     temperatura = AA_calculaTemperatura();
           CFI FunCall AA_calculaTemperatura
         BL       AA_calculaTemperatura
+        MOVS     R4,R0
 //   79     if(temperatura>CT_preset_temperatura)
-        LDR.N    R1,??DataTable2_1
-        LDRB     R1,[R1, #+0]
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+        LDR.N    R0,??DataTable2_1
+        LDRB     R0,[R0, #+0]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        CMP      R1,R0
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        CMP      R0,R4
         BCS.N    ??CT_timer_tick_1
 //   80       SET_PULSO_RESISTENCIA(0);
         LDR.N    R0,??DataTable2_2  ;; 0x2009c05c
@@ -242,7 +238,7 @@ CT_timer_tick:
         STR      R0,[R1, #+0]
 //   86 }
 ??CT_timer_tick_2:
-        POP      {R0,PC}          ;; return
+        POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock1
         REQUIRE _A_FIO2CLR
         REQUIRE _A_FIO2SET
@@ -309,9 +305,9 @@ CT_set_temperatura:
 // 
 //   1 byte  in section .bss
 //  12 bytes in section .noinit (abs)
-// 104 bytes in section .text
+// 106 bytes in section .text
 // 
-// 104 bytes of CODE memory
+// 106 bytes of CODE memory
 //   1 byte  of DATA memory (+ 12 bytes shared)
 //
 //Errors: none

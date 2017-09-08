@@ -288,6 +288,12 @@ const sPARAMETROS tabela_parametros[]={
        .nome = "SG_CLIENTE_04",
        .ext = "TXT",
        .default_value = (void*) "  GRUPO ALTECH  "    
+  },
+  [ADR_TIPOS_MOEDAS]={
+       .length = WORD,
+       .nome = "TIPOS_MONEADA",
+       .ext = "i16",
+       .default_value = (void*) "  GRUPO ALTECH  "        
   }
 };
 

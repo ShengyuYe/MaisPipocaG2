@@ -1,28 +1,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:17 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:43 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\RTC\RTC.C        /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\RTC\RTC.C" -lC  /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA        /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\RTC\RTC.C /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\RTC\RTC.C /
+//                     -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\  /
+//                    -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\   /
+//                    -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\     /
+//                    --no_cse --no_unroll --no_inline --no_code_motion       /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\RTC.s         /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\RTC.s  /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -75,7 +69,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\RTC\RTC.C
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\RTC\RTC.C
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Ltda.
 //    3 |       
@@ -267,24 +261,24 @@ RTC_setValue:
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         STR      R2,[R6, #+0]
 //  102   RTCMIN = minute;
-        LDR.N    R2,??DataTable2_3  ;; 0x40024024
+        LDR.N    R6,??DataTable2_3  ;; 0x40024024
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        STR      R1,[R2, #+0]
+        STR      R1,[R6, #+0]
 //  103   RTCHOUR = hour;
-        LDR.N    R1,??DataTable2_4  ;; 0x40024028
+        LDR.N    R6,??DataTable2_4  ;; 0x40024028
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        STR      R0,[R1, #+0]
+        STR      R0,[R6, #+0]
 //  104   RTCDOM = day;
-        LDR.N    R0,??DataTable2_5  ;; 0x4002402c
+        LDR.N    R6,??DataTable2_5  ;; 0x4002402c
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
-        STR      R3,[R0, #+0]
+        STR      R3,[R6, #+0]
 //  105   RTCMONTH = month;
-        LDR.N    R0,??DataTable2_6  ;; 0x40024038
+        LDR.N    R6,??DataTable2_6  ;; 0x40024038
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        STR      R4,[R0, #+0]
+        STR      R4,[R6, #+0]
 //  106   RTCYEAR = year;                                      
-        LDR.N    R0,??DataTable2_7  ;; 0x4002403c
-        STR      R5,[R0, #+0]
+        LDR.N    R6,??DataTable2_7  ;; 0x4002403c
+        STR      R5,[R6, #+0]
 //  107 }
         POP      {R4-R6}
           CFI R4 SameValue
@@ -323,33 +317,33 @@ RTC_getValue:
           CFI R5 Frame(CFA, -8)
           CFI R4 Frame(CFA, -12)
           CFI CFA R13+12
-        LDR      R5,[SP, #+12]
-        LDR      R4,[SP, #+16]
+        LDR      R4,[SP, #+12]
+        LDR      R5,[SP, #+16]
 //  120                     
 //  121   *second = RTCSEC;
         LDR.N    R6,??DataTable2_2  ;; 0x40024020
         LDR      R6,[R6, #+0]
         STRB     R6,[R2, #+0]
 //  122   *minute = RTCMIN;
-        LDR.N    R2,??DataTable2_3  ;; 0x40024024
-        LDR      R2,[R2, #+0]
-        STRB     R2,[R1, #+0]
+        LDR.N    R6,??DataTable2_3  ;; 0x40024024
+        LDR      R6,[R6, #+0]
+        STRB     R6,[R1, #+0]
 //  123   *hour = RTCHOUR;
-        LDR.N    R1,??DataTable2_4  ;; 0x40024028
-        LDR      R1,[R1, #+0]
-        STRB     R1,[R0, #+0]
+        LDR.N    R6,??DataTable2_4  ;; 0x40024028
+        LDR      R6,[R6, #+0]
+        STRB     R6,[R0, #+0]
 //  124   *day = RTCDOM;
-        LDR.N    R0,??DataTable2_5  ;; 0x4002402c
-        LDR      R0,[R0, #+0]
-        STRB     R0,[R3, #+0]
+        LDR.N    R6,??DataTable2_5  ;; 0x4002402c
+        LDR      R6,[R6, #+0]
+        STRB     R6,[R3, #+0]
 //  125   *month = RTCMONTH;
-        LDR.N    R0,??DataTable2_6  ;; 0x40024038
-        LDR      R0,[R0, #+0]
-        STRB     R0,[R5, #+0]
+        LDR.N    R6,??DataTable2_6  ;; 0x40024038
+        LDR      R6,[R6, #+0]
+        STRB     R6,[R4, #+0]
 //  126   *year = RTCYEAR;                    
-        LDR.N    R0,??DataTable2_7  ;; 0x4002403c
-        LDR      R0,[R0, #+0]
-        STR      R0,[R4, #+0]
+        LDR.N    R6,??DataTable2_7  ;; 0x4002403c
+        LDR      R6,[R6, #+0]
+        STR      R6,[R5, #+0]
 //  127 }
         POP      {R4-R6}
           CFI R4 SameValue

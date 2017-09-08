@@ -1,37 +1,31 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:58:27 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      08/Sep/2017  19:51:51 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
 #    Endian       =  little                                                   #
-#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_ajuste_relo #
-#                    gio.c                                                    #
-#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_ajuste_rel #
-#                    ogio.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmw #
-#                    are\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\"  #
-#                    -lA "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_m #
-#                    ais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o       #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
-#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
-#                    --no_clustering --no_scheduling --debug --endian=little  #
-#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
-#                    Files (x86)\IAR Systems\Embedded Workbench               #
-#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
-#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\menu_ajuste_rel #
-#                    ogio.lst                                                 #
-#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\menu_ajuste_relo #
-#                    gio.o                                                    #
+#    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_aju #
+#                    ste_relogio.c                                            #
+#    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_aju #
+#                    ste_relogio.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\ #
+#                    Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\De #
+#                    bug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug #
+#                    \Obj\ --no_cse --no_unroll --no_inline --no_code_motion  #
+#                    --no_tbaa --no_clustering --no_scheduling --debug        #
+#                    --endian=little --cpu=Cortex-M3 -e --fpu=None            #
+#                    --dlib_config "C:\Program Files (x86)\IAR                #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -On                                               #
+#    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\menu_aj #
+#                    uste_relogio.lst                                         #
+#    Object file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\menu_aju #
+#                    ste_relogio.o                                            #
 #                                                                             #
 #                                                                             #
 ###############################################################################
 
-C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_ajuste_relogio.c
+C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_ajuste_relogio.c
       1          /*__________________________________________________________________________________
       2          |	DEXTRO SOLUÇÕES TECNOLÓGICAS
       3          |       
@@ -103,8 +97,8 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \                                 In section .text, align 4, keep-with-next
      68          void MARTC_entry(void){
    \                     MARTC_entry:
-   \   00000000   0xB510             PUSH     {R4,LR}
-   \   00000002   0xB09E             SUB      SP,SP,#+120
+   \   00000000   0xB530             PUSH     {R4,R5,LR}
+   \   00000002   0xB09F             SUB      SP,SP,#+124
      69            unsigned char hora;
      70            unsigned char minuto;
      71            unsigned char segundo;
@@ -115,20 +109,20 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
      76            unsigned int matriz_edicao[6];
      77            unsigned int limites_inf[6]={0,0,0,1,1,2017};
    \   00000004   0xA818             ADD      R0,SP,#+96
-   \   00000006   0x4972             LDR.N    R1,??MARTC_entry_0
+   \   00000006   0x4975             LDR.N    R1,??MARTC_entry_0
    \   00000008   0x2218             MOVS     R2,#+24
    \   0000000A   0x.... 0x....      BL       __aeabi_memcpy4
      78            unsigned int limites_sup[6]={23,59,59,31,12,2117};  
    \   0000000E   0xA812             ADD      R0,SP,#+72
-   \   00000010   0x4970             LDR.N    R1,??MARTC_entry_0+0x4
+   \   00000010   0x4973             LDR.N    R1,??MARTC_entry_0+0x4
    \   00000012   0x2218             MOVS     R2,#+24
    \   00000014   0x.... 0x....      BL       __aeabi_memcpy4
      79            unsigned int indice=0;
-   \   00000018   0x2400             MOVS     R4,#+0
+   \   00000018   0x2500             MOVS     R5,#+0
      80            char linha[17];
      81            const unsigned char posicoes[6]={4,7,10,2,5,8};
    \   0000001A   0xA80B             ADD      R0,SP,#+44
-   \   0000001C   0x496E             LDR.N    R1,??MARTC_entry_0+0x8
+   \   0000001C   0x4971             LDR.N    R1,??MARTC_entry_0+0x8
    \   0000001E   0xC90C             LDM      R1!,{R2,R3}
    \   00000020   0xC00C             STM      R0!,{R2,R3}
    \   00000022   0x3908             SUBS     R1,R1,#+8
@@ -189,203 +183,209 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
      89            if(ano<2017 || ano>2117) ano = 2017;
    \                     ??MARTC_entry_7:
    \   00000096   0x9804             LDR      R0,[SP, #+16]
-   \   00000098   0xF2A0 0x70E1      SUBW     R0,R0,#+2017
-   \   0000009C   0x2865             CMP      R0,#+101
-   \   0000009E   0xD302             BCC.N    ??MARTC_entry_8
-   \   000000A0   0xF240 0x70E1      MOVW     R0,#+2017
-   \   000000A4   0x9004             STR      R0,[SP, #+16]
+   \   00000098   0xF5B0 0x6FFC      CMP      R0,#+2016
+   \   0000009C   0xD904             BLS.N    ??MARTC_entry_8
+   \   0000009E   0x9804             LDR      R0,[SP, #+16]
+   \   000000A0   0xF640 0x0146      MOVW     R1,#+2118
+   \   000000A4   0x4288             CMP      R0,R1
+   \   000000A6   0xD302             BCC.N    ??MARTC_entry_9
+   \                     ??MARTC_entry_8:
+   \   000000A8   0xF240 0x70E1      MOVW     R0,#+2017
+   \   000000AC   0x9004             STR      R0,[SP, #+16]
      90            
      91            matriz_edicao[0] = hora;
-   \                     ??MARTC_entry_8:
-   \   000000A6   0xF89D 0x000C      LDRB     R0,[SP, #+12]
-   \   000000AA   0x9005             STR      R0,[SP, #+20]
+   \                     ??MARTC_entry_9:
+   \   000000AE   0xF89D 0x000C      LDRB     R0,[SP, #+12]
+   \   000000B2   0x9005             STR      R0,[SP, #+20]
      92            matriz_edicao[1] = minuto;
-   \   000000AC   0xF89D 0x000B      LDRB     R0,[SP, #+11]
-   \   000000B0   0x9006             STR      R0,[SP, #+24]
+   \   000000B4   0xF89D 0x000B      LDRB     R0,[SP, #+11]
+   \   000000B8   0x9006             STR      R0,[SP, #+24]
      93            matriz_edicao[2] = segundo;
-   \   000000B2   0xF89D 0x000A      LDRB     R0,[SP, #+10]
-   \   000000B6   0x9007             STR      R0,[SP, #+28]
+   \   000000BA   0xF89D 0x000A      LDRB     R0,[SP, #+10]
+   \   000000BE   0x9007             STR      R0,[SP, #+28]
      94            matriz_edicao[3] = dia;
-   \   000000B8   0xF89D 0x0009      LDRB     R0,[SP, #+9]
-   \   000000BC   0x9008             STR      R0,[SP, #+32]
+   \   000000C0   0xF89D 0x0009      LDRB     R0,[SP, #+9]
+   \   000000C4   0x9008             STR      R0,[SP, #+32]
      95            matriz_edicao[4] = mes;
-   \   000000BE   0xF89D 0x0008      LDRB     R0,[SP, #+8]
-   \   000000C2   0x9009             STR      R0,[SP, #+36]
+   \   000000C6   0xF89D 0x0008      LDRB     R0,[SP, #+8]
+   \   000000CA   0x9009             STR      R0,[SP, #+36]
      96            matriz_edicao[5] = ano;
-   \   000000C4   0x9804             LDR      R0,[SP, #+16]
-   \   000000C6   0x900A             STR      R0,[SP, #+40]
+   \   000000CC   0x9804             LDR      R0,[SP, #+16]
+   \   000000CE   0x900A             STR      R0,[SP, #+40]
      97            
      98            HD44780_clearText();
-   \   000000C8   0x200C             MOVS     R0,#+12
-   \   000000CA   0x.... 0x....      BL       HD44780_writeChar
-   \   000000CE   0xE033             B.N      ??MARTC_entry_9
+   \   000000D0   0x200C             MOVS     R0,#+12
+   \   000000D2   0x.... 0x....      BL       HD44780_writeChar
      99            
     100            for(;TECLADO_getContadorInatividade();){
+   \                     ??MARTC_entry_10:
+   \   000000D6   0x.... 0x....      BL       TECLADO_getContadorInatividade
+   \   000000DA   0x2800             CMP      R0,#+0
+   \   000000DC   0xD07B             BEQ.N    ??MARTC_entry_11
     101              
     102              tecla = TECLADO_getch();
+   \   000000DE   0x.... 0x....      BL       TECLADO_getch
+   \   000000E2   0x0004             MOVS     R4,R0
     103              switch(tecla){
+   \   000000E4   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   000000E6   0x2C01             CMP      R4,#+1
+   \   000000E8   0xD019             BEQ.N    ??MARTC_entry_12
+   \   000000EA   0xD346             BCC.N    ??MARTC_entry_13
+   \   000000EC   0x2C03             CMP      R4,#+3
+   \   000000EE   0xD02E             BEQ.N    ??MARTC_entry_14
+   \   000000F0   0xD316             BCC.N    ??MARTC_entry_15
+   \   000000F2   0x2C04             CMP      R4,#+4
+   \   000000F4   0xD141             BNE.N    ??MARTC_entry_13
     104                case TECLA_ENTER: 
     105                     indice++;
+   \                     ??MARTC_entry_16:
+   \   000000F6   0x1C6D             ADDS     R5,R5,#+1
     106                     if(indice>5){
+   \   000000F8   0x2D06             CMP      R5,#+6
+   \   000000FA   0xD30F             BCC.N    ??MARTC_entry_17
     107                       RTC_setValue(matriz_edicao[0],matriz_edicao[1],matriz_edicao[2],
     108                                    matriz_edicao[3],matriz_edicao[4],matriz_edicao[5]);
+   \   000000FC   0x980A             LDR      R0,[SP, #+40]
+   \   000000FE   0x9001             STR      R0,[SP, #+4]
+   \   00000100   0x9809             LDR      R0,[SP, #+36]
+   \   00000102   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000104   0x9000             STR      R0,[SP, #+0]
+   \   00000106   0x9B08             LDR      R3,[SP, #+32]
+   \   00000108   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   0000010A   0x9A07             LDR      R2,[SP, #+28]
+   \   0000010C   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   0000010E   0x9906             LDR      R1,[SP, #+24]
+   \   00000110   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000112   0x9805             LDR      R0,[SP, #+20]
+   \   00000114   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000116   0x.... 0x....      BL       RTC_setValue
+   \   0000011A   0xE000             B.N      ??MARTC_entry_12
     109                     }
     110                     else
     111                       break;
+   \                     ??MARTC_entry_17:
+   \   0000011C   0xE02D             B.N      ??MARTC_entry_13
     112                case TECLA_ESC:
     113                     return;
+   \                     ??MARTC_entry_12:
+   \   0000011E   0xE05A             B.N      ??MARTC_entry_18
     114                case TECLA_INC:
     115                     if(matriz_edicao[indice]>=limites_sup[indice])
+   \                     ??MARTC_entry_15:
+   \   00000120   0xA805             ADD      R0,SP,#+20
+   \   00000122   0xF850 0x0025      LDR      R0,[R0, R5, LSL #+2]
+   \   00000126   0xA912             ADD      R1,SP,#+72
+   \   00000128   0xF851 0x1025      LDR      R1,[R1, R5, LSL #+2]
+   \   0000012C   0x4288             CMP      R0,R1
+   \   0000012E   0xD306             BCC.N    ??MARTC_entry_19
     116                       matriz_edicao[indice] = limites_inf[indice];
+   \   00000130   0xA805             ADD      R0,SP,#+20
+   \   00000132   0xA918             ADD      R1,SP,#+96
+   \   00000134   0xF851 0x1025      LDR      R1,[R1, R5, LSL #+2]
+   \   00000138   0xF840 0x1025      STR      R1,[R0, R5, LSL #+2]
+   \   0000013C   0xE006             B.N      ??MARTC_entry_20
     117                     else
     118                       matriz_edicao[indice]++;
+   \                     ??MARTC_entry_19:
+   \   0000013E   0xA805             ADD      R0,SP,#+20
+   \   00000140   0xF850 0x0025      LDR      R0,[R0, R5, LSL #+2]
+   \   00000144   0x1C40             ADDS     R0,R0,#+1
+   \   00000146   0xA905             ADD      R1,SP,#+20
+   \   00000148   0xF841 0x0025      STR      R0,[R1, R5, LSL #+2]
     119                     break;
+   \                     ??MARTC_entry_20:
+   \   0000014C   0xE015             B.N      ??MARTC_entry_13
     120                case TECLA_DEC:
     121                      if(matriz_edicao[indice]<=limites_inf[indice])
+   \                     ??MARTC_entry_14:
+   \   0000014E   0xA818             ADD      R0,SP,#+96
+   \   00000150   0xF850 0x0025      LDR      R0,[R0, R5, LSL #+2]
+   \   00000154   0xA905             ADD      R1,SP,#+20
+   \   00000156   0xF851 0x1025      LDR      R1,[R1, R5, LSL #+2]
+   \   0000015A   0x4288             CMP      R0,R1
+   \   0000015C   0xD306             BCC.N    ??MARTC_entry_21
     122                        matriz_edicao[indice] = limites_sup[indice];
+   \   0000015E   0xA805             ADD      R0,SP,#+20
+   \   00000160   0xA912             ADD      R1,SP,#+72
+   \   00000162   0xF851 0x1025      LDR      R1,[R1, R5, LSL #+2]
+   \   00000166   0xF840 0x1025      STR      R1,[R0, R5, LSL #+2]
+   \   0000016A   0xE006             B.N      ??MARTC_entry_22
     123                      else
     124                        matriz_edicao[indice]--;
-   \                     ??MARTC_entry_10:
-   \   000000D0   0xA805             ADD      R0,SP,#+20
-   \   000000D2   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
-   \   000000D6   0x1E40             SUBS     R0,R0,#+1
-   \   000000D8   0xA905             ADD      R1,SP,#+20
-   \   000000DA   0xF841 0x0024      STR      R0,[R1, R4, LSL #+2]
+   \                     ??MARTC_entry_21:
+   \   0000016C   0xA805             ADD      R0,SP,#+20
+   \   0000016E   0xF850 0x0025      LDR      R0,[R0, R5, LSL #+2]
+   \   00000172   0x1E40             SUBS     R0,R0,#+1
+   \   00000174   0xA905             ADD      R1,SP,#+20
+   \   00000176   0xF841 0x0025      STR      R0,[R1, R5, LSL #+2]
     125                     break;
     126              }
     127              
     128              // Escreve a primeira linha no LCD
     129              sprintf(linha,"%02d:%02d:%02d",matriz_edicao[0],matriz_edicao[1],matriz_edicao[2]);
-   \                     ??MARTC_entry_11:
-   \                     ??MARTC_entry_12:
-   \   000000DE   0x9807             LDR      R0,[SP, #+28]
-   \   000000E0   0x9000             STR      R0,[SP, #+0]
-   \   000000E2   0x9B06             LDR      R3,[SP, #+24]
-   \   000000E4   0x9A05             LDR      R2,[SP, #+20]
-   \   000000E6   0x493D             LDR.N    R1,??MARTC_entry_0+0xC
-   \   000000E8   0xA80D             ADD      R0,SP,#+52
-   \   000000EA   0x.... 0x....      BL       sprintf
+   \                     ??MARTC_entry_22:
+   \                     ??MARTC_entry_13:
+   \   0000017A   0x9807             LDR      R0,[SP, #+28]
+   \   0000017C   0x9000             STR      R0,[SP, #+0]
+   \   0000017E   0x9B06             LDR      R3,[SP, #+24]
+   \   00000180   0x9A05             LDR      R2,[SP, #+20]
+   \   00000182   0x4919             LDR.N    R1,??MARTC_entry_0+0xC
+   \   00000184   0xA80D             ADD      R0,SP,#+52
+   \   00000186   0x.... 0x....      BL       sprintf
     130              HD44780_posicionaTexto(4,0);
-   \   000000EE   0x2100             MOVS     R1,#+0
-   \   000000F0   0x2004             MOVS     R0,#+4
-   \   000000F2   0x.... 0x....      BL       HD44780_posicionaTexto
+   \   0000018A   0x2100             MOVS     R1,#+0
+   \   0000018C   0x2004             MOVS     R0,#+4
+   \   0000018E   0x.... 0x....      BL       HD44780_posicionaTexto
     131              HD44780_writeString(linha);
-   \   000000F6   0xA80D             ADD      R0,SP,#+52
-   \   000000F8   0x.... 0x....      BL       HD44780_writeString
+   \   00000192   0xA80D             ADD      R0,SP,#+52
+   \   00000194   0x.... 0x....      BL       HD44780_writeString
     132              
     133              // Escreve a segunda linha no LCd
     134              sprintf(linha,"%02d/%02d/%04d",matriz_edicao[3],matriz_edicao[4],matriz_edicao[5]);
-   \   000000FC   0x980A             LDR      R0,[SP, #+40]
-   \   000000FE   0x9000             STR      R0,[SP, #+0]
-   \   00000100   0x9B09             LDR      R3,[SP, #+36]
-   \   00000102   0x9A08             LDR      R2,[SP, #+32]
-   \   00000104   0x4936             LDR.N    R1,??MARTC_entry_0+0x10
-   \   00000106   0xA80D             ADD      R0,SP,#+52
-   \   00000108   0x.... 0x....      BL       sprintf
+   \   00000198   0x980A             LDR      R0,[SP, #+40]
+   \   0000019A   0x9000             STR      R0,[SP, #+0]
+   \   0000019C   0x9B09             LDR      R3,[SP, #+36]
+   \   0000019E   0x9A08             LDR      R2,[SP, #+32]
+   \   000001A0   0x4912             LDR.N    R1,??MARTC_entry_0+0x10
+   \   000001A2   0xA80D             ADD      R0,SP,#+52
+   \   000001A4   0x.... 0x....      BL       sprintf
     135              HD44780_posicionaTexto(2,1);
-   \   0000010C   0x2101             MOVS     R1,#+1
-   \   0000010E   0x2002             MOVS     R0,#+2
-   \   00000110   0x.... 0x....      BL       HD44780_posicionaTexto
+   \   000001A8   0x2101             MOVS     R1,#+1
+   \   000001AA   0x2002             MOVS     R0,#+2
+   \   000001AC   0x.... 0x....      BL       HD44780_posicionaTexto
     136              HD44780_writeString(linha);
-   \   00000114   0xA80D             ADD      R0,SP,#+52
-   \   00000116   0x.... 0x....      BL       HD44780_writeString
+   \   000001B0   0xA80D             ADD      R0,SP,#+52
+   \   000001B2   0x.... 0x....      BL       HD44780_writeString
     137              
     138              // Liga o cursor piscante
     139              HD44780_ligaCursorPiscante();    
-   \   0000011A   0x.... 0x....      BL       HD44780_ligaCursorPiscante
+   \   000001B6   0x.... 0x....      BL       HD44780_ligaCursorPiscante
     140              HD44780_posicionaTexto(posicoes[indice],indice/3);    
-   \   0000011E   0x2003             MOVS     R0,#+3
-   \   00000120   0xFBB4 0xF1F0      UDIV     R1,R4,R0
-   \   00000124   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   00000126   0xA80B             ADD      R0,SP,#+44
-   \   00000128   0x5C20             LDRB     R0,[R4, R0]
-   \   0000012A   0x.... 0x....      BL       HD44780_posicionaTexto
+   \   000001BA   0x2003             MOVS     R0,#+3
+   \   000001BC   0xFBB5 0xF1F0      UDIV     R1,R5,R0
+   \   000001C0   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   000001C2   0xA80B             ADD      R0,SP,#+44
+   \   000001C4   0x5C28             LDRB     R0,[R5, R0]
+   \   000001C6   0x.... 0x....      BL       HD44780_posicionaTexto
     141              vTaskDelay(150);
-   \   0000012E   0x2096             MOVS     R0,#+150
-   \   00000130   0x.... 0x....      BL       vTaskDelay
+   \   000001CA   0x2096             MOVS     R0,#+150
+   \   000001CC   0x.... 0x....      BL       vTaskDelay
     142              HD44780_desligaCursorPiscante();    
-   \   00000134   0x.... 0x....      BL       HD44780_desligaCursorPiscante
-   \                     ??MARTC_entry_9:
-   \   00000138   0x.... 0x....      BL       TECLADO_getContadorInatividade
-   \   0000013C   0x2800             CMP      R0,#+0
-   \   0000013E   0xD044             BEQ.N    ??MARTC_entry_13
-   \   00000140   0x.... 0x....      BL       TECLADO_getch
-   \   00000144   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000146   0x2801             CMP      R0,#+1
-   \   00000148   0xD017             BEQ.N    ??MARTC_entry_14
-   \   0000014A   0xD3C8             BCC.N    ??MARTC_entry_12
-   \   0000014C   0x2803             CMP      R0,#+3
-   \   0000014E   0xD02D             BEQ.N    ??MARTC_entry_15
-   \   00000150   0xD315             BCC.N    ??MARTC_entry_16
-   \   00000152   0x2804             CMP      R0,#+4
-   \   00000154   0xD1C3             BNE.N    ??MARTC_entry_12
-   \                     ??MARTC_entry_17:
-   \   00000156   0x1C64             ADDS     R4,R4,#+1
-   \   00000158   0x2C06             CMP      R4,#+6
-   \   0000015A   0xD30F             BCC.N    ??MARTC_entry_18
-   \   0000015C   0x980A             LDR      R0,[SP, #+40]
-   \   0000015E   0x9001             STR      R0,[SP, #+4]
-   \   00000160   0x9809             LDR      R0,[SP, #+36]
-   \   00000162   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000164   0x9000             STR      R0,[SP, #+0]
-   \   00000166   0x9B08             LDR      R3,[SP, #+32]
-   \   00000168   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
-   \   0000016A   0x9A07             LDR      R2,[SP, #+28]
-   \   0000016C   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
-   \   0000016E   0x9906             LDR      R1,[SP, #+24]
-   \   00000170   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   00000172   0x9805             LDR      R0,[SP, #+20]
-   \   00000174   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000176   0x.... 0x....      BL       RTC_setValue
-   \                     ??MARTC_entry_14:
-   \   0000017A   0xE026             B.N      ??MARTC_entry_19
-   \                     ??MARTC_entry_18:
-   \   0000017C   0xE7AF             B.N      ??MARTC_entry_12
-   \                     ??MARTC_entry_16:
-   \   0000017E   0xA805             ADD      R0,SP,#+20
-   \   00000180   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
-   \   00000184   0xA912             ADD      R1,SP,#+72
-   \   00000186   0xF851 0x1024      LDR      R1,[R1, R4, LSL #+2]
-   \   0000018A   0x4288             CMP      R0,R1
-   \   0000018C   0xD306             BCC.N    ??MARTC_entry_20
-   \   0000018E   0xA805             ADD      R0,SP,#+20
-   \   00000190   0xA918             ADD      R1,SP,#+96
-   \   00000192   0xF851 0x1024      LDR      R1,[R1, R4, LSL #+2]
-   \   00000196   0xF840 0x1024      STR      R1,[R0, R4, LSL #+2]
-   \   0000019A   0xE006             B.N      ??MARTC_entry_21
-   \                     ??MARTC_entry_20:
-   \   0000019C   0xA805             ADD      R0,SP,#+20
-   \   0000019E   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
-   \   000001A2   0x1C40             ADDS     R0,R0,#+1
-   \   000001A4   0xA905             ADD      R1,SP,#+20
-   \   000001A6   0xF841 0x0024      STR      R0,[R1, R4, LSL #+2]
-   \                     ??MARTC_entry_21:
-   \   000001AA   0xE798             B.N      ??MARTC_entry_12
-   \                     ??MARTC_entry_15:
-   \   000001AC   0xA818             ADD      R0,SP,#+96
-   \   000001AE   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
-   \   000001B2   0xA905             ADD      R1,SP,#+20
-   \   000001B4   0xF851 0x1024      LDR      R1,[R1, R4, LSL #+2]
-   \   000001B8   0x4288             CMP      R0,R1
-   \   000001BA   0xD389             BCC.N    ??MARTC_entry_10
-   \   000001BC   0xA805             ADD      R0,SP,#+20
-   \   000001BE   0xA912             ADD      R1,SP,#+72
-   \   000001C0   0xF851 0x1024      LDR      R1,[R1, R4, LSL #+2]
-   \   000001C4   0xF840 0x1024      STR      R1,[R0, R4, LSL #+2]
-   \   000001C8   0xE789             B.N      ??MARTC_entry_11
+   \   000001D0   0x.... 0x....      BL       HD44780_desligaCursorPiscante
+   \   000001D4   0xE77F             B.N      ??MARTC_entry_10
     143            }     
     144          }
-   \                     ??MARTC_entry_13:
-   \                     ??MARTC_entry_19:
-   \   000001CA   0xB01E             ADD      SP,SP,#+120
-   \   000001CC   0xBD10             POP      {R4,PC}          ;; return
-   \   000001CE   0xBF00             Nop      
+   \                     ??MARTC_entry_11:
+   \                     ??MARTC_entry_18:
+   \   000001D6   0xB01F             ADD      SP,SP,#+124
+   \   000001D8   0xBD30             POP      {R4,R5,PC}       ;; return
+   \   000001DA   0xBF00             Nop      
    \                     ??MARTC_entry_0:
-   \   000001D0   0x........         DC32     `?<Constant {0, 0, 0, 1, 1, 2017}>`
-   \   000001D4   0x........         DC32     `?<Constant {23, 59, 59, 31, 12, 2117}>`
-   \   000001D8   0x........         DC32     `?<Constant {4, 7, 10, 2, 5, 8}>`
-   \   000001DC   0x........         DC32     `?<Constant "%02d:%02d:%02d">`
-   \   000001E0   0x........         DC32     `?<Constant "%02d/%02d/%04d">`
+   \   000001DC   0x........         DC32     `?<Constant {0, 0, 0, 1, 1, 2017}>`
+   \   000001E0   0x........         DC32     `?<Constant {23, 59, 59, 31, 12, 2117}>`
+   \   000001E4   0x........         DC32     `?<Constant {4, 7, 10, 2, 5, 8}>`
+   \   000001E8   0x........         DC32     `?<Constant "%02d:%02d:%02d">`
+   \   000001EC   0x........         DC32     `?<Constant "%02d/%02d/%04d">`
 
    \                                 In section .rodata, align 4
    \                     `?<Constant {0, 0, 0, 1, 1, 2017}>`:
@@ -443,19 +443,19 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
 
    .cstack Function
    ------- --------
-     128   MARTC_entry
-       128   -> HD44780_desligaCursorPiscante
-       128   -> HD44780_ligaCursorPiscante
-       128   -> HD44780_posicionaTexto
-       128   -> HD44780_writeChar
-       128   -> HD44780_writeString
-       128   -> RTC_getValue
-       128   -> RTC_setValue
-       128   -> TECLADO_getContadorInatividade
-       128   -> TECLADO_getch
-       128   -> __aeabi_memcpy4
-       128   -> sprintf
-       128   -> vTaskDelay
+     136   MARTC_entry
+       136   -> HD44780_desligaCursorPiscante
+       136   -> HD44780_ligaCursorPiscante
+       136   -> HD44780_posicionaTexto
+       136   -> HD44780_writeChar
+       136   -> HD44780_writeString
+       136   -> RTC_getValue
+       136   -> RTC_setValue
+       136   -> TECLADO_getContadorInatividade
+       136   -> TECLADO_getch
+       136   -> __aeabi_memcpy4
+       136   -> sprintf
+       136   -> vTaskDelay
 
 
    Section sizes:
@@ -467,13 +467,13 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
       24  ?<Constant {0, 0, 0, 1, 1, 2017}>
       24  ?<Constant {23, 59, 59, 31, 12, 2117}>
        8  ?<Constant {4, 7, 10, 2, 5, 8}>
-     484  MARTC_entry
+     496  MARTC_entry
 
  
   88 bytes in section .rodata
- 484 bytes in section .text
+ 496 bytes in section .text
  
- 484 bytes of CODE  memory
+ 496 bytes of CODE  memory
   88 bytes of CONST memory
 
 Errors: none

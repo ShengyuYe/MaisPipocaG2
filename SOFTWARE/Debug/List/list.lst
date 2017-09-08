@@ -1,34 +1,29 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      21/Jun/2017  11:11:23 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      08/Sep/2017  19:51:49 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
 #    Endian       =  little                                                   #
-#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Kernel\list.c              #
-#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Kernel\list.c" -lC        #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA          #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o           #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
-#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
-#                    --no_clustering --no_scheduling --debug --endian=little  #
-#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
-#                    Files (x86)\IAR Systems\Embedded Workbench               #
-#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
-#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\list.lst        #
-#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\list.o           #
+#    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Kernel\list.c      #
+#    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Kernel\list.c -lC  #
+#                    C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\ -lA    #
+#                    C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\ -o     #
+#                    C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\         #
+#                    --no_cse --no_unroll --no_inline --no_code_motion        #
+#                    --no_tbaa --no_clustering --no_scheduling --debug        #
+#                    --endian=little --cpu=Cortex-M3 -e --fpu=None            #
+#                    --dlib_config "C:\Program Files (x86)\IAR                #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -On                                               #
+#    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\list.ls #
+#                    t                                                        #
+#    Object file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\list.o   #
 #                                                                             #
 #                                                                             #
 ###############################################################################
 
-C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Kernel\list.c
+C:\repositorios\MaisPipocaG2\SOFTWARE\Kernel\list.c
       1          /*__________________________________________________________________________________
       2          |	Quark Tecnologia Eletrônica Embarcada
       3          |       
@@ -120,28 +115,29 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
      67          	
      68              pxIndex = pxList->pxIndex;
    \                     vListInsertEnd:
-   \   00000000   0x6842             LDR      R2,[R0, #+4]
+   \   00000000   0x6843             LDR      R3,[R0, #+4]
+   \   00000002   0x001A             MOVS     R2,R3
      69              pxNewListItem->pxNext = pxIndex->pxNext;
-   \   00000002   0x6853             LDR      R3,[R2, #+4]
-   \   00000004   0x604B             STR      R3,[R1, #+4]
+   \   00000004   0x6853             LDR      R3,[R2, #+4]
+   \   00000006   0x604B             STR      R3,[R1, #+4]
      70              pxNewListItem->pxPrevious = pxList->pxIndex;
-   \   00000006   0x6843             LDR      R3,[R0, #+4]
-   \   00000008   0x608B             STR      R3,[R1, #+8]
+   \   00000008   0x6843             LDR      R3,[R0, #+4]
+   \   0000000A   0x608B             STR      R3,[R1, #+8]
      71              pxIndex->pxNext->pxPrevious = ( volatile xListItem * ) pxNewListItem;
-   \   0000000A   0x6853             LDR      R3,[R2, #+4]
-   \   0000000C   0x6099             STR      R1,[R3, #+8]
+   \   0000000C   0x6853             LDR      R3,[R2, #+4]
+   \   0000000E   0x6099             STR      R1,[R3, #+8]
      72              pxIndex->pxNext = ( volatile xListItem * ) pxNewListItem;
-   \   0000000E   0x6051             STR      R1,[R2, #+4]
+   \   00000010   0x6051             STR      R1,[R2, #+4]
      73              pxList->pxIndex = ( volatile xListItem * ) pxNewListItem;
-   \   00000010   0x6041             STR      R1,[R0, #+4]
+   \   00000012   0x6041             STR      R1,[R0, #+4]
      74              pxNewListItem->pvContainer = ( void * ) pxList;
-   \   00000012   0x6108             STR      R0,[R1, #+16]
+   \   00000014   0x6108             STR      R0,[R1, #+16]
      75              ( pxList->uxNumberOfItems )++;
-   \   00000014   0x6801             LDR      R1,[R0, #+0]
-   \   00000016   0x1C49             ADDS     R1,R1,#+1
-   \   00000018   0x6001             STR      R1,[R0, #+0]
+   \   00000016   0x6803             LDR      R3,[R0, #+0]
+   \   00000018   0x1C5B             ADDS     R3,R3,#+1
+   \   0000001A   0x6003             STR      R3,[R0, #+0]
      76          }
-   \   0000001A   0x4770             BX       LR               ;; return
+   \   0000001C   0x4770             BX       LR               ;; return
      77          /********************************************************************************
      78          *   Descrição       : 
      79          *   Parametros      : 
@@ -156,29 +152,31 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
      84            portTickType xValueOfInsertion;
      85          
      86            xValueOfInsertion = pxNewListItem->xItemValue;
-   \   00000002   0x680B             LDR      R3,[R1, #+0]
+   \   00000002   0x680C             LDR      R4,[R1, #+0]
+   \   00000004   0x0023             MOVS     R3,R4
      87          
      88            if( xValueOfInsertion == portMAX_DELAY )
-   \   00000004   0xF113 0x0F01      CMN      R3,#+1
-   \   00000008   0xD101             BNE.N    ??vListInsert_0
+   \   00000006   0xF113 0x0F01      CMN      R3,#+1
+   \   0000000A   0xD102             BNE.N    ??vListInsert_0
      89            {
      90                pxIterator = pxList->xListEnd.pxPrevious;
-   \   0000000A   0x6902             LDR      R2,[R0, #+16]
-   \   0000000C   0xE007             B.N      ??vListInsert_1
+   \   0000000C   0x6904             LDR      R4,[R0, #+16]
+   \   0000000E   0x0022             MOVS     R2,R4
+   \   00000010   0xE008             B.N      ??vListInsert_1
      91            }
      92            else
      93            {		
      94                for( pxIterator = ( xListItem * ) &( pxList->xListEnd ); pxIterator->pxNext->xItemValue <= xValueOfInsertion; pxIterator = pxIterator->pxNext )
    \                     ??vListInsert_0:
-   \   0000000E   0xF110 0x0208      ADDS     R2,R0,#+8
-   \   00000012   0xE000             B.N      ??vListInsert_2
-   \                     ??vListInsert_3:
-   \   00000014   0x6852             LDR      R2,[R2, #+4]
+   \   00000012   0xF110 0x0408      ADDS     R4,R0,#+8
+   \   00000016   0x0022             MOVS     R2,R4
    \                     ??vListInsert_2:
-   \   00000016   0x6854             LDR      R4,[R2, #+4]
-   \   00000018   0x6824             LDR      R4,[R4, #+0]
-   \   0000001A   0x42A3             CMP      R3,R4
-   \   0000001C   0xD2FA             BCS.N    ??vListInsert_3
+   \   00000018   0x6854             LDR      R4,[R2, #+4]
+   \   0000001A   0x6824             LDR      R4,[R4, #+0]
+   \   0000001C   0x42A3             CMP      R3,R4
+   \   0000001E   0xD301             BCC.N    ??vListInsert_1
+   \   00000020   0x6852             LDR      R2,[R2, #+4]
+   \   00000022   0xE7F9             B.N      ??vListInsert_2
      95                {
      96          
      97                }
@@ -186,25 +184,25 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
      99          
     100             pxNewListItem->pxNext = pxIterator->pxNext;
    \                     ??vListInsert_1:
-   \   0000001E   0x6853             LDR      R3,[R2, #+4]
-   \   00000020   0x604B             STR      R3,[R1, #+4]
+   \   00000024   0x6854             LDR      R4,[R2, #+4]
+   \   00000026   0x604C             STR      R4,[R1, #+4]
     101             pxNewListItem->pxNext->pxPrevious = ( volatile xListItem * ) pxNewListItem;
-   \   00000022   0x684B             LDR      R3,[R1, #+4]
-   \   00000024   0x6099             STR      R1,[R3, #+8]
+   \   00000028   0x684C             LDR      R4,[R1, #+4]
+   \   0000002A   0x60A1             STR      R1,[R4, #+8]
     102             pxNewListItem->pxPrevious = pxIterator;
-   \   00000026   0x608A             STR      R2,[R1, #+8]
+   \   0000002C   0x608A             STR      R2,[R1, #+8]
     103             pxIterator->pxNext = ( volatile xListItem * ) pxNewListItem;
-   \   00000028   0x6051             STR      R1,[R2, #+4]
+   \   0000002E   0x6051             STR      R1,[R2, #+4]
     104          
     105             pxNewListItem->pvContainer = ( void * ) pxList;
-   \   0000002A   0x6108             STR      R0,[R1, #+16]
+   \   00000030   0x6108             STR      R0,[R1, #+16]
     106             ( pxList->uxNumberOfItems )++;
-   \   0000002C   0x6801             LDR      R1,[R0, #+0]
-   \   0000002E   0x1C49             ADDS     R1,R1,#+1
-   \   00000030   0x6001             STR      R1,[R0, #+0]
+   \   00000032   0x6804             LDR      R4,[R0, #+0]
+   \   00000034   0x1C64             ADDS     R4,R4,#+1
+   \   00000036   0x6004             STR      R4,[R0, #+0]
     107          }
-   \   00000032   0xBC10             POP      {R4}
-   \   00000034   0x4770             BX       LR               ;; return
+   \   00000038   0xBC10             POP      {R4}
+   \   0000003A   0x4770             BX       LR               ;; return
     108          /********************************************************************************
     109          *   Descrição     :   
     110          *   Parametros    : 
@@ -217,37 +215,38 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
     115          
     116            pxItemToRemove->pxNext->pxPrevious = pxItemToRemove->pxPrevious;
    \                     vListRemove:
-   \   00000000   0x6841             LDR      R1,[R0, #+4]
-   \   00000002   0x6882             LDR      R2,[R0, #+8]
-   \   00000004   0x608A             STR      R2,[R1, #+8]
+   \   00000000   0x6842             LDR      R2,[R0, #+4]
+   \   00000002   0x6883             LDR      R3,[R0, #+8]
+   \   00000004   0x6093             STR      R3,[R2, #+8]
     117            pxItemToRemove->pxPrevious->pxNext = pxItemToRemove->pxNext;
-   \   00000006   0x6881             LDR      R1,[R0, #+8]
-   \   00000008   0x6842             LDR      R2,[R0, #+4]
-   \   0000000A   0x604A             STR      R2,[R1, #+4]
+   \   00000006   0x6882             LDR      R2,[R0, #+8]
+   \   00000008   0x6843             LDR      R3,[R0, #+4]
+   \   0000000A   0x6053             STR      R3,[R2, #+4]
     118          	
     119            pxList = ( xList * ) pxItemToRemove->pvContainer;
-   \   0000000C   0x6901             LDR      R1,[R0, #+16]
+   \   0000000C   0x6902             LDR      R2,[R0, #+16]
+   \   0000000E   0x0011             MOVS     R1,R2
     120          
     121            if( pxList->pxIndex == pxItemToRemove )
-   \   0000000E   0x684A             LDR      R2,[R1, #+4]
-   \   00000010   0x4282             CMP      R2,R0
-   \   00000012   0xD101             BNE.N    ??vListRemove_0
+   \   00000010   0x684A             LDR      R2,[R1, #+4]
+   \   00000012   0x4282             CMP      R2,R0
+   \   00000014   0xD101             BNE.N    ??vListRemove_0
     122            {
     123                pxList->pxIndex = pxItemToRemove->pxPrevious;
-   \   00000014   0x6882             LDR      R2,[R0, #+8]
-   \   00000016   0x604A             STR      R2,[R1, #+4]
+   \   00000016   0x6882             LDR      R2,[R0, #+8]
+   \   00000018   0x604A             STR      R2,[R1, #+4]
     124            }
     125          
     126            pxItemToRemove->pvContainer = NULL;
    \                     ??vListRemove_0:
-   \   00000018   0x2200             MOVS     R2,#+0
-   \   0000001A   0x6102             STR      R2,[R0, #+16]
+   \   0000001A   0x2200             MOVS     R2,#+0
+   \   0000001C   0x6102             STR      R2,[R0, #+16]
     127            ( pxList->uxNumberOfItems )--;
-   \   0000001C   0x6808             LDR      R0,[R1, #+0]
-   \   0000001E   0x1E40             SUBS     R0,R0,#+1
-   \   00000020   0x6008             STR      R0,[R1, #+0]
+   \   0000001E   0x680A             LDR      R2,[R1, #+0]
+   \   00000020   0x1E52             SUBS     R2,R2,#+1
+   \   00000022   0x600A             STR      R2,[R1, #+0]
     128          }
-   \   00000022   0x4770             BX       LR               ;; return
+   \   00000024   0x4770             BX       LR               ;; return
     129          /********************************************************************************
     130          *   Fim do arquivo
     131          ********************************************************************************/
@@ -270,14 +269,14 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    -----  --------------
       30  vListInitialise
        6  vListInitialiseItem
-      54  vListInsert
-      28  vListInsertEnd
-      36  vListRemove
+      60  vListInsert
+      30  vListInsertEnd
+      38  vListRemove
 
  
- 154 bytes in section .text
+ 164 bytes in section .text
  
- 154 bytes of CODE memory
+ 164 bytes of CODE memory
 
 Errors: none
 Warnings: none

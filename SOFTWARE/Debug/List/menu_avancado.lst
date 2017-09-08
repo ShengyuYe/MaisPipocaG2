@@ -1,35 +1,31 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jun/2017  17:57:56 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      08/Sep/2017  19:51:52 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
 #    Endian       =  little                                                   #
-#    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_avancado.c  #
-#    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_avancado.c #
-#                    " -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01 #
-#                    _mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA    #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o           #
-#                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ #
-#                    pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse      #
-#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
-#                    --no_clustering --no_scheduling --debug --endian=little  #
-#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
-#                    Files (x86)\IAR Systems\Embedded Workbench               #
-#                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                  #
-#    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\List\menu_avancado.l #
-#                    st                                                       #
-#    Object file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_p #
-#                    ipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\menu_avancado.o  #
+#    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_ava #
+#                    ncado.c                                                  #
+#    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_ava #
+#                    ncado.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\ #
+#                    List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Li #
+#                    st\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\  #
+#                    --no_cse --no_unroll --no_inline --no_code_motion        #
+#                    --no_tbaa --no_clustering --no_scheduling --debug        #
+#                    --endian=little --cpu=Cortex-M3 -e --fpu=None            #
+#                    --dlib_config "C:\Program Files (x86)\IAR                #
+#                    Systems\Embedded Workbench 6.5\arm\INC\c\DLib_Config_Nor #
+#                    mal.h" -On                                               #
+#    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\menu_av #
+#                    ancado.lst                                               #
+#    Object file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\menu_ava #
+#                    ncado.o                                                  #
 #                                                                             #
 #                                                                             #
 ###############################################################################
 
-C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_avancado.c
+C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_avancado.c
       1          /*__________________________________________________________________________________
       2          |	Quark Tecnologia Eletrônica Embarcada
       3          |       
@@ -345,99 +341,101 @@ C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2
    \                                 In section .text, align 2, keep-with-next
     179          void MENUAVANCADO_cadastra_senha_admin(void){
    \                     MENUAVANCADO_cadastra_senha_admin:
-   \   00000000   0xB51C             PUSH     {R2-R4,LR}
+   \   00000000   0xB530             PUSH     {R4,R5,LR}
+   \   00000002   0xB083             SUB      SP,SP,#+12
     180            unsigned int senha;
     181            unsigned int s1,s2;
     182            unsigned char idioma = APLICACAO_carrega_idioma();  
-   \   00000002   0x.... 0x....      BL       APLICACAO_carrega_idioma
-   \   00000006   0x0004             MOVS     R4,R0
+   \   00000004   0x.... 0x....      BL       APLICACAO_carrega_idioma
+   \   00000008   0x0005             MOVS     R5,R0
     183            
     184            PARAMETROS_le(ADR_SENHA_ADMIN,(void*)&senha);
-   \   00000008   0xA900             ADD      R1,SP,#+0
-   \   0000000A   0x2023             MOVS     R0,#+35
-   \   0000000C   0x.... 0x....      BL       PARAMETROS_le
+   \   0000000A   0xA900             ADD      R1,SP,#+0
+   \   0000000C   0x2023             MOVS     R0,#+35
+   \   0000000E   0x.... 0x....      BL       PARAMETROS_le
     185            
     186            if(senha>9999)
-   \   00000010   0x9800             LDR      R0,[SP, #+0]
-   \   00000012   0xF242 0x7110      MOVW     R1,#+10000
-   \   00000016   0x4288             CMP      R0,R1
-   \   00000018   0xD301             BCC.N    ??MENUAVANCADO_cadastra_senha_admin_0
+   \   00000012   0x9800             LDR      R0,[SP, #+0]
+   \   00000014   0xF242 0x7110      MOVW     R1,#+10000
+   \   00000018   0x4288             CMP      R0,R1
+   \   0000001A   0xD301             BCC.N    ??MENUAVANCADO_cadastra_senha_admin_0
     187              senha = 0;
-   \   0000001A   0x2000             MOVS     R0,#+0
-   \   0000001C   0x9000             STR      R0,[SP, #+0]
+   \   0000001C   0x2000             MOVS     R0,#+0
+   \   0000001E   0x9000             STR      R0,[SP, #+0]
     188            
     189            // Senha para acesso,caso inválida
     190            // não abre o menu
     191            if(!TELASENHA_telaSenha(senha))
    \                     ??MENUAVANCADO_cadastra_senha_admin_0:
-   \   0000001E   0x9800             LDR      R0,[SP, #+0]
-   \   00000020   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-   \   00000022   0x.... 0x....      BL       TELASENHA_telaSenha
-   \   00000026   0x2800             CMP      R0,#+0
-   \   00000028   0xD030             BEQ.N    ??MENUAVANCADO_cadastra_senha_admin_1
+   \   00000020   0x9800             LDR      R0,[SP, #+0]
+   \   00000022   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000024   0x.... 0x....      BL       TELASENHA_telaSenha
+   \   00000028   0x2800             CMP      R0,#+0
+   \   0000002A   0xD031             BEQ.N    ??MENUAVANCADO_cadastra_senha_admin_1
     192              return;  
     193            
     194            s1 = TELASENHA_get_senha((char*)STRING_mensagem_inserir_senha[idioma]);
    \                     ??MENUAVANCADO_cadastra_senha_admin_2:
-   \   0000002A   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-   \   0000002C   0x....             LDR.N    R0,??DataTable5_6
-   \   0000002E   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
-   \   00000032   0x.... 0x....      BL       TELASENHA_get_senha
-   \   00000036   0x9001             STR      R0,[SP, #+4]
+   \   0000002C   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   0000002E   0x....             LDR.N    R0,??DataTable5_6
+   \   00000030   0xF850 0x0025      LDR      R0,[R0, R5, LSL #+2]
+   \   00000034   0x.... 0x....      BL       TELASENHA_get_senha
+   \   00000038   0x9001             STR      R0,[SP, #+4]
     195            s2 = TELASENHA_get_senha((char*)STRING_mensagem_inserir_senha[idioma]);
-   \   00000038   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-   \   0000003A   0x....             LDR.N    R0,??DataTable5_6
-   \   0000003C   0xF850 0x0024      LDR      R0,[R0, R4, LSL #+2]
-   \   00000040   0x.... 0x....      BL       TELASENHA_get_senha
+   \   0000003A   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   0000003C   0x....             LDR.N    R0,??DataTable5_6
+   \   0000003E   0xF850 0x0025      LDR      R0,[R0, R5, LSL #+2]
+   \   00000042   0x.... 0x....      BL       TELASENHA_get_senha
+   \   00000046   0x0004             MOVS     R4,R0
     196            
     197            if(s1 == s2){
-   \   00000044   0x9901             LDR      R1,[SP, #+4]
-   \   00000046   0x4281             CMP      R1,R0
-   \   00000048   0xD110             BNE.N    ??MENUAVANCADO_cadastra_senha_admin_3
+   \   00000048   0x9801             LDR      R0,[SP, #+4]
+   \   0000004A   0x42A0             CMP      R0,R4
+   \   0000004C   0xD110             BNE.N    ??MENUAVANCADO_cadastra_senha_admin_3
     198              // Desenha a mensagem confirmando a gravação
     199              // da nova senha
     200              STRING_write_to_internal(CLEAR_DISPLAY,
     201                                      (char*)STRING_mensagem_cadastro_senha[idioma][0],
     202                                      (char*)STRING_mensagem_cadastro_senha[idioma][1]);
-   \   0000004A   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-   \   0000004C   0x....             LDR.N    R0,??DataTable5_7
-   \   0000004E   0xEB10 0x00C4      ADDS     R0,R0,R4, LSL #+3
-   \   00000052   0x6842             LDR      R2,[R0, #+4]
-   \   00000054   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-   \   00000056   0x....             LDR.N    R0,??DataTable5_7
-   \   00000058   0xF850 0x1034      LDR      R1,[R0, R4, LSL #+3]
-   \   0000005C   0x2000             MOVS     R0,#+0
-   \   0000005E   0x.... 0x....      BL       STRING_write_to_internal
+   \   0000004E   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000050   0x....             LDR.N    R0,??DataTable5_7
+   \   00000052   0xEB10 0x00C5      ADDS     R0,R0,R5, LSL #+3
+   \   00000056   0x6842             LDR      R2,[R0, #+4]
+   \   00000058   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   0000005A   0x....             LDR.N    R0,??DataTable5_7
+   \   0000005C   0xF850 0x1035      LDR      R1,[R0, R5, LSL #+3]
+   \   00000060   0x2000             MOVS     R0,#+0
+   \   00000062   0x.... 0x....      BL       STRING_write_to_internal
     203              
     204              // Grava a nova senha na memória flash
     205              PARAMETROS_grava(ADR_SENHA_ADMIN,(void*)&s1);    
-   \   00000062   0xA901             ADD      R1,SP,#+4
-   \   00000064   0x2023             MOVS     R0,#+35
-   \   00000066   0x.... 0x....      BL       PARAMETROS_grava
-   \   0000006A   0xE00B             B.N      ??MENUAVANCADO_cadastra_senha_admin_4
+   \   00000066   0xA901             ADD      R1,SP,#+4
+   \   00000068   0x2023             MOVS     R0,#+35
+   \   0000006A   0x.... 0x....      BL       PARAMETROS_grava
+   \   0000006E   0xE00B             B.N      ??MENUAVANCADO_cadastra_senha_admin_4
     206            }
     207            else
     208              STRING_write_to_internal(CLEAR_DISPLAY,
     209                                      (char*)STRING_mensagem_cadastro_senha_erro[idioma][0],
     210                                      (char*)STRING_mensagem_cadastro_senha_erro[idioma][1]);
    \                     ??MENUAVANCADO_cadastra_senha_admin_3:
-   \   0000006C   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-   \   0000006E   0x....             LDR.N    R0,??DataTable5_8
-   \   00000070   0xEB10 0x00C4      ADDS     R0,R0,R4, LSL #+3
-   \   00000074   0x6842             LDR      R2,[R0, #+4]
-   \   00000076   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-   \   00000078   0x....             LDR.N    R0,??DataTable5_8
-   \   0000007A   0xF850 0x1034      LDR      R1,[R0, R4, LSL #+3]
-   \   0000007E   0x2000             MOVS     R0,#+0
-   \   00000080   0x.... 0x....      BL       STRING_write_to_internal
+   \   00000070   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000072   0x....             LDR.N    R0,??DataTable5_8
+   \   00000074   0xEB10 0x00C5      ADDS     R0,R0,R5, LSL #+3
+   \   00000078   0x6842             LDR      R2,[R0, #+4]
+   \   0000007A   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   0000007C   0x....             LDR.N    R0,??DataTable5_8
+   \   0000007E   0xF850 0x1035      LDR      R1,[R0, R5, LSL #+3]
+   \   00000082   0x2000             MOVS     R0,#+0
+   \   00000084   0x.... 0x....      BL       STRING_write_to_internal
     211             
     212            vTaskDelay(3000);
    \                     ??MENUAVANCADO_cadastra_senha_admin_4:
-   \   00000084   0xF640 0x30B8      MOVW     R0,#+3000
-   \   00000088   0x.... 0x....      BL       vTaskDelay
+   \   00000088   0xF640 0x30B8      MOVW     R0,#+3000
+   \   0000008C   0x.... 0x....      BL       vTaskDelay
     213          }
    \                     ??MENUAVANCADO_cadastra_senha_admin_1:
-   \   0000008C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+   \   00000090   0xBD37             POP      {R0-R2,R4,R5,PC}  ;; return
     214          /***********************************************************************************
     215          *       Descrição       :       Faz o reset dos totalizadores permanentes da 
     216          *                               máquina
@@ -770,14 +768,14 @@ Warning[Pe223]: function "IAR_entry" declared implicitly
 
    .cstack Function
    ------- --------
-      16   MENUAVANCADO_cadastra_senha_admin
-        16   -> APLICACAO_carrega_idioma
-        16   -> PARAMETROS_grava
-        16   -> PARAMETROS_le
-        16   -> STRING_write_to_internal
-        16   -> TELASENHA_get_senha
-        16   -> TELASENHA_telaSenha
-        16   -> vTaskDelay
+      24   MENUAVANCADO_cadastra_senha_admin
+        24   -> APLICACAO_carrega_idioma
+        24   -> PARAMETROS_grava
+        24   -> PARAMETROS_le
+        24   -> STRING_write_to_internal
+        24   -> TELASENHA_get_senha
+        24   -> TELASENHA_telaSenha
+        24   -> vTaskDelay
        8   MENUAVANCADO_configura_hora_data
          8   -> IAR_entry
       16   MENUAVANCADO_configura_numero_serie
@@ -840,7 +838,7 @@ Warning[Pe223]: function "IAR_entry" declared implicitly
        4  ??DataTable5_7
        4  ??DataTable5_8
        4  ??DataTable5_9
-     142  MENUAVANCADO_cadastra_senha_admin
+     146  MENUAVANCADO_cadastra_senha_admin
        8  MENUAVANCADO_configura_hora_data
      116  MENUAVANCADO_configura_numero_serie
       48  MENUAVANCADO_entry
@@ -851,9 +849,9 @@ Warning[Pe223]: function "IAR_entry" declared implicitly
 
  
   56 bytes in section .rodata
- 814 bytes in section .text
+ 818 bytes in section .text
  
- 814 bytes of CODE  memory
+ 818 bytes of CODE  memory
   56 bytes of CONST memory
 
 Errors: none

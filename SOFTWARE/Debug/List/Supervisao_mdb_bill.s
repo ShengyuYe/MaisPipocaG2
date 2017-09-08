@@ -1,30 +1,25 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:57:52 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:44 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Super /
-//                    visao_mdb_bill.c                                        /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Supe /
-//                    rvisao_mdb_bill.c" -lC "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
-//                    --no_code_motion --no_tbaa --no_clustering              /
-//                    --no_scheduling --debug --endian=little                 /
-//                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
-//                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\Supervisao_md /
-//                    b_bill.s                                                /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamento /
+//                    s\Supervisao_mdb_bill.c                                 /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamento /
+//                    s\Supervisao_mdb_bill.c -lC                             /
+//                    C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\ -lA   /
+//                    C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\ -o    /
+//                    C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\        /
+//                    --no_cse --no_unroll --no_inline --no_code_motion       /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
+//                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
+//                    --dlib_config "C:\Program Files (x86)\IAR               /
+//                    Systems\Embedded Workbench                              /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\Superv /
+//                    isao_mdb_bill.s                                         /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -104,7 +99,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Supervisao_mdb_bill.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\Supervisao_mdb_bill.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -340,9 +335,13 @@ SMDBILL_tick:
         THUMB
 //  137 eBILL_POLL_STATE SMDBILL_estado_desabilitado(eBILL_POLL_STATE estado){
 SMDBILL_estado_desabilitado:
-        PUSH     {R7,LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
+        SUB      SP,SP,#+8
+          CFI CFA R13+16
+        MOVS     R4,R0
 //  138   unsigned char flag;
 //  139   
 //  140   PARAMETROS_le(ADR_FLAG_MDB_BIL,(void*)&flag);
@@ -364,7 +363,7 @@ SMDBILL_estado_desabilitado:
 ??SMDBILL_estado_desabilitado_0:
         MOVS     R0,#+0
 ??SMDBILL_estado_desabilitado_1:
-        POP      {R1,PC}          ;; return
+        POP      {R1,R2,R4,PC}    ;; return
           CFI EndBlock cfiBlock2
 //  147 }
 //  148 /***********************************************************************************
@@ -380,13 +379,17 @@ SMDBILL_estado_desabilitado:
         THUMB
 //  154 eBILL_POLL_STATE SMDBILL_estado_bloqueado(eBILL_POLL_STATE estado){
 SMDBILL_estado_bloqueado:
-        PUSH     {R3-R5,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
           CFI CFA R13+16
+        SUB      SP,SP,#+8
+          CFI CFA R13+24
+        MOVS     R4,R0
 //  155   unsigned char tentativas=5;
-        MOVS     R4,#+5
+        MOVS     R5,#+5
 //  156   eMDB_reply flag;    
 //  157   
 //  158   SMDBILL_reset_counter=CICLOS_RESET;
@@ -411,7 +414,7 @@ SMDBILL_estado_bloqueado:
         MOVS     R0,#+0
           CFI FunCall MDBILL_set_bill_type_on_device
         BL       MDBILL_set_bill_type_on_device
-        MOVS     R5,R0
+        MOVS     R6,R0
 //  165       MDBAURT_sleep(1);
         MOVS     R0,#+1
           CFI FunCall MDBAURT_sleep
@@ -431,11 +434,11 @@ SMDBILL_estado_bloqueado:
 //  169     }
 //  170     while(flag!=MDB_OK && --tentativas);
 ??SMDBILL_estado_bloqueado_2:
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BEQ.N    ??SMDBILL_estado_bloqueado_3
-        SUBS     R4,R4,#+1
-        MOVS     R0,R4
+        SUBS     R5,R5,#+1
+        MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BNE.N    ??SMDBILL_estado_bloqueado_1
@@ -474,8 +477,8 @@ SMDBILL_estado_bloqueado:
 //  183   
 //  184     if(flag!=MDB_OK)
 ??SMDBILL_estado_bloqueado_6:
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BEQ.N    ??SMDBILL_estado_bloqueado_7
 //  185       return BILL_OFFLINE;     
         MOVS     R0,#+5
@@ -504,18 +507,19 @@ SMDBILL_estado_bloqueado:
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable9_4
         STRH     R0,[R1, #+0]
+        B.N      ??SMDBILL_estado_bloqueado_8
 //  193     else
 //  194       return BILL_OFFLINE;
+??SMDBILL_estado_bloqueado_9:
+        MOVS     R0,#+5
+        B.N      ??SMDBILL_estado_bloqueado_5
 //  195   }  
 //  196   
 //  197   return BILL_BLOQUEADO;
 ??SMDBILL_estado_bloqueado_8:
         MOVS     R0,#+1
 ??SMDBILL_estado_bloqueado_5:
-        POP      {R1,R4,R5,PC}    ;; return
-??SMDBILL_estado_bloqueado_9:
-        MOVS     R0,#+5
-        B.N      ??SMDBILL_estado_bloqueado_5
+        POP      {R1,R2,R4-R6,PC}  ;; return
           CFI EndBlock cfiBlock3
 //  198 }
 //  199 /***********************************************************************************
@@ -530,11 +534,15 @@ SMDBILL_estado_bloqueado:
         THUMB
 //  204 eBILL_POLL_STATE SMDBILL_estado_reset(eBILL_POLL_STATE estado){
 SMDBILL_estado_reset:
-        PUSH     {R3-R5,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
           CFI CFA R13+16
+        SUB      SP,SP,#+8
+          CFI CFA R13+24
+        MOVS     R4,R0
 //  205   unsigned char tentativas=5;
         MOVS     R5,#+5
 //  206   eMDB_reply flag;
@@ -545,7 +553,7 @@ SMDBILL_estado_reset:
 ??SMDBILL_estado_reset_0:
           CFI FunCall MDBILL_reset_device
         BL       MDBILL_reset_device
-        MOVS     R4,R0
+        MOVS     R6,R0
 //  211     MDBAURT_sleep(1);
         MOVS     R0,#+1
           CFI FunCall MDBAURT_sleep
@@ -566,8 +574,8 @@ SMDBILL_estado_reset:
 //  216   }
 //  217   while(flag!=MDB_OK && --tentativas);
 ??SMDBILL_estado_reset_1:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BEQ.N    ??SMDBILL_estado_reset_2
         SUBS     R5,R5,#+1
         MOVS     R0,R5
@@ -595,13 +603,14 @@ SMDBILL_estado_reset:
 //  225     
 //  226   // O reset ocorreu com sucesso
 //  227   if(flag==MDB_OK){
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BNE.N    ??SMDBILL_estado_reset_5
 //  228     
 //  229     unsigned char tamanho;
 //  230     tentativas = 5;
-        MOVS     R5,#+5
+        MOVS     R0,#+5
+        MOVS     R5,R0
 //  231     
 //  232     do{       
 //  233        flag = MDBILL_get_poll_from_device((sBILL_event*)SMDBILL_eventos,&tamanho);
@@ -610,7 +619,7 @@ SMDBILL_estado_reset:
         LDR.W    R0,??DataTable9_5
           CFI FunCall MDBILL_get_poll_from_device
         BL       MDBILL_get_poll_from_device
-        MOVS     R4,R0
+        MOVS     R6,R0
 //  234        MDBAURT_sleep(10);
         MOVS     R0,#+10
           CFI FunCall MDBAURT_sleep
@@ -630,8 +639,8 @@ SMDBILL_estado_reset:
 //  238     }
 //  239     while(flag!=MDB_OK && --tentativas);
 ??SMDBILL_estado_reset_7:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BEQ.N    ??SMDBILL_estado_reset_8
         SUBS     R5,R5,#+1
         MOVS     R0,R5
@@ -657,14 +666,11 @@ SMDBILL_estado_reset:
         STRH     R1,[R0, #+0]
 //  246     
 //  247     if(flag==MDB_OK){      
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BNE.N    ??SMDBILL_estado_reset_5
 //  248         for(unsigned char i=0;i<tamanho;i++)
         MOVS     R0,#+0
-        B.N      ??SMDBILL_estado_reset_10
-??SMDBILL_estado_reset_11:
-        ADDS     R0,R0,#+1
 ??SMDBILL_estado_reset_10:
         LDRB     R1,[SP, #+0]
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
@@ -685,6 +691,9 @@ SMDBILL_estado_reset:
 //  250             return BILL_INICIALIZA;
         MOVS     R0,#+3
         B.N      ??SMDBILL_estado_reset_4
+??SMDBILL_estado_reset_11:
+        ADDS     R0,R0,#+1
+        B.N      ??SMDBILL_estado_reset_10
 //  251     }    
 //  252   }  
 //  253   
@@ -692,7 +701,7 @@ SMDBILL_estado_reset:
 ??SMDBILL_estado_reset_5:
         MOVS     R0,#+2
 ??SMDBILL_estado_reset_4:
-        POP      {R1,R4,R5,PC}    ;; return
+        POP      {R1,R2,R4-R6,PC}  ;; return
           CFI EndBlock cfiBlock4
 //  255 }
 //  256 /***********************************************************************************
@@ -708,16 +717,18 @@ SMDBILL_estado_reset:
         THUMB
 //  262 eBILL_POLL_STATE SMDBILL_estado_inicializa(eBILL_POLL_STATE estado){
 SMDBILL_estado_inicializa:
-        PUSH     {R4-R6,LR}
+        PUSH     {R4-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
-        SUB      SP,SP,#+24
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
+        SUB      SP,SP,#+20
           CFI CFA R13+40
+        MOVS     R4,R0
 //  263   unsigned char tentativas=5;
-        MOVS     R4,#+5
+        MOVS     R5,#+5
 //  264   eMDB_reply flag;
 //  265   
 //  266   // Faz o reset do dispositivo
@@ -727,7 +738,7 @@ SMDBILL_estado_inicializa:
 ??SMDBILL_estado_inicializa_0:
           CFI FunCall MDBILL_reset_device
         BL       MDBILL_reset_device
-        MOVS     R5,R0
+        MOVS     R6,R0
 //  270     
 //  271     MDBAURT_sleep(1);
         MOVS     R0,#+1
@@ -749,11 +760,11 @@ SMDBILL_estado_inicializa:
 //  276   }
 //  277   while(flag!=MDB_OK && --tentativas);
 ??SMDBILL_estado_inicializa_1:
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BEQ.N    ??SMDBILL_estado_inicializa_2
-        SUBS     R4,R4,#+1
-        MOVS     R0,R4
+        SUBS     R5,R5,#+1
+        MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BNE.N    ??SMDBILL_estado_inicializa_0
@@ -777,8 +788,8 @@ SMDBILL_estado_inicializa:
         STRH     R1,[R0, #+0]
 //  285   
 //  286   if(flag==MDB_OK){
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BNE.N    ??SMDBILL_estado_inicializa_5
 //  287     
 //  288     unsigned char notas;
@@ -789,20 +800,21 @@ SMDBILL_estado_inicializa:
         BL       PARAMETROS_le
 //  290     
 //  291     unsigned short int notas_i = notas;
-        LDRB     R6,[SP, #+16]
+        LDRB     R7,[SP, #+16]
 //  292     
 //  293     tentativas=5;
-        MOVS     R4,#+5
+        MOVS     R0,#+5
+        MOVS     R5,R0
 //  294     do{
 //  295       flag = MDBILL_set_bill_type_on_device(notas_i,notas_i);
 ??SMDBILL_estado_inicializa_6:
-        MOVS     R1,R6
+        MOVS     R1,R7
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        MOVS     R0,R6
+        MOVS     R0,R7
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall MDBILL_set_bill_type_on_device
         BL       MDBILL_set_bill_type_on_device
-        MOVS     R5,R0
+        MOVS     R6,R0
 //  296       
 //  297       MDBAURT_sleep(1);
         MOVS     R0,#+1
@@ -810,7 +822,7 @@ SMDBILL_estado_inicializa:
         BL       MDBAURT_sleep
 //  298       
 //  299       if(SMDBILL_time_out)
-        LDR.N    R0,??DataTable9_4
+        LDR.W    R0,??DataTable9_4
         LDRH     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??SMDBILL_estado_inicializa_7
@@ -823,11 +835,11 @@ SMDBILL_estado_inicializa:
 //  301     }
 //  302     while(flag!=MDB_OK && --tentativas);
 ??SMDBILL_estado_inicializa_7:
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BEQ.N    ??SMDBILL_estado_inicializa_8
-        SUBS     R4,R4,#+1
-        MOVS     R0,R4
+        SUBS     R5,R5,#+1
+        MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BNE.N    ??SMDBILL_estado_inicializa_6
@@ -849,7 +861,8 @@ SMDBILL_estado_inicializa:
         STRH     R1,[R0, #+0]
 //  308     
 //  309     tentativas=5;
-        MOVS     R4,#+5
+        MOVS     R0,#+5
+        MOVS     R5,R0
 //  310     unsigned char nivel;
 //  311     
 //  312     do{
@@ -872,7 +885,7 @@ SMDBILL_estado_inicializa:
         ADD      R0,SP,#+17
           CFI FunCall MDBILL_get_setup_from_device
         BL       MDBILL_get_setup_from_device
-        MOVS     R5,R0
+        MOVS     R6,R0
 //  317         
 //  318       MDBAURT_sleep(1);
         MOVS     R0,#+1
@@ -893,11 +906,11 @@ SMDBILL_estado_inicializa:
 //  322     }
 //  323     while(flag!=MDB_OK && --tentativas);
 ??SMDBILL_estado_inicializa_11:
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BEQ.N    ??SMDBILL_estado_inicializa_12
-        SUBS     R4,R4,#+1
-        MOVS     R0,R4
+        SUBS     R5,R5,#+1
+        MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BNE.N    ??SMDBILL_estado_inicializa_10
@@ -919,8 +932,8 @@ SMDBILL_estado_inicializa:
         STRH     R1,[R0, #+0]
 //  329     
 //  330     if(flag!=MDB_OK){
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BEQ.N    ??SMDBILL_estado_inicializa_5
 //  331       // Em caso de falha inicializa os canais com zero
 //  332       // para evitar crédito em algum
@@ -947,9 +960,9 @@ SMDBILL_estado_inicializa:
 ??SMDBILL_estado_inicializa_5:
         MOVS     R0,#+4
 ??SMDBILL_estado_inicializa_4:
-        ADD      SP,SP,#+24
-          CFI CFA R13+16
-        POP      {R4-R6,PC}       ;; return
+        ADD      SP,SP,#+20
+          CFI CFA R13+20
+        POP      {R4-R7,PC}       ;; return
           CFI EndBlock cfiBlock5
 //  340 }
 //  341 /***********************************************************************************
@@ -964,11 +977,15 @@ SMDBILL_estado_inicializa:
         THUMB
 //  346 eBILL_POLL_STATE SMDBILL_estado_supervisao(eBILL_POLL_STATE estado){
 SMDBILL_estado_supervisao:
-        PUSH     {R3-R5,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
           CFI CFA R13+16
+        SUB      SP,SP,#+8
+          CFI CFA R13+24
+        MOVS     R4,R0
 //  347   unsigned char tentativas=5;
         MOVS     R5,#+5
 //  348   eMDB_reply flag;
@@ -982,7 +999,7 @@ SMDBILL_estado_supervisao:
         LDR.N    R0,??DataTable9_5
           CFI FunCall MDBILL_get_poll_from_device
         BL       MDBILL_get_poll_from_device
-        MOVS     R4,R0
+        MOVS     R6,R0
 //  354       
 //  355     MDBAURT_sleep(1);
         MOVS     R0,#+1
@@ -1004,8 +1021,8 @@ SMDBILL_estado_supervisao:
 //  360   }
 //  361   while(flag!=MDB_OK && --tentativas);
 ??SMDBILL_estado_supervisao_1:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BEQ.N    ??SMDBILL_estado_supervisao_2
         SUBS     R5,R5,#+1
         MOVS     R0,R5
@@ -1030,8 +1047,8 @@ SMDBILL_estado_supervisao:
         STRH     R1,[R0, #+0]
 //  367   
 //  368   if(flag==MDB_OK){
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BNE.N    ??SMDBILL_estado_supervisao_5
 //  369     // Foi recebido eventos pelo sistema
 //  370     if(!SMDBILL_trata_eventos(tamanho))
@@ -1047,8 +1064,8 @@ SMDBILL_estado_supervisao:
 //  373   else
 //  374     if(flag==MDB_JUST_RESET){
 ??SMDBILL_estado_supervisao_5:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+3
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+3
         BNE.N    ??SMDBILL_estado_supervisao_6
 //  375       // Houve um reset
 //  376       // do dispositivo
@@ -1086,7 +1103,7 @@ SMDBILL_estado_supervisao:
 ??SMDBILL_estado_supervisao_8:
         MOVS     R0,#+4
 ??SMDBILL_estado_supervisao_4:
-        POP      {R1,R4,R5,PC}    ;; return
+        POP      {R1,R2,R4-R6,PC}  ;; return
           CFI EndBlock cfiBlock6
 //  389 }
 //  390 /***********************************************************************************
@@ -1101,13 +1118,15 @@ SMDBILL_estado_supervisao:
         THUMB
 //  395 eBILL_POLL_STATE SMDBILL_estado_offline(eBILL_POLL_STATE estado){
 SMDBILL_estado_offline:
-        PUSH     {R3-R5,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
           CFI CFA R13+16
+        MOVS     R4,R0
 //  396   unsigned char tentativas=5;
-        MOVS     R4,#+5
+        MOVS     R5,#+5
 //  397   eMDB_reply flag;
 //  398   
 //  399   do{
@@ -1116,18 +1135,18 @@ SMDBILL_estado_offline:
 ??SMDBILL_estado_offline_0:
           CFI FunCall MDBILL_verifica_dispositivo
         BL       MDBILL_verifica_dispositivo
-        MOVS     R5,R0
+        MOVS     R6,R0
 //  402     MDBAURT_sleep(1);           
         MOVS     R0,#+1
           CFI FunCall MDBAURT_sleep
         BL       MDBAURT_sleep
 //  403   }
 //  404   while(flag!=MDB_OK && --tentativas);
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BEQ.N    ??SMDBILL_estado_offline_1
-        SUBS     R4,R4,#+1
-        MOVS     R0,R4
+        SUBS     R5,R5,#+1
+        MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BNE.N    ??SMDBILL_estado_offline_0
@@ -1135,8 +1154,8 @@ SMDBILL_estado_offline:
 //  406   
 //  407   if(flag==MDB_OK){
 ??SMDBILL_estado_offline_1:
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BNE.N    ??SMDBILL_estado_offline_2
 //  408      SMDBILL_time_out = RELOAD_TIMEOUT_BILL;
         LDR.N    R0,??DataTable9_4
@@ -1151,7 +1170,7 @@ SMDBILL_estado_offline:
 ??SMDBILL_estado_offline_2:
         MOVS     R0,#+5
 ??SMDBILL_estado_offline_3:
-        POP      {R1,R4,R5,PC}    ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock7
 //  413 }
 //  414 /***********************************************************************************
@@ -1167,10 +1186,11 @@ SMDBILL_estado_offline:
           CFI NoCalls
         THUMB
 //  420 eBILL_POLL_STATE SMDBILL_estado_falha_dispositivo(eBILL_POLL_STATE estado){
+SMDBILL_estado_falha_dispositivo:
+        MOVS     R1,R0
 //  421    
 //  422   
 //  423    return BILL_OFFLINE;
-SMDBILL_estado_falha_dispositivo:
         MOVS     R0,#+5
         BX       LR               ;; return
           CFI EndBlock cfiBlock8
@@ -1228,166 +1248,137 @@ SMDBILL_trata_eventos:
 //  446   for(unsigned char i=0;i<quantidade;i++){
 ??SMDBILL_trata_eventos_0:
         MOVS     R5,#+0
-        B.N      ??SMDBILL_trata_eventos_2
-//  447     
-//  448     if(SMDBILL_eventos[i].tipo==BILL_STATUS){
-//  449       switch(SMDBILL_eventos[i].args){
-//  450         case DEFECTIVE_MOTOR:
-//  451              break;
-//  452         case SENSOR_PROBLEM:
-//  453              break;
-//  454         case VALIDATOR_BUSY:
-//  455              break;
-//  456         case ROM_CHECKSUM_ERROR:
-//  457              break;
-//  458         case VALIDATOR_JAMMED:
-//  459              break;
-//  460         case VALIDATOR_WAS_RESET:
-//  461              new_scrow = 0;
-//  462              break;
-//  463         case BILL_REMOVED:
-//  464              new_scrow = 0;
-//  465              break;
-//  466         case CASH_BOX_OUT_POSITION:    
-//  467              break;
-//  468         case UNIT_DISABLED:
-//  469              if(canal==255)
-//  470                new_scrow = 0;             
-//  471              break;
-//  472         case INVALID_ESCROW_REQUEST:
-//  473              break;
-//  474         case BILL_REJECTED:
-//  475              break;
-//  476         case POSSIBLE_CREDITED_BILL_REMOVAL:
-//  477              break;
-//  478       }
-//  479     }
-//  480     else{
-//  481       //Switch dos comandos
-//  482       switch(SMDBILL_eventos[i].tipo){
-//  483         case BILL_STACKED:
-//  484              if(new_scrow){
-//  485                PAGAMENTOS_adiciona_valores(SMDBILL_valor_canais[canal]*100);
-//  486                new_scrow = 0;  
-//  487                canal = 255;
-//  488              }             
-//  489              break;
-//  490         case ESCROW_POSITION:  
-//  491              if(MDBILL_send_escrow_command(STACK_BILL)==MDB_OK){
-//  492                //vTaskDelay(100);
-//  493                new_scrow = 1;
-//  494                canal = (unsigned char)(SMDBILL_eventos[i].args-CANAL_01);               
-//  495              }
-//  496              //else
-//  497                //vTaskDelay(1000);
-//  498              
-//  499              break;
-//  500         case BILL_RETURNED:
-//  501              new_scrow = 0;
-//  502              break;
-//  503         case NOT_USED:
-//  504              break;
-//  505         case DISABLED_BILL_REJECTED: 
-//  506              new_scrow = 0;
-??SMDBILL_trata_eventos_3:
-        LDR.N    R0,??DataTable9_13
-        MOVS     R1,#+0
-        STRB     R1,[R0, #+0]
-//  507              break;
-??SMDBILL_trata_eventos_4:
-        ADDS     R5,R5,#+1
 ??SMDBILL_trata_eventos_2:
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R5,R4
-        BCS.N    ??SMDBILL_trata_eventos_5
+        BCS.N    ??SMDBILL_trata_eventos_3
+//  447     
+//  448     if(SMDBILL_eventos[i].tipo==BILL_STATUS){
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R0,??DataTable9_5
         LDRB     R0,[R0, R5, LSL #+1]
         CMP      R0,#+0
-        BNE.N    ??SMDBILL_trata_eventos_6
+        BNE.N    ??SMDBILL_trata_eventos_4
+//  449       switch(SMDBILL_eventos[i].args){
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R0,??DataTable9_5
         ADDS     R0,R0,R5, LSL #+1
         LDRB     R0,[R0, #+1]
         CMP      R0,#+1
-        BEQ.N    ??SMDBILL_trata_eventos_7
-        BCC.N    ??SMDBILL_trata_eventos_4
+        BEQ.N    ??SMDBILL_trata_eventos_5
+        BCC.N    ??SMDBILL_trata_eventos_6
         CMP      R0,#+3
-        BEQ.N    ??SMDBILL_trata_eventos_8
-        BCC.N    ??SMDBILL_trata_eventos_9
+        BEQ.N    ??SMDBILL_trata_eventos_7
+        BCC.N    ??SMDBILL_trata_eventos_8
         CMP      R0,#+5
-        BEQ.N    ??SMDBILL_trata_eventos_10
-        BCC.N    ??SMDBILL_trata_eventos_11
+        BEQ.N    ??SMDBILL_trata_eventos_9
+        BCC.N    ??SMDBILL_trata_eventos_10
         CMP      R0,#+7
-        BEQ.N    ??SMDBILL_trata_eventos_12
-        BCC.N    ??SMDBILL_trata_eventos_13
+        BEQ.N    ??SMDBILL_trata_eventos_11
+        BCC.N    ??SMDBILL_trata_eventos_12
         CMP      R0,#+9
-        BEQ.N    ??SMDBILL_trata_eventos_14
-        BCC.N    ??SMDBILL_trata_eventos_15
+        BEQ.N    ??SMDBILL_trata_eventos_13
+        BCC.N    ??SMDBILL_trata_eventos_14
         CMP      R0,#+11
-        BEQ.N    ??SMDBILL_trata_eventos_16
-        BCC.N    ??SMDBILL_trata_eventos_17
+        BEQ.N    ??SMDBILL_trata_eventos_15
+        BCC.N    ??SMDBILL_trata_eventos_16
         CMP      R0,#+12
-        BEQ.N    ??SMDBILL_trata_eventos_18
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_7:
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_9:
-        B.N      ??SMDBILL_trata_eventos_4
+        BEQ.N    ??SMDBILL_trata_eventos_17
+        B.N      ??SMDBILL_trata_eventos_6
+//  450         case DEFECTIVE_MOTOR:
+//  451              break;
+??SMDBILL_trata_eventos_5:
+        B.N      ??SMDBILL_trata_eventos_6
+//  452         case SENSOR_PROBLEM:
+//  453              break;
 ??SMDBILL_trata_eventos_8:
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_11:
-        B.N      ??SMDBILL_trata_eventos_4
+        B.N      ??SMDBILL_trata_eventos_6
+//  454         case VALIDATOR_BUSY:
+//  455              break;
+??SMDBILL_trata_eventos_7:
+        B.N      ??SMDBILL_trata_eventos_6
+//  456         case ROM_CHECKSUM_ERROR:
+//  457              break;
 ??SMDBILL_trata_eventos_10:
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_13:
-        LDR.N    R0,??DataTable9_13
-        MOVS     R1,#+0
-        STRB     R1,[R0, #+0]
-        B.N      ??SMDBILL_trata_eventos_4
+        B.N      ??SMDBILL_trata_eventos_6
+//  458         case VALIDATOR_JAMMED:
+//  459              break;
+??SMDBILL_trata_eventos_9:
+        B.N      ??SMDBILL_trata_eventos_6
+//  460         case VALIDATOR_WAS_RESET:
+//  461              new_scrow = 0;
 ??SMDBILL_trata_eventos_12:
         LDR.N    R0,??DataTable9_13
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_15:
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_14:
-        LDR.N    R0,??DataTable9_14
-        LDRB     R0,[R0, #+0]
-        CMP      R0,#+255
-        BNE.N    ??SMDBILL_trata_eventos_19
+//  462              break;
+        B.N      ??SMDBILL_trata_eventos_6
+//  463         case BILL_REMOVED:
+//  464              new_scrow = 0;
+??SMDBILL_trata_eventos_11:
         LDR.N    R0,??DataTable9_13
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
-??SMDBILL_trata_eventos_19:
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_17:
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_16:
-        B.N      ??SMDBILL_trata_eventos_4
+//  465              break;
+        B.N      ??SMDBILL_trata_eventos_6
+//  466         case CASH_BOX_OUT_POSITION:    
+//  467              break;
+??SMDBILL_trata_eventos_14:
+        B.N      ??SMDBILL_trata_eventos_6
+//  468         case UNIT_DISABLED:
+//  469              if(canal==255)
+??SMDBILL_trata_eventos_13:
+        LDR.N    R0,??DataTable9_14
+        LDRB     R0,[R0, #+0]
+        CMP      R0,#+255
+        BNE.N    ??SMDBILL_trata_eventos_18
+//  470                new_scrow = 0;             
+        LDR.N    R0,??DataTable9_13
+        MOVS     R1,#+0
+        STRB     R1,[R0, #+0]
+//  471              break;
 ??SMDBILL_trata_eventos_18:
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_6:
+        B.N      ??SMDBILL_trata_eventos_6
+//  472         case INVALID_ESCROW_REQUEST:
+//  473              break;
+??SMDBILL_trata_eventos_16:
+        B.N      ??SMDBILL_trata_eventos_6
+//  474         case BILL_REJECTED:
+//  475              break;
+??SMDBILL_trata_eventos_15:
+        B.N      ??SMDBILL_trata_eventos_6
+//  476         case POSSIBLE_CREDITED_BILL_REMOVAL:
+//  477              break;
+??SMDBILL_trata_eventos_17:
+        B.N      ??SMDBILL_trata_eventos_6
+//  478       }
+//  479     }
+//  480     else{
+//  481       //Switch dos comandos
+//  482       switch(SMDBILL_eventos[i].tipo){
+??SMDBILL_trata_eventos_4:
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R0,??DataTable9_5
         LDRB     R0,[R0, R5, LSL #+1]
         CMP      R0,#+8
-        BEQ.N    ??SMDBILL_trata_eventos_20
-        BCC.N    ??SMDBILL_trata_eventos_4
+        BEQ.N    ??SMDBILL_trata_eventos_19
+        BCC.N    ??SMDBILL_trata_eventos_6
         CMP      R0,#+10
-        BEQ.N    ??SMDBILL_trata_eventos_21
-        BCC.N    ??SMDBILL_trata_eventos_22
+        BEQ.N    ??SMDBILL_trata_eventos_20
+        BCC.N    ??SMDBILL_trata_eventos_21
         CMP      R0,#+12
-        BEQ.N    ??SMDBILL_trata_eventos_3
+        BEQ.N    ??SMDBILL_trata_eventos_22
         BCC.N    ??SMDBILL_trata_eventos_23
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_20:
+        B.N      ??SMDBILL_trata_eventos_6
+//  483         case BILL_STACKED:
+//  484              if(new_scrow){
+??SMDBILL_trata_eventos_19:
         LDR.N    R0,??DataTable9_13
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??SMDBILL_trata_eventos_24
+//  485                PAGAMENTOS_adiciona_valores(SMDBILL_valor_canais[canal]*100);
         LDR.N    R0,??DataTable9_14
         LDRB     R0,[R0, #+0]
         LDR.N    R1,??DataTable9_6
@@ -1397,23 +1388,32 @@ SMDBILL_trata_eventos:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall PAGAMENTOS_adiciona_valores
         BL       PAGAMENTOS_adiciona_valores
+//  486                new_scrow = 0;  
         LDR.N    R0,??DataTable9_13
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
+//  487                canal = 255;
         LDR.N    R0,??DataTable9_14
         MOVS     R1,#+255
         STRB     R1,[R0, #+0]
+//  488              }             
+//  489              break;
 ??SMDBILL_trata_eventos_24:
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_22:
+        B.N      ??SMDBILL_trata_eventos_6
+//  490         case ESCROW_POSITION:  
+//  491              if(MDBILL_send_escrow_command(STACK_BILL)==MDB_OK){
+??SMDBILL_trata_eventos_21:
         MOVS     R0,#+1
           CFI FunCall MDBILL_send_escrow_command
         BL       MDBILL_send_escrow_command
         CMP      R0,#+0
         BNE.N    ??SMDBILL_trata_eventos_25
+//  492                //vTaskDelay(100);
+//  493                new_scrow = 1;
         LDR.N    R0,??DataTable9_13
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
+//  494                canal = (unsigned char)(SMDBILL_eventos[i].args-CANAL_01);               
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R0,??DataTable9_5
         ADDS     R0,R0,R5, LSL #+1
@@ -1421,21 +1421,41 @@ SMDBILL_trata_eventos:
         SUBS     R0,R0,#+13
         LDR.N    R1,??DataTable9_14
         STRB     R0,[R1, #+0]
+//  495              }
+//  496              //else
+//  497                //vTaskDelay(1000);
+//  498              
+//  499              break;
 ??SMDBILL_trata_eventos_25:
-        B.N      ??SMDBILL_trata_eventos_4
-??SMDBILL_trata_eventos_21:
+        B.N      ??SMDBILL_trata_eventos_6
+//  500         case BILL_RETURNED:
+//  501              new_scrow = 0;
+??SMDBILL_trata_eventos_20:
         LDR.N    R0,??DataTable9_13
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
-        B.N      ??SMDBILL_trata_eventos_4
+//  502              break;
+        B.N      ??SMDBILL_trata_eventos_6
+//  503         case NOT_USED:
+//  504              break;
 ??SMDBILL_trata_eventos_23:
-        B.N      ??SMDBILL_trata_eventos_4
+        B.N      ??SMDBILL_trata_eventos_6
+//  505         case DISABLED_BILL_REJECTED: 
+//  506              new_scrow = 0;
+??SMDBILL_trata_eventos_22:
+        LDR.N    R0,??DataTable9_13
+        MOVS     R1,#+0
+        STRB     R1,[R0, #+0]
+//  507              break;
 //  508       }
 //  509     }
 //  510   }
+??SMDBILL_trata_eventos_6:
+        ADDS     R5,R5,#+1
+        B.N      ??SMDBILL_trata_eventos_2
 //  511   
 //  512   return 1;
-??SMDBILL_trata_eventos_5:
+??SMDBILL_trata_eventos_3:
         MOVS     R0,#+1
 ??SMDBILL_trata_eventos_1:
         POP      {R1,R4,R5,PC}    ;; return
@@ -1654,9 +1674,9 @@ SMDBILL_get_net_status:
 //    45 bytes in section .bss
 //    20 bytes in section .data
 //    28 bytes in section .rodata
-// 1 370 bytes in section .text
+// 1 402 bytes in section .text
 // 
-// 1 370 bytes of CODE  memory
+// 1 402 bytes of CODE  memory
 //    28 bytes of CONST memory
 //    65 bytes of DATA  memory
 //

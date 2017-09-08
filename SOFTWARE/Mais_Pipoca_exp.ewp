@@ -313,7 +313,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -322,7 +322,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -690,7 +690,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.1\AirPopCorn.icf</state>
+          <state>C:\repositorios\MaisPipocaG2\SOFTWARE\AirPopCorn.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>

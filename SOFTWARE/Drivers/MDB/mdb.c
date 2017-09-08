@@ -336,5 +336,28 @@ eMDB_RESULTADO_SCAN MDB_checa_dispositivos(void){
   return MDB_TODOS_ONLINE;
 }
 /***********************************************************************************
+*       Descrição       :       Veririca se os dispositivos MDB habilitados
+*                               estão presentes no barramento
+*       Parametros      :       nenhum
+*       Retorno         :       nenhum
+***********************************************************************************/
+eMDB_reply MDB_checa_valor_moedas(unsigned char *escala,unsigned char *canais){
+  eMDB_reply res;
+  unsigned char tentativas=10;
+  unsigned char level;
+  unsigned short int pais;
+  unsigned char casas_decimais;
+  unsigned short int roteamento;
+  
+  SMDB_wait();
+  
+  do res = MDBCOIN_get_setup_from_device(&level,&pais,escala,&casas_decimais,&roteamento,canais);
+  while(res!=MDB_OK && tentativas--);
+   
+  SMDB_release();   
+  
+  return res;
+}
+/***********************************************************************************
 *       Fim do arquivo
 ***********************************************************************************/

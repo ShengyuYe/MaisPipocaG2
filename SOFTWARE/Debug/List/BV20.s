@@ -1,29 +1,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:11 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:39 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\BV20. /
-//                    c                                                       /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\BV20 /
-//                    .c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware /
-//                    \01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\"    /
-//                    -lA "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_ /
-//                    mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o     /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamento /
+//                    s\BV20.c                                                /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamento /
+//                    s\BV20.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debu /
+//                    g\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug /
+//                    \List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\O /
+//                    bj\ --no_cse --no_unroll --no_inline --no_code_motion   /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\BV20.s        /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\BV20.s /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -105,7 +99,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\BV20.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\BV20.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -270,9 +264,11 @@ BV20_func:
         THUMB
 //  104 void BV20_main(void*pPar){  
 BV20_main:
-        PUSH     {R7,LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
+        MOVS     R4,R0
 //  105   
 //  106   vTaskDelay(3000);
         MOVW     R0,#+3000
@@ -388,11 +384,12 @@ BV20_ini:
         THUMB
 //  136 unsigned char BV20_inicializNoteiro(void){
 BV20_inicializNoteiro:
-        PUSH     {R4,LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
-        SUB      SP,SP,#+24
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
+        SUB      SP,SP,#+20
           CFI CFA R13+32
 //  137   unsigned char canais=0;
         MOVS     R0,#+0
@@ -417,20 +414,21 @@ BV20_inicializNoteiro:
         MOVS     R0,#+40
           CFI FunCall CCTALK_leFilaEventos
         BL       CCTALK_leFilaEventos
+        MOVS     R5,R0
 //  147   while(!flag && tentativas--);
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
         BNE.N    ??BV20_inicializNoteiro_1
-        MOVS     R1,R4
-        SUBS     R4,R1,#+1
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        CMP      R1,#+0
+        MOVS     R0,R4
+        SUBS     R4,R0,#+1
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        CMP      R0,#+0
         BNE.N    ??BV20_inicializNoteiro_0
 //  148   
 //  149   if(!flag)
 ??BV20_inicializNoteiro_1:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
         BNE.N    ??BV20_inicializNoteiro_2
 //  150     return 0;
         MOVS     R0,#+0
@@ -438,7 +436,8 @@ BV20_inicializNoteiro:
 //  151   
 //  152   tentativas=3;
 ??BV20_inicializNoteiro_2:
-        MOVS     R4,#+3
+        MOVS     R0,#+3
+        MOVS     R4,R0
 //  153   do flag = CCTALK_setBitsHabilitacaoCanal(END_NOTEIRO,canais);
 ??BV20_inicializNoteiro_4:
         LDRB     R1,[SP, #+0]
@@ -446,20 +445,21 @@ BV20_inicializNoteiro:
         MOVS     R0,#+40
           CFI FunCall CCTALK_setBitsHabilitacaoCanal
         BL       CCTALK_setBitsHabilitacaoCanal
+        MOVS     R5,R0
 //  154   while(!flag && tentativas--);
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
         BNE.N    ??BV20_inicializNoteiro_5
-        MOVS     R1,R4
-        SUBS     R4,R1,#+1
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        CMP      R1,#+0
+        MOVS     R0,R4
+        SUBS     R4,R0,#+1
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        CMP      R0,#+0
         BNE.N    ??BV20_inicializNoteiro_4
 //  155   
 //  156   if(!flag)
 ??BV20_inicializNoteiro_5:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
         BNE.N    ??BV20_inicializNoteiro_6
 //  157     return 0;
         MOVS     R0,#+0
@@ -467,27 +467,29 @@ BV20_inicializNoteiro:
 //  158   
 //  159   tentativas=3;
 ??BV20_inicializNoteiro_6:
-        MOVS     R4,#+3
+        MOVS     R0,#+3
+        MOVS     R4,R0
 //  160   do flag = CCTALK_setFlagHabilitacaoGeral(END_NOTEIRO,255);
 ??BV20_inicializNoteiro_7:
         MOVS     R1,#+255
         MOVS     R0,#+40
           CFI FunCall CCTALK_setFlagHabilitacaoGeral
         BL       CCTALK_setFlagHabilitacaoGeral
+        MOVS     R5,R0
 //  161   while(!flag && tentativas--);
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
         BNE.N    ??BV20_inicializNoteiro_8
-        MOVS     R1,R4
-        SUBS     R4,R1,#+1
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        CMP      R1,#+0
+        MOVS     R0,R4
+        SUBS     R4,R0,#+1
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        CMP      R0,#+0
         BNE.N    ??BV20_inicializNoteiro_7
 //  162   
 //  163   if(!flag)
 ??BV20_inicializNoteiro_8:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
         BNE.N    ??BV20_inicializNoteiro_9
 //  164     return 0;
         MOVS     R0,#+0
@@ -497,9 +499,9 @@ BV20_inicializNoteiro:
 ??BV20_inicializNoteiro_9:
         MOVS     R0,#+255
 ??BV20_inicializNoteiro_3:
-        ADD      SP,SP,#+24
-          CFI CFA R13+8
-        POP      {R4,PC}          ;; return
+        ADD      SP,SP,#+20
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
           CFI EndBlock cfiBlock2
 //  167 }
 //  168 /***********************************************************************************
@@ -557,9 +559,11 @@ BV20_offline_bloqueado:
         THUMB
 //  196 eBV20_state BV20_estado_inicializacao(eBV20_state estado){
 BV20_estado_inicializacao:
-        PUSH     {R7,LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
+          CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
+        MOVS     R4,R0
 //  197   
 //  198   if(BV20_inicializNoteiro()){
           CFI FunCall BV20_inicializNoteiro
@@ -575,7 +579,7 @@ BV20_estado_inicializacao:
 ??BV20_estado_inicializacao_0:
         MOVS     R0,#+3
 ??BV20_estado_inicializacao_1:
-        POP      {R1,PC}          ;; return
+        POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock5
 //  203 }
 //  204 /***********************************************************************************
@@ -624,31 +628,33 @@ BV20_estado_supervisao:
 //  224   
 //  225   if(CCTALK_leFilaEventos(END_NOTEIRO,&BV20_quantidade_eventos,eventos)){    
         ADD      R2,SP,#+0
-        LDR.N    R1,??DataTable9_6
+        LDR.W    R1,??DataTable9_6
         MOVS     R0,#+40
           CFI FunCall CCTALK_leFilaEventos
         BL       CCTALK_leFilaEventos
         CMP      R0,#+0
         BEQ.N    ??BV20_estado_supervisao_0
 //  226     contador_ciclos=10;
-        LDR.N    R0,??DataTable9_7
+        LDR.W    R0,??DataTable9_7
         MOVS     R1,#+10
         STRB     R1,[R0, #+0]
 //  227     if(BV20_quantidade_eventos!=BV20_ultima_quantidade_eventos)
-        LDR.N    R0,??DataTable9_6
+        LDR.W    R0,??DataTable9_6
         LDRB     R0,[R0, #+0]
-        LDR.N    R1,??DataTable9_8
+        LDR.W    R1,??DataTable9_8
         LDRH     R1,[R1, #+0]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         CMP      R0,R1
         BEQ.N    ??BV20_estado_supervisao_1
 //  228       estado = BV20_LE_EVENTO;
-        MOVS     R4,#+5
+        MOVS     R0,#+5
+        MOVS     R4,R0
         B.N      ??BV20_estado_supervisao_2
 //  229     else
 //  230       estado = BV20_SUPERVISAO;    
 ??BV20_estado_supervisao_1:
-        MOVS     R4,#+4
+        MOVS     R0,#+4
+        MOVS     R4,R0
         B.N      ??BV20_estado_supervisao_2
 //  231   }
 //  232   else{
@@ -671,7 +677,8 @@ BV20_estado_supervisao:
 //  238     else
 //  239       estado = BV20_OFFLINE;    
 ??BV20_estado_supervisao_3:
-        MOVS     R4,#+3
+        MOVS     R0,#+3
+        MOVS     R4,R0
 //  240   }
 //  241   
 //  242   return estado;
@@ -702,14 +709,20 @@ BV20_estado_supervisao:
         THUMB
 //  251 eBV20_state BV20_estado_le_evento(eBV20_state estado){
 BV20_estado_le_evento:
-        PUSH     {R1-R5,LR}
+        PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
+          CFI R8 Frame(CFA, -8)
+          CFI R7 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -16)
+          CFI R5 Frame(CFA, -20)
+          CFI R4 Frame(CFA, -24)
           CFI CFA R13+24
+        SUB      SP,SP,#+16
+          CFI CFA R13+40
+        MOVS     R4,R0
 //  252   unsigned short int eventos[5];
 //  253   unsigned char tentativas=5;
-        MOVS     R4,#+5
+        MOVS     R6,#+5
 //  254   unsigned char flag;
 //  255   
 //  256   do flag = CCTALK_leFilaEventos(END_NOTEIRO,&BV20_quantidade_eventos,eventos);
@@ -719,20 +732,21 @@ BV20_estado_le_evento:
         MOVS     R0,#+40
           CFI FunCall CCTALK_leFilaEventos
         BL       CCTALK_leFilaEventos
+        MOVS     R5,R0
 //  257   while(!flag && --tentativas);
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
         BNE.N    ??BV20_estado_le_evento_1
-        SUBS     R4,R4,#+1
-        MOVS     R0,R4
+        SUBS     R6,R6,#+1
+        MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BNE.N    ??BV20_estado_le_evento_0
 //  258     
 //  259   if(!tentativas)
 ??BV20_estado_le_evento_1:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BNE.N    ??BV20_estado_le_evento_2
 //  260     return BV20_OFFLINE;
         MOVS     R0,#+3
@@ -762,7 +776,8 @@ BV20_estado_le_evento:
         LDRB     R0,[R0, #+0]
         LDR.N    R1,??DataTable9_8
         LDRH     R1,[R1, #+0]
-        SUBS     R4,R0,R1
+        SUBS     R0,R0,R1
+        MOVS     R7,R0
         B.N      ??BV20_estado_le_evento_6
 //  267     else
 //  268       diferenca = (255 - BV20_ultima_quantidade_eventos) + BV20_quantidade_eventos;
@@ -772,33 +787,33 @@ BV20_estado_le_evento:
         RSBS     R0,R0,#+255
         LDR.N    R1,??DataTable9_6
         LDRB     R1,[R1, #+0]
-        ADDS     R4,R1,R0
+        ADDS     R0,R1,R0
+        MOVS     R7,R0
 //  269 
 //  270     for(unsigned char i=0;i<diferenca && i<5;i++)      
 ??BV20_estado_le_evento_6:
-        MOVS     R5,#+0
-        B.N      ??BV20_estado_le_evento_7
-//  271       BV20_decodifica_eventos(eventos[i]);    
-??BV20_estado_le_evento_8:
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        ADD      R0,SP,#+0
-        LDRH     R0,[R0, R5, LSL #+1]
-          CFI FunCall BV20_decodifica_eventos
-        BL       BV20_decodifica_eventos
-        ADDS     R5,R5,#+1
+        MOVS     R8,#+0
 ??BV20_estado_le_evento_7:
-        MOVS     R0,R5
+        MOV      R0,R8
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
-        CMP      R0,R4
-        BCS.N    ??BV20_estado_le_evento_9
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+5
-        BLT.N    ??BV20_estado_le_evento_8
+        UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
+        CMP      R0,R7
+        BCS.N    ??BV20_estado_le_evento_8
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        CMP      R8,#+5
+        BGE.N    ??BV20_estado_le_evento_8
+//  271       BV20_decodifica_eventos(eventos[i]);    
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        ADD      R0,SP,#+0
+        LDRH     R0,[R0, R8, LSL #+1]
+          CFI FunCall BV20_decodifica_eventos
+        BL       BV20_decodifica_eventos
+        ADDS     R8,R8,#+1
+        B.N      ??BV20_estado_le_evento_7
 //  272     
 //  273     BV20_ultima_quantidade_eventos = BV20_quantidade_eventos;    
-??BV20_estado_le_evento_9:
+??BV20_estado_le_evento_8:
         LDR.N    R0,??DataTable9_8
         LDR.N    R1,??DataTable9_6
         LDRB     R1,[R1, #+0]
@@ -809,7 +824,9 @@ BV20_estado_le_evento:
 ??BV20_estado_le_evento_4:
         MOVS     R0,#+4
 ??BV20_estado_le_evento_3:
-        POP      {R1-R5,PC}       ;; return
+        ADD      SP,SP,#+16
+          CFI CFA R13+24
+        POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock8
 //  277 }
 //  278 /***********************************************************************************
@@ -824,12 +841,13 @@ BV20_estado_le_evento:
         THUMB
 //  283 void BV20_decodifica_eventos(unsigned short int evento){
 BV20_decodifica_eventos:
-        PUSH     {R4-R6,LR}
+        PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+24
         MOVS     R4,R0
 //  284   static unsigned short int valorGolpe = 100;
 //  285   static CCTALK_BILL_EVENTS last_evento;
@@ -874,30 +892,32 @@ BV20_decodifica_eventos:
 //  292               {
 //  293                   unsigned char tentativas=10;
 ??BV20_decodifica_eventos_1:
-        MOVS     R6,#+10
+        MOVS     R7,#+10
 //  294                   unsigned char flag;
 //  295                   i = 0;
-        MOVS     R5,#+0
+        MOVS     R0,#+0
+        MOVS     R5,R0
 //  296                 
 //  297                   do flag = CCTALK_rotacionaValidador(END_NOTEIRO);
 ??BV20_decodifica_eventos_7:
         MOVS     R0,#+40
           CFI FunCall CCTALK_rotacionaValidador
         BL       CCTALK_rotacionaValidador
+        MOVS     R6,R0
 //  298                   while(!flag && tentativas--);
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
+        BNE.N    ??BV20_decodifica_eventos_8
+        MOVS     R0,R7
+        SUBS     R7,R0,#+1
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
-        BNE.N    ??BV20_decodifica_eventos_8
-        MOVS     R1,R6
-        SUBS     R6,R1,#+1
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        CMP      R1,#+0
         BNE.N    ??BV20_decodifica_eventos_7
 //  299                 
 //  300                   if(flag){                                                                 
 ??BV20_decodifica_eventos_8:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BEQ.N    ??BV20_decodifica_eventos_9
 //  301                     while(!xSemaphoreTake(BV20_sem_acumulador_dinheiro,portTICK_RATE_MS*1));  
 ??BV20_decodifica_eventos_10:
@@ -919,8 +939,8 @@ BV20_decodifica_eventos:
         LDR.N    R2,??DataTable9_5
         LDRB     R2,[R2, #+0]
         MOVS     R3,#+14
-        LDR.N    R6,??DataTable9_10
-        MLA      R2,R3,R2,R6
+        LDR.W    R12,??DataTable9_10
+        MLA      R2,R3,R2,R12
         LDRH     R1,[R2, R1, LSL #+1]
         ADDS     R0,R1,R0
         LDR.N    R1,??DataTable9_9
@@ -1104,7 +1124,7 @@ BV20_decodifica_eventos:
         LDRB     R1,[R1, #+0]
         STRB     R1,[R0, #+0]
 //  364 }
-        POP      {R4-R6,PC}       ;; return
+        POP      {R0,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock9
 
         SECTION `.data`:DATA:REORDER:NOROOT(1)
@@ -1148,7 +1168,8 @@ BV20_get_valor_acumulador:
 //  374   
 //  375    valor = BV20_valor_acumulado;
         LDR.N    R0,??DataTable9_9
-        LDRH     R4,[R0, #+0]
+        LDRH     R0,[R0, #+0]
+        MOVS     R4,R0
 //  376    
 //  377    xSemaphoreGive(BV20_sem_acumulador_dinheiro);     
         MOVS     R3,#+0
@@ -1282,12 +1303,15 @@ BV20_get_current_state:
         THUMB
 //  423 eBV20_state BV20_estado_bloqueio(eBV20_state estado){
 BV20_estado_bloqueio:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
+        MOVS     R4,R0
 //  424   unsigned int tentativas=3;
-        MOVS     R4,#+3
+        MOVS     R5,#+3
 //  425   unsigned char flag;
 //  426   
 //  427   do flag = CCTALK_setBitsHabilitacaoCanal(END_NOTEIRO,0);
@@ -1296,19 +1320,20 @@ BV20_estado_bloqueio:
         MOVS     R0,#+40
           CFI FunCall CCTALK_setBitsHabilitacaoCanal
         BL       CCTALK_setBitsHabilitacaoCanal
+        MOVS     R6,R0
 //  428   while(!flag && tentativas--);  
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
         BNE.N    ??BV20_estado_bloqueio_1
-        MOVS     R0,R4
-        SUBS     R4,R0,#+1
+        MOVS     R0,R5
+        SUBS     R5,R0,#+1
         CMP      R0,#+0
         BNE.N    ??BV20_estado_bloqueio_0
 //  429   
 //  430   return BV20_BLOQUEADO;
 ??BV20_estado_bloqueio_1:
         MOVS     R0,#+0
-        POP      {R4,PC}          ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock14
 //  431 }
 //  432 /***********************************************************************************
@@ -1330,16 +1355,16 @@ BV20_setter_bloqueio:
         CMP      R0,#+0
         BEQ.N    ??BV20_setter_bloqueio_0
 //  440     BV20_mensagemExterna = BV20_BLOQUEADO;
-        LDR.N    R0,??DataTable9
-        MOVS     R1,#+0
-        STRB     R1,[R0, #+0]
+        LDR.N    R1,??DataTable9
+        MOVS     R2,#+0
+        STRB     R2,[R1, #+0]
         B.N      ??BV20_setter_bloqueio_1
 //  441   else
 //  442     BV20_mensagemExterna = BV20_INICIALIZACAO;
 ??BV20_setter_bloqueio_0:
-        LDR.N    R0,??DataTable9
-        MOVS     R1,#+2
-        STRB     R1,[R0, #+0]
+        LDR.N    R1,??DataTable9
+        MOVS     R2,#+2
+        STRB     R2,[R1, #+0]
 //  443 }
 ??BV20_setter_bloqueio_1:
         BX       LR               ;; return
@@ -1448,9 +1473,9 @@ BV20_setter_bloqueio:
 //    14 bytes in section .bss
 //    31 bytes in section .data
 //   100 bytes in section .rodata
-// 1 154 bytes in section .text
+// 1 220 bytes in section .text
 // 
-// 1 154 bytes of CODE  memory
+// 1 220 bytes of CODE  memory
 //   100 bytes of CONST memory
 //    45 bytes of DATA  memory
 //

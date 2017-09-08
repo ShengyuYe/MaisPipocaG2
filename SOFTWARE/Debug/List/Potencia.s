@@ -1,28 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:15 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:42 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Potencia\Potencia.c      /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Potencia\Potencia.c"    /
-//                    -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_ /
-//                    mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA    /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Potencia\Potencia /
+//                    .c                                                      /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Potencia\Potencia /
+//                    .c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List /
+//                    \ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\ /
+//                     -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\    /
+//                    --no_cse --no_unroll --no_inline --no_code_motion       /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\Potencia.s    /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\Potenc /
+//                    ia.s                                                    /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -124,7 +120,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Potencia\Potencia.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Potencia\Potencia.c
 //    1 /*__________________________________________________________________________________
 //    2 |	DEXTRO SOLUÇÕES TECNOLÓGICAS
 //    3 |       
@@ -628,36 +624,36 @@ POTENCIA_ini:
         LDR      R0,[R0, #+0]
         LSLS     R0,R0,#+8        ;; ZeroExtS R0,R0,#+8,#+8
         LSRS     R0,R0,#+8
-        LDR.N    R1,??DataTable10_8  ;; 0xe000e400
+        LDR.W    R1,??DataTable10_8  ;; 0xe000e400
         STR      R0,[R1, #+0]
 //  164   SETENA0_bit.SETENA3 = 1; // Habilitação da interrupção do timer 1
-        LDR.N    R0,??DataTable10_6  ;; 0xe000e100
+        LDR.W    R0,??DataTable10_6  ;; 0xe000e100
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x8
-        LDR.N    R1,??DataTable10_6  ;; 0xe000e100
+        LDR.W    R1,??DataTable10_6  ;; 0xe000e100
         STR      R0,[R1, #+0]
 //  165   
 //  166   T2TCR_bit.CE = 1;   // Contador Habilitado
         LDR.W    R0,??DataTable10_15  ;; 0x40090004
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x1
-        LDR.N    R1,??DataTable10_15  ;; 0x40090004
+        LDR.W    R1,??DataTable10_15  ;; 0x40090004
         STR      R0,[R1, #+0]
 //  167   T2TCR_bit.CR = 1;   // Realiza o reset
-        LDR.N    R0,??DataTable10_15  ;; 0x40090004
+        LDR.W    R0,??DataTable10_15  ;; 0x40090004
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x2
-        LDR.N    R1,??DataTable10_15  ;; 0x40090004
+        LDR.W    R1,??DataTable10_15  ;; 0x40090004
         STR      R0,[R1, #+0]
 //  168   T2TCR_bit.CR = 0;   // do contador
-        LDR.N    R0,??DataTable10_15  ;; 0x40090004
+        LDR.W    R0,??DataTable10_15  ;; 0x40090004
         LDR      R0,[R0, #+0]
         BICS     R0,R0,#0x2
-        LDR.N    R1,??DataTable10_15  ;; 0x40090004
+        LDR.W    R1,??DataTable10_15  ;; 0x40090004
         STR      R0,[R1, #+0]
 //  169   
 //  170   T2CTCR_bit.CTM = 0x00;
-        LDR.N    R0,??DataTable10_16  ;; 0x40090070
+        LDR.W    R0,??DataTable10_16  ;; 0x40090070
         LDR      R0,[R0, #+0]
         LSRS     R0,R0,#+2
         LSLS     R0,R0,#+2
@@ -746,18 +742,18 @@ POTENCIA_set_neutro:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BEQ.N    ??POTENCIA_set_neutro_0
-        LDR.N    R0,??DataTable10_22  ;; 0x2009c038
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x80000
         LDR.N    R1,??DataTable10_22  ;; 0x2009c038
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x80000
+        LDR.N    R2,??DataTable10_22  ;; 0x2009c038
+        STR      R1,[R2, #+0]
         B.N      ??POTENCIA_set_neutro_1
 ??POTENCIA_set_neutro_0:
-        LDR.N    R0,??DataTable10_2  ;; 0x2009c03c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x80000
         LDR.N    R1,??DataTable10_2  ;; 0x2009c03c
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x80000
+        LDR.N    R2,??DataTable10_2  ;; 0x2009c03c
+        STR      R1,[R2, #+0]
 //  190 }
 ??POTENCIA_set_neutro_1:
         BX       LR               ;; return
@@ -893,18 +889,17 @@ POTENCIA_timerTick:
         BNE.N    ??POTENCIA_timerTick_2
 //  234       for(unsigned char i=0;i<TAM_BUF_VELOCIDADE;i++)
         MOVS     R0,#+0
-        B.N      ??POTENCIA_timerTick_3
+??POTENCIA_timerTick_3:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+2
+        BGE.N    ??POTENCIA_timerTick_2
 //  235         POTENCIA_bufferRotacao[i] = 0;
-??POTENCIA_timerTick_4:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LDR.N    R1,??DataTable10_31
         MOVS     R2,#+0
         STR      R2,[R1, R0, LSL #+2]
         ADDS     R0,R0,#+1
-??POTENCIA_timerTick_3:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+2
-        BLT.N    ??POTENCIA_timerTick_4
+        B.N      ??POTENCIA_timerTick_3
 //  236     }
 //  237     POTENCIA_timeOutCounter--;
 ??POTENCIA_timerTick_2:
@@ -956,26 +951,30 @@ POTENCIA_getFrequenciaRede:
           CFI NoCalls
         THUMB
 //  254 void POTENCIA_captureInterrupt(void){
+POTENCIA_captureInterrupt:
+        PUSH     {R4}
+          CFI R4 Frame(CFA, -4)
+          CFI CFA R13+4
 //  255   static unsigned int ultimaLeitura=0;
 //  256   unsigned int larguraAtual;
 //  257   unsigned int tmp;
 //  258   static unsigned int ponteiroLeitura=0;
 //  259   
 //  260   larguraAtual = tmp = T1CR0;
-POTENCIA_captureInterrupt:
-        LDR.N    R0,??DataTable10_32  ;; 0x4000802c
-        LDR      R0,[R0, #+0]
-        MOVS     R1,R0
+        LDR.N    R2,??DataTable10_32  ;; 0x4000802c
+        LDR      R2,[R2, #+0]
+        MOVS     R0,R2
+        MOVS     R1,R2
 //  261   
 //  262   if(larguraAtual>ultimaLeitura)         
         LDR.N    R2,??DataTable10_33
         LDR      R2,[R2, #+0]
-        CMP      R2,R0
+        CMP      R2,R1
         BCS.N    ??POTENCIA_captureInterrupt_0
 //  263     larguraAtual-=ultimaLeitura;    
         LDR.N    R2,??DataTable10_33
         LDR      R2,[R2, #+0]
-        SUBS     R0,R0,R2
+        SUBS     R1,R1,R2
         B.N      ??POTENCIA_captureInterrupt_1
 //  264   else
 //  265     larguraAtual = (0xFFFFFFFF - ultimaLeitura) + larguraAtual;
@@ -984,48 +983,51 @@ POTENCIA_captureInterrupt:
         LDR.N    R3,??DataTable10_33
         LDR      R3,[R3, #+0]
         SUBS     R2,R2,R3
-        ADDS     R0,R2,R0
+        ADDS     R1,R2,R1
 //  266     
 //  267   ultimaLeitura = tmp;
 ??POTENCIA_captureInterrupt_1:
         LDR.N    R2,??DataTable10_33
-        STR      R1,[R2, #+0]
+        STR      R0,[R2, #+0]
 //  268   
 //  269   T1IR_bit.CR0INT = 1;
-        LDR.N    R1,??DataTable10_34  ;; 0x40008000
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x10
         LDR.N    R2,??DataTable10_34  ;; 0x40008000
-        STR      R1,[R2, #+0]
+        LDR      R2,[R2, #+0]
+        ORRS     R2,R2,#0x10
+        LDR.N    R3,??DataTable10_34  ;; 0x40008000
+        STR      R2,[R3, #+0]
 //  270   CLRPEND0_bit.CLRPEND2 = 1;
-        LDR.N    R1,??DataTable10_27  ;; 0xe000e280
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x4
         LDR.N    R2,??DataTable10_27  ;; 0xe000e280
-        STR      R1,[R2, #+0]
+        LDR      R2,[R2, #+0]
+        ORRS     R2,R2,#0x4
+        LDR.N    R3,??DataTable10_27  ;; 0xe000e280
+        STR      R2,[R3, #+0]
 //  271   
 //  272   POTENCIA_periodoCapturadoMotor = larguraAtual;
-        LDR.N    R1,??DataTable10_35
-        STR      R0,[R1, #+0]
-//  273   POTENCIA_timeOutCounter = RELOAD_TIMEOUT_RRPM;      
-        LDR.N    R0,??DataTable10_30
-        MOV      R1,#+1000
-        STR      R1,[R0, #+0]
-//  274   POTENCIA_bufferRotacao[ponteiroLeitura] = POTENCIA_periodoCapturadoMotor;
-        LDR.N    R0,??DataTable10_36
-        LDR      R0,[R0, #+0]
-        LDR.N    R1,??DataTable10_31
         LDR.N    R2,??DataTable10_35
+        STR      R1,[R2, #+0]
+//  273   POTENCIA_timeOutCounter = RELOAD_TIMEOUT_RRPM;      
+        LDR.N    R2,??DataTable10_30
+        MOV      R3,#+1000
+        STR      R3,[R2, #+0]
+//  274   POTENCIA_bufferRotacao[ponteiroLeitura] = POTENCIA_periodoCapturadoMotor;
+        LDR.N    R2,??DataTable10_36
         LDR      R2,[R2, #+0]
-        STR      R2,[R1, R0, LSL #+2]
+        LDR.N    R3,??DataTable10_31
+        LDR.N    R4,??DataTable10_35
+        LDR      R4,[R4, #+0]
+        STR      R4,[R3, R2, LSL #+2]
 //  275   ponteiroLeitura= (ponteiroLeitura+1) % TAM_BUF_VELOCIDADE;   
-        LDR.N    R0,??DataTable10_36
-        LDR      R0,[R0, #+0]
-        ADDS     R0,R0,#+1
-        ANDS     R0,R0,#0x1
-        LDR.N    R1,??DataTable10_36
-        STR      R0,[R1, #+0]
+        LDR.N    R2,??DataTable10_36
+        LDR      R2,[R2, #+0]
+        ADDS     R2,R2,#+1
+        ANDS     R2,R2,#0x1
+        LDR.N    R3,??DataTable10_36
+        STR      R2,[R3, #+0]
 //  276 }
+        POP      {R4}
+          CFI R4 SameValue
+          CFI CFA R13+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock5
         REQUIRE T1CR0
@@ -1170,17 +1172,21 @@ _ZZ27POTENCIA_controleVelocidadeE6ciclos:
           CFI NoCalls
         THUMB
 //  358 int POTENCIA_calcula_integral_erro(int erro,unsigned flush){
+POTENCIA_calcula_integral_erro:
+        PUSH     {R4}
+          CFI R4 Frame(CFA, -4)
+          CFI CFA R13+4
+        MOVS     R2,R0
 //  359   static long int y=0;
 //  360   long int abs;    
 //  361   
 //  362   if(flush){    
-POTENCIA_calcula_integral_erro:
         CMP      R1,#+0
         BEQ.N    ??POTENCIA_calcula_integral_erro_0
 //  363     y = 0;
         LDR.N    R0,??DataTable10_39
-        MOVS     R1,#+0
-        STR      R1,[R0, #+0]
+        MOVS     R4,#+0
+        STR      R4,[R0, #+0]
 //  364     return 0;
         MOVS     R0,#+0
         B.N      ??POTENCIA_calcula_integral_erro_1
@@ -1188,39 +1194,39 @@ POTENCIA_calcula_integral_erro:
 //  366   
 //  367   y+=erro;
 ??POTENCIA_calcula_integral_erro_0:
-        LDR.N    R1,??DataTable10_39
-        LDR      R1,[R1, #+0]
-        ADDS     R1,R0,R1
-        LDR.N    R2,??DataTable10_39
-        STR      R1,[R2, #+0]
+        LDR.N    R0,??DataTable10_39
+        LDR      R0,[R0, #+0]
+        ADDS     R0,R2,R0
+        LDR.N    R4,??DataTable10_39
+        STR      R0,[R4, #+0]
 //  368   
 //  369   abs = erro;
-        MOVS     R1,R0
+        MOVS     R3,R2
 //  370   if(abs<0) abs*= -1;
-        CMP      R1,#+0
+        CMP      R3,#+0
         BPL.N    ??POTENCIA_calcula_integral_erro_2
-        MOVS     R2,#-1
-        MULS     R1,R2,R1
+        MOVS     R0,#-1
+        MULS     R3,R0,R3
 //  371   
 //  372   if(abs<100000){
 ??POTENCIA_calcula_integral_erro_2:
-        LDR.N    R2,??DataTable10_40  ;; 0x186a0
-        CMP      R1,R2
+        LDR.N    R0,??DataTable10_40  ;; 0x186a0
+        CMP      R3,R0
         BGE.N    ??POTENCIA_calcula_integral_erro_3
 //  373     y+=erro;
-        LDR.N    R1,??DataTable10_39
-        LDR      R1,[R1, #+0]
-        ADDS     R0,R0,R1
-        LDR.N    R1,??DataTable10_39
-        STR      R0,[R1, #+0]
+        LDR.N    R0,??DataTable10_39
+        LDR      R0,[R0, #+0]
+        ADDS     R0,R2,R0
+        LDR.N    R4,??DataTable10_39
+        STR      R0,[R4, #+0]
         B.N      ??POTENCIA_calcula_integral_erro_4
 //  374   }
 //  375   else{
 //  376     y = 0;
 ??POTENCIA_calcula_integral_erro_3:
         LDR.N    R0,??DataTable10_39
-        MOVS     R1,#+0
-        STR      R1,[R0, #+0]
+        MOVS     R4,#+0
+        STR      R4,[R0, #+0]
 //  377   }
 //  378 
 //  379   return y;
@@ -1228,6 +1234,9 @@ POTENCIA_calcula_integral_erro:
         LDR.N    R0,??DataTable10_39
         LDR      R0,[R0, #+0]
 ??POTENCIA_calcula_integral_erro_1:
+        POP      {R4}
+          CFI R4 SameValue
+          CFI CFA R13+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock7
 //  380 }
@@ -1329,15 +1338,21 @@ POTENCIA_setRPM:
           CFI NoCalls
         THUMB
 //  418 unsigned int POTENCIA_calculaAtrasoGate(int rotacao_rpm){    
+POTENCIA_calculaAtrasoGate:
+        PUSH     {R4}
+          CFI R4 Frame(CFA, -4)
+          CFI CFA R13+4
+        MOVS     R4,R0
 //  419   
 //  420 #ifdef FQ_REDE_60_HZ  
 //  421   long long int valor;
 //  422   
 //  423   valor = rotacao_rpm*4404;
-POTENCIA_calculaAtrasoGate:
-        MOVW     R1,#+4404
-        MULS     R0,R1,R0
-        ASRS     R1,R0,#+31
+        MOVW     R2,#+4404
+        MUL      R2,R2,R4
+        ASRS     R3,R2,#+31
+        MOVS     R0,R2
+        MOVS     R1,R3
 //  424   valor>>= 15;
         LSRS     R0,R0,#+15
         ORR      R0,R0,R1, LSL #+17
@@ -1361,8 +1376,10 @@ POTENCIA_calculaAtrasoGate:
         BCS.N    ??POTENCIA_calculaAtrasoGate_0
 //  433     valor = ATRASO_MINIMO;
 ??POTENCIA_calculaAtrasoGate_1:
-        MOVS     R0,#+150
-        MOVS     R1,#+0
+        MOVS     R2,#+150
+        MOVS     R3,#+0
+        MOVS     R0,R2
+        MOVS     R1,R3
 //  434   if(valor>ATRASO_MAXIMO)
 ??POTENCIA_calculaAtrasoGate_0:
         MOVW     R2,#+2501
@@ -1374,11 +1391,16 @@ POTENCIA_calculaAtrasoGate:
         BCC.N    ??POTENCIA_calculaAtrasoGate_2
 //  435     valor = ATRASO_MAXIMO;
 ??POTENCIA_calculaAtrasoGate_3:
-        MOVW     R0,#+2500
-        MOVS     R1,#+0
+        MOVW     R2,#+2500
+        MOVS     R3,#+0
+        MOVS     R0,R2
+        MOVS     R1,R3
 //  436   
 //  437   return valor;
 ??POTENCIA_calculaAtrasoGate_2:
+        POP      {R4}
+          CFI R4 SameValue
+          CFI CFA R13+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock10
 //  438 #endif
@@ -1410,29 +1432,30 @@ POTENCIA_calculaAtrasoGate:
           CFI NoCalls
         THUMB
 POTENCIA_getRPMmedido:
-        MOVS     R0,#+0
-        LDR.N    R1,??DataTable10_35
-        LDR      R1,[R1, #+0]
-        CMP      R1,#+0
+        MOVS     R1,#+0
+        LDR.N    R0,??DataTable10_35
+        LDR      R0,[R0, #+0]
+        CMP      R0,#+0
         BNE.N    ??POTENCIA_getRPMmedido_0
         MOVS     R0,#+0
         B.N      ??POTENCIA_getRPMmedido_1
 ??POTENCIA_getRPMmedido_0:
-        MOVS     R1,#+0
+        MOVS     R0,#+0
+??POTENCIA_getRPMmedido_2:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+2
+        BGE.N    ??POTENCIA_getRPMmedido_3
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        LDR.N    R2,??DataTable10_31
+        LDR      R2,[R2, R0, LSL #+2]
+        ADDS     R1,R2,R1
+        ADDS     R0,R0,#+1
         B.N      ??POTENCIA_getRPMmedido_2
 ??POTENCIA_getRPMmedido_3:
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        LDR.N    R2,??DataTable10_31
-        LDR      R2,[R2, R1, LSL #+2]
-        ADDS     R0,R2,R0
-        ADDS     R1,R1,#+1
-??POTENCIA_getRPMmedido_2:
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        CMP      R1,#+2
-        BLT.N    ??POTENCIA_getRPMmedido_3
-        LSRS     R0,R0,#+1
-        LDR.N    R1,??DataTable10_44  ;; 0x13098d8
-        UDIV     R0,R1,R0
+        LSRS     R1,R1,#+1
+        LDR.N    R0,??DataTable10_44  ;; 0x13098d8
+        UDIV     R1,R0,R1
+        MOVS     R0,R1
 ??POTENCIA_getRPMmedido_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock11
@@ -1713,14 +1736,15 @@ POTENCIA_getRPMmedido:
           CFI Function POTENCIA_controleVelocidade
         THUMB
 POTENCIA_controleVelocidade:
-        PUSH     {R3-R9,LR}
+        PUSH     {R4-R10,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R9 Frame(CFA, -8)
-          CFI R8 Frame(CFA, -12)
-          CFI R7 Frame(CFA, -16)
-          CFI R6 Frame(CFA, -20)
-          CFI R5 Frame(CFA, -24)
-          CFI R4 Frame(CFA, -28)
+          CFI R10 Frame(CFA, -8)
+          CFI R9 Frame(CFA, -12)
+          CFI R8 Frame(CFA, -16)
+          CFI R7 Frame(CFA, -20)
+          CFI R6 Frame(CFA, -24)
+          CFI R5 Frame(CFA, -28)
+          CFI R4 Frame(CFA, -32)
           CFI CFA R13+32
         LDR.N    R0,??POTENCIA_controleVelocidade_0
         LDRB     R0,[R0, #+0]
@@ -1761,19 +1785,21 @@ POTENCIA_controleVelocidade:
         LDR.N    R1,??POTENCIA_controleVelocidade_0+0xC
         STRH     R0,[R1, #+0]
         LDR.N    R0,??POTENCIA_controleVelocidade_0+0x4
-        LDRH     R4,[R0, #+0]
+        LDRH     R10,[R0, #+0]
           CFI FunCall POTENCIA_getRPMmedido
         BL       POTENCIA_getRPMmedido
-        SUBS     R4,R4,R0
-        MOVS     R5,#+0
+        SUBS     R0,R10,R0
+        MOVS     R1,#+0
+        MOVS     R4,R0
+        MOVS     R5,R1
         LDR.N    R0,??POTENCIA_controleVelocidade_0+0x10
-        LDR      R2,[R0, #+0]
-        MOVS     R3,#+0
-        MOVS     R0,R4
-        MOVS     R1,R5
-        UMULL    R4,R5,R2,R0
-        MLA      R5,R2,R1,R5
-        MLA      R5,R3,R0,R5
+        LDR      R0,[R0, #+0]
+        MOVS     R1,#+0
+        UMULL    R2,R3,R0,R4
+        MLA      R3,R0,R5,R3
+        MLA      R3,R1,R4,R3
+        MOVS     R4,R2
+        MOVS     R5,R3
         LSRS     R4,R4,#+8
         ORR      R4,R4,R5, LSL #+24
         ASRS     R5,R5,#+8
@@ -1782,11 +1808,11 @@ POTENCIA_controleVelocidade:
           CFI FunCall POTENCIA_calcula_derivada_erro
         BL       POTENCIA_calcula_derivada_erro
         LDR.N    R0,??POTENCIA_controleVelocidade_0+0x14  ;; 0x40090008
-        LDR      R6,[R0, #+0]
+        LDR      R10,[R0, #+0]
         MOVS     R0,R4
           CFI FunCall POTENCIA_calculaAtrasoGate
         BL       POTENCIA_calculaAtrasoGate
-        ADDS     R0,R0,R6
+        ADDS     R0,R0,R10
         LDR.N    R1,??POTENCIA_controleVelocidade_0+0x18  ;; 0x40090018
         STR      R0,[R1, #+0]
         LDR.N    R0,??POTENCIA_controleVelocidade_0+0x1C  ;; 0x40090014
@@ -1797,65 +1823,69 @@ POTENCIA_controleVelocidade:
         B.N      ??POTENCIA_controleVelocidade_5
 ??POTENCIA_controleVelocidade_4:
         LDR.N    R0,??POTENCIA_controleVelocidade_0+0x4
-        LDRH     R4,[R0, #+0]
+        LDRH     R10,[R0, #+0]
           CFI FunCall POTENCIA_getRPMmedido
         BL       POTENCIA_getRPMmedido
-        SUBS     R4,R4,R0
-        MOVS     R5,#+0
+        SUBS     R0,R10,R0
+        MOVS     R1,#+0
+        MOVS     R4,R0
+        MOVS     R5,R1
         MOVS     R1,#+0
         MOVS     R0,R4
           CFI FunCall POTENCIA_calcula_integral_erro
         BL       POTENCIA_calcula_integral_erro
-        MOVS     R6,R0
-        ASRS     R7,R0,#+31
+        ASRS     R1,R0,#+31
+        MOV      R8,R0
+        MOV      R9,R1
         LDR.N    R0,??POTENCIA_controleVelocidade_0+0x20
-        LDR      R2,[R0, #+0]
-        MOVS     R3,#+0
-        MOVS     R0,R6
-        MOVS     R1,R7
-        UMULL    R6,R7,R2,R0
-        MLA      R7,R2,R1,R7
-        MLA      R7,R3,R0,R7
-        LSRS     R6,R6,#+15
-        ORR      R6,R6,R7, LSL #+17
-        ASRS     R7,R7,#+15
+        LDR      R0,[R0, #+0]
+        MOVS     R1,#+0
+        UMULL    R2,R3,R0,R8
+        MLA      R3,R0,R9,R3
+        MLA      R3,R1,R8,R3
+        MOV      R8,R2
+        MOV      R9,R3
+        LSRS     R8,R8,#+15
+        ORR      R8,R8,R9, LSL #+17
+        ASRS     R9,R9,#+15
         MOVS     R0,R4
           CFI FunCall POTENCIA_calcula_derivada_erro
         BL       POTENCIA_calcula_derivada_erro
-        MOVS     R2,R0
-        ASRS     R3,R0,#+31
+        ASRS     R1,R0,#+31
+        MOVS     R6,R0
+        MOVS     R7,R1
         LDR.N    R0,??POTENCIA_controleVelocidade_0+0x24
-        LDR      R8,[R0, #+0]
-        MOVS     R9,#+0
-        MOVS     R0,R2
-        MOVS     R1,R3
-        UMULL    R2,R3,R8,R0
-        MLA      R3,R8,R1,R3
-        MLA      R3,R9,R0,R3
-        LSRS     R2,R2,#+15
-        ORR      R2,R2,R3, LSL #+17
-        ASRS     R3,R3,#+15
+        LDR      R0,[R0, #+0]
+        MOVS     R1,#+0
+        UMULL    R2,R3,R0,R6
+        MLA      R3,R0,R7,R3
+        MLA      R3,R1,R6,R3
+        MOVS     R6,R2
+        MOVS     R7,R3
+        LSRS     R6,R6,#+15
+        ORR      R6,R6,R7, LSL #+17
+        ASRS     R7,R7,#+15
         LDR.N    R0,??POTENCIA_controleVelocidade_0+0x10
         LDR      R0,[R0, #+0]
         MOVS     R1,#+0
-        UMULL    R8,R9,R0,R4
-        MLA      R9,R0,R5,R9
-        MLA      R9,R1,R4,R9
-        MOV      R4,R8
-        MOV      R5,R9
+        UMULL    R2,R3,R0,R4
+        MLA      R3,R0,R5,R3
+        MLA      R3,R1,R4,R3
+        MOVS     R4,R2
+        MOVS     R5,R3
         LSRS     R4,R4,#+8
         ORR      R4,R4,R5, LSL #+24
         ASRS     R5,R5,#+8
+        ADDS     R4,R4,R8
+        ADCS     R5,R5,R9
         ADDS     R4,R4,R6
         ADCS     R5,R5,R7
-        ADDS     R4,R4,R2
-        ADCS     R5,R5,R3
         LDR.N    R0,??POTENCIA_controleVelocidade_0+0x14  ;; 0x40090008
-        LDR      R6,[R0, #+0]
+        LDR      R10,[R0, #+0]
         MOVS     R0,R4
           CFI FunCall POTENCIA_calculaAtrasoGate
         BL       POTENCIA_calculaAtrasoGate
-        ADDS     R0,R0,R6
+        ADDS     R0,R0,R10
         LDR.N    R1,??POTENCIA_controleVelocidade_0+0x18  ;; 0x40090018
         STR      R0,[R1, #+0]
         LDR.N    R0,??POTENCIA_controleVelocidade_0+0x1C  ;; 0x40090014
@@ -1876,7 +1906,7 @@ POTENCIA_controleVelocidade:
         MOVS     R1,#+128
         STRH     R1,[R0, #+0]
 ??POTENCIA_controleVelocidade_5:
-        POP      {R0,R4-R9,PC}    ;; return
+        POP      {R4-R10,PC}      ;; return
         Nop      
         DATA
 ??POTENCIA_controleVelocidade_0:
@@ -1934,9 +1964,9 @@ POTENCIA_controleVelocidade:
 //     4 bytes in section .data
 //   120 bytes in section .noinit (abs)
 //    12 bytes in section .rodata
-// 1 640 bytes in section .text
+// 1 724 bytes in section .text
 // 
-// 1 248 bytes of CODE  memory (+ 392 bytes shared)
+// 1 300 bytes of CODE  memory (+ 424 bytes shared)
 //    12 bytes of CONST memory
 //    47 bytes of DATA  memory (+ 124 bytes shared)
 //

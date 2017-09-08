@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:57:57 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  20:04:12 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_operacao. /
-//                    c                                                       /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_operacao /
-//                    .c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware /
-//                    \01_mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\"    /
-//                    -lA "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_ /
-//                    mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o     /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_op /
+//                    eracao.c                                                /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_op /
+//                    eracao.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debu /
+//                    g\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug /
+//                    \List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\O /
+//                    bj\ --no_cse --no_unroll --no_inline --no_code_motion   /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\menu_operacao /
-//                    .s                                                      /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\menu_o /
+//                    peracao.s                                               /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -44,6 +38,7 @@
         EXTERN APLICACAO_carrega_idioma
         EXTERN EMBALAGEM_libera_pacote
         EXTERN FTP_novo_preco
+        EXTERN MDB_checa_valor_moedas
         EXTERN MEF_entry
         EXTERN MEI_entry_inc
         EXTERN MEL_entry
@@ -73,6 +68,7 @@
         EXTERN strlen
         EXTERN vTaskDelay
 
+        PUBLIC MENUOP_configura_canais_moeda
         PUBLIC MENUOP_configura_comissao
         PUBLIC MENUOP_configura_fita_led
         PUBLIC MENUOP_configura_flag_desumidificador
@@ -121,7 +117,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_operacao.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_operacao.c
 //    1  /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -163,16 +159,22 @@
         THUMB
 // __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
 memcpy:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
+        MOVS     R2,R6
+        MOVS     R1,R5
         MOVS     R0,R4
           CFI FunCall __aeabi_memcpy
         BL       __aeabi_memcpy
         MOVS     R0,R4
-        POP      {R4,PC}          ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock0
 //   34 #include "..\includes.h"
 //   35 #include "menu_operacao.h"
@@ -210,18 +212,20 @@ memcpy:
 //   67 void MENUOP_configura_mensagem_cliente_02(void);
 //   68 void MENUOP_configura_mensagem_cliente_03(void);
 //   69 void MENUOP_configura_mensagem_cliente_04(void);
-//   70 
-//   71 /***********************************************************************************
-//   72 *       Tabela de funções
-//   73 ***********************************************************************************/
+//   70 void MENUOP_configura_canais_moeda(void);
+//   71 
+//   72 /***********************************************************************************
+//   73 *       Tabela de funções
+//   74 ***********************************************************************************/
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
-//   74 void(*MENUOP_funcs[])(void)={
+//   75 void(*MENUOP_funcs[])(void)={
 MENUOP_funcs:
         DATA
         DC32 MENUOP_configura_valor, MENUOP_configura_notas
-        DC32 MENUOP_configura_modo_free, MENUOP_configura_fita_led
-        DC32 MENUOP_configura_volume_musica, MENUOP_configura_volume_locucoes
+        DC32 MENUOP_configura_canais_moeda, MENUOP_configura_modo_free
+        DC32 MENUOP_configura_fita_led, MENUOP_configura_volume_musica
+        DC32 MENUOP_configura_volume_locucoes
         DC32 MENUOP_configura_intervalo_propaganda
         DC32 MENUOP_configura_tempo_embalagem, MENUOP_configura_troco
         DC32 MENUOP_configura_comissao, MENUOP_configura_mensagem_cliente
@@ -229,217 +233,207 @@ MENUOP_funcs:
         DC32 MENUOP_configura_mensagem_cliente_03
         DC32 MENUOP_configura_mensagem_cliente_04
         DC32 MENUOP_configura_flag_desumidificador, 0H
-//   75   MENUOP_configura_valor,
-//   76   MENUOP_configura_notas,
-//   77   MENUOP_configura_modo_free,
-//   78   MENUOP_configura_fita_led,
-//   79   MENUOP_configura_volume_musica,
-//   80   MENUOP_configura_volume_locucoes,
-//   81   MENUOP_configura_intervalo_propaganda,
-//   82   MENUOP_configura_tempo_embalagem,
-//   83   MENUOP_configura_troco,
-//   84   MENUOP_configura_comissao,
-//   85   MENUOP_configura_mensagem_cliente,
-//   86   MENUOP_configura_mensagem_cliente_02,
-//   87   MENUOP_configura_mensagem_cliente_03,
-//   88   MENUOP_configura_mensagem_cliente_04,
-//   89   MENUOP_configura_flag_desumidificador,
-//   90   NULL  
-//   91 };
-//   92 
-//   93 /***********************************************************************************
-//   94 *       Implementação das funções
-//   95 ***********************************************************************************/
-//   96 
-//   97 /***********************************************************************************
-//   98 *       Descrição       :       Ponto de entrada do menu de configuração
-//   99 *                               do sistema
-//  100 *       Parametros      :       nenhum
-//  101 *       Retorno         :       nenhum
-//  102 ***********************************************************************************/
+//   76   MENUOP_configura_valor,
+//   77   MENUOP_configura_notas,
+//   78   MENUOP_configura_canais_moeda,
+//   79   MENUOP_configura_modo_free,
+//   80   MENUOP_configura_fita_led,
+//   81   MENUOP_configura_volume_musica,
+//   82   MENUOP_configura_volume_locucoes,
+//   83   MENUOP_configura_intervalo_propaganda,
+//   84   MENUOP_configura_tempo_embalagem,
+//   85   MENUOP_configura_troco,
+//   86   MENUOP_configura_comissao,
+//   87   MENUOP_configura_mensagem_cliente,
+//   88   MENUOP_configura_mensagem_cliente_02,
+//   89   MENUOP_configura_mensagem_cliente_03,
+//   90   MENUOP_configura_mensagem_cliente_04,
+//   91   MENUOP_configura_flag_desumidificador,
+//   92   NULL  
+//   93 };
+//   94 
+//   95 /***********************************************************************************
+//   96 *       Implementação das funções
+//   97 ***********************************************************************************/
+//   98 
+//   99 /***********************************************************************************
+//  100 *       Descrição       :       Ponto de entrada do menu de configuração
+//  101 *                               do sistema
+//  102 *       Parametros      :       nenhum
+//  103 *       Retorno         :       nenhum
+//  104 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock1 Using cfiCommon0
           CFI Function MENUOP_entry
         THUMB
-//  103 void MENUOP_entry(void){
+//  105 void MENUOP_entry(void){
 MENUOP_entry:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
-//  104   unsigned char idioma = APLICACAO_carrega_idioma();
+//  106   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
-//  105   
-//  106   MENUROLAGEM_show((char*)STRING_titulo_menu_operacao[idioma],
-//  107                    (char**)STRING_menu_configuracao_operacao[idioma],
-//  108                    QTD_OPCOES_OPERACAO,
-//  109                    MENUOP_funcs);    
-        LDR.W    R3,??DataTable16_2
-        MOVS     R2,#+16
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        MOVS     R1,#+64
-        LDR.W    R4,??DataTable16_3
-        MLA      R1,R1,R0,R4
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R4,??DataTable16_4
-        LDR      R0,[R4, R0, LSL #+2]
+        MOVS     R4,R0
+//  107   
+//  108   MENUROLAGEM_show((char*)STRING_titulo_menu_operacao[idioma],
+//  109                    (char**)STRING_menu_configuracao_operacao[idioma],
+//  110                    QTD_OPCOES_OPERACAO,
+//  111                    MENUOP_funcs);    
+        LDR.W    R3,??DataTable17
+        MOVS     R2,#+17
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        MOVS     R0,#+68
+        LDR.W    R1,??DataTable17_1
+        MLA      R1,R0,R4,R1
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.W    R0,??DataTable17_2
+        LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall MENUROLAGEM_show
         BL       MENUROLAGEM_show
-//  110 }
+//  112 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock1
-//  111 /***********************************************************************************
-//  112 *       Descrição       :       Menu para configuração do valor da pipoca
-//  113 *       Parametros      :       nenhum
-//  114 *       Retorno         :       nenhum
-//  115 ***********************************************************************************/
+//  113 /***********************************************************************************
+//  114 *       Descrição       :       Menu para configuração do valor da pipoca
+//  115 *       Parametros      :       nenhum
+//  116 *       Retorno         :       nenhum
+//  117 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function MENUOP_configura_valor
         THUMB
-//  116 void MENUOP_configura_valor(void){
+//  118 void MENUOP_configura_valor(void){
 MENUOP_configura_valor:
-        PUSH     {R4-R7,LR}
+        PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R7 Frame(CFA, -8)
-          CFI R6 Frame(CFA, -12)
-          CFI R5 Frame(CFA, -16)
-          CFI R4 Frame(CFA, -20)
-          CFI CFA R13+20
-        SUB      SP,SP,#+28
-          CFI CFA R13+48
-//  117   unsigned char idioma = APLICACAO_carrega_idioma();  
+          CFI R8 Frame(CFA, -8)
+          CFI R7 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -16)
+          CFI R5 Frame(CFA, -20)
+          CFI R4 Frame(CFA, -24)
+          CFI CFA R13+24
+        SUB      SP,SP,#+32
+          CFI CFA R13+56
+//  119   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  118   unsigned int valor;
-//  119   char buffer_linha[17];
-//  120   eTECLA tecla;
-//  121   unsigned char tamanho=0;
+//  120   unsigned int valor;
+//  121   char buffer_linha[17];
+//  122   eTECLA tecla;
+//  123   unsigned char tamanho=0;
+        MOVS     R6,#+0
+//  124   unsigned char ultimo_tamanho=0;
         MOVS     R7,#+0
-//  122   unsigned char ultimo_tamanho=0;
-        MOVS     R5,#+0
-//  123   unsigned int valor_anterior;
-//  124   
-//  125   PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valor);
+//  125   unsigned int valor_anterior;
+//  126   
+//  127   PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valor);
         ADD      R1,SP,#+4
         MOVS     R0,#+3
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  126   if(valor>99990)
+//  128   if(valor>99990)
         LDR      R0,[SP, #+4]
-        LDR.W    R1,??DataTable16_5  ;; 0x18697
+        LDR.W    R1,??DataTable17_3  ;; 0x18697
         CMP      R0,R1
         BCC.N    ??MENUOP_configura_valor_0
-//  127     valor = 5;
+//  129     valor = 5;
         MOVS     R0,#+5
         STR      R0,[SP, #+4]
-//  128   
-//  129   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_ajusta_valor[idioma],NULL);
+//  130   
+//  131   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_ajusta_valor[idioma],NULL);
 ??MENUOP_configura_valor_0:
         MOVS     R2,#+0
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.W    R0,??DataTable16_6
+        LDR.W    R0,??DataTable17_4
         LDR      R1,[R0, R4, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  130   
-//  131   valor_anterior = valor;
-        LDR      R6,[SP, #+4]
-        B.N      ??MENUOP_configura_valor_1
 //  132   
-//  133   for(;TECLADO_getContadorInatividade();){
+//  133   valor_anterior = valor;
+        LDR      R0,[SP, #+4]
+        MOV      R8,R0
 //  134   
-//  135     tecla = TECLADO_getch();
-//  136     switch(tecla){
-//  137       case TECLA_ENTER:
-//  138            PARAMETROS_grava(ADR_VALOR_PIPOCA,(void*)&valor);        
-//  139            // Novo evento de troca
-//  140            // de preço
-//  141            if(valor_anterior!=valor)
-//  142              FTP_novo_preco(valor,valor_anterior);           
-//  143       case TECLA_ESC:
-//  144            return;
-//  145       case TECLA_INC:
-//  146            if(valor<99990)
-//  147              valor+=5;
-//  148            break;
-//  149       case TECLA_DEC:
-//  150            if(valor>5)
-//  151              valor-=5;
-//  152            break;
-//  153     }
-//  154     
-//  155     sprintf(buffer_linha,"%s %d,%02d",(char*)STRING_simbolo_moeda[idioma],valor/100,valor%100);
-//  156     tamanho = strlen(buffer_linha);
-//  157     if(tamanho!=ultimo_tamanho){
-//  158       STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_ajusta_valor[idioma],buffer_linha);    
-??MENUOP_configura_valor_2:
-        ADD      R2,SP,#+8
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.W    R0,??DataTable16_6
-        LDR      R1,[R0, R4, LSL #+2]
-        MOVS     R0,#+0
-          CFI FunCall STRING_write_to_internal
-        BL       STRING_write_to_internal
-//  159       ultimo_tamanho = tamanho;
-        MOVS     R5,R7
-//  160     }
+//  135   for(;TECLADO_getContadorInatividade();){
 ??MENUOP_configura_valor_1:
           CFI FunCall TECLADO_getContadorInatividade
         BL       TECLADO_getContadorInatividade
         CMP      R0,#+0
-        BEQ.N    ??MENUOP_configura_valor_3
+        BEQ.N    ??MENUOP_configura_valor_2
+//  136   
+//  137     tecla = TECLADO_getch();
           CFI FunCall TECLADO_getch
         BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MENUOP_configura_valor_4
-        BCC.N    ??MENUOP_configura_valor_5
-        CMP      R0,#+3
-        BEQ.N    ??MENUOP_configura_valor_6
-        BCC.N    ??MENUOP_configura_valor_7
-        CMP      R0,#+4
-        BNE.N    ??MENUOP_configura_valor_5
-??MENUOP_configura_valor_8:
+        MOVS     R5,R0
+//  138     switch(tecla){
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+1
+        BEQ.N    ??MENUOP_configura_valor_3
+        BCC.N    ??MENUOP_configura_valor_4
+        CMP      R5,#+3
+        BEQ.N    ??MENUOP_configura_valor_5
+        BCC.N    ??MENUOP_configura_valor_6
+        CMP      R5,#+4
+        BNE.N    ??MENUOP_configura_valor_4
+//  139       case TECLA_ENTER:
+//  140            PARAMETROS_grava(ADR_VALOR_PIPOCA,(void*)&valor);        
+??MENUOP_configura_valor_7:
         ADD      R1,SP,#+4
         MOVS     R0,#+3
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
+//  141            // Novo evento de troca
+//  142            // de preço
+//  143            if(valor_anterior!=valor)
         LDR      R0,[SP, #+4]
-        CMP      R6,R0
-        BEQ.N    ??MENUOP_configura_valor_4
-        MOVS     R1,R6
+        CMP      R8,R0
+        BEQ.N    ??MENUOP_configura_valor_3
+//  144              FTP_novo_preco(valor,valor_anterior);           
+        MOV      R1,R8
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         LDR      R0,[SP, #+4]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall FTP_novo_preco
         BL       FTP_novo_preco
-??MENUOP_configura_valor_4:
-        B.N      ??MENUOP_configura_valor_9
-??MENUOP_configura_valor_7:
+//  145       case TECLA_ESC:
+//  146            return;
+??MENUOP_configura_valor_3:
+        B.N      ??MENUOP_configura_valor_8
+//  147       case TECLA_INC:
+//  148            if(valor<99990)
+??MENUOP_configura_valor_6:
         LDR      R0,[SP, #+4]
-        LDR.W    R1,??DataTable16_7  ;; 0x18696
+        LDR.W    R1,??DataTable17_5  ;; 0x18696
         CMP      R0,R1
-        BCS.N    ??MENUOP_configura_valor_10
+        BCS.N    ??MENUOP_configura_valor_9
+//  149              valor+=5;
         LDR      R0,[SP, #+4]
         ADDS     R0,R0,#+5
         STR      R0,[SP, #+4]
-??MENUOP_configura_valor_10:
-        B.N      ??MENUOP_configura_valor_5
-??MENUOP_configura_valor_6:
+//  150            break;
+??MENUOP_configura_valor_9:
+        B.N      ??MENUOP_configura_valor_4
+//  151       case TECLA_DEC:
+//  152            if(valor>5)
+??MENUOP_configura_valor_5:
         LDR      R0,[SP, #+4]
         CMP      R0,#+6
-        BCC.N    ??MENUOP_configura_valor_11
+        BCC.N    ??MENUOP_configura_valor_10
+//  153              valor-=5;
         LDR      R0,[SP, #+4]
         SUBS     R0,R0,#+5
         STR      R0,[SP, #+4]
-??MENUOP_configura_valor_11:
-??MENUOP_configura_valor_5:
+//  154            break;
+//  155     }
+//  156     
+//  157     sprintf(buffer_linha,"%s %d,%02d",(char*)STRING_simbolo_moeda[idioma],valor/100,valor%100);
+??MENUOP_configura_valor_10:
+??MENUOP_configura_valor_4:
         LDR      R0,[SP, #+4]
         MOVS     R1,#+100
         UDIV     R2,R0,R1
@@ -449,48 +443,63 @@ MENUOP_configura_valor:
         MOVS     R1,#+100
         UDIV     R3,R0,R1
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.W    R0,??DataTable16_8
+        LDR.W    R0,??DataTable17_6
         LDR      R2,[R0, R4, LSL #+2]
-        LDR.W    R1,??DataTable16_9
+        LDR.W    R1,??DataTable17_7
         ADD      R0,SP,#+8
           CFI FunCall sprintf
         BL       sprintf
+//  158     tamanho = strlen(buffer_linha);
         ADD      R0,SP,#+8
           CFI FunCall strlen
         BL       strlen
-        MOVS     R7,R0
+        MOVS     R6,R0
+//  159     if(tamanho!=ultimo_tamanho){
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R7,R5
-        BNE.N    ??MENUOP_configura_valor_2
-//  161     else
-//  162       STRING_write_to_internal(NO_CLEAR,NULL,buffer_linha);    
+        CMP      R6,R7
+        BEQ.N    ??MENUOP_configura_valor_11
+//  160       STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_ajusta_valor[idioma],buffer_linha);    
+        ADD      R2,SP,#+8
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.W    R0,??DataTable17_4
+        LDR      R1,[R0, R4, LSL #+2]
+        MOVS     R0,#+0
+          CFI FunCall STRING_write_to_internal
+        BL       STRING_write_to_internal
+//  161       ultimo_tamanho = tamanho;
+        MOVS     R7,R6
+        B.N      ??MENUOP_configura_valor_1
+//  162     }
+//  163     else
+//  164       STRING_write_to_internal(NO_CLEAR,NULL,buffer_linha);    
+??MENUOP_configura_valor_11:
         ADD      R2,SP,#+8
         MOVS     R1,#+0
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
         B.N      ??MENUOP_configura_valor_1
-//  163   }  
-//  164 }
-??MENUOP_configura_valor_3:
-??MENUOP_configura_valor_9:
-        ADD      SP,SP,#+28
-          CFI CFA R13+20
-        POP      {R4-R7,PC}       ;; return
+//  165   }  
+//  166 }
+??MENUOP_configura_valor_2:
+??MENUOP_configura_valor_8:
+        ADD      SP,SP,#+32
+          CFI CFA R13+24
+        POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock2
-//  165 /***********************************************************************************
-//  166 *       Descrição       :       Configura as cédulas que serão aceitas
-//  167 *                               pelo meio de pagamento, quando serial ou CCTALK
-//  168 *       Parametros      :       nenhum
-//  169 *       Retorno         :       nenhum
-//  170 ***********************************************************************************/
+//  167 /***********************************************************************************
+//  168 *       Descrição       :       Configura as cédulas que serão aceitas
+//  169 *                               pelo meio de pagamento, quando serial ou CCTALK
+//  170 *       Parametros      :       nenhum
+//  171 *       Retorno         :       nenhum
+//  172 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock3 Using cfiCommon0
           CFI Function MENUOP_configura_notas
         THUMB
-//  171 void MENUOP_configura_notas(void){
+//  173 void MENUOP_configura_notas(void){
 MENUOP_configura_notas:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -498,75 +507,77 @@ MENUOP_configura_notas:
           CFI CFA R13+8
         SUB      SP,SP,#+16
           CFI CFA R13+24
-//  172   unsigned char idioma = APLICACAO_carrega_idioma();
+//  174   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  173   unsigned char flags[6]={0};
+//  175   unsigned char flags[6]={0};
         ADD      R0,SP,#+4
         MOVS     R1,#+0
         MOVS     R2,#+0
         STM      R0!,{R1,R2}
         SUBS     R0,R0,#+8
-//  174   unsigned char cedulas;
-//  175   
-//  176   PARAMETROS_le(ADR_NOTAS,(void*)&cedulas);
+//  176   unsigned char cedulas;
+//  177   
+//  178   PARAMETROS_le(ADR_NOTAS,(void*)&cedulas);
         ADD      R1,SP,#+0
         MOVS     R0,#+2
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  177   for(unsigned char i=0;i<6;i++)
+//  179   for(unsigned char i=0;i<6;i++)
         MOVS     R0,#+0
-        B.N      ??MENUOP_configura_notas_0
-//  178     if(cedulas&(0x01<<i))
-??MENUOP_configura_notas_1:
+??MENUOP_configura_notas_0:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+6
+        BGE.N    ??MENUOP_configura_notas_1
+//  180     if(cedulas&(0x01<<i))
         LDRB     R1,[SP, #+0]
         MOVS     R2,#+1
         LSLS     R2,R2,R0
         TST      R1,R2
         BEQ.N    ??MENUOP_configura_notas_2
-//  179       flags[i] = 255;  
+//  181       flags[i] = 255;  
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         ADD      R1,SP,#+4
         MOVS     R2,#+255
         STRB     R2,[R0, R1]
 ??MENUOP_configura_notas_2:
         ADDS     R0,R0,#+1
-??MENUOP_configura_notas_0:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+6
-        BLT.N    ??MENUOP_configura_notas_1
-//  180   
-//  181   MEL_entry((char*)STRING_titulo_configuracao_notas[idioma],
-//  182             (char**)STRING_tabela_cedulas_canais[idioma],
-//  183             flags,
-//  184             6);
+        B.N      ??MENUOP_configura_notas_0
+//  182   
+//  183   MEL_entry((char*)STRING_titulo_configuracao_notas[idioma],
+//  184             (char**)STRING_tabela_cedulas_canais[idioma],
+//  185             flags,
+//  186             6);
+??MENUOP_configura_notas_1:
         MOVS     R3,#+6
         ADD      R2,SP,#+4
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         MOVS     R0,#+24
-        LDR.W    R1,??DataTable16_10
+        LDR.W    R1,??DataTable17_8
         MLA      R1,R0,R4,R1
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.W    R0,??DataTable16_11
+        LDR.W    R0,??DataTable17_9
         LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall MEL_entry
         BL       MEL_entry
-//  185   
-//  186   cedulas = 0;
+//  187   
+//  188   cedulas = 0;
         MOVS     R0,#+0
         STRB     R0,[SP, #+0]
-//  187   for(unsigned char i=0;i<6;i++)
+//  189   for(unsigned char i=0;i<6;i++)
         MOVS     R0,#+0
-        B.N      ??MENUOP_configura_notas_3
-//  188     if(flags[i])
-??MENUOP_configura_notas_4:
+??MENUOP_configura_notas_3:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+6
+        BGE.N    ??MENUOP_configura_notas_4
+//  190     if(flags[i])
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         ADD      R1,SP,#+4
         LDRB     R1,[R0, R1]
         CMP      R1,#+0
         BEQ.N    ??MENUOP_configura_notas_5
-//  189       cedulas|= (0x01)<<i;
+//  191       cedulas|= (0x01)<<i;
         LDRB     R1,[SP, #+0]
         MOVS     R2,#+1
         LSLS     R2,R2,R0
@@ -574,254 +585,255 @@ MENUOP_configura_notas:
         STRB     R1,[SP, #+0]
 ??MENUOP_configura_notas_5:
         ADDS     R0,R0,#+1
-??MENUOP_configura_notas_3:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+6
-        BLT.N    ??MENUOP_configura_notas_4
-//  190   
-//  191   PARAMETROS_grava(ADR_NOTAS,(void*)&cedulas);     
+        B.N      ??MENUOP_configura_notas_3
+//  192   
+//  193   PARAMETROS_grava(ADR_NOTAS,(void*)&cedulas);     
+??MENUOP_configura_notas_4:
         ADD      R1,SP,#+0
         MOVS     R0,#+2
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  192 }
+//  194 }
         POP      {R0-R4,PC}       ;; return
           CFI EndBlock cfiBlock3
-//  193 /***********************************************************************************
-//  194 *       Descrição       :       Tela que faz o teste da liberação de uma embalagem
-//  195 *       Parametros      :       nenhum
-//  196 *       Retorno         :       nenhum
-//  197 ***********************************************************************************/
+//  195 /***********************************************************************************
+//  196 *       Descrição       :       Tela que faz o teste da liberação de uma embalagem
+//  197 *       Parametros      :       nenhum
+//  198 *       Retorno         :       nenhum
+//  199 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function MENUOP_testa_liberacao_embalagem
         THUMB
-//  198 void MENUOP_testa_liberacao_embalagem(unsigned int tempo){
+//  200 void MENUOP_testa_liberacao_embalagem(unsigned int tempo){
 MENUOP_testa_liberacao_embalagem:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  199   
-//  200   STRING_write_to_internal(CLEAR_DISPLAY,"Liberando","Embalagem");  
-        LDR.N    R2,??DataTable16_12
-        LDR.N    R1,??DataTable16_13
+//  201   
+//  202   STRING_write_to_internal(CLEAR_DISPLAY,"Liberando","Embalagem");  
+        LDR.W    R2,??DataTable17_10
+        LDR.W    R1,??DataTable17_11
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  201   EMBALAGEM_libera_pacote(tempo);    
+//  203   EMBALAGEM_libera_pacote(tempo);    
         MOVS     R0,R4
           CFI FunCall EMBALAGEM_libera_pacote
         BL       EMBALAGEM_libera_pacote
-//  202 }
+//  204 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock4
-//  203 /***********************************************************************************
-//  204 *       Descrição       :       Faz o ajuste do intervalo de tempo em que
-//  205 *                               o motor da embalagem fica ligado
-//  206 *       Parametros      :       nenhum
-//  207 *       Retorno         :       nenhum
-//  208 ***********************************************************************************/
+//  205 /***********************************************************************************
+//  206 *       Descrição       :       Faz o ajuste do intervalo de tempo em que
+//  207 *                               o motor da embalagem fica ligado
+//  208 *       Parametros      :       nenhum
+//  209 *       Retorno         :       nenhum
+//  210 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function MENUOP_configura_tempo_embalagem
         THUMB
-//  209 void MENUOP_configura_tempo_embalagem(void){
+//  211 void MENUOP_configura_tempo_embalagem(void){
 MENUOP_configura_tempo_embalagem:
-        PUSH     {LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
-        SUB      SP,SP,#+28
+          CFI R4 Frame(CFA, -8)
+          CFI CFA R13+8
+        SUB      SP,SP,#+24
           CFI CFA R13+32
-//  210   unsigned int tempo_embalagem;
-//  211   eTECLA tecla;
-//  212   char buffer_linha[17];
-//  213   
-//  214   PARAMETROS_le(ADR_TEMPO_EMBALAGEM,(void*)&tempo_embalagem);
+//  212   unsigned int tempo_embalagem;
+//  213   eTECLA tecla;
+//  214   char buffer_linha[17];
+//  215   
+//  216   PARAMETROS_le(ADR_TEMPO_EMBALAGEM,(void*)&tempo_embalagem);
         ADD      R1,SP,#+0
         MOVS     R0,#+28
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  215   if(tempo_embalagem>10000)
+//  217   if(tempo_embalagem>10000)
         LDR      R0,[SP, #+0]
         MOVW     R1,#+10001
         CMP      R0,R1
         BCC.N    ??MENUOP_configura_tempo_embalagem_0
-//  216     tempo_embalagem = 500;
+//  218     tempo_embalagem = 500;
         MOV      R0,#+500
         STR      R0,[SP, #+0]
-//  217   
-//  218   STRING_write_to_internal(CLEAR_DISPLAY,"T. Motor Emb.",NULL);
+//  219   
+//  220   STRING_write_to_internal(CLEAR_DISPLAY,"T. Motor Emb.",NULL);
 ??MENUOP_configura_tempo_embalagem_0:
         MOVS     R2,#+0
-        LDR.N    R1,??DataTable16_14
+        LDR.W    R1,??DataTable17_12
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MENUOP_configura_tempo_embalagem_1
-//  219   
-//  220   for(;;){
-//  221     tecla = TECLADO_getch();
-//  222     
-//  223     switch(tecla){
-//  224       case TECLA_ENTER:
-//  225            MENUOP_testa_liberacao_embalagem(tempo_embalagem);
-//  226            STRING_write_to_internal(CLEAR_DISPLAY,"T. Motor Emb.",NULL);           
-//  227            break;
-//  228       case TECLA_ESC:
-//  229            STRING_write_to_internal(CLEAR_DISPLAY,"Salvando","na FLASH");
-//  230            PARAMETROS_grava(ADR_TEMPO_EMBALAGEM,(void*)&tempo_embalagem);
-//  231            vTaskDelay(3000);
-//  232            return;
-//  233       case TECLA_INC:
-//  234            if(tempo_embalagem<10000)
-//  235              tempo_embalagem+=100;
-//  236            break;
-//  237       case TECLA_DEC:
-//  238            if(tempo_embalagem>500)
+//  221   
+//  222   for(;;){
+//  223     tecla = TECLADO_getch();
+??MENUOP_configura_tempo_embalagem_1:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
+//  224     
+//  225     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MENUOP_configura_tempo_embalagem_2
+        BCC.N    ??MENUOP_configura_tempo_embalagem_3
+        CMP      R4,#+3
+        BEQ.N    ??MENUOP_configura_tempo_embalagem_4
+        BCC.N    ??MENUOP_configura_tempo_embalagem_5
+        CMP      R4,#+4
+        BNE.N    ??MENUOP_configura_tempo_embalagem_3
+//  226       case TECLA_ENTER:
+//  227            MENUOP_testa_liberacao_embalagem(tempo_embalagem);
+??MENUOP_configura_tempo_embalagem_6:
+        LDR      R0,[SP, #+0]
+          CFI FunCall MENUOP_testa_liberacao_embalagem
+        BL       MENUOP_testa_liberacao_embalagem
+//  228            STRING_write_to_internal(CLEAR_DISPLAY,"T. Motor Emb.",NULL);           
+        MOVS     R2,#+0
+        LDR.W    R1,??DataTable17_12
+        MOVS     R0,#+0
+          CFI FunCall STRING_write_to_internal
+        BL       STRING_write_to_internal
+//  229            break;
+        B.N      ??MENUOP_configura_tempo_embalagem_3
+//  230       case TECLA_ESC:
+//  231            STRING_write_to_internal(CLEAR_DISPLAY,"Salvando","na FLASH");
 ??MENUOP_configura_tempo_embalagem_2:
+        LDR.W    R2,??DataTable17_13
+        LDR.W    R1,??DataTable17_14
+        MOVS     R0,#+0
+          CFI FunCall STRING_write_to_internal
+        BL       STRING_write_to_internal
+//  232            PARAMETROS_grava(ADR_TEMPO_EMBALAGEM,(void*)&tempo_embalagem);
+        ADD      R1,SP,#+0
+        MOVS     R0,#+28
+          CFI FunCall PARAMETROS_grava
+        BL       PARAMETROS_grava
+//  233            vTaskDelay(3000);
+        MOVW     R0,#+3000
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
+//  234            return;
+        B.N      ??MENUOP_configura_tempo_embalagem_7
+//  235       case TECLA_INC:
+//  236            if(tempo_embalagem<10000)
+??MENUOP_configura_tempo_embalagem_5:
+        LDR      R0,[SP, #+0]
+        MOVW     R1,#+10000
+        CMP      R0,R1
+        BCS.N    ??MENUOP_configura_tempo_embalagem_8
+//  237              tempo_embalagem+=100;
+        LDR      R0,[SP, #+0]
+        ADDS     R0,R0,#+100
+        STR      R0,[SP, #+0]
+//  238            break;
+??MENUOP_configura_tempo_embalagem_8:
+        B.N      ??MENUOP_configura_tempo_embalagem_3
+//  239       case TECLA_DEC:
+//  240            if(tempo_embalagem>500)
+??MENUOP_configura_tempo_embalagem_4:
         LDR      R0,[SP, #+0]
         CMP      R0,#+500
-        BLS.N    ??MENUOP_configura_tempo_embalagem_3
-//  239              tempo_embalagem-=100;
+        BLS.N    ??MENUOP_configura_tempo_embalagem_9
+//  241              tempo_embalagem-=100;
         LDR      R0,[SP, #+0]
         SUBS     R0,R0,#+100
         STR      R0,[SP, #+0]
-//  240            break;
-//  241     }
-//  242         
-//  243     sprintf(buffer_linha,"%05d ms",tempo_embalagem);
+//  242            break;
+//  243     }
+//  244         
+//  245     sprintf(buffer_linha,"%05d ms",tempo_embalagem);
+??MENUOP_configura_tempo_embalagem_9:
 ??MENUOP_configura_tempo_embalagem_3:
-??MENUOP_configura_tempo_embalagem_4:
         LDR      R2,[SP, #+0]
-        LDR.N    R1,??DataTable16_15
+        LDR.W    R1,??DataTable17_15
         ADD      R0,SP,#+4
           CFI FunCall sprintf
         BL       sprintf
-//  244     STRING_write_to_internal(NO_CLEAR,NULL,buffer_linha);
+//  246     STRING_write_to_internal(NO_CLEAR,NULL,buffer_linha);
         ADD      R2,SP,#+4
         MOVS     R1,#+0
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-??MENUOP_configura_tempo_embalagem_1:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MENUOP_configura_tempo_embalagem_5
-        BCC.N    ??MENUOP_configura_tempo_embalagem_4
-        CMP      R0,#+3
-        BEQ.N    ??MENUOP_configura_tempo_embalagem_2
-        BCC.N    ??MENUOP_configura_tempo_embalagem_6
-        CMP      R0,#+4
-        BNE.N    ??MENUOP_configura_tempo_embalagem_4
+        B.N      ??MENUOP_configura_tempo_embalagem_1
+//  247   }
 ??MENUOP_configura_tempo_embalagem_7:
-        LDR      R0,[SP, #+0]
-          CFI FunCall MENUOP_testa_liberacao_embalagem
-        BL       MENUOP_testa_liberacao_embalagem
-        MOVS     R2,#+0
-        LDR.N    R1,??DataTable16_14
-        MOVS     R0,#+0
-          CFI FunCall STRING_write_to_internal
-        BL       STRING_write_to_internal
-        B.N      ??MENUOP_configura_tempo_embalagem_4
-??MENUOP_configura_tempo_embalagem_5:
-        LDR.N    R2,??DataTable16_16
-        LDR.N    R1,??DataTable16_17
-        MOVS     R0,#+0
-          CFI FunCall STRING_write_to_internal
-        BL       STRING_write_to_internal
-        ADD      R1,SP,#+0
-        MOVS     R0,#+28
-          CFI FunCall PARAMETROS_grava
-        BL       PARAMETROS_grava
-        MOVW     R0,#+3000
-          CFI FunCall vTaskDelay
-        BL       vTaskDelay
-        ADD      SP,SP,#+28
-          CFI CFA R13+4
-        POP      {PC}             ;; return
-          CFI CFA R13+32
-??MENUOP_configura_tempo_embalagem_6:
-        LDR      R0,[SP, #+0]
-        MOVW     R1,#+10000
-        CMP      R0,R1
-        BCS.N    ??MENUOP_configura_tempo_embalagem_8
-        LDR      R0,[SP, #+0]
-        ADDS     R0,R0,#+100
-        STR      R0,[SP, #+0]
-??MENUOP_configura_tempo_embalagem_8:
-        B.N      ??MENUOP_configura_tempo_embalagem_4
+        ADD      SP,SP,#+24
+          CFI CFA R13+8
+        POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock5
-//  245   }
-//  246   /*
-//  247   unsigned int tempo_embalagem;
-//  248   unsigned char idioma;
-//  249   
-//  250   PARAMETROS_le(ADR_TEMPO_EMBALAGEM,(void*)&tempo_embalagem);
-//  251   PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma);
-//  252   
-//  253   if(tempo_embalagem>10000)
-//  254     tempo_embalagem = 100;
-//  255   
-//  256   tempo_embalagem = MEI_entry_inc((char*)STRING_mensagem_edita_tempo_embalagem[idioma],
-//  257                                   "%05d ms",
-//  258                                   tempo_embalagem,
-//  259                                   100,
-//  260                                   10000,
-//  261                                   100);
-//  262   
-//  263   PARAMETROS_grava(ADR_TEMPO_EMBALAGEM,(void*)&tempo_embalagem);  
-//  264   */
-//  265 }
-//  266 /***********************************************************************************
-//  267 *       Descrição       :       Configura o volume utilizado pela música
-//  268 *       Parametros      :       nenhum
-//  269 *       Retorno         :       nenhum
-//  270 ***********************************************************************************/
+//  248   /*
+//  249   unsigned int tempo_embalagem;
+//  250   unsigned char idioma;
+//  251   
+//  252   PARAMETROS_le(ADR_TEMPO_EMBALAGEM,(void*)&tempo_embalagem);
+//  253   PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma);
+//  254   
+//  255   if(tempo_embalagem>10000)
+//  256     tempo_embalagem = 100;
+//  257   
+//  258   tempo_embalagem = MEI_entry_inc((char*)STRING_mensagem_edita_tempo_embalagem[idioma],
+//  259                                   "%05d ms",
+//  260                                   tempo_embalagem,
+//  261                                   100,
+//  262                                   10000,
+//  263                                   100);
+//  264   
+//  265   PARAMETROS_grava(ADR_TEMPO_EMBALAGEM,(void*)&tempo_embalagem);  
+//  266   */
+//  267 }
+//  268 /***********************************************************************************
+//  269 *       Descrição       :       Configura o volume utilizado pela música
+//  270 *       Parametros      :       nenhum
+//  271 *       Retorno         :       nenhum
+//  272 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function MENUOP_configura_volume_musica
         THUMB
-//  271 void MENUOP_configura_volume_musica(void){
+//  273 void MENUOP_configura_volume_musica(void){
 MENUOP_configura_volume_musica:
         PUSH     {R0-R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+24
-//  272   unsigned int volume;
-//  273   unsigned char idioma;  
-//  274   
-//  275   PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma);
+//  274   unsigned int volume;
+//  275   unsigned char idioma;  
+//  276   
+//  277   PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma);
         ADD      R1,SP,#+8
         MOVS     R0,#+0
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  276   PARAMETROS_le(ADR_VOLUME_MUSICA,(void*)&volume);
+//  278   PARAMETROS_le(ADR_VOLUME_MUSICA,(void*)&volume);
         ADD      R1,SP,#+12
         MOVS     R0,#+29
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  277   
-//  278   if(volume>100)
+//  279   
+//  280   if(volume>100)
         LDR      R0,[SP, #+12]
         CMP      R0,#+101
         BCC.N    ??MENUOP_configura_volume_musica_0
-//  279     volume = 100;
+//  281     volume = 100;
         MOVS     R0,#+100
         STR      R0,[SP, #+12]
-//  280   
-//  281   volume = MEI_entry_inc((char*)STRING_titulo_menu_edita_volume_musica[idioma],
-//  282                          "%03d",
-//  283                          volume,
-//  284                          1,
-//  285                          100,
-//  286                          1);
+//  282   
+//  283   volume = MEI_entry_inc((char*)STRING_titulo_menu_edita_volume_musica[idioma],
+//  284                          "%03d",
+//  285                          volume,
+//  286                          1,
+//  287                          100,
+//  288                          1);
 ??MENUOP_configura_volume_musica_0:
         MOVS     R0,#+1
         STR      R0,[SP, #+4]
@@ -829,65 +841,65 @@ MENUOP_configura_volume_musica:
         STR      R0,[SP, #+0]
         MOVS     R3,#+1
         LDR      R2,[SP, #+12]
-        LDR.N    R1,??DataTable16_18
+        LDR.W    R1,??DataTable17_16
         LDRB     R0,[SP, #+8]
-        LDR.N    R4,??DataTable16_19
+        LDR.W    R4,??DataTable17_17
         LDR      R0,[R4, R0, LSL #+2]
           CFI FunCall MEI_entry_inc
         BL       MEI_entry_inc
         STR      R0,[SP, #+12]
-//  287   PARAMETROS_grava(ADR_VOLUME_MUSICA,(void*)&volume);    
+//  289   PARAMETROS_grava(ADR_VOLUME_MUSICA,(void*)&volume);    
         ADD      R1,SP,#+12
         MOVS     R0,#+29
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  288 }
+//  290 }
         POP      {R0-R4,PC}       ;; return
           CFI EndBlock cfiBlock6
-//  289 /***********************************************************************************
-//  290 *       Descrição       :       Confiura o volume das locuções
-//  291 *       Parametros      :       nenhum
-//  292 *       Retorno         :       nenhum
-//  293 ***********************************************************************************/
+//  291 /***********************************************************************************
+//  292 *       Descrição       :       Confiura o volume das locuções
+//  293 *       Parametros      :       nenhum
+//  294 *       Retorno         :       nenhum
+//  295 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function MENUOP_configura_volume_locucoes
         THUMB
-//  294 void MENUOP_configura_volume_locucoes(void){
+//  296 void MENUOP_configura_volume_locucoes(void){
 MENUOP_configura_volume_locucoes:
         PUSH     {R0-R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+24
-//  295   unsigned int volume;
-//  296   unsigned char idioma;  
-//  297   
-//  298   PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma);
+//  297   unsigned int volume;
+//  298   unsigned char idioma;  
+//  299   
+//  300   PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma);
         ADD      R1,SP,#+8
         MOVS     R0,#+0
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  299   PARAMETROS_le(ADR_VOLUME_VOZ,(void*)&volume);
+//  301   PARAMETROS_le(ADR_VOLUME_VOZ,(void*)&volume);
         ADD      R1,SP,#+12
         MOVS     R0,#+30
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  300   
-//  301   if(volume>100)
+//  302   
+//  303   if(volume>100)
         LDR      R0,[SP, #+12]
         CMP      R0,#+101
         BCC.N    ??MENUOP_configura_volume_locucoes_0
-//  302     volume = 100;
+//  304     volume = 100;
         MOVS     R0,#+100
         STR      R0,[SP, #+12]
-//  303   
-//  304   volume = MEI_entry_inc((char*)STRING_titulo_menu_edita_volume_voz[idioma],
-//  305                          "%03d",
-//  306                          volume,
-//  307                          1,
-//  308                          100,
-//  309                          1);
+//  305   
+//  306   volume = MEI_entry_inc((char*)STRING_titulo_menu_edita_volume_voz[idioma],
+//  307                          "%03d",
+//  308                          volume,
+//  309                          1,
+//  310                          100,
+//  311                          1);
 ??MENUOP_configura_volume_locucoes_0:
         MOVS     R0,#+1
         STR      R0,[SP, #+4]
@@ -895,65 +907,65 @@ MENUOP_configura_volume_locucoes:
         STR      R0,[SP, #+0]
         MOVS     R3,#+1
         LDR      R2,[SP, #+12]
-        LDR.N    R1,??DataTable16_18
+        LDR.W    R1,??DataTable17_16
         LDRB     R0,[SP, #+8]
-        LDR.N    R4,??DataTable16_20
+        LDR.W    R4,??DataTable17_18
         LDR      R0,[R4, R0, LSL #+2]
           CFI FunCall MEI_entry_inc
         BL       MEI_entry_inc
         STR      R0,[SP, #+12]
-//  310   PARAMETROS_grava(ADR_VOLUME_VOZ,(void*)&volume);  
+//  312   PARAMETROS_grava(ADR_VOLUME_VOZ,(void*)&volume);  
         ADD      R1,SP,#+12
         MOVS     R0,#+30
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  311 }
+//  313 }
         POP      {R0-R4,PC}       ;; return
           CFI EndBlock cfiBlock7
-//  312 /***********************************************************************************
-//  313 *       Descrição       :       Configura o intervalo para a propaganda
-//  314 *       Parametros      :       nenhum
-//  315 *       Retorno         :       nenhum
-//  316 ***********************************************************************************/
+//  314 /***********************************************************************************
+//  315 *       Descrição       :       Configura o intervalo para a propaganda
+//  316 *       Parametros      :       nenhum
+//  317 *       Retorno         :       nenhum
+//  318 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock8 Using cfiCommon0
           CFI Function MENUOP_configura_intervalo_propaganda
         THUMB
-//  317 void MENUOP_configura_intervalo_propaganda(void){
+//  319 void MENUOP_configura_intervalo_propaganda(void){
 MENUOP_configura_intervalo_propaganda:
         PUSH     {R0-R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+24
-//  318   unsigned char idioma;
-//  319   unsigned int intervalo;
-//  320   
-//  321   PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma);
+//  320   unsigned char idioma;
+//  321   unsigned int intervalo;
+//  322   
+//  323   PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma);
         ADD      R1,SP,#+8
         MOVS     R0,#+0
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  322   PARAMETROS_le(ADR_INTERVALO_TEMPO_PROP,(void*)&intervalo);
+//  324   PARAMETROS_le(ADR_INTERVALO_TEMPO_PROP,(void*)&intervalo);
         ADD      R1,SP,#+12
         MOVS     R0,#+31
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  323   
-//  324   if(intervalo>60)
+//  325   
+//  326   if(intervalo>60)
         LDR      R0,[SP, #+12]
         CMP      R0,#+61
         BCC.N    ??MENUOP_configura_intervalo_propaganda_0
-//  325     intervalo = 60;
+//  327     intervalo = 60;
         MOVS     R0,#+60
         STR      R0,[SP, #+12]
-//  326   
-//  327   intervalo = MEI_entry_inc((char*)STRING_titulo_menu_intervalo_prop[idioma],
-//  328                             "%02d min",
-//  329                              intervalo,
-//  330                              10,
-//  331                              60,
-//  332                              10);  
+//  328   
+//  329   intervalo = MEI_entry_inc((char*)STRING_titulo_menu_intervalo_prop[idioma],
+//  330                             "%02d min",
+//  331                              intervalo,
+//  332                              10,
+//  333                              60,
+//  334                              10);  
 ??MENUOP_configura_intervalo_propaganda_0:
         MOVS     R0,#+10
         STR      R0,[SP, #+4]
@@ -961,33 +973,33 @@ MENUOP_configura_intervalo_propaganda:
         STR      R0,[SP, #+0]
         MOVS     R3,#+10
         LDR      R2,[SP, #+12]
-        LDR.N    R1,??DataTable16_21
+        LDR.W    R1,??DataTable17_19
         LDRB     R0,[SP, #+8]
-        LDR.N    R4,??DataTable16_22
+        LDR.W    R4,??DataTable17_20
         LDR      R0,[R4, R0, LSL #+2]
           CFI FunCall MEI_entry_inc
         BL       MEI_entry_inc
         STR      R0,[SP, #+12]
-//  333   
-//  334   PARAMETROS_grava(ADR_INTERVALO_TEMPO_PROP,(void*)&intervalo);    
+//  335   
+//  336   PARAMETROS_grava(ADR_INTERVALO_TEMPO_PROP,(void*)&intervalo);    
         ADD      R1,SP,#+12
         MOVS     R0,#+31
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  335 }
+//  337 }
         POP      {R0-R4,PC}       ;; return
           CFI EndBlock cfiBlock8
-//  336 /***********************************************************************************
-//  337 *       Descrição       :       Tela para configuração do modo free
-//  338 *       Parametros      :       nenhum
-//  339 *       Retorno         :       nenhum
-//  340 ***********************************************************************************/
+//  338 /***********************************************************************************
+//  339 *       Descrição       :       Tela para configuração do modo free
+//  340 *       Parametros      :       nenhum
+//  341 *       Retorno         :       nenhum
+//  342 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock9 Using cfiCommon0
           CFI Function MENUOP_configura_modo_free
         THUMB
-//  341 void MENUOP_configura_modo_free(void){
+//  343 void MENUOP_configura_modo_free(void){
 MENUOP_configura_modo_free:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -995,49 +1007,49 @@ MENUOP_configura_modo_free:
           CFI CFA R13+8
         SUB      SP,SP,#+8
           CFI CFA R13+16
-//  342   unsigned char idioma = APLICACAO_carrega_idioma();
+//  344   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  343   unsigned char flag;
-//  344   
-//  345   PARAMETROS_le(ADR_FLAG_FREE,(void*)&flag);
+//  345   unsigned char flag;
+//  346   
+//  347   PARAMETROS_le(ADR_FLAG_FREE,(void*)&flag);
         ADD      R1,SP,#+0
         MOVS     R0,#+32
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  346   
-//  347   flag = MEF_entry((char*)STRING_mensagem_configura_free[idioma],flag,"ON ","OFF");    
+//  348   
+//  349   flag = MEF_entry((char*)STRING_mensagem_configura_free[idioma],flag,"ON ","OFF");    
         ADR.N    R3,??DataTable16  ;; "OFF"
         ADR.N    R2,??DataTable16_1  ;; "ON "
         LDRB     R1,[SP, #+0]
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.N    R0,??DataTable16_23
+        LDR.W    R0,??DataTable17_21
         LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall MEF_entry
         BL       MEF_entry
         STRB     R0,[SP, #+0]
-//  348   
-//  349   PARAMETROS_grava(ADR_FLAG_FREE,(void*)&flag);
+//  350   
+//  351   PARAMETROS_grava(ADR_FLAG_FREE,(void*)&flag);
         ADD      R1,SP,#+0
         MOVS     R0,#+32
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  350 }
+//  352 }
         POP      {R0,R1,R4,PC}    ;; return
           CFI EndBlock cfiBlock9
-//  351 /***********************************************************************************
-//  352 *       Descrição       :       Tela para configuração do uso da fita-led
-//  353 *                               durante a espera da máquina
-//  354 *       Parametros      :       nenhum
-//  355 *       Retorno         :       nenhum
-//  356 ***********************************************************************************/
+//  353 /***********************************************************************************
+//  354 *       Descrição       :       Tela para configuração do uso da fita-led
+//  355 *                               durante a espera da máquina
+//  356 *       Parametros      :       nenhum
+//  357 *       Retorno         :       nenhum
+//  358 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock10 Using cfiCommon0
           CFI Function MENUOP_configura_fita_led
         THUMB
-//  357 void MENUOP_configura_fita_led(void){
+//  359 void MENUOP_configura_fita_led(void){
 MENUOP_configura_fita_led:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -1045,49 +1057,49 @@ MENUOP_configura_fita_led:
           CFI CFA R13+8
         SUB      SP,SP,#+8
           CFI CFA R13+16
-//  358   unsigned char idioma = APLICACAO_carrega_idioma();
+//  360   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  359   unsigned char flag;
-//  360   
-//  361   PARAMETROS_le(ADR_FLAG_FITA_LED,(void*)&flag);
+//  361   unsigned char flag;
+//  362   
+//  363   PARAMETROS_le(ADR_FLAG_FITA_LED,(void*)&flag);
         ADD      R1,SP,#+0
         MOVS     R0,#+33
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  362   
-//  363   flag = MEF_entry((char*)STRING_mensagem_configura_fita_led[idioma],flag,"ON ","OFF");    
+//  364   
+//  365   flag = MEF_entry((char*)STRING_mensagem_configura_fita_led[idioma],flag,"ON ","OFF");    
         ADR.N    R3,??DataTable16  ;; "OFF"
         ADR.N    R2,??DataTable16_1  ;; "ON "
         LDRB     R1,[SP, #+0]
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.N    R0,??DataTable16_24
+        LDR.W    R0,??DataTable17_22
         LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall MEF_entry
         BL       MEF_entry
         STRB     R0,[SP, #+0]
-//  364   
-//  365   PARAMETROS_grava(ADR_FLAG_FITA_LED,(void*)&flag);
+//  366   
+//  367   PARAMETROS_grava(ADR_FLAG_FITA_LED,(void*)&flag);
         ADD      R1,SP,#+0
         MOVS     R0,#+33
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  366 }
+//  368 }
         POP      {R0,R1,R4,PC}    ;; return
           CFI EndBlock cfiBlock10
-//  367 /***********************************************************************************
-//  368 *       Descrição       :       Tela para configuração do uso de troco
-//  369 *                               pela máquina
-//  370 *       Parametros      :       nenhum
-//  371 *       Retorno         :       nenhum
-//  372 ***********************************************************************************/
+//  369 /***********************************************************************************
+//  370 *       Descrição       :       Tela para configuração do uso de troco
+//  371 *                               pela máquina
+//  372 *       Parametros      :       nenhum
+//  373 *       Retorno         :       nenhum
+//  374 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock11 Using cfiCommon0
           CFI Function MENUOP_configura_troco
         THUMB
-//  373 void MENUOP_configura_troco(void){
+//  375 void MENUOP_configura_troco(void){
 MENUOP_configura_troco:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -1095,81 +1107,81 @@ MENUOP_configura_troco:
           CFI CFA R13+8
         SUB      SP,SP,#+8
           CFI CFA R13+16
-//  374   unsigned char idioma = APLICACAO_carrega_idioma();
+//  376   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  375   unsigned char flag;
-//  376   
-//  377   PARAMETROS_le(ADR_FLAG_TROCO,(void*)&flag);
+//  377   unsigned char flag;
+//  378   
+//  379   PARAMETROS_le(ADR_FLAG_TROCO,(void*)&flag);
         ADD      R1,SP,#+0
         MOVS     R0,#+34
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  378   
-//  379   flag = MEF_entry((char*)STRING_titulo_configura_troco[idioma],flag,"ON ","OFF");    
+//  380   
+//  381   flag = MEF_entry((char*)STRING_titulo_configura_troco[idioma],flag,"ON ","OFF");    
         ADR.N    R3,??DataTable16  ;; "OFF"
         ADR.N    R2,??DataTable16_1  ;; "ON "
         LDRB     R1,[SP, #+0]
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.N    R0,??DataTable16_25
+        LDR.W    R0,??DataTable17_23
         LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall MEF_entry
         BL       MEF_entry
         STRB     R0,[SP, #+0]
-//  380   
-//  381   PARAMETROS_grava(ADR_FLAG_TROCO,(void*)&flag);         
+//  382   
+//  383   PARAMETROS_grava(ADR_FLAG_TROCO,(void*)&flag);         
         ADD      R1,SP,#+0
         MOVS     R0,#+34
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  382 }
+//  384 }
         POP      {R0,R1,R4,PC}    ;; return
           CFI EndBlock cfiBlock11
-//  383 /***********************************************************************************
-//  384 *       Descrição       :       Tela para configurar a comissão do ponto
-//  385 *       Parametros      :       nenhum
-//  386 *       Retorno         :       nenhum
-//  387 ***********************************************************************************/
+//  385 /***********************************************************************************
+//  386 *       Descrição       :       Tela para configurar a comissão do ponto
+//  387 *       Parametros      :       nenhum
+//  388 *       Retorno         :       nenhum
+//  389 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock12 Using cfiCommon0
           CFI Function MENUOP_configura_comissao
         THUMB
-//  388 void MENUOP_configura_comissao(void){
+//  390 void MENUOP_configura_comissao(void){
 MENUOP_configura_comissao:
         PUSH     {R0-R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+24
-//  389   unsigned int comissao;
-//  390   unsigned char idioma;
-//  391   
-//  392   PARAMETROS_le(ADR_COMISSAO_PONTO,(void*)&comissao);
+//  391   unsigned int comissao;
+//  392   unsigned char idioma;
+//  393   
+//  394   PARAMETROS_le(ADR_COMISSAO_PONTO,(void*)&comissao);
         ADD      R1,SP,#+12
         MOVS     R0,#+37
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  393   PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma);
+//  395   PARAMETROS_le(ADR_FLAG_IDIOMA,(void*)&idioma);
         ADD      R1,SP,#+8
         MOVS     R0,#+0
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  394   
-//  395   if(comissao>100)
+//  396   
+//  397   if(comissao>100)
         LDR      R0,[SP, #+12]
         CMP      R0,#+101
         BCC.N    ??MENUOP_configura_comissao_0
-//  396     comissao = 20;
+//  398     comissao = 20;
         MOVS     R0,#+20
         STR      R0,[SP, #+12]
-//  397   
-//  398   comissao = MEI_entry_inc((char*)STRING_titulo_edita_comissao[idioma],
-//  399                            "%03d %%",
-//  400                             comissao,
-//  401                             1,
-//  402                             100,
-//  403                             1);
+//  399   
+//  400   comissao = MEI_entry_inc((char*)STRING_titulo_edita_comissao[idioma],
+//  401                            "%03d %%",
+//  402                             comissao,
+//  403                             1,
+//  404                             100,
+//  405                             1);
 ??MENUOP_configura_comissao_0:
         MOVS     R0,#+1
         STR      R0,[SP, #+4]
@@ -1177,209 +1189,209 @@ MENUOP_configura_comissao:
         STR      R0,[SP, #+0]
         MOVS     R3,#+1
         LDR      R2,[SP, #+12]
-        LDR.N    R1,??DataTable16_26
+        LDR.N    R1,??DataTable17_24
         LDRB     R0,[SP, #+8]
-        LDR.N    R4,??DataTable16_27
+        LDR.N    R4,??DataTable17_25
         LDR      R0,[R4, R0, LSL #+2]
           CFI FunCall MEI_entry_inc
         BL       MEI_entry_inc
         STR      R0,[SP, #+12]
-//  404   
-//  405   PARAMETROS_grava(ADR_COMISSAO_PONTO,(void*)&comissao);  
+//  406   
+//  407   PARAMETROS_grava(ADR_COMISSAO_PONTO,(void*)&comissao);  
         ADD      R1,SP,#+12
         MOVS     R0,#+37
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  406 }
+//  408 }
         POP      {R0-R4,PC}       ;; return
           CFI EndBlock cfiBlock12
-//  407 /***********************************************************************************
-//  408 *       Descrição       :       Tela para configurar a mensagem de cliente
-//  409 *       Parametros      :       nenhum
-//  410 *       Retorno         :       nenhum
-//  411 ***********************************************************************************/
+//  409 /***********************************************************************************
+//  410 *       Descrição       :       Tela para configurar a mensagem de cliente
+//  411 *       Parametros      :       nenhum
+//  412 *       Retorno         :       nenhum
+//  413 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock13 Using cfiCommon0
           CFI Function MENUOP_configura_mensagem_cliente
         THUMB
-//  412 void MENUOP_configura_mensagem_cliente(void){
+//  414 void MENUOP_configura_mensagem_cliente(void){
 MENUOP_configura_mensagem_cliente:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+20
           CFI CFA R13+24
-//  413   char buffer_mensagem[17];
-//  414   
-//  415   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_01,(void*)buffer_mensagem);
+//  415   char buffer_mensagem[17];
+//  416   
+//  417   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_01,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
         MOVS     R0,#+60
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  416   if(MENUOP_edita_mensagem("MSG CLIENTE 01",buffer_mensagem)){
+//  418   if(MENUOP_edita_mensagem("MSG CLIENTE 01",buffer_mensagem)){
         ADD      R1,SP,#+0
-        LDR.N    R0,??DataTable16_28
+        LDR.N    R0,??DataTable17_26
           CFI FunCall MENUOP_edita_mensagem
         BL       MENUOP_edita_mensagem
         CMP      R0,#+0
         BEQ.N    ??MENUOP_configura_mensagem_cliente_0
-//  417     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_01,(void*)buffer_mensagem);
+//  419     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_01,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
         MOVS     R0,#+60
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  418   }
-//  419 }
+//  420   }
+//  421 }
 ??MENUOP_configura_mensagem_cliente_0:
         ADD      SP,SP,#+20
           CFI CFA R13+4
         POP      {PC}             ;; return
           CFI EndBlock cfiBlock13
-//  420 /***********************************************************************************
-//  421 *       Descrição       :       Tela para configurar a mensagem do cliente
-//  422 *                               de número 02
-//  423 *       Parametros      :       nenhum
-//  424 *       Retorno         :       nenhum
-//  425 ***********************************************************************************/
+//  422 /***********************************************************************************
+//  423 *       Descrição       :       Tela para configurar a mensagem do cliente
+//  424 *                               de número 02
+//  425 *       Parametros      :       nenhum
+//  426 *       Retorno         :       nenhum
+//  427 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock14 Using cfiCommon0
           CFI Function MENUOP_configura_mensagem_cliente_02
         THUMB
-//  426 void MENUOP_configura_mensagem_cliente_02(void){
+//  428 void MENUOP_configura_mensagem_cliente_02(void){
 MENUOP_configura_mensagem_cliente_02:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+20
           CFI CFA R13+24
-//  427   char buffer_mensagem[17];
-//  428   
-//  429   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_02,(void*)buffer_mensagem);
+//  429   char buffer_mensagem[17];
+//  430   
+//  431   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_02,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
         MOVS     R0,#+61
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  430   if(MENUOP_edita_mensagem("MSG CLIENTE 02",buffer_mensagem)){
+//  432   if(MENUOP_edita_mensagem("MSG CLIENTE 02",buffer_mensagem)){
         ADD      R1,SP,#+0
-        LDR.N    R0,??DataTable16_29
+        LDR.N    R0,??DataTable17_27
           CFI FunCall MENUOP_edita_mensagem
         BL       MENUOP_edita_mensagem
         CMP      R0,#+0
         BEQ.N    ??MENUOP_configura_mensagem_cliente_02_0
-//  431     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_02,(void*)buffer_mensagem);
+//  433     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_02,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
         MOVS     R0,#+61
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  432   }
-//  433 }
+//  434   }
+//  435 }
 ??MENUOP_configura_mensagem_cliente_02_0:
         ADD      SP,SP,#+20
           CFI CFA R13+4
         POP      {PC}             ;; return
           CFI EndBlock cfiBlock14
-//  434 /***********************************************************************************
-//  435 *       Descrição       :       Tela para configurar a mensagem do cliente
-//  436 *                               de número 03
-//  437 *       Parametros      :       nenhum
-//  438 *       Retorno         :       nenhum
-//  439 ***********************************************************************************/
+//  436 /***********************************************************************************
+//  437 *       Descrição       :       Tela para configurar a mensagem do cliente
+//  438 *                               de número 03
+//  439 *       Parametros      :       nenhum
+//  440 *       Retorno         :       nenhum
+//  441 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock15 Using cfiCommon0
           CFI Function MENUOP_configura_mensagem_cliente_03
         THUMB
-//  440 void MENUOP_configura_mensagem_cliente_03(void){
+//  442 void MENUOP_configura_mensagem_cliente_03(void){
 MENUOP_configura_mensagem_cliente_03:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+20
           CFI CFA R13+24
-//  441   char buffer_mensagem[17];
-//  442   
-//  443   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_03,(void*)buffer_mensagem);
+//  443   char buffer_mensagem[17];
+//  444   
+//  445   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_03,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
         MOVS     R0,#+62
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  444   if(MENUOP_edita_mensagem("MSG CLIENTE 03",buffer_mensagem)){
+//  446   if(MENUOP_edita_mensagem("MSG CLIENTE 03",buffer_mensagem)){
         ADD      R1,SP,#+0
-        LDR.N    R0,??DataTable16_30
+        LDR.N    R0,??DataTable17_28
           CFI FunCall MENUOP_edita_mensagem
         BL       MENUOP_edita_mensagem
         CMP      R0,#+0
         BEQ.N    ??MENUOP_configura_mensagem_cliente_03_0
-//  445     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_03,(void*)buffer_mensagem);
+//  447     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_03,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
         MOVS     R0,#+62
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  446   }
-//  447 }
+//  448   }
+//  449 }
 ??MENUOP_configura_mensagem_cliente_03_0:
         ADD      SP,SP,#+20
           CFI CFA R13+4
         POP      {PC}             ;; return
           CFI EndBlock cfiBlock15
-//  448 /***********************************************************************************
-//  449 *       Descrição       :       Tela para configurar a mensagem do cliente
-//  450 *                               de número 04
-//  451 *       Parametros      :       nenhum
-//  452 *       Retorno         :       nenhum
-//  453 ***********************************************************************************/
+//  450 /***********************************************************************************
+//  451 *       Descrição       :       Tela para configurar a mensagem do cliente
+//  452 *                               de número 04
+//  453 *       Parametros      :       nenhum
+//  454 *       Retorno         :       nenhum
+//  455 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock16 Using cfiCommon0
           CFI Function MENUOP_configura_mensagem_cliente_04
         THUMB
-//  454 void MENUOP_configura_mensagem_cliente_04(void){
+//  456 void MENUOP_configura_mensagem_cliente_04(void){
 MENUOP_configura_mensagem_cliente_04:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+20
           CFI CFA R13+24
-//  455   char buffer_mensagem[17];
-//  456   
-//  457   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_04,(void*)buffer_mensagem);
+//  457   char buffer_mensagem[17];
+//  458   
+//  459   PARAMETROS_le(ADR_MENSAGEM_CLIENTE_04,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
         MOVS     R0,#+63
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  458   if(MENUOP_edita_mensagem("MSG CLIENTE 04",buffer_mensagem)){
+//  460   if(MENUOP_edita_mensagem("MSG CLIENTE 04",buffer_mensagem)){
         ADD      R1,SP,#+0
-        LDR.N    R0,??DataTable16_31
+        LDR.N    R0,??DataTable17_29
           CFI FunCall MENUOP_edita_mensagem
         BL       MENUOP_edita_mensagem
         CMP      R0,#+0
         BEQ.N    ??MENUOP_configura_mensagem_cliente_04_0
-//  459     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_04,(void*)buffer_mensagem);
+//  461     PARAMETROS_grava(ADR_MENSAGEM_CLIENTE_04,(void*)buffer_mensagem);
         ADD      R1,SP,#+0
         MOVS     R0,#+63
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  460   }   
-//  461 }
+//  462   }   
+//  463 }
 ??MENUOP_configura_mensagem_cliente_04_0:
         ADD      SP,SP,#+20
           CFI CFA R13+4
         POP      {PC}             ;; return
           CFI EndBlock cfiBlock16
-//  462 /***********************************************************************************
-//  463 *       Descrição       :       Tela para editar o flag que liga o 
-//  464 *                               desumidificador
-//  465 *       Parametros      :       nenhum
-//  466 *       Retorno         :       nenhum
-//  467 ***********************************************************************************/
+//  464 /***********************************************************************************
+//  465 *       Descrição       :       Tela para editar o flag que liga o 
+//  466 *                               desumidificador
+//  467 *       Parametros      :       nenhum
+//  468 *       Retorno         :       nenhum
+//  469 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock17 Using cfiCommon0
           CFI Function MENUOP_configura_flag_desumidificador
         THUMB
-//  468 void MENUOP_configura_flag_desumidificador(void){
+//  470 void MENUOP_configura_flag_desumidificador(void){
 MENUOP_configura_flag_desumidificador:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -1387,37 +1399,37 @@ MENUOP_configura_flag_desumidificador:
           CFI CFA R13+8
         SUB      SP,SP,#+8
           CFI CFA R13+16
-//  469   unsigned char idioma = APLICACAO_carrega_idioma();
+//  471   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  470   unsigned char flag;
-//  471   
-//  472   PARAMETROS_le(ADR_FLAG_DESUMIDIFICADOR,(void*)&flag);
+//  472   unsigned char flag;
+//  473   
+//  474   PARAMETROS_le(ADR_FLAG_DESUMIDIFICADOR,(void*)&flag);
         ADD      R1,SP,#+0
         MOVS     R0,#+38
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  473   
-//  474   flag = MEF_entry((char*)STRING_titulo_edita_flag_desumidifcador[idioma],
-//  475                    flag,
-//  476                    "ON ","OFF");    
+//  475   
+//  476   flag = MEF_entry((char*)STRING_titulo_edita_flag_desumidifcador[idioma],
+//  477                    flag,
+//  478                    "ON ","OFF");    
         ADR.N    R3,??DataTable16  ;; "OFF"
         ADR.N    R2,??DataTable16_1  ;; "ON "
         LDRB     R1,[SP, #+0]
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.N    R0,??DataTable16_32
+        LDR.N    R0,??DataTable17_30
         LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall MEF_entry
         BL       MEF_entry
         STRB     R0,[SP, #+0]
-//  477   
-//  478   PARAMETROS_grava(ADR_FLAG_DESUMIDIFICADOR,(void*)&flag);    
+//  479   
+//  480   PARAMETROS_grava(ADR_FLAG_DESUMIDIFICADOR,(void*)&flag);    
         ADD      R1,SP,#+0
         MOVS     R0,#+38
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  479 }
+//  481 }
         POP      {R0,R1,R4,PC}    ;; return
           CFI EndBlock cfiBlock17
 
@@ -1432,414 +1444,637 @@ MENUOP_configura_flag_desumidificador:
         DATA
 ??DataTable16_1:
         DC8      "ON "
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_2:
-        DC32     MENUOP_funcs
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_3:
-        DC32     STRING_menu_configuracao_operacao
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_4:
-        DC32     STRING_titulo_menu_operacao
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_5:
-        DC32     0x18697
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_6:
-        DC32     STRING_titulo_ajusta_valor
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_7:
-        DC32     0x18696
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_8:
-        DC32     STRING_simbolo_moeda
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_9:
-        DC32     `?<Constant "%s %d,%02d">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_10:
-        DC32     STRING_tabela_cedulas_canais
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_11:
-        DC32     STRING_titulo_configuracao_notas
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_12:
-        DC32     `?<Constant "Embalagem">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_13:
-        DC32     `?<Constant "Liberando">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_14:
-        DC32     `?<Constant "T. Motor Emb.">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_15:
-        DC32     `?<Constant "%05d ms">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_16:
-        DC32     `?<Constant "na FLASH">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_17:
-        DC32     `?<Constant "Salvando">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_18:
-        DC32     `?<Constant "%03d">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_19:
-        DC32     STRING_titulo_menu_edita_volume_musica
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_20:
-        DC32     STRING_titulo_menu_edita_volume_voz
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_21:
-        DC32     `?<Constant "%02d min">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_22:
-        DC32     STRING_titulo_menu_intervalo_prop
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_23:
-        DC32     STRING_mensagem_configura_free
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_24:
-        DC32     STRING_mensagem_configura_fita_led
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_25:
-        DC32     STRING_titulo_configura_troco
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_26:
-        DC32     `?<Constant "%03d %%">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_27:
-        DC32     STRING_titulo_edita_comissao
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_28:
-        DC32     `?<Constant "MSG CLIENTE 01">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_29:
-        DC32     `?<Constant "MSG CLIENTE 02">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_30:
-        DC32     `?<Constant "MSG CLIENTE 03">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_31:
-        DC32     `?<Constant "MSG CLIENTE 04">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_32:
-        DC32     STRING_titulo_edita_flag_desumidifcador
-//  480 /***********************************************************************************
-//  481 *       Descrição       :       Tela para configuração de uma mensagem no LCD
-//  482 *       Parametros      :       (char*) título da tela
-//  483 *                               (char*) mensagem inicial
-//  484 *       Retorno         :       (unsigned char) maior do que zero se 
-//  485 *                               a mensagem original sofreu alteração
-//  486 ***********************************************************************************/
+//  482 /***********************************************************************************
+//  483 *       Descrição       :       Tela para configuração de uma mensagem no LCD
+//  484 *       Parametros      :       (char*) título da tela
+//  485 *                               (char*) mensagem inicial
+//  486 *       Retorno         :       (unsigned char) maior do que zero se 
+//  487 *                               a mensagem original sofreu alteração
+//  488 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock18 Using cfiCommon0
           CFI Function MENUOP_edita_mensagem
         THUMB
-//  487 unsigned char MENUOP_edita_mensagem(char *titulo,char* buffer_mensagem){
+//  489 unsigned char MENUOP_edita_mensagem(char *titulo,char* buffer_mensagem){
 MENUOP_edita_mensagem:
-        PUSH     {R4-R9,LR}
+        PUSH     {R4-R10,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R9 Frame(CFA, -8)
-          CFI R8 Frame(CFA, -12)
-          CFI R7 Frame(CFA, -16)
-          CFI R6 Frame(CFA, -20)
-          CFI R5 Frame(CFA, -24)
-          CFI R4 Frame(CFA, -28)
-          CFI CFA R13+28
-        SUB      SP,SP,#+20
-          CFI CFA R13+48
-        MOVS     R5,R0
-        MOVS     R4,R1
-//  488   eTECLA tecla;
-//  489   char buffer_temp[17]={0};
+          CFI R10 Frame(CFA, -8)
+          CFI R9 Frame(CFA, -12)
+          CFI R8 Frame(CFA, -16)
+          CFI R7 Frame(CFA, -20)
+          CFI R6 Frame(CFA, -24)
+          CFI R5 Frame(CFA, -28)
+          CFI R4 Frame(CFA, -32)
+          CFI CFA R13+32
+        SUB      SP,SP,#+24
+          CFI CFA R13+56
+        MOVS     R4,R0
+        MOVS     R5,R1
+//  490   eTECLA tecla;
+//  491   char buffer_temp[17]={0};
         ADD      R0,SP,#+0
         MOVS     R1,#+20
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  490   unsigned char toggle=0;
-        MOVS     R6,#+0
-//  491   unsigned char tempo=1;
-        MOVS     R7,#+1
-//  492   unsigned char indice=0;
-        MOVS     R8,#+0
-//  493   unsigned char res=0;
+//  492   unsigned char toggle=0;
+        MOVS     R7,#+0
+//  493   unsigned char tempo=1;
+        MOVS     R8,#+1
+//  494   unsigned char indice=0;
         MOVS     R9,#+0
-//  494   
-//  495   buffer_mensagem[16] = 0;
+//  495   unsigned char res=0;
+        MOVS     R10,#+0
+//  496   
+//  497   buffer_mensagem[16] = 0;
         MOVS     R0,#+0
-        STRB     R0,[R4, #+16]
-//  496     
-//  497   for(unsigned char i=0;i<16;i++)
+        STRB     R0,[R5, #+16]
+//  498     
+//  499   for(unsigned char i=0;i<16;i++)
         MOVS     R0,#+0
-        B.N      ??MENUOP_edita_mensagem_0
-//  498     if(buffer_mensagem[i]<' ' || buffer_mensagem[i]>'z')
-??MENUOP_edita_mensagem_1:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDRB     R1,[R0, R4]
-        SUBS     R1,R1,#+32
-        CMP      R1,#+91
-        BCC.N    ??MENUOP_edita_mensagem_2
-//  499       buffer_mensagem[i] = ' ';
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        MOVS     R1,#+32
-        STRB     R1,[R0, R4]
-??MENUOP_edita_mensagem_2:
-        ADDS     R0,R0,#+1
 ??MENUOP_edita_mensagem_0:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+16
-        BLT.N    ??MENUOP_edita_mensagem_1
-//  500   
-//  501   STRING_write_to_internal(CLEAR_DISPLAY,titulo,NULL);
+        BGE.N    ??MENUOP_edita_mensagem_1
+//  500     if(buffer_mensagem[i]<' ' || buffer_mensagem[i]>'z')
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        LDRB     R1,[R0, R5]
+        CMP      R1,#+32
+        BLT.N    ??MENUOP_edita_mensagem_2
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        LDRB     R1,[R0, R5]
+        CMP      R1,#+123
+        BLT.N    ??MENUOP_edita_mensagem_3
+//  501       buffer_mensagem[i] = ' ';
+??MENUOP_edita_mensagem_2:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        MOVS     R1,#+32
+        STRB     R1,[R0, R5]
+??MENUOP_edita_mensagem_3:
+        ADDS     R0,R0,#+1
+        B.N      ??MENUOP_edita_mensagem_0
+//  502   
+//  503   STRING_write_to_internal(CLEAR_DISPLAY,titulo,NULL);
+??MENUOP_edita_mensagem_1:
         MOVS     R2,#+0
-        MOVS     R1,R5
+        MOVS     R1,R4
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MENUOP_edita_mensagem_3
-//  502   
-//  503   for(;;){
-//  504     
-//  505     tecla = TECLADO_getch();
-//  506     switch(tecla){
-//  507       case TECLA_ENTER:
-//  508            indice++;
-//  509            if(indice>15){             
-//  510              return res;
-//  511            }
-//  512            break;
-//  513       case TECLA_ESC:           
-//  514            return res;
-//  515       case TECLA_INC:
-//  516            res = 1;
-//  517            if(buffer_mensagem[indice]>'z')
-//  518              buffer_mensagem[indice] = ' ';
-//  519            else
-//  520              buffer_mensagem[indice]++;
-//  521            break;
-//  522       case TECLA_DEC:
-//  523            res = 1;
-//  524            if(buffer_mensagem[indice]>' ')
-//  525              buffer_mensagem[indice]--;
-//  526            else
-//  527              buffer_mensagem[indice] = 'z';
-//  528            break;
-//  529     }
-//  530     
-//  531     if(!--tempo){
-//  532       tempo = 5;
-//  533       toggle ^= 255;
-//  534     }
-//  535     
-//  536     if(toggle)
-//  537       STRING_write_to_internal(NO_CLEAR,NULL,buffer_mensagem);
-//  538     else{
-//  539       memcpy(buffer_temp,buffer_mensagem,16);
+//  504   
+//  505   for(;;){
+//  506     
+//  507     tecla = TECLADO_getch();
 ??MENUOP_edita_mensagem_4:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R6,R0
+//  508     switch(tecla){
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+1
+        BEQ.N    ??MENUOP_edita_mensagem_5
+        BCC.N    ??MENUOP_edita_mensagem_6
+        CMP      R6,#+3
+        BEQ.N    ??MENUOP_edita_mensagem_7
+        BCC.N    ??MENUOP_edita_mensagem_8
+        CMP      R6,#+4
+        BNE.N    ??MENUOP_edita_mensagem_6
+//  509       case TECLA_ENTER:
+//  510            indice++;
+??MENUOP_edita_mensagem_9:
+        ADDS     R9,R9,#+1
+//  511            if(indice>15){             
+        UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+        CMP      R9,#+16
+        BLT.N    ??MENUOP_edita_mensagem_10
+//  512              return res;
+        MOV      R0,R10
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??MENUOP_edita_mensagem_11
+//  513            }
+//  514            break;
+??MENUOP_edita_mensagem_10:
+        B.N      ??MENUOP_edita_mensagem_6
+//  515       case TECLA_ESC:           
+//  516            return res;
+??MENUOP_edita_mensagem_5:
+        MOV      R0,R10
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        B.N      ??MENUOP_edita_mensagem_11
+//  517       case TECLA_INC:
+//  518            res = 1;
+??MENUOP_edita_mensagem_8:
+        MOVS     R0,#+1
+        MOV      R10,R0
+//  519            if(buffer_mensagem[indice]>'z')
+        UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+        LDRB     R0,[R9, R5]
+        CMP      R0,#+123
+        BLT.N    ??MENUOP_edita_mensagem_12
+//  520              buffer_mensagem[indice] = ' ';
+        UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+        MOVS     R0,#+32
+        STRB     R0,[R9, R5]
+        B.N      ??MENUOP_edita_mensagem_13
+//  521            else
+//  522              buffer_mensagem[indice]++;
+??MENUOP_edita_mensagem_12:
+        UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+        LDRB     R0,[R9, R5]
+        ADDS     R0,R0,#+1
+        UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+        STRB     R0,[R9, R5]
+//  523            break;
+??MENUOP_edita_mensagem_13:
+        B.N      ??MENUOP_edita_mensagem_6
+//  524       case TECLA_DEC:
+//  525            res = 1;
+??MENUOP_edita_mensagem_7:
+        MOVS     R0,#+1
+        MOV      R10,R0
+//  526            if(buffer_mensagem[indice]>' ')
+        UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+        LDRB     R0,[R9, R5]
+        CMP      R0,#+33
+        BLT.N    ??MENUOP_edita_mensagem_14
+//  527              buffer_mensagem[indice]--;
+        UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+        LDRB     R0,[R9, R5]
+        SUBS     R0,R0,#+1
+        UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+        STRB     R0,[R9, R5]
+        B.N      ??MENUOP_edita_mensagem_15
+//  528            else
+//  529              buffer_mensagem[indice] = 'z';
+??MENUOP_edita_mensagem_14:
+        UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+        MOVS     R0,#+122
+        STRB     R0,[R9, R5]
+//  530            break;
+//  531     }
+//  532     
+//  533     if(!--tempo){
+??MENUOP_edita_mensagem_15:
+??MENUOP_edita_mensagem_6:
+        SUBS     R8,R8,#+1
+        MOV      R0,R8
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+0
+        BNE.N    ??MENUOP_edita_mensagem_16
+//  534       tempo = 5;
+        MOVS     R0,#+5
+        MOV      R8,R0
+//  535       toggle ^= 255;
+        EORS     R7,R7,#0xFF
+//  536     }
+//  537     
+//  538     if(toggle)
+??MENUOP_edita_mensagem_16:
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        CMP      R7,#+0
+        BEQ.N    ??MENUOP_edita_mensagem_17
+//  539       STRING_write_to_internal(NO_CLEAR,NULL,buffer_mensagem);
+        MOVS     R2,R5
+        MOVS     R1,#+0
+        MOVS     R0,#+1
+          CFI FunCall STRING_write_to_internal
+        BL       STRING_write_to_internal
+        B.N      ??MENUOP_edita_mensagem_18
+//  540     else{
+//  541       memcpy(buffer_temp,buffer_mensagem,16);
+??MENUOP_edita_mensagem_17:
         MOVS     R2,#+16
-        MOVS     R1,R4
+        MOVS     R1,R5
         ADD      R0,SP,#+0
           CFI FunCall memcpy
         BL       memcpy
-//  540       buffer_temp[indice] = '_';
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+//  542       buffer_temp[indice] = '_';
+        UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
         ADD      R0,SP,#+0
         MOVS     R1,#+95
-        STRB     R1,[R8, R0]
-//  541       STRING_write_to_internal(NO_CLEAR,NULL,buffer_temp);
+        STRB     R1,[R9, R0]
+//  543       STRING_write_to_internal(NO_CLEAR,NULL,buffer_temp);
         ADD      R2,SP,#+0
         MOVS     R1,#+0
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  542     }
-//  543     
-//  544     vTaskDelay(50);
-??MENUOP_edita_mensagem_5:
+//  544     }
+//  545     
+//  546     vTaskDelay(50);
+??MENUOP_edita_mensagem_18:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??MENUOP_edita_mensagem_3:
+        B.N      ??MENUOP_edita_mensagem_4
+//  547   }      
+??MENUOP_edita_mensagem_11:
+        ADD      SP,SP,#+24
+          CFI CFA R13+32
+        POP      {R4-R10,PC}      ;; return
+          CFI EndBlock cfiBlock18
+//  548 }
+//  549 /***********************************************************************************
+//  550 *       Descrição       :       Configura os canais de moeda MDB habilitados
+//  551 *                               na operação
+//  552 *       Parametros      :       nenhum
+//  553 *       Retorno         :       nenhum
+//  554 ***********************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(1)
+          CFI Block cfiBlock19 Using cfiCommon0
+          CFI Function MENUOP_configura_canais_moeda
+        THUMB
+//  555 void MENUOP_configura_canais_moeda(void){
+MENUOP_configura_canais_moeda:
+        PUSH     {R4-R7,LR}
+          CFI R14 Frame(CFA, -4)
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
+        SUB      SP,SP,#+52
+          CFI CFA R13+72
+//  556   unsigned char escala;
+//  557   unsigned char canais[16];
+//  558 
+//  559   if(MDB_checa_valor_moedas(&escala,canais)!=MDB_OK){
+        ADD      R1,SP,#+12
+        ADD      R0,SP,#+8
+          CFI FunCall MDB_checa_valor_moedas
+        BL       MDB_checa_valor_moedas
+        CMP      R0,#+0
+        BEQ.N    ??MENUOP_configura_canais_moeda_0
+//  560     STRING_write_to_internal(CLEAR_DISPLAY,"Falha ao","ler MDB COIN");
+        LDR.N    R2,??DataTable17_31
+        LDR.N    R1,??DataTable17_32
+        MOVS     R0,#+0
+          CFI FunCall STRING_write_to_internal
+        BL       STRING_write_to_internal
+//  561     vTaskDelay(3000);
+        MOVW     R0,#+3000
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
+//  562   }
+//  563   
+//  564   unsigned short int cfg_moedas;
+//  565   PARAMETROS_le(ADR_TIPOS_MOEDAS,(void*)&cfg_moedas);
+??MENUOP_configura_canais_moeda_0:
+        ADD      R1,SP,#+10
+        MOVS     R0,#+64
+          CFI FunCall PARAMETROS_le
+        BL       PARAMETROS_le
+//  566   eTECLA tecla;
+//  567   unsigned char indice=0;
+        MOVS     R5,#+0
+//  568   char linha[17];
+//  569   unsigned char inteiro;
+//  570   unsigned char fracionario;
+//  571   
+//  572   STRING_write_to_internal(CLEAR_DISPLAY,"COINS MDB",NULL);
+        MOVS     R2,#+0
+        LDR.N    R1,??DataTable17_33
+        MOVS     R0,#+0
+          CFI FunCall STRING_write_to_internal
+        BL       STRING_write_to_internal
+//  573   
+//  574   for(;;){
+//  575     
+//  576     tecla = TECLADO_getch();
+??MENUOP_configura_canais_moeda_1:
           CFI FunCall TECLADO_getch
         BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MENUOP_edita_mensagem_6
-        BCC.N    ??MENUOP_edita_mensagem_7
-        CMP      R0,#+3
-        BEQ.N    ??MENUOP_edita_mensagem_8
-        BCC.N    ??MENUOP_edita_mensagem_9
-        CMP      R0,#+4
-        BNE.N    ??MENUOP_edita_mensagem_7
-??MENUOP_edita_mensagem_10:
-        ADDS     R8,R8,#+1
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        CMP      R8,#+16
-        BLT.N    ??MENUOP_edita_mensagem_11
-        MOV      R0,R9
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-??MENUOP_edita_mensagem_12:
-        ADD      SP,SP,#+20
-          CFI CFA R13+28
-        POP      {R4-R9,PC}       ;; return
-          CFI CFA R13+48
-??MENUOP_edita_mensagem_11:
-        B.N      ??MENUOP_edita_mensagem_7
-??MENUOP_edita_mensagem_6:
-        MOV      R0,R9
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        B.N      ??MENUOP_edita_mensagem_12
-??MENUOP_edita_mensagem_9:
-        MOVS     R9,#+1
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        LDRB     R0,[R8, R4]
-        CMP      R0,#+123
-        BLT.N    ??MENUOP_edita_mensagem_13
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        MOVS     R0,#+32
-        STRB     R0,[R8, R4]
-        B.N      ??MENUOP_edita_mensagem_14
-??MENUOP_edita_mensagem_13:
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        LDRB     R0,[R8, R4]
-        ADDS     R0,R0,#+1
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        STRB     R0,[R8, R4]
-??MENUOP_edita_mensagem_14:
-        B.N      ??MENUOP_edita_mensagem_7
-??MENUOP_edita_mensagem_8:
-        MOVS     R9,#+1
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        LDRB     R0,[R8, R4]
-        CMP      R0,#+33
-        BLT.N    ??MENUOP_edita_mensagem_15
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        LDRB     R0,[R8, R4]
-        SUBS     R0,R0,#+1
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        STRB     R0,[R8, R4]
-        B.N      ??MENUOP_edita_mensagem_16
-??MENUOP_edita_mensagem_15:
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        MOVS     R0,#+122
-        STRB     R0,[R8, R4]
-??MENUOP_edita_mensagem_16:
-??MENUOP_edita_mensagem_7:
-        SUBS     R7,R7,#+1
-        MOVS     R0,R7
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
-        BNE.N    ??MENUOP_edita_mensagem_17
-        MOVS     R7,#+5
-        EORS     R6,R6,#0xFF
-??MENUOP_edita_mensagem_17:
+        MOVS     R4,R0
+//  577     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MENUOP_configura_canais_moeda_2
+        BCC.N    ??MENUOP_configura_canais_moeda_3
+        CMP      R4,#+3
+        BEQ.N    ??MENUOP_configura_canais_moeda_4
+        BCC.N    ??MENUOP_configura_canais_moeda_5
+        CMP      R4,#+4
+        BNE.N    ??MENUOP_configura_canais_moeda_3
+//  578       case TECLA_ENTER:
+//  579            cfg_moedas^=(0x01<<indice);
+??MENUOP_configura_canais_moeda_6:
+        LDRH     R0,[SP, #+10]
+        MOVS     R1,#+1
+        LSLS     R1,R1,R5
+        EORS     R0,R1,R0
+        STRH     R0,[SP, #+10]
+//  580            break;
+        B.N      ??MENUOP_configura_canais_moeda_3
+//  581       case TECLA_ESC:
+//  582            PARAMETROS_grava(ADR_TIPOS_MOEDAS,(void*)&cfg_moedas); 
+??MENUOP_configura_canais_moeda_2:
+        ADD      R1,SP,#+10
+        MOVS     R0,#+64
+          CFI FunCall PARAMETROS_grava
+        BL       PARAMETROS_grava
+//  583            return;
+        B.N      ??MENUOP_configura_canais_moeda_7
+//  584       case TECLA_INC:
+//  585            indice = (indice+1)%16;
+??MENUOP_configura_canais_moeda_5:
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R0,R5,#+1
+        MOVS     R1,#+16
+        SDIV     R5,R0,R1
+        MLS      R5,R5,R1,R0
+//  586            break;
+        B.N      ??MENUOP_configura_canais_moeda_3
+//  587       case TECLA_DEC:
+//  588            if(indice)
+??MENUOP_configura_canais_moeda_4:
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BEQ.N    ??MENUOP_configura_canais_moeda_8
+//  589              indice--;
+        SUBS     R5,R5,#+1
+        B.N      ??MENUOP_configura_canais_moeda_9
+//  590            else
+//  591              indice = 16;
+??MENUOP_configura_canais_moeda_8:
+        MOVS     R0,#+16
+        MOVS     R5,R0
+//  592            break;
+//  593     }        
+//  594     
+//  595     inteiro = (canais[indice]*escala)/100;
+??MENUOP_configura_canais_moeda_9:
+??MENUOP_configura_canais_moeda_3:
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADD      R0,SP,#+12
+        LDRB     R0,[R5, R0]
+        LDRB     R1,[SP, #+8]
+        MULS     R0,R1,R0
+        MOVS     R1,#+100
+        SDIV     R0,R0,R1
+        MOVS     R6,R0
+//  596     fracionario = (canais[indice]*escala)%100;
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADD      R0,SP,#+12
+        LDRB     R0,[R5, R0]
+        LDRB     R1,[SP, #+8]
+        MULS     R0,R1,R0
+        MOVS     R1,#+100
+        SDIV     R2,R0,R1
+        MLS      R0,R1,R2,R0
+        MOVS     R7,R0
+//  597     
+//  598     sprintf(linha,"[%c] CH %02d-%01d,%02d",(cfg_moedas&(1<<indice))?'X':' ',indice+1,inteiro,fracionario);
+        LDRH     R0,[SP, #+10]
+        MOVS     R1,#+1
+        LSLS     R1,R1,R5
+        TST      R0,R1
+        BEQ.N    ??MENUOP_configura_canais_moeda_10
+        MOVS     R2,#+88
+        B.N      ??MENUOP_configura_canais_moeda_11
+??MENUOP_configura_canais_moeda_10:
+        MOVS     R2,#+32
+??MENUOP_configura_canais_moeda_11:
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        STR      R7,[SP, #+4]
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-        CMP      R6,#+0
-        BEQ.N    ??MENUOP_edita_mensagem_4
-        MOVS     R2,R4
+        STR      R6,[SP, #+0]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R3,R5,#+1
+        LDR.N    R1,??DataTable17_34
+        ADD      R0,SP,#+28
+          CFI FunCall sprintf
+        BL       sprintf
+//  599     STRING_write_to_internal(NO_CLEAR,NULL,linha);
+        ADD      R2,SP,#+28
         MOVS     R1,#+0
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MENUOP_edita_mensagem_5
-          CFI EndBlock cfiBlock18
-//  545   }      
-//  546 }
+//  600     
+//  601     vTaskDelay(50);
+        MOVS     R0,#+50
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
+        B.N      ??MENUOP_configura_canais_moeda_1
+//  602   }           
+??MENUOP_configura_canais_moeda_7:
+        ADD      SP,SP,#+52
+          CFI CFA R13+20
+        POP      {R4-R7,PC}       ;; return
+          CFI EndBlock cfiBlock19
+//  603 }
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17:
+        DC32     MENUOP_funcs
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_1:
+        DC32     STRING_menu_configuracao_operacao
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_2:
+        DC32     STRING_titulo_menu_operacao
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_3:
+        DC32     0x18697
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_4:
+        DC32     STRING_titulo_ajusta_valor
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_5:
+        DC32     0x18696
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_6:
+        DC32     STRING_simbolo_moeda
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_7:
+        DC32     `?<Constant "%s %d,%02d">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_8:
+        DC32     STRING_tabela_cedulas_canais
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_9:
+        DC32     STRING_titulo_configuracao_notas
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_10:
+        DC32     `?<Constant "Embalagem">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_11:
+        DC32     `?<Constant "Liberando">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_12:
+        DC32     `?<Constant "T. Motor Emb.">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_13:
+        DC32     `?<Constant "na FLASH">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_14:
+        DC32     `?<Constant "Salvando">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_15:
+        DC32     `?<Constant "%05d ms">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_16:
+        DC32     `?<Constant "%03d">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_17:
+        DC32     STRING_titulo_menu_edita_volume_musica
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_18:
+        DC32     STRING_titulo_menu_edita_volume_voz
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_19:
+        DC32     `?<Constant "%02d min">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_20:
+        DC32     STRING_titulo_menu_intervalo_prop
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_21:
+        DC32     STRING_mensagem_configura_free
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_22:
+        DC32     STRING_mensagem_configura_fita_led
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_23:
+        DC32     STRING_titulo_configura_troco
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_24:
+        DC32     `?<Constant "%03d %%">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_25:
+        DC32     STRING_titulo_edita_comissao
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_26:
+        DC32     `?<Constant "MSG CLIENTE 01">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_27:
+        DC32     `?<Constant "MSG CLIENTE 02">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_28:
+        DC32     `?<Constant "MSG CLIENTE 03">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_29:
+        DC32     `?<Constant "MSG CLIENTE 04">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_30:
+        DC32     STRING_titulo_edita_flag_desumidifcador
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_31:
+        DC32     `?<Constant "ler MDB COIN">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_32:
+        DC32     `?<Constant "Falha ao">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_33:
+        DC32     `?<Constant "COINS MDB">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_34:
+        DC32     `?<Constant "[%c] CH %02d-%01d,%02d">`
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1950,18 +2185,42 @@ MENUOP_edita_mensagem:
         DATA
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "Falha ao">`:
+        DATA
+        DC8 "Falha ao"
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "ler MDB COIN">`:
+        DATA
+        DC8 "ler MDB COIN"
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "COINS MDB">`:
+        DATA
+        DC8 "COINS MDB"
+        DC8 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "[%c] CH %02d-%01d,%02d">`:
+        DATA
+        DC8 "[%c] CH %02d-%01d,%02d"
+        DC8 0
+
         END
-//  547 /***********************************************************************************
-//  548 *       Fim do arquivo
-//  549 ***********************************************************************************/
+//  604 /***********************************************************************************
+//  605 *       Fim do arquivo
+//  606 ***********************************************************************************/
 // 
-//    64 bytes in section .data
-//   212 bytes in section .rodata
-// 1 670 bytes in section .text
+//    68 bytes in section .data
+//   276 bytes in section .rodata
+// 1 998 bytes in section .text
 // 
-// 1 656 bytes of CODE  memory (+ 14 bytes shared)
-//   212 bytes of CONST memory
-//    64 bytes of DATA  memory
+// 1 976 bytes of CODE  memory (+ 22 bytes shared)
+//   276 bytes of CONST memory
+//    68 bytes of DATA  memory
 //
 //Errors: none
 //Warnings: none

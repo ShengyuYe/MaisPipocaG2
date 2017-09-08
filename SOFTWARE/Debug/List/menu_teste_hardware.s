@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:34 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:55 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_teste_har /
-//                    dware.c                                                 /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_teste_ha /
-//                    rdware.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Fi /
-//                    rmware\01_mais_pipoca_exp\MaisPipoca -                  /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_te /
+//                    ste_hardware.c                                          /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_te /
+//                    ste_hardware.c -lC C:\repositorios\MaisPipocaG2\SOFTWAR /
+//                    E\Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE /
+//                    \Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\D /
+//                    ebug\Obj\ --no_cse --no_unroll --no_inline              /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\menu_teste_ha /
-//                    rdware.s                                                /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\menu_t /
+//                    este_hardware.s                                         /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -246,7 +240,7 @@
         DATA
         DC8 "[%s][i:%01d]"
         DC8 0, 0, 0
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_teste_hardware.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_teste_hardware.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -374,6 +368,7 @@ MTH_entry:
 //  105   unsigned char idioma = APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R4,R0
 //  106   
 //  107   MENUROLAGEM_show((char*)STRING_titulo_teste_hardware[idioma],
 //  108                    (char**)STRING_menu_teste_hardware[idioma],
@@ -381,13 +376,13 @@ MTH_entry:
 //  110                    (void(**)(void))MTH_funcs);   
         LDR.W    R3,??DataTable14
         MOVS     R2,#+16
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        MOVS     R1,#+64
-        LDR.W    R4,??DataTable14_1
-        MLA      R1,R1,R0,R4
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R4,??DataTable14_2
-        LDR      R0,[R4, R0, LSL #+2]
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        MOVS     R0,#+64
+        LDR.W    R1,??DataTable14_1
+        MLA      R1,R0,R4,R1
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LDR.W    R0,??DataTable14_2
+        LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall MENUROLAGEM_show
         BL       MENUROLAGEM_show
 //  111 }
@@ -405,43 +400,74 @@ MTH_entry:
         THUMB
 //  117 void MTH_teste_rtc(void){
 MTH_teste_rtc:
-        PUSH     {LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
         SUB      SP,SP,#+44
-          CFI CFA R13+48
+          CFI CFA R13+56
 //  118   eTECLA tecla;
 //  119   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R5,R0
 //  120   unsigned char hora,minuto,segundo,dia,mes;
 //  121   unsigned int ano;
 //  122   char buffer_linha[17];
 //  123   
 //  124   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_teste_rtc[idioma],NULL);  
         MOVS     R2,#+0
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R1,??DataTable14_3
-        LDR      R1,[R1, R0, LSL #+2]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LDR.W    R0,??DataTable14_3
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_teste_rtc_0
 //  125   
 //  126   for(;;){
 //  127     
 //  128     tecla = TECLADO_getch();
+??MTH_teste_rtc_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  129     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MTH_teste_rtc_1
+        BCC.N    ??MTH_teste_rtc_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_teste_rtc_3
+        BCC.N    ??MTH_teste_rtc_4
+        CMP      R4,#+4
+        BNE.N    ??MTH_teste_rtc_2
 //  130       case TECLA_ENTER:
 //  131            break;
+??MTH_teste_rtc_5:
+        B.N      ??MTH_teste_rtc_2
 //  132       case TECLA_ESC:
 //  133            return;
+??MTH_teste_rtc_1:
+        B.N      ??MTH_teste_rtc_6
 //  134       case TECLA_INC:
 //  135            RTC_setValue(23,59,30,0,0,0);
+??MTH_teste_rtc_4:
+        MOVS     R0,#+0
+        STR      R0,[SP, #+4]
+        MOVS     R0,#+0
+        STR      R0,[SP, #+0]
+        MOVS     R3,#+0
+        MOVS     R2,#+30
+        MOVS     R1,#+59
+        MOVS     R0,#+23
+          CFI FunCall RTC_setValue
+        BL       RTC_setValue
 //  136            break;
+        B.N      ??MTH_teste_rtc_2
 //  137       case TECLA_DEC:
 //  138            RTC_setValue(0,0,0,0,0,0);
-??MTH_teste_rtc_1:
+??MTH_teste_rtc_3:
         MOVS     R0,#+0
         STR      R0,[SP, #+4]
         MOVS     R0,#+0
@@ -487,39 +513,13 @@ MTH_teste_rtc:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??MTH_teste_rtc_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_teste_rtc_3
-        BCC.N    ??MTH_teste_rtc_2
-        CMP      R0,#+3
-        BEQ.N    ??MTH_teste_rtc_1
-        BCC.N    ??MTH_teste_rtc_4
-        CMP      R0,#+4
-        BNE.N    ??MTH_teste_rtc_2
-??MTH_teste_rtc_5:
-        B.N      ??MTH_teste_rtc_2
-??MTH_teste_rtc_3:
-        ADD      SP,SP,#+44
-          CFI CFA R13+4
-        POP      {PC}             ;; return
-          CFI CFA R13+48
-??MTH_teste_rtc_4:
-        MOVS     R0,#+0
-        STR      R0,[SP, #+4]
-        MOVS     R0,#+0
-        STR      R0,[SP, #+0]
-        MOVS     R3,#+0
-        MOVS     R2,#+30
-        MOVS     R1,#+59
-        MOVS     R0,#+23
-          CFI FunCall RTC_setValue
-        BL       RTC_setValue
-        B.N      ??MTH_teste_rtc_2
-          CFI EndBlock cfiBlock1
+        B.N      ??MTH_teste_rtc_0
 //  147   }    
+??MTH_teste_rtc_6:
+        ADD      SP,SP,#+44
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
+          CFI EndBlock cfiBlock1
 //  148 }
 //  149 /***********************************************************************************
 //  150 *       Descrição       :       Executa um passo no teste da memória dataflash
@@ -533,6 +533,8 @@ MTH_teste_rtc:
           CFI NoCalls
         THUMB
 //  154 unsigned char MTH_passo_teste_data_flash(unsigned char idioma,unsigned char passo){  
+MTH_passo_teste_data_flash:
+        MOVS     R2,R0
 //  155   /*
 //  156   unsigned char buffer[64];
 //  157   
@@ -565,7 +567,6 @@ MTH_teste_rtc:
 //  184   return passo;
 //  185   */
 //  186   return 0;
-MTH_passo_teste_data_flash:
         MOVS     R0,#+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock2
@@ -582,21 +583,22 @@ MTH_passo_teste_data_flash:
         THUMB
 //  193 void MTH_teste_data_flash(void){
 MTH_teste_data_flash:
-        PUSH     {R4-R6,LR}
+        PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+24
 //  194   eTECLA tecla;
 //  195   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
-        MOVS     R4,R0
+        MOVS     R5,R0
 //  196   unsigned char tempo=1;
-        MOVS     R5,#+1
+        MOVS     R6,#+1
 //  197   unsigned char passo=0;
-        MOVS     R6,#+0
+        MOVS     R7,#+0
 //  198 
 //  199   srand(100);  
         MOVS     R0,#+100
@@ -604,23 +606,41 @@ MTH_teste_data_flash:
         BL       srand
 //  200   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_teste_data_flash[idioma],NULL);  
         MOVS     R2,#+0
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.W    R0,??DataTable14_5
-        LDR      R1,[R0, R4, LSL #+2]
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_teste_data_flash_0
 //  201   for(;;){
 //  202     
 //  203     tecla = TECLADO_getch();
+??MTH_teste_data_flash_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  204     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MTH_teste_data_flash_1
+        BCC.N    ??MTH_teste_data_flash_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_teste_data_flash_3
+        BCC.N    ??MTH_teste_data_flash_4
+        CMP      R4,#+4
+        BNE.N    ??MTH_teste_data_flash_2
 //  205       case TECLA_ENTER:        
 //  206            break;
+??MTH_teste_data_flash_5:
+        B.N      ??MTH_teste_data_flash_2
 //  207       case TECLA_ESC:
 //  208            return;
+??MTH_teste_data_flash_1:
+        B.N      ??MTH_teste_data_flash_6
 //  209       case TECLA_INC:
 //  210            break;
+??MTH_teste_data_flash_4:
+        B.N      ??MTH_teste_data_flash_2
 //  211       case TECLA_DEC:
 //  212            break;
 //  213     }
@@ -629,50 +649,36 @@ MTH_teste_data_flash:
 //  216     //  Executa o teste
 //  217     //
 //  218     if(!--tempo){
-??MTH_teste_data_flash_1:
+??MTH_teste_data_flash_3:
 ??MTH_teste_data_flash_2:
-        SUBS     R5,R5,#+1
-        MOVS     R0,R5
+        SUBS     R6,R6,#+1
+        MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
-        BNE.N    ??MTH_teste_data_flash_3
+        BNE.N    ??MTH_teste_data_flash_7
 //  219       tempo = 10;      
-        MOVS     R5,#+10
+        MOVS     R0,#+10
+        MOVS     R6,R0
 //  220       passo = MTH_passo_teste_data_flash(idioma,passo);      
-        MOVS     R1,R6
+        MOVS     R1,R7
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        MOVS     R0,R4
+        MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall MTH_passo_teste_data_flash
         BL       MTH_passo_teste_data_flash
-        MOVS     R6,R0
+        MOVS     R7,R0
 //  221     }    
 //  222     
 //  223     vTaskDelay(50);
-??MTH_teste_data_flash_3:
+??MTH_teste_data_flash_7:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??MTH_teste_data_flash_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_teste_data_flash_4
-        BCC.N    ??MTH_teste_data_flash_2
-        CMP      R0,#+3
-        BEQ.N    ??MTH_teste_data_flash_1
-        BCC.N    ??MTH_teste_data_flash_5
-        CMP      R0,#+4
-        BNE.N    ??MTH_teste_data_flash_2
-??MTH_teste_data_flash_6:
-        B.N      ??MTH_teste_data_flash_2
-??MTH_teste_data_flash_4:
-        POP      {R4-R6,PC}       ;; return
-??MTH_teste_data_flash_5:
-        B.N      ??MTH_teste_data_flash_2
-          CFI EndBlock cfiBlock3
+        B.N      ??MTH_teste_data_flash_0
 //  224   }    
+??MTH_teste_data_flash_6:
+        POP      {R0,R4-R7,PC}    ;; return
+          CFI EndBlock cfiBlock3
 //  225 }
 //  226 /***********************************************************************************
 //  227 *       Descrição       :       Teste do controle do dispensador de
@@ -687,57 +693,114 @@ MTH_teste_data_flash:
         THUMB
 //  232 void MTH_teste_dispensador_papel(void){
 MTH_teste_dispensador_papel:
-        PUSH     {R4,R5,LR}
+        PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
-          CFI CFA R13+12
-        SUB      SP,SP,#+28
-          CFI CFA R13+40
+          CFI R8 Frame(CFA, -8)
+          CFI R7 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -16)
+          CFI R5 Frame(CFA, -20)
+          CFI R4 Frame(CFA, -24)
+          CFI CFA R13+24
+        SUB      SP,SP,#+24
+          CFI CFA R13+48
 //  233   eTECLA tecla;
 //  234   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R5,R0
 //  235   char buffer_linha[17];
 //  236 
 //  237   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_tela_teste_dispensador_papel[idioma],NULL);  
         MOVS     R2,#+0
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R1,??DataTable14_6
-        LDR      R1,[R1, R0, LSL #+2]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LDR.W    R0,??DataTable14_6
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_teste_dispensador_papel_0
 //  238   for(;;){
 //  239     
 //  240     tecla = TECLADO_getch();
+??MTH_teste_dispensador_papel_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  241     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MTH_teste_dispensador_papel_1
+        BCC.N    ??MTH_teste_dispensador_papel_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_teste_dispensador_papel_3
+        BCC.N    ??MTH_teste_dispensador_papel_4
+        CMP      R4,#+4
+        BNE.N    ??MTH_teste_dispensador_papel_2
 //  242       case TECLA_ENTER:
 //  243            break;
+??MTH_teste_dispensador_papel_5:
+        B.N      ??MTH_teste_dispensador_papel_2
 //  244       case TECLA_ESC:
 //  245            return;
+??MTH_teste_dispensador_papel_1:
+        B.N      ??MTH_teste_dispensador_papel_6
 //  246       case TECLA_INC:
 //  247            BOARD_set_motor_embalagem(1);
+??MTH_teste_dispensador_papel_4:
+        MOVS     R0,#+1
+          CFI FunCall BOARD_set_motor_embalagem
+        BL       BOARD_set_motor_embalagem
 //  248            break;
+        B.N      ??MTH_teste_dispensador_papel_2
 //  249       case TECLA_DEC:
 //  250            BOARD_set_motor_embalagem(0);
+??MTH_teste_dispensador_papel_3:
+        MOVS     R0,#+0
+          CFI FunCall BOARD_set_motor_embalagem
+        BL       BOARD_set_motor_embalagem
 //  251            break;
 //  252     }
 //  253     
 //  254     unsigned char barreira = GET_BARREIRA_SAIDA_PAPEL();
+??MTH_teste_dispensador_papel_2:
+        MOVS     R0,#+0
+          CFI FunCall BOARD_get_sinal
+        BL       BOARD_get_sinal
+        MOVS     R6,R0
 //  255     unsigned int nivelPapel = AA_mediaMovelPapel();
+          CFI FunCall AA_mediaMovelPapel
+        BL       AA_mediaMovelPapel
+        MOVS     R7,R0
 //  256     unsigned char reserva = GET_SENSOR_RESERVA_PAPEL();
+        MOVS     R0,#+1
+          CFI FunCall BOARD_get_sinal
+        BL       BOARD_get_sinal
+        MOV      R8,R0
 //  257     
 //  258     nivelPapel *= 100;
+        MOVS     R0,#+100
+        MULS     R7,R0,R7
 //  259     nivelPapel>>= 12;
+        LSRS     R7,R7,#+12
 //  260     
 //  261     sprintf(buffer_linha,"BP:%01d-NP:%03d-RP:%1d",barreira==BARREIRA_PAPEL_LIVRE?0:1,nivelPapel,reserva?1:0);
-??MTH_teste_dispensador_papel_1:
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        CMP      R8,#+0
+        BEQ.N    ??MTH_teste_dispensador_papel_7
+        MOVS     R0,#+1
+        B.N      ??MTH_teste_dispensador_papel_8
+??MTH_teste_dispensador_papel_7:
+        MOVS     R0,#+0
+??MTH_teste_dispensador_papel_8:
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
+        BNE.N    ??MTH_teste_dispensador_papel_9
+        MOVS     R2,#+0
+        B.N      ??MTH_teste_dispensador_papel_10
+??MTH_teste_dispensador_papel_9:
         MOVS     R2,#+1
-??MTH_teste_dispensador_papel_2:
+??MTH_teste_dispensador_papel_10:
         STR      R0,[SP, #+0]
-        MOVS     R3,R4
+        MOVS     R3,R7
         LDR.W    R1,??DataTable14_7
         ADD      R0,SP,#+4
           CFI FunCall sprintf
@@ -753,63 +816,13 @@ MTH_teste_dispensador_papel:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??MTH_teste_dispensador_papel_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_teste_dispensador_papel_3
-        BCC.N    ??MTH_teste_dispensador_papel_4
-        CMP      R0,#+3
-        BEQ.N    ??MTH_teste_dispensador_papel_5
-        BCC.N    ??MTH_teste_dispensador_papel_6
-        CMP      R0,#+4
-        BNE.N    ??MTH_teste_dispensador_papel_4
-??MTH_teste_dispensador_papel_7:
-        B.N      ??MTH_teste_dispensador_papel_4
-??MTH_teste_dispensador_papel_3:
-        ADD      SP,SP,#+28
-          CFI CFA R13+12
-        POP      {R4,R5,PC}       ;; return
-          CFI CFA R13+40
-??MTH_teste_dispensador_papel_6:
-        MOVS     R0,#+1
-          CFI FunCall BOARD_set_motor_embalagem
-        BL       BOARD_set_motor_embalagem
-        B.N      ??MTH_teste_dispensador_papel_4
-??MTH_teste_dispensador_papel_5:
-        MOVS     R0,#+0
-          CFI FunCall BOARD_set_motor_embalagem
-        BL       BOARD_set_motor_embalagem
-??MTH_teste_dispensador_papel_4:
-        MOVS     R0,#+0
-          CFI FunCall BOARD_get_sinal
-        BL       BOARD_get_sinal
-        MOVS     R5,R0
-          CFI FunCall AA_mediaMovelPapel
-        BL       AA_mediaMovelPapel
-        MOVS     R4,R0
-        MOVS     R0,#+1
-          CFI FunCall BOARD_get_sinal
-        BL       BOARD_get_sinal
-        MOVS     R1,#+100
-        MULS     R4,R1,R4
-        LSRS     R4,R4,#+12
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
-        BEQ.N    ??MTH_teste_dispensador_papel_8
-        MOVS     R0,#+1
-        B.N      ??MTH_teste_dispensador_papel_9
-??MTH_teste_dispensador_papel_8:
-        MOVS     R0,#+0
-??MTH_teste_dispensador_papel_9:
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+0
-        BNE.N    ??MTH_teste_dispensador_papel_1
-        MOVS     R2,#+0
-        B.N      ??MTH_teste_dispensador_papel_2
-          CFI EndBlock cfiBlock4
+        B.N      ??MTH_teste_dispensador_papel_0
 //  265   }    
+??MTH_teste_dispensador_papel_6:
+        ADD      SP,SP,#+24
+          CFI CFA R13+24
+        POP      {R4-R8,PC}       ;; return
+          CFI EndBlock cfiBlock4
 //  266 }
 //  267 /***********************************************************************************
 //  268 *       Descriçao       :       Teste do dosador do milho
@@ -823,54 +836,85 @@ MTH_teste_dispensador_papel:
         THUMB
 //  272 void MTH_teste_dosador_milho(void){
 MTH_teste_dosador_milho:
-        PUSH     {R4,R5,LR}
+        PUSH     {R4-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
-          CFI CFA R13+12
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
         SUB      SP,SP,#+20
-          CFI CFA R13+32
+          CFI CFA R13+40
 //  273   eTECLA tecla;  
 //  274   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
-        MOVS     R4,R0
+        MOVS     R5,R0
 //  275   char buffer_linha[17];
 //  276   eMOTOR_DOSE estado=PARADO;
-        MOVS     R5,#+0
+        MOVS     R6,#+0
 //  277     
 //  278   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_tela_teste_dosador[idioma],NULL);    
         MOVS     R2,#+0
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.W    R0,??DataTable14_8
-        LDR      R1,[R0, R4, LSL #+2]
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_teste_dosador_milho_0
 //  279   
 //  280   for(;;){
 //  281     
 //  282     tecla = TECLADO_getch();
+??MTH_teste_dosador_milho_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  283     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MTH_teste_dosador_milho_1
+        BCC.N    ??MTH_teste_dosador_milho_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_teste_dosador_milho_3
+        BCC.N    ??MTH_teste_dosador_milho_4
+        CMP      R4,#+4
+        BNE.N    ??MTH_teste_dosador_milho_2
 //  284       case TECLA_ENTER:
 //  285            BOARD_set_motor_dose(PARADO);
+??MTH_teste_dosador_milho_5:
+        MOVS     R0,#+0
+          CFI FunCall BOARD_set_motor_dose
+        BL       BOARD_set_motor_dose
 //  286            estado = PARADO;        
+        MOVS     R0,#+0
+        MOVS     R6,R0
 //  287            break;
+        B.N      ??MTH_teste_dosador_milho_2
 //  288       case TECLA_ESC:
 //  289            return;
+??MTH_teste_dosador_milho_1:
+        B.N      ??MTH_teste_dosador_milho_6
 //  290       case TECLA_INC:
 //  291            BOARD_set_motor_dose(DOSAR);
+??MTH_teste_dosador_milho_4:
+        MOVS     R0,#+1
+          CFI FunCall BOARD_set_motor_dose
+        BL       BOARD_set_motor_dose
 //  292            estado = DOSAR;
+        MOVS     R0,#+1
+        MOVS     R6,R0
 //  293            break;
+        B.N      ??MTH_teste_dosador_milho_2
 //  294       case TECLA_DEC:
 //  295            BOARD_set_motor_dose(REVERTER);
-??MTH_teste_dosador_milho_1:
+??MTH_teste_dosador_milho_3:
         MOVS     R0,#+2
           CFI FunCall BOARD_set_motor_dose
         BL       BOARD_set_motor_dose
 //  296            estado = REVERTER;
-        MOVS     R5,#+2
+        MOVS     R0,#+2
+        MOVS     R6,R0
 //  297            break;
 //  298     }
 //  299    
@@ -879,15 +923,16 @@ MTH_teste_dosador_milho:
         MOVS     R0,#+2
           CFI FunCall BOARD_get_sinal
         BL       BOARD_get_sinal
-        MOVS     R2,R0
+        MOVS     R7,R0
 //  301     sprintf(buffer_linha,"SD:%01d - M:%s",sensor_dose,STRING_texto_teste_motor[idioma][estado]);
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         MOVS     R0,#+12
         LDR.W    R1,??DataTable14_9
-        MLA      R0,R0,R4,R1
-        LDR      R3,[R0, R5, LSL #+2]
-        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+        MLA      R0,R0,R5,R1
+        LDR      R3,[R0, R6, LSL #+2]
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        MOVS     R2,R7
         LDR.W    R1,??DataTable14_10
         ADD      R0,SP,#+0
           CFI FunCall sprintf
@@ -903,37 +948,13 @@ MTH_teste_dosador_milho:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??MTH_teste_dosador_milho_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_teste_dosador_milho_3
-        BCC.N    ??MTH_teste_dosador_milho_2
-        CMP      R0,#+3
-        BEQ.N    ??MTH_teste_dosador_milho_1
-        BCC.N    ??MTH_teste_dosador_milho_4
-        CMP      R0,#+4
-        BNE.N    ??MTH_teste_dosador_milho_2
-??MTH_teste_dosador_milho_5:
-        MOVS     R0,#+0
-          CFI FunCall BOARD_set_motor_dose
-        BL       BOARD_set_motor_dose
-        MOVS     R5,#+0
-        B.N      ??MTH_teste_dosador_milho_2
-??MTH_teste_dosador_milho_3:
-        ADD      SP,SP,#+20
-          CFI CFA R13+12
-        POP      {R4,R5,PC}       ;; return
-          CFI CFA R13+32
-??MTH_teste_dosador_milho_4:
-        MOVS     R0,#+1
-          CFI FunCall BOARD_set_motor_dose
-        BL       BOARD_set_motor_dose
-        MOVS     R5,#+1
-        B.N      ??MTH_teste_dosador_milho_2
-          CFI EndBlock cfiBlock5
+        B.N      ??MTH_teste_dosador_milho_0
 //  305   }   
+??MTH_teste_dosador_milho_6:
+        ADD      SP,SP,#+20
+          CFI CFA R13+20
+        POP      {R4-R7,PC}       ;; return
+          CFI EndBlock cfiBlock5
 //  306 }
 //  307 /***********************************************************************************
 //  308 *       Descrição       :       Teste de controle do motor AC
@@ -947,32 +968,33 @@ MTH_teste_dosador_milho:
         THUMB
 //  312 void MTH_teste_ventilador(void){
 MTH_teste_ventilador:
-        PUSH     {R4-R8,LR}
+        PUSH     {R4-R9,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R8 Frame(CFA, -8)
-          CFI R7 Frame(CFA, -12)
-          CFI R6 Frame(CFA, -16)
-          CFI R5 Frame(CFA, -20)
-          CFI R4 Frame(CFA, -24)
-          CFI CFA R13+24
-        SUB      SP,SP,#+24
+          CFI R9 Frame(CFA, -8)
+          CFI R8 Frame(CFA, -12)
+          CFI R7 Frame(CFA, -16)
+          CFI R6 Frame(CFA, -20)
+          CFI R5 Frame(CFA, -24)
+          CFI R4 Frame(CFA, -28)
+          CFI CFA R13+28
+        SUB      SP,SP,#+20
           CFI CFA R13+48
 //  313   eTECLA tecla;  
 //  314   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
-        MOVS     R4,R0
+        MOVS     R5,R0
 //  315   char buffer_linha[17];
 //  316   unsigned int contagem_atual=4000;
-        MOV      R5,#+4000
+        MOV      R7,#+4000
 //  317   unsigned int ultima_contagem=4000;
         MOV      R6,#+4000
 //  318     
 //  319   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_teste_ventilador[idioma],NULL);      
         MOVS     R2,#+0
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.W    R0,??DataTable14_11
-        LDR      R1,[R0, R4, LSL #+2]
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
@@ -984,51 +1006,141 @@ MTH_teste_ventilador:
         MOVS     R0,#+0
           CFI FunCall BOARD_setter_general_purpose_counter
         BL       BOARD_setter_general_purpose_counter
-        B.N      ??MTH_teste_ventilador_0
 //  322   
 //  323   for(;;){
 //  324     
 //  325     tecla = TECLADO_getch();
+??MTH_teste_ventilador_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  326     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MTH_teste_ventilador_1
+        BCC.N    ??MTH_teste_ventilador_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_teste_ventilador_3
+        BCC.N    ??MTH_teste_ventilador_4
+        CMP      R4,#+4
+        BNE.N    ??MTH_teste_ventilador_2
 //  327       case TECLA_ENTER:
 //  328            POTENCIA_setRPM(0);
+??MTH_teste_ventilador_5:
+        MOVS     R0,#+0
+          CFI FunCall POTENCIA_setRPM
+        BL       POTENCIA_setRPM
 //  329       case TECLA_ESC:
 //  330            POTENCIA_setRPM(0);        
+??MTH_teste_ventilador_1:
+        MOVS     R0,#+0
+          CFI FunCall POTENCIA_setRPM
+        BL       POTENCIA_setRPM
 //  331            POTENCIA_set_neutro(0);
+        MOVS     R0,#+0
+          CFI FunCall POTENCIA_set_neutro
+        BL       POTENCIA_set_neutro
 //  332            return;
+        B.N      ??MTH_teste_ventilador_6
 //  333       case TECLA_INC:
 //  334            if(contagem_atual<18000)
+??MTH_teste_ventilador_4:
+        MOVW     R0,#+18000
+        CMP      R7,R0
+        BCS.N    ??MTH_teste_ventilador_7
 //  335              contagem_atual+=100;
+        ADDS     R7,R7,#+100
 //  336            BOARD_setter_general_purpose_counter(3000);
+??MTH_teste_ventilador_7:
+        MOVW     R0,#+3000
+          CFI FunCall BOARD_setter_general_purpose_counter
+        BL       BOARD_setter_general_purpose_counter
 //  337            break;
+        B.N      ??MTH_teste_ventilador_2
 //  338       case TECLA_DEC:
 //  339            if(contagem_atual>1000)
+??MTH_teste_ventilador_3:
+        CMP      R7,#+1000
+        BLS.N    ??MTH_teste_ventilador_8
 //  340              contagem_atual-=100;
+        SUBS     R7,R7,#+100
 //  341            BOARD_setter_general_purpose_counter(3000);
+??MTH_teste_ventilador_8:
+        MOVW     R0,#+3000
+          CFI FunCall BOARD_setter_general_purpose_counter
+        BL       BOARD_setter_general_purpose_counter
 //  342            break;
 //  343     }
 //  344     
 //  345     unsigned short int frequencia=POTENCIA_getFrequenciaRede();
+??MTH_teste_ventilador_2:
+          CFI FunCall POTENCIA_getFrequenciaRede
+        BL       POTENCIA_getFrequenciaRede
+        MOV      R8,R0
 //  346     unsigned short int rotacao = POTENCIA_getRPMmedido();
+          CFI FunCall POTENCIA_getRPMmedido
+        BL       POTENCIA_getRPMmedido
+        MOV      R9,R0
 //  347     
 //  348     if(!BOARD_getter_general_purpose_counter()){
+          CFI FunCall BOARD_getter_general_purpose_counter
+        BL       BOARD_getter_general_purpose_counter
+        CMP      R0,#+0
+        BNE.N    ??MTH_teste_ventilador_9
 //  349       
 //  350       if(contagem_atual!=ultima_contagem){
+        CMP      R7,R6
+        BEQ.N    ??MTH_teste_ventilador_10
 //  351         POTENCIA_setRPM(contagem_atual);
+        MOVS     R0,R7
+          CFI FunCall POTENCIA_setRPM
+        BL       POTENCIA_setRPM
 //  352         ultima_contagem = contagem_atual;
+        MOVS     R6,R7
 //  353         sprintf(buffer_linha,"F:%02dHz-RPM:%05d",frequencia,rotacao);
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
+        MOV      R3,R9
+        UXTH     R8,R8            ;; ZeroExt  R8,R8,#+16,#+16
+        MOV      R2,R8
+        LDR.W    R1,??DataTable14_12
+        ADD      R0,SP,#+0
+          CFI FunCall sprintf
+        BL       sprintf
 //  354         STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_teste_ventilador[idioma],buffer_linha);        
+        ADD      R2,SP,#+0
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LDR.W    R0,??DataTable14_11
+        LDR      R1,[R0, R5, LSL #+2]
+        MOVS     R0,#+0
+          CFI FunCall STRING_write_to_internal
+        BL       STRING_write_to_internal
+        B.N      ??MTH_teste_ventilador_11
 //  355       }
 //  356       else{        
 //  357         sprintf(buffer_linha,"F:%02dHz-RPM:%05d",frequencia,rotacao);
+??MTH_teste_ventilador_10:
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
+        MOV      R3,R9
+        UXTH     R8,R8            ;; ZeroExt  R8,R8,#+16,#+16
+        MOV      R2,R8
+        LDR.W    R1,??DataTable14_12
+        ADD      R0,SP,#+0
+          CFI FunCall sprintf
+        BL       sprintf
 //  358         STRING_write_to_internal(NO_CLEAR,NULL,buffer_linha);
+        ADD      R2,SP,#+0
+        MOVS     R1,#+0
+        MOVS     R0,#+1
+          CFI FunCall STRING_write_to_internal
+        BL       STRING_write_to_internal
+        B.N      ??MTH_teste_ventilador_11
 //  359       }
 //  360     }
 //  361     else{
 //  362       sprintf(buffer_linha," SET RPM:%05d  ",contagem_atual);
-??MTH_teste_ventilador_1:
-        MOVS     R2,R5
-        LDR.W    R1,??DataTable14_12
+??MTH_teste_ventilador_9:
+        MOVS     R2,R7
+        LDR.W    R1,??DataTable14_13
         ADD      R0,SP,#+0
           CFI FunCall sprintf
         BL       sprintf
@@ -1041,105 +1153,17 @@ MTH_teste_ventilador:
 //  364     }
 //  365     
 //  366     vTaskDelay(50);
-??MTH_teste_ventilador_2:
+??MTH_teste_ventilador_11:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??MTH_teste_ventilador_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_teste_ventilador_3
-        BCC.N    ??MTH_teste_ventilador_4
-        CMP      R0,#+3
-        BEQ.N    ??MTH_teste_ventilador_5
-        BCC.N    ??MTH_teste_ventilador_6
-        CMP      R0,#+4
-        BNE.N    ??MTH_teste_ventilador_4
-??MTH_teste_ventilador_7:
-        MOVS     R0,#+0
-          CFI FunCall POTENCIA_setRPM
-        BL       POTENCIA_setRPM
-??MTH_teste_ventilador_3:
-        MOVS     R0,#+0
-          CFI FunCall POTENCIA_setRPM
-        BL       POTENCIA_setRPM
-        MOVS     R0,#+0
-          CFI FunCall POTENCIA_set_neutro
-        BL       POTENCIA_set_neutro
-        ADD      SP,SP,#+24
-          CFI CFA R13+24
-        POP      {R4-R8,PC}       ;; return
-          CFI CFA R13+48
-??MTH_teste_ventilador_6:
-        MOVW     R0,#+18000
-        CMP      R5,R0
-        BCS.N    ??MTH_teste_ventilador_8
-        ADDS     R5,R5,#+100
-??MTH_teste_ventilador_8:
-        MOVW     R0,#+3000
-          CFI FunCall BOARD_setter_general_purpose_counter
-        BL       BOARD_setter_general_purpose_counter
-        B.N      ??MTH_teste_ventilador_4
-??MTH_teste_ventilador_5:
-        CMP      R5,#+1000
-        BLS.N    ??MTH_teste_ventilador_9
-        SUBS     R5,R5,#+100
-??MTH_teste_ventilador_9:
-        MOVW     R0,#+3000
-          CFI FunCall BOARD_setter_general_purpose_counter
-        BL       BOARD_setter_general_purpose_counter
-??MTH_teste_ventilador_4:
-          CFI FunCall POTENCIA_getFrequenciaRede
-        BL       POTENCIA_getFrequenciaRede
-        MOVS     R7,R0
-          CFI FunCall POTENCIA_getRPMmedido
-        BL       POTENCIA_getRPMmedido
-        MOV      R8,R0
-          CFI FunCall BOARD_getter_general_purpose_counter
-        BL       BOARD_getter_general_purpose_counter
-        CMP      R0,#+0
-        BNE.N    ??MTH_teste_ventilador_1
-        CMP      R5,R6
-        BEQ.N    ??MTH_teste_ventilador_10
-        MOVS     R0,R5
-          CFI FunCall POTENCIA_setRPM
-        BL       POTENCIA_setRPM
-        MOVS     R6,R5
-        UXTH     R8,R8            ;; ZeroExt  R8,R8,#+16,#+16
-        MOV      R3,R8
-        UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
-        MOVS     R2,R7
-        LDR.W    R1,??DataTable14_13
-        ADD      R0,SP,#+0
-          CFI FunCall sprintf
-        BL       sprintf
-        ADD      R2,SP,#+0
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        LDR.W    R0,??DataTable14_11
-        LDR      R1,[R0, R4, LSL #+2]
-        MOVS     R0,#+0
-          CFI FunCall STRING_write_to_internal
-        BL       STRING_write_to_internal
-        B.N      ??MTH_teste_ventilador_2
-??MTH_teste_ventilador_10:
-        UXTH     R8,R8            ;; ZeroExt  R8,R8,#+16,#+16
-        MOV      R3,R8
-        UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
-        MOVS     R2,R7
-        LDR.W    R1,??DataTable14_13
-        ADD      R0,SP,#+0
-          CFI FunCall sprintf
-        BL       sprintf
-        ADD      R2,SP,#+0
-        MOVS     R1,#+0
-        MOVS     R0,#+1
-          CFI FunCall STRING_write_to_internal
-        BL       STRING_write_to_internal
-        B.N      ??MTH_teste_ventilador_2
-          CFI EndBlock cfiBlock6
+        B.N      ??MTH_teste_ventilador_0
 //  367   }    
+??MTH_teste_ventilador_6:
+        ADD      SP,SP,#+20
+          CFI CFA R13+28
+        POP      {R4-R9,PC}       ;; return
+          CFI EndBlock cfiBlock6
 //  368 }
 //  369 /***********************************************************************************
 //  370 *       Descrição       :       Menu para testar a panela
@@ -1153,29 +1177,33 @@ MTH_teste_ventilador:
         THUMB
 //  374 void MTH_teste_panela(void){
 MTH_teste_panela:
-        PUSH     {R4-R6,LR}
+        PUSH     {R4-R9,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
-        SUB      SP,SP,#+24
-          CFI CFA R13+40
+          CFI R9 Frame(CFA, -8)
+          CFI R8 Frame(CFA, -12)
+          CFI R7 Frame(CFA, -16)
+          CFI R6 Frame(CFA, -20)
+          CFI R5 Frame(CFA, -24)
+          CFI R4 Frame(CFA, -28)
+          CFI CFA R13+28
+        SUB      SP,SP,#+28
+          CFI CFA R13+56
 //  375   eTECLA tecla;
 //  376   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R5,R0
 //  377   char buffer_linha[17];
 //  378   unsigned char flag=0;
-        MOVS     R4,#+0
+        MOVS     R6,#+0
 //  379   unsigned char trap=0;
-        MOVS     R5,#+0
+        MOVS     R7,#+0
 //  380   
 //  381   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_teste_panela[idioma],NULL);      
         MOVS     R2,#+0
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R1,??DataTable14_14
-        LDR      R1,[R1, R0, LSL #+2]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LDR.W    R0,??DataTable14_14
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
@@ -1183,28 +1211,63 @@ MTH_teste_panela:
         MOVW     R0,#+5000
           CFI FunCall POTENCIA_setRPM
         BL       POTENCIA_setRPM
-        B.N      ??MTH_teste_panela_0
 //  383   
 //  384   for(;;){
 //  385     
 //  386     tecla = TECLADO_getch();
+??MTH_teste_panela_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  387     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MTH_teste_panela_1
+        BCC.N    ??MTH_teste_panela_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_teste_panela_3
+        BCC.N    ??MTH_teste_panela_4
+        CMP      R4,#+4
+        BNE.N    ??MTH_teste_panela_2
 //  388       case TECLA_ENTER:
 //  389            trap ^= 255;
+??MTH_teste_panela_5:
+        EORS     R7,R7,#0xFF
 //  390            POTENCIA_set_neutro(trap);
+        MOVS     R0,R7
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+          CFI FunCall POTENCIA_set_neutro
+        BL       POTENCIA_set_neutro
 //  391            break;
+        B.N      ??MTH_teste_panela_2
 //  392       case TECLA_ESC:
 //  393            POTENCIA_setRPM(0);
+??MTH_teste_panela_1:
+        MOVS     R0,#+0
+          CFI FunCall POTENCIA_setRPM
+        BL       POTENCIA_setRPM
 //  394            return;
+        B.N      ??MTH_teste_panela_6
 //  395       case TECLA_INC:
 //  396            flag = 1;
+??MTH_teste_panela_4:
+        MOVS     R0,#+1
+        MOVS     R6,R0
 //  397            BOARD_setter_general_purpose_counter(3000);           
+        MOVW     R0,#+3000
+          CFI FunCall BOARD_setter_general_purpose_counter
+        BL       BOARD_setter_general_purpose_counter
 //  398            CT_set_temperatura(60);        
+        MOVS     R0,#+60
+          CFI FunCall CT_set_temperatura
+        BL       CT_set_temperatura
 //  399            break;
+        B.N      ??MTH_teste_panela_2
 //  400       case TECLA_DEC:
 //  401            flag = 0;
-??MTH_teste_panela_1:
-        MOVS     R4,#+0
+??MTH_teste_panela_3:
+        MOVS     R0,#+0
+        MOVS     R6,R0
 //  402            CT_set_temperatura(0);                
         MOVS     R0,#+0
           CFI FunCall CT_set_temperatura
@@ -1216,18 +1279,19 @@ MTH_teste_panela:
 ??MTH_teste_panela_2:
           CFI FunCall AA_calculaResistorInteiro
         BL       AA_calculaResistorInteiro
-        MOVS     R6,R0
+        MOV      R8,R0
 //  407     unsigned short int temperatura = AA_calculaTemperatura();
           CFI FunCall AA_calculaTemperatura
         BL       AA_calculaTemperatura
-        MOVS     R3,R0
+        MOV      R9,R0
 //  408     
 //  409     sprintf(buffer_linha,"%05dR-%03doC-R:%01d",resistencia,temperatura,flag);   
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        STR      R4,[SP, #+0]
-        UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
-        UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
-        MOVS     R2,R6
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        STR      R6,[SP, #+0]
+        UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
+        MOV      R3,R9
+        UXTH     R8,R8            ;; ZeroExt  R8,R8,#+16,#+16
+        MOV      R2,R8
         LDR.W    R1,??DataTable14_15
         ADD      R0,SP,#+4
           CFI FunCall sprintf
@@ -1238,44 +1302,13 @@ MTH_teste_panela:
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-??MTH_teste_panela_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_teste_panela_3
-        BCC.N    ??MTH_teste_panela_2
-        CMP      R0,#+3
-        BEQ.N    ??MTH_teste_panela_1
-        BCC.N    ??MTH_teste_panela_4
-        CMP      R0,#+4
-        BNE.N    ??MTH_teste_panela_2
-??MTH_teste_panela_5:
-        EORS     R5,R5,#0xFF
-        MOVS     R0,R5
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-          CFI FunCall POTENCIA_set_neutro
-        BL       POTENCIA_set_neutro
-        B.N      ??MTH_teste_panela_2
-??MTH_teste_panela_3:
-        MOVS     R0,#+0
-          CFI FunCall POTENCIA_setRPM
-        BL       POTENCIA_setRPM
-        ADD      SP,SP,#+24
-          CFI CFA R13+16
-        POP      {R4-R6,PC}       ;; return
-          CFI CFA R13+40
-??MTH_teste_panela_4:
-        MOVS     R4,#+1
-        MOVW     R0,#+3000
-          CFI FunCall BOARD_setter_general_purpose_counter
-        BL       BOARD_setter_general_purpose_counter
-        MOVS     R0,#+60
-          CFI FunCall CT_set_temperatura
-        BL       CT_set_temperatura
-        B.N      ??MTH_teste_panela_2
-          CFI EndBlock cfiBlock7
+        B.N      ??MTH_teste_panela_0
 //  411   }  
+??MTH_teste_panela_6:
+        ADD      SP,SP,#+28
+          CFI CFA R13+28
+        POP      {R4-R9,PC}       ;; return
+          CFI EndBlock cfiBlock7
 //  412 }
 //  413 /***********************************************************************************
 //  414 *       Descrição       :       Tela para testar o noteiro CCTALK
@@ -1289,54 +1322,69 @@ MTH_teste_panela:
         THUMB
 //  418 void MTH_tela_teste_cctalk(void){
 MTH_tela_teste_cctalk:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         SUB      SP,SP,#+24
-          CFI CFA R13+32
+          CFI CFA R13+40
 //  419   eTECLA tecla;  
 //  420   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R5,R0
 //  421   char buffer_linha[17];
 //  422   
 //  423   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_mensagem_teste_BV20[idioma],NULL);      
         MOVS     R2,#+0
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R1,??DataTable14_16
-        LDR      R1,[R1, R0, LSL #+2]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LDR.W    R0,??DataTable14_16
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_tela_teste_cctalk_0
 //  424   
 //  425   for(;;){
 //  426     
 //  427     tecla = TECLADO_getch();
+??MTH_tela_teste_cctalk_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  428     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        MOVS     R0,R4
+        CMP      R0,#+1
+        BEQ.N    ??MTH_tela_teste_cctalk_1
+        CMP      R0,#+4
+        BNE.N    ??MTH_tela_teste_cctalk_2
 //  429       case TECLA_ENTER:
 //  430            BV20_subtrai_valor_acumulado(BV20_get_valor_acumulador());
-??MTH_tela_teste_cctalk_1:
+??MTH_tela_teste_cctalk_3:
           CFI FunCall BV20_get_valor_acumulador
         BL       BV20_get_valor_acumulador
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall BV20_subtrai_valor_acumulado
         BL       BV20_subtrai_valor_acumulado
 //  431            break;
+        B.N      ??MTH_tela_teste_cctalk_2
 //  432       case TECLA_ESC:
 //  433            return;
+??MTH_tela_teste_cctalk_1:
+        B.N      ??MTH_tela_teste_cctalk_4
 //  434     }
 //  435     
 //  436     sprintf(buffer_linha,"T=%04d-Ev=%1d",BV20_get_valor_acumulador(),BV20_get_ultimo_evento());
 ??MTH_tela_teste_cctalk_2:
           CFI FunCall BV20_get_ultimo_evento
         BL       BV20_get_ultimo_evento
-        MOVS     R4,R0
+        MOVS     R6,R0
           CFI FunCall BV20_get_valor_acumulador
         BL       BV20_get_valor_acumulador
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        MOVS     R3,R4
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        MOVS     R3,R6
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         MOVS     R2,R0
         LDR.W    R1,??DataTable14_17
@@ -1354,21 +1402,13 @@ MTH_tela_teste_cctalk:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??MTH_tela_teste_cctalk_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_tela_teste_cctalk_3
-        CMP      R0,#+4
-        BEQ.N    ??MTH_tela_teste_cctalk_1
-        B.N      ??MTH_tela_teste_cctalk_2
-??MTH_tela_teste_cctalk_3:
-        ADD      SP,SP,#+24
-          CFI CFA R13+8
-        POP      {R4,PC}          ;; return
-          CFI EndBlock cfiBlock8
+        B.N      ??MTH_tela_teste_cctalk_0
 //  440   }  
+??MTH_tela_teste_cctalk_4:
+        ADD      SP,SP,#+24
+          CFI CFA R13+16
+        POP      {R4-R6,PC}       ;; return
+          CFI EndBlock cfiBlock8
 //  441 }
 //  442 /***********************************************************************************
 //  443 *       Descrição       :       Tela para testar o moedeiro tipo pulso
@@ -1382,58 +1422,95 @@ MTH_tela_teste_cctalk:
         THUMB
 //  447 void MTH_tela_teste_uca1(void){
 MTH_tela_teste_uca1:
-        PUSH     {R4,R5,LR}
+        PUSH     {R4-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
-          CFI CFA R13+12
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
         SUB      SP,SP,#+20
-          CFI CFA R13+32
+          CFI CFA R13+40
 //  448   eTECLA tecla;
 //  449   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R5,R0
 //  450   char buffer_linha[17];
 //  451   unsigned char flag=0;
-        MOVS     R4,#+0
+        MOVS     R6,#+0
 //  452   
 //  453   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_mensagem_teste_uca1[idioma],NULL);     
         MOVS     R2,#+0
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R1,??DataTable14_18
-        LDR      R1,[R1, R0, LSL #+2]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LDR.W    R0,??DataTable14_18
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_tela_teste_uca1_0
 //  454   
 //  455   for(;;){
 //  456     
 //  457     tecla = TECLADO_getch();
+??MTH_tela_teste_uca1_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  458     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MTH_tela_teste_uca1_1
+        BCC.N    ??MTH_tela_teste_uca1_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_tela_teste_uca1_3
+        BCC.N    ??MTH_tela_teste_uca1_4
+        CMP      R4,#+4
+        BNE.N    ??MTH_tela_teste_uca1_2
 //  459       case TECLA_ENTER:
 //  460            PAGAMENTOS_subtrai_contagem_uca1(PAGAMENTOS_get_contagem_uca1());
+??MTH_tela_teste_uca1_5:
+          CFI FunCall PAGAMENTOS_get_contagem_uca1
+        BL       PAGAMENTOS_get_contagem_uca1
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+          CFI FunCall PAGAMENTOS_subtrai_contagem_uca1
+        BL       PAGAMENTOS_subtrai_contagem_uca1
 //  461            break;
+        B.N      ??MTH_tela_teste_uca1_2
 //  462       case TECLA_ESC:
 //  463            return;
+??MTH_tela_teste_uca1_1:
+        B.N      ??MTH_tela_teste_uca1_6
 //  464       case TECLA_INC:
 //  465            flag = 1;
+??MTH_tela_teste_uca1_4:
+        MOVS     R0,#+1
+        MOVS     R6,R0
 //  466            break;
+        B.N      ??MTH_tela_teste_uca1_2
 //  467       case TECLA_DEC:
 //  468            flag = 0;
+??MTH_tela_teste_uca1_3:
+        MOVS     R0,#+0
+        MOVS     R6,R0
 //  469            break;
 //  470     }
 //  471     
 //  472     sprintf(buffer_linha,"%04d-[%s]",PAGAMENTOS_get_contagem_uca1(),flag?"LOCK  ":"UNLOK");
-??MTH_tela_teste_uca1_1:
-        LDR.W    R5,??DataTable14_19
 ??MTH_tela_teste_uca1_2:
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
+        BEQ.N    ??MTH_tela_teste_uca1_7
+        LDR.W    R7,??DataTable14_19
+        B.N      ??MTH_tela_teste_uca1_8
+??MTH_tela_teste_uca1_7:
+        LDR.W    R7,??DataTable14_20
+??MTH_tela_teste_uca1_8:
           CFI FunCall PAGAMENTOS_get_contagem_uca1
         BL       PAGAMENTOS_get_contagem_uca1
+        MOVS     R3,R7
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         MOVS     R2,R0
-        MOVS     R3,R5
-        UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
-        LDR.W    R1,??DataTable14_20
+        LDR.W    R1,??DataTable14_21
         ADD      R0,SP,#+0
           CFI FunCall sprintf
         BL       sprintf
@@ -1445,7 +1522,7 @@ MTH_tela_teste_uca1:
         BL       STRING_write_to_internal
 //  474     
 //  475     PAGAMENTOS_bloqueia_uca1(flag);
-        MOVS     R0,R4
+        MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall PAGAMENTOS_bloqueia_uca1
         BL       PAGAMENTOS_bloqueia_uca1
@@ -1453,43 +1530,13 @@ MTH_tela_teste_uca1:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??MTH_tela_teste_uca1_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_tela_teste_uca1_3
-        BCC.N    ??MTH_tela_teste_uca1_4
-        CMP      R0,#+3
-        BEQ.N    ??MTH_tela_teste_uca1_5
-        BCC.N    ??MTH_tela_teste_uca1_6
-        CMP      R0,#+4
-        BNE.N    ??MTH_tela_teste_uca1_4
-??MTH_tela_teste_uca1_7:
-          CFI FunCall PAGAMENTOS_get_contagem_uca1
-        BL       PAGAMENTOS_get_contagem_uca1
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-          CFI FunCall PAGAMENTOS_subtrai_contagem_uca1
-        BL       PAGAMENTOS_subtrai_contagem_uca1
-        B.N      ??MTH_tela_teste_uca1_4
-??MTH_tela_teste_uca1_3:
-        ADD      SP,SP,#+20
-          CFI CFA R13+12
-        POP      {R4,R5,PC}       ;; return
-          CFI CFA R13+32
-??MTH_tela_teste_uca1_6:
-        MOVS     R4,#+1
-        B.N      ??MTH_tela_teste_uca1_4
-??MTH_tela_teste_uca1_5:
-        MOVS     R4,#+0
-??MTH_tela_teste_uca1_4:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
-        BEQ.N    ??MTH_tela_teste_uca1_1
-        LDR.W    R5,??DataTable14_21
-        B.N      ??MTH_tela_teste_uca1_2
-          CFI EndBlock cfiBlock9
+        B.N      ??MTH_tela_teste_uca1_0
 //  477   }  
+??MTH_tela_teste_uca1_6:
+        ADD      SP,SP,#+20
+          CFI CFA R13+20
+        POP      {R4-R7,PC}       ;; return
+          CFI EndBlock cfiBlock9
 //  478 }
 //  479 /***********************************************************************************
 //  480 *       Descrição       :       Tela para testar o noteiro pulso
@@ -1503,58 +1550,95 @@ MTH_tela_teste_uca1:
         THUMB
 //  484 void MTH_tela_teste_p70(void){
 MTH_tela_teste_p70:
-        PUSH     {R4,R5,LR}
+        PUSH     {R4-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
-          CFI CFA R13+12
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
         SUB      SP,SP,#+20
-          CFI CFA R13+32
+          CFI CFA R13+40
 //  485   eTECLA tecla;
 //  486   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R5,R0
 //  487   char buffer_linha[17];
 //  488   unsigned char flag=0;
-        MOVS     R4,#+0
+        MOVS     R6,#+0
 //  489   
 //  490   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_mensagem_teste_P70[idioma],NULL);     
         MOVS     R2,#+0
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R1,??DataTable14_22
-        LDR      R1,[R1, R0, LSL #+2]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LDR.W    R0,??DataTable14_22
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_tela_teste_p70_0
 //  491   
 //  492   for(;;){
 //  493     
 //  494     tecla = TECLADO_getch();
+??MTH_tela_teste_p70_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  495     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MTH_tela_teste_p70_1
+        BCC.N    ??MTH_tela_teste_p70_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_tela_teste_p70_3
+        BCC.N    ??MTH_tela_teste_p70_4
+        CMP      R4,#+4
+        BNE.N    ??MTH_tela_teste_p70_2
 //  496       case TECLA_ENTER:
 //  497            PAGAMENTOS_subtrai_contagem_p70(PAGAMENTOS_get_contagem_p70());
+??MTH_tela_teste_p70_5:
+          CFI FunCall PAGAMENTOS_get_contagem_p70
+        BL       PAGAMENTOS_get_contagem_p70
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+          CFI FunCall PAGAMENTOS_subtrai_contagem_p70
+        BL       PAGAMENTOS_subtrai_contagem_p70
 //  498            break;
+        B.N      ??MTH_tela_teste_p70_2
 //  499       case TECLA_ESC:
 //  500            return;
+??MTH_tela_teste_p70_1:
+        B.N      ??MTH_tela_teste_p70_6
 //  501       case TECLA_INC:
 //  502            flag = 1;
+??MTH_tela_teste_p70_4:
+        MOVS     R0,#+1
+        MOVS     R6,R0
 //  503            break;
+        B.N      ??MTH_tela_teste_p70_2
 //  504       case TECLA_DEC:
 //  505            flag = 0;
+??MTH_tela_teste_p70_3:
+        MOVS     R0,#+0
+        MOVS     R6,R0
 //  506            break;
 //  507     }
 //  508     
 //  509     sprintf(buffer_linha,"%04d-[%s]",PAGAMENTOS_get_contagem_p70(),flag?"LOCK  ":"UNLOK");
-??MTH_tela_teste_p70_1:
-        LDR.N    R5,??DataTable14_19
 ??MTH_tela_teste_p70_2:
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
+        BEQ.N    ??MTH_tela_teste_p70_7
+        LDR.N    R7,??DataTable14_19
+        B.N      ??MTH_tela_teste_p70_8
+??MTH_tela_teste_p70_7:
+        LDR.N    R7,??DataTable14_20
+??MTH_tela_teste_p70_8:
           CFI FunCall PAGAMENTOS_get_contagem_p70
         BL       PAGAMENTOS_get_contagem_p70
+        MOVS     R3,R7
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         MOVS     R2,R0
-        MOVS     R3,R5
-        UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
-        LDR.N    R1,??DataTable14_20
+        LDR.N    R1,??DataTable14_21
         ADD      R0,SP,#+0
           CFI FunCall sprintf
         BL       sprintf
@@ -1566,7 +1650,7 @@ MTH_tela_teste_p70:
         BL       STRING_write_to_internal
 //  511     
 //  512     PAGAMENTOS_set_inhibit_p70(flag);
-        MOVS     R0,R4
+        MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall PAGAMENTOS_set_inhibit_p70
         BL       PAGAMENTOS_set_inhibit_p70
@@ -1574,43 +1658,13 @@ MTH_tela_teste_p70:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??MTH_tela_teste_p70_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_tela_teste_p70_3
-        BCC.N    ??MTH_tela_teste_p70_4
-        CMP      R0,#+3
-        BEQ.N    ??MTH_tela_teste_p70_5
-        BCC.N    ??MTH_tela_teste_p70_6
-        CMP      R0,#+4
-        BNE.N    ??MTH_tela_teste_p70_4
-??MTH_tela_teste_p70_7:
-          CFI FunCall PAGAMENTOS_get_contagem_p70
-        BL       PAGAMENTOS_get_contagem_p70
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-          CFI FunCall PAGAMENTOS_subtrai_contagem_p70
-        BL       PAGAMENTOS_subtrai_contagem_p70
-        B.N      ??MTH_tela_teste_p70_4
-??MTH_tela_teste_p70_3:
-        ADD      SP,SP,#+20
-          CFI CFA R13+12
-        POP      {R4,R5,PC}       ;; return
-          CFI CFA R13+32
-??MTH_tela_teste_p70_6:
-        MOVS     R4,#+1
-        B.N      ??MTH_tela_teste_p70_4
-??MTH_tela_teste_p70_5:
-        MOVS     R4,#+0
-??MTH_tela_teste_p70_4:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
-        BEQ.N    ??MTH_tela_teste_p70_1
-        LDR.N    R5,??DataTable14_21
-        B.N      ??MTH_tela_teste_p70_2
-          CFI EndBlock cfiBlock10
+        B.N      ??MTH_tela_teste_p70_0
 //  514   }  
+??MTH_tela_teste_p70_6:
+        ADD      SP,SP,#+20
+          CFI CFA R13+20
+        POP      {R4-R7,PC}       ;; return
+          CFI EndBlock cfiBlock10
 //  515 }
 //  516 /***********************************************************************************
 //  517 *       Descrição       :       Tela para o teste dos leds da placa
@@ -1625,58 +1679,122 @@ MTH_tela_teste_p70:
         THUMB
 //  522 void MTH_tela_placa_instrucao(void){
 MTH_tela_placa_instrucao:
-        PUSH     {R4,R5,LR}
+        PUSH     {R4-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
-          CFI CFA R13+12
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
         SUB      SP,SP,#+20
-          CFI CFA R13+32
+          CFI CFA R13+40
 //  523   eTECLA tecla;
 //  524   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R5,R0
 //  525   char buffer_linha[17];
 //  526   unsigned char indice=0;
-        MOVS     R4,#+0
+        MOVS     R6,#+0
 //  527   
 //  528   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_mensagem_teste_led_instrucao[idioma],NULL);    
         MOVS     R2,#+0
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R1,??DataTable14_23
-        LDR      R1,[R1, R0, LSL #+2]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LDR.N    R0,??DataTable14_23
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_tela_placa_instrucao_0
 //  529   
 //  530   for(;;){
 //  531     
 //  532     tecla = TECLADO_getch();
+??MTH_tela_placa_instrucao_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  533     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MTH_tela_placa_instrucao_1
+        BCC.N    ??MTH_tela_placa_instrucao_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_tela_placa_instrucao_3
+        BCC.N    ??MTH_tela_placa_instrucao_4
+        CMP      R4,#+4
+        BNE.N    ??MTH_tela_placa_instrucao_2
 //  534       case TECLA_ENTER:
 //  535            break;
+??MTH_tela_placa_instrucao_5:
+        B.N      ??MTH_tela_placa_instrucao_2
 //  536       case TECLA_ESC:
 //  537            return;
+??MTH_tela_placa_instrucao_1:
+        B.N      ??MTH_tela_placa_instrucao_6
 //  538       case TECLA_INC: 
 //  539            for(unsigned char i=0;i<8;i++)
+??MTH_tela_placa_instrucao_4:
+        MOVS     R7,#+0
+??MTH_tela_placa_instrucao_7:
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        CMP      R7,#+8
+        BGE.N    ??MTH_tela_placa_instrucao_8
 //  540              LEDS_setter_led(i,0);
+        MOVS     R1,#+0
+        MOVS     R0,R7
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+          CFI FunCall LEDS_setter_led
+        BL       LEDS_setter_led
+        ADDS     R7,R7,#+1
+        B.N      ??MTH_tela_placa_instrucao_7
 //  541            indice = (indice+1) % 8;
+??MTH_tela_placa_instrucao_8:
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        ADDS     R0,R6,#+1
+        MOVS     R1,#+8
+        SDIV     R6,R0,R1
+        MLS      R6,R6,R1,R0
 //  542            LEDS_setter_led(indice,1);
+        MOVS     R1,#+1
+        MOVS     R0,R6
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+          CFI FunCall LEDS_setter_led
+        BL       LEDS_setter_led
 //  543            break;
+        B.N      ??MTH_tela_placa_instrucao_2
 //  544       case TECLA_DEC:
 //  545            for(unsigned char i=0;i<8;i++)
+??MTH_tela_placa_instrucao_3:
+        MOVS     R7,#+0
+??MTH_tela_placa_instrucao_9:
+        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
+        CMP      R7,#+8
+        BGE.N    ??MTH_tela_placa_instrucao_10
 //  546              LEDS_setter_led(i,0);   
+        MOVS     R1,#+0
+        MOVS     R0,R7
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+          CFI FunCall LEDS_setter_led
+        BL       LEDS_setter_led
+        ADDS     R7,R7,#+1
+        B.N      ??MTH_tela_placa_instrucao_9
 //  547            if(indice)
+??MTH_tela_placa_instrucao_10:
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
+        BEQ.N    ??MTH_tela_placa_instrucao_11
 //  548              indice = 7;
+        MOVS     R0,#+7
+        MOVS     R6,R0
+        B.N      ??MTH_tela_placa_instrucao_12
 //  549            else
 //  550              indice--;
-??MTH_tela_placa_instrucao_1:
-        SUBS     R4,R4,#+1
+??MTH_tela_placa_instrucao_11:
+        SUBS     R6,R6,#+1
 //  551            LEDS_setter_led(indice,1);
-??MTH_tela_placa_instrucao_2:
+??MTH_tela_placa_instrucao_12:
         MOVS     R1,#+1
-        MOVS     R0,R4
+        MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
@@ -1684,9 +1802,9 @@ MTH_tela_placa_instrucao:
 //  553     }
 //  554     
 //  555     sprintf(buffer_linha,"LED:[%01d]",indice);
-??MTH_tela_placa_instrucao_3:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        MOVS     R2,R4
+??MTH_tela_placa_instrucao_2:
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        MOVS     R2,R6
         LDR.N    R1,??DataTable14_24
         ADD      R0,SP,#+0
           CFI FunCall sprintf
@@ -1702,71 +1820,13 @@ MTH_tela_placa_instrucao:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??MTH_tela_placa_instrucao_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_tela_placa_instrucao_4
-        BCC.N    ??MTH_tela_placa_instrucao_3
-        CMP      R0,#+3
-        BEQ.N    ??MTH_tela_placa_instrucao_5
-        BCC.N    ??MTH_tela_placa_instrucao_6
-        CMP      R0,#+4
-        BNE.N    ??MTH_tela_placa_instrucao_3
-??MTH_tela_placa_instrucao_7:
-        B.N      ??MTH_tela_placa_instrucao_3
-??MTH_tela_placa_instrucao_4:
-        ADD      SP,SP,#+20
-          CFI CFA R13+12
-        POP      {R4,R5,PC}       ;; return
-          CFI CFA R13+32
-??MTH_tela_placa_instrucao_6:
-        MOVS     R5,#+0
-        B.N      ??MTH_tela_placa_instrucao_8
-??MTH_tela_placa_instrucao_9:
-        MOVS     R1,#+0
-        MOVS     R0,R5
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-          CFI FunCall LEDS_setter_led
-        BL       LEDS_setter_led
-        ADDS     R5,R5,#+1
-??MTH_tela_placa_instrucao_8:
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+8
-        BLT.N    ??MTH_tela_placa_instrucao_9
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        ADDS     R0,R4,#+1
-        MOVS     R1,#+8
-        SDIV     R4,R0,R1
-        MLS      R4,R4,R1,R0
-        MOVS     R1,#+1
-        MOVS     R0,R4
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-          CFI FunCall LEDS_setter_led
-        BL       LEDS_setter_led
-        B.N      ??MTH_tela_placa_instrucao_3
-??MTH_tela_placa_instrucao_5:
-        MOVS     R5,#+0
-        B.N      ??MTH_tela_placa_instrucao_10
-??MTH_tela_placa_instrucao_11:
-        MOVS     R1,#+0
-        MOVS     R0,R5
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-          CFI FunCall LEDS_setter_led
-        BL       LEDS_setter_led
-        ADDS     R5,R5,#+1
-??MTH_tela_placa_instrucao_10:
-        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        CMP      R5,#+8
-        BLT.N    ??MTH_tela_placa_instrucao_11
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
-        BEQ.N    ??MTH_tela_placa_instrucao_1
-        MOVS     R4,#+7
-        B.N      ??MTH_tela_placa_instrucao_2
-          CFI EndBlock cfiBlock11
+        B.N      ??MTH_tela_placa_instrucao_0
 //  559   }
+??MTH_tela_placa_instrucao_6:
+        ADD      SP,SP,#+20
+          CFI CFA R13+20
+        POP      {R4-R7,PC}       ;; return
+          CFI EndBlock cfiBlock11
 //  560 }
 //  561 /***********************************************************************************
 //  562 *       Descrição       :       Menu para teste do LCD externo
@@ -1780,66 +1840,89 @@ MTH_tela_placa_instrucao:
         THUMB
 //  566 void MTH_tela_teste_lcd_externo(void){
 MTH_tela_teste_lcd_externo:
-        PUSH     {R4-R6,LR}
+        PUSH     {R4-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
-        SUB      SP,SP,#+24
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
+        SUB      SP,SP,#+20
           CFI CFA R13+40
 //  567   eTECLA tecla;
 //  568   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
-        MOVS     R4,R0
+        MOVS     R5,R0
 //  569   char buffer_linha[17]={0};
         ADD      R0,SP,#+0
         MOVS     R1,#+20
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
 //  570   char first=' ';
-        MOVS     R5,#+32
+        MOVS     R6,#+32
 //  571   unsigned char ciclos=1;
-        MOVS     R6,#+1
+        MOVS     R7,#+1
 //  572     
 //  573   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_teste_lcd_externo[idioma],NULL);    
         MOVS     R2,#+0
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R0,??DataTable14_25
-        LDR      R1,[R0, R4, LSL #+2]
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_tela_teste_lcd_externo_0
 //  574   
 //  575   for(;;){
 //  576    
 //  577     tecla = TECLADO_getch();
+??MTH_tela_teste_lcd_externo_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  578     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MTH_tela_teste_lcd_externo_1
+        BCC.N    ??MTH_tela_teste_lcd_externo_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_tela_teste_lcd_externo_3
+        BCC.N    ??MTH_tela_teste_lcd_externo_4
+        CMP      R4,#+4
+        BNE.N    ??MTH_tela_teste_lcd_externo_2
 //  579       case TECLA_ENTER:
 //  580            break;
+??MTH_tela_teste_lcd_externo_5:
+        B.N      ??MTH_tela_teste_lcd_externo_2
 //  581       case TECLA_ESC:
 //  582            return;
+??MTH_tela_teste_lcd_externo_1:
+        B.N      ??MTH_tela_teste_lcd_externo_6
 //  583       case TECLA_INC:
 //  584            break;
+??MTH_tela_teste_lcd_externo_4:
+        B.N      ??MTH_tela_teste_lcd_externo_2
 //  585       case TECLA_DEC:
 //  586            break;
 //  587     }       
 //  588     
 //  589     for(unsigned char i=0;i<16;i++)
-//  590       buffer_linha[i] = first;
-??MTH_tela_teste_lcd_externo_1:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        ADD      R1,SP,#+0
-        STRB     R5,[R0, R1]
-        ADDS     R0,R0,#+1
+??MTH_tela_teste_lcd_externo_3:
 ??MTH_tela_teste_lcd_externo_2:
+        MOVS     R0,#+0
+??MTH_tela_teste_lcd_externo_7:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+16
-        BLT.N    ??MTH_tela_teste_lcd_externo_1
+        BGE.N    ??MTH_tela_teste_lcd_externo_8
+//  590       buffer_linha[i] = first;
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADD      R1,SP,#+0
+        STRB     R6,[R0, R1]
+        ADDS     R0,R0,#+1
+        B.N      ??MTH_tela_teste_lcd_externo_7
 //  591         
 //  592     STRING_write_to_external(NO_CLEAR,buffer_linha,buffer_linha);
+??MTH_tela_teste_lcd_externo_8:
         ADD      R2,SP,#+0
         ADD      R1,SP,#+0
         MOVS     R0,#+1
@@ -1847,49 +1930,30 @@ MTH_tela_teste_lcd_externo:
         BL       STRING_write_to_external
 //  593     
 //  594     if(!--ciclos){
-        SUBS     R6,R6,#+1
-        MOVS     R0,R6
+        SUBS     R7,R7,#+1
+        MOVS     R0,R7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
-        BNE.N    ??MTH_tela_teste_lcd_externo_3
+        BNE.N    ??MTH_tela_teste_lcd_externo_9
 //  595       ciclos = 10;
-        MOVS     R6,#+10
+        MOVS     R0,#+10
+        MOVS     R7,R0
 //  596       first++;      
-        ADDS     R5,R5,#+1
+        ADDS     R6,R6,#+1
 //  597     }
 //  598     
 //  599     vTaskDelay(50);    
-??MTH_tela_teste_lcd_externo_3:
+??MTH_tela_teste_lcd_externo_9:
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-??MTH_tela_teste_lcd_externo_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_tela_teste_lcd_externo_4
-        BCC.N    ??MTH_tela_teste_lcd_externo_5
-        CMP      R0,#+3
-        BEQ.N    ??MTH_tela_teste_lcd_externo_6
-        BCC.N    ??MTH_tela_teste_lcd_externo_7
-        CMP      R0,#+4
-        BNE.N    ??MTH_tela_teste_lcd_externo_5
-??MTH_tela_teste_lcd_externo_8:
-        B.N      ??MTH_tela_teste_lcd_externo_5
-??MTH_tela_teste_lcd_externo_4:
-        ADD      SP,SP,#+24
-          CFI CFA R13+16
-        POP      {R4-R6,PC}       ;; return
-          CFI CFA R13+40
-??MTH_tela_teste_lcd_externo_7:
-        B.N      ??MTH_tela_teste_lcd_externo_5
-??MTH_tela_teste_lcd_externo_6:
-??MTH_tela_teste_lcd_externo_5:
-        MOVS     R0,#+0
-        B.N      ??MTH_tela_teste_lcd_externo_2
-          CFI EndBlock cfiBlock12
+        B.N      ??MTH_tela_teste_lcd_externo_0
 //  600   }  
+??MTH_tela_teste_lcd_externo_6:
+        ADD      SP,SP,#+20
+          CFI CFA R13+20
+        POP      {R4-R7,PC}       ;; return
+          CFI EndBlock cfiBlock12
 //  601 }
 //  602 /***********************************************************************************
 //  603 *       Descrição       :       Tela para realizar o teste da impressora
@@ -1903,87 +1967,91 @@ MTH_tela_teste_lcd_externo:
         THUMB
 //  607 void MTH_tela_teste_impressora(void){
 MTH_tela_teste_impressora:
-        PUSH     {R4,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
 //  608   eTECLA tecla;
 //  609   unsigned char idioma = APLICACAO_carrega_idioma();  
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
-        MOVS     R4,R0
+        MOVS     R5,R0
 //  610 
 //  611   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_teste_impresora[idioma][0],(char*)STRING_titulo_teste_impresora[idioma][1]);      
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R0,??DataTable14_26
-        ADDS     R0,R0,R4, LSL #+3
+        ADDS     R0,R0,R5, LSL #+3
         LDR      R2,[R0, #+4]
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R0,??DataTable14_26
-        LDR      R1,[R0, R4, LSL #+3]
+        LDR      R1,[R0, R5, LSL #+3]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_tela_teste_impressora_0
 //  612   
 //  613   for(;;){
 //  614     
 //  615     tecla = TECLADO_getch();
-//  616     switch(tecla){
-//  617       case TECLA_ENTER:
-//  618            STRING_write_to_internal(NO_CLEAR,NULL,"      ...       ");
-//  619            IMPRESSORA_impressora_teste();
-//  620            STRING_write_to_internal(NO_CLEAR,NULL,(char*)STRING_titulo_teste_impresora[idioma][1]);               
-//  621            break;
-//  622       case TECLA_ESC:
-//  623            return;
-//  624       case TECLA_INC:
-//  625            break;
-//  626       case TECLA_DEC:
-//  627            break;
-//  628     }       
-//  629     
-//  630     vTaskDelay(50);
-??MTH_tela_teste_impressora_1:
-??MTH_tela_teste_impressora_2:
-        MOVS     R0,#+50
-          CFI FunCall vTaskDelay
-        BL       vTaskDelay
 ??MTH_tela_teste_impressora_0:
           CFI FunCall TECLADO_getch
         BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_tela_teste_impressora_3
-        BCC.N    ??MTH_tela_teste_impressora_2
-        CMP      R0,#+3
+        MOVS     R4,R0
+//  616     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
         BEQ.N    ??MTH_tela_teste_impressora_1
+        BCC.N    ??MTH_tela_teste_impressora_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_tela_teste_impressora_3
         BCC.N    ??MTH_tela_teste_impressora_4
-        CMP      R0,#+4
+        CMP      R4,#+4
         BNE.N    ??MTH_tela_teste_impressora_2
+//  617       case TECLA_ENTER:
+//  618            STRING_write_to_internal(NO_CLEAR,NULL,"      ...       ");
 ??MTH_tela_teste_impressora_5:
         LDR.N    R2,??DataTable14_27
         MOVS     R1,#+0
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
+//  619            IMPRESSORA_impressora_teste();
           CFI FunCall IMPRESSORA_impressora_teste
         BL       IMPRESSORA_impressora_teste
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+//  620            STRING_write_to_internal(NO_CLEAR,NULL,(char*)STRING_titulo_teste_impresora[idioma][1]);               
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDR.N    R0,??DataTable14_26
-        ADDS     R0,R0,R4, LSL #+3
+        ADDS     R0,R0,R5, LSL #+3
         LDR      R2,[R0, #+4]
         MOVS     R1,#+0
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
+//  621            break;
         B.N      ??MTH_tela_teste_impressora_2
-??MTH_tela_teste_impressora_3:
-        POP      {R4,PC}          ;; return
+//  622       case TECLA_ESC:
+//  623            return;
+??MTH_tela_teste_impressora_1:
+        B.N      ??MTH_tela_teste_impressora_6
+//  624       case TECLA_INC:
+//  625            break;
 ??MTH_tela_teste_impressora_4:
         B.N      ??MTH_tela_teste_impressora_2
-          CFI EndBlock cfiBlock13
+//  626       case TECLA_DEC:
+//  627            break;
+//  628     }       
+//  629     
+//  630     vTaskDelay(50);
+??MTH_tela_teste_impressora_3:
+??MTH_tela_teste_impressora_2:
+        MOVS     R0,#+50
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
+        B.N      ??MTH_tela_teste_impressora_0
 //  631   }  
+??MTH_tela_teste_impressora_6:
+        POP      {R0,R4,R5,PC}    ;; return
+          CFI EndBlock cfiBlock13
 //  632 }
 //  633 /***********************************************************************************
 //  634 *       Descrição       :       Interface para teste da música
@@ -1997,46 +2065,80 @@ MTH_tela_teste_impressora:
         THUMB
 //  638 void MTH_teste_musica(void){
 MTH_teste_musica:
-        PUSH     {LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
         SUB      SP,SP,#+20
-          CFI CFA R13+24
+          CFI CFA R13+32
 //  639   eTECLA tecla;
 //  640   char buffer_linha[17];
 //  641   unsigned char idioma = APLICACAO_carrega_idioma();    
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R5,R0
 //  642   
 //  643   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_menu_teste_musica[idioma],NULL);
         MOVS     R2,#+0
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R1,??DataTable14_28
-        LDR      R1,[R1, R0, LSL #+2]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LDR.N    R0,??DataTable14_28
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_teste_musica_0
 //  644       
 //  645   for(;;){
 //  646             
 //  647     tecla = TECLADO_getch();
+??MTH_teste_musica_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  648     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        MOVS     R0,R4
+        CMP      R0,#+1
+        BEQ.N    ??MTH_teste_musica_1
+        CMP      R0,#+4
+        BNE.N    ??MTH_teste_musica_2
 //  649       case TECLA_ENTER:
 //  650            PLAYER_interrompeMusica();
+??MTH_teste_musica_3:
+          CFI FunCall PLAYER_interrompeMusica
+        BL       PLAYER_interrompeMusica
 //  651            vTaskDelay(5);
+        MOVS     R0,#+5
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
 //  652            PLAYERWAVE_iniciaMusica(1,0);           
+        MOVS     R1,#+0
+        MOVS     R0,#+1
+          CFI FunCall PLAYERWAVE_iniciaMusica
+        BL       PLAYERWAVE_iniciaMusica
 //  653            break;
+        B.N      ??MTH_teste_musica_2
 //  654       case TECLA_ESC:
 //  655            PLAYER_interrompeMusica();
+??MTH_teste_musica_1:
+          CFI FunCall PLAYER_interrompeMusica
+        BL       PLAYER_interrompeMusica
 //  656            return;
+        B.N      ??MTH_teste_musica_4
 //  657     }
 //  658     
 //  659     sprintf(buffer_linha,"[%s]",PLAYERWAVE_verificaToque()?"PLAY":"STOP");
-??MTH_teste_musica_1:
-        LDR.N    R2,??DataTable14_29
 ??MTH_teste_musica_2:
-        LDR.N    R1,??DataTable14_30
+          CFI FunCall PLAYERWAVE_verificaToque
+        BL       PLAYERWAVE_verificaToque
+        CMP      R0,#+0
+        BEQ.N    ??MTH_teste_musica_5
+        LDR.N    R2,??DataTable14_29
+        B.N      ??MTH_teste_musica_6
+??MTH_teste_musica_5:
+        LDR.N    R2,??DataTable14_30
+??MTH_teste_musica_6:
+        LDR.N    R1,??DataTable14_31
         ADD      R0,SP,#+0
           CFI FunCall sprintf
         BL       sprintf
@@ -2046,39 +2148,13 @@ MTH_teste_musica:
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-??MTH_teste_musica_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_teste_musica_3
-        CMP      R0,#+4
-        BNE.N    ??MTH_teste_musica_4
-??MTH_teste_musica_5:
-          CFI FunCall PLAYER_interrompeMusica
-        BL       PLAYER_interrompeMusica
-        MOVS     R0,#+5
-          CFI FunCall vTaskDelay
-        BL       vTaskDelay
-        MOVS     R1,#+0
-        MOVS     R0,#+1
-          CFI FunCall PLAYERWAVE_iniciaMusica
-        BL       PLAYERWAVE_iniciaMusica
-??MTH_teste_musica_4:
-          CFI FunCall PLAYERWAVE_verificaToque
-        BL       PLAYERWAVE_verificaToque
-        CMP      R0,#+0
-        BEQ.N    ??MTH_teste_musica_1
-        LDR.N    R2,??DataTable14_31
-        B.N      ??MTH_teste_musica_2
-??MTH_teste_musica_3:
-          CFI FunCall PLAYER_interrompeMusica
-        BL       PLAYER_interrompeMusica
-        ADD      SP,SP,#+20
-          CFI CFA R13+4
-        POP      {PC}             ;; return
-          CFI EndBlock cfiBlock14
+        B.N      ??MTH_teste_musica_0
 //  661   }
+??MTH_teste_musica_4:
+        ADD      SP,SP,#+20
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
+          CFI EndBlock cfiBlock14
 //  662 }
 //  663 /***********************************************************************************
 //  664 *       Descrição       :       Interface para realizar o teste das
@@ -2093,64 +2169,120 @@ MTH_teste_musica:
         THUMB
 //  669 void MTH_teste_locucoes(void){
 MTH_teste_locucoes:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         SUB      SP,SP,#+24
-          CFI CFA R13+32
+          CFI CFA R13+40
 //  670   eTECLA tecla;
 //  671   unsigned char idioma = APLICACAO_carrega_idioma();    
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
+        MOVS     R5,R0
 //  672   char buffer_linha[17];
 //  673   const char toques[3]={0,2,3};
-        ADD      R1,SP,#+0
-        LDR.N    R2,??DataTable14_32
-        LDR      R3,[R2, #0]
-        STR      R3,[R1, #+0]
+        ADD      R0,SP,#+0
+        LDR.N    R1,??DataTable14_32
+        LDR      R2,[R1, #0]
+        STR      R2,[R0, #+0]
 //  674   unsigned char indice=0;
-        MOVS     R4,#+0
+        MOVS     R6,#+0
 //  675   
 //  676   
 //  677   STRING_write_to_internal(CLEAR_DISPLAY,(char*)STRING_titulo_menu_teste_vozes[idioma],NULL);
         MOVS     R2,#+0
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R1,??DataTable14_33
-        LDR      R1,[R1, R0, LSL #+2]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LDR.N    R0,??DataTable14_33
+        LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-        B.N      ??MTH_teste_locucoes_0
 //  678   for(;;){
 //  679     
 //  680     tecla = TECLADO_getch();
+??MTH_teste_locucoes_0:
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOVS     R4,R0
 //  681     switch(tecla){
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        CMP      R4,#+1
+        BEQ.N    ??MTH_teste_locucoes_1
+        BCC.N    ??MTH_teste_locucoes_2
+        CMP      R4,#+3
+        BEQ.N    ??MTH_teste_locucoes_3
+        BCC.N    ??MTH_teste_locucoes_4
+        CMP      R4,#+4
+        BNE.N    ??MTH_teste_locucoes_2
 //  682       case TECLA_ENTER:
 //  683            PLAYER_interrompeMusica();        
+??MTH_teste_locucoes_5:
+          CFI FunCall PLAYER_interrompeMusica
+        BL       PLAYER_interrompeMusica
 //  684            vTaskDelay(5);
+        MOVS     R0,#+5
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
 //  685            PLAYERWAVE_iniciaMusica(toques[indice],0);  
+        MOVS     R1,#+0
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        ADD      R0,SP,#+0
+        LDRB     R0,[R6, R0]
+          CFI FunCall PLAYERWAVE_iniciaMusica
+        BL       PLAYERWAVE_iniciaMusica
 //  686            break;
+        B.N      ??MTH_teste_locucoes_2
 //  687       case TECLA_ESC:
 //  688            PLAYER_interrompeMusica();
+??MTH_teste_locucoes_1:
+          CFI FunCall PLAYER_interrompeMusica
+        BL       PLAYER_interrompeMusica
 //  689            return;
+        B.N      ??MTH_teste_locucoes_6
 //  690       case TECLA_INC:
 //  691            indice = (indice+1) % 3;
+??MTH_teste_locucoes_4:
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        ADDS     R0,R6,#+1
+        MOVS     R1,#+3
+        SDIV     R2,R0,R1
+        MLS      R6,R1,R2,R0
 //  692            break;
+        B.N      ??MTH_teste_locucoes_2
 //  693       case TECLA_DEC:
 //  694            if(indice)
+??MTH_teste_locucoes_3:
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
+        BEQ.N    ??MTH_teste_locucoes_7
 //  695              indice--;
+        SUBS     R6,R6,#+1
+        B.N      ??MTH_teste_locucoes_8
 //  696            else
 //  697              indice = 2;
+??MTH_teste_locucoes_7:
+        MOVS     R0,#+2
+        MOVS     R6,R0
 //  698            break;
 //  699     }
 //  700     
 //  701     sprintf(buffer_linha,"[%s][i:%01d]",PLAYERWAVE_verificaToque()?"PLAY":"STOP",indice+1);
-??MTH_teste_locucoes_1:
-        LDR.N    R2,??DataTable14_29
+??MTH_teste_locucoes_8:
 ??MTH_teste_locucoes_2:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        ADDS     R3,R4,#+1
+          CFI FunCall PLAYERWAVE_verificaToque
+        BL       PLAYERWAVE_verificaToque
+        CMP      R0,#+0
+        BEQ.N    ??MTH_teste_locucoes_9
+        LDR.N    R2,??DataTable14_29
+        B.N      ??MTH_teste_locucoes_10
+??MTH_teste_locucoes_9:
+        LDR.N    R2,??DataTable14_30
+??MTH_teste_locucoes_10:
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        ADDS     R3,R6,#+1
         LDR.N    R1,??DataTable14_34
         ADD      R0,SP,#+4
           CFI FunCall sprintf
@@ -2161,63 +2293,13 @@ MTH_teste_locucoes:
         MOVS     R0,#+1
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-??MTH_teste_locucoes_0:
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MTH_teste_locucoes_3
-        BCC.N    ??MTH_teste_locucoes_4
-        CMP      R0,#+3
-        BEQ.N    ??MTH_teste_locucoes_5
-        BCC.N    ??MTH_teste_locucoes_6
-        CMP      R0,#+4
-        BNE.N    ??MTH_teste_locucoes_4
-??MTH_teste_locucoes_7:
-          CFI FunCall PLAYER_interrompeMusica
-        BL       PLAYER_interrompeMusica
-        MOVS     R0,#+5
-          CFI FunCall vTaskDelay
-        BL       vTaskDelay
-        MOVS     R1,#+0
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        ADD      R0,SP,#+0
-        LDRB     R0,[R4, R0]
-          CFI FunCall PLAYERWAVE_iniciaMusica
-        BL       PLAYERWAVE_iniciaMusica
-        B.N      ??MTH_teste_locucoes_4
-??MTH_teste_locucoes_3:
-          CFI FunCall PLAYER_interrompeMusica
-        BL       PLAYER_interrompeMusica
-        ADD      SP,SP,#+24
-          CFI CFA R13+8
-        POP      {R4,PC}          ;; return
-          CFI CFA R13+32
-??MTH_teste_locucoes_6:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        ADDS     R0,R4,#+1
-        MOVS     R1,#+3
-        SDIV     R2,R0,R1
-        MLS      R4,R1,R2,R0
-        B.N      ??MTH_teste_locucoes_4
-??MTH_teste_locucoes_5:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
-        CMP      R4,#+0
-        BEQ.N    ??MTH_teste_locucoes_8
-        SUBS     R4,R4,#+1
-        B.N      ??MTH_teste_locucoes_9
-??MTH_teste_locucoes_8:
-        MOVS     R4,#+2
-??MTH_teste_locucoes_9:
-??MTH_teste_locucoes_4:
-          CFI FunCall PLAYERWAVE_verificaToque
-        BL       PLAYERWAVE_verificaToque
-        CMP      R0,#+0
-        BEQ.N    ??MTH_teste_locucoes_1
-        LDR.N    R2,??DataTable14_31
-        B.N      ??MTH_teste_locucoes_2
-          CFI EndBlock cfiBlock15
+        B.N      ??MTH_teste_locucoes_0
 //  703   }  
+??MTH_teste_locucoes_6:
+        ADD      SP,SP,#+24
+          CFI CFA R13+16
+        POP      {R4-R6,PC}       ;; return
+          CFI EndBlock cfiBlock15
 //  704 }
 
         SECTION `.text`:CODE:NOROOT(2)
@@ -2296,13 +2378,13 @@ MTH_teste_locucoes:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable14_12:
-        DC32     `?<Constant " SET RPM:%05d  ">`
+        DC32     `?<Constant "F:%02dHz-RPM:%05d">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable14_13:
-        DC32     `?<Constant "F:%02dHz-RPM:%05d">`
+        DC32     `?<Constant " SET RPM:%05d  ">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -2338,19 +2420,19 @@ MTH_teste_locucoes:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable14_19:
-        DC32     `?<Constant "UNLOK">`
+        DC32     `?<Constant "LOCK  ">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable14_20:
-        DC32     `?<Constant "%04d-[%s]">`
+        DC32     `?<Constant "UNLOK">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable14_21:
-        DC32     `?<Constant "LOCK  ">`
+        DC32     `?<Constant "%04d-[%s]">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -2398,19 +2480,19 @@ MTH_teste_locucoes:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable14_29:
-        DC32     `?<Constant "STOP">`
+        DC32     `?<Constant "PLAY">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable14_30:
-        DC32     `?<Constant "[%s]">`
+        DC32     `?<Constant "STOP">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable14_31:
-        DC32     `?<Constant "PLAY">`
+        DC32     `?<Constant "[%s]">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -2447,9 +2529,9 @@ MTH_teste_locucoes:
 //  707 ***********************************************************************************/
 // 
 //   316 bytes in section .rodata
-// 2 166 bytes in section .text
+// 2 302 bytes in section .text
 // 
-// 2 166 bytes of CODE  memory
+// 2 302 bytes of CODE  memory
 //   316 bytes of CONST memory
 //
 //Errors: none

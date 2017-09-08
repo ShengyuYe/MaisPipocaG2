@@ -1,28 +1,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jun/2017  11:11:50 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:57 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Kernel\queue.c           /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Kernel\queue.c" -lC     /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA        /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Kernel\queue.c    /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Kernel\queue.c    /
+//                    -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\   /
+//                    -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\   /
+//                    -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\     /
+//                    --no_cse --no_unroll --no_inline --no_code_motion       /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\queue.s       /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\queue. /
+//                    s                                                       /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -101,7 +96,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Kernel\queue.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Kernel\queue.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -143,16 +138,22 @@
         THUMB
 // __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
 memcpy:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
+        MOVS     R2,R6
+        MOVS     R1,R5
         MOVS     R0,R4
           CFI FunCall __aeabi_memcpy
         BL       __aeabi_memcpy
         MOVS     R0,R4
-        POP      {R4,PC}          ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock0
 //   34 #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
 //   35   #include "FreeRTOS.h"
@@ -260,12 +261,13 @@ xQueueRegistry:
 //  128 xQueueHandle xQueueCreate( unsigned portBASE_TYPE uxQueueLength, unsigned portBASE_TYPE uxItemSize )
 //  129 {
 xQueueCreate:
-        PUSH     {R4-R6,LR}
+        PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+24
         MOVS     R4,R0
         MOVS     R5,R1
 //  130   xQUEUE *pxNewQueue;
@@ -287,7 +289,9 @@ xQueueCreate:
 //  138       xQueueSizeInBytes = ( size_t ) ( uxQueueLength * uxItemSize ) + ( size_t ) 1;
         MUL      R0,R5,R4
         ADDS     R0,R0,#+1
+        MOVS     R7,R0
 //  139       pxNewQueue->pcHead = ( signed char * ) pvPortMalloc( xQueueSizeInBytes );
+        MOVS     R0,R7
           CFI FunCall pvPortMalloc
         BL       pvPortMalloc
         STR      R0,[R6, #+0]
@@ -352,7 +356,7 @@ xQueueCreate:
 ??xQueueCreate_0:
         MOVS     R0,#+0
 ??xQueueCreate_2:
-        POP      {R4-R6,PC}       ;; return
+        POP      {R1,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock1
 //  166 }
 //  167 /********************************************************************************
@@ -455,19 +459,20 @@ xQueueCreateMutex:
 //  209 portBASE_TYPE xQueueGiveMutexRecursive( xQueueHandle pxMutex )
 //  210 {
 xQueueGiveMutexRecursive:
-        PUSH     {R3-R5,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R5 Frame(CFA, -8)
-          CFI R4 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
           CFI CFA R13+16
         MOVS     R4,R0
 //  211     portBASE_TYPE xReturn;
 //  212 
 //  213     if( pxMutex->pxMutexHolder == xTaskGetCurrentTaskHandle() )
-        LDR      R5,[R4, #+4]
+        LDR      R6,[R4, #+4]
           CFI FunCall xTaskGetCurrentTaskHandle
         BL       xTaskGetCurrentTaskHandle
-        CMP      R5,R0
+        CMP      R6,R0
         BNE.N    ??xQueueGiveMutexRecursive_0
 //  214     {
 //  215 	traceGIVE_MUTEX_RECURSIVE( pxMutex );
@@ -492,6 +497,7 @@ xQueueGiveMutexRecursive:
 //  222 	xReturn = pdPASS;
 ??xQueueGiveMutexRecursive_1:
         MOVS     R0,#+1
+        MOVS     R5,R0
         B.N      ??xQueueGiveMutexRecursive_2
 //  223     }
 //  224     else
@@ -499,12 +505,14 @@ xQueueGiveMutexRecursive:
 //  226 	xReturn = pdFAIL;
 ??xQueueGiveMutexRecursive_0:
         MOVS     R0,#+0
+        MOVS     R5,R0
 //  227 
 //  228 	traceGIVE_MUTEX_RECURSIVE_FAILED( pxMutex );
 //  229     }
 //  230     return xReturn;
 ??xQueueGiveMutexRecursive_2:
-        POP      {R1,R4,R5,PC}    ;; return
+        MOVS     R0,R5
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock3
 //  231 }
 //  232 /********************************************************************************
@@ -520,12 +528,13 @@ xQueueGiveMutexRecursive:
 //  237 portBASE_TYPE xQueueTakeMutexRecursive( xQueueHandle pxMutex, portTickType xBlockTime )
 //  238 {
 xQueueTakeMutexRecursive:
-        PUSH     {R4-R6,LR}
+        PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+24
         MOVS     R4,R0
         MOVS     R5,R1
 //  239     portBASE_TYPE xReturn;
@@ -533,10 +542,10 @@ xQueueTakeMutexRecursive:
 //  241     traceTAKE_MUTEX_RECURSIVE( pxMutex );
 //  242 
 //  243     if( pxMutex->pxMutexHolder == xTaskGetCurrentTaskHandle() )
-        LDR      R6,[R4, #+4]
+        LDR      R7,[R4, #+4]
           CFI FunCall xTaskGetCurrentTaskHandle
         BL       xTaskGetCurrentTaskHandle
-        CMP      R6,R0
+        CMP      R7,R0
         BNE.N    ??xQueueTakeMutexRecursive_0
 //  244     {
 //  245 	  ( pxMutex->uxRecursiveCallCount )++;
@@ -545,6 +554,7 @@ xQueueTakeMutexRecursive:
         STR      R0,[R4, #+12]
 //  246 	    xReturn = pdPASS;
         MOVS     R0,#+1
+        MOVS     R6,R0
         B.N      ??xQueueTakeMutexRecursive_1
 //  247     }
 //  248     else
@@ -557,15 +567,16 @@ xQueueTakeMutexRecursive:
         MOVS     R0,R4
           CFI FunCall xQueueGenericReceive
         BL       xQueueGenericReceive
+        MOVS     R6,R0
 //  251 
 //  252         if( xReturn == pdPASS )
-        CMP      R0,#+1
+        CMP      R6,#+1
         BNE.N    ??xQueueTakeMutexRecursive_1
 //  253 	{
 //  254 	  ( pxMutex->uxRecursiveCallCount )++;
-        LDR      R1,[R4, #+12]
-        ADDS     R1,R1,#+1
-        STR      R1,[R4, #+12]
+        LDR      R0,[R4, #+12]
+        ADDS     R0,R0,#+1
+        STR      R0,[R4, #+12]
 //  255 	}
 //  256 	else
 //  257 	{
@@ -575,7 +586,8 @@ xQueueTakeMutexRecursive:
 //  261 
 //  262     return xReturn;
 ??xQueueTakeMutexRecursive_1:
-        POP      {R4-R6,PC}       ;; return
+        MOVS     R0,R6
+        POP      {R1,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock4
 //  263 }
 //  264 /********************************************************************************
@@ -603,167 +615,168 @@ xQueueGenericSend:
         MOVS     R6,R3
 //  271   signed portBASE_TYPE xEntryTimeSet = pdFALSE;
         MOVS     R7,#+0
-        B.N      ??xQueueGenericSend_0
 //  272   xTimeOutType xTimeOut;
 //  273 
 //  274   for( ;; )
 //  275   {
 //  276       taskENTER_CRITICAL();
+??xQueueGenericSend_0:
+          CFI FunCall vPortEnterCritical
+        BL       vPortEnterCritical
 //  277       {
 //  278 	if( pxQueue->uxMessagesWaiting < pxQueue->uxLength )
+        LDR      R0,[R4, #+56]
+        LDR      R1,[R4, #+60]
+        CMP      R0,R1
+        BCS.N    ??xQueueGenericSend_1
 //  279 	{
 //  280 	    traceQUEUE_SEND( pxQueue );
 //  281 	    prvCopyDataToQueue( pxQueue, pvItemToQueue, xCopyPosition );
+        MOVS     R2,R6
+        MOVS     R1,R5
+        MOVS     R0,R4
+          CFI FunCall prvCopyDataToQueue
+        BL       prvCopyDataToQueue
 //  282 
 //  283 	    if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
+        LDR      R0,[R4, #+36]
+        CMP      R0,#+0
+        BEQ.N    ??xQueueGenericSend_2
 //  284 	    {
 //  285 		if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) == pdTRUE )
+        ADDS     R0,R4,#+36
+          CFI FunCall xTaskRemoveFromEventList
+        BL       xTaskRemoveFromEventList
+        CMP      R0,#+1
+        BNE.N    ??xQueueGenericSend_2
 //  286 		{
 //  287 		    portYIELD_WITHIN_API();
+          CFI FunCall vPortYieldFromISR
+        BL       vPortYieldFromISR
 //  288 		}
 //  289 	    }
 //  290 
 //  291             taskEXIT_CRITICAL();
+??xQueueGenericSend_2:
+          CFI FunCall vPortExitCritical
+        BL       vPortExitCritical
 //  292 
 //  293 	return pdPASS;
+        MOVS     R0,#+1
+        B.N      ??xQueueGenericSend_3
 //  294    }
 //  295     else
 //  296     {
 //  297 	if( xTicksToWait == ( portTickType ) 0 )
+??xQueueGenericSend_1:
+        LDR      R0,[SP, #+8]
+        CMP      R0,#+0
+        BNE.N    ??xQueueGenericSend_4
 //  298 	 {
 //  299 	    taskEXIT_CRITICAL();
+          CFI FunCall vPortExitCritical
+        BL       vPortExitCritical
 //  300 
 //  301 	    traceQUEUE_SEND_FAILED( pxQueue );
 //  302 	    return errQUEUE_FULL;
+        MOVS     R0,#+0
+        B.N      ??xQueueGenericSend_3
 //  303 	  }
 //  304 	else if( xEntryTimeSet == pdFALSE )
+??xQueueGenericSend_4:
+        CMP      R7,#+0
+        BNE.N    ??xQueueGenericSend_5
 //  305 	{
 //  306 	    vTaskSetTimeOutState( &xTimeOut );
+        ADD      R0,SP,#+0
+          CFI FunCall vTaskSetTimeOutState
+        BL       vTaskSetTimeOutState
 //  307 	    xEntryTimeSet = pdTRUE;
+        MOVS     R0,#+1
+        MOVS     R7,R0
 //  308 	}
 //  309     }
 //  310   }
 //  311   taskEXIT_CRITICAL();
+??xQueueGenericSend_5:
+          CFI FunCall vPortExitCritical
+        BL       vPortExitCritical
 //  312 
 //  313    vTaskSuspendAll();
+          CFI FunCall vTaskSuspendAll
+        BL       vTaskSuspendAll
 //  314    prvLockQueue( pxQueue );
+          CFI FunCall vPortEnterCritical
+        BL       vPortEnterCritical
+        LDR      R0,[R4, #+68]
+        CMN      R0,#+1
+        BNE.N    ??xQueueGenericSend_6
+        MOVS     R0,#+0
+        STR      R0,[R4, #+68]
+??xQueueGenericSend_6:
+        LDR      R0,[R4, #+72]
+        CMN      R0,#+1
+        BNE.N    ??xQueueGenericSend_7
+        MOVS     R0,#+0
+        STR      R0,[R4, #+72]
+??xQueueGenericSend_7:
+          CFI FunCall vPortExitCritical
+        BL       vPortExitCritical
 //  315 
 //  316     if( xTaskCheckForTimeOut( &xTimeOut, &xTicksToWait ) == pdFALSE )
+        ADD      R1,SP,#+8
+        ADD      R0,SP,#+0
+          CFI FunCall xTaskCheckForTimeOut
+        BL       xTaskCheckForTimeOut
+        CMP      R0,#+0
+        BNE.N    ??xQueueGenericSend_8
 //  317     {
 //  318 	if( prvIsQueueFull( pxQueue ) )
+        MOVS     R0,R4
+          CFI FunCall prvIsQueueFull
+        BL       prvIsQueueFull
+        CMP      R0,#+0
+        BEQ.N    ??xQueueGenericSend_9
 //  319 	{
 //  320 	    traceBLOCKING_ON_QUEUE_SEND( pxQueue );
 //  321 	    vTaskPlaceOnEventList( &( pxQueue->xTasksWaitingToSend ), xTicksToWait );
+        LDR      R1,[SP, #+8]
+        ADDS     R0,R4,#+16
+          CFI FunCall vTaskPlaceOnEventList
+        BL       vTaskPlaceOnEventList
 //  322       	    prvUnlockQueue( pxQueue );
+        MOVS     R0,R4
+          CFI FunCall prvUnlockQueue
+        BL       prvUnlockQueue
 //  323     	    if( !xTaskResumeAll() )
+          CFI FunCall xTaskResumeAll
+        BL       xTaskResumeAll
+        CMP      R0,#+0
+        BNE.N    ??xQueueGenericSend_0
 //  324 	    {
 //  325 		portYIELD_WITHIN_API();
+          CFI FunCall vPortYieldFromISR
+        BL       vPortYieldFromISR
+        B.N      ??xQueueGenericSend_0
 //  326 	    }
 //  327 	}
 //  328 	else
 //  329 	{
 //  330 	    prvUnlockQueue( pxQueue );
-??xQueueGenericSend_1:
+??xQueueGenericSend_9:
         MOVS     R0,R4
           CFI FunCall prvUnlockQueue
         BL       prvUnlockQueue
 //  331 	    ( void ) xTaskResumeAll();
           CFI FunCall xTaskResumeAll
         BL       xTaskResumeAll
-//  332 	}
-??xQueueGenericSend_0:
-          CFI FunCall vPortEnterCritical
-        BL       vPortEnterCritical
-        LDR      R0,[R4, #+56]
-        LDR      R1,[R4, #+60]
-        CMP      R0,R1
-        BCS.N    ??xQueueGenericSend_2
-        MOVS     R2,R6
-        MOVS     R1,R5
-        MOVS     R0,R4
-          CFI FunCall prvCopyDataToQueue
-        BL       prvCopyDataToQueue
-        LDR      R0,[R4, #+36]
-        CMP      R0,#+0
-        BEQ.N    ??xQueueGenericSend_3
-        ADDS     R0,R4,#+36
-          CFI FunCall xTaskRemoveFromEventList
-        BL       xTaskRemoveFromEventList
-        CMP      R0,#+1
-        BNE.N    ??xQueueGenericSend_3
-          CFI FunCall vPortYieldFromISR
-        BL       vPortYieldFromISR
-??xQueueGenericSend_3:
-          CFI FunCall vPortExitCritical
-        BL       vPortExitCritical
-        MOVS     R0,#+1
-        B.N      ??xQueueGenericSend_4
-??xQueueGenericSend_2:
-        LDR      R0,[SP, #+8]
-        CMP      R0,#+0
-        BNE.N    ??xQueueGenericSend_5
-          CFI FunCall vPortExitCritical
-        BL       vPortExitCritical
-        MOVS     R0,#+0
-        B.N      ??xQueueGenericSend_4
-??xQueueGenericSend_5:
-        CMP      R7,#+0
-        BNE.N    ??xQueueGenericSend_6
-        ADD      R0,SP,#+0
-          CFI FunCall vTaskSetTimeOutState
-        BL       vTaskSetTimeOutState
-        MOVS     R7,#+1
-??xQueueGenericSend_6:
-          CFI FunCall vPortExitCritical
-        BL       vPortExitCritical
-          CFI FunCall vTaskSuspendAll
-        BL       vTaskSuspendAll
-          CFI FunCall vPortEnterCritical
-        BL       vPortEnterCritical
-        LDR      R0,[R4, #+68]
-        CMN      R0,#+1
-        BNE.N    ??xQueueGenericSend_7
-        MOVS     R0,#+0
-        STR      R0,[R4, #+68]
-??xQueueGenericSend_7:
-        LDR      R0,[R4, #+72]
-        CMN      R0,#+1
-        BNE.N    ??xQueueGenericSend_8
-        MOVS     R0,#+0
-        STR      R0,[R4, #+72]
-??xQueueGenericSend_8:
-          CFI FunCall vPortExitCritical
-        BL       vPortExitCritical
-        ADD      R1,SP,#+8
-        ADD      R0,SP,#+0
-          CFI FunCall xTaskCheckForTimeOut
-        BL       xTaskCheckForTimeOut
-        CMP      R0,#+0
-        BNE.N    ??xQueueGenericSend_9
-        MOVS     R0,R4
-          CFI FunCall prvIsQueueFull
-        BL       prvIsQueueFull
-        CMP      R0,#+0
-        BEQ.N    ??xQueueGenericSend_1
-        LDR      R1,[SP, #+8]
-        ADDS     R0,R4,#+16
-          CFI FunCall vTaskPlaceOnEventList
-        BL       vTaskPlaceOnEventList
-        MOVS     R0,R4
-          CFI FunCall prvUnlockQueue
-        BL       prvUnlockQueue
-          CFI FunCall xTaskResumeAll
-        BL       xTaskResumeAll
-        CMP      R0,#+0
-        BNE.N    ??xQueueGenericSend_0
-          CFI FunCall vPortYieldFromISR
-        BL       vPortYieldFromISR
         B.N      ??xQueueGenericSend_0
+//  332 	}
 //  333     }
 //  334     else
 //  335     {
 //  336 	prvUnlockQueue( pxQueue );
-??xQueueGenericSend_9:
+??xQueueGenericSend_8:
         MOVS     R0,R4
           CFI FunCall prvUnlockQueue
         BL       prvUnlockQueue
@@ -774,7 +787,7 @@ xQueueGenericSend:
 //  338         traceQUEUE_SEND_FAILED( pxQueue );
 //  339 	return errQUEUE_FULL;
         MOVS     R0,#+0
-??xQueueGenericSend_4:
+??xQueueGenericSend_3:
         POP      {R1-R7,PC}       ;; return
           CFI EndBlock cfiBlock5
 //  340     }
@@ -793,23 +806,25 @@ xQueueGenericSend:
 //  348 signed portBASE_TYPE xQueueGenericSendFromISR( xQueueHandle pxQueue, const void * const pvItemToQueue, signed portBASE_TYPE *pxHigherPriorityTaskWoken, portBASE_TYPE xCopyPosition )
 //  349 {
 xQueueGenericSendFromISR:
-        PUSH     {R4-R8,LR}
+        PUSH     {R3-R9,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R8 Frame(CFA, -8)
-          CFI R7 Frame(CFA, -12)
-          CFI R6 Frame(CFA, -16)
-          CFI R5 Frame(CFA, -20)
-          CFI R4 Frame(CFA, -24)
-          CFI CFA R13+24
+          CFI R9 Frame(CFA, -8)
+          CFI R8 Frame(CFA, -12)
+          CFI R7 Frame(CFA, -16)
+          CFI R6 Frame(CFA, -20)
+          CFI R5 Frame(CFA, -24)
+          CFI R4 Frame(CFA, -28)
+          CFI CFA R13+32
         MOVS     R4,R0
-        MOVS     R6,R1
-        MOVS     R5,R2
+        MOVS     R5,R1
+        MOVS     R6,R2
         MOVS     R7,R3
 //  350   signed portBASE_TYPE xReturn;
 //  351   unsigned portBASE_TYPE uxSavedInterruptStatus;
 //  352   
 //  353     uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
-        MOVS     R8,#+0
+        MOVS     R0,#+0
+        MOV      R9,R0
           CFI FunCall vPortSetInterruptMask
         BL       vPortSetInterruptMask
 //  354     {
@@ -822,7 +837,7 @@ xQueueGenericSendFromISR:
 //  357 	    traceQUEUE_SEND_FROM_ISR( pxQueue );
 //  358 	    prvCopyDataToQueue( pxQueue, pvItemToQueue, xCopyPosition );
         MOVS     R2,R7
-        MOVS     R1,R6
+        MOVS     R1,R5
         MOVS     R0,R4
           CFI FunCall prvCopyDataToQueue
         BL       prvCopyDataToQueue
@@ -846,7 +861,7 @@ xQueueGenericSendFromISR:
 //  365 		  {
 //  366 			*pxHigherPriorityTaskWoken = pdTRUE;
         MOVS     R0,#+1
-        STR      R0,[R5, #+0]
+        STR      R0,[R6, #+0]
         B.N      ??xQueueGenericSendFromISR_2
 //  367 		  }
 //  368 		 }
@@ -862,7 +877,8 @@ xQueueGenericSendFromISR:
 //  374 
 //  375     xReturn = pdPASS;
 ??xQueueGenericSendFromISR_2:
-        MOVS     R4,#+1
+        MOVS     R0,#+1
+        MOV      R8,R0
         B.N      ??xQueueGenericSendFromISR_3
 //  376     }
 //  377     else
@@ -870,7 +886,8 @@ xQueueGenericSendFromISR:
 //  379 	traceQUEUE_SEND_FROM_ISR_FAILED( pxQueue );
 //  380 	xReturn = errQUEUE_FULL;
 ??xQueueGenericSendFromISR_0:
-        MOVS     R4,#+0
+        MOVS     R0,#+0
+        MOV      R8,R0
 //  381     }
 //  382     }
 //  383     portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
@@ -879,8 +896,8 @@ xQueueGenericSendFromISR:
         BL       vPortClearInterruptMask
 //  384 
 //  385     return xReturn;
-        MOVS     R0,R4
-        POP      {R4-R8,PC}       ;; return
+        MOV      R0,R8
+        POP      {R1,R4-R9,PC}    ;; return
           CFI EndBlock cfiBlock6
 //  386 }
 //  387 /********************************************************************************
@@ -896,52 +913,89 @@ xQueueGenericSendFromISR:
 //  392 signed portBASE_TYPE xQueueGenericReceive( xQueueHandle pxQueue, void * const pvBuffer, portTickType xTicksToWait, portBASE_TYPE xJustPeeking )
 //  393 {
 xQueueGenericReceive:
-        PUSH     {R0-R2,R4-R7,LR}
+        PUSH     {R2,R4-R8,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R7 Frame(CFA, -8)
-          CFI R6 Frame(CFA, -12)
-          CFI R5 Frame(CFA, -16)
-          CFI R4 Frame(CFA, -20)
-          CFI CFA R13+32
+          CFI R8 Frame(CFA, -8)
+          CFI R7 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -16)
+          CFI R5 Frame(CFA, -20)
+          CFI R4 Frame(CFA, -24)
+          CFI CFA R13+28
+        SUB      SP,SP,#+12
+          CFI CFA R13+40
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R3
 //  394 signed portBASE_TYPE xEntryTimeSet = pdFALSE;
         MOVS     R7,#+0
-        B.N      ??xQueueGenericReceive_0
 //  395 xTimeOutType xTimeOut;
 //  396 signed char *pcOriginalReadPosition;
 //  397 
 //  398 	for( ;; )
 //  399 	{
 //  400 		taskENTER_CRITICAL();
+??xQueueGenericReceive_0:
+          CFI FunCall vPortEnterCritical
+        BL       vPortEnterCritical
 //  401 		{
 //  402 			if( pxQueue->uxMessagesWaiting > ( unsigned portBASE_TYPE ) 0 )
+        LDR      R0,[R4, #+56]
+        CMP      R0,#+0
+        BEQ.N    ??xQueueGenericReceive_1
 //  403 			{
 //  404 				pcOriginalReadPosition = pxQueue->pcReadFrom;
+        LDR      R0,[R4, #+12]
+        MOV      R8,R0
 //  405 
 //  406 				prvCopyDataFromQueue( pxQueue, pvBuffer );
+        MOVS     R1,R5
+        MOVS     R0,R4
+          CFI FunCall prvCopyDataFromQueue
+        BL       prvCopyDataFromQueue
 //  407 
 //  408 				if( xJustPeeking == pdFALSE )
+        CMP      R6,#+0
+        BNE.N    ??xQueueGenericReceive_2
 //  409 				{
 //  410 					traceQUEUE_RECEIVE( pxQueue );
 //  411 
 //  412 					--( pxQueue->uxMessagesWaiting );
+        LDR      R0,[R4, #+56]
+        SUBS     R0,R0,#+1
+        STR      R0,[R4, #+56]
 //  413 
 //  414 					{
 //  415 						if( pxQueue->uxQueueType == queueQUEUE_IS_MUTEX )
+        LDR      R0,[R4, #+0]
+        CMP      R0,#+0
+        BNE.N    ??xQueueGenericReceive_3
 //  416 						{
 //  417 							/* Record the information required to implement
 //  418 							priority inheritance should it become necessary. */
 //  419 							pxQueue->pxMutexHolder = xTaskGetCurrentTaskHandle();
+          CFI FunCall xTaskGetCurrentTaskHandle
+        BL       xTaskGetCurrentTaskHandle
+        STR      R0,[R4, #+4]
 //  420 						}
 //  421 					}
 //  422 
 //  423 					if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToSend ) ) == pdFALSE )
+??xQueueGenericReceive_3:
+        LDR      R0,[R4, #+16]
+        CMP      R0,#+0
+        BEQ.N    ??xQueueGenericReceive_4
 //  424 					{
 //  425 						if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToSend ) ) == pdTRUE )
+        ADDS     R0,R4,#+16
+          CFI FunCall xTaskRemoveFromEventList
+        BL       xTaskRemoveFromEventList
+        CMP      R0,#+1
+        BNE.N    ??xQueueGenericReceive_4
 //  426 						{
 //  427 							portYIELD_WITHIN_API();
+          CFI FunCall vPortYieldFromISR
+        BL       vPortYieldFromISR
+        B.N      ??xQueueGenericReceive_4
 //  428 						}
 //  429 					}
 //  430 				}
@@ -950,203 +1004,171 @@ xQueueGenericReceive:
 //  433 					traceQUEUE_PEEK( pxQueue );
 //  434 
 //  435 					pxQueue->pcReadFrom = pcOriginalReadPosition;
+??xQueueGenericReceive_2:
+        STR      R8,[R4, #+12]
 //  436 
 //  437 					if( !listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) )
+        LDR      R0,[R4, #+36]
+        CMP      R0,#+0
+        BEQ.N    ??xQueueGenericReceive_4
 //  438 					{
 //  439 						if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+        ADDS     R0,R4,#+36
+          CFI FunCall xTaskRemoveFromEventList
+        BL       xTaskRemoveFromEventList
+        CMP      R0,#+0
+        BEQ.N    ??xQueueGenericReceive_4
 //  440 						{
 //  441 							portYIELD_WITHIN_API();
+          CFI FunCall vPortYieldFromISR
+        BL       vPortYieldFromISR
 //  442 						}
 //  443 					}
 //  444 
 //  445 				}
 //  446 
 //  447 				taskEXIT_CRITICAL();
+??xQueueGenericReceive_4:
+          CFI FunCall vPortExitCritical
+        BL       vPortExitCritical
 //  448 				return pdPASS;
+        MOVS     R0,#+1
+        B.N      ??xQueueGenericReceive_5
 //  449 			}
 //  450 			else
 //  451 			{
 //  452 				if( xTicksToWait == ( portTickType ) 0 )
+??xQueueGenericReceive_1:
+        LDR      R0,[SP, #+12]
+        CMP      R0,#+0
+        BNE.N    ??xQueueGenericReceive_6
 //  453 				{
 //  454 					taskEXIT_CRITICAL();
+          CFI FunCall vPortExitCritical
+        BL       vPortExitCritical
 //  455 					traceQUEUE_RECEIVE_FAILED( pxQueue );
 //  456 					return errQUEUE_EMPTY;
+        MOVS     R0,#+0
+        B.N      ??xQueueGenericReceive_5
 //  457 				}
 //  458 				else if( xEntryTimeSet == pdFALSE )
+??xQueueGenericReceive_6:
+        CMP      R7,#+0
+        BNE.N    ??xQueueGenericReceive_7
 //  459 				{
 //  460 					vTaskSetTimeOutState( &xTimeOut );
+        ADD      R0,SP,#+0
+          CFI FunCall vTaskSetTimeOutState
+        BL       vTaskSetTimeOutState
 //  461 					xEntryTimeSet = pdTRUE;
+        MOVS     R0,#+1
+        MOVS     R7,R0
 //  462 				}
 //  463 			}
 //  464 		}
 //  465 		taskEXIT_CRITICAL();
+??xQueueGenericReceive_7:
+          CFI FunCall vPortExitCritical
+        BL       vPortExitCritical
 //  466 
 //  467 		vTaskSuspendAll();
+          CFI FunCall vTaskSuspendAll
+        BL       vTaskSuspendAll
 //  468 		prvLockQueue( pxQueue );
+          CFI FunCall vPortEnterCritical
+        BL       vPortEnterCritical
+        LDR      R0,[R4, #+68]
+        CMN      R0,#+1
+        BNE.N    ??xQueueGenericReceive_8
+        MOVS     R0,#+0
+        STR      R0,[R4, #+68]
+??xQueueGenericReceive_8:
+        LDR      R0,[R4, #+72]
+        CMN      R0,#+1
+        BNE.N    ??xQueueGenericReceive_9
+        MOVS     R0,#+0
+        STR      R0,[R4, #+72]
+??xQueueGenericReceive_9:
+          CFI FunCall vPortExitCritical
+        BL       vPortExitCritical
 //  469 
 //  470 		if( xTaskCheckForTimeOut( &xTimeOut, &xTicksToWait ) == pdFALSE )
+        ADD      R1,SP,#+12
+        ADD      R0,SP,#+0
+          CFI FunCall xTaskCheckForTimeOut
+        BL       xTaskCheckForTimeOut
+        CMP      R0,#+0
+        BNE.N    ??xQueueGenericReceive_10
 //  471 		{
 //  472 			if( prvIsQueueEmpty( pxQueue ) )
+        MOVS     R0,R4
+          CFI FunCall prvIsQueueEmpty
+        BL       prvIsQueueEmpty
+        CMP      R0,#+0
+        BEQ.N    ??xQueueGenericReceive_11
 //  473 			{
 //  474 				traceBLOCKING_ON_QUEUE_RECEIVE( pxQueue );
 //  475 
 //  476 				{
 //  477 					if( pxQueue->uxQueueType == queueQUEUE_IS_MUTEX )
+        LDR      R0,[R4, #+0]
+        CMP      R0,#+0
+        BNE.N    ??xQueueGenericReceive_12
 //  478 					{
 //  479 						portENTER_CRITICAL();
+          CFI FunCall vPortEnterCritical
+        BL       vPortEnterCritical
 //  480 						{
 //  481 							vTaskPriorityInherit( ( void * ) pxQueue->pxMutexHolder );
+        LDR      R0,[R4, #+4]
+          CFI FunCall vTaskPriorityInherit
+        BL       vTaskPriorityInherit
 //  482 						}
 //  483 						portEXIT_CRITICAL();
+          CFI FunCall vPortExitCritical
+        BL       vPortExitCritical
 //  484 					}
 //  485 				}
 //  486 
 //  487 				vTaskPlaceOnEventList( &( pxQueue->xTasksWaitingToReceive ), xTicksToWait );
+??xQueueGenericReceive_12:
+        LDR      R1,[SP, #+12]
+        ADDS     R0,R4,#+36
+          CFI FunCall vTaskPlaceOnEventList
+        BL       vTaskPlaceOnEventList
 //  488 				prvUnlockQueue( pxQueue );
+        MOVS     R0,R4
+          CFI FunCall prvUnlockQueue
+        BL       prvUnlockQueue
 //  489 				if( !xTaskResumeAll() )
+          CFI FunCall xTaskResumeAll
+        BL       xTaskResumeAll
+        CMP      R0,#+0
+        BNE.N    ??xQueueGenericReceive_0
 //  490 				{
 //  491 					portYIELD_WITHIN_API();
+          CFI FunCall vPortYieldFromISR
+        BL       vPortYieldFromISR
+        B.N      ??xQueueGenericReceive_0
 //  492 				}
 //  493 			}
 //  494 			else
 //  495 			{
 //  496 				prvUnlockQueue( pxQueue );
-??xQueueGenericReceive_1:
+??xQueueGenericReceive_11:
         MOVS     R0,R4
           CFI FunCall prvUnlockQueue
         BL       prvUnlockQueue
 //  497 				( void ) xTaskResumeAll();
           CFI FunCall xTaskResumeAll
         BL       xTaskResumeAll
-//  498 			}
-??xQueueGenericReceive_0:
-          CFI FunCall vPortEnterCritical
-        BL       vPortEnterCritical
-        LDR      R0,[R4, #+56]
-        CMP      R0,#+0
-        BEQ.N    ??xQueueGenericReceive_2
-        LDR      R7,[R4, #+12]
-        MOVS     R1,R5
-        MOVS     R0,R4
-          CFI FunCall prvCopyDataFromQueue
-        BL       prvCopyDataFromQueue
-        CMP      R6,#+0
-        BNE.N    ??xQueueGenericReceive_3
-        LDR      R0,[R4, #+56]
-        SUBS     R0,R0,#+1
-        STR      R0,[R4, #+56]
-        LDR      R0,[R4, #+0]
-        CMP      R0,#+0
-        BNE.N    ??xQueueGenericReceive_4
-          CFI FunCall xTaskGetCurrentTaskHandle
-        BL       xTaskGetCurrentTaskHandle
-        STR      R0,[R4, #+4]
-??xQueueGenericReceive_4:
-        LDR      R0,[R4, #+16]
-        CMP      R0,#+0
-        BEQ.N    ??xQueueGenericReceive_5
-        ADDS     R0,R4,#+16
-          CFI FunCall xTaskRemoveFromEventList
-        BL       xTaskRemoveFromEventList
-        CMP      R0,#+1
-        BNE.N    ??xQueueGenericReceive_5
-          CFI FunCall vPortYieldFromISR
-        BL       vPortYieldFromISR
-        B.N      ??xQueueGenericReceive_5
-??xQueueGenericReceive_3:
-        STR      R7,[R4, #+12]
-        LDR      R0,[R4, #+36]
-        CMP      R0,#+0
-        BEQ.N    ??xQueueGenericReceive_5
-        ADDS     R0,R4,#+36
-          CFI FunCall xTaskRemoveFromEventList
-        BL       xTaskRemoveFromEventList
-        CMP      R0,#+0
-        BEQ.N    ??xQueueGenericReceive_5
-          CFI FunCall vPortYieldFromISR
-        BL       vPortYieldFromISR
-??xQueueGenericReceive_5:
-          CFI FunCall vPortExitCritical
-        BL       vPortExitCritical
-        MOVS     R0,#+1
-        B.N      ??xQueueGenericReceive_6
-??xQueueGenericReceive_2:
-        LDR      R0,[SP, #+8]
-        CMP      R0,#+0
-        BNE.N    ??xQueueGenericReceive_7
-          CFI FunCall vPortExitCritical
-        BL       vPortExitCritical
-        MOVS     R0,#+0
-        B.N      ??xQueueGenericReceive_6
-??xQueueGenericReceive_7:
-        CMP      R7,#+0
-        BNE.N    ??xQueueGenericReceive_8
-        ADD      R0,SP,#+0
-          CFI FunCall vTaskSetTimeOutState
-        BL       vTaskSetTimeOutState
-        MOVS     R7,#+1
-??xQueueGenericReceive_8:
-          CFI FunCall vPortExitCritical
-        BL       vPortExitCritical
-          CFI FunCall vTaskSuspendAll
-        BL       vTaskSuspendAll
-          CFI FunCall vPortEnterCritical
-        BL       vPortEnterCritical
-        LDR      R0,[R4, #+68]
-        CMN      R0,#+1
-        BNE.N    ??xQueueGenericReceive_9
-        MOVS     R0,#+0
-        STR      R0,[R4, #+68]
-??xQueueGenericReceive_9:
-        LDR      R0,[R4, #+72]
-        CMN      R0,#+1
-        BNE.N    ??xQueueGenericReceive_10
-        MOVS     R0,#+0
-        STR      R0,[R4, #+72]
-??xQueueGenericReceive_10:
-          CFI FunCall vPortExitCritical
-        BL       vPortExitCritical
-        ADD      R1,SP,#+8
-        ADD      R0,SP,#+0
-          CFI FunCall xTaskCheckForTimeOut
-        BL       xTaskCheckForTimeOut
-        CMP      R0,#+0
-        BNE.N    ??xQueueGenericReceive_11
-        MOVS     R0,R4
-          CFI FunCall prvIsQueueEmpty
-        BL       prvIsQueueEmpty
-        CMP      R0,#+0
-        BEQ.N    ??xQueueGenericReceive_1
-        LDR      R0,[R4, #+0]
-        CMP      R0,#+0
-        BNE.N    ??xQueueGenericReceive_12
-          CFI FunCall vPortEnterCritical
-        BL       vPortEnterCritical
-        LDR      R0,[R4, #+4]
-          CFI FunCall vTaskPriorityInherit
-        BL       vTaskPriorityInherit
-          CFI FunCall vPortExitCritical
-        BL       vPortExitCritical
-??xQueueGenericReceive_12:
-        LDR      R1,[SP, #+8]
-        ADDS     R0,R4,#+36
-          CFI FunCall vTaskPlaceOnEventList
-        BL       vTaskPlaceOnEventList
-        MOVS     R0,R4
-          CFI FunCall prvUnlockQueue
-        BL       prvUnlockQueue
-          CFI FunCall xTaskResumeAll
-        BL       xTaskResumeAll
-        CMP      R0,#+0
-        BNE.N    ??xQueueGenericReceive_0
-          CFI FunCall vPortYieldFromISR
-        BL       vPortYieldFromISR
         B.N      ??xQueueGenericReceive_0
+//  498 			}
 //  499 		}
 //  500 		else
 //  501 		{
 //  502 			prvUnlockQueue( pxQueue );
-??xQueueGenericReceive_11:
+??xQueueGenericReceive_10:
         MOVS     R0,R4
           CFI FunCall prvUnlockQueue
         BL       prvUnlockQueue
@@ -1157,8 +1179,10 @@ xQueueGenericReceive:
 //  504 			traceQUEUE_RECEIVE_FAILED( pxQueue );
 //  505 			return errQUEUE_EMPTY;
         MOVS     R0,#+0
-??xQueueGenericReceive_6:
-        POP      {R1-R7,PC}       ;; return
+??xQueueGenericReceive_5:
+        ADD      SP,SP,#+16
+          CFI CFA R13+24
+        POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock7
 //  506 		}
 //  507 	}
@@ -1176,21 +1200,23 @@ xQueueGenericReceive:
 //  514 signed portBASE_TYPE xQueueReceiveFromISR( xQueueHandle pxQueue, void * const pvBuffer, signed portBASE_TYPE *pxTaskWoken )
 //  515 {
 xQueueReceiveFromISR:
-        PUSH     {R3-R7,LR}
+        PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R7 Frame(CFA, -8)
-          CFI R6 Frame(CFA, -12)
-          CFI R5 Frame(CFA, -16)
-          CFI R4 Frame(CFA, -20)
+          CFI R8 Frame(CFA, -8)
+          CFI R7 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -16)
+          CFI R5 Frame(CFA, -20)
+          CFI R4 Frame(CFA, -24)
           CFI CFA R13+24
         MOVS     R4,R0
-        MOVS     R6,R1
-        MOVS     R5,R2
+        MOVS     R5,R1
+        MOVS     R6,R2
 //  516 signed portBASE_TYPE xReturn;
 //  517 unsigned portBASE_TYPE uxSavedInterruptStatus;
 //  518 
 //  519 	uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
-        MOVS     R7,#+0
+        MOVS     R0,#+0
+        MOV      R8,R0
           CFI FunCall vPortSetInterruptMask
         BL       vPortSetInterruptMask
 //  520 	{
@@ -1202,7 +1228,7 @@ xQueueReceiveFromISR:
 //  523 			traceQUEUE_RECEIVE_FROM_ISR( pxQueue );
 //  524 
 //  525 			prvCopyDataFromQueue( pxQueue, pvBuffer );
-        MOVS     R1,R6
+        MOVS     R1,R5
         MOVS     R0,R4
           CFI FunCall prvCopyDataFromQueue
         BL       prvCopyDataFromQueue
@@ -1229,7 +1255,7 @@ xQueueReceiveFromISR:
 //  532 					{
 //  533 						*pxTaskWoken = pdTRUE;
         MOVS     R0,#+1
-        STR      R0,[R5, #+0]
+        STR      R0,[R6, #+0]
         B.N      ??xQueueReceiveFromISR_2
 //  534 					}
 //  535 				}
@@ -1245,14 +1271,16 @@ xQueueReceiveFromISR:
 //  541 
 //  542 			xReturn = pdPASS;
 ??xQueueReceiveFromISR_2:
-        MOVS     R4,#+1
+        MOVS     R0,#+1
+        MOVS     R7,R0
         B.N      ??xQueueReceiveFromISR_3
 //  543 		}
 //  544 		else
 //  545 		{
 //  546 			xReturn = pdFAIL;
 ??xQueueReceiveFromISR_0:
-        MOVS     R4,#+0
+        MOVS     R0,#+0
+        MOVS     R7,R0
 //  547 			traceQUEUE_RECEIVE_FROM_ISR_FAILED( pxQueue );
 //  548 		}
 //  549 	}
@@ -1262,8 +1290,8 @@ xQueueReceiveFromISR:
         BL       vPortClearInterruptMask
 //  551 
 //  552 	return xReturn;
-        MOVS     R0,R4
-        POP      {R1,R4-R7,PC}    ;; return
+        MOVS     R0,R7
+        POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock8
 //  553 }
 //  554 /********************************************************************************
@@ -1279,10 +1307,11 @@ xQueueReceiveFromISR:
 //  559 unsigned portBASE_TYPE uxQueueMessagesWaiting( const xQueueHandle pxQueue )
 //  560 {
 uxQueueMessagesWaiting:
-        PUSH     {R4,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
         MOVS     R4,R0
 //  561 unsigned portBASE_TYPE uxReturn;
 //  562 
@@ -1290,14 +1319,15 @@ uxQueueMessagesWaiting:
           CFI FunCall vPortEnterCritical
         BL       vPortEnterCritical
 //  564 		uxReturn = pxQueue->uxMessagesWaiting;
-        LDR      R4,[R4, #+56]
+        LDR      R0,[R4, #+56]
+        MOVS     R5,R0
 //  565 	taskEXIT_CRITICAL();
           CFI FunCall vPortExitCritical
         BL       vPortExitCritical
 //  566 
 //  567 	return uxReturn;
-        MOVS     R0,R4
-        POP      {R4,PC}          ;; return
+        MOVS     R0,R5
+        POP      {R1,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock9
 //  568 }
 //  569 /********************************************************************************
@@ -1313,11 +1343,13 @@ uxQueueMessagesWaiting:
         THUMB
 //  574 unsigned portBASE_TYPE uxQueueMessagesWaitingFromISR( const xQueueHandle pxQueue )
 //  575 {
+uxQueueMessagesWaitingFromISR:
+        MOVS     R1,R0
 //  576 unsigned portBASE_TYPE uxReturn;
 //  577 
 //  578 	uxReturn = pxQueue->uxMessagesWaiting;
-uxQueueMessagesWaitingFromISR:
-        LDR      R0,[R0, #+56]
+        LDR      R2,[R1, #+56]
+        MOVS     R0,R2
 //  579 
 //  580 	return uxReturn;
         BX       LR               ;; return
@@ -1370,11 +1402,15 @@ vQueueDelete:
 //  599 static void prvCopyDataToQueue( xQUEUE *pxQueue, const void *pvItemToQueue, portBASE_TYPE xPosition )
 //  600 {
 prvCopyDataToQueue:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
 //  601 	if( pxQueue->uxItemSize == ( unsigned portBASE_TYPE ) 0 )
         LDR      R0,[R4, #+64]
         CMP      R0,#+0
@@ -1399,11 +1435,12 @@ prvCopyDataToQueue:
 //  610 	}
 //  611 	else if( xPosition == queueSEND_TO_BACK )
 ??prvCopyDataToQueue_0:
-        CMP      R2,#+0
+        CMP      R6,#+0
         BNE.N    ??prvCopyDataToQueue_2
 //  612 	{
 //  613 		memcpy( ( void * ) pxQueue->pcWriteTo, pvItemToQueue, ( unsigned ) pxQueue->uxItemSize );
         LDR      R2,[R4, #+64]
+        MOVS     R1,R5
         LDR      R0,[R4, #+8]
           CFI FunCall memcpy
         BL       memcpy
@@ -1429,6 +1466,7 @@ prvCopyDataToQueue:
 //  622 		memcpy( ( void * ) pxQueue->pcReadFrom, pvItemToQueue, ( unsigned ) pxQueue->uxItemSize );
 ??prvCopyDataToQueue_2:
         LDR      R2,[R4, #+64]
+        MOVS     R1,R5
         LDR      R0,[R4, #+12]
           CFI FunCall memcpy
         BL       memcpy
@@ -1459,7 +1497,7 @@ prvCopyDataToQueue:
         ADDS     R0,R0,#+1
         STR      R0,[R4, #+56]
 //  631 }
-        POP      {R4,PC}          ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock12
 //  632 /********************************************************************************
 //  633 *   Descrição      :  
@@ -1474,41 +1512,44 @@ prvCopyDataToQueue:
 //  637 static void prvCopyDataFromQueue( xQUEUE * const pxQueue, const void *pvBuffer )
 //  638 {
 prvCopyDataFromQueue:
-        PUSH     {R7,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+8
-        MOVS     R3,R0
-        MOVS     R0,R1
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  639 	if( pxQueue->uxQueueType != queueQUEUE_IS_MUTEX )
-        LDR      R1,[R3, #+0]
-        CMP      R1,#+0
+        LDR      R0,[R4, #+0]
+        CMP      R0,#+0
         BEQ.N    ??prvCopyDataFromQueue_0
 //  640 	{
 //  641 		pxQueue->pcReadFrom += pxQueue->uxItemSize;
-        LDR      R1,[R3, #+64]
-        LDR      R2,[R3, #+12]
-        ADDS     R1,R1,R2
-        STR      R1,[R3, #+12]
+        LDR      R0,[R4, #+64]
+        LDR      R1,[R4, #+12]
+        ADDS     R0,R0,R1
+        STR      R0,[R4, #+12]
 //  642 		if( pxQueue->pcReadFrom >= pxQueue->pcTail )
-        LDR      R1,[R3, #+12]
-        LDR      R2,[R3, #+4]
-        CMP      R1,R2
+        LDR      R0,[R4, #+12]
+        LDR      R1,[R4, #+4]
+        CMP      R0,R1
         BCC.N    ??prvCopyDataFromQueue_1
 //  643 		{
 //  644 			pxQueue->pcReadFrom = pxQueue->pcHead;
-        LDR      R1,[R3, #+0]
-        STR      R1,[R3, #+12]
+        LDR      R0,[R4, #+0]
+        STR      R0,[R4, #+12]
 //  645 		}
 //  646 		memcpy( ( void * ) pvBuffer, ( void * ) pxQueue->pcReadFrom, ( unsigned ) pxQueue->uxItemSize );
 ??prvCopyDataFromQueue_1:
-        LDR      R2,[R3, #+64]
-        LDR      R1,[R3, #+12]
+        LDR      R2,[R4, #+64]
+        LDR      R1,[R4, #+12]
+        MOVS     R0,R5
           CFI FunCall memcpy
         BL       memcpy
 //  647 	}
 //  648 }
 ??prvCopyDataFromQueue_0:
-        POP      {R0,PC}          ;; return
+        POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock13
 //  649 /********************************************************************************
 //  650 *   Descrição      :  
@@ -1531,19 +1572,24 @@ prvUnlockQueue:
 //  656 	taskENTER_CRITICAL();
           CFI FunCall vPortEnterCritical
         BL       vPortEnterCritical
-        B.N      ??prvUnlockQueue_0
 //  657 	{
 //  658 		while( pxQueue->xTxLock > queueLOCKED_UNMODIFIED )
+??prvUnlockQueue_0:
+        LDR      R0,[R4, #+72]
+        CMP      R0,#+1
+        BLT.N    ??prvUnlockQueue_1
 //  659 		{
 //  660 			if( !listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) )
+        LDR      R0,[R4, #+36]
+        CMP      R0,#+0
+        BEQ.N    ??prvUnlockQueue_2
 //  661 			{
 //  662 				if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
-??prvUnlockQueue_1:
         ADDS     R0,R4,#+36
           CFI FunCall xTaskRemoveFromEventList
         BL       xTaskRemoveFromEventList
         CMP      R0,#+0
-        BEQ.N    ??prvUnlockQueue_2
+        BEQ.N    ??prvUnlockQueue_3
 //  663 				{
 //  664 					vTaskMissedYield();
           CFI FunCall vTaskMissedYield
@@ -1551,18 +1597,12 @@ prvUnlockQueue:
 //  665 				}
 //  666 
 //  667 				--( pxQueue->xTxLock );
-??prvUnlockQueue_2:
+??prvUnlockQueue_3:
         LDR      R0,[R4, #+72]
         SUBS     R0,R0,#+1
         STR      R0,[R4, #+72]
+        B.N      ??prvUnlockQueue_0
 //  668 			}
-??prvUnlockQueue_0:
-        LDR      R0,[R4, #+72]
-        CMP      R0,#+1
-        BLT.N    ??prvUnlockQueue_3
-        LDR      R0,[R4, #+36]
-        CMP      R0,#+0
-        BNE.N    ??prvUnlockQueue_1
 //  669 			else
 //  670 			{
 //  671 				break;
@@ -1570,7 +1610,8 @@ prvUnlockQueue:
 //  673 		}
 //  674 
 //  675 		pxQueue->xTxLock = queueUNLOCKED;
-??prvUnlockQueue_3:
+??prvUnlockQueue_2:
+??prvUnlockQueue_1:
         MOVS     R0,#-1
         STR      R0,[R4, #+72]
 //  676 	}
@@ -1581,19 +1622,24 @@ prvUnlockQueue:
 //  679 	taskENTER_CRITICAL();
           CFI FunCall vPortEnterCritical
         BL       vPortEnterCritical
-        B.N      ??prvUnlockQueue_4
 //  680 	{
 //  681 		while( pxQueue->xRxLock > queueLOCKED_UNMODIFIED )
+??prvUnlockQueue_4:
+        LDR      R0,[R4, #+68]
+        CMP      R0,#+1
+        BLT.N    ??prvUnlockQueue_5
 //  682 		{
 //  683 			if( !listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToSend ) ) )
+        LDR      R0,[R4, #+16]
+        CMP      R0,#+0
+        BEQ.N    ??prvUnlockQueue_6
 //  684 			{
 //  685 				if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToSend ) ) != pdFALSE )
-??prvUnlockQueue_5:
         ADDS     R0,R4,#+16
           CFI FunCall xTaskRemoveFromEventList
         BL       xTaskRemoveFromEventList
         CMP      R0,#+0
-        BEQ.N    ??prvUnlockQueue_6
+        BEQ.N    ??prvUnlockQueue_7
 //  686 				{
 //  687 					vTaskMissedYield();
           CFI FunCall vTaskMissedYield
@@ -1601,18 +1647,12 @@ prvUnlockQueue:
 //  688 				}
 //  689 
 //  690 				--( pxQueue->xRxLock );
-??prvUnlockQueue_6:
+??prvUnlockQueue_7:
         LDR      R0,[R4, #+68]
         SUBS     R0,R0,#+1
         STR      R0,[R4, #+68]
+        B.N      ??prvUnlockQueue_4
 //  691 			}
-??prvUnlockQueue_4:
-        LDR      R0,[R4, #+68]
-        CMP      R0,#+1
-        BLT.N    ??prvUnlockQueue_7
-        LDR      R0,[R4, #+16]
-        CMP      R0,#+0
-        BNE.N    ??prvUnlockQueue_5
 //  692 			else
 //  693 			{
 //  694 				break;
@@ -1620,7 +1660,8 @@ prvUnlockQueue:
 //  696 		}
 //  697 
 //  698 		pxQueue->xRxLock = queueUNLOCKED;
-??prvUnlockQueue_7:
+??prvUnlockQueue_6:
+??prvUnlockQueue_5:
         MOVS     R0,#-1
         STR      R0,[R4, #+68]
 //  699 	}
@@ -1643,10 +1684,11 @@ prvUnlockQueue:
 //  707 static signed portBASE_TYPE prvIsQueueEmpty( const xQueueHandle pxQueue )
 //  708 {
 prvIsQueueEmpty:
-        PUSH     {R4,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
         MOVS     R4,R0
 //  709 signed portBASE_TYPE xReturn;
 //  710 
@@ -1657,19 +1699,19 @@ prvIsQueueEmpty:
         LDR      R0,[R4, #+56]
         CMP      R0,#+0
         BNE.N    ??prvIsQueueEmpty_0
-        MOVS     R4,#+1
+        MOVS     R5,#+1
         B.N      ??prvIsQueueEmpty_1
 ??prvIsQueueEmpty_0:
-        MOVS     R4,#+0
+        MOVS     R5,#+0
 ??prvIsQueueEmpty_1:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
 //  713 	taskEXIT_CRITICAL();
           CFI FunCall vPortExitCritical
         BL       vPortExitCritical
 //  714 
 //  715 	return xReturn;
-        MOVS     R0,R4
-        POP      {R4,PC}          ;; return
+        MOVS     R0,R5
+        POP      {R1,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock15
 //  716 }
 //  717 /********************************************************************************
@@ -1685,12 +1727,13 @@ prvIsQueueEmpty:
         THUMB
 //  722 signed portBASE_TYPE xQueueIsQueueEmptyFromISR( const xQueueHandle pxQueue )
 //  723 {
+xQueueIsQueueEmptyFromISR:
+        MOVS     R1,R0
 //  724 signed portBASE_TYPE xReturn;
 //  725 
 //  726 	xReturn = ( pxQueue->uxMessagesWaiting == ( unsigned portBASE_TYPE ) 0 );
-xQueueIsQueueEmptyFromISR:
-        LDR      R0,[R0, #+56]
-        CMP      R0,#+0
+        LDR      R2,[R1, #+56]
+        CMP      R2,#+0
         BNE.N    ??xQueueIsQueueEmptyFromISR_0
         MOVS     R0,#+1
         B.N      ??xQueueIsQueueEmptyFromISR_1
@@ -1716,10 +1759,11 @@ xQueueIsQueueEmptyFromISR:
 //  735 static signed portBASE_TYPE prvIsQueueFull( const xQueueHandle pxQueue )
 //  736 {
 prvIsQueueFull:
-        PUSH     {R4,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
         MOVS     R4,R0
 //  737 signed portBASE_TYPE xReturn;
 //  738 
@@ -1731,19 +1775,19 @@ prvIsQueueFull:
         LDR      R1,[R4, #+60]
         CMP      R0,R1
         BNE.N    ??prvIsQueueFull_0
-        MOVS     R4,#+1
+        MOVS     R5,#+1
         B.N      ??prvIsQueueFull_1
 ??prvIsQueueFull_0:
-        MOVS     R4,#+0
+        MOVS     R5,#+0
 ??prvIsQueueFull_1:
-        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
 //  741 	taskEXIT_CRITICAL();
           CFI FunCall vPortExitCritical
         BL       vPortExitCritical
 //  742 
 //  743 	return xReturn;
-        MOVS     R0,R4
-        POP      {R4,PC}          ;; return
+        MOVS     R0,R5
+        POP      {R1,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock17
 //  744 }
 //  745 /********************************************************************************
@@ -1759,13 +1803,14 @@ prvIsQueueFull:
         THUMB
 //  750 signed portBASE_TYPE xQueueIsQueueFullFromISR( const xQueueHandle pxQueue )
 //  751 {
+xQueueIsQueueFullFromISR:
+        MOVS     R1,R0
 //  752 signed portBASE_TYPE xReturn;
 //  753 
 //  754 	xReturn = ( pxQueue->uxMessagesWaiting == pxQueue->uxLength );
-xQueueIsQueueFullFromISR:
-        LDR      R1,[R0, #+56]
-        LDR      R0,[R0, #+60]
-        CMP      R1,R0
+        LDR      R2,[R1, #+56]
+        LDR      R3,[R1, #+60]
+        CMP      R2,R3
         BNE.N    ??xQueueIsQueueFullFromISR_0
         MOVS     R0,#+1
         B.N      ??xQueueIsQueueFullFromISR_1
@@ -1795,32 +1840,34 @@ xQueueIsQueueFullFromISR:
 //  766 
 //  767     for( ux = 0; ux < configQUEUE_REGISTRY_SIZE; ux++ )
 vQueueAddToRegistry:
-        MOVS     R2,#+0
-        B.N      ??vQueueAddToRegistry_0
-??vQueueAddToRegistry_1:
-        ADDS     R2,R2,#+1
+        MOVS     R3,#+0
+        MOVS     R2,R3
 ??vQueueAddToRegistry_0:
         CMP      R2,#+10
-        BCS.N    ??vQueueAddToRegistry_2
+        BCS.N    ??vQueueAddToRegistry_1
 //  768     {
 //  769 	if( xQueueRegistry[ ux ].pcQueueName == NULL )
         LDR.N    R3,??DataTable1
         LDR      R3,[R3, R2, LSL #+3]
         CMP      R3,#+0
-        BNE.N    ??vQueueAddToRegistry_1
+        BNE.N    ??vQueueAddToRegistry_2
 //  770 	{
 //  771 	    xQueueRegistry[ ux ].pcQueueName = pcQueueName;
         LDR.N    R3,??DataTable1
         STR      R1,[R3, R2, LSL #+3]
 //  772 	    xQueueRegistry[ ux ].xHandle = xQueue;
-        LDR.N    R1,??DataTable1
-        ADDS     R1,R1,R2, LSL #+3
-        STR      R0,[R1, #+4]
+        LDR.N    R3,??DataTable1
+        ADDS     R3,R3,R2, LSL #+3
+        STR      R0,[R3, #+4]
 //  773 	    break;
+        B.N      ??vQueueAddToRegistry_1
 //  774 	}
 //  775     }
-//  776 }
 ??vQueueAddToRegistry_2:
+        ADDS     R2,R2,#+1
+        B.N      ??vQueueAddToRegistry_0
+//  776 }
+??vQueueAddToRegistry_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock19
 //  777 /********************************************************************************
@@ -1841,31 +1888,33 @@ vQueueAddToRegistry:
 //  786 	
 //  787     for( ux = 0; ux < configQUEUE_REGISTRY_SIZE; ux++ )
 vQueueUnregisterQueue:
-        MOVS     R1,#+0
-        B.N      ??vQueueUnregisterQueue_0
-??vQueueUnregisterQueue_1:
-        ADDS     R1,R1,#+1
+        MOVS     R2,#+0
+        MOVS     R1,R2
 ??vQueueUnregisterQueue_0:
         CMP      R1,#+10
-        BCS.N    ??vQueueUnregisterQueue_2
+        BCS.N    ??vQueueUnregisterQueue_1
 //  788     {
 //  789 	if( xQueueRegistry[ ux ].xHandle == xQueue )
         LDR.N    R2,??DataTable1
         ADDS     R2,R2,R1, LSL #+3
         LDR      R2,[R2, #+4]
         CMP      R2,R0
-        BNE.N    ??vQueueUnregisterQueue_1
+        BNE.N    ??vQueueUnregisterQueue_2
 //  790 	{
 //  791 	    xQueueRegistry[ ux ].pcQueueName = NULL;
-        LDR.N    R0,??DataTable1
-        MOVS     R2,#+0
-        STR      R2,[R0, R1, LSL #+3]
+        LDR.N    R2,??DataTable1
+        MOVS     R3,#+0
+        STR      R3,[R2, R1, LSL #+3]
 //  792 	    break;
+        B.N      ??vQueueUnregisterQueue_1
 //  793 	}
 //  794     }
+??vQueueUnregisterQueue_2:
+        ADDS     R1,R1,#+1
+        B.N      ??vQueueUnregisterQueue_0
 //  795 
 //  796 }
-??vQueueUnregisterQueue_2:
+??vQueueUnregisterQueue_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock20
 
@@ -1892,9 +1941,9 @@ vQueueUnregisterQueue:
 //  799 ********************************************************************************/
 // 
 //    80 bytes in section .bss
-// 1 436 bytes in section .text
+// 1 518 bytes in section .text
 // 
-// 1 422 bytes of CODE memory (+ 14 bytes shared)
+// 1 496 bytes of CODE memory (+ 22 bytes shared)
 //    80 bytes of DATA memory
 //
 //Errors: none

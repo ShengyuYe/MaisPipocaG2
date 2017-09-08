@@ -1,29 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:37 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:57 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\sst25vf016b\spi_ /
-//                    wrapper.c                                               /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\sst25vf016b\spi /
-//                    _wrapper.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01- /
-//                    Firmware\01_mais_pipoca_exp\MaisPipoca -                /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\sst25vf01 /
+//                    6b\spi_wrapper.c                                        /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\sst25vf01 /
+//                    6b\spi_wrapper.c -lC C:\repositorios\MaisPipocaG2\SOFTW /
+//                    ARE\Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWA /
+//                    RE\Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE /
+//                    \Debug\Obj\ --no_cse --no_unroll --no_inline            /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\spi_wrapper.s /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\spi_wr /
+//                    apper.s                                                 /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -80,7 +75,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\sst25vf016b\spi_wrapper.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\sst25vf016b\spi_wrapper.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -241,164 +236,171 @@ dummy:
           CFI NoCalls
         THUMB
 //   84 void SPIWRAPPER_init(unsigned long int spiClk){
+SPIWRAPPER_init:
+        PUSH     {R4}
+          CFI R4 Frame(CFA, -4)
+          CFI CFA R13+4
 //   85   unsigned int divisor;
 //   86     
 //   87   divisor = 8;//4;//PCLK/spiClk;
-SPIWRAPPER_init:
-        MOVS     R0,#+8
+        MOVS     R2,#+8
+        MOVS     R1,R2
 //   88   divisor &=~(0x01); // Aham!!!! Me diga o que isso faz!!!!! Se souber, está contratado!!!!
-        LSRS     R0,R0,#+1
-        LSLS     R0,R0,#+1
+        LSRS     R1,R1,#+1
+        LSLS     R1,R1,#+1
 //   89     
 //   90   INIT_CHIP_SELECTS;
-        LDR.N    R1,??DataTable2  ;; 0x2009c000
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x10000
         LDR.N    R2,??DataTable2  ;; 0x2009c000
-        STR      R1,[R2, #+0]
-        LDR.N    R1,??DataTable2_1  ;; 0x2009c018
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x10000
+        LDR      R2,[R2, #+0]
+        ORRS     R2,R2,#0x10000
+        LDR.N    R3,??DataTable2  ;; 0x2009c000
+        STR      R2,[R3, #+0]
         LDR.N    R2,??DataTable2_1  ;; 0x2009c018
-        STR      R1,[R2, #+0]
-        LDR.N    R1,??DataTable2  ;; 0x2009c000
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x200000
+        LDR      R2,[R2, #+0]
+        ORRS     R2,R2,#0x10000
+        LDR.N    R3,??DataTable2_1  ;; 0x2009c018
+        STR      R2,[R3, #+0]
         LDR.N    R2,??DataTable2  ;; 0x2009c000
-        STR      R1,[R2, #+0]
-        LDR.N    R1,??DataTable2_1  ;; 0x2009c018
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x200000
+        LDR      R2,[R2, #+0]
+        ORRS     R2,R2,#0x200000
+        LDR.N    R3,??DataTable2  ;; 0x2009c000
+        STR      R2,[R3, #+0]
         LDR.N    R2,??DataTable2_1  ;; 0x2009c018
-        STR      R1,[R2, #+0]
+        LDR      R2,[R2, #+0]
+        ORRS     R2,R2,#0x200000
+        LDR.N    R3,??DataTable2_1  ;; 0x2009c018
+        STR      R2,[R3, #+0]
 //   91   UNSEL_CS_01;
-        LDR.N    R1,??DataTable2_1  ;; 0x2009c018
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x10000
         LDR.N    R2,??DataTable2_1  ;; 0x2009c018
-        STR      R1,[R2, #+0]
+        LDR      R2,[R2, #+0]
+        ORRS     R2,R2,#0x10000
+        LDR.N    R3,??DataTable2_1  ;; 0x2009c018
+        STR      R2,[R3, #+0]
 //   92   UNSEL_CS_02;
-        LDR.N    R1,??DataTable2_1  ;; 0x2009c018
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x200000
         LDR.N    R2,??DataTable2_1  ;; 0x2009c018
-        STR      R1,[R2, #+0]
+        LDR      R2,[R2, #+0]
+        ORRS     R2,R2,#0x200000
+        LDR.N    R3,??DataTable2_1  ;; 0x2009c018
+        STR      R2,[R3, #+0]
 //   93   
 //   94   // Configura a função SPI para os pinos
 //   95   SCK_FUNC = 2;
-        MOVS     R1,#+2
+        MOVS     R2,#+2
+        LDR.N    R3,??DataTable2_2  ;; 0x4002c000
+        LDR      R3,[R3, #+0]
+        BFI      R3,R2,#+30,#+2
         LDR.N    R2,??DataTable2_2  ;; 0x4002c000
-        LDR      R2,[R2, #+0]
-        BFI      R2,R1,#+30,#+2
-        LDR.N    R1,??DataTable2_2  ;; 0x4002c000
-        STR      R2,[R1, #+0]
+        STR      R3,[R2, #+0]
 //   96   MISO_FUNC = 2;
-        MOVS     R1,#+2
+        MOVS     R2,#+2
+        LDR.N    R3,??DataTable2_3  ;; 0x4002c004
+        LDR      R3,[R3, #+0]
+        BFI      R3,R2,#+2,#+2
         LDR.N    R2,??DataTable2_3  ;; 0x4002c004
-        LDR      R2,[R2, #+0]
-        BFI      R2,R1,#+2,#+2
-        LDR.N    R1,??DataTable2_3  ;; 0x4002c004
-        STR      R2,[R1, #+0]
+        STR      R3,[R2, #+0]
 //   97   MOSI_FUNC = 2;
-        MOVS     R1,#+2
+        MOVS     R2,#+2
+        LDR.N    R3,??DataTable2_3  ;; 0x4002c004
+        LDR      R3,[R3, #+0]
+        BFI      R3,R2,#+4,#+2
         LDR.N    R2,??DataTable2_3  ;; 0x4002c004
-        LDR      R2,[R2, #+0]
-        BFI      R2,R1,#+4,#+2
-        LDR.N    R1,??DataTable2_3  ;; 0x4002c004
-        STR      R2,[R1, #+0]
+        STR      R3,[R2, #+0]
 //   98   
 //   99   PCONP_bit.PCSSP0 = 1; // Ativa a alimentação do periférico
-        LDR.N    R1,??DataTable2_4  ;; 0x400fc0c4
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x200000
         LDR.N    R2,??DataTable2_4  ;; 0x400fc0c4
-        STR      R1,[R2, #+0]
-//  100   PCLKSEL1_bit.PCLK_SSP0 = 1; // Ativa o clock do periférico
-        MOVS     R1,#+1
-        LDR.N    R2,??DataTable2_5  ;; 0x400fc1ac
         LDR      R2,[R2, #+0]
-        BFI      R2,R1,#+10,#+2
-        LDR.N    R1,??DataTable2_5  ;; 0x400fc1ac
-        STR      R2,[R1, #+0]
+        ORRS     R2,R2,#0x200000
+        LDR.N    R3,??DataTable2_4  ;; 0x400fc0c4
+        STR      R2,[R3, #+0]
+//  100   PCLKSEL1_bit.PCLK_SSP0 = 1; // Ativa o clock do periférico
+        MOVS     R2,#+1
+        LDR.N    R3,??DataTable2_5  ;; 0x400fc1ac
+        LDR      R3,[R3, #+0]
+        BFI      R3,R2,#+10,#+2
+        LDR.N    R2,??DataTable2_5  ;; 0x400fc1ac
+        STR      R3,[R2, #+0]
 //  101   
 //  102   SSP0CR0_bit.DSS = 0x07; // 8 bits de dados
-        MOVS     R1,#+7
+        MOVS     R2,#+7
+        LDR.N    R3,??DataTable2_6  ;; 0x40088000
+        LDR      R3,[R3, #+0]
+        BFI      R3,R2,#+0,#+4
         LDR.N    R2,??DataTable2_6  ;; 0x40088000
-        LDR      R2,[R2, #+0]
-        BFI      R2,R1,#+0,#+4
-        LDR.N    R1,??DataTable2_6  ;; 0x40088000
-        STR      R2,[R1, #+0]
+        STR      R3,[R2, #+0]
 //  103   SSP0CR0_bit.FRF = 0x00; // Frame em formato SPI
-        LDR.N    R1,??DataTable2_6  ;; 0x40088000
-        LDR      R1,[R1, #+0]
-        BICS     R1,R1,#0x30
-        LDR.N    R2,??DataTable2_6  ;; 0x40088000
-        STR      R1,[R2, #+0]
-//  104   SSP0CR0_bit.CPOL = 1; // Foi levantado que era assim na firmware da MX-485 
-        LDR.N    R1,??DataTable2_6  ;; 0x40088000
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x40
-        LDR.N    R2,??DataTable2_6  ;; 0x40088000
-        STR      R1,[R2, #+0]
-//  105   SSP0CR0_bit.CPHA = 1; // tem que ver pq...
-        LDR.N    R1,??DataTable2_6  ;; 0x40088000
-        LDR      R1,[R1, #+0]
-        ORRS     R1,R1,#0x80
-        LDR.N    R2,??DataTable2_6  ;; 0x40088000
-        STR      R1,[R2, #+0]
-//  106   
-//  107   SSP0CR0_bit.SCR = divisor<<8;
-        LSLS     R1,R0,#+8
         LDR.N    R2,??DataTable2_6  ;; 0x40088000
         LDR      R2,[R2, #+0]
-        BICS     R2,R2,#0xFF00
+        BICS     R2,R2,#0x30
         LDR.N    R3,??DataTable2_6  ;; 0x40088000
         STR      R2,[R3, #+0]
+//  104   SSP0CR0_bit.CPOL = 1; // Foi levantado que era assim na firmware da MX-485 
+        LDR.N    R2,??DataTable2_6  ;; 0x40088000
+        LDR      R2,[R2, #+0]
+        ORRS     R2,R2,#0x40
+        LDR.N    R3,??DataTable2_6  ;; 0x40088000
+        STR      R2,[R3, #+0]
+//  105   SSP0CR0_bit.CPHA = 1; // tem que ver pq...
+        LDR.N    R2,??DataTable2_6  ;; 0x40088000
+        LDR      R2,[R2, #+0]
+        ORRS     R2,R2,#0x80
+        LDR.N    R3,??DataTable2_6  ;; 0x40088000
+        STR      R2,[R3, #+0]
+//  106   
+//  107   SSP0CR0_bit.SCR = divisor<<8;
+        LSLS     R2,R1,#+8
+        LDR.N    R3,??DataTable2_6  ;; 0x40088000
+        LDR      R3,[R3, #+0]
+        BICS     R3,R3,#0xFF00
+        LDR.N    R4,??DataTable2_6  ;; 0x40088000
+        STR      R3,[R4, #+0]
 //  108   
 //  109   SSP0CPSR = divisor;
-        LDR.N    R2,??DataTable2_7  ;; 0x40088010
-        STR      R0,[R2, #+0]
+        LDR.N    R3,??DataTable2_7  ;; 0x40088010
+        STR      R1,[R3, #+0]
 //  110   
 //  111   SSP0CR1_bit.LBM = 0; // Modo normal, sem loopback
-        LDR.N    R0,??DataTable2_8  ;; 0x40088004
-        LDR      R0,[R0, #+0]
-        LSRS     R0,R0,#+1
-        LSLS     R0,R0,#+1
-        LDR.N    R2,??DataTable2_8  ;; 0x40088004
-        STR      R0,[R2, #+0]
+        LDR.N    R3,??DataTable2_8  ;; 0x40088004
+        LDR      R3,[R3, #+0]
+        LSRS     R3,R3,#+1
+        LSLS     R3,R3,#+1
+        LDR.N    R4,??DataTable2_8  ;; 0x40088004
+        STR      R3,[R4, #+0]
 //  112   SSP0CR1_bit.SSE = 1; // Módulo habilitado
-        LDR.N    R0,??DataTable2_8  ;; 0x40088004
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x2
-        LDR.N    R2,??DataTable2_8  ;; 0x40088004
-        STR      R0,[R2, #+0]
+        LDR.N    R3,??DataTable2_8  ;; 0x40088004
+        LDR      R3,[R3, #+0]
+        ORRS     R3,R3,#0x2
+        LDR.N    R4,??DataTable2_8  ;; 0x40088004
+        STR      R3,[R4, #+0]
 //  113   SSP0CR1_bit.MS  = 0; // Modo mestre
-        LDR.N    R0,??DataTable2_8  ;; 0x40088004
-        LDR      R0,[R0, #+0]
-        BICS     R0,R0,#0x4
-        LDR.N    R2,??DataTable2_8  ;; 0x40088004
-        STR      R0,[R2, #+0]
+        LDR.N    R3,??DataTable2_8  ;; 0x40088004
+        LDR      R3,[R3, #+0]
+        BICS     R3,R3,#0x4
+        LDR.N    R4,??DataTable2_8  ;; 0x40088004
+        STR      R3,[R4, #+0]
 //  114   SSP0CR1_bit.SOD = 0; // É dummy nesse modo
-        LDR.N    R0,??DataTable2_8  ;; 0x40088004
-        LDR      R0,[R0, #+0]
-        BICS     R0,R0,#0x8
-        LDR.N    R2,??DataTable2_8  ;; 0x40088004
-        STR      R0,[R2, #+0]
+        LDR.N    R3,??DataTable2_8  ;; 0x40088004
+        LDR      R3,[R3, #+0]
+        BICS     R3,R3,#0x8
+        LDR.N    R4,??DataTable2_8  ;; 0x40088004
+        STR      R3,[R4, #+0]
 //  115     
 //  116   for(unsigned int i=0;i<8;i++)
-        MOVS     R0,#+0
-        B.N      ??SPIWRAPPER_init_0
-//  117     dummy = SSP0DR;  
-??SPIWRAPPER_init_1:
-        LDR.N    R1,??DataTable2_9
-        LDR.N    R2,??DataTable2_10  ;; 0x40088008
-        LDR      R2,[R2, #+0]
-        STRB     R2,[R1, #+0]
-        ADDS     R0,R0,#+1
+        MOVS     R3,#+0
 ??SPIWRAPPER_init_0:
-        CMP      R0,#+8
-        BCC.N    ??SPIWRAPPER_init_1
+        CMP      R3,#+8
+        BCS.N    ??SPIWRAPPER_init_1
+//  117     dummy = SSP0DR;  
+        LDR.N    R2,??DataTable2_9
+        LDR.N    R4,??DataTable2_10  ;; 0x40088008
+        LDR      R4,[R4, #+0]
+        STRB     R4,[R2, #+0]
+        ADDS     R3,R3,#+1
+        B.N      ??SPIWRAPPER_init_0
 //  118 }
+??SPIWRAPPER_init_1:
+        POP      {R4}
+          CFI R4 SameValue
+          CFI CFA R13+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock0
         REQUIRE _A_FIO0DIR
@@ -428,29 +430,31 @@ SPIWRAPPER_init:
 //  127   if(size==0){
 SPI_sendBytes:
         CMP      R1,#+0
-        BNE.N    ??SPI_sendBytes_0
+        BEQ.N    ??SPI_sendBytes_0
 //  128     return;
-        B.N      ??SPI_sendBytes_1
 //  129   }
 //  130   
 //  131   while(size){
+??SPI_sendBytes_1:
+        CMP      R1,#+0
+        BEQ.N    ??SPI_sendBytes_2
 //  132     
 //  133     while(! (SSP0SR & 0x02));//Se está setado é pq o buffer está cheio
-??SPI_sendBytes_2:
+??SPI_sendBytes_3:
         LDR.N    R2,??DataTable2_11  ;; 0x4008800c
         LDR      R2,[R2, #+0]
         LSLS     R2,R2,#+30
-        BPL.N    ??SPI_sendBytes_2
+        BPL.N    ??SPI_sendBytes_3
 //  134     SSP0DR = *buffer;
         LDRB     R2,[R0, #+0]
         LDR.N    R3,??DataTable2_10  ;; 0x40088008
         STR      R2,[R3, #+0]
 //  135     while(! (SSP0SR & 0x04));//
-??SPI_sendBytes_3:
+??SPI_sendBytes_4:
         LDR.N    R2,??DataTable2_11  ;; 0x4008800c
         LDR      R2,[R2, #+0]
         LSLS     R2,R2,#+29
-        BPL.N    ??SPI_sendBytes_3
+        BPL.N    ??SPI_sendBytes_4
 //  136     dummy = SSP0DR;
         LDR.N    R2,??DataTable2_9
         LDR.N    R3,??DataTable2_10  ;; 0x40088008
@@ -460,12 +464,11 @@ SPI_sendBytes:
         SUBS     R1,R1,#+1
 //  138     buffer++;                
         ADDS     R0,R0,#+1
+        B.N      ??SPI_sendBytes_1
 //  139   }      
-??SPI_sendBytes_0:
-        CMP      R1,#+0
-        BNE.N    ??SPI_sendBytes_2
 //  140 }
-??SPI_sendBytes_1:
+??SPI_sendBytes_2:
+??SPI_sendBytes_0:
         BX       LR               ;; return
           CFI EndBlock cfiBlock1
         REQUIRE _A_SSP0SR
@@ -490,10 +493,11 @@ SPI_getBytes:
 //  148  
 //  149   for(unsigned int i=0;i<size;i++){
         MOVS     R2,#+0
-        B.N      ??SPI_getBytes_0
+??SPI_getBytes_0:
+        CMP      R2,R1
+        BCS.N    ??SPI_getBytes_1
 //  150    
 //  151     SSP0DR = 0xFF;//Dummy write, na verdade gera os clocks para ler os dados
-??SPI_getBytes_1:
         LDR.N    R3,??DataTable2_10  ;; 0x40088008
         MOVS     R4,#+255
         STR      R4,[R3, #+0]
@@ -511,10 +515,9 @@ SPI_getBytes:
         ADDS     R0,R0,#+1
 //  155   }     
         ADDS     R2,R2,#+1
-??SPI_getBytes_0:
-        CMP      R2,R1
-        BCC.N    ??SPI_getBytes_1
+        B.N      ??SPI_getBytes_0
 //  156 }
+??SPI_getBytes_1:
         POP      {R4}
           CFI R4 SameValue
           CFI CFA R13+0
@@ -613,9 +616,9 @@ SPI_getBytes:
 // 
 //   1 byte  in section .bss
 //  44 bytes in section .noinit (abs)
-// 414 bytes in section .text
+// 420 bytes in section .text
 // 
-// 414 bytes of CODE memory
+// 420 bytes of CODE memory
 //   1 byte  of DATA memory (+ 44 bytes shared)
 //
 //Errors: none

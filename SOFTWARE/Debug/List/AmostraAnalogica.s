@@ -1,31 +1,25 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:11 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:39 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\AmostragemAnalog /
-//                    ica\AmostraAnalogica.c                                  /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\AmostragemAnalo /
-//                    gica\AmostraAnalogica.c" -lC                            /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA        /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Amostrage /
+//                    mAnalogica\AmostraAnalogica.c                           /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Amostrage /
+//                    mAnalogica\AmostraAnalogica.c -lC                       /
+//                    C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\ -lA   /
+//                    C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\ -o    /
+//                    C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\        /
+//                    --no_cse --no_unroll --no_inline --no_code_motion       /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\AmostraAnalog /
-//                    ica.s                                                   /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\Amostr /
+//                    aAnalogica.s                                            /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -100,7 +94,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\AmostragemAnalogica\AmostraAnalogica.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\AmostragemAnalogica\AmostraAnalogica.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -375,20 +369,20 @@ AA_mediaMovel:
 //  105     
 //  106   for(unsigned char i=0;i<TAMANHO_BUFFER_ENTRADAS_ANALOGICAS;i++)
         MOVS     R1,#+0
-        B.N      ??AA_mediaMovel_0
+??AA_mediaMovel_0:
+        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+        CMP      R1,#+16
+        BGE.N    ??AA_mediaMovel_1
 //  107     media += AA_bufferEntradasAnalogicas[i];
-??AA_mediaMovel_1:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         LDR.N    R2,??DataTable5_4
         LDRH     R2,[R2, R1, LSL #+1]
         ADDS     R0,R2,R0
         ADDS     R1,R1,#+1
-??AA_mediaMovel_0:
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        CMP      R1,#+16
-        BLT.N    ??AA_mediaMovel_1
+        B.N      ??AA_mediaMovel_0
 //  108   
 //  109   return (unsigned short int)media>>4;
+??AA_mediaMovel_1:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         LSRS     R0,R0,#+4
         BX       LR               ;; return
@@ -495,12 +489,13 @@ _ZZ22AA_amostragemAnalogicaE11indicePapel:
         THUMB
 //  174 float AA_calculaResistor(void){
 AA_calculaResistor:
-        PUSH     {R4-R6,LR}
+        PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+16
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+24
 //  175   float vx;  
 //  176   float resistor;
 //  177   
@@ -547,9 +542,11 @@ AA_calculaResistor:
         BL       __aeabi_ddiv
           CFI FunCall __aeabi_d2f
         BL       __aeabi_d2f
+        MOVS     R7,R0
 //  180     
 //  181   return resistor;
-        POP      {R4-R6,PC}       ;; return
+        MOVS     R0,R7
+        POP      {R1,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock3
 //  182 }
 //  183 /***********************************************************************************
@@ -565,9 +562,13 @@ AA_calculaResistor:
         THUMB
 //  189 unsigned short int AA_calculaResistorInteiro(void){
 AA_calculaResistorInteiro:
-        PUSH     {R7,LR}
+        PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+8
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+24
 //  190   unsigned int vmeas;
 //  191   unsigned int vx;
 //  192   unsigned int rx;
@@ -576,28 +577,34 @@ AA_calculaResistorInteiro:
 //  195   vmeas = AA_mediaMovel();
           CFI FunCall AA_mediaMovel
         BL       AA_mediaMovel
+        MOVS     R4,R0
 //  196   
 //  197   vx = vmeas*806;
-        MOVW     R1,#+806
-        MULS     R0,R1,R0
+        MOVW     R0,#+806
+        MUL      R0,R0,R4
+        MOVS     R5,R0
 //  198   
 //  199   ix  = (3300000 - vx);   // em micro amperes
-        LDR.N    R1,??DataTable5_8  ;; 0x325aa0
-        SUBS     R1,R1,R0
+        LDR.N    R0,??DataTable5_8  ;; 0x325aa0
+        SUBS     R0,R0,R5
+        MOVS     R7,R0
 //  200   ix /= 499;
         MOVW     R0,#+499
-        UDIV     R1,R1,R0
+        UDIV     R7,R7,R0
 //  201   
 //  202   vx  = 3300000 - (2*ix*499);
         LDR.N    R0,??DataTable5_8  ;; 0x325aa0
-        MOVW     R2,#+998
-        MLS      R0,R2,R1,R0
+        MOVW     R1,#+998
+        MLS      R0,R1,R7,R0
+        MOVS     R5,R0
 //  203   rx  = vx/ix;
-        UDIV     R0,R0,R1
+        UDIV     R0,R5,R7
+        MOVS     R6,R0
 //  204   
 //  205   return rx;
+        MOVS     R0,R6
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        POP      {R1,PC}          ;; return
+        POP      {R1,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock4
 //  206   
 //  207   /*
@@ -628,11 +635,12 @@ AA_calculaTemperatura:
 //  223   unsigned short int resistor = AA_calculaResistorInteiro();
           CFI FunCall AA_calculaResistorInteiro
         BL       AA_calculaResistorInteiro
+        MOVS     R1,R0
 //  224     
 //  225   if(resistor>10000)
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        MOVW     R1,#+10001
-        CMP      R0,R1
+        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+        MOVW     R0,#+10001
+        CMP      R1,R0
         BLT.N    ??AA_calculaTemperatura_0
 //  226     return 25;
         MOVS     R0,#+25
@@ -640,53 +648,53 @@ AA_calculaTemperatura:
 //  227   
 //  228   for(unsigned short int i=0;i<TAMANHO_TABELA_TERMISTOR-1;i++){
 ??AA_calculaTemperatura_0:
-        MOVS     R1,#+0
-        B.N      ??AA_calculaTemperatura_2
-??AA_calculaTemperatura_3:
-        ADDS     R1,R1,#+1
+        MOVS     R0,#+0
 ??AA_calculaTemperatura_2:
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        CMP      R1,#+179
-        BGE.N    ??AA_calculaTemperatura_4
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        CMP      R0,#+179
+        BGE.N    ??AA_calculaTemperatura_3
 //  229     
 //  230     if(resistor<=TABTERM_curva_maximo[i] && resistor>TABTERM_curva_maximo[i+1] ||              
 //  231        resistor<=TABTERM_curva_minimo[i] && resistor>TABTERM_curva_maximo[i+1] ) 
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        LDR.N    R2,??DataTable5_9
-        LDRH     R2,[R2, R1, LSL #+1]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        CMP      R2,R0
+        LDR.N    R2,??DataTable5_9
+        LDRH     R2,[R2, R0, LSL #+1]
+        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+        CMP      R2,R1
+        BCC.N    ??AA_calculaTemperatura_4
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+        LDR.N    R2,??DataTable5_9
+        ADDS     R2,R2,R0, LSL #+1
+        LDRH     R2,[R2, #+2]
+        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+        CMP      R2,R1
         BCC.N    ??AA_calculaTemperatura_5
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        LDR.N    R2,??DataTable5_9
-        ADDS     R2,R2,R1, LSL #+1
-        LDRH     R2,[R2, #+2]
+??AA_calculaTemperatura_4:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        CMP      R2,R0
-        BCC.N    ??AA_calculaTemperatura_6
-??AA_calculaTemperatura_5:
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         LDR.N    R2,??DataTable5_10
-        LDRH     R2,[R2, R1, LSL #+1]
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        CMP      R2,R0
-        BCC.N    ??AA_calculaTemperatura_3
+        LDRH     R2,[R2, R0, LSL #+1]
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        LDR.N    R2,??DataTable5_9
-        ADDS     R2,R2,R1, LSL #+1
-        LDRH     R2,[R2, #+2]
+        CMP      R2,R1
+        BCC.N    ??AA_calculaTemperatura_6
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        CMP      R2,R0
-        BCS.N    ??AA_calculaTemperatura_3
+        LDR.N    R2,??DataTable5_9
+        ADDS     R2,R2,R0, LSL #+1
+        LDRH     R2,[R2, #+2]
+        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+        CMP      R2,R1
+        BCS.N    ??AA_calculaTemperatura_6
 //  232       return 28+i;
-??AA_calculaTemperatura_6:
-        ADDS     R0,R1,#+28
+??AA_calculaTemperatura_5:
+        ADDS     R0,R0,#+28
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         B.N      ??AA_calculaTemperatura_1
 //  233   }       
+??AA_calculaTemperatura_6:
+        ADDS     R0,R0,#+1
+        B.N      ??AA_calculaTemperatura_2
 //  234   
 //  235   return 500;
-??AA_calculaTemperatura_4:
+??AA_calculaTemperatura_3:
         MOV      R0,#+500
 ??AA_calculaTemperatura_1:
         POP      {R1,PC}          ;; return
@@ -759,17 +767,17 @@ AA_verificaConexaoTermistor:
 AA_mediaMovelPapel:
         MOVS     R0,#+0
         MOVS     R1,#+0
-        B.N      ??AA_mediaMovelPapel_0
-??AA_mediaMovelPapel_1:
+??AA_mediaMovelPapel_0:
+        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+        CMP      R1,#+16
+        BGE.N    ??AA_mediaMovelPapel_1
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         LDR.N    R2,??DataTable5_11
         LDRH     R2,[R2, R1, LSL #+1]
         ADDS     R0,R2,R0
         ADDS     R1,R1,#+1
-??AA_mediaMovelPapel_0:
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        CMP      R1,#+16
-        BLT.N    ??AA_mediaMovelPapel_1
+        B.N      ??AA_mediaMovelPapel_0
+??AA_mediaMovelPapel_1:
         LSRS     R0,R0,#+4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         BX       LR               ;; return
@@ -854,23 +862,24 @@ AA_mediaMovelPapel:
           CFI NoCalls
         THUMB
 AA_amostragemAnalogica:
-        LDR.N    R0,??AA_amostragemAnalogica_0  ;; 0x40034004
-        LDR      R0,[R0, #+0]
-        LSRS     R0,R0,#+31
-        CMP      R0,#+0
+        LDR.N    R1,??AA_amostragemAnalogica_0  ;; 0x40034004
+        LDR      R1,[R1, #+0]
+        LSRS     R1,R1,#+31
+        CMP      R1,#+0
         BEQ.N    ??AA_amostragemAnalogica_1
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x4
-        LDRB     R0,[R0, #+0]
-        MVNS     R0,R0
         LDR.N    R1,??AA_amostragemAnalogica_0+0x4
-        STRB     R0,[R1, #+0]
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x4
-        LDRB     R0,[R0, #+0]
-        CMP      R0,#+0
+        LDRB     R1,[R1, #+0]
+        MVNS     R1,R1
+        LDR.N    R2,??AA_amostragemAnalogica_0+0x4
+        STRB     R1,[R2, #+0]
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x4
+        LDRB     R1,[R1, #+0]
+        CMP      R1,#+0
         BEQ.N    ??AA_amostragemAnalogica_2
-        LDR.N    R0,??AA_amostragemAnalogica_0  ;; 0x40034004
-        LDR      R0,[R0, #+0]
-        UBFX     R0,R0,#+4,#+12
+        LDR.N    R1,??AA_amostragemAnalogica_0  ;; 0x40034004
+        LDR      R1,[R1, #+0]
+        UBFX     R1,R1,#+4,#+12
+        MOVS     R0,R1
         LDR.N    R1,??AA_amostragemAnalogica_0+0x8
         LDR      R1,[R1, #+0]
         SUBS     R1,R1,R0
@@ -897,96 +906,97 @@ AA_amostragemAnalogica:
         LDRB     R1,[R1, #+0]
         LDR.N    R2,??AA_amostragemAnalogica_0+0x14
         STRH     R0,[R2, R1, LSL #+1]
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x10
-        LDRB     R0,[R0, #+0]
-        ADDS     R0,R0,#+1
-        MOVS     R1,#+16
-        SDIV     R2,R0,R1
-        MLS      R2,R2,R1,R0
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x10
-        STRB     R2,[R0, #+0]
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x10
+        LDRB     R1,[R1, #+0]
+        ADDS     R1,R1,#+1
+        MOVS     R2,#+16
+        SDIV     R3,R1,R2
+        MLS      R3,R3,R2,R1
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x10
+        STRB     R3,[R1, #+0]
 ??AA_amostragemAnalogica_4:
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x18
-        MOVS     R1,#+3
-        STRB     R1,[R0, #+0]
-        MOVS     R0,#+2
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x18
+        MOVS     R2,#+3
+        STRB     R2,[R1, #+0]
+        MOVS     R1,#+2
+        LDR.N    R2,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
+        LDR      R2,[R2, #+0]
+        BFI      R2,R1,#+0,#+8
         LDR.N    R1,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
-        LDR      R1,[R1, #+0]
-        BFI      R1,R0,#+0,#+8
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
-        STR      R1,[R0, #+0]
-        MOVS     R0,#+1
+        STR      R2,[R1, #+0]
+        MOVS     R1,#+1
+        LDR.N    R2,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
+        LDR      R2,[R2, #+0]
+        BFI      R2,R1,#+24,#+3
         LDR.N    R1,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
-        LDR      R1,[R1, #+0]
-        BFI      R1,R0,#+24,#+3
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
-        STR      R1,[R0, #+0]
+        STR      R2,[R1, #+0]
         B.N      ??AA_amostragemAnalogica_1
 ??AA_amostragemAnalogica_2:
-        LDR.N    R0,??AA_amostragemAnalogica_0  ;; 0x40034004
-        LDR      R0,[R0, #+0]
-        UBFX     R0,R0,#+4,#+12
+        LDR.N    R1,??AA_amostragemAnalogica_0  ;; 0x40034004
+        LDR      R1,[R1, #+0]
+        UBFX     R1,R1,#+4,#+12
+        LDR.N    R2,??AA_amostragemAnalogica_0+0x20
+        LDRB     R2,[R2, #+0]
+        LDR.N    R3,??AA_amostragemAnalogica_0+0x24
+        STRH     R1,[R3, R2, LSL #+1]
         LDR.N    R1,??AA_amostragemAnalogica_0+0x20
         LDRB     R1,[R1, #+0]
-        LDR.N    R2,??AA_amostragemAnalogica_0+0x24
-        STRH     R0,[R2, R1, LSL #+1]
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x20
-        LDRB     R0,[R0, #+0]
-        ADDS     R0,R0,#+1
-        MOVS     R1,#+16
-        SDIV     R2,R0,R1
-        MLS      R2,R2,R1,R0
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x20
-        STRB     R2,[R0, #+0]
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x18
-        MOVS     R1,#+3
-        STRB     R1,[R0, #+0]
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
-        LDR      R0,[R0, #+0]
-        LSRS     R0,R0,#+8
-        LSLS     R0,R0,#+8
-        LDR.N    R1,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
-        STR      R0,[R1, #+0]
-        MOVS     R0,#+1
-        LDR.N    R1,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
-        LDR      R1,[R1, #+0]
-        BFI      R1,R0,#+24,#+3
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
-        STR      R1,[R0, #+0]
-??AA_amostragemAnalogica_1:
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x18
-        LDRB     R0,[R0, #+0]
-        CMP      R0,#+0
-        BEQ.N    ??AA_amostragemAnalogica_5
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x18
-        LDRB     R0,[R0, #+0]
-        SUBS     R0,R0,#+1
+        ADDS     R1,R1,#+1
+        MOVS     R2,#+16
+        SDIV     R3,R1,R2
+        MLS      R3,R3,R2,R1
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x20
+        STRB     R3,[R1, #+0]
         LDR.N    R1,??AA_amostragemAnalogica_0+0x18
-        STRB     R0,[R1, #+0]
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x18
-        LDRB     R0,[R0, #+0]
-        CMP      R0,#+0
-        BNE.N    ??AA_amostragemAnalogica_5
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
-        LDR      R0,[R0, #+0]
-        LSRS     R0,R0,#+8
-        LSLS     R0,R0,#+8
-        LDR.N    R1,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
-        STR      R0,[R1, #+0]
-        MOVS     R0,#+1
+        MOVS     R2,#+3
+        STRB     R2,[R1, #+0]
         LDR.N    R1,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
         LDR      R1,[R1, #+0]
-        BFI      R1,R0,#+24,#+3
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
-        STR      R1,[R0, #+0]
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x18
-        MOVS     R1,#+3
-        STRB     R1,[R0, #+0]
-        LDR.N    R0,??AA_amostragemAnalogica_0+0x4
-        MOVS     R1,#+0
-        STRB     R1,[R0, #+0]
+        LSRS     R1,R1,#+8
+        LSLS     R1,R1,#+8
+        LDR.N    R2,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
+        STR      R1,[R2, #+0]
+        MOVS     R1,#+1
+        LDR.N    R2,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
+        LDR      R2,[R2, #+0]
+        BFI      R2,R1,#+24,#+3
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
+        STR      R2,[R1, #+0]
+??AA_amostragemAnalogica_1:
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x18
+        LDRB     R1,[R1, #+0]
+        CMP      R1,#+0
+        BEQ.N    ??AA_amostragemAnalogica_5
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x18
+        LDRB     R1,[R1, #+0]
+        SUBS     R1,R1,#+1
+        LDR.N    R2,??AA_amostragemAnalogica_0+0x18
+        STRB     R1,[R2, #+0]
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x18
+        LDRB     R1,[R1, #+0]
+        CMP      R1,#+0
+        BNE.N    ??AA_amostragemAnalogica_5
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
+        LDR      R1,[R1, #+0]
+        LSRS     R1,R1,#+8
+        LSLS     R1,R1,#+8
+        LDR.N    R2,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
+        STR      R1,[R2, #+0]
+        MOVS     R1,#+1
+        LDR.N    R2,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
+        LDR      R2,[R2, #+0]
+        BFI      R2,R1,#+24,#+3
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x1C  ;; 0x40034000
+        STR      R2,[R1, #+0]
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x18
+        MOVS     R2,#+3
+        STRB     R2,[R1, #+0]
+        LDR.N    R1,??AA_amostragemAnalogica_0+0x4
+        MOVS     R2,#+0
+        STRB     R2,[R1, #+0]
 ??AA_amostragemAnalogica_5:
         BX       LR               ;; return
+        Nop      
         DATA
 ??AA_amostragemAnalogica_0:
         DC32     0x40034004
@@ -1038,9 +1048,9 @@ AA_amostragemAnalogica:
 //   1 byte  in section .data
 //  20 bytes in section .noinit (abs)
 // 720 bytes in section .rodata
-// 824 bytes in section .text
+// 846 bytes in section .text
 // 
-// 500 bytes of CODE  memory (+ 324 bytes shared)
+// 518 bytes of CODE  memory (+ 328 bytes shared)
 // 720 bytes of CONST memory
 //  66 bytes of DATA  memory (+  32 bytes shared)
 //

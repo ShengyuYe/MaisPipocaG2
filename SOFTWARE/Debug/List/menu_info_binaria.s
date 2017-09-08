@@ -1,30 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:33 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:53 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_info_bina /
-//                    ria.c                                                   /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_info_bin /
-//                    aria.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firm /
-//                    ware\01_mais_pipoca_exp\MaisPipoca -                    /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_in /
+//                    fo_binaria.c                                            /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_in /
+//                    fo_binaria.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\ /
+//                    Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\D /
+//                    ebug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Deb /
+//                    ug\Obj\ --no_cse --no_unroll --no_inline                /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\menu_info_bin /
-//                    aria.s                                                  /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\menu_i /
+//                    nfo_binaria.s                                           /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -78,7 +72,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Aplicacao\menu_info_binaria.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\menu_info_binaria.c
 //    1 /*__________________________________________________________________________________
 //    2 |	DEXTRO SOLUÇÕES TECNOLÓGICAS
 //    3 |       
@@ -156,15 +150,17 @@
         THUMB
 //   71 void MIB_show(char* titulo,unsigned char(*func)(void),char*strON,char*strOFF){
 MIB_show:
-        PUSH     {R4-R7,LR}
+        PUSH     {R4-R9,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R7 Frame(CFA, -8)
-          CFI R6 Frame(CFA, -12)
-          CFI R5 Frame(CFA, -16)
-          CFI R4 Frame(CFA, -20)
-          CFI CFA R13+20
+          CFI R9 Frame(CFA, -8)
+          CFI R8 Frame(CFA, -12)
+          CFI R7 Frame(CFA, -16)
+          CFI R6 Frame(CFA, -20)
+          CFI R5 Frame(CFA, -24)
+          CFI R4 Frame(CFA, -28)
+          CFI CFA R13+28
         SUB      SP,SP,#+20
-          CFI CFA R13+40
+          CFI CFA R13+48
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
@@ -181,37 +177,64 @@ MIB_show:
         MOVS     R0,R4
           CFI FunCall HD44780_writeString
         BL       HD44780_writeString
-        B.N      ??MIB_show_0
 //   78   
 //   79   for(;TECLADO_getContadorInatividade();){
+??MIB_show_0:
+          CFI FunCall TECLADO_getContadorInatividade
+        BL       TECLADO_getContadorInatividade
+        CMP      R0,#+0
+        BEQ.N    ??MIB_show_1
 //   80     
 //   81     tecla = TECLADO_getch();
+          CFI FunCall TECLADO_getch
+        BL       TECLADO_getch
+        MOV      R8,R0
 //   82     switch(tecla){
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        MOV      R0,R8
+        CMP      R0,#+1
+        BEQ.N    ??MIB_show_2
+        CMP      R0,#+4
+        BNE.N    ??MIB_show_3
 //   83       case TECLA_ENTER:
 //   84       case TECLA_ESC:
 //   85            return;
+??MIB_show_2:
+        B.N      ??MIB_show_4
 //   86     }
 //   87     
 //   88     if(func())
+??MIB_show_3:
+          CFI FunCall
+        BLX      R5
+        CMP      R0,#+0
+        BEQ.N    ??MIB_show_5
 //   89       sprintf(linha," [%s] ",strON);
+        MOVS     R2,R6
+        LDR.N    R1,??MIB_show_6
+        ADD      R0,SP,#+0
+          CFI FunCall sprintf
+        BL       sprintf
+        B.N      ??MIB_show_7
 //   90     else
 //   91       sprintf(linha," [%s] ",strOFF);
-??MIB_show_1:
+??MIB_show_5:
         MOVS     R2,R7
-        LDR.N    R1,??MIB_show_2
+        LDR.N    R1,??MIB_show_6
         ADD      R0,SP,#+0
           CFI FunCall sprintf
         BL       sprintf
 //   92     
 //   93     tam = strlen(linha);
-??MIB_show_3:
+??MIB_show_7:
         ADD      R0,SP,#+0
           CFI FunCall strlen
         BL       strlen
+        MOV      R9,R0
 //   94     HD44780_posicionaTexto((16-tam)>>1,1);
         MOVS     R1,#+1
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        RSBS     R0,R0,#+16
+        UXTB     R9,R9            ;; ZeroExt  R9,R9,#+24,#+24
+        RSBS     R0,R9,#+16
         ASRS     R0,R0,#+1
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall HD44780_posicionaTexto
@@ -220,41 +243,16 @@ MIB_show:
         ADD      R0,SP,#+0
           CFI FunCall HD44780_writeString
         BL       HD44780_writeString
-??MIB_show_0:
-          CFI FunCall TECLADO_getContadorInatividade
-        BL       TECLADO_getContadorInatividade
-        CMP      R0,#+0
-        BEQ.N    ??MIB_show_4
-          CFI FunCall TECLADO_getch
-        BL       TECLADO_getch
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+1
-        BEQ.N    ??MIB_show_5
-        CMP      R0,#+4
-        BNE.N    ??MIB_show_6
-??MIB_show_5:
-        B.N      ??MIB_show_7
-??MIB_show_6:
-          CFI FunCall
-        BLX      R5
-        CMP      R0,#+0
-        BEQ.N    ??MIB_show_1
-        MOVS     R2,R6
-        LDR.N    R1,??MIB_show_2
-        ADD      R0,SP,#+0
-          CFI FunCall sprintf
-        BL       sprintf
-        B.N      ??MIB_show_3
+        B.N      ??MIB_show_0
 //   96   }    
 //   97 }
+??MIB_show_1:
 ??MIB_show_4:
-??MIB_show_7:
         ADD      SP,SP,#+20
-          CFI CFA R13+20
-        POP      {R4-R7,PC}       ;; return
-        Nop      
+          CFI CFA R13+28
+        POP      {R4-R9,PC}       ;; return
         DATA
-??MIB_show_2:
+??MIB_show_6:
         DC32     `?<Constant " [%s] ">`
           CFI EndBlock cfiBlock0
 
@@ -283,9 +281,9 @@ MIB_show:
 //  102 
 // 
 //   8 bytes in section .rodata
-// 116 bytes in section .text
+// 128 bytes in section .text
 // 
-// 116 bytes of CODE  memory
+// 128 bytes of CODE  memory
 //   8 bytes of CONST memory
 //
 //Errors: none

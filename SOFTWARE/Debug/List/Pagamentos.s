@@ -1,29 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:13 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:41 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Pagam /
-//                    entos.c                                                 /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Paga /
-//                    mentos.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Fi /
-//                    rmware\01_mais_pipoca_exp\MaisPipoca -                  /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamento /
+//                    s\Pagamentos.c                                          /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamento /
+//                    s\Pagamentos.c -lC C:\repositorios\MaisPipocaG2\SOFTWAR /
+//                    E\Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE /
+//                    \Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\D /
+//                    ebug\Obj\ --no_cse --no_unroll --no_inline              /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\Pagamentos.s  /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\Pagame /
+//                    ntos.s                                                  /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -115,7 +110,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\Pagamentos\Pagamentos.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\Pagamentos.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -453,10 +448,12 @@ PAGAMENTOS_timer_tick:
         THUMB
 //  118 void PAGAMENTOS_main(void*pPar){
 PAGAMENTOS_main:
-        PUSH     {R4,LR}
+        PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+16
+        MOVS     R4,R0
 //  119   unsigned int acumulado;
 //  120   
 //  121   SMDB_ini();  
@@ -476,18 +473,18 @@ PAGAMENTOS_main:
 //  127     acumulado = BV20_get_valor_acumulador();
           CFI FunCall BV20_get_valor_acumulador
         BL       BV20_get_valor_acumulador
-        MOVS     R4,R0
+        MOVS     R5,R0
 //  128     if(acumulado){
-        CMP      R4,#+0
+        CMP      R5,#+0
         BEQ.N    ??PAGAMENTOS_main_1
 //  129       PAGAMENTOS_adiciona_valores(acumulado*100);
         MOVS     R0,#+100
-        MUL      R0,R0,R4
+        MUL      R0,R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall PAGAMENTOS_adiciona_valores
         BL       PAGAMENTOS_adiciona_valores
 //  130       BV20_subtrai_valor_acumulado(acumulado);
-        MOVS     R0,R4
+        MOVS     R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall BV20_subtrai_valor_acumulado
         BL       BV20_subtrai_valor_acumulado
@@ -599,16 +596,16 @@ PAGAMENTOS_subtrai_contagem_uca1:
 //  173     PAGAMENTOS_valor_acumulado_uca-=contagem;
         LDR.N    R1,??DataTable15_9
         LDRH     R1,[R1, #+0]
-        SUBS     R0,R1,R0
-        LDR.N    R1,??DataTable15_9
-        STRH     R0,[R1, #+0]
+        SUBS     R1,R1,R0
+        LDR.N    R2,??DataTable15_9
+        STRH     R1,[R2, #+0]
         B.N      ??PAGAMENTOS_subtrai_contagem_uca1_1
 //  174   else
 //  175     PAGAMENTOS_valor_acumulado_uca = 0;
 ??PAGAMENTOS_subtrai_contagem_uca1_0:
-        LDR.N    R0,??DataTable15_9
-        MOVS     R1,#+0
-        STRH     R1,[R0, #+0]
+        LDR.N    R1,??DataTable15_9
+        MOVS     R2,#+0
+        STRH     R2,[R1, #+0]
 //  176 }
 ??PAGAMENTOS_subtrai_contagem_uca1_1:
         BX       LR               ;; return
@@ -631,18 +628,18 @@ PAGAMENTOS_bloqueia_uca1:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BEQ.N    ??PAGAMENTOS_bloqueia_uca1_0
-        LDR.N    R0,??DataTable15_5  ;; 0x2009c038
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x1000000
         LDR.N    R1,??DataTable15_5  ;; 0x2009c038
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x1000000
+        LDR.N    R2,??DataTable15_5  ;; 0x2009c038
+        STR      R1,[R2, #+0]
         B.N      ??PAGAMENTOS_bloqueia_uca1_1
 ??PAGAMENTOS_bloqueia_uca1_0:
-        LDR.N    R0,??DataTable15_12  ;; 0x2009c03c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x1000000
         LDR.N    R1,??DataTable15_12  ;; 0x2009c03c
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x1000000
+        LDR.N    R2,??DataTable15_12  ;; 0x2009c03c
+        STR      R1,[R2, #+0]
 //  185 }
 ??PAGAMENTOS_bloqueia_uca1_1:
         BX       LR               ;; return
@@ -720,18 +717,18 @@ PAGAMENTOS_set_inhibit_p70:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BEQ.N    ??PAGAMENTOS_set_inhibit_p70_0
-        LDR.N    R0,??DataTable15_5  ;; 0x2009c038
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x2000000
         LDR.N    R1,??DataTable15_5  ;; 0x2009c038
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x2000000
+        LDR.N    R2,??DataTable15_5  ;; 0x2009c038
+        STR      R1,[R2, #+0]
         B.N      ??PAGAMENTOS_set_inhibit_p70_1
 ??PAGAMENTOS_set_inhibit_p70_0:
-        LDR.N    R0,??DataTable15_12  ;; 0x2009c03c
-        LDR      R0,[R0, #+0]
-        ORRS     R0,R0,#0x2000000
         LDR.N    R1,??DataTable15_12  ;; 0x2009c03c
-        STR      R0,[R1, #+0]
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x2000000
+        LDR.N    R2,??DataTable15_12  ;; 0x2009c03c
+        STR      R1,[R2, #+0]
 //  209 }
 ??PAGAMENTOS_set_inhibit_p70_1:
         BX       LR               ;; return
@@ -782,16 +779,16 @@ PAGAMENTOS_subtrai_contagem_p70:
 //  228     PAGAMENTOS_valor_acumulado_p70 -= contagem;
         LDR.N    R1,??DataTable15_14
         LDRH     R1,[R1, #+0]
-        SUBS     R0,R1,R0
-        LDR.N    R1,??DataTable15_14
-        STRH     R0,[R1, #+0]
+        SUBS     R1,R1,R0
+        LDR.N    R2,??DataTable15_14
+        STRH     R1,[R2, #+0]
         B.N      ??PAGAMENTOS_subtrai_contagem_p70_1
 //  229   else
 //  230     PAGAMENTOS_valor_acumulado_p70 = 0;    
 ??PAGAMENTOS_subtrai_contagem_p70_0:
-        LDR.N    R0,??DataTable15_14
-        MOVS     R1,#+0
-        STRH     R1,[R0, #+0]
+        LDR.N    R1,??DataTable15_14
+        MOVS     R2,#+0
+        STRH     R2,[R1, #+0]
 //  231 }
 ??PAGAMENTOS_subtrai_contagem_p70_1:
         BX       LR               ;; return
@@ -947,7 +944,8 @@ PAGAMENTOS_get_valor_acumulado:
 //  277    valor = PAGAMENTOS_valor_acumulado_geral;   
 ??PAGAMENTOS_get_valor_acumulado_1:
         LDR.N    R0,??DataTable15_15
-        LDR      R4,[R0, #+0]
+        LDR      R0,[R0, #+0]
+        MOVS     R4,R0
 //  278    valor+= PAGAMENTOS_valor_acumulado_uca;   
         LDR.N    R0,??DataTable15_9
         LDRH     R0,[R0, #+0]
@@ -1283,9 +1281,9 @@ PAGAMENTOS_get_timeout_pagamento:
 //    20 bytes in section .bss
 //     4 bytes in section .data
 //    36 bytes in section .noinit (abs)
-// 1 016 bytes in section .text
+// 1 020 bytes in section .text
 // 
-// 1 016 bytes of CODE memory
+// 1 020 bytes of CODE memory
 //    24 bytes of DATA memory (+ 36 bytes shared)
 //
 //Errors: none

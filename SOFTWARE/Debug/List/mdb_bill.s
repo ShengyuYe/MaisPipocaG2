@@ -1,28 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     21/Jun/2017  16:28:34 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:50 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_bill.c   /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_bill.c" /
-//                     -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01 /
-//                    _mais_pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -lA   /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\List\" -o         /
-//                    "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Debug\Obj\" --no_cse    /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_b /
+//                    ill.c                                                   /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_b /
+//                    ill.c -lC C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\L /
+//                    ist\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Li /
+//                    st\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj\ /
+//                     --no_cse --no_unroll --no_inline --no_code_motion      /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M3 -e --fpu=None           /
 //                    --dlib_config "C:\Program Files (x86)\IAR               /
 //                    Systems\Embedded Workbench                              /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\mdb_bill.s    /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\mdb_bi /
+//                    ll.s                                                    /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,7 +75,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\MDB\mdb_bill.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_bill.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -121,16 +117,22 @@
         THUMB
 // __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
 memcpy:
-        PUSH     {R4,LR}
+        PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
         MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
+        MOVS     R2,R6
+        MOVS     R1,R5
         MOVS     R0,R4
           CFI FunCall __aeabi_memcpy
         BL       __aeabi_memcpy
         MOVS     R0,R4
-        POP      {R4,PC}          ;; return
+        POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock0
 //   34 #include "mdb.h"
 //   35 #include "mdb_uart.h"
@@ -293,19 +295,27 @@ MDBILL_reset_device:
 //  115                                         unsigned short int *security_level,
 //  116                                         unsigned char *credit_types){
 MDBILL_get_setup_from_device:
-        PUSH     {R4-R7,LR}
+        PUSH     {R4-R11,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R7 Frame(CFA, -8)
-          CFI R6 Frame(CFA, -12)
-          CFI R5 Frame(CFA, -16)
-          CFI R4 Frame(CFA, -20)
-          CFI CFA R13+20
+          CFI R11 Frame(CFA, -8)
+          CFI R10 Frame(CFA, -12)
+          CFI R9 Frame(CFA, -16)
+          CFI R8 Frame(CFA, -20)
+          CFI R7 Frame(CFA, -24)
+          CFI R6 Frame(CFA, -28)
+          CFI R5 Frame(CFA, -32)
+          CFI R4 Frame(CFA, -36)
+          CFI CFA R13+36
         SUB      SP,SP,#+52
-          CFI CFA R13+72
-        MOVS     R7,R0
-        MOVS     R4,R1
-        MOVS     R5,R2
-        MOVS     R6,R3
+          CFI CFA R13+88
+        MOVS     R4,R0
+        MOVS     R5,R1
+        MOVS     R6,R2
+        MOVS     R7,R3
+        LDR      R8,[SP, #+88]
+        LDR      R9,[SP, #+92]
+        LDR      R10,[SP, #+96]
+        LDR      R11,[SP, #+100]
 //  117   unsigned char setup[36];
 //  118   unsigned char size;
 //  119   
@@ -328,79 +338,76 @@ MDBILL_get_setup_from_device:
         BNE.N    ??MDBILL_get_setup_from_device_0
 //  123     
 //  124     if(level!=NULL)
-        CMP      R7,#+0
+        CMP      R4,#+0
         BEQ.N    ??MDBILL_get_setup_from_device_1
 //  125       *level = setup[Z1];
         LDRB     R0,[SP, #+12]
-        STRB     R0,[R7, #+0]
+        STRB     R0,[R4, #+0]
 //  126     
 //  127     if(country!=NULL)          
 ??MDBILL_get_setup_from_device_1:
-        CMP      R4,#+0
+        CMP      R5,#+0
         BEQ.N    ??MDBILL_get_setup_from_device_2
 //  128       *country = setup[Z2]<<8 | setup[Z3];
         LDRB     R0,[SP, #+13]
         LDRB     R1,[SP, #+14]
         ORRS     R0,R1,R0, LSL #+8
-        STRH     R0,[R4, #+0]
+        STRH     R0,[R5, #+0]
 //  129     
 //  130     if(country!=NULL)
 ??MDBILL_get_setup_from_device_2:
-        CMP      R4,#+0
+        CMP      R5,#+0
         BEQ.N    ??MDBILL_get_setup_from_device_3
 //  131       *scaling = setup[Z4]<<8 | setup[Z5];    
         LDRB     R0,[SP, #+15]
         LDRB     R1,[SP, #+16]
         ORRS     R0,R1,R0, LSL #+8
-        STRH     R0,[R5, #+0]
+        STRH     R0,[R6, #+0]
 //  132     
 //  133     if(decimal_places!=NULL)
 ??MDBILL_get_setup_from_device_3:
-        CMP      R6,#+0
+        CMP      R7,#+0
         BEQ.N    ??MDBILL_get_setup_from_device_4
 //  134       *decimal_places = setup[Z6];
         LDRB     R0,[SP, #+17]
-        STRB     R0,[R6, #+0]
-??MDBILL_get_setup_from_device_4:
-        LDR      R0,[SP, #+72]
+        STRB     R0,[R7, #+0]
 //  135     
 //  136     if(stacker_capacity!=NULL)
-        CMP      R0,#+0
+??MDBILL_get_setup_from_device_4:
+        CMP      R8,#+0
         BEQ.N    ??MDBILL_get_setup_from_device_5
 //  137       *stacker_capacity = setup[Z7]<<8 | setup[Z8];
-        LDRB     R1,[SP, #+18]
-        LDRB     R2,[SP, #+19]
-        ORRS     R1,R2,R1, LSL #+8
-        STRH     R1,[R0, #+0]
-??MDBILL_get_setup_from_device_5:
-        LDR      R0,[SP, #+80]
+        LDRB     R0,[SP, #+18]
+        LDRB     R1,[SP, #+19]
+        ORRS     R0,R1,R0, LSL #+8
+        STRH     R0,[R8, #+0]
 //  138     
 //  139     if(security_level!=NULL)
-        CMP      R0,#+0
+??MDBILL_get_setup_from_device_5:
+        CMP      R10,#+0
         BEQ.N    ??MDBILL_get_setup_from_device_6
 //  140       *security_level = setup[Z9]<<8 | setup[Z10];  
-        LDRB     R1,[SP, #+20]
-        LDRB     R2,[SP, #+21]
-        ORRS     R1,R2,R1, LSL #+8
-        STRH     R1,[R0, #+0]
-??MDBILL_get_setup_from_device_6:
-        LDR      R0,[SP, #+76]
+        LDRB     R0,[SP, #+20]
+        LDRB     R1,[SP, #+21]
+        ORRS     R0,R1,R0, LSL #+8
+        STRH     R0,[R10, #+0]
 //  141     
 //  142     if(scroll_preset!=NULL)
-        CMP      R0,#+0
+??MDBILL_get_setup_from_device_6:
+        CMP      R9,#+0
         BEQ.N    ??MDBILL_get_setup_from_device_7
 //  143       *scroll_preset = setup[Z11];
-        LDRB     R1,[SP, #+22]
-        STRB     R1,[R0, #+0]
-??MDBILL_get_setup_from_device_7:
-        LDR      R0,[SP, #+84]
+        LDRB     R0,[SP, #+22]
+        STRB     R0,[R9, #+0]
 //  144     
 //  145     if(credit_types!=NULL)
-        CMP      R0,#+0
+??MDBILL_get_setup_from_device_7:
+        CMP      R11,#+0
         BEQ.N    ??MDBILL_get_setup_from_device_8
 //  146       memcpy(credit_types,&setup[Z12],16);    
         MOVS     R2,#+16
         ADD      R1,SP,#+23
+        MOV      R0,R11
           CFI FunCall memcpy
         BL       memcpy
 //  147     
@@ -415,8 +422,8 @@ MDBILL_get_setup_from_device:
         MOVS     R0,#+2
 ??MDBILL_get_setup_from_device_9:
         ADD      SP,SP,#+52
-          CFI CFA R13+20
-        POP      {R4-R7,PC}       ;; return
+          CFI CFA R13+36
+        POP      {R4-R11,PC}      ;; return
           CFI EndBlock cfiBlock3
 //  152 }
 //  153 /***********************************************************************************
@@ -471,9 +478,15 @@ MDBILL_get_poll_from_device:
 //  168       
 //  169       for(unsigned char i=0;i<size && size<16;i++){        
         MOVS     R0,#+0
-        B.N      ??MDBILL_get_poll_from_device_2
+??MDBILL_get_poll_from_device_2:
+        LDRB     R1,[SP, #+8]
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,R1
+        BCS.N    ??MDBILL_get_poll_from_device_3
+        LDRB     R1,[SP, #+8]
+        CMP      R1,#+16
+        BGE.N    ??MDBILL_get_poll_from_device_3
 //  170          activity->tipo =  (eBILL_ROUTING)(poll[0]>>4);
-??MDBILL_get_poll_from_device_3:
         LDRB     R1,[SP, #+12]
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         LSRS     R1,R1,#+4
@@ -496,45 +509,38 @@ MDBILL_get_poll_from_device:
         ADDS     R4,R4,#+2
 //  176       } 
         ADDS     R0,R0,#+1
-??MDBILL_get_poll_from_device_2:
-        LDRB     R1,[SP, #+8]
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,R1
-        BCS.N    ??MDBILL_get_poll_from_device_5
-        LDRB     R1,[SP, #+8]
-        CMP      R1,#+16
-        BLT.N    ??MDBILL_get_poll_from_device_3
+        B.N      ??MDBILL_get_poll_from_device_2
 //  177       
 //  178       return MDB_OK;     
-??MDBILL_get_poll_from_device_5:
+??MDBILL_get_poll_from_device_3:
         MOVS     R0,#+0
-        B.N      ??MDBILL_get_poll_from_device_6
+        B.N      ??MDBILL_get_poll_from_device_5
 //  179     }
 //  180     else{
 //  181       if(poll[0]==MDB_RESP_ACK)
 ??MDBILL_get_poll_from_device_1:
         LDRB     R0,[SP, #+12]
         CMP      R0,#+0
-        BNE.N    ??MDBILL_get_poll_from_device_7
+        BNE.N    ??MDBILL_get_poll_from_device_6
 //  182         return MDB_OK;    
         MOVS     R0,#+0
-        B.N      ??MDBILL_get_poll_from_device_6
+        B.N      ??MDBILL_get_poll_from_device_5
 //  183       else
 //  184         if(poll[0]==MDB_RESP_NAK)
-??MDBILL_get_poll_from_device_7:
+??MDBILL_get_poll_from_device_6:
         LDRB     R0,[SP, #+12]
         CMP      R0,#+255
         BNE.N    ??MDBILL_get_poll_from_device_0
 //  185           return MDB_ERROR;
         MOVS     R0,#+1
-        B.N      ??MDBILL_get_poll_from_device_6
+        B.N      ??MDBILL_get_poll_from_device_5
 //  186     }
 //  187   }
 //  188     
 //  189   return MDB_TIMEOUT;   
 ??MDBILL_get_poll_from_device_0:
         MOVS     R0,#+2
-??MDBILL_get_poll_from_device_6:
+??MDBILL_get_poll_from_device_5:
         ADD      SP,SP,#+28
           CFI CFA R13+12
         POP      {R4,R5,PC}       ;; return
@@ -554,29 +560,35 @@ MDBILL_get_poll_from_device:
 //  197 eMDB_reply MDBILL_set_bill_type_on_device(unsigned short int bill_types,
 //  198                                           unsigned short int scrolls){
 MDBILL_set_bill_type_on_device:
-        PUSH     {LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+4
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
         SUB      SP,SP,#+20
-          CFI CFA R13+24
+          CFI CFA R13+32
+        MOVS     R4,R0
+        MOVS     R5,R1
 //  199   unsigned char bills[5];  
 //  200   unsigned char size;
 //  201    
 //  202   bills[0] = BILL_TYPE;
-        MOVS     R2,#+52
-        STRB     R2,[SP, #+12]
+        MOVS     R0,#+52
+        STRB     R0,[SP, #+12]
 //  203   bills[1] = bill_types>>8;
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        LSRS     R2,R0,#+8
-        STRB     R2,[SP, #+13]
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        LSRS     R0,R4,#+8
+        STRB     R0,[SP, #+13]
 //  204   bills[2] = bill_types;
+        MOVS     R0,R4
         STRB     R0,[SP, #+14]
 //  205   bills[3] = scrolls>>8;
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        LSRS     R0,R1,#+8
+        UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+        LSRS     R0,R5,#+8
         STRB     R0,[SP, #+15]
 //  206   bills[4] = scrolls;
-        STRB     R1,[SP, #+16]
+        MOVS     R0,R5
+        STRB     R0,[SP, #+16]
 //  207   
 //  208   if(MDB_send_package(1,bills,5,0,bills,&size)==MDB_OK){
         ADD      R0,SP,#+8
@@ -611,8 +623,8 @@ MDBILL_set_bill_type_on_device:
         MOVS     R0,#+2
 ??MDBILL_set_bill_type_on_device_2:
         ADD      SP,SP,#+20
-          CFI CFA R13+4
-        POP      {PC}             ;; return
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
           CFI EndBlock cfiBlock5
 //  217 }
 //  218 /***********************************************************************************
@@ -627,17 +639,21 @@ MDBILL_set_bill_type_on_device:
         THUMB
 //  223 eMDB_reply MDBILL_send_escrow_command(eMDB_ESCROW_COMMANDS cmd){
 MDBILL_send_escrow_command:
-        PUSH     {R5-R7,LR}
+        PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
-          CFI CFA R13+16
+          CFI R4 Frame(CFA, -8)
+          CFI CFA R13+8
+        SUB      SP,SP,#+16
+          CFI CFA R13+24
+        MOVS     R4,R0
 //  224   unsigned char escrow[2];
 //  225   unsigned char size;
 //  226 
 //  227   escrow[0] = BILL_ESCROW;
-        MOVS     R1,#+53
-        STRB     R1,[SP, #+8]
+        MOVS     R0,#+53
+        STRB     R0,[SP, #+8]
 //  228   escrow[1] = (unsigned char)cmd;  
-        STRB     R0,[SP, #+9]
+        STRB     R4,[SP, #+9]
 //  229   
 //  230   if(MDB_send_package(1,escrow,2,1,escrow,&size)==MDB_OK){
         ADD      R0,SP,#+10
@@ -672,7 +688,9 @@ MDBILL_send_escrow_command:
 ??MDBILL_send_escrow_command_0:
         MOVS     R0,#+2
 ??MDBILL_send_escrow_command_2:
-        POP      {R1-R3,PC}       ;; return
+        ADD      SP,SP,#+16
+          CFI CFA R13+8
+        POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock6
 //  240 }
 //  241 /***********************************************************************************
@@ -867,19 +885,21 @@ MDBILL_get_identification_of_device:
 //  310                                           char* firmware_version,
 //  311                                           unsigned char *optional_features){
 MDBILL_get_id_with_option_bits:
-        PUSH     {R4-R7,LR}
+        PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R7 Frame(CFA, -8)
-          CFI R6 Frame(CFA, -12)
-          CFI R5 Frame(CFA, -16)
-          CFI R4 Frame(CFA, -20)
-          CFI CFA R13+20
-        SUB      SP,SP,#+52
+          CFI R8 Frame(CFA, -8)
+          CFI R7 Frame(CFA, -12)
+          CFI R6 Frame(CFA, -16)
+          CFI R5 Frame(CFA, -20)
+          CFI R4 Frame(CFA, -24)
+          CFI CFA R13+24
+        SUB      SP,SP,#+48
           CFI CFA R13+72
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
         MOVS     R7,R3
+        LDR      R8,[SP, #+72]
 //  312   unsigned char ext[36];
 //  313   unsigned char size;
 //  314   
@@ -946,15 +966,15 @@ MDBILL_get_id_with_option_bits:
         MOVS     R0,R7
           CFI FunCall memcpy
         BL       memcpy
-??MDBILL_get_id_with_option_bits_4:
-        LDR      R0,[SP, #+72]
 //  331     
 //  332     if(optional_features!=NULL)
-        CMP      R0,#+0
+??MDBILL_get_id_with_option_bits_4:
+        CMP      R8,#+0
         BEQ.N    ??MDBILL_get_id_with_option_bits_5
 //  333       memcpy(optional_features,&ext[Z30],4);
         MOVS     R2,#+4
         ADD      R1,SP,#+41
+        MOV      R0,R8
           CFI FunCall memcpy
         BL       memcpy
 //  334     
@@ -968,9 +988,9 @@ MDBILL_get_id_with_option_bits:
 ??MDBILL_get_id_with_option_bits_0:
         MOVS     R0,#+2
 ??MDBILL_get_id_with_option_bits_6:
-        ADD      SP,SP,#+52
-          CFI CFA R13+20
-        POP      {R4-R7,PC}       ;; return
+        ADD      SP,SP,#+48
+          CFI CFA R13+24
+        POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock9
 //  339 }
 
@@ -990,9 +1010,9 @@ MDBILL_get_id_with_option_bits:
 //  341 *       Fim do arquivo
 //  342 ***********************************************************************************/
 // 
-// 894 bytes in section .text
+// 954 bytes in section .text
 // 
-// 880 bytes of CODE memory (+ 14 bytes shared)
+// 932 bytes of CODE memory (+ 22 bytes shared)
 //
 //Errors: none
 //Warnings: none

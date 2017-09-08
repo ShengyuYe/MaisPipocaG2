@@ -1,29 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jun/2017  17:58:14 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:41 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Drivers\PlayerWave\Playe /
-//                    rWave.c                                                 /
-//    Command line =  "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais /
-//                    _pipoca_exp\MaisPipoca - 2.0.11\Drivers\PlayerWave\Play /
-//                    erWave.c" -lC "C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Fi /
-//                    rmware\01_mais_pipoca_exp\MaisPipoca -                  /
-//                    2.0.11\Debug\List\" -lA "C:\Users\Marcos\Dropbox\Cli\Al /
-//                    mTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -        /
-//                    2.0.11\Debug\List\" -o "C:\Users\Marcos\Dropbox\Cli\Alm /
-//                    Tec\01-Firmware\01_mais_pipoca_exp\MaisPipoca -         /
-//                    2.0.11\Debug\Obj\" --no_cse --no_unroll --no_inline     /
+//    Source file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\PlayerWav /
+//                    e\PlayerWave.c                                          /
+//    Command line =  C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\PlayerWav /
+//                    e\PlayerWave.c -lC C:\repositorios\MaisPipocaG2\SOFTWAR /
+//                    E\Debug\List\ -lA C:\repositorios\MaisPipocaG2\SOFTWARE /
+//                    \Debug\List\ -o C:\repositorios\MaisPipocaG2\SOFTWARE\D /
+//                    ebug\Obj\ --no_cse --no_unroll --no_inline              /
 //                    --no_code_motion --no_tbaa --no_clustering              /
 //                    --no_scheduling --debug --endian=little                 /
 //                    --cpu=Cortex-M3 -e --fpu=None --dlib_config             /
 //                    "C:\Program Files (x86)\IAR Systems\Embedded Workbench  /
-//                    6.5\arm\INC\c\DLib_Config_Normal.h" -Ol                 /
-//    List file    =  C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_ /
-//                    pipoca_exp\MaisPipoca - 2.0.11\Debug\List\PlayerWave.s  /
+//                    6.5\arm\INC\c\DLib_Config_Normal.h" -On                 /
+//    List file    =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\List\Player /
+//                    Wave.s                                                  /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -95,7 +90,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// C:\Users\Marcos\Dropbox\Cli\AlmTec\01-Firmware\01_mais_pipoca_exp\MaisPipoca - 2.0.11\Drivers\PlayerWave\PlayerWave.c
+// C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\PlayerWave\PlayerWave.c
 //    1 /*__________________________________________________________________________________
 //    2 |	Quark Tecnologia Eletrônica Embarcada
 //    3 |       
@@ -436,11 +431,15 @@ PLAYERWAVE_ini:
         THUMB
 //  111 void PLAYERWAVE_iniciaMusica(unsigned char indice,unsigned char modo){
 PLAYERWAVE_iniciaMusica:
-        PUSH     {R2-R4,LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+16
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
+        SUB      SP,SP,#+12
+          CFI CFA R13+24
         MOVS     R4,R0
+        MOVS     R5,R1
 //  112   unsigned int enderecoInicial;
 //  113   unsigned int tamanho;
 //  114     
@@ -524,7 +523,7 @@ PLAYERWAVE_iniciaMusica:
         STR      R0,[R1, #+0]
 //  138 }
 ??PLAYERWAVE_iniciaMusica_3:
-        POP      {R0,R1,R4,PC}    ;; return
+        POP      {R0-R2,R4,R5,PC}  ;; return
           CFI EndBlock cfiBlock1
         REQUIRE T0MR0
         REQUIRE T0TC
@@ -856,9 +855,9 @@ PLAYERWAVE_verificaToque:
 //   9 bytes in section .bss
 //   4 bytes in section .data
 //  60 bytes in section .noinit (abs)
-// 618 bytes in section .text
+// 622 bytes in section .text
 // 
-// 618 bytes of CODE memory
+// 622 bytes of CODE memory
 //  13 bytes of DATA memory (+ 60 bytes shared)
 //
 //Errors: none
