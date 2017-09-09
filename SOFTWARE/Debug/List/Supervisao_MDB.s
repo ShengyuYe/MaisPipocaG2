@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     09/Sep/2017  15:56:24 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     09/Sep/2017  16:50:09 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -34,8 +34,8 @@
 
         #define SHT_PROGBITS 0x1
 
-        EXTERN MDBCASHLESS_start_vend
         EXTERN SMC_ini
+        EXTERN SMC_tick
         EXTERN SMDBCOIN_tick
         EXTERN SMDBILL_set_bloqueio
         EXTERN SMDBILL_tick
@@ -44,7 +44,6 @@
         EXTERN xQueueGenericReceive
         EXTERN xQueueGenericSend
 
-        PUBLIC SMDB_cashless_vend
         PUBLIC SMDB_ini
         PUBLIC SMDB_release
         PUBLIC SMDB_semaforo_barramento
@@ -227,7 +226,9 @@ SMDB_tick:
 //   84   SMDBCOIN_tick(); // 
           CFI FunCall SMDBCOIN_tick
         BL       SMDBCOIN_tick
-//   85   //SMC_tick(); // Dentro do módulo ele verifica o bloqueio e habilitação do cartão
+//   85   SMC_tick(); // Dentro do módulo ele verifica o bloqueio e habilitação do cartão
+          CFI FunCall SMC_tick
+        BL       SMC_tick
 //   86    
 //   87   xSemaphoreGive(SMDB_semaforo_barramento); 
         MOVS     R3,#+0
@@ -303,79 +304,6 @@ SMDB_release:
         DATA
 ??DataTable3:
         DC32     SMDB_semaforo_barramento
-//  107 /***********************************************************************************
-//  108 *       Descrição       :       Inicia uma venda
-//  109 *       Parametros      :       nenhum
-//  110 *       Retorno         :       (unsigned char) maior do que zero
-//  111 *                                               se a venda for iniciada
-//  112 ***********************************************************************************/
-
-        SECTION `.text`:CODE:NOROOT(1)
-          CFI Block cfiBlock4 Using cfiCommon0
-          CFI Function SMDB_cashless_vend
-        THUMB
-//  113 unsigned char SMDB_cashless_vend(unsigned short int valor,
-//  114                                  unsigned short int item){
-SMDB_cashless_vend:
-        PUSH     {R4-R8,LR}
-          CFI R14 Frame(CFA, -4)
-          CFI R8 Frame(CFA, -8)
-          CFI R7 Frame(CFA, -12)
-          CFI R6 Frame(CFA, -16)
-          CFI R5 Frame(CFA, -20)
-          CFI R4 Frame(CFA, -24)
-          CFI CFA R13+24
-        MOVS     R4,R0
-        MOVS     R5,R1
-//  115    unsigned char tentativas=10;
-        MOVS     R6,#+10
-//  116    unsigned char res=0;
-        MOVS     R7,#+0
-//  117    eMDB_reply flag;
-//  118                                    
-//  119    SMDB_wait();
-          CFI FunCall SMDB_wait
-        BL       SMDB_wait
-//  120    
-//  121    do flag = MDBCASHLESS_start_vend(valor,item);
-??SMDB_cashless_vend_0:
-        MOVS     R1,R5
-        UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
-        MOVS     R0,R4
-        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-          CFI FunCall MDBCASHLESS_start_vend
-        BL       MDBCASHLESS_start_vend
-        MOV      R8,R0
-//  122    while(flag!=MDB_OK && tentativas--);
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        CMP      R8,#+0
-        BEQ.N    ??SMDB_cashless_vend_1
-        MOVS     R0,R6
-        SUBS     R6,R0,#+1
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
-        BNE.N    ??SMDB_cashless_vend_0
-//  123    
-//  124    if(flag==MDB_OK)
-??SMDB_cashless_vend_1:
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        CMP      R8,#+0
-        BNE.N    ??SMDB_cashless_vend_2
-//  125      res = 1;   
-        MOVS     R0,#+1
-        MOVS     R7,R0
-//  126    
-//  127    SMDB_release();      
-??SMDB_cashless_vend_2:
-          CFI FunCall SMDB_release
-        BL       SMDB_release
-//  128    
-//  129    return res;
-        MOVS     R0,R7
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        POP      {R4-R8,PC}       ;; return
-          CFI EndBlock cfiBlock4
-//  130 }
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -389,14 +317,14 @@ SMDB_cashless_vend:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  131 /***********************************************************************************
-//  132 *       Fim do arquivo
-//  133 ***********************************************************************************/
+//  107 /***********************************************************************************
+//  108 *       Fim do arquivo
+//  109 ***********************************************************************************/
 // 
 //   4 bytes in section .bss
-// 218 bytes in section .text
+// 146 bytes in section .text
 // 
-// 218 bytes of CODE memory
+// 146 bytes of CODE memory
 //   4 bytes of DATA memory
 //
 //Errors: none

@@ -82,7 +82,7 @@ void SMDB_tick(void){
   vTaskDelay(5);  
   SMDBILL_tick(); // dentro do módulo ele verifica o bloqueio e habilitação do periférico
   SMDBCOIN_tick(); // 
-  //SMC_tick(); // Dentro do módulo ele verifica o bloqueio e habilitação do cartão
+  SMC_tick(); // Dentro do módulo ele verifica o bloqueio e habilitação do cartão
    
   xSemaphoreGive(SMDB_semaforo_barramento); 
 }
@@ -103,30 +103,6 @@ void SMDB_wait(void){
 void SMDB_release(void){
   
   xSemaphoreGive(SMDB_semaforo_barramento); 
-}
-/***********************************************************************************
-*       Descrição       :       Inicia uma venda
-*       Parametros      :       nenhum
-*       Retorno         :       (unsigned char) maior do que zero
-*                                               se a venda for iniciada
-***********************************************************************************/
-unsigned char SMDB_cashless_vend(unsigned short int valor,
-                                 unsigned short int item){
-   unsigned char tentativas=10;
-   unsigned char res=0;
-   eMDB_reply flag;
-                                   
-   SMDB_wait();
-   
-   do flag = MDBCASHLESS_start_vend(valor,item);
-   while(flag!=MDB_OK && tentativas--);
-   
-   if(flag==MDB_OK)
-     res = 1;   
-   
-   SMDB_release();      
-   
-   return res;
 }
 /***********************************************************************************
 *       Fim do arquivo
