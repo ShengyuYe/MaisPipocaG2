@@ -2,6 +2,12 @@
 
 <workspace>
   <project>
+    <path>$WS_DIR$\Library.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\Library_COIN.ewp</path>
+  </project>
+  <project>
     <path>$WS_DIR$\Mais_Pipoca_exp.ewp</path>
   </project>
   <batchBuild/>

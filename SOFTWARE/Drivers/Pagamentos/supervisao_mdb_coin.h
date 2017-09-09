@@ -1,17 +1,17 @@
 /*__________________________________________________________________________________
-|	Quark Tecnologia Eletrônica Embarcada
+|	Dextro Soluções Tecnológicas
 |       
-|       Itapema - SC
-|       www.quarktee.com.br
+|       Balneário Camboriú - SC
+|       www.dextro-st.com.br
 | __________________________________________________________________________________
 |
-|       This source code was developed by Quark  and cannot be copied, in part 
+|       This source code was developed by Dextro  and cannot be copied, in part 
 |       or in whole, or used, except when legally licensed by Quark 
 |       or its distributors.
 |
-|       Este código é propriedade da Quark  e não pode ser copiado, em parte 
+|       Este código é propriedade da Dextro  e não pode ser copiado, em parte 
 |       ou em todo, ou utilizado, exceto quando for legalmente licenciado pela 
-|       Quark  ou por um de seus distribuidores.
+|       Dextro ou por um de seus distribuidores.
 | __________________________________________________________________________________
 |
 |       Arquivo            :  supervisao_mdb_coin.h

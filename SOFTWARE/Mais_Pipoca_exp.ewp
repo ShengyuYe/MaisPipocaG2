@@ -1953,7 +1953,13 @@
         <name>$PROJ_DIR$\Drivers\MDB\mdb_coin.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\Drivers\MDB\mdb_uart.a</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\Drivers\MDB\mdb_uart.c</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
       </file>
     </group>
     <group>
@@ -2095,7 +2101,13 @@
       <name>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_cashless.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_mdb_coin.a</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_mdb_coin.c</name>
+      <excluded>
+        <configuration>Debug</configuration>
+      </excluded>
     </file>
   </group>
   <group>
