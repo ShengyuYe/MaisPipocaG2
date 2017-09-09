@@ -292,10 +292,10 @@ void APLICACAO_exibe_valor(unsigned char idioma){
 *       Retorno         :       (unsigned char) maior do que zero se há troco
 ***********************************************************************************/
 unsigned int APLICACACAO_verifica_troco(void){
+  unsigned int troco;
   
-  if(MDB_coin_check_tubes(APLICACAO_tubos)){      
-    return APLICACAO_tubos[2]*25;
-  }
+  if(MDB_checa_troco(&troco))
+    return troco;
   
   return 0;
 }
@@ -405,31 +405,61 @@ void APLICACAO_menu_falha(void){
 ***********************************************************************************/
 unsigned char APLICACAO_devolve_troco(void){
   unsigned int valor = PAGAMENTOS_get_valor_acumulado();
-  unsigned int desconto = valor;
   unsigned char tubos[16];
+  unsigned char escala;
+  unsigned char change_coins[16];
+  eMDB_reply res;
+  unsigned int tentativas;
+  eIDIOMA idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
   
   PAGAMENTOS_set_bloqueio(0);
   vTaskDelay(500);
   
-  if(MDB_coin_check_tubes(tubos)){
+  
+  // Busca a quantidade de moedas nos tubos
+  // e a escala do pais
+  tentativas=10;
+  do res = MDB_checa_valor_moedas(&escala,tubos);
+  while(res!=MDB_OK && --tentativas);
+  
+  if(res==MDB_OK){
+    
+    STRING_write_to_external(NO_CLEAR,NULL,(char*)STRING_liberando_troco[(unsigned char)idioma]);
+          
+    SMDB_wait();
+  
+    tentativas = 10;
+    do res = MDBCOIN_alternative_payout(valor,escala);
+    while(res!=MDB_OK && tentativas--);
+    
+    SMDB_release();
+    
+    if(res==MDB_OK){      
       
-    valor /= 25;
-    PAGAMENTOS_subtrai_valores(desconto);
+      SMDB_wait();
+      
+      
+      tentativas = 10;
+      do res = MDBCOIN_get_payout_status(change_coins);
+      while(res!=MDB_OK && --tentativas);      
+      
+      SMDB_release();      
+      
+      if(res==MDB_OK){                                      
+        unsigned int troco=0;
+        for(unsigned char i=0;i<16;i++)
+          troco+= (change_coins[i]*escala*tubos[i]);
         
-    unsigned char moedas_15 = valor /15;
-    unsigned char moedas_rest = valor % 15;
-        
-    for(unsigned char i=0;i<moedas_15;i++){
-      MDB_coin_dispenser(2,15);
-      vTaskDelay(5000);      
+          // Confirmação de que o troco liberado
+          // corresponde ao valor solicitado
+          // assim pode descontar o montante do módulo
+          // Pagamentos
+          if(troco==valor)
+            PAGAMENTOS_subtrai_valores(valor);  
+      }
     }
-        
-    if(moedas_rest){
-      MDB_coin_dispenser(2,moedas_rest);
-      vTaskDelay(5000);                
-     }
-  }
-      
+  }        
+  
   return 1;      
 }
 /***********************************************************************************

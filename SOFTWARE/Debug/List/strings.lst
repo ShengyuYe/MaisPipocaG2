@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      08/Sep/2017  19:51:36 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      09/Sep/2017  15:28:21 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -1829,6 +1829,17 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Strings\strings.c
    \   00000010   0x........         DC32 `?<Constant " HABILT. DESUM. ">`, `?<Constant " HABILT. DESUM. ">`
    \              0x........   
    \   00000018   0x........         DC32 `?<Constant " HABILT. DESUM. ">`
+
+   \                                 In section .data, align 4
+   \   __absolute char const *STRING_liberando_troco[7]
+   \                     STRING_liberando_troco:
+   \   00000000   0x........         DC32 `?<Constant " RETIRE O TROCO ">`, `?<Constant "                ">`
+   \              0x........   
+   \   00000008   0x........         DC32 `?<Constant "                ">`, `?<Constant "                ">`
+   \              0x........   
+   \   00000010   0x........         DC32 `?<Constant "                ">`, `?<Constant " GET YOUR CHANGE">`
+   \              0x........   
+   \   00000018   0x........         DC32 `?<Constant " GET CHANGE PLS ">`
      38          
      39          /***********************************************************************************
      40          *       Constantes
@@ -5664,6 +5675,62 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Strings\strings.c
    \              0x00         
 
    \                                 In section .rodata, align 4
+   \                     `?<Constant " RETIRE O TROCO ">`:
+   \   00000000   0x20 0x52          DC8 " RETIRE O TROCO "
+   \              0x45 0x54    
+   \              0x49 0x52    
+   \              0x45 0x20    
+   \              0x4F 0x20    
+   \              0x54 0x52    
+   \              0x4F 0x43    
+   \              0x4F 0x20    
+   \              0x00         
+   \   00000011   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "                ">`:
+   \   00000000   0x20 0x20          DC8 "                "
+   \              0x20 0x20    
+   \              0x20 0x20    
+   \              0x20 0x20    
+   \              0x20 0x20    
+   \              0x20 0x20    
+   \              0x20 0x20    
+   \              0x20 0x20    
+   \              0x00         
+   \   00000011   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant " GET YOUR CHANGE">`:
+   \   00000000   0x20 0x47          DC8 " GET YOUR CHANGE"
+   \              0x45 0x54    
+   \              0x20 0x59    
+   \              0x4F 0x55    
+   \              0x52 0x20    
+   \              0x43 0x48    
+   \              0x41 0x4E    
+   \              0x47 0x45    
+   \              0x00         
+   \   00000011   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant " GET CHANGE PLS ">`:
+   \   00000000   0x20 0x47          DC8 " GET CHANGE PLS "
+   \              0x45 0x54    
+   \              0x20 0x43    
+   \              0x48 0x41    
+   \              0x4E 0x47    
+   \              0x45 0x20    
+   \              0x50 0x4C    
+   \              0x53 0x20    
+   \              0x00         
+   \   00000011   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
    \                     `?<Constant "BRASIL">`:
    \   00000000   0x42 0x52          DC8 "BRASIL"
    \              0x41 0x53    
@@ -5753,6 +5820,7 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Strings\strings.c
 
    Bytes  Function/Label
    -----  --------------
+      20  ?<Constant "                ">
       20  ?<Constant "     TO START   ">
       16  ?<Constant "   AGUARDE...  ">
       20  ?<Constant "   AUTOTESTE    ">
@@ -5764,8 +5832,11 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Strings\strings.c
       16  ?<Constant "   PRONTAS EM  ">
       16  ?<Constant "   RESFRIANDO  ">
       20  ?<Constant "  PARA INICIAR  ">
+      20  ?<Constant " GET CHANGE PLS ">
+      20  ?<Constant " GET YOUR CHANGE">
       20  ?<Constant " HABILT. DESUM. ">
       16  ?<Constant " PRESS BUTTON  ">
+      20  ?<Constant " RETIRE O TROCO ">
        2  ?<Constant "$">
       20  ?<Constant "(1) CLEANING    ">
       20  ?<Constant "(1) LIMPEZA     ">
@@ -6084,6 +6155,7 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Strings\strings.c
        4  ??DataTable0
       28  STRING_idioma_to_string
      112  STRING_impressao_teste
+      28  STRING_liberando_troco
       56  STRING_mensagem_cadastro_senha
       56  STRING_mensagem_cadastro_senha_erro
       56  STRING_mensagem_cctalk_offline
@@ -6178,13 +6250,13 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Strings\strings.c
       90  STRING_write_to_internal
 
  
- 5 600 bytes in section .data
- 5 054 bytes in section .rodata
+ 5 628 bytes in section .data
+ 5 134 bytes in section .rodata
    212 bytes in section .text
  
    212 bytes of CODE  memory
- 5 054 bytes of CONST memory
- 5 600 bytes of DATA  memory
+ 5 134 bytes of CONST memory
+ 5 628 bytes of DATA  memory
 
 Errors: none
 Warnings: none

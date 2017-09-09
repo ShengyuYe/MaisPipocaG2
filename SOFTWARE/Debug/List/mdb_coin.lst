@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      08/Sep/2017  19:51:50 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      09/Sep/2017  15:28:13 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -625,19 +625,145 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_coin.c
    \   000000A8   0xBDF0             POP      {R4-R7,PC}       ;; return
     272          }
     273          /***********************************************************************************
-    274          *       Fim do arquivo
-    275          ***********************************************************************************/
+    274          *       Descrição       :       Faz o dispensamento do troco 
+    275          *       Parametros      :       (unsigned short int) valor
+    276          *                               (unsigned char) escala
+    277          *       Retorno         :       (eMDB_reply) resultado da operação
+    278          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    279          eMDB_reply MDBCOIN_alternative_payout(unsigned short int value,unsigned char scale){
+   \                     MDBCOIN_alternative_payout:
+   \   00000000   0xB530             PUSH     {R4,R5,LR}
+   \   00000002   0xB085             SUB      SP,SP,#+20
+   \   00000004   0x0004             MOVS     R4,R0
+   \   00000006   0x000D             MOVS     R5,R1
+    280            unsigned char payout[3];
+    281            unsigned char size;
+    282          
+    283            payout[0] = COIN_EXPANSION_COMMAND;
+   \   00000008   0x200F             MOVS     R0,#+15
+   \   0000000A   0xF88D 0x000C      STRB     R0,[SP, #+12]
+    284            payout[1] = 0x02; // alternativa payout code
+   \   0000000E   0x2002             MOVS     R0,#+2
+   \   00000010   0xF88D 0x000D      STRB     R0,[SP, #+13]
+    285            payout[2] = (value/scale);
+   \   00000014   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+   \   00000016   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000018   0xFB94 0xF0F5      SDIV     R0,R4,R5
+   \   0000001C   0xF88D 0x000E      STRB     R0,[SP, #+14]
+    286           
+    287            vTaskDelay(1000);
+                   ^
+Warning[Pe223]: function "vTaskDelay" declared implicitly
+   \   00000020   0xF44F 0x707A      MOV      R0,#+1000
+   \   00000024   0x.... 0x....      BL       vTaskDelay
+    288            if(MDB_send_package_long(1,payout,3,0,payout,&size)==MDB_OK){
+   \   00000028   0xA802             ADD      R0,SP,#+8
+   \   0000002A   0x9001             STR      R0,[SP, #+4]
+   \   0000002C   0xA803             ADD      R0,SP,#+12
+   \   0000002E   0x9000             STR      R0,[SP, #+0]
+   \   00000030   0x2300             MOVS     R3,#+0
+   \   00000032   0x2203             MOVS     R2,#+3
+   \   00000034   0xA903             ADD      R1,SP,#+12
+   \   00000036   0x2001             MOVS     R0,#+1
+   \   00000038   0x.... 0x....      BL       MDB_send_package_long
+   \   0000003C   0x2800             CMP      R0,#+0
+   \   0000003E   0xD105             BNE.N    ??MDBCOIN_alternative_payout_0
+    289              vTaskDelay(10000);         
+   \   00000040   0xF242 0x7010      MOVW     R0,#+10000
+   \   00000044   0x.... 0x....      BL       vTaskDelay
+    290              return MDB_OK;
+   \   00000048   0x2000             MOVS     R0,#+0
+   \   0000004A   0xE000             B.N      ??MDBCOIN_alternative_payout_1
+    291            }                 
+    292            
+    293            return MDB_TIMEOUT;          
+   \                     ??MDBCOIN_alternative_payout_0:
+   \   0000004C   0x2002             MOVS     R0,#+2
+   \                     ??MDBCOIN_alternative_payout_1:
+   \   0000004E   0xB005             ADD      SP,SP,#+20
+   \   00000050   0xBD30             POP      {R4,R5,PC}       ;; return
+    294          }
+    295          /***********************************************************************************
+    296          *       Descrição       :       Verifica as moedas que foram liberas 
+    297          *       Parametros      :       (unsigned char*) moedas
+    298          *       Retorno         :       (eMDB_reply) resultado da operação
+    299          ***********************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    300          eMDB_reply MDBCOIN_get_payout_status(unsigned char *coins_per_channel){
+   \                     MDBCOIN_get_payout_status:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0xB088             SUB      SP,SP,#+32
+   \   00000004   0x0004             MOVS     R4,R0
+    301            unsigned char payout_status[19];
+    302            unsigned char size;
+    303            
+    304            payout_status[0] = COIN_EXPANSION_COMMAND;
+   \   00000006   0x200F             MOVS     R0,#+15
+   \   00000008   0xF88D 0x000C      STRB     R0,[SP, #+12]
+    305            payout_status[1]= 0x03; // payout status code
+   \   0000000C   0x2003             MOVS     R0,#+3
+   \   0000000E   0xF88D 0x000D      STRB     R0,[SP, #+13]
+    306            
+    307            
+    308            if(MDB_send_package(1,payout_status,2,1,payout_status,&size)==MDB_OK){
+   \   00000012   0xA802             ADD      R0,SP,#+8
+   \   00000014   0x9001             STR      R0,[SP, #+4]
+   \   00000016   0xA803             ADD      R0,SP,#+12
+   \   00000018   0x9000             STR      R0,[SP, #+0]
+   \   0000001A   0x2301             MOVS     R3,#+1
+   \   0000001C   0x2202             MOVS     R2,#+2
+   \   0000001E   0xA903             ADD      R1,SP,#+12
+   \   00000020   0x2001             MOVS     R0,#+1
+   \   00000022   0x.... 0x....      BL       MDB_send_package
+   \   00000026   0x2800             CMP      R0,#+0
+   \   00000028   0xD10A             BNE.N    ??MDBCOIN_get_payout_status_0
+    309                     
+    310              if(size==16){      
+   \   0000002A   0xF89D 0x0008      LDRB     R0,[SP, #+8]
+   \   0000002E   0x2810             CMP      R0,#+16
+   \   00000030   0xD106             BNE.N    ??MDBCOIN_get_payout_status_0
+    311                memcpy(coins_per_channel,&payout_status[Z1],16);             
+   \   00000032   0x2210             MOVS     R2,#+16
+   \   00000034   0xA903             ADD      R1,SP,#+12
+   \   00000036   0x0020             MOVS     R0,R4
+   \   00000038   0x.... 0x....      BL       memcpy
+    312                return MDB_OK;
+   \   0000003C   0x2000             MOVS     R0,#+0
+   \   0000003E   0xE000             B.N      ??MDBCOIN_get_payout_status_1
+    313              }
+    314              
+    315            }                 
+    316            
+    317            return MDB_TIMEOUT;            
+   \                     ??MDBCOIN_get_payout_status_0:
+   \   00000040   0x2002             MOVS     R0,#+2
+   \                     ??MDBCOIN_get_payout_status_1:
+   \   00000042   0xB008             ADD      SP,SP,#+32
+   \   00000044   0xBD10             POP      {R4,PC}          ;; return
+    318          }
+    319          /***********************************************************************************
+    320          *       Fim do arquivo
+    321          ***********************************************************************************/
 
    Maximum stack usage in bytes:
 
    .cstack Function
    ------- --------
+      32   MDBCOIN_alternative_payout
+        32   -> MDB_send_package_long
+        32   -> vTaskDelay
       24   MDBCOIN_coin_dispense
         24   -> MDB_send_package_long
       32   MDBCOIN_coin_type_setup
         32   -> MDB_send_package_long
       16   MDBCOIN_get_device
         16   -> MDB_send_package
+      40   MDBCOIN_get_payout_status
+        40   -> MDB_send_package
+        40   -> memcpy
       80   MDBCOIN_get_setup_from_device
         80   -> MDB_send_package
         80   -> memcpy
@@ -656,9 +782,11 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_coin.c
 
    Bytes  Function/Label
    -----  --------------
+      82  MDBCOIN_alternative_payout
       58  MDBCOIN_coin_dispense
       76  MDBCOIN_coin_type_setup
       54  MDBCOIN_get_device
+      70  MDBCOIN_get_payout_status
      152  MDBCOIN_get_setup_from_device
       82  MDBCOIN_get_tube_status_from_device
      170  MDBCOIN_poll
@@ -666,9 +794,9 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\MDB\mdb_coin.c
       22  memcpy
 
  
- 668 bytes in section .text
+ 820 bytes in section .text
  
- 646 bytes of CODE memory (+ 22 bytes shared)
+ 798 bytes of CODE memory (+ 22 bytes shared)
 
 Errors: none
-Warnings: none
+Warnings: 1

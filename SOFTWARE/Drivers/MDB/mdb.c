@@ -44,7 +44,7 @@
 /***********************************************************************************
 *       Definiões locais
 ***********************************************************************************/
-#define TIMEOUT_WAIT_MESSAGE                    50
+#define TIMEOUT_WAIT_MESSAGE                    100//50
 #define MAX_PACKAGE_SIZE                        36
 
 /***********************************************************************************
@@ -210,7 +210,7 @@ eMDB_reply MDB_send_package_long(unsigned char first_is_address,
                                  unsigned char *pData,unsigned char data_length,
                                  unsigned char send_ack,
                                  unsigned char *pRx,unsigned char *rx_length){
-  unsigned short int time_out=2000;
+  unsigned short int time_out=10000;
   unsigned char flag;  
                               
   memcpy(MDB_buffer_stream,pData,data_length);
@@ -357,6 +357,44 @@ eMDB_reply MDB_checa_valor_moedas(unsigned char *escala,unsigned char *canais){
   SMDB_release();   
   
   return res;
+}
+/***********************************************************************************
+*       Descrição       :       Verifica a quantidade de troco disponível
+*                               no moedeiro
+*       Parametros      :       nenhum
+*       Retorno         :       (unsigned char) maior do que zero se
+*                                               houver resposta do moedeiro
+***********************************************************************************/
+unsigned char MDB_checa_troco(unsigned int *troco){
+  unsigned char escala;
+  unsigned char canais[16];
+  unsigned char tubos[16];
+  unsigned char tentativas;
+  eMDB_reply res;
+  unsigned char flag;
+  
+  *troco = 0;
+  
+  tentativas=10;
+  do flag = MDB_coin_check_tubes(tubos);
+  while(!flag && --tentativas);
+
+  if(!flag)
+    return 0;
+
+  tentativas=10;  
+  do res = MDB_checa_valor_moedas(&escala,canais);
+  while(res!=MDB_OK && --tentativas);
+  
+  if(res==MDB_OK){
+    
+    for(unsigned char i=0;i<16;i++)
+      *troco+= tubos[i]*canais[i]*escala;
+    
+    return 255;  
+  }  
+  
+  return 0;  
 }
 /***********************************************************************************
 *       Fim do arquivo

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:50 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     09/Sep/2017  15:28:13 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -37,10 +37,13 @@
         EXTERN MDB_send_package
         EXTERN MDB_send_package_long
         EXTERN __aeabi_memcpy
+        EXTERN vTaskDelay
 
+        PUBLIC MDBCOIN_alternative_payout
         PUBLIC MDBCOIN_coin_dispense
         PUBLIC MDBCOIN_coin_type_setup
         PUBLIC MDBCOIN_get_device
+        PUBLIC MDBCOIN_get_payout_status
         PUBLIC MDBCOIN_get_setup_from_device
         PUBLIC MDBCOIN_get_tube_status_from_device
         PUBLIC MDBCOIN_poll
@@ -759,6 +762,148 @@ MDBCOIN_poll:
         POP      {R4-R7,PC}       ;; return
           CFI EndBlock cfiBlock7
 //  272 }
+//  273 /***********************************************************************************
+//  274 *       Descrição       :       Faz o dispensamento do troco 
+//  275 *       Parametros      :       (unsigned short int) valor
+//  276 *                               (unsigned char) escala
+//  277 *       Retorno         :       (eMDB_reply) resultado da operação
+//  278 ***********************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(1)
+          CFI Block cfiBlock8 Using cfiCommon0
+          CFI Function MDBCOIN_alternative_payout
+        THUMB
+//  279 eMDB_reply MDBCOIN_alternative_payout(unsigned short int value,unsigned char scale){
+MDBCOIN_alternative_payout:
+        PUSH     {R4,R5,LR}
+          CFI R14 Frame(CFA, -4)
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
+        SUB      SP,SP,#+20
+          CFI CFA R13+32
+        MOVS     R4,R0
+        MOVS     R5,R1
+//  280   unsigned char payout[3];
+//  281   unsigned char size;
+//  282 
+//  283   payout[0] = COIN_EXPANSION_COMMAND;
+        MOVS     R0,#+15
+        STRB     R0,[SP, #+12]
+//  284   payout[1] = 0x02; // alternativa payout code
+        MOVS     R0,#+2
+        STRB     R0,[SP, #+13]
+//  285   payout[2] = (value/scale);
+        UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        SDIV     R0,R4,R5
+        STRB     R0,[SP, #+14]
+//  286  
+//  287   vTaskDelay(1000);
+        MOV      R0,#+1000
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
+//  288   if(MDB_send_package_long(1,payout,3,0,payout,&size)==MDB_OK){
+        ADD      R0,SP,#+8
+        STR      R0,[SP, #+4]
+        ADD      R0,SP,#+12
+        STR      R0,[SP, #+0]
+        MOVS     R3,#+0
+        MOVS     R2,#+3
+        ADD      R1,SP,#+12
+        MOVS     R0,#+1
+          CFI FunCall MDB_send_package_long
+        BL       MDB_send_package_long
+        CMP      R0,#+0
+        BNE.N    ??MDBCOIN_alternative_payout_0
+//  289     vTaskDelay(10000);         
+        MOVW     R0,#+10000
+          CFI FunCall vTaskDelay
+        BL       vTaskDelay
+//  290     return MDB_OK;
+        MOVS     R0,#+0
+        B.N      ??MDBCOIN_alternative_payout_1
+//  291   }                 
+//  292   
+//  293   return MDB_TIMEOUT;          
+??MDBCOIN_alternative_payout_0:
+        MOVS     R0,#+2
+??MDBCOIN_alternative_payout_1:
+        ADD      SP,SP,#+20
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
+          CFI EndBlock cfiBlock8
+//  294 }
+//  295 /***********************************************************************************
+//  296 *       Descrição       :       Verifica as moedas que foram liberas 
+//  297 *       Parametros      :       (unsigned char*) moedas
+//  298 *       Retorno         :       (eMDB_reply) resultado da operação
+//  299 ***********************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(1)
+          CFI Block cfiBlock9 Using cfiCommon0
+          CFI Function MDBCOIN_get_payout_status
+        THUMB
+//  300 eMDB_reply MDBCOIN_get_payout_status(unsigned char *coins_per_channel){
+MDBCOIN_get_payout_status:
+        PUSH     {R4,LR}
+          CFI R14 Frame(CFA, -4)
+          CFI R4 Frame(CFA, -8)
+          CFI CFA R13+8
+        SUB      SP,SP,#+32
+          CFI CFA R13+40
+        MOVS     R4,R0
+//  301   unsigned char payout_status[19];
+//  302   unsigned char size;
+//  303   
+//  304   payout_status[0] = COIN_EXPANSION_COMMAND;
+        MOVS     R0,#+15
+        STRB     R0,[SP, #+12]
+//  305   payout_status[1]= 0x03; // payout status code
+        MOVS     R0,#+3
+        STRB     R0,[SP, #+13]
+//  306   
+//  307   
+//  308   if(MDB_send_package(1,payout_status,2,1,payout_status,&size)==MDB_OK){
+        ADD      R0,SP,#+8
+        STR      R0,[SP, #+4]
+        ADD      R0,SP,#+12
+        STR      R0,[SP, #+0]
+        MOVS     R3,#+1
+        MOVS     R2,#+2
+        ADD      R1,SP,#+12
+        MOVS     R0,#+1
+          CFI FunCall MDB_send_package
+        BL       MDB_send_package
+        CMP      R0,#+0
+        BNE.N    ??MDBCOIN_get_payout_status_0
+//  309            
+//  310     if(size==16){      
+        LDRB     R0,[SP, #+8]
+        CMP      R0,#+16
+        BNE.N    ??MDBCOIN_get_payout_status_0
+//  311       memcpy(coins_per_channel,&payout_status[Z1],16);             
+        MOVS     R2,#+16
+        ADD      R1,SP,#+12
+        MOVS     R0,R4
+          CFI FunCall memcpy
+        BL       memcpy
+//  312       return MDB_OK;
+        MOVS     R0,#+0
+        B.N      ??MDBCOIN_get_payout_status_1
+//  313     }
+//  314     
+//  315   }                 
+//  316   
+//  317   return MDB_TIMEOUT;            
+??MDBCOIN_get_payout_status_0:
+        MOVS     R0,#+2
+??MDBCOIN_get_payout_status_1:
+        ADD      SP,SP,#+32
+          CFI CFA R13+8
+        POP      {R4,PC}          ;; return
+          CFI EndBlock cfiBlock9
+//  318 }
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -772,13 +917,13 @@ MDBCOIN_poll:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  273 /***********************************************************************************
-//  274 *       Fim do arquivo
-//  275 ***********************************************************************************/
+//  319 /***********************************************************************************
+//  320 *       Fim do arquivo
+//  321 ***********************************************************************************/
 // 
-// 668 bytes in section .text
+// 820 bytes in section .text
 // 
-// 646 bytes of CODE memory (+ 22 bytes shared)
+// 798 bytes of CODE memory (+ 22 bytes shared)
 //
 //Errors: none
-//Warnings: none
+//Warnings: 1

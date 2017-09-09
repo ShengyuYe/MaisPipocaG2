@@ -134,6 +134,7 @@ eMDB_RESULTADO_SCAN MDB_checa_dispositivos(void);
 
 eMDB_reply MDB_checa_valor_moedas(unsigned char *escala,unsigned char *canais);
 
+unsigned char MDB_checa_troco(unsigned int *troco);
 /************************************************************************************
 *       Fim do arquivo
 ************************************************************************************/

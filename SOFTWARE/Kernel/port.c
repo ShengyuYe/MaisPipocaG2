@@ -155,6 +155,7 @@ extern unsigned char MDBUART_bytes_recebidos;
 extern unsigned char MDBUART_novo_pacote;
 extern unsigned char MDBUART_silent_time;
 extern unsigned char MDBUART_buffer_in[50];
+extern unsigned short int SMDBCOIN_lock_coin;
 
 void xPortSysTickHandler( void )
 {
@@ -162,21 +163,8 @@ void xPortSysTickHandler( void )
     
   BOARD_timer_tick();
   
-/*
-  if(MDBUART_silent_time){
-    // Bytes recebidos pela UART1
-    if(MDBUART_bytes_recebidos && MDBUART_silent_time==1){
-         
-      if(!MDBUART_buffer_in[MDBUART_bytes_recebidos-1] || MDBUART_buffer_in[MDBUART_bytes_recebidos-1]==0xFF)
-        MDBUART_novo_pacote = 1;
-      else{      
-        MDBUART_buffer_in[MDBUART_bytes_recebidos++] = 0;
-        MDBUART_novo_pacote = 1;
-       }     
-    }    
-    MDBUART_silent_time--;
-  }
-  */
+  if(SMDBCOIN_lock_coin)
+    SMDBCOIN_lock_coin--;
 
   *(portNVIC_INT_CTRL) = portNVIC_PENDSVSET;	
 
@@ -200,3 +188,4 @@ void prvSetupTimerInterrupt( void ){
 *   Fim do arquivo
 ********************************************************************************/
 
+  

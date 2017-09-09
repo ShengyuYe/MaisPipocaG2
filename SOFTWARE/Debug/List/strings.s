@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:36 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     09/Sep/2017  15:28:21 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -44,6 +44,7 @@
 
         PUBLIC STRING_idioma_to_string
         PUBLIC STRING_impressao_teste
+        PUBLIC STRING_liberando_troco
         PUBLIC STRING_mensagem_cadastro_senha
         PUBLIC STRING_mensagem_cadastro_senha_erro
         PUBLIC STRING_mensagem_cctalk_offline
@@ -1402,6 +1403,15 @@ STRING_titulo_edita_flag_desumidifcador:
         DC32 `?<Constant " HABILT. DESUM. ">`, `?<Constant " HABILT. DESUM. ">`
         DC32 `?<Constant " HABILT. DESUM. ">`, `?<Constant " HABILT. DESUM. ">`
         DC32 `?<Constant " HABILT. DESUM. ">`
+
+        SECTION `.data`:DATA:REORDER:NOROOT(2)
+// __absolute char const *STRING_liberando_troco[7]
+STRING_liberando_troco:
+        DATA
+        DC32 `?<Constant " RETIRE O TROCO ">`, `?<Constant "                ">`
+        DC32 `?<Constant "                ">`, `?<Constant "                ">`
+        DC32 `?<Constant "                ">`, `?<Constant " GET YOUR CHANGE">`
+        DC32 `?<Constant " GET CHANGE PLS ">`
 //   38 
 //   39 /***********************************************************************************
 //   40 *       Constantes
@@ -3507,6 +3517,30 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant " RETIRE O TROCO ">`:
+        DATA
+        DC8 " RETIRE O TROCO "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "                ">`:
+        DATA
+        DC8 "                "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant " GET YOUR CHANGE">`:
+        DATA
+        DC8 " GET YOUR CHANGE"
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant " GET CHANGE PLS ">`:
+        DATA
+        DC8 " GET CHANGE PLS "
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "BRASIL">`:
         DATA
         DC8 "BRASIL"
@@ -3558,13 +3592,13 @@ STRING_write_to_external:
 //  117 *       Fim do arquivo
 //  118 ***********************************************************************************/
 // 
-// 5 600 bytes in section .data
-// 5 054 bytes in section .rodata
+// 5 628 bytes in section .data
+// 5 134 bytes in section .rodata
 //   212 bytes in section .text
 // 
 //   212 bytes of CODE  memory
-// 5 054 bytes of CONST memory
-// 5 600 bytes of DATA  memory
+// 5 134 bytes of CONST memory
+// 5 628 bytes of DATA  memory
 //
 //Errors: none
 //Warnings: none

@@ -271,5 +271,51 @@ eMDB_reply MDBCOIN_poll(eMDB_COIN_POOL_TYPE *tipo_evento,
   return MDB_TIMEOUT;                            
 }
 /***********************************************************************************
+*       Descrição       :       Faz o dispensamento do troco 
+*       Parametros      :       (unsigned short int) valor
+*                               (unsigned char) escala
+*       Retorno         :       (eMDB_reply) resultado da operação
+***********************************************************************************/
+eMDB_reply MDBCOIN_alternative_payout(unsigned short int value,unsigned char scale){
+  unsigned char payout[3];
+  unsigned char size;
+
+  payout[0] = COIN_EXPANSION_COMMAND;
+  payout[1] = 0x02; // alternativa payout code
+  payout[2] = (value/scale);
+ 
+  vTaskDelay(1000);
+  if(MDB_send_package_long(1,payout,3,0,payout,&size)==MDB_OK){
+    vTaskDelay(10000);         
+    return MDB_OK;
+  }                 
+  
+  return MDB_TIMEOUT;          
+}
+/***********************************************************************************
+*       Descrição       :       Verifica as moedas que foram liberas 
+*       Parametros      :       (unsigned char*) moedas
+*       Retorno         :       (eMDB_reply) resultado da operação
+***********************************************************************************/
+eMDB_reply MDBCOIN_get_payout_status(unsigned char *coins_per_channel){
+  unsigned char payout_status[19];
+  unsigned char size;
+  
+  payout_status[0] = COIN_EXPANSION_COMMAND;
+  payout_status[1]= 0x03; // payout status code
+  
+  
+  if(MDB_send_package(1,payout_status,2,1,payout_status,&size)==MDB_OK){
+           
+    if(size==16){      
+      memcpy(coins_per_channel,&payout_status[Z1],16);             
+      return MDB_OK;
+    }
+    
+  }                 
+  
+  return MDB_TIMEOUT;            
+}
+/***********************************************************************************
 *       Fim do arquivo
 ***********************************************************************************/

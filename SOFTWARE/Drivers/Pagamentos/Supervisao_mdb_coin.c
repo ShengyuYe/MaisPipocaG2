@@ -40,7 +40,7 @@
 *       Definições
 ***********************************************************************************/
 #define RELOAD_COIN_TIMEOUT             30000
-
+#define RELOAD_LOCK_COIN                250        
 /***********************************************************************************
 *       Enumerações
 ***********************************************************************************/
@@ -61,6 +61,7 @@ unsigned short int SMDBCOIN_contador_timeout=0;
 unsigned char SMDBCOIN_coin_credit[16]={0};
 unsigned char SMDBCOIN_scale_factor=0x00;
 unsigned char SMDBCOIN_decimal_places;
+unsigned short int SMDBCOIN_lock_coin;
 
 /***********************************************************************************
 *       Funções locais
@@ -234,7 +235,9 @@ eCOIN_SM_STATE SMDBCOIN_estado_supervisao(eCOIN_SM_STATE estado){
       return COIN_OFFLINE;
   }
 
-  if(MDBCOIN_poll(&tipo_pacote,&status_pacote,&tipo_moeda,&quantidade_tubo)==MDB_OK){
+  if(!SMDBCOIN_lock_coin && MDBCOIN_poll(&tipo_pacote,&status_pacote,&tipo_moeda,&quantidade_tubo)==MDB_OK){
+    
+    SMDBCOIN_lock_coin=RELOAD_LOCK_COIN;
     
     SMDBCOIN_contador_timeout = RELOAD_COIN_TIMEOUT;     
     if(tipo_pacote!=COIN_ACK){

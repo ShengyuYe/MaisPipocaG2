@@ -93,6 +93,10 @@ eMDB_reply MDBCOIN_coin_dispense(unsigned char quantidade,unsigned char coin_cod
 eMDB_reply MDBCOIN_poll(eMDB_COIN_POOL_TYPE *tipo_evento,eMDB_COIN_POOL_STATUS *status,
                         unsigned char *tipo_moeda,unsigned char *quantidade_tubo);
 
+eMDB_reply MDBCOIN_alternative_payout(unsigned short int value,unsigned char scale);
+
+eMDB_reply MDBCOIN_get_payout_status(unsigned char *coins_per_channel);
+
 #endif//_MDB_COIN_H_
 /*************************************************************************************
 *       Fim do arquivo

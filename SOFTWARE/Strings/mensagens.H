@@ -1706,6 +1706,15 @@ const char *STRING_titulo_edita_flag_desumidifcador[QTY_OF_LANGUAGES]={
   [CANADA]    = {" HABILT. DESUM. "},
 };
 
+const char *STRING_liberando_troco[QTY_OF_LANGUAGES]={
+  [BRASIL]    = {" RETIRE O TROCO "},
+  [URUGUAI]   = {"                "},
+  [ARGENTINA] = {"                "},
+  [PARAGUAI]  = {"                "},
+  [PERU]      = {"                "},
+  [EUA]       = {" GET YOUR CHANGE"},
+  [CANADA]    = {" GET CHANGE PLS "},
+};
 
 #else
 
@@ -1804,6 +1813,7 @@ extern const char *STRING_mensagem_reinicia_totalizadores_erro[QTY_OF_LANGUAGES]
 extern const char *STRING_titulo_edita_serial[QTY_OF_LANGUAGES];
 extern const char *STRING_titulo_edita_comissao[QTY_OF_LANGUAGES];
 extern const char *STRING_titulo_edita_flag_desumidifcador[QTY_OF_LANGUAGES];
+extern const char *STRING_liberando_troco[QTY_OF_LANGUAGES];
 
 #endif
 

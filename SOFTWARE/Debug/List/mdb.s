@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  20:00:28 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     09/Sep/2017  15:28:12 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -54,6 +54,7 @@
 
         PUBLIC MDB_buffer_stream
         PUBLIC MDB_checa_dispositivos
+        PUBLIC MDB_checa_troco
         PUBLIC MDB_checa_valor_moedas
         PUBLIC MDB_chk_generate
         PUBLIC MDB_coin_check_tubes
@@ -176,7 +177,7 @@ memcpy:
 //   44 /***********************************************************************************
 //   45 *       Definiões locais
 //   46 ***********************************************************************************/
-//   47 #define TIMEOUT_WAIT_MESSAGE                    50
+//   47 #define TIMEOUT_WAIT_MESSAGE                    100//50
 //   48 #define MAX_PACKAGE_SIZE                        36
 //   49 
 //   50 /***********************************************************************************
@@ -461,7 +462,7 @@ MDB_send_package:
         LDR      R6,[SP, #+48]
         LDR      R7,[SP, #+52]
 //  159   unsigned short int time_out=TIMEOUT_WAIT_MESSAGE;
-        MOVS     R9,#+50
+        MOVS     R9,#+100
 //  160   unsigned char flag;  
 //  161   
 //  162   //flag = U2RBR;
@@ -648,8 +649,8 @@ MDB_send_package_long:
         MOVS     R5,R2
         LDR      R6,[SP, #+48]
         LDR      R7,[SP, #+52]
-//  213   unsigned short int time_out=2000;
-        MOV      R9,#+2000
+//  213   unsigned short int time_out=10000;
+        MOVW     R9,#+10000
 //  214   unsigned char flag;  
 //  215                               
 //  216   memcpy(MDB_buffer_stream,pData,data_length);
@@ -1199,6 +1200,132 @@ MDB_checa_valor_moedas:
         POP      {R4-R7,PC}       ;; return
           CFI EndBlock cfiBlock10
 //  360 }
+//  361 /***********************************************************************************
+//  362 *       Descrição       :       Verifica a quantidade de troco disponível
+//  363 *                               no moedeiro
+//  364 *       Parametros      :       nenhum
+//  365 *       Retorno         :       (unsigned char) maior do que zero se
+//  366 *                                               houver resposta do moedeiro
+//  367 ***********************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(1)
+          CFI Block cfiBlock11 Using cfiCommon0
+          CFI Function MDB_checa_troco
+        THUMB
+//  368 unsigned char MDB_checa_troco(unsigned int *troco){
+MDB_checa_troco:
+        PUSH     {R4-R7,LR}
+          CFI R14 Frame(CFA, -4)
+          CFI R7 Frame(CFA, -8)
+          CFI R6 Frame(CFA, -12)
+          CFI R5 Frame(CFA, -16)
+          CFI R4 Frame(CFA, -20)
+          CFI CFA R13+20
+        SUB      SP,SP,#+36
+          CFI CFA R13+56
+        MOVS     R4,R0
+//  369   unsigned char escala;
+//  370   unsigned char canais[16];
+//  371   unsigned char tubos[16];
+//  372   unsigned char tentativas;
+//  373   eMDB_reply res;
+//  374   unsigned char flag;
+//  375   
+//  376   *troco = 0;
+        MOVS     R0,#+0
+        STR      R0,[R4, #+0]
+//  377   
+//  378   tentativas=10;
+        MOVS     R0,#+10
+        MOVS     R7,R0
+//  379   do flag = MDB_coin_check_tubes(tubos);
+??MDB_checa_troco_0:
+        ADD      R0,SP,#+4
+          CFI FunCall MDB_coin_check_tubes
+        BL       MDB_coin_check_tubes
+        MOVS     R6,R0
+//  380   while(!flag && --tentativas);
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
+        BNE.N    ??MDB_checa_troco_1
+        SUBS     R7,R7,#+1
+        MOVS     R0,R7
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+0
+        BNE.N    ??MDB_checa_troco_0
+//  381 
+//  382   if(!flag)
+??MDB_checa_troco_1:
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        CMP      R6,#+0
+        BNE.N    ??MDB_checa_troco_2
+//  383     return 0;
+        MOVS     R0,#+0
+        B.N      ??MDB_checa_troco_3
+//  384 
+//  385   tentativas=10;  
+??MDB_checa_troco_2:
+        MOVS     R0,#+10
+        MOVS     R7,R0
+//  386   do res = MDB_checa_valor_moedas(&escala,canais);
+??MDB_checa_troco_4:
+        ADD      R1,SP,#+20
+        ADD      R0,SP,#+0
+          CFI FunCall MDB_checa_valor_moedas
+        BL       MDB_checa_valor_moedas
+        MOVS     R5,R0
+//  387   while(res!=MDB_OK && --tentativas);
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BEQ.N    ??MDB_checa_troco_5
+        SUBS     R7,R7,#+1
+        MOVS     R0,R7
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+0
+        BNE.N    ??MDB_checa_troco_4
+//  388   
+//  389   if(res==MDB_OK){
+??MDB_checa_troco_5:
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BNE.N    ??MDB_checa_troco_6
+//  390     
+//  391     for(unsigned char i=0;i<16;i++)
+        MOVS     R0,#+0
+??MDB_checa_troco_7:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+16
+        BGE.N    ??MDB_checa_troco_8
+//  392       *troco+= tubos[i]*canais[i]*escala;
+        LDR      R1,[R4, #+0]
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADD      R2,SP,#+4
+        LDRB     R2,[R0, R2]
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADD      R3,SP,#+20
+        LDRB     R3,[R0, R3]
+        MULS     R2,R3,R2
+        LDRB     R3,[SP, #+0]
+        MLA      R1,R3,R2,R1
+        STR      R1,[R4, #+0]
+        ADDS     R0,R0,#+1
+        B.N      ??MDB_checa_troco_7
+//  393     
+//  394     return 255;  
+??MDB_checa_troco_8:
+        MOVS     R0,#+255
+        B.N      ??MDB_checa_troco_3
+//  395   }  
+//  396   
+//  397   return 0;  
+??MDB_checa_troco_6:
+        MOVS     R0,#+0
+??MDB_checa_troco_3:
+        ADD      SP,SP,#+36
+          CFI CFA R13+20
+        POP      {R4-R7,PC}       ;; return
+          CFI EndBlock cfiBlock11
+//  398 }
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1212,15 +1339,15 @@ MDB_checa_valor_moedas:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  361 /***********************************************************************************
-//  362 *       Fim do arquivo
-//  363 ***********************************************************************************/
+//  399 /***********************************************************************************
+//  400 *       Fim do arquivo
+//  401 ***********************************************************************************/
 // 
 //    81 bytes in section .bss
-// 1 010 bytes in section .text
+// 1 142 bytes in section .text
 // 
-// 988 bytes of CODE memory (+ 22 bytes shared)
-//  81 bytes of DATA memory
+// 1 120 bytes of CODE memory (+ 22 bytes shared)
+//    81 bytes of DATA memory
 //
 //Errors: none
 //Warnings: 2

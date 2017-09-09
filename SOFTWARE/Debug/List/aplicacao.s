@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:46 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     09/Sep/2017  15:28:09 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -46,9 +46,11 @@
         EXTERN HD44780_2_init
         EXTERN HD44780_init
         EXTERN MCFG_entry
+        EXTERN MDBCOIN_alternative_payout
+        EXTERN MDBCOIN_get_payout_status
         EXTERN MDB_checa_dispositivos
-        EXTERN MDB_coin_check_tubes
-        EXTERN MDB_coin_dispenser
+        EXTERN MDB_checa_troco
+        EXTERN MDB_checa_valor_moedas
         EXTERN PAGAMENTOS_adiciona_valores
         EXTERN PAGAMENTOS_get_timeout_pagamento
         EXTERN PAGAMENTOS_get_valor_acumulado
@@ -62,6 +64,9 @@
         EXTERN POTENCIA_set_neutro
         EXTERN PREPARACAO_entry
         EXTERN PREPARACAO_resfriamento
+        EXTERN SMDB_release
+        EXTERN SMDB_wait
+        EXTERN STRING_liberando_troco
         EXTERN STRING_mensagem_cctalk_offline
         EXTERN STRING_mensagem_fora_servico
         EXTERN STRING_mensagem_modo_gratis
@@ -914,20 +919,17 @@ APLICACACAO_verifica_troco:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  295   
-//  296   if(MDB_coin_check_tubes(APLICACAO_tubos)){      
-        LDR.W    R0,??DataTable14_12
-          CFI FunCall MDB_coin_check_tubes
-        BL       MDB_coin_check_tubes
+//  295   unsigned int troco;
+//  296   
+//  297   if(MDB_checa_troco(&troco))
+        ADD      R0,SP,#+0
+          CFI FunCall MDB_checa_troco
+        BL       MDB_checa_troco
         CMP      R0,#+0
         BEQ.N    ??APLICACACAO_verifica_troco_0
-//  297     return APLICACAO_tubos[2]*25;
-        LDR.W    R0,??DataTable14_12
-        LDRB     R0,[R0, #+2]
-        MOVS     R1,#+25
-        MULS     R0,R1,R0
+//  298     return troco;
+        LDR      R0,[SP, #+0]
         B.N      ??APLICACACAO_verifica_troco_1
-//  298   }
 //  299   
 //  300   return 0;
 ??APLICACACAO_verifica_troco_0:
@@ -1014,11 +1016,11 @@ APLICACAO_verifica_preparacao:
 //  324                                         (char*)STRING_mensagem_retire_troco[idioma][0],
 //  325                                         (char*)STRING_mensagem_retire_troco[idioma][1]);
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable14_13
+        LDR.W    R0,??DataTable14_12
         ADDS     R0,R0,R5, LSL #+3
         LDR      R2,[R0, #+4]
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable14_13
+        LDR.W    R0,??DataTable14_12
         LDR      R1,[R0, R5, LSL #+3]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
@@ -1048,9 +1050,9 @@ APLICACAO_verifica_preparacao:
 //  332         case FALHA_VENTILADOR:
 //  333              STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_fora_servico[idioma],"E0:VENTILADOR");                       
 ??APLICACAO_verifica_preparacao_5:
-        LDR.W    R2,??DataTable14_14
+        LDR.W    R2,??DataTable14_13
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable14_15
+        LDR.W    R0,??DataTable14_14
         LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
@@ -1067,9 +1069,9 @@ APLICACAO_verifica_preparacao:
 //  337         case FALHA_RESISTENCIA:
 //  338              STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_fora_servico[idioma],"E1:AQUECIMENTO");
 ??APLICACAO_verifica_preparacao_4:
-        LDR.W    R2,??DataTable14_16
+        LDR.W    R2,??DataTable14_15
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable14_15
+        LDR.W    R0,??DataTable14_14
         LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
@@ -1086,9 +1088,9 @@ APLICACAO_verifica_preparacao:
 //  342         case FALHA_DOSE:
 //  343              STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_fora_servico[idioma],"E2:DOSADOR");          
 ??APLICACAO_verifica_preparacao_7:
-        LDR.W    R2,??DataTable14_17
+        LDR.W    R2,??DataTable14_16
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable14_15
+        LDR.W    R0,??DataTable14_14
         LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
@@ -1105,9 +1107,9 @@ APLICACAO_verifica_preparacao:
 //  347         case FALHA_EMBALAGEM:
 //  348              STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_fora_servico[idioma],"E3:EMBALAGEM");                                                 
 ??APLICACAO_verifica_preparacao_6:
-        LDR.W    R2,??DataTable14_18
+        LDR.W    R2,??DataTable14_17
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable14_15
+        LDR.W    R0,??DataTable14_14
         LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
@@ -1268,111 +1270,196 @@ APLICACAO_menu_falha:
         THUMB
 //  406 unsigned char APLICACAO_devolve_troco(void){
 APLICACAO_devolve_troco:
-        PUSH     {R0-R8,LR}
+        PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
           CFI R8 Frame(CFA, -8)
           CFI R7 Frame(CFA, -12)
           CFI R6 Frame(CFA, -16)
           CFI R5 Frame(CFA, -20)
           CFI R4 Frame(CFA, -24)
-          CFI CFA R13+40
+          CFI CFA R13+24
+        SUB      SP,SP,#+40
+          CFI CFA R13+64
 //  407   unsigned int valor = PAGAMENTOS_get_valor_acumulado();
           CFI FunCall PAGAMENTOS_get_valor_acumulado
         BL       PAGAMENTOS_get_valor_acumulado
-        MOVS     R5,R0
-//  408   unsigned int desconto = valor;
-        MOVS     R4,R5
-//  409   unsigned char tubos[16];
-//  410   
-//  411   PAGAMENTOS_set_bloqueio(0);
+        MOVS     R4,R0
+//  408   unsigned char tubos[16];
+//  409   unsigned char escala;
+//  410   unsigned char change_coins[16];
+//  411   eMDB_reply res;
+//  412   unsigned int tentativas;
+//  413   eIDIOMA idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
+          CFI FunCall APLICACAO_carrega_idioma
+        BL       APLICACAO_carrega_idioma
+        MOVS     R6,R0
+//  414   
+//  415   PAGAMENTOS_set_bloqueio(0);
         MOVS     R0,#+0
           CFI FunCall PAGAMENTOS_set_bloqueio
         BL       PAGAMENTOS_set_bloqueio
-//  412   vTaskDelay(500);
+//  416   vTaskDelay(500);
         MOV      R0,#+500
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  413   
-//  414   if(MDB_coin_check_tubes(tubos)){
+//  417   
+//  418   
+//  419   // Busca a quantidade de moedas nos tubos
+//  420   // e a escala do pais
+//  421   tentativas=10;
+        MOVS     R0,#+10
+        MOVS     R7,R0
+//  422   do res = MDB_checa_valor_moedas(&escala,tubos);
+??APLICACAO_devolve_troco_0:
+        ADD      R1,SP,#+20
         ADD      R0,SP,#+0
-          CFI FunCall MDB_coin_check_tubes
-        BL       MDB_coin_check_tubes
+          CFI FunCall MDB_checa_valor_moedas
+        BL       MDB_checa_valor_moedas
+        MOVS     R5,R0
+//  423   while(res!=MDB_OK && --tentativas);
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BEQ.N    ??APLICACAO_devolve_troco_1
+        SUBS     R7,R7,#+1
+        CMP      R7,#+0
+        BNE.N    ??APLICACAO_devolve_troco_0
+//  424   
+//  425   if(res==MDB_OK){
+??APLICACAO_devolve_troco_1:
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BNE.N    ??APLICACAO_devolve_troco_2
+//  426     
+//  427     STRING_write_to_external(NO_CLEAR,NULL,(char*)STRING_liberando_troco[(unsigned char)idioma]);
+        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+        LDR.W    R0,??DataTable14_18
+        LDR      R2,[R0, R6, LSL #+2]
+        MOVS     R1,#+0
+        MOVS     R0,#+1
+          CFI FunCall STRING_write_to_external
+        BL       STRING_write_to_external
+//  428           
+//  429     SMDB_wait();
+          CFI FunCall SMDB_wait
+        BL       SMDB_wait
+//  430   
+//  431     tentativas = 10;
+        MOVS     R0,#+10
+        MOVS     R7,R0
+//  432     do res = MDBCOIN_alternative_payout(valor,escala);
+??APLICACAO_devolve_troco_3:
+        LDRB     R1,[SP, #+0]
+        MOVS     R0,R4
+        UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+          CFI FunCall MDBCOIN_alternative_payout
+        BL       MDBCOIN_alternative_payout
+        MOVS     R5,R0
+//  433     while(res!=MDB_OK && tentativas--);
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BEQ.N    ??APLICACAO_devolve_troco_4
+        MOVS     R0,R7
+        SUBS     R7,R0,#+1
         CMP      R0,#+0
-        BEQ.N    ??APLICACAO_devolve_troco_0
-//  415       
-//  416     valor /= 25;
-        MOVS     R0,#+25
-        UDIV     R5,R5,R0
-//  417     PAGAMENTOS_subtrai_valores(desconto);
+        BNE.N    ??APLICACAO_devolve_troco_3
+//  434     
+//  435     SMDB_release();
+??APLICACAO_devolve_troco_4:
+          CFI FunCall SMDB_release
+        BL       SMDB_release
+//  436     
+//  437     if(res==MDB_OK){      
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BNE.N    ??APLICACAO_devolve_troco_2
+//  438       
+//  439       SMDB_wait();
+          CFI FunCall SMDB_wait
+        BL       SMDB_wait
+//  440       
+//  441       
+//  442       tentativas = 10;
+        MOVS     R0,#+10
+        MOVS     R7,R0
+//  443       do res = MDBCOIN_get_payout_status(change_coins);
+??APLICACAO_devolve_troco_5:
+        ADD      R0,SP,#+4
+          CFI FunCall MDBCOIN_get_payout_status
+        BL       MDBCOIN_get_payout_status
+        MOVS     R5,R0
+//  444       while(res!=MDB_OK && --tentativas);      
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BEQ.N    ??APLICACAO_devolve_troco_6
+        SUBS     R7,R7,#+1
+        CMP      R7,#+0
+        BNE.N    ??APLICACAO_devolve_troco_5
+//  445       
+//  446       SMDB_release();      
+??APLICACAO_devolve_troco_6:
+          CFI FunCall SMDB_release
+        BL       SMDB_release
+//  447       
+//  448       if(res==MDB_OK){                                      
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+0
+        BNE.N    ??APLICACAO_devolve_troco_2
+//  449         unsigned int troco=0;
+        MOVS     R8,#+0
+//  450         for(unsigned char i=0;i<16;i++)
+        MOVS     R0,#+0
+??APLICACAO_devolve_troco_7:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+16
+        BGE.N    ??APLICACAO_devolve_troco_8
+//  451           troco+= (change_coins[i]*escala*tubos[i]);
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADD      R1,SP,#+4
+        LDRB     R1,[R0, R1]
+        LDRB     R2,[SP, #+0]
+        MULS     R1,R2,R1
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADD      R2,SP,#+20
+        LDRB     R2,[R0, R2]
+        MLA      R8,R2,R1,R8
+        ADDS     R0,R0,#+1
+        B.N      ??APLICACAO_devolve_troco_7
+//  452         
+//  453           // Confirmação de que o troco liberado
+//  454           // corresponde ao valor solicitado
+//  455           // assim pode descontar o montante do módulo
+//  456           // Pagamentos
+//  457           if(troco==valor)
+??APLICACAO_devolve_troco_8:
+        CMP      R8,R4
+        BNE.N    ??APLICACAO_devolve_troco_2
+//  458             PAGAMENTOS_subtrai_valores(valor);  
         MOVS     R0,R4
           CFI FunCall PAGAMENTOS_subtrai_valores
         BL       PAGAMENTOS_subtrai_valores
-//  418         
-//  419     unsigned char moedas_15 = valor /15;
-        MOVS     R0,#+15
-        UDIV     R6,R5,R0
-//  420     unsigned char moedas_rest = valor % 15;
-        MOVS     R0,#+15
-        UDIV     R1,R5,R0
-        MLS      R7,R0,R1,R5
-//  421         
-//  422     for(unsigned char i=0;i<moedas_15;i++){
-        MOVS     R8,#+0
-??APLICACAO_devolve_troco_1:
-        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-        CMP      R8,R6
-        BCS.N    ??APLICACAO_devolve_troco_2
-//  423       MDB_coin_dispenser(2,15);
-        MOVS     R1,#+15
-        MOVS     R0,#+2
-          CFI FunCall MDB_coin_dispenser
-        BL       MDB_coin_dispenser
-//  424       vTaskDelay(5000);      
-        MOVW     R0,#+5000
-          CFI FunCall vTaskDelay
-        BL       vTaskDelay
-//  425     }
-        ADDS     R8,R8,#+1
-        B.N      ??APLICACAO_devolve_troco_1
-//  426         
-//  427     if(moedas_rest){
+//  459       }
+//  460     }
+//  461   }        
+//  462   
+//  463   return 1;      
 ??APLICACAO_devolve_troco_2:
-        UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
-        CMP      R7,#+0
-        BEQ.N    ??APLICACAO_devolve_troco_0
-//  428       MDB_coin_dispenser(2,moedas_rest);
-        MOVS     R1,R7
-        UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        MOVS     R0,#+2
-          CFI FunCall MDB_coin_dispenser
-        BL       MDB_coin_dispenser
-//  429       vTaskDelay(5000);                
-        MOVW     R0,#+5000
-          CFI FunCall vTaskDelay
-        BL       vTaskDelay
-//  430      }
-//  431   }
-//  432       
-//  433   return 1;      
-??APLICACAO_devolve_troco_0:
         MOVS     R0,#+1
-        ADD      SP,SP,#+16
+        ADD      SP,SP,#+40
           CFI CFA R13+24
         POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock10
-//  434 }
-//  435 /***********************************************************************************
-//  436 *       Descrição       :       Faz a verificação do POST
-//  437 *       Parametros      :       nenhum
-//  438 *       Retorno         :       nenhum
-//  439 ***********************************************************************************/
+//  464 }
+//  465 /***********************************************************************************
+//  466 *       Descrição       :       Faz a verificação do POST
+//  467 *       Parametros      :       nenhum
+//  468 *       Retorno         :       nenhum
+//  469 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock11 Using cfiCommon0
           CFI Function APLICACAO_verifica_post
         THUMB
-//  440 unsigned char APLICACAO_verifica_post(void){
+//  470 unsigned char APLICACAO_verifica_post(void){
 APLICACAO_verifica_post:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -1380,32 +1467,32 @@ APLICACAO_verifica_post:
           CFI R5 Frame(CFA, -12)
           CFI R4 Frame(CFA, -16)
           CFI CFA R13+16
-//  441   ePOST_RESULT post = POST_entry();
+//  471   ePOST_RESULT post = POST_entry();
           CFI FunCall POST_entry
         BL       POST_entry
         MOVS     R4,R0
-//  442   eIDIOMA idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
+//  472   eIDIOMA idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R5,R0
-//  443   
-//  444   switch(post){
+//  473   
+//  474   switch(post){
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+0
         BNE.N    ??APLICACAO_verifica_post_0
-//  445     case POST_SUCESSO:
-//  446          return 1;
+//  475     case POST_SUCESSO:
+//  476          return 1;
         MOVS     R0,#+1
         B.N      ??APLICACAO_verifica_post_1
-//  447     case POST_FALHA_VENTILADOR:
-//  448     case POST_FALHA_RESISTENCIA:
-//  449     case POST_FALHA_MDB_BILL:
-//  450     case POST_FALHA_MDB_COIN:
-//  451     case POST_FALHA_MDB_CASHLESS:
-//  452     case POST_FALHA_CCTALK:
-//  453     case POST_FALHA_PAPEL:
-//  454     default:
-//  455          switch(post){
+//  477     case POST_FALHA_VENTILADOR:
+//  478     case POST_FALHA_RESISTENCIA:
+//  479     case POST_FALHA_MDB_BILL:
+//  480     case POST_FALHA_MDB_COIN:
+//  481     case POST_FALHA_MDB_CASHLESS:
+//  482     case POST_FALHA_CCTALK:
+//  483     case POST_FALHA_PAPEL:
+//  484     default:
+//  485          switch(post){
 ??APLICACAO_verifica_post_0:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+1
@@ -1421,79 +1508,79 @@ APLICACAO_verifica_post:
         BEQ.N    ??APLICACAO_verifica_post_8
         BCC.N    ??APLICACAO_verifica_post_9
         B.N      ??APLICACAO_verifica_post_3
-//  456            case POST_FALHA_VENTILADOR:
-//  457                 STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_fora_servico[idioma],"E0:MOTOR AR");                                    
+//  486            case POST_FALHA_VENTILADOR:
+//  487                 STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_fora_servico[idioma],"E0:MOTOR AR");                                    
 ??APLICACAO_verifica_post_2:
         LDR.W    R2,??DataTable14_19
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable14_15
+        LDR.W    R0,??DataTable14_14
         LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  458                 break;
+//  488                 break;
         B.N      ??APLICACAO_verifica_post_3
-//  459            case POST_FALHA_RESISTENCIA:
-//  460                 STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_fora_servico[idioma],"E1:AQUECIMENTO");                
+//  489            case POST_FALHA_RESISTENCIA:
+//  490                 STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_fora_servico[idioma],"E1:AQUECIMENTO");                
 ??APLICACAO_verifica_post_5:
-        LDR.W    R2,??DataTable14_16
+        LDR.W    R2,??DataTable14_15
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable14_15
+        LDR.W    R0,??DataTable14_14
         LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  461                 break;
+//  491                 break;
         B.N      ??APLICACAO_verifica_post_3
-//  462            case POST_FALHA_MDB_BILL:
-//  463                 break;
+//  492            case POST_FALHA_MDB_BILL:
+//  493                 break;
 ??APLICACAO_verifica_post_4:
         B.N      ??APLICACAO_verifica_post_3
-//  464            case POST_FALHA_MDB_COIN:
-//  465                 break;
+//  494            case POST_FALHA_MDB_COIN:
+//  495                 break;
 ??APLICACAO_verifica_post_7:
         B.N      ??APLICACAO_verifica_post_3
-//  466            case POST_FALHA_MDB_CASHLESS:
-//  467                 break;
+//  496            case POST_FALHA_MDB_CASHLESS:
+//  497                 break;
 ??APLICACAO_verifica_post_6:
         B.N      ??APLICACAO_verifica_post_3
-//  468            case POST_FALHA_CCTALK:
-//  469                 break;
+//  498            case POST_FALHA_CCTALK:
+//  499                 break;
 ??APLICACAO_verifica_post_9:
         B.N      ??APLICACAO_verifica_post_3
-//  470            case POST_FALHA_PAPEL:   
-//  471                 STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_fora_servico[idioma],"E3:EMBALAGEM");              
+//  500            case POST_FALHA_PAPEL:   
+//  501                 STRING_write_to_external(CLEAR_DISPLAY,(char*)STRING_mensagem_fora_servico[idioma],"E3:EMBALAGEM");              
 ??APLICACAO_verifica_post_8:
-        LDR.W    R2,??DataTable14_18
+        LDR.W    R2,??DataTable14_17
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable14_15
+        LDR.W    R0,??DataTable14_14
         LDR      R1,[R0, R5, LSL #+2]
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  472                 break;
-//  473          }         
-//  474          
-//  475          PAGAMENTOS_set_bloqueio(1); // Bloqueia os meios de pagamento
+//  502                 break;
+//  503          }         
+//  504          
+//  505          PAGAMENTOS_set_bloqueio(1); // Bloqueia os meios de pagamento
 ??APLICACAO_verifica_post_3:
         MOVS     R0,#+1
           CFI FunCall PAGAMENTOS_set_bloqueio
         BL       PAGAMENTOS_set_bloqueio
-//  476          BOARD_liga_placa_instrucao(LED_FORA_SERVICO);
+//  506          BOARD_liga_placa_instrucao(LED_FORA_SERVICO);
         MOVS     R0,#+6
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  477          
-//  478          for(;;){
-//  479            eTECLA tecla;
-//  480            
-//  481            tecla = TECLADO_getch();
+//  507          
+//  508          for(;;){
+//  509            eTECLA tecla;
+//  510            
+//  511            tecla = TECLADO_getch();
 ??APLICACAO_verifica_post_10:
           CFI FunCall TECLADO_getch
         BL       TECLADO_getch
         MOVS     R6,R0
-//  482            
-//  483            switch(tecla){
+//  512            
+//  513            switch(tecla){
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         CMP      R6,#+1
         BEQ.N    ??APLICACAO_verifica_post_11
@@ -1503,75 +1590,75 @@ APLICACAO_verifica_post:
         BCC.N    ??APLICACAO_verifica_post_14
         CMP      R6,#+4
         BNE.N    ??APLICACAO_verifica_post_12
-//  484              case TECLA_ENTER:
-//  485                   APLIACAO_wait_lcd();
+//  514              case TECLA_ENTER:
+//  515                   APLIACAO_wait_lcd();
 ??APLICACAO_verifica_post_15:
           CFI FunCall APLIACAO_wait_lcd
         BL       APLIACAO_wait_lcd
-//  486                   BOARD_liga_placa_instrucao(0);
+//  516                   BOARD_liga_placa_instrucao(0);
         MOVS     R0,#+0
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  487                   MCFG_entry();                     
+//  517                   MCFG_entry();                     
           CFI FunCall MCFG_entry
         BL       MCFG_entry
-//  488                   BOARD_liga_placa_instrucao(1);
+//  518                   BOARD_liga_placa_instrucao(1);
         MOVS     R0,#+1
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  489                   idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
+//  519                   idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R5,R0
-//  490                   APLICACAO_release_lcd();  
+//  520                   APLICACAO_release_lcd();  
           CFI FunCall APLICACAO_release_lcd
         BL       APLICACAO_release_lcd
-//  491            
-//  492                   STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);               
+//  521            
+//  522                   STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);               
         MOVS     R2,#+0
         MOVS     R1,#+0
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  493                   break;
+//  523                   break;
         B.N      ??APLICACAO_verifica_post_12
-//  494              case TECLA_ESC:
-//  495                   break;
+//  524              case TECLA_ESC:
+//  525                   break;
 ??APLICACAO_verifica_post_11:
         B.N      ??APLICACAO_verifica_post_12
-//  496              case TECLA_INC:
-//  497                   break;
+//  526              case TECLA_INC:
+//  527                   break;
 ??APLICACAO_verifica_post_14:
         B.N      ??APLICACAO_verifica_post_12
-//  498              case TECLA_DEC: 
-//  499                   break;
-//  500            }
-//  501            
-//  502            APLICACAO_tela_descanso();
+//  528              case TECLA_DEC: 
+//  529                   break;
+//  530            }
+//  531            
+//  532            APLICACAO_tela_descanso();
 ??APLICACAO_verifica_post_13:
 ??APLICACAO_verifica_post_12:
           CFI FunCall APLICACAO_tela_descanso
         BL       APLICACAO_tela_descanso
         B.N      ??APLICACAO_verifica_post_10
-//  503          }       
-//  504   }
+//  533          }       
+//  534   }
 ??APLICACAO_verifica_post_1:
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock11
-//  505 }
-//  506 /***********************************************************************************
-//  507 *       Descrição       :       Faz a verificação de troco para o primeiro
-//  508 *                               processo
-//  509 *       Parametros      :       nenhum
-//  510 *       Retorno         :       (unsigned char) maior do que zero
-//  511 *                               se houver troco suficiente
-//  512 ***********************************************************************************/
+//  535 }
+//  536 /***********************************************************************************
+//  537 *       Descrição       :       Faz a verificação de troco para o primeiro
+//  538 *                               processo
+//  539 *       Parametros      :       nenhum
+//  540 *       Retorno         :       (unsigned char) maior do que zero
+//  541 *                               se houver troco suficiente
+//  542 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock12 Using cfiCommon0
           CFI Function APLICACAO_verifica_disponibilidade_troco
         THUMB
-//  513 void APLICACAO_verifica_disponibilidade_troco(unsigned char idioma){
+//  543 void APLICACAO_verifica_disponibilidade_troco(unsigned char idioma){
 APLICACAO_verifica_disponibilidade_troco:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -1582,79 +1669,79 @@ APLICACAO_verifica_disponibilidade_troco:
         SUB      SP,SP,#+8
           CFI CFA R13+24
         MOVS     R4,R0
-//  514   unsigned char flag_notas;
-//  515   unsigned int maior_nota=0;
+//  544   unsigned char flag_notas;
+//  545   unsigned int maior_nota=0;
         MOVS     R5,#+0
-//  516   eTECLA tecla;
-//  517   
-//  518   PARAMETROS_le(ADR_NOTAS,(void*)&flag_notas);
+//  546   eTECLA tecla;
+//  547   
+//  548   PARAMETROS_le(ADR_NOTAS,(void*)&flag_notas);
         ADD      R1,SP,#+0
         MOVS     R0,#+2
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  519   if(flag_notas&0x01)
+//  549   if(flag_notas&0x01)
         LDRB     R0,[SP, #+0]
         LSLS     R0,R0,#+31
         BPL.N    ??APLICACAO_verifica_disponibilidade_troco_0
-//  520     maior_nota = 100;
+//  550     maior_nota = 100;
         MOVS     R0,#+100
         MOVS     R5,R0
-//  521   if(flag_notas&0x02)
+//  551   if(flag_notas&0x02)
 ??APLICACAO_verifica_disponibilidade_troco_0:
         LDRB     R0,[SP, #+0]
         LSLS     R0,R0,#+30
         BPL.N    ??APLICACAO_verifica_disponibilidade_troco_1
-//  522     maior_nota = 200;
+//  552     maior_nota = 200;
         MOVS     R0,#+200
         MOVS     R5,R0
-//  523   if(flag_notas&0x04)
+//  553   if(flag_notas&0x04)
 ??APLICACAO_verifica_disponibilidade_troco_1:
         LDRB     R0,[SP, #+0]
         LSLS     R0,R0,#+29
         BPL.N    ??APLICACAO_verifica_disponibilidade_troco_2
-//  524     maior_nota = 500;
+//  554     maior_nota = 500;
         MOV      R0,#+500
         MOVS     R5,R0
-//  525   if(flag_notas&0x08)
+//  555   if(flag_notas&0x08)
 ??APLICACAO_verifica_disponibilidade_troco_2:
         LDRB     R0,[SP, #+0]
         LSLS     R0,R0,#+28
         BPL.N    ??APLICACAO_verifica_disponibilidade_troco_3
-//  526     maior_nota = 1000;
+//  556     maior_nota = 1000;
         MOV      R0,#+1000
         MOVS     R5,R0
-//  527   if(flag_notas&0x10)
+//  557   if(flag_notas&0x10)
 ??APLICACAO_verifica_disponibilidade_troco_3:
         LDRB     R0,[SP, #+0]
         LSLS     R0,R0,#+27
         BPL.N    ??APLICACAO_verifica_disponibilidade_troco_4
-//  528     maior_nota = 2000;
+//  558     maior_nota = 2000;
         MOV      R0,#+2000
         MOVS     R5,R0
-//  529   /*
-//  530   if(flag_notas&0x20)
-//  531     maior_nota = 5000;
-//  532   */
-//  533   
-//  534   if( APLICACACAO_verifica_troco()<maior_nota){
+//  559   /*
+//  560   if(flag_notas&0x20)
+//  561     maior_nota = 5000;
+//  562   */
+//  563   
+//  564   if( APLICACACAO_verifica_troco()<maior_nota){
 ??APLICACAO_verifica_disponibilidade_troco_4:
           CFI FunCall APLICACACAO_verifica_troco
         BL       APLICACACAO_verifica_troco
         CMP      R0,R5
         BCS.N    ??APLICACAO_verifica_disponibilidade_troco_5
-//  535     
-//  536     BOARD_setter_led_instrucao(LED_FORA_SERVICO,PISCANDO);
+//  565     
+//  566     BOARD_setter_led_instrucao(LED_FORA_SERVICO,PISCANDO);
         MOVS     R1,#+2
         MOVS     R0,#+6
           CFI FunCall BOARD_setter_led_instrucao
         BL       BOARD_setter_led_instrucao
-//  537     PAGAMENTOS_set_bloqueio(1);
+//  567     PAGAMENTOS_set_bloqueio(1);
         MOVS     R0,#+1
           CFI FunCall PAGAMENTOS_set_bloqueio
         BL       PAGAMENTOS_set_bloqueio
-//  538     STRING_write_to_external(CLEAR_DISPLAY,
-//  539                              (char*)STRING_mensagem_sem_troco[idioma][0],
-//  540                              (char*)STRING_mensagem_sem_troco[idioma][1]);    
+//  568     STRING_write_to_external(CLEAR_DISPLAY,
+//  569                              (char*)STRING_mensagem_sem_troco[idioma][0],
+//  570                              (char*)STRING_mensagem_sem_troco[idioma][1]);    
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable14_20
         ADDS     R0,R0,R4, LSL #+3
@@ -1665,113 +1752,113 @@ APLICACAO_verifica_disponibilidade_troco:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  541     
-//  542     for(;APLICACACAO_verifica_troco()<maior_nota;){
+//  571     
+//  572     for(;APLICACACAO_verifica_troco()<maior_nota;){
 ??APLICACAO_verifica_disponibilidade_troco_6:
           CFI FunCall APLICACACAO_verifica_troco
         BL       APLICACACAO_verifica_troco
         CMP      R0,R5
         BCS.N    ??APLICACAO_verifica_disponibilidade_troco_7
-//  543         
-//  544       tecla = TECLADO_getch();
+//  573         
+//  574       tecla = TECLADO_getch();
           CFI FunCall TECLADO_getch
         BL       TECLADO_getch
         MOVS     R6,R0
-//  545       switch(tecla){
+//  575       switch(tecla){
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         MOVS     R0,R6
         CMP      R0,#+1
         BEQ.N    ??APLICACAO_verifica_disponibilidade_troco_8
         CMP      R0,#+4
         BNE.N    ??APLICACAO_verifica_disponibilidade_troco_9
-//  546         case TECLA_ENTER:
-//  547             APLIACAO_wait_lcd();
+//  576         case TECLA_ENTER:
+//  577             APLIACAO_wait_lcd();
 ??APLICACAO_verifica_disponibilidade_troco_10:
           CFI FunCall APLIACAO_wait_lcd
         BL       APLIACAO_wait_lcd
-//  548             BOARD_liga_placa_instrucao(0);
+//  578             BOARD_liga_placa_instrucao(0);
         MOVS     R0,#+0
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  549             MCFG_entry();                     
+//  579             MCFG_entry();                     
           CFI FunCall MCFG_entry
         BL       MCFG_entry
-//  550             BOARD_liga_placa_instrucao(1);
+//  580             BOARD_liga_placa_instrucao(1);
         MOVS     R0,#+1
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  551             idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
+//  581             idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  552             APLICACAO_release_lcd();             
+//  582             APLICACAO_release_lcd();             
           CFI FunCall APLICACAO_release_lcd
         BL       APLICACAO_release_lcd
-//  553             STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);        
+//  583             STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);        
         MOVS     R2,#+0
         MOVS     R1,#+0
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  554             break;
+//  584             break;
         B.N      ??APLICACAO_verifica_disponibilidade_troco_9
-//  555         case TECLA_ESC:
-//  556             break;
-//  557       }    
-//  558       
-//  559       APLICACAO_tela_descanso();      
+//  585         case TECLA_ESC:
+//  586             break;
+//  587       }    
+//  588       
+//  589       APLICACAO_tela_descanso();      
 ??APLICACAO_verifica_disponibilidade_troco_8:
 ??APLICACAO_verifica_disponibilidade_troco_9:
           CFI FunCall APLICACAO_tela_descanso
         BL       APLICACAO_tela_descanso
         B.N      ??APLICACAO_verifica_disponibilidade_troco_6
-//  560     }//Fim do for(;;)        
-//  561     PAGAMENTOS_set_bloqueio(0);
+//  590     }//Fim do for(;;)        
+//  591     PAGAMENTOS_set_bloqueio(0);
 ??APLICACAO_verifica_disponibilidade_troco_7:
         MOVS     R0,#+0
           CFI FunCall PAGAMENTOS_set_bloqueio
         BL       PAGAMENTOS_set_bloqueio
-//  562     BOARD_liga_placa_instrucao(0);
+//  592     BOARD_liga_placa_instrucao(0);
         MOVS     R0,#+0
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  563     BOARD_liga_placa_instrucao(1);
+//  593     BOARD_liga_placa_instrucao(1);
         MOVS     R0,#+1
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  564     BOARD_setter_led_instrucao(LED_INSIRA_DINHEIRO,PISCANDO);
+//  594     BOARD_setter_led_instrucao(LED_INSIRA_DINHEIRO,PISCANDO);
         MOVS     R1,#+2
         MOVS     R0,#+2
           CFI FunCall BOARD_setter_led_instrucao
         BL       BOARD_setter_led_instrucao
-//  565   }  
-//  566 }
+//  595   }  
+//  596 }
 ??APLICACAO_verifica_disponibilidade_troco_5:
         POP      {R0,R1,R4-R6,PC}  ;; return
           CFI EndBlock cfiBlock12
-//  567 /***********************************************************************************
-//  568 *       Descrição       :       Verifica o barramento MDB
-//  569 *       Parametros      :       nenhum
-//  570 *       Retorno         :       nenhum
-//  571 ***********************************************************************************/
+//  597 /***********************************************************************************
+//  598 *       Descrição       :       Verifica o barramento MDB
+//  599 *       Parametros      :       nenhum
+//  600 *       Retorno         :       nenhum
+//  601 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock13 Using cfiCommon0
           CFI Function APLICACAO_verifica_MDB
         THUMB
-//  572 void APLICACAO_verifica_MDB(void){
+//  602 void APLICACAO_verifica_MDB(void){
 APLICACAO_verifica_MDB:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
           CFI R5 Frame(CFA, -8)
           CFI R4 Frame(CFA, -12)
           CFI CFA R13+16
-//  573   eIDIOMA idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
+//  603   eIDIOMA idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  574   
-//  575   switch(MDB_checa_dispositivos()){
+//  604   
+//  605   switch(MDB_checa_dispositivos()){
           CFI FunCall MDB_checa_dispositivos
         BL       MDB_checa_dispositivos
         CMP      R0,#+0
@@ -1780,14 +1867,14 @@ APLICACAO_verifica_MDB:
         BEQ.N    ??APLICACAO_verifica_MDB_1
         BCC.N    ??APLICACAO_verifica_MDB_2
         B.N      ??APLICACAO_verifica_MDB_3
-//  576     case MDB_TODOS_ONLINE:            
-//  577          return;
+//  606     case MDB_TODOS_ONLINE:            
+//  607          return;
 ??APLICACAO_verifica_MDB_0:
         B.N      ??APLICACAO_verifica_MDB_4
-//  578     case MDB_BILL_OFFLINE:
-//  579          STRING_write_to_external(CLEAR_DISPLAY,
-//  580                                   (char*)STRING_mensagem_noteiro_mdb_offline[idioma][0],
-//  581                                   (char*)STRING_mensagem_noteiro_mdb_offline[idioma][1]);          
+//  608     case MDB_BILL_OFFLINE:
+//  609          STRING_write_to_external(CLEAR_DISPLAY,
+//  610                                   (char*)STRING_mensagem_noteiro_mdb_offline[idioma][0],
+//  611                                   (char*)STRING_mensagem_noteiro_mdb_offline[idioma][1]);          
 ??APLICACAO_verifica_MDB_2:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable14_21
@@ -1799,12 +1886,12 @@ APLICACAO_verifica_MDB:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  582          break;
+//  612          break;
         B.N      ??APLICACAO_verifica_MDB_3
-//  583     case MDB_COIN_OFFLINE:
-//  584          STRING_write_to_external(CLEAR_DISPLAY,
-//  585                                   (char*)STRING_mensagem_moedeiro_mdb_offline[idioma][0],
-//  586                                   (char*)STRING_mensagem_moedeiro_mdb_offline[idioma][1]);           
+//  613     case MDB_COIN_OFFLINE:
+//  614          STRING_write_to_external(CLEAR_DISPLAY,
+//  615                                   (char*)STRING_mensagem_moedeiro_mdb_offline[idioma][0],
+//  616                                   (char*)STRING_mensagem_moedeiro_mdb_offline[idioma][1]);           
 ??APLICACAO_verifica_MDB_1:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable14_22
@@ -1816,95 +1903,95 @@ APLICACAO_verifica_MDB:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  587          break;
-//  588   }  
-//  589   
-//  590   eTECLA tecla;
-//  591   
-//  592   for(;;){
-//  593     
-//  594     if(MDB_checa_dispositivos()==MDB_TODOS_ONLINE)
+//  617          break;
+//  618   }  
+//  619   
+//  620   eTECLA tecla;
+//  621   
+//  622   for(;;){
+//  623     
+//  624     if(MDB_checa_dispositivos()==MDB_TODOS_ONLINE)
 ??APLICACAO_verifica_MDB_3:
 ??APLICACAO_verifica_MDB_5:
           CFI FunCall MDB_checa_dispositivos
         BL       MDB_checa_dispositivos
         CMP      R0,#+0
         BEQ.N    ??APLICACAO_verifica_MDB_4
-//  595       return;
-//  596     
-//  597     tecla = TECLADO_getch();
+//  625       return;
+//  626     
+//  627     tecla = TECLADO_getch();
 ??APLICACAO_verifica_MDB_6:
           CFI FunCall TECLADO_getch
         BL       TECLADO_getch
         MOVS     R5,R0
-//  598     switch(tecla){
+//  628     switch(tecla){
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         MOVS     R0,R5
         CMP      R0,#+1
         BEQ.N    ??APLICACAO_verifica_MDB_7
         CMP      R0,#+4
         BNE.N    ??APLICACAO_verifica_MDB_8
-//  599       case TECLA_ENTER:
-//  600             APLIACAO_wait_lcd();
+//  629       case TECLA_ENTER:
+//  630             APLIACAO_wait_lcd();
 ??APLICACAO_verifica_MDB_9:
           CFI FunCall APLIACAO_wait_lcd
         BL       APLIACAO_wait_lcd
-//  601             BOARD_liga_placa_instrucao(0);
+//  631             BOARD_liga_placa_instrucao(0);
         MOVS     R0,#+0
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  602             MCFG_entry();                     
+//  632             MCFG_entry();                     
           CFI FunCall MCFG_entry
         BL       MCFG_entry
-//  603             BOARD_liga_placa_instrucao(1);
+//  633             BOARD_liga_placa_instrucao(1);
         MOVS     R0,#+1
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  604             idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
+//  634             idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  605             APLICACAO_release_lcd();             
+//  635             APLICACAO_release_lcd();             
           CFI FunCall APLICACAO_release_lcd
         BL       APLICACAO_release_lcd
-//  606             STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);              
+//  636             STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);              
         MOVS     R2,#+0
         MOVS     R1,#+0
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  607            break;
+//  637            break;
         B.N      ??APLICACAO_verifica_MDB_8
-//  608       case TECLA_ESC:
-//  609            break;
-//  610     }    
-//  611     APLICACAO_tela_descanso();      
+//  638       case TECLA_ESC:
+//  639            break;
+//  640     }    
+//  641     APLICACAO_tela_descanso();      
 ??APLICACAO_verifica_MDB_7:
 ??APLICACAO_verifica_MDB_8:
           CFI FunCall APLICACAO_tela_descanso
         BL       APLICACAO_tela_descanso
-//  612     vTaskDelay(500);
+//  642     vTaskDelay(500);
         MOV      R0,#+500
           CFI FunCall vTaskDelay
         BL       vTaskDelay
         B.N      ??APLICACAO_verifica_MDB_5
-//  613   }
+//  643   }
 ??APLICACAO_verifica_MDB_4:
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock13
-//  614 }
-//  615 /***********************************************************************************
-//  616 *       Descrição       :       Faz a verificação do meio de pagamento
-//  617 *                               CCTALK
-//  618 *       Parametros      :       nenhum
-//  619 *       Retorno         :       nenhum
-//  620 ***********************************************************************************/
+//  644 }
+//  645 /***********************************************************************************
+//  646 *       Descrição       :       Faz a verificação do meio de pagamento
+//  647 *                               CCTALK
+//  648 *       Parametros      :       nenhum
+//  649 *       Retorno         :       nenhum
+//  650 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock14 Using cfiCommon0
           CFI Function APLICACAO_verifica_cctalk
         THUMB
-//  621 void APLICACAO_verifica_cctalk(void){
+//  651 void APLICACAO_verifica_cctalk(void){
 APLICACAO_verifica_cctalk:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -1914,39 +2001,39 @@ APLICACAO_verifica_cctalk:
           CFI CFA R13+16
         SUB      SP,SP,#+8
           CFI CFA R13+24
-//  622   unsigned char flag;
-//  623   
-//  624   PARAMETROS_le(ADR_FLAG_BV20,(void*)&flag);
+//  652   unsigned char flag;
+//  653   
+//  654   PARAMETROS_le(ADR_FLAG_BV20,(void*)&flag);
         ADD      R1,SP,#+0
         MOVS     R0,#+1
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  625   
-//  626   if(!flag)
+//  655   
+//  656   if(!flag)
         LDRB     R0,[SP, #+0]
         CMP      R0,#+0
         BEQ.N    ??APLICACAO_verifica_cctalk_0
-//  627     return;  
-//  628   
-//  629   eIDIOMA idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
+//  657     return;  
+//  658   
+//  659   eIDIOMA idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
 ??APLICACAO_verifica_cctalk_1:
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  630   eBV20_state estado_atual = BV20_get_current_state();
+//  660   eBV20_state estado_atual = BV20_get_current_state();
           CFI FunCall BV20_get_current_state
         BL       BV20_get_current_state
         MOVS     R5,R0
-//  631   
-//  632   if(estado_atual!=BV20_OFFLINE)
+//  661   
+//  662   if(estado_atual!=BV20_OFFLINE)
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+3
         BNE.N    ??APLICACAO_verifica_cctalk_0
-//  633     return;
-//  634   
-//  635   STRING_write_to_external(CLEAR_DISPLAY,
-//  636                            (char*)STRING_mensagem_cctalk_offline[idioma][0],
-//  637                            (char*)STRING_mensagem_cctalk_offline[idioma][1]);       
+//  663     return;
+//  664   
+//  665   STRING_write_to_external(CLEAR_DISPLAY,
+//  666                            (char*)STRING_mensagem_cctalk_offline[idioma][0],
+//  667                            (char*)STRING_mensagem_cctalk_offline[idioma][1]);       
 ??APLICACAO_verifica_cctalk_2:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LDR.N    R0,??DataTable14_23
@@ -1958,108 +2045,108 @@ APLICACAO_verifica_cctalk:
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  638     
-//  639   eTECLA tecla;
-//  640   
-//  641   for(;;){
-//  642     
-//  643     estado_atual = BV20_get_current_state();
+//  668     
+//  669   eTECLA tecla;
+//  670   
+//  671   for(;;){
+//  672     
+//  673     estado_atual = BV20_get_current_state();
 ??APLICACAO_verifica_cctalk_3:
           CFI FunCall BV20_get_current_state
         BL       BV20_get_current_state
         MOVS     R5,R0
-//  644     
-//  645     if(estado_atual!=BV20_OFFLINE)
+//  674     
+//  675     if(estado_atual!=BV20_OFFLINE)
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+3
         BNE.N    ??APLICACAO_verifica_cctalk_0
-//  646       return;
-//  647     
-//  648     tecla = TECLADO_getch();
+//  676       return;
+//  677     
+//  678     tecla = TECLADO_getch();
 ??APLICACAO_verifica_cctalk_4:
           CFI FunCall TECLADO_getch
         BL       TECLADO_getch
         MOVS     R6,R0
-//  649     switch(tecla){
+//  679     switch(tecla){
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         MOVS     R0,R6
         CMP      R0,#+1
         BEQ.N    ??APLICACAO_verifica_cctalk_5
         CMP      R0,#+4
         BNE.N    ??APLICACAO_verifica_cctalk_6
-//  650       case TECLA_ENTER:
-//  651             BOARD_reset_tempo_propaganda();
+//  680       case TECLA_ENTER:
+//  681             BOARD_reset_tempo_propaganda();
 ??APLICACAO_verifica_cctalk_7:
           CFI FunCall BOARD_reset_tempo_propaganda
         BL       BOARD_reset_tempo_propaganda
-//  652             APLIACAO_wait_lcd();
+//  682             APLIACAO_wait_lcd();
           CFI FunCall APLIACAO_wait_lcd
         BL       APLIACAO_wait_lcd
-//  653             BOARD_liga_placa_instrucao(0);
+//  683             BOARD_liga_placa_instrucao(0);
         MOVS     R0,#+0
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  654             MCFG_entry();                     
+//  684             MCFG_entry();                     
           CFI FunCall MCFG_entry
         BL       MCFG_entry
-//  655             BOARD_liga_placa_instrucao(1);
+//  685             BOARD_liga_placa_instrucao(1);
         MOVS     R0,#+1
           CFI FunCall BOARD_liga_placa_instrucao
         BL       BOARD_liga_placa_instrucao
-//  656             idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
+//  686             idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
           CFI FunCall APLICACAO_carrega_idioma
         BL       APLICACAO_carrega_idioma
         MOVS     R4,R0
-//  657             APLICACAO_release_lcd();             
+//  687             APLICACAO_release_lcd();             
           CFI FunCall APLICACAO_release_lcd
         BL       APLICACAO_release_lcd
-//  658             STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);              
+//  688             STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);              
         MOVS     R2,#+0
         MOVS     R1,#+0
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  659             BOARD_reset_tempo_propaganda();
+//  689             BOARD_reset_tempo_propaganda();
           CFI FunCall BOARD_reset_tempo_propaganda
         BL       BOARD_reset_tempo_propaganda
-//  660            break;
+//  690            break;
         B.N      ??APLICACAO_verifica_cctalk_6
-//  661       case TECLA_ESC:
-//  662            break;
-//  663     }    
-//  664     APLICACAO_tela_descanso();      
+//  691       case TECLA_ESC:
+//  692            break;
+//  693     }    
+//  694     APLICACAO_tela_descanso();      
 ??APLICACAO_verifica_cctalk_5:
 ??APLICACAO_verifica_cctalk_6:
           CFI FunCall APLICACAO_tela_descanso
         BL       APLICACAO_tela_descanso
-//  665     vTaskDelay(500);
+//  695     vTaskDelay(500);
         MOV      R0,#+500
           CFI FunCall vTaskDelay
         BL       vTaskDelay
         B.N      ??APLICACAO_verifica_cctalk_3
-//  666   }    
+//  696   }    
 ??APLICACAO_verifica_cctalk_0:
         POP      {R0,R1,R4-R6,PC}  ;; return
           CFI EndBlock cfiBlock14
-//  667 }
-//  668 /***********************************************************************************
-//  669 *       Descrição       :       Faz a verificação cíclica dos sinais 
-//  670 *                               do papel e do termistor
-//  671 *       Parametros      :       nenhum
-//  672 *       Retorno         :       nenhum
-//  673 ***********************************************************************************/
+//  697 }
+//  698 /***********************************************************************************
+//  699 *       Descrição       :       Faz a verificação cíclica dos sinais 
+//  700 *                               do papel e do termistor
+//  701 *       Parametros      :       nenhum
+//  702 *       Retorno         :       nenhum
+//  703 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock15 Using cfiCommon0
           CFI Function APLICACAO_verificao_ciclica
         THUMB
-//  674 void APLICACAO_verificao_ciclica(void){
+//  704 void APLICACAO_verificao_ciclica(void){
 APLICACAO_verificao_ciclica:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  675   
-//  676   switch(POST_verificacao_ciclica()){
+//  705   
+//  706   switch(POST_verificacao_ciclica()){
           CFI FunCall POST_verificacao_ciclica
         BL       POST_verificacao_ciclica
         CMP      R0,#+0
@@ -2068,126 +2155,126 @@ APLICACAO_verificao_ciclica:
         BEQ.N    ??APLICACAO_verificao_ciclica_1
         BCC.N    ??APLICACAO_verificao_ciclica_2
         B.N      ??APLICACAO_verificao_ciclica_3
-//  677    case POST_CICLICO_SUCESSO:
-//  678         break;
+//  707    case POST_CICLICO_SUCESSO:
+//  708         break;
 ??APLICACAO_verificao_ciclica_0:
         B.N      ??APLICACAO_verificao_ciclica_3
-//  679    case POST_CICLICO_FALHA_EMBALAGEM:
-//  680         STRING_write_to_external(CLEAR_DISPLAY,"E03:FALTA","EMBALAGEM");
+//  709    case POST_CICLICO_FALHA_EMBALAGEM:
+//  710         STRING_write_to_external(CLEAR_DISPLAY,"E03:FALTA","EMBALAGEM");
 ??APLICACAO_verificao_ciclica_2:
         LDR.N    R2,??DataTable14_24
         LDR.N    R1,??DataTable14_25
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  681         APLICACAO_loop_falha_ciclica();
+//  711         APLICACAO_loop_falha_ciclica();
           CFI FunCall APLICACAO_loop_falha_ciclica
         BL       APLICACAO_loop_falha_ciclica
-//  682         break;
+//  712         break;
         B.N      ??APLICACAO_verificao_ciclica_3
-//  683    case POST_CICLICO_FALHA_TERMISTOR:
-//  684         STRING_write_to_external(CLEAR_DISPLAY,"E04:FALHA","SENS. TEMP.");
+//  713    case POST_CICLICO_FALHA_TERMISTOR:
+//  714         STRING_write_to_external(CLEAR_DISPLAY,"E04:FALHA","SENS. TEMP.");
 ??APLICACAO_verificao_ciclica_1:
         LDR.N    R2,??DataTable14_26
         LDR.N    R1,??DataTable14_27
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  685         APLICACAO_loop_falha_ciclica();
+//  715         APLICACAO_loop_falha_ciclica();
           CFI FunCall APLICACAO_loop_falha_ciclica
         BL       APLICACAO_loop_falha_ciclica
-//  686         break;
-//  687   }  
-//  688 }
+//  716         break;
+//  717   }  
+//  718 }
 ??APLICACAO_verificao_ciclica_3:
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock15
-//  689 /***********************************************************************************
-//  690 *       Descrição       :       Menu do loop onde há a falha no sensor de
-//  691 *                               temperatura ou falta de embalagem
-//  692 *       Parametros      :       nenhum
-//  693 *       Retorno         :       nenhum
-//  694 ***********************************************************************************/
+//  719 /***********************************************************************************
+//  720 *       Descrição       :       Menu do loop onde há a falha no sensor de
+//  721 *                               temperatura ou falta de embalagem
+//  722 *       Parametros      :       nenhum
+//  723 *       Retorno         :       nenhum
+//  724 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock16 Using cfiCommon0
           CFI Function APLICACAO_loop_falha_ciclica
         THUMB
-//  695 void APLICACAO_loop_falha_ciclica(void){
+//  725 void APLICACAO_loop_falha_ciclica(void){
 APLICACAO_loop_falha_ciclica:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
           CFI R5 Frame(CFA, -8)
           CFI R4 Frame(CFA, -12)
           CFI CFA R13+16
-//  696   eTECLA tecla;
-//  697   unsigned char loop=1;
+//  726   eTECLA tecla;
+//  727   unsigned char loop=1;
         MOVS     R5,#+1
-//  698     
-//  699   for(;loop;){
+//  728     
+//  729   for(;loop;){
 ??APLICACAO_loop_falha_ciclica_0:
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+0
         BEQ.N    ??APLICACAO_loop_falha_ciclica_1
-//  700     
-//  701     tecla = TECLADO_getch();
+//  730     
+//  731     tecla = TECLADO_getch();
           CFI FunCall TECLADO_getch
         BL       TECLADO_getch
         MOVS     R4,R0
-//  702     switch(tecla){
+//  732     switch(tecla){
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         MOVS     R0,R4
         CMP      R0,#+1
         BEQ.N    ??APLICACAO_loop_falha_ciclica_2
         CMP      R0,#+4
         BNE.N    ??APLICACAO_loop_falha_ciclica_3
-//  703       case TECLA_ENTER:
-//  704           MCFG_entry();                     
+//  733       case TECLA_ENTER:
+//  734           MCFG_entry();                     
 ??APLICACAO_loop_falha_ciclica_4:
           CFI FunCall MCFG_entry
         BL       MCFG_entry
-//  705            break;
+//  735            break;
         B.N      ??APLICACAO_loop_falha_ciclica_3
-//  706       case TECLA_ESC:
-//  707            loop = 0;
+//  736       case TECLA_ESC:
+//  737            loop = 0;
 ??APLICACAO_loop_falha_ciclica_2:
         MOVS     R0,#+0
         MOVS     R5,R0
-//  708            break;
-//  709     }      
-//  710     
-//  711     APLICACAO_tela_descanso();    
+//  738            break;
+//  739     }      
+//  740     
+//  741     APLICACAO_tela_descanso();    
 ??APLICACAO_loop_falha_ciclica_3:
           CFI FunCall APLICACAO_tela_descanso
         BL       APLICACAO_tela_descanso
         B.N      ??APLICACAO_loop_falha_ciclica_0
-//  712   }  
-//  713   
-//  714   STRING_write_to_internal(CLEAR_DISPLAY,"REINICIANDO","VERIFICACAO");
+//  742   }  
+//  743   
+//  744   STRING_write_to_internal(CLEAR_DISPLAY,"REINICIANDO","VERIFICACAO");
 ??APLICACAO_loop_falha_ciclica_1:
         LDR.N    R2,??DataTable14_28
         LDR.N    R1,??DataTable14_29
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  715   vTaskDelay(3000);  
+//  745   vTaskDelay(3000);  
         MOVW     R0,#+3000
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  716 }
+//  746 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock16
-//  717 /***********************************************************************************
-//  718 *       Descrição       :       Ciclo de desumidificação da máquina
-//  719 *       Parametros      :       nenhum
-//  720 *       Retorno         :       nenhum
-//  721 ***********************************************************************************/
+//  747 /***********************************************************************************
+//  748 *       Descrição       :       Ciclo de desumidificação da máquina
+//  749 *       Parametros      :       nenhum
+//  750 *       Retorno         :       nenhum
+//  751 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock17 Using cfiCommon0
           CFI Function APLICACAO_ciclo_desumidificador
         THUMB
-//  722 void APLICACAO_ciclo_desumidificador(unsigned char flag){
+//  752 void APLICACAO_ciclo_desumidificador(unsigned char flag){
 APLICACAO_ciclo_desumidificador:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -2195,8 +2282,8 @@ APLICACAO_ciclo_desumidificador:
           CFI R4 Frame(CFA, -12)
           CFI CFA R13+16
         MOVS     R4,R0
-//  723   
-//  724   if(flag && !APLICACAO_tempo_desumidificador){
+//  753   
+//  754   if(flag && !APLICACAO_tempo_desumidificador){
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+0
         BEQ.N    ??APLICACAO_ciclo_desumidificador_0
@@ -2204,97 +2291,97 @@ APLICACAO_ciclo_desumidificador:
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??APLICACAO_ciclo_desumidificador_0
-//  725     
-//  726     unsigned int tempo=30000;
+//  755     
+//  756     unsigned int tempo=30000;
         MOVW     R5,#+30000
-//  727     
-//  728     STRING_write_to_internal(CLEAR_DISPLAY,"CICLO DE","DESUMIDIFICACAO");
+//  757     
+//  758     STRING_write_to_internal(CLEAR_DISPLAY,"CICLO DE","DESUMIDIFICACAO");
         LDR.N    R2,??DataTable14_30
         LDR.N    R1,??DataTable14_31
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_internal
         BL       STRING_write_to_internal
-//  729     STRING_write_to_external(CLEAR_DISPLAY,"CICLO DE","DESUMIDIFICACAO");
+//  759     STRING_write_to_external(CLEAR_DISPLAY,"CICLO DE","DESUMIDIFICACAO");
         LDR.N    R2,??DataTable14_30
         LDR.N    R1,??DataTable14_31
         MOVS     R0,#+0
           CFI FunCall STRING_write_to_external
         BL       STRING_write_to_external
-//  730     
-//  731     POTENCIA_set_neutro(1);
+//  760     
+//  761     POTENCIA_set_neutro(1);
         MOVS     R0,#+1
           CFI FunCall POTENCIA_set_neutro
         BL       POTENCIA_set_neutro
-//  732     POTENCIA_setRPM(6000);
+//  762     POTENCIA_setRPM(6000);
         MOVW     R0,#+6000
           CFI FunCall POTENCIA_setRPM
         BL       POTENCIA_setRPM
-//  733     CT_set_temperatura(60);
+//  763     CT_set_temperatura(60);
         MOVS     R0,#+60
           CFI FunCall CT_set_temperatura
         BL       CT_set_temperatura
-//  734     vTaskDelay(3000);
+//  764     vTaskDelay(3000);
         MOVW     R0,#+3000
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  735     
-//  736     while(tempo--){
+//  765     
+//  766     while(tempo--){
 ??APLICACAO_ciclo_desumidificador_1:
         MOVS     R0,R5
         SUBS     R5,R0,#+1
         CMP      R0,#+0
         BEQ.N    ??APLICACAO_ciclo_desumidificador_2
-//  737       
-//  738       if(POTENCIA_getRPMmedido()<1000){
+//  767       
+//  768       if(POTENCIA_getRPMmedido()<1000){
           CFI FunCall POTENCIA_getRPMmedido
         BL       POTENCIA_getRPMmedido
         CMP      R0,#+1000
         BCS.N    ??APLICACAO_ciclo_desumidificador_3
-//  739         CT_set_temperatura(0);
+//  769         CT_set_temperatura(0);
         MOVS     R0,#+0
           CFI FunCall CT_set_temperatura
         BL       CT_set_temperatura
-//  740         POTENCIA_setRPM(0);
+//  770         POTENCIA_setRPM(0);
         MOVS     R0,#+0
           CFI FunCall POTENCIA_setRPM
         BL       POTENCIA_setRPM
-//  741         POTENCIA_set_neutro(0);        
+//  771         POTENCIA_set_neutro(0);        
         MOVS     R0,#+0
           CFI FunCall POTENCIA_set_neutro
         BL       POTENCIA_set_neutro
-//  742         return;
+//  772         return;
         B.N      ??APLICACAO_ciclo_desumidificador_4
-//  743       }
-//  744       vTaskDelay(1);
+//  773       }
+//  774       vTaskDelay(1);
 ??APLICACAO_ciclo_desumidificador_3:
         MOVS     R0,#+1
           CFI FunCall vTaskDelay
         BL       vTaskDelay
         B.N      ??APLICACAO_ciclo_desumidificador_1
-//  745     }
-//  746     
-//  747     CT_set_temperatura(0);
+//  775     }
+//  776     
+//  777     CT_set_temperatura(0);
 ??APLICACAO_ciclo_desumidificador_2:
         MOVS     R0,#+0
           CFI FunCall CT_set_temperatura
         BL       CT_set_temperatura
-//  748     POTENCIA_setRPM(0);
+//  778     POTENCIA_setRPM(0);
         MOVS     R0,#+0
           CFI FunCall POTENCIA_setRPM
         BL       POTENCIA_setRPM
-//  749     POTENCIA_set_neutro(0);
+//  779     POTENCIA_set_neutro(0);
         MOVS     R0,#+0
           CFI FunCall POTENCIA_set_neutro
         BL       POTENCIA_set_neutro
-//  750     APLICACAO_verifica_post();
+//  780     APLICACAO_verifica_post();
           CFI FunCall APLICACAO_verifica_post
         BL       APLICACAO_verifica_post
-//  751     APLICACAO_tempo_desumidificador = TEMPO_DESUMIDIFICADOR;
+//  781     APLICACAO_tempo_desumidificador = TEMPO_DESUMIDIFICADOR;
         LDR.N    R0,??DataTable14
         LDR.N    R1,??DataTable14_1  ;; 0x1b7740
         STR      R1,[R0, #+0]
-//  752   }
-//  753 }
+//  782   }
+//  783 }
 ??APLICACAO_ciclo_desumidificador_0:
 ??APLICACAO_ciclo_desumidificador_4:
         POP      {R0,R4,R5,PC}    ;; return
@@ -2376,43 +2463,43 @@ APLICACAO_ciclo_desumidificador:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable14_12:
-        DC32     APLICACAO_tubos
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable14_13:
         DC32     STRING_mensagem_retire_troco
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_14:
+??DataTable14_13:
         DC32     `?<Constant "E0:VENTILADOR">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_15:
+??DataTable14_14:
         DC32     STRING_mensagem_fora_servico
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_16:
+??DataTable14_15:
         DC32     `?<Constant "E1:AQUECIMENTO">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_17:
+??DataTable14_16:
         DC32     `?<Constant "E2:DOSADOR">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_18:
+??DataTable14_17:
         DC32     `?<Constant "E3:EMBALAGEM">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable14_18:
+        DC32     STRING_liberando_troco
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -2589,16 +2676,16 @@ APLICACAO_ciclo_desumidificador:
         DC8 "DESUMIDIFICACAO"
 
         END
-//  754 /***********************************************************************************
-//  755 *       Fim do arquivo
-//  756 ***********************************************************************************/
+//  784 /***********************************************************************************
+//  785 *       Fim do arquivo
+//  786 ***********************************************************************************/
 // 
 //    25 bytes in section .bss
 //     4 bytes in section .data
 //   212 bytes in section .rodata
-// 2 552 bytes in section .text
+// 2 632 bytes in section .text
 // 
-// 2 552 bytes of CODE  memory
+// 2 632 bytes of CODE  memory
 //   212 bytes of CONST memory
 //    29 bytes of DATA  memory
 //

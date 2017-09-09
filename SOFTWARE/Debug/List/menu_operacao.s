@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  20:04:12 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     09/Sep/2017  15:28:17 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -1796,9 +1796,9 @@ MENUOP_configura_canais_moeda:
         SUBS     R5,R5,#+1
         B.N      ??MENUOP_configura_canais_moeda_9
 //  590            else
-//  591              indice = 16;
+//  591              indice = 15;
 ??MENUOP_configura_canais_moeda_8:
-        MOVS     R0,#+16
+        MOVS     R0,#+15
         MOVS     R5,R0
 //  592            break;
 //  593     }        

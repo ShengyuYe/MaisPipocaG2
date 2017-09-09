@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     08/Sep/2017  19:51:56 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     09/Sep/2017  15:28:47 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -31,6 +31,7 @@
         #define SHT_PROGBITS 0x1
 
         EXTERN BOARD_timer_tick
+        EXTERN SMDBCOIN_lock_coin
         EXTERN vPortClearInterruptMask
         EXTERN vPortSetInterruptMask
         EXTERN vPortStartFirstTask
@@ -346,85 +347,83 @@ vPortExitCritical:
 //  155 extern unsigned char MDBUART_novo_pacote;
 //  156 extern unsigned char MDBUART_silent_time;
 //  157 extern unsigned char MDBUART_buffer_in[50];
-//  158 
+//  158 extern unsigned short int SMDBCOIN_lock_coin;
+//  159 
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function xPortSysTickHandler
         THUMB
-//  159 void xPortSysTickHandler( void )
-//  160 {
+//  160 void xPortSysTickHandler( void )
+//  161 {
 xPortSysTickHandler:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
-//  161   unsigned long ulDummy;
-//  162     
-//  163   BOARD_timer_tick();
+//  162   unsigned long ulDummy;
+//  163     
+//  164   BOARD_timer_tick();
           CFI FunCall BOARD_timer_tick
         BL       BOARD_timer_tick
-//  164   
-//  165 /*
-//  166   if(MDBUART_silent_time){
-//  167     // Bytes recebidos pela UART1
-//  168     if(MDBUART_bytes_recebidos && MDBUART_silent_time==1){
-//  169          
-//  170       if(!MDBUART_buffer_in[MDBUART_bytes_recebidos-1] || MDBUART_buffer_in[MDBUART_bytes_recebidos-1]==0xFF)
-//  171         MDBUART_novo_pacote = 1;
-//  172       else{      
-//  173         MDBUART_buffer_in[MDBUART_bytes_recebidos++] = 0;
-//  174         MDBUART_novo_pacote = 1;
-//  175        }     
-//  176     }    
-//  177     MDBUART_silent_time--;
-//  178   }
-//  179   */
-//  180 
-//  181   *(portNVIC_INT_CTRL) = portNVIC_PENDSVSET;	
+//  165   
+//  166   if(SMDBCOIN_lock_coin)
+        LDR.N    R0,??DataTable5_3
+        LDRH     R0,[R0, #+0]
+        CMP      R0,#+0
+        BEQ.N    ??xPortSysTickHandler_0
+//  167     SMDBCOIN_lock_coin--;
+        LDR.N    R0,??DataTable5_3
+        LDRH     R0,[R0, #+0]
+        SUBS     R0,R0,#+1
+        LDR.N    R1,??DataTable5_3
+        STRH     R0,[R1, #+0]
+//  168 
+//  169   *(portNVIC_INT_CTRL) = portNVIC_PENDSVSET;	
+??xPortSysTickHandler_0:
         LDR.N    R0,??DataTable5_2  ;; 0xe000ed04
         MOVS     R1,#+268435456
         STR      R1,[R0, #+0]
-//  182 
-//  183     ulDummy = portSET_INTERRUPT_MASK_FROM_ISR();
+//  170 
+//  171     ulDummy = portSET_INTERRUPT_MASK_FROM_ISR();
         MOVS     R0,#+0
         MOVS     R4,R0
           CFI FunCall vPortSetInterruptMask
         BL       vPortSetInterruptMask
-//  184     {
-//  185 	vTaskIncrementTick();
+//  172     {
+//  173 	vTaskIncrementTick();
           CFI FunCall vTaskIncrementTick
         BL       vTaskIncrementTick
-//  186     }
-//  187     portCLEAR_INTERRUPT_MASK_FROM_ISR( ulDummy );         
+//  174     }
+//  175     portCLEAR_INTERRUPT_MASK_FROM_ISR( ulDummy );         
           CFI FunCall vPortClearInterruptMask
         BL       vPortClearInterruptMask
-//  188 }
+//  176 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock6
-//  189 /********************************************************************************
-//  190 *   Descrição     :   
-//  191 *   Parametros    : 
-//  192 *   Retorno       : 
-//  193 ********************************************************************************/
+//  177 /********************************************************************************
+//  178 *   Descrição     :   
+//  179 *   Parametros    : 
+//  180 *   Retorno       : 
+//  181 ********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function prvSetupTimerInterrupt
           CFI NoCalls
         THUMB
-//  194 void prvSetupTimerInterrupt( void ){
-//  195   
-//  196   *(portNVIC_SYSTICK_LOAD) = ( configCPU_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;
+//  182 void prvSetupTimerInterrupt( void ){
+//  183   
+//  184   *(portNVIC_SYSTICK_LOAD) = ( configCPU_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;
 prvSetupTimerInterrupt:
-        LDR.N    R0,??DataTable5_3  ;; 0xe000e014
-        LDR.N    R1,??DataTable5_4  ;; 0x182b7
+        LDR.N    R0,??DataTable5_4  ;; 0xe000e014
+        LDR.N    R1,??DataTable5_5  ;; 0x182b7
         STR      R1,[R0, #+0]
-//  197   *(portNVIC_SYSTICK_CTRL) = portNVIC_SYSTICK_CLK | portNVIC_SYSTICK_INT | portNVIC_SYSTICK_ENABLE;
-        LDR.N    R0,??DataTable5_5  ;; 0xe000e010
+//  185   *(portNVIC_SYSTICK_CTRL) = portNVIC_SYSTICK_CLK | portNVIC_SYSTICK_INT | portNVIC_SYSTICK_ENABLE;
+        LDR.N    R0,??DataTable5_6  ;; 0xe000e010
         MOVS     R1,#+7
         STR      R1,[R0, #+0]
-//  198 }
+//  186 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock7
 
@@ -450,18 +449,24 @@ prvSetupTimerInterrupt:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable5_3:
-        DC32     0xe000e014
+        DC32     SMDBCOIN_lock_coin
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable5_4:
-        DC32     0x182b7
+        DC32     0xe000e014
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable5_5:
+        DC32     0x182b7
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable5_6:
         DC32     0xe000e010
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
@@ -476,15 +481,16 @@ prvSetupTimerInterrupt:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  199 /********************************************************************************
-//  200 *   Fim do arquivo
-//  201 ********************************************************************************/
-//  202 
+//  187 /********************************************************************************
+//  188 *   Fim do arquivo
+//  189 ********************************************************************************/
+//  190 
+//  191   
 // 
 //   4 bytes in section .data
-// 196 bytes in section .text
+// 218 bytes in section .text
 // 
-// 196 bytes of CODE memory
+// 218 bytes of CODE memory
 //   4 bytes of DATA memory
 //
 //Errors: none
