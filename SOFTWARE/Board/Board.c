@@ -94,12 +94,15 @@ extern unsigned int PAGAMENTOS_timeout_pagamento;
 unsigned int BOARD_contador_propaganda=10*60000;
 unsigned int BOARD_intervalo_propaganda=0;
 unsigned int BOARD_lock_timer;
+unsigned int APLICACAO_tempo_compensacao;
 extern unsigned int MCS_contadorSemente;
 extern unsigned int HD44780_2_tempoRefreshSegundoLCD;
 extern unsigned int PREPARACAO_contador_compensacao;
 extern unsigned int APLICACAO_tempo_desumidificador;
 extern unsigned int SMC_contador;
 extern unsigned int APLICACAO_tempo_mensagem;
+extern unsigned int PREPARACAO_compensador;
+
 /***********************************************************************************
 *       Funções locais
 ***********************************************************************************/
@@ -114,8 +117,9 @@ void BOARD_instrucao_leds(void);
 *       Parametros      :       nenhum
 *       Retorno         :       nenhum
 ***********************************************************************************/
-void BOARD_ini(void){
-  
+void BOARD_ini(void){  
+  INI_MOTOR_EMBALAGEM_PIN();
+    
   CCTALK_ini();
   PAGAMENTOS_ini();
   PAGAMENTOS_set_bloqueio(1);
@@ -134,7 +138,7 @@ void BOARD_ini(void){
   SERIALMUX_ini();
   // Deixa a porta serial RS232
   // habilitada direto
-  SERIALMUX_seleciona(SERIALMUX_RS232);
+  SERIALMUX_seleciona(SERIALMUX_USB);
 }
 /***********************************************************************************
 *       Descrição       :       Tick de timer para o módulo board
@@ -184,6 +188,14 @@ void BOARD_timer_tick(void){
   
   if(APLICACAO_tempo_mensagem)
     APLICACAO_tempo_mensagem--;
+  
+  if(!APLICACAO_tempo_compensacao){
+    APLICACAO_tempo_compensacao = 3*60*1000;
+    if(PREPARACAO_compensador)
+      PREPARACAO_compensador--;
+  }
+  else
+    APLICACAO_tempo_compensacao--;
   
   MCS_contadorSemente++;
   
