@@ -68,13 +68,13 @@
 *       Ganhos do PID
 ***********************************************************************************/
 #ifdef FQ_REDE_60_HZ
-  #define KP                                       4
-  #define KI                                       0.2
-  #define KD                                       0.2
+  #define KP                                       2////4
+  #define KI                                       0.02
+  #define KD                                       0.5
 #else
   #define KP                                       4
   #define KI                                       0.2
-  #define KD                                       0.2
+  #define KD                                       0.1
 #endif
 
 #ifdef FQ_REDE_60_HZ
@@ -105,6 +105,7 @@ unsigned int POTENCIA_bufferRotacao[TAM_BUF_VELOCIDADE]={0};
 unsigned char POTENCIA_ligaMotor=0;
 unsigned int POTENCIA_set_point=0;
 extern unsigned int BOARD_lock_timer;
+unsigned char PORTENCIA_correcao_erro = 0;
 
 /***********************************************************************************
 *       Funções locais
@@ -178,6 +179,8 @@ void POTENCIA_ini(void){
   T2EMR_bit.EMC0 = 0;
   
   T2MR0 = T2TC+1000;  
+  
+  PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&PORTENCIA_correcao_erro);    
 }
 /***********************************************************************************
 *       Descrição       :       Inicializa o neutro de potência
@@ -310,38 +313,51 @@ void POTENCIA_controleVelocidade(void){
           if(referencia_rampa>POTENCIA_set_point)
             referencia_rampa-=25;//50;
           else
-            referencia_rampa+=25;//50;
+            referencia_rampa+=25;//50;          
         }      
         
         if(ciclos){
           // Nos primeiros ciclos trabalha apenas com o erro
           // proporcional
-          ciclos--;
-          erro = referencia_rampa - POTENCIA_getRPMmedido();
-          erro*= kp_const;
-          erro>>= 8;   
-          POTENCIA_calcula_derivada_erro(referencia_rampa);
+          if(PORTENCIA_correcao_erro){
+            //Controla o motor com algortmo 
+            ciclos--;
+            erro = referencia_rampa - POTENCIA_getRPMmedido();
+            erro*= kp_const;
+            erro>>= 8;   
+            POTENCIA_calcula_derivada_erro(referencia_rampa);
           
-          SET_ATRASO(POTENCIA_calculaAtrasoGate(erro));
+            SET_ATRASO(POTENCIA_calculaAtrasoGate(erro));
+          }
+          else{
+            SET_ATRASO(POTENCIA_calculaAtrasoGate(referencia_rampa));            
+          }
         }
         else{
           // Calcula o erro entre a referência e a rotação medida pelo sensor
-          erro = referencia_rampa - POTENCIA_getRPMmedido();
-          // Calcula a integral do erro
-          erro_i = POTENCIA_calcula_integral_erro(erro,0);                     
-          erro_i *= ki_const;
-          erro_i >>= 15;
+          if(PORTENCIA_correcao_erro){
+            // Controle o motor usando a correção
+            // de erro com PID
+            erro = referencia_rampa - POTENCIA_getRPMmedido();
+            // Calcula a integral do erro
+            erro_i = POTENCIA_calcula_integral_erro(erro,0);                     
+            erro_i *= ki_const;
+            erro_i >>= 15;
           
-          erro_d = POTENCIA_calcula_derivada_erro(erro);
-          erro_d *= kd_const;
-          erro_d >>= 15;
-          
-          erro*= kp_const;
-          erro>>= 8;          
-          erro += erro_i;
-          erro += erro_d;
+            erro_d = POTENCIA_calcula_derivada_erro(erro);
+            erro_d *= kd_const;
+            erro_d >>= 15;
+           
+            erro*= kp_const;
+            erro>>= 8;          
+            erro += erro_i;
+            erro += erro_d;
                                  
-          SET_ATRASO(POTENCIA_calculaAtrasoGate(erro));          
+            SET_ATRASO(POTENCIA_calculaAtrasoGate(erro));          
+          }
+          else{
+            SET_ATRASO(POTENCIA_calculaAtrasoGate(referencia_rampa));            
+          }       
         }
   }
   else{
@@ -369,13 +385,9 @@ int POTENCIA_calcula_integral_erro(int erro,unsigned flush){
   abs = erro;
   if(abs<0) abs*= -1;
   
-  if(abs<100000){
+  if(abs<(0x7FFFFFFFF))
     y+=erro;
-  }
-  else{
-    y = 0;
-  }
-
+  
   return y;
 }
 /***********************************************************************************
@@ -384,13 +396,25 @@ int POTENCIA_calcula_integral_erro(int erro,unsigned flush){
 *       Retorno         :       (int) derivada do erro
 ***********************************************************************************/
 int POTENCIA_calcula_derivada_erro(int erro){
-  static int ultimo_erro = 0;
+  static int buffer_z[4];
+  static unsigned short int indice=0;
+  int y=0;
   
-  erro = erro - ultimo_erro;     
-  ultimo_erro = erro;  
+  buffer_z[indice] = erro;
   
-  //Trunca os limites  
-  return erro;
+  y+= 11*erro;
+  y-= 18*buffer_z[(indice+1)%4];
+  y+=  9*buffer_z[(indice+2)%4];
+  y-=  2*buffer_z[(indice+3)%4];  
+  indice = (indice+1) % 4;  
+  y/=6;
+  
+  if(y>12000)
+    y = 12000;
+  if(y<-12000)
+    y = -12000;
+  
+  return y;   
 }
 /***********************************************************************************
 *       Descrição       :       Setter para a rotação do motor
@@ -420,7 +444,7 @@ unsigned int POTENCIA_calculaAtrasoGate(int rotacao_rpm){
 #ifdef FQ_REDE_60_HZ  
   long long int valor;
   
-  valor = rotacao_rpm*4404;
+  valor = rotacao_rpm*2800;//4404;
   valor>>= 15;
   valor = 2499 - valor; 
   

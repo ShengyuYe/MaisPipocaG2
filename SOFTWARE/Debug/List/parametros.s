@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     12/Sep/2017  15:11:47 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     13/Sep/2017  16:11:49 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -147,7 +147,7 @@ memcpy:
 //   38 #include "tabela_parametros.h"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-// __absolute struct <unnamed> const tabela_parametros[65]
+// __absolute struct <unnamed> const tabela_parametros[67]
 tabela_parametros:
         DATA
         DC32 0H
@@ -502,6 +502,18 @@ tabela_parametros:
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         DC8 69H, 31H, 36H
         DC8 0, 0, 0
+        DC32 0H
+        DC16 1
+        DC8 "COMP_ERRO_MOTOR"
+        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        DC8 4EH, 55H, 4DH
+        DC8 0, 0, 0
+        DC32 0H
+        DC16 4
+        DC8 "COMP_TEMP"
+        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        DC8 4EH, 55H, 4DH
+        DC8 0, 0, 0
 //   39 
 //   40 
 //   41 /***********************************************************************************
@@ -579,7 +591,7 @@ PARAMETROS_resolve_endereco:
 ??PARAMETROS_resolve_endereco_0:
         CMP      R2,R1
         BCS.N    ??PARAMETROS_resolve_endereco_1
-//   83     endereco_fisico+=(tabela_parametros[i].length+2); // 2 = CRC
+//   83     endereco_fisico+=(tabela_parametros[i].length+2);
         MOVS     R3,#+44
         LDR.N    R4,??DataTable2
         MLA      R3,R3,R2,R4
@@ -821,11 +833,11 @@ PARAMETROS_le:
 //  131 ***********************************************************************************/
 // 
 //   128 bytes in section .bss
-// 2 880 bytes in section .rodata
+// 2 968 bytes in section .rodata
 //   344 bytes in section .text
 // 
 //   322 bytes of CODE  memory (+ 22 bytes shared)
-// 2 880 bytes of CONST memory
+// 2 968 bytes of CONST memory
 //   128 bytes of DATA  memory
 //
 //Errors: none

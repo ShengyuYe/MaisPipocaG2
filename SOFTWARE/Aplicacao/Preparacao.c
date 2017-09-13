@@ -45,7 +45,7 @@
 #define TEMPO_ABRIR_PACOTE              50*1000
 #define TEMPO_RAMPA                     3000
 #define THRESOLD_RESFRIAMENTO           1
-#define RELOAD_COMPENSADOR              2*60000 // 5 minutos
+#define RELOAD_COMPENSADOR              5*60000 // 5 minutos
 /**********************************************************************************
 *       Constantes
 **********************************************************************************/
@@ -87,6 +87,8 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   unsigned char idioma;
   unsigned char delta=0;
   unsigned int valor_pipoca;
+  unsigned char flag_correcao_erro;
+  unsigned int compensador;
   
   PAGAMENTOS_set_bloqueio(1);
   
@@ -95,6 +97,8 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   PARAMETROS_le(ADR_VELOCIDADE_PREPARACAO,(void*)&velocidade_processo);
   PARAMETROS_le(ADR_TEMPO_EMBALAGEM,(void*)&tempo_embalagem);
   PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valor_pipoca);  
+  PARAMETROS_le(ADR_COMPENSADOR_ERRO_ROTACAO,(void*)&flag_correcao_erro);    
+  PARAMETROS_le(ADR_FATOR_COMPENSADOR,(void*)&compensador);
 
   //-----------------------------------------------
   // Por falta de testes, deixei esse trecho abaixo
@@ -111,18 +115,10 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   
   BOARD_setter_led_instrucao(LED_INSIRA_DINHEIRO,ACESO);
        
-  //Faz o ajuste de compensação da panela
-  //unsigned int ajuste = AA_calculaTemperatura();
-  if(PREPARACAO_contador_compensacao){
-    if(PREPARACAO_compensador<5)
-      PREPARACAO_compensador++;
-  }
-  else{
-    if(PREPARACAO_compensador)
-      PREPARACAO_compensador--;
-  }
-  
-  PREPARACAO_contador_compensacao = RELOAD_COMPENSADOR;  
+  if(!compensador)
+    compensador=1;
+  if(compensador>3)
+    compensador=3;    
   
   temperatura_processo += PREPARACAO_compensador;
   
@@ -133,7 +129,10 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   // da rotação do motor
   POTENCIA_set_neutro(1);
   vTaskDelay(500);
-  POTENCIA_setRPM(velocidade_processo);
+  if(flag_correcao_erro)
+    POTENCIA_setRPM(2500);
+  else
+    POTENCIA_setRPM(4000);
 
   PREPARACAO_cnt_preparo = TEMPO_PREPARO;  
   // Faz a verificação do ventilador
@@ -149,15 +148,6 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   // Inicia o controlador de temperatura
   CT_set_temperatura(temperatura_processo);
   
-  // Faz a verificação da resistência
-  /*
-  if(!PREPARACAO_verifica_resistencia()){
-    POTENCIA_setRPM(0);
-    POTENCIA_set_neutro(0);
-    CT_set_temperatura(0);
-    return FALHA_RESISTENCIA;        
-  }
-  */
   // Aguarda até a temperatura de início de processo
   // chegar ao valor da inicial
   unsigned int timeout=60000;
@@ -165,17 +155,14 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   while(AA_calculaTemperatura()<temperatura_processo && --timeout){
     vTaskDelay(1);
     APLICACAO_tela_descanso();
-  }
+  }  
   
   if(!timeout){
     POTENCIA_setRPM(0);
     POTENCIA_set_neutro(0);
     CT_set_temperatura(0);
     return FALHA_RESISTENCIA;   
-  }
-  
-  POTENCIA_setRPM(4000);
-  while(POTENCIA_getRPMmedido()>4200);
+  }  
   
   if(!PREPARACAO_dosagem_milho()){
     POTENCIA_setRPM(0);
@@ -185,6 +172,10 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
   }
   
   POTENCIA_setRPM(velocidade_processo);
+  if(flag_correcao_erro)
+    while(POTENCIA_getRPMmedido()<velocidade_processo);
+  else
+    while(POTENCIA_getRPMmedido()<(velocidade_processo-1000));
   
   BOARD_setter_led_instrucao(LED_PEGUE_PACOTE,PISCANDO); // Indica na plac ade instrução para pegar a embalagem
   //if(
@@ -274,12 +265,16 @@ ePREPARACAO_RESULT PREPARACAO_entry(unsigned int *ajuste_out,
  
   //----------------------------------------------
   // Fim da coleta dos dados de faturamento
-  //----------------------------------------------   
-  
+  //----------------------------------------------    
+  //Faz o ajuste de compensação da panela
+  //unsigned int ajuste = AA_calculaTemperatura();
+  if(PREPARACAO_contador_compensacao){
+    if(PREPARACAO_compensador<=(5*compensador))
+      PREPARACAO_compensador+=compensador;
+  }  
+  PREPARACAO_contador_compensacao = RELOAD_COMPENSADOR;     
   BOARD_liga_placa_instrucao(0);
-  BOARD_liga_placa_instrucao(1);  
-  
-  //PAGAMENTOS_set_bloqueio(0);
+  BOARD_liga_placa_instrucao(1);    
   
   return SUCESSO;
 }
@@ -450,4 +445,3 @@ void PREPARACAO_limpeza_inicial(unsigned char idioma){
 /**********************************************************************************
 *       Fim do arquivo
 **********************************************************************************/
-

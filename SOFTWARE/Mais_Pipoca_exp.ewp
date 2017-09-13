@@ -1916,6 +1916,12 @@
     </group>
     <group>
       <name>CCTALK</name>
+      <group>
+        <name>WH1602_2</name>
+        <file>
+          <name>$PROJ_DIR$\Drivers\WH1602_2\WH1602_2.C</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$\Drivers\CCTALK\cctalk.c</name>
       </file>
@@ -2008,12 +2014,6 @@
       <name>WH1602</name>
       <file>
         <name>$PROJ_DIR$\Drivers\WH1602\WH1602.C</name>
-      </file>
-    </group>
-    <group>
-      <name>WH1602_2</name>
-      <file>
-        <name>$PROJ_DIR$\Drivers\WH1602_2\WH1602_2.C</name>
       </file>
     </group>
   </group>

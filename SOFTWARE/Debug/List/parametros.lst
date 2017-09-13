@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      12/Sep/2017  15:11:47 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      13/Sep/2017  16:11:49 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -80,7 +80,7 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Parametros\parametros.c
      38          #include "tabela_parametros.h"
 
    \                                 In section .rodata, align 4
-   \   __absolute struct <unnamed> const tabela_parametros[65]
+   \   __absolute struct <unnamed> const tabela_parametros[67]
    \                     tabela_parametros:
    \   00000000   0x00000000         DC32 0H
    \   00000004   0x0001             DC16 1
@@ -1514,6 +1514,50 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Parametros\parametros.c
    \              0x36         
    \   00000B29   0x00 0x00          DC8 0, 0, 0
    \              0x00         
+   \   00000B2C   0x00000000         DC32 0H
+   \   00000B30   0x0001             DC16 1
+   \   00000B32   0x43 0x4F          DC8 "COMP_ERRO_MOTOR"
+   \              0x4D 0x50    
+   \              0x5F 0x45    
+   \              0x52 0x52    
+   \              0x4F 0x5F    
+   \              0x4D 0x4F    
+   \              0x54 0x4F    
+   \              0x52 0x00    
+   \   00000B42   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \   00000B52   0x4E 0x55          DC8 4EH, 55H, 4DH
+   \              0x4D         
+   \   00000B55   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+   \   00000B58   0x00000000         DC32 0H
+   \   00000B5C   0x0004             DC16 4
+   \   00000B5E   0x43 0x4F          DC8 "COMP_TEMP"
+   \              0x4D 0x50    
+   \              0x5F 0x54    
+   \              0x45 0x4D    
+   \              0x50 0x00    
+   \   00000B68   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \   00000B7E   0x4E 0x55          DC8 4EH, 55H, 4DH
+   \              0x4D         
+   \   00000B81   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
      39          
      40          
      41          /***********************************************************************************
@@ -1578,7 +1622,7 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Parametros\parametros.c
    \                     ??PARAMETROS_resolve_endereco_0:
    \   00000008   0x428A             CMP      R2,R1
    \   0000000A   0xD208             BCS.N    ??PARAMETROS_resolve_endereco_1
-     83              endereco_fisico+=(tabela_parametros[i].length+2); // 2 = CRC
+     83              endereco_fisico+=(tabela_parametros[i].length+2);
    \   0000000C   0x232C             MOVS     R3,#+44
    \   0000000E   0x....             LDR.N    R4,??DataTable2
    \   00000010   0xFB03 0x4302      MLA      R3,R3,R2,R4
@@ -1819,15 +1863,15 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Parametros\parametros.c
      164  PARAMETROS_le
       34  PARAMETROS_resolve_endereco
       22  memcpy
-    2860  tabela_parametros
+    2948  tabela_parametros
 
  
    128 bytes in section .bss
- 2 880 bytes in section .rodata
+ 2 968 bytes in section .rodata
    344 bytes in section .text
  
    322 bytes of CODE  memory (+ 22 bytes shared)
- 2 880 bytes of CONST memory
+ 2 968 bytes of CONST memory
    128 bytes of DATA  memory
 
 Errors: none

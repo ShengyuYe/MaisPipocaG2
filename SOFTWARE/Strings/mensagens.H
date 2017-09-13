@@ -41,7 +41,7 @@
 #define QTD_OPCOES_FATURAMENTO          6
 #define QTD_OPCOES_PREPARACAO           3
 #define QTD_OPCOES_SERVICO              6
-#define QTD_OPCOES_AVANCADO             7
+#define QTD_OPCOES_AVANCADO             9
 
 #ifdef _GLOBAL_STRING_
 
@@ -1521,8 +1521,7 @@ const char *STRING_titulo_configura_troco[QTY_OF_LANGUAGES]={
 /// Mensagens no display dentro do menu
 /// teste do hardware
 ///
-const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
-  
+const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={  
   [BRASIL]={
     //1234567890123456
      "(1) PADRAO FAB. ",
@@ -1531,7 +1530,9 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) ERRO MOTOR  ",
+     "(8) K TEMP      ",
+     "(9) VOLTAR      "
   },
   [URUGUAI]={
     //1234567890123456
@@ -1541,7 +1542,9 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) ERRO MOTOR  ",
+     "(8) K TEMP      ",
+     "(9) VOLTAR      "
   },
   [ARGENTINA]={
     //1234567890123456
@@ -1551,7 +1554,9 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) ERRO MOTOR  ",
+     "(8) K TEMP      ",
+     "(9) VOLTAR      "
   },
   [PARAGUAI]={
     //1234567890123456
@@ -1561,7 +1566,9 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) ERRO MOTOR  ",
+     "(8) K TEMP      ",
+     "(9) VOLTAR      "
   },
   [PERU]={
     //1234567890123456
@@ -1571,17 +1578,21 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) ERRO MOTOR  ",
+     "(8) K TEMP      ",
+     "(9) VOLTAR      "
   },
   [EUA]={
     //1234567890123456
-     "(1) PADRAO FAB. ",
-     "(2) SENHA ADMIN ",
-     "(3) RESET GERAL ",
-     "(4) MOTOR AC    ",
-     "(5) NUM SERIE   ",
-     "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(1) FACT. STAND ",
+     "(2) ADMIN PASS. ",
+     "(3) GENERAL RST ",
+     "(4) AC MOTOR    ",
+     "(5) SERIAL NUMBE",
+     "(6) HOUR/DATA   ",
+     "(7) MOTOR ERROR ",
+     "(8) K TEMP      ",
+     "(9) EXIT        "
   },
   [CANADA]={
     //1234567890123456
@@ -1591,7 +1602,9 @@ const char *STRING_menu_avancado[QTY_OF_LANGUAGES][QTD_OPCOES_AVANCADO]={
      "(4) MOTOR AC    ",
      "(5) NUM SERIE   ",
      "(6) HORA/DATA   ",
-     "(7) VOLTAR      "
+     "(7) MOTOR ERROR ",
+     "(8) K TEMP      ",
+     "(9) VOLTAR      "
   },  
 };
 

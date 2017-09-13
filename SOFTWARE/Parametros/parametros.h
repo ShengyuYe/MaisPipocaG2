@@ -79,6 +79,8 @@
 #define ADR_MENSAGEM_CLIENTE_03                 62
 #define ADR_MENSAGEM_CLIENTE_04                 63
 #define ADR_TIPOS_MOEDAS                        64
+#define ADR_COMPENSADOR_ERRO_ROTACAO            65     
+#define ADR_FATOR_COMPENSADOR                   66
 
 #define ADR_AREA_TESTE                          100
 

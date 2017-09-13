@@ -294,7 +294,19 @@ const sPARAMETROS tabela_parametros[]={
        .nome = "TIPOS_MONEADA",
        .ext = "i16",
        .default_value = (void*) "  GRUPO ALTECH  "        
-  }
+  },
+  [ADR_COMPENSADOR_ERRO_ROTACAO]={
+       .length = BYTE,
+       .nome = "COMP_ERRO_MOTOR",
+       .ext = "NUM",
+       .default_value = (void*) 0x00    
+  },
+  [ADR_FATOR_COMPENSADOR]={
+       .length = DOUBLE_WORD,
+       .nome = "COMP_TEMP",
+       .ext = "NUM",
+       .default_value = (void*) 0x00        
+  }  
 };
 
 

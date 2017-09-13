@@ -44,7 +44,7 @@
         <expressions>
           
           
-        <item>SMDBCOIN_scale_factor</item><item>SMDBCOIN_decimal_places</item><item>SMDBCOIN_coin_credit</item><item>troco</item><item>tubos</item><item>canais</item><item>tubes</item><item>types</item><item>cfg_moedas</item><item>change_coins</item><item>troco</item><item>SMDBCOIN_coin_credit</item><item></item></expressions>
+        <item>SMDBCOIN_scale_factor</item><item>SMDBCOIN_decimal_places</item><item>SMDBCOIN_coin_credit</item><item>troco</item><item>tubos</item><item>canais</item><item>tubes</item><item>types</item><item>cfg_moedas</item><item>change_coins</item><item>troco</item><item>SMDBCOIN_coin_credit</item><item/></expressions>
         <col-names>
           
           

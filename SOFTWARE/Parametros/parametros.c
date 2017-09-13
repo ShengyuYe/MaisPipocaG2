@@ -80,7 +80,7 @@ unsigned int PARAMETROS_resolve_endereco(unsigned int endereco){
   unsigned int endereco_fisico=0;
 
   for(unsigned int i=0;i<endereco;i++)
-    endereco_fisico+=(tabela_parametros[i].length+2); // 2 = CRC
+    endereco_fisico+=(tabela_parametros[i].length+2);
 
   return endereco_fisico;  
 }
