@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      13/Sep/2017  16:12:03 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      13/Sep/2017  16:35:11 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -74,7 +74,7 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\aplicacao.c
      46          #define TEMPO_DESUMIDIFICADOR                   1000*60*30
      47          #define TEMPO_MENSAGEM_LINHA_INFERIOR           10000
      48          
-     49          //#define _DEBUG_PAGAMENTOS_
+     49          #define _DEBUG_PAGAMENTOS_
      50          
      51          /***********************************************************************************
      52          *       Enumerações
@@ -170,206 +170,199 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\aplicacao.c
     106            
     107          #ifndef _DEBUG_PAGAMENTOS_
     108            vTaskDelay(3000);
-   \   00000032   0xF640 0x30B8      MOVW     R0,#+3000
-   \   00000036   0x.... 0x....      BL       vTaskDelay
     109            PREPARACAO_limpeza_inicial(idioma);
-   \   0000003A   0x0030             MOVS     R0,R6
-   \   0000003C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   0000003E   0x.... 0x....      BL       PREPARACAO_limpeza_inicial
     110          #endif
     111            
     112            
     113            STRING_write_to_external(CLEAR_DISPLAY,NULL,NULL);
-   \   00000042   0x2200             MOVS     R2,#+0
-   \   00000044   0x2100             MOVS     R1,#+0
-   \   00000046   0x2000             MOVS     R0,#+0
-   \   00000048   0x.... 0x....      BL       STRING_write_to_external
+   \   00000032   0x2200             MOVS     R2,#+0
+   \   00000034   0x2100             MOVS     R1,#+0
+   \   00000036   0x2000             MOVS     R0,#+0
+   \   00000038   0x.... 0x....      BL       STRING_write_to_external
     114            
     115            BOARD_liga_placa_instrucao(1); // Liga a placa de instrução  
-   \   0000004C   0x2001             MOVS     R0,#+1
-   \   0000004E   0x.... 0x....      BL       BOARD_liga_placa_instrucao
+   \   0000003C   0x2001             MOVS     R0,#+1
+   \   0000003E   0x.... 0x....      BL       BOARD_liga_placa_instrucao
     116            
     117            BOARD_setter_contador_propaganda(0); // Deixa a propaganda agendada para o primeiro ciclo
-   \   00000052   0x2000             MOVS     R0,#+0
-   \   00000054   0x.... 0x....      BL       BOARD_setter_contador_propaganda
+   \   00000042   0x2000             MOVS     R0,#+0
+   \   00000044   0x.... 0x....      BL       BOARD_setter_contador_propaganda
     118            
     119          #ifndef _DEBUG_PAGAMENTOS_  
     120            APLICACAO_verifica_post();
-   \   00000058   0x.... 0x....      BL       APLICACAO_verifica_post
     121          #endif
     122              
     123            PAGAMENTOS_subtrai_valores(PAGAMENTOS_get_valor_acumulado());
-   \   0000005C   0x.... 0x....      BL       PAGAMENTOS_get_valor_acumulado
-   \   00000060   0x.... 0x....      BL       PAGAMENTOS_subtrai_valores
+   \   00000048   0x.... 0x....      BL       PAGAMENTOS_get_valor_acumulado
+   \   0000004C   0x.... 0x....      BL       PAGAMENTOS_subtrai_valores
     124            PAGAMENTOS_set_bloqueio(0);
-   \   00000064   0x2000             MOVS     R0,#+0
-   \   00000066   0x.... 0x....      BL       PAGAMENTOS_set_bloqueio
+   \   00000050   0x2000             MOVS     R0,#+0
+   \   00000052   0x.... 0x....      BL       PAGAMENTOS_set_bloqueio
     125            
     126            for(;;){
     127              
     128              PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);
    \                     ??APLICACAO_main_0:
-   \   0000006A   0xA901             ADD      R1,SP,#+4
-   \   0000006C   0x2003             MOVS     R0,#+3
-   \   0000006E   0x.... 0x....      BL       PARAMETROS_le
+   \   00000056   0xA901             ADD      R1,SP,#+4
+   \   00000058   0x2003             MOVS     R0,#+3
+   \   0000005A   0x.... 0x....      BL       PARAMETROS_le
     129              PARAMETROS_le(ADR_FLAG_FREE,(void*)&modo_gratis);
-   \   00000072   0xF10D 0x0101      ADD      R1,SP,#+1
-   \   00000076   0x2020             MOVS     R0,#+32
-   \   00000078   0x.... 0x....      BL       PARAMETROS_le
+   \   0000005E   0xF10D 0x0101      ADD      R1,SP,#+1
+   \   00000062   0x2020             MOVS     R0,#+32
+   \   00000064   0x.... 0x....      BL       PARAMETROS_le
     130              PARAMETROS_le(ADR_FLAG_TROCO,(void*)&modo_troco);    
-   \   0000007C   0xA900             ADD      R1,SP,#+0
-   \   0000007E   0x2022             MOVS     R0,#+34
-   \   00000080   0x.... 0x....      BL       PARAMETROS_le
+   \   00000068   0xA900             ADD      R1,SP,#+0
+   \   0000006A   0x2022             MOVS     R0,#+34
+   \   0000006C   0x.... 0x....      BL       PARAMETROS_le
     131              
     132              tecla = TECLADO_getch();
-   \   00000084   0x.... 0x....      BL       TECLADO_getch
-   \   00000088   0x0005             MOVS     R5,R0
+   \   00000070   0x.... 0x....      BL       TECLADO_getch
+   \   00000074   0x0005             MOVS     R5,R0
     133              switch(tecla){
-   \   0000008A   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-   \   0000008C   0x2D01             CMP      R5,#+1
-   \   0000008E   0xD030             BEQ.N    ??APLICACAO_main_1
-   \   00000090   0xD338             BCC.N    ??APLICACAO_main_2
-   \   00000092   0x2D03             CMP      R5,#+3
-   \   00000094   0xD005             BEQ.N    ??APLICACAO_main_3
-   \   00000096   0xD303             BCC.N    ??APLICACAO_main_4
-   \   00000098   0x2D05             CMP      R5,#+5
-   \   0000009A   0xD02B             BEQ.N    ??APLICACAO_main_5
-   \   0000009C   0xD302             BCC.N    ??APLICACAO_main_6
-   \   0000009E   0xE031             B.N      ??APLICACAO_main_2
+   \   00000076   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000078   0x2D01             CMP      R5,#+1
+   \   0000007A   0xD030             BEQ.N    ??APLICACAO_main_1
+   \   0000007C   0xD338             BCC.N    ??APLICACAO_main_2
+   \   0000007E   0x2D03             CMP      R5,#+3
+   \   00000080   0xD005             BEQ.N    ??APLICACAO_main_3
+   \   00000082   0xD303             BCC.N    ??APLICACAO_main_4
+   \   00000084   0x2D05             CMP      R5,#+5
+   \   00000086   0xD02B             BEQ.N    ??APLICACAO_main_5
+   \   00000088   0xD302             BCC.N    ??APLICACAO_main_6
+   \   0000008A   0xE031             B.N      ??APLICACAO_main_2
     134                case TECLA_INC:
     135                     //SMDB_cashless_vend(100,1);
     136                     break;
    \                     ??APLICACAO_main_4:
-   \   000000A0   0xE030             B.N      ??APLICACAO_main_2
+   \   0000008C   0xE030             B.N      ??APLICACAO_main_2
     137                case TECLA_DEC:
     138                     break;
    \                     ??APLICACAO_main_3:
-   \   000000A2   0xE02F             B.N      ??APLICACAO_main_2
+   \   0000008E   0xE02F             B.N      ??APLICACAO_main_2
     139                case TECLA_ENTER:
     140                     APLIACAO_wait_lcd();
    \                     ??APLICACAO_main_6:
-   \   000000A4   0x.... 0x....      BL       APLIACAO_wait_lcd
+   \   00000090   0x.... 0x....      BL       APLIACAO_wait_lcd
     141                       BOARD_liga_placa_instrucao(0);
-   \   000000A8   0x2000             MOVS     R0,#+0
-   \   000000AA   0x.... 0x....      BL       BOARD_liga_placa_instrucao
+   \   00000094   0x2000             MOVS     R0,#+0
+   \   00000096   0x.... 0x....      BL       BOARD_liga_placa_instrucao
     142                       MCFG_entry();                     
-   \   000000AE   0x.... 0x....      BL       MCFG_entry
+   \   0000009A   0x.... 0x....      BL       MCFG_entry
     143                       BOARD_liga_placa_instrucao(1);
-   \   000000B2   0x2001             MOVS     R0,#+1
-   \   000000B4   0x.... 0x....      BL       BOARD_liga_placa_instrucao
+   \   0000009E   0x2001             MOVS     R0,#+1
+   \   000000A0   0x.... 0x....      BL       BOARD_liga_placa_instrucao
     144                       idioma  = (eIDIOMA)APLICACAO_carrega_idioma();
-   \   000000B8   0x.... 0x....      BL       APLICACAO_carrega_idioma
-   \   000000BC   0x0006             MOVS     R6,R0
+   \   000000A4   0x.... 0x....      BL       APLICACAO_carrega_idioma
+   \   000000A8   0x0006             MOVS     R6,R0
     145                       
     146                       PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);
-   \   000000BE   0xA901             ADD      R1,SP,#+4
-   \   000000C0   0x2003             MOVS     R0,#+3
-   \   000000C2   0x.... 0x....      BL       PARAMETROS_le
+   \   000000AA   0xA901             ADD      R1,SP,#+4
+   \   000000AC   0x2003             MOVS     R0,#+3
+   \   000000AE   0x.... 0x....      BL       PARAMETROS_le
     147                       PARAMETROS_le(ADR_FLAG_FREE,(void*)&modo_gratis);
-   \   000000C6   0xF10D 0x0101      ADD      R1,SP,#+1
-   \   000000CA   0x2020             MOVS     R0,#+32
-   \   000000CC   0x.... 0x....      BL       PARAMETROS_le
+   \   000000B2   0xF10D 0x0101      ADD      R1,SP,#+1
+   \   000000B6   0x2020             MOVS     R0,#+32
+   \   000000B8   0x.... 0x....      BL       PARAMETROS_le
     148                       PARAMETROS_le(ADR_FLAG_TROCO,(void*)&modo_troco);
-   \   000000D0   0xA900             ADD      R1,SP,#+0
-   \   000000D2   0x2022             MOVS     R0,#+34
-   \   000000D4   0x.... 0x....      BL       PARAMETROS_le
+   \   000000BC   0xA900             ADD      R1,SP,#+0
+   \   000000BE   0x2022             MOVS     R0,#+34
+   \   000000C0   0x.... 0x....      BL       PARAMETROS_le
     149                       
     150                       APLICACAO_tempo_desumidificador=TEMPO_DESUMIDIFICADOR;
-   \   000000D8   0x.... 0x....      LDR.W    R0,??DataTable14
-   \   000000DC   0x.... 0x....      LDR.W    R1,??DataTable14_1  ;; 0x1b7740
-   \   000000E0   0x6001             STR      R1,[R0, #+0]
+   \   000000C4   0x.... 0x....      LDR.W    R0,??DataTable14
+   \   000000C8   0x.... 0x....      LDR.W    R1,??DataTable14_1  ;; 0x1b7740
+   \   000000CC   0x6001             STR      R1,[R0, #+0]
     151                       
     152                     APLICACAO_release_lcd();  
-   \   000000E2   0x.... 0x....      BL       APLICACAO_release_lcd
+   \   000000CE   0x.... 0x....      BL       APLICACAO_release_lcd
     153                     
     154                     STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);
-   \   000000E6   0x2200             MOVS     R2,#+0
-   \   000000E8   0x2100             MOVS     R1,#+0
-   \   000000EA   0x2000             MOVS     R0,#+0
-   \   000000EC   0x.... 0x....      BL       STRING_write_to_internal
+   \   000000D2   0x2200             MOVS     R2,#+0
+   \   000000D4   0x2100             MOVS     R1,#+0
+   \   000000D6   0x2000             MOVS     R0,#+0
+   \   000000D8   0x.... 0x....      BL       STRING_write_to_internal
     155                     break;
-   \   000000F0   0xE008             B.N      ??APLICACAO_main_2
+   \   000000DC   0xE008             B.N      ??APLICACAO_main_2
     156                case TECLA_ESC:
     157                     break;
    \                     ??APLICACAO_main_1:
-   \   000000F2   0xE007             B.N      ??APLICACAO_main_2
+   \   000000DE   0xE007             B.N      ??APLICACAO_main_2
     158                case TECLA_GRATIS:
     159                     if(modo_gratis)
    \                     ??APLICACAO_main_5:
-   \   000000F4   0xF89D 0x0001      LDRB     R0,[SP, #+1]
-   \   000000F8   0x2800             CMP      R0,#+0
-   \   000000FA   0xD003             BEQ.N    ??APLICACAO_main_7
+   \   000000E0   0xF89D 0x0001      LDRB     R0,[SP, #+1]
+   \   000000E4   0x2800             CMP      R0,#+0
+   \   000000E6   0xD003             BEQ.N    ??APLICACAO_main_7
     160                       PAGAMENTOS_adiciona_valores(valorPipoca);
-   \   000000FC   0x9801             LDR      R0,[SP, #+4]
-   \   000000FE   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-   \   00000100   0x.... 0x....      BL       PAGAMENTOS_adiciona_valores
+   \   000000E8   0x9801             LDR      R0,[SP, #+4]
+   \   000000EA   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   000000EC   0x.... 0x....      BL       PAGAMENTOS_adiciona_valores
     161                     break;      
     162              }
     163              
     164              if(modo_gratis)
    \                     ??APLICACAO_main_7:
    \                     ??APLICACAO_main_2:
-   \   00000104   0xF89D 0x0001      LDRB     R0,[SP, #+1]
-   \   00000108   0x2800             CMP      R0,#+0
-   \   0000010A   0xD00E             BEQ.N    ??APLICACAO_main_8
+   \   000000F0   0xF89D 0x0001      LDRB     R0,[SP, #+1]
+   \   000000F4   0x2800             CMP      R0,#+0
+   \   000000F6   0xD00E             BEQ.N    ??APLICACAO_main_8
     165                STRING_write_to_external(NO_CLEAR,(void*)STRING_mensagem_modo_gratis[idioma][0],(void*)STRING_mensagem_modo_gratis[idioma][1]);
-   \   0000010C   0xB2F6             UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-   \   0000010E   0x.... 0x....      LDR.W    R0,??DataTable14_2
-   \   00000112   0xEB10 0x00C6      ADDS     R0,R0,R6, LSL #+3
-   \   00000116   0x6842             LDR      R2,[R0, #+4]
-   \   00000118   0xB2F6             UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-   \   0000011A   0x.... 0x....      LDR.W    R0,??DataTable14_2
-   \   0000011E   0xF850 0x1036      LDR      R1,[R0, R6, LSL #+3]
-   \   00000122   0x2001             MOVS     R0,#+1
-   \   00000124   0x.... 0x....      BL       STRING_write_to_external
-   \   00000128   0xE00F             B.N      ??APLICACAO_main_9
+   \   000000F8   0xB2F6             UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+   \   000000FA   0x.... 0x....      LDR.W    R0,??DataTable14_2
+   \   000000FE   0xEB10 0x00C6      ADDS     R0,R0,R6, LSL #+3
+   \   00000102   0x6842             LDR      R2,[R0, #+4]
+   \   00000104   0xB2F6             UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+   \   00000106   0x.... 0x....      LDR.W    R0,??DataTable14_2
+   \   0000010A   0xF850 0x1036      LDR      R1,[R0, R6, LSL #+3]
+   \   0000010E   0x2001             MOVS     R0,#+1
+   \   00000110   0x.... 0x....      BL       STRING_write_to_external
+   \   00000114   0xE00F             B.N      ??APLICACAO_main_9
     166              else{
     167                APLICACAO_exibe_valor(idioma);     
    \                     ??APLICACAO_main_8:
-   \   0000012A   0x0030             MOVS     R0,R6
-   \   0000012C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   0000012E   0x.... 0x....      BL       APLICACAO_exibe_valor
+   \   00000116   0x0030             MOVS     R0,R6
+   \   00000118   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000011A   0x.... 0x....      BL       APLICACAO_exibe_valor
     168                if(modo_troco)
-   \   00000132   0xF89D 0x0000      LDRB     R0,[SP, #+0]
-   \   00000136   0x2800             CMP      R0,#+0
-   \   00000138   0xD003             BEQ.N    ??APLICACAO_main_10
+   \   0000011E   0xF89D 0x0000      LDRB     R0,[SP, #+0]
+   \   00000122   0x2800             CMP      R0,#+0
+   \   00000124   0xD003             BEQ.N    ??APLICACAO_main_10
     169                  APLICACAO_verifica_disponibilidade_troco(idioma);
-   \   0000013A   0x0030             MOVS     R0,R6
-   \   0000013C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   0000013E   0x.... 0x....      BL       APLICACAO_verifica_disponibilidade_troco
+   \   00000126   0x0030             MOVS     R0,R6
+   \   00000128   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000012A   0x.... 0x....      BL       APLICACAO_verifica_disponibilidade_troco
     170                // Verifica a conectividade dos
     171                // meios de pagamento seriais
     172                APLICACAO_verifica_MDB();
    \                     ??APLICACAO_main_10:
-   \   00000142   0x.... 0x....      BL       APLICACAO_verifica_MDB
+   \   0000012E   0x.... 0x....      BL       APLICACAO_verifica_MDB
     173                APLICACAO_verifica_cctalk();
-   \   00000146   0x.... 0x....      BL       APLICACAO_verifica_cctalk
+   \   00000132   0x.... 0x....      BL       APLICACAO_verifica_cctalk
     174              }
     175              
     176              APLICACAO_verifica_preparacao(valorPipoca,idioma,modo_troco);             
    \                     ??APLICACAO_main_9:
-   \   0000014A   0xF89D 0x2000      LDRB     R2,[SP, #+0]
-   \   0000014E   0x0031             MOVS     R1,R6
-   \   00000150   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   00000152   0x9801             LDR      R0,[SP, #+4]
-   \   00000154   0x.... 0x....      BL       APLICACAO_verifica_preparacao
+   \   00000136   0xF89D 0x2000      LDRB     R2,[SP, #+0]
+   \   0000013A   0x0031             MOVS     R1,R6
+   \   0000013C   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000013E   0x9801             LDR      R0,[SP, #+4]
+   \   00000140   0x.... 0x....      BL       APLICACAO_verifica_preparacao
     177              BOARD_setter_led_instrucao(LED_INSIRA_DINHEIRO,PISCANDO); // Ativa o modo inserir dinheiro
-   \   00000158   0x2102             MOVS     R1,#+2
-   \   0000015A   0x2002             MOVS     R0,#+2
-   \   0000015C   0x.... 0x....      BL       BOARD_setter_led_instrucao
+   \   00000144   0x2102             MOVS     R1,#+2
+   \   00000146   0x2002             MOVS     R0,#+2
+   \   00000148   0x.... 0x....      BL       BOARD_setter_led_instrucao
     178              APLICACAO_tela_descanso();    
-   \   00000160   0x.... 0x....      BL       APLICACAO_tela_descanso
+   \   0000014C   0x.... 0x....      BL       APLICACAO_tela_descanso
     179          #ifndef _DEBUG_PAGAMENTOS_    
     180              APLICACAO_verificao_ciclica();
-   \   00000164   0x.... 0x....      BL       APLICACAO_verificao_ciclica
     181          #endif
     182              vTaskDelay(50);
-   \   00000168   0x2032             MOVS     R0,#+50
-   \   0000016A   0x.... 0x....      BL       vTaskDelay
+   \   00000150   0x2032             MOVS     R0,#+50
+   \   00000152   0x.... 0x....      BL       vTaskDelay
     183              APLICACAO_ciclo_desumidificador(flag_desumidificador);
-   \   0000016E   0xF89D 0x0002      LDRB     R0,[SP, #+2]
-   \   00000172   0x.... 0x....      BL       APLICACAO_ciclo_desumidificador
-   \   00000176   0xE778             B.N      ??APLICACAO_main_0
+   \   00000156   0xF89D 0x0002      LDRB     R0,[SP, #+2]
+   \   0000015A   0x.... 0x....      BL       APLICACAO_ciclo_desumidificador
+   \   0000015E   0xE77A             B.N      ??APLICACAO_main_0
     184            }   
     185          }
     186          /***********************************************************************************
@@ -2272,9 +2265,7 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\aplicacao.c
         24   -> APLICACAO_verifica_MDB
         24   -> APLICACAO_verifica_cctalk
         24   -> APLICACAO_verifica_disponibilidade_troco
-        24   -> APLICACAO_verifica_post
         24   -> APLICACAO_verifica_preparacao
-        24   -> APLICACAO_verificao_ciclica
         24   -> BOARD_liga_placa_instrucao
         24   -> BOARD_setter_contador_propaganda
         24   -> BOARD_setter_led_instrucao
@@ -2284,7 +2275,6 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\aplicacao.c
         24   -> PAGAMENTOS_set_bloqueio
         24   -> PAGAMENTOS_subtrai_valores
         24   -> PARAMETROS_le
-        24   -> PREPARACAO_limpeza_inicial
         24   -> STRING_write_to_external
         24   -> STRING_write_to_internal
         24   -> TECLADO_getch
@@ -2439,7 +2429,7 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\aplicacao.c
      186  APLICACAO_exibe_valor
      118  APLICACAO_ini
       64  APLICACAO_loop_falha_ciclica
-     376  APLICACAO_main
+     352  APLICACAO_main
       90  APLICACAO_menu_falha
       20  APLICACAO_release_lcd
        4  APLICACAO_sem_LCD
@@ -2459,9 +2449,9 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Aplicacao\aplicacao.c
     25 bytes in section .bss
      4 bytes in section .data
    212 bytes in section .rodata
- 2 656 bytes in section .text
+ 2 632 bytes in section .text
  
- 2 656 bytes of CODE  memory
+ 2 632 bytes of CODE  memory
    212 bytes of CONST memory
     29 bytes of DATA  memory
 

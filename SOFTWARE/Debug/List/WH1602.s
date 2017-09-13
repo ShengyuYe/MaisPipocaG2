@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     13/Sep/2017  16:12:02 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     13/Sep/2017  16:35:08 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -34,6 +34,7 @@
 
         #define SHT_PROGBITS 0x1
 
+        EXTERN HD44780_2_tempoRefreshSegundoLCD
         EXTERN vTaskDelay
 
         PUBLIC HD44780_desligaCursor
@@ -171,7 +172,7 @@ _A_FIO1CLR:
 //   46 unsigned char controleLcd=0x00;
 controleLcd:
         DS8 1
-//   47 
+//   47 extern unsigned int HD44780_2_tempoRefreshSegundoLCD;
 //   48 /***********************************************************************************
 //   49 *		Funções locais
 //   50 ***********************************************************************************/
@@ -205,40 +206,40 @@ HD44780_init:
 //   64   unsigned char i;
 //   65   
 //   66   INIT_DIR_PINS; 
-        LDR.N    R0,??DataTable9  ;; 0x2009c020
+        LDR.N    R0,??DataTable10  ;; 0x2009c020
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10
-        LDR.N    R1,??DataTable9  ;; 0x2009c020
+        LDR.N    R1,??DataTable10  ;; 0x2009c020
         STR      R0,[R1, #+0]
-        LDR.N    R0,??DataTable9  ;; 0x2009c020
+        LDR.N    R0,??DataTable10  ;; 0x2009c020
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x2
-        LDR.N    R1,??DataTable9  ;; 0x2009c020
+        LDR.N    R1,??DataTable10  ;; 0x2009c020
         STR      R0,[R1, #+0]
-        LDR.N    R0,??DataTable9_1  ;; 0x2009c000
+        LDR.N    R0,??DataTable10_1  ;; 0x2009c000
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x20
-        LDR.N    R1,??DataTable9_1  ;; 0x2009c000
+        LDR.N    R1,??DataTable10_1  ;; 0x2009c000
         STR      R0,[R1, #+0]
-        LDR.N    R0,??DataTable9_1  ;; 0x2009c000
+        LDR.N    R0,??DataTable10_1  ;; 0x2009c000
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10
-        LDR.N    R1,??DataTable9_1  ;; 0x2009c000
+        LDR.N    R1,??DataTable10_1  ;; 0x2009c000
         STR      R0,[R1, #+0]
-        LDR.N    R0,??DataTable9_1  ;; 0x2009c000
+        LDR.N    R0,??DataTable10_1  ;; 0x2009c000
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x2000000
-        LDR.N    R1,??DataTable9_1  ;; 0x2009c000
+        LDR.N    R1,??DataTable10_1  ;; 0x2009c000
         STR      R0,[R1, #+0]
-        LDR.N    R0,??DataTable9_1  ;; 0x2009c000
+        LDR.N    R0,??DataTable10_1  ;; 0x2009c000
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x2000000
-        LDR.N    R1,??DataTable9_1  ;; 0x2009c000
+        LDR.N    R1,??DataTable10_1  ;; 0x2009c000
         STR      R0,[R1, #+0]
-        LDR.N    R0,??DataTable9  ;; 0x2009c020
+        LDR.N    R0,??DataTable10  ;; 0x2009c020
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x20000
-        LDR.N    R1,??DataTable9  ;; 0x2009c020
+        LDR.N    R1,??DataTable10  ;; 0x2009c020
         STR      R0,[R1, #+0]
 //   67   
 //   68   HD44780_delay_ms(500);
@@ -299,7 +300,7 @@ HD44780_init:
 //   83   
 //   84   controleLcd = 0x08 | modo2;
         ORRS     R0,R5,#0x8
-        LDR.N    R1,??DataTable9_2
+        LDR.N    R1,??DataTable10_2
         STRB     R0,[R1, #+0]
 //   85   
 //   86   HD44780_enviaByte(0,0x10);
@@ -340,10 +341,10 @@ HD44780_init:
 //   97  
 //   98   SET_LCD_ENABLE; 
 HD44780_enviaNibble:
-        LDR.N    R1,??DataTable9_3  ;; 0x2009c038
+        LDR.N    R1,??DataTable10_3  ;; 0x2009c038
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x20000
-        LDR.N    R2,??DataTable9_3  ;; 0x2009c038
+        LDR.N    R2,??DataTable10_3  ;; 0x2009c038
         STR      R1,[R2, #+0]
 //   99   __no_operation();
         Nop      
@@ -360,62 +361,62 @@ HD44780_enviaNibble:
 //  105   LCD_WRITE_NIBBLE(value);      
         LSLS     R1,R0,#+31
         BPL.N    ??HD44780_enviaNibble_0
-        LDR.N    R1,??DataTable9_3  ;; 0x2009c038
+        LDR.N    R1,??DataTable10_3  ;; 0x2009c038
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x10
-        LDR.N    R2,??DataTable9_3  ;; 0x2009c038
+        LDR.N    R2,??DataTable10_3  ;; 0x2009c038
         STR      R1,[R2, #+0]
         B.N      ??HD44780_enviaNibble_1
 ??HD44780_enviaNibble_0:
-        LDR.N    R1,??DataTable9_4  ;; 0x2009c03c
+        LDR.N    R1,??DataTable10_4  ;; 0x2009c03c
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x10
-        LDR.N    R2,??DataTable9_4  ;; 0x2009c03c
+        LDR.N    R2,??DataTable10_4  ;; 0x2009c03c
         STR      R1,[R2, #+0]
 ??HD44780_enviaNibble_1:
         LSLS     R1,R0,#+30
         BPL.N    ??HD44780_enviaNibble_2
-        LDR.N    R1,??DataTable9_3  ;; 0x2009c038
+        LDR.N    R1,??DataTable10_3  ;; 0x2009c038
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x2
-        LDR.N    R2,??DataTable9_3  ;; 0x2009c038
+        LDR.N    R2,??DataTable10_3  ;; 0x2009c038
         STR      R1,[R2, #+0]
         B.N      ??HD44780_enviaNibble_3
 ??HD44780_enviaNibble_2:
-        LDR.N    R1,??DataTable9_4  ;; 0x2009c03c
+        LDR.N    R1,??DataTable10_4  ;; 0x2009c03c
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x2
-        LDR.N    R2,??DataTable9_4  ;; 0x2009c03c
+        LDR.N    R2,??DataTable10_4  ;; 0x2009c03c
         STR      R1,[R2, #+0]
 ??HD44780_enviaNibble_3:
         LSLS     R1,R0,#+29
         BPL.N    ??HD44780_enviaNibble_4
-        LDR.N    R1,??DataTable9_5  ;; 0x2009c018
+        LDR.N    R1,??DataTable10_5  ;; 0x2009c018
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x20
-        LDR.N    R2,??DataTable9_5  ;; 0x2009c018
+        LDR.N    R2,??DataTable10_5  ;; 0x2009c018
         STR      R1,[R2, #+0]
         B.N      ??HD44780_enviaNibble_5
 ??HD44780_enviaNibble_4:
-        LDR.N    R1,??DataTable9_6  ;; 0x2009c01c
+        LDR.N    R1,??DataTable10_6  ;; 0x2009c01c
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x20
-        LDR.N    R2,??DataTable9_6  ;; 0x2009c01c
+        LDR.N    R2,??DataTable10_6  ;; 0x2009c01c
         STR      R1,[R2, #+0]
 ??HD44780_enviaNibble_5:
         LSLS     R1,R0,#+28
         BPL.N    ??HD44780_enviaNibble_6
-        LDR.N    R1,??DataTable9_5  ;; 0x2009c018
+        LDR.N    R1,??DataTable10_5  ;; 0x2009c018
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x10
-        LDR.N    R2,??DataTable9_5  ;; 0x2009c018
+        LDR.N    R2,??DataTable10_5  ;; 0x2009c018
         STR      R1,[R2, #+0]
         B.N      ??HD44780_enviaNibble_7
 ??HD44780_enviaNibble_6:
-        LDR.N    R1,??DataTable9_6  ;; 0x2009c01c
+        LDR.N    R1,??DataTable10_6  ;; 0x2009c01c
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x10
-        LDR.N    R2,??DataTable9_6  ;; 0x2009c01c
+        LDR.N    R2,??DataTable10_6  ;; 0x2009c01c
         STR      R1,[R2, #+0]
 //  106   __no_operation();
 ??HD44780_enviaNibble_7:
@@ -432,10 +433,10 @@ HD44780_enviaNibble:
         Nop      
 //  112                          
 //  113   CLR_LCD_ENABLE;   
-        LDR.N    R1,??DataTable9_4  ;; 0x2009c03c
+        LDR.N    R1,??DataTable10_4  ;; 0x2009c03c
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x20000
-        LDR.N    R2,??DataTable9_4  ;; 0x2009c03c
+        LDR.N    R2,??DataTable10_4  ;; 0x2009c03c
         STR      R1,[R2, #+0]
 //  114 }
         BX       LR               ;; return
@@ -469,17 +470,17 @@ HD44780_enviaByte:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+0
         BEQ.N    ??HD44780_enviaByte_0
-        LDR.N    R0,??DataTable9_5  ;; 0x2009c018
+        LDR.N    R0,??DataTable10_5  ;; 0x2009c018
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x2000000
-        LDR.N    R1,??DataTable9_5  ;; 0x2009c018
+        LDR.N    R1,??DataTable10_5  ;; 0x2009c018
         STR      R0,[R1, #+0]
         B.N      ??HD44780_enviaByte_1
 ??HD44780_enviaByte_0:
-        LDR.N    R0,??DataTable9_6  ;; 0x2009c01c
+        LDR.N    R0,??DataTable10_6  ;; 0x2009c01c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x2000000
-        LDR.N    R1,??DataTable9_6  ;; 0x2009c01c
+        LDR.N    R1,??DataTable10_6  ;; 0x2009c01c
         STR      R0,[R1, #+0]
 //  124   HD44780_enviaNibble(value>>4);
 ??HD44780_enviaByte_1:
@@ -651,263 +652,280 @@ HD44780_writeString:
           CFI CFA R13+8
         MOVS     R4,R0
 //  182   
-//  183   while(*string)
+//  183   if(!HD44780_2_tempoRefreshSegundoLCD){    
+        LDR.N    R0,??DataTable10_7
+        LDR      R0,[R0, #+0]
+        CMP      R0,#+0
+        BNE.N    ??HD44780_writeString_0
+//  184     HD44780_init(LCD_DISPLAY_8X5 | LCD_2_LINHAS,
+//  185                  LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);          
+        MOVS     R1,#+4
+        MOVS     R0,#+8
+          CFI FunCall HD44780_init
+        BL       HD44780_init
+//  186     HD44780_clearText();    
+        MOVS     R0,#+12
+          CFI FunCall HD44780_writeChar
+        BL       HD44780_writeChar
+//  187   }    
+//  188   
+//  189   while(*string)
 ??HD44780_writeString_0:
         LDRB     R0,[R4, #+0]
         CMP      R0,#+0
         BEQ.N    ??HD44780_writeString_1
-//  184     HD44780_writeChar(*string++);      
+//  190     HD44780_writeChar(*string++);      
         LDRB     R0,[R4, #+0]
           CFI FunCall HD44780_writeChar
         BL       HD44780_writeChar
         ADDS     R4,R4,#+1
         B.N      ??HD44780_writeString_0
-//  185 }
+//  191 }
 ??HD44780_writeString_1:
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock5
-//  186 /***********************************************************************************
-//  187 *     Descrição   :   Liga o display
-//  188 *     Parametros  :   (nenhum)
-//  189 *     Retorno     :   (nenhum)
-//  190 ***********************************************************************************/
+//  192 /***********************************************************************************
+//  193 *     Descrição   :   Liga o display
+//  194 *     Parametros  :   (nenhum)
+//  195 *     Retorno     :   (nenhum)
+//  196 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function HD44780_ligaDisplay
         THUMB
-//  191 void HD44780_ligaDisplay(void){
+//  197 void HD44780_ligaDisplay(void){
 HD44780_ligaDisplay:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  192  
-//  193   controleLcd |= 0x04;
-        LDR.N    R0,??DataTable9_2
+//  198  
+//  199   controleLcd |= 0x04;
+        LDR.N    R0,??DataTable10_2
         LDRB     R0,[R0, #+0]
         ORRS     R0,R0,#0x4
-        LDR.N    R1,??DataTable9_2
+        LDR.N    R1,??DataTable10_2
         STRB     R0,[R1, #+0]
-//  194   HD44780_enviaByte(0,controleLcd);  
-        LDR.N    R0,??DataTable9_2
+//  200   HD44780_enviaByte(0,controleLcd);  
+        LDR.N    R0,??DataTable10_2
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+0
           CFI FunCall HD44780_enviaByte
         BL       HD44780_enviaByte
-//  195 }
+//  201 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock6
-//  196 /***********************************************************************************
-//  197 *     Descrição    :    Desliga o display
-//  198 *     Parametros   :    (nenhum)
-//  199 *     Retorno      :    (nenhum)
-//  200 ***********************************************************************************/
+//  202 /***********************************************************************************
+//  203 *     Descrição    :    Desliga o display
+//  204 *     Parametros   :    (nenhum)
+//  205 *     Retorno      :    (nenhum)
+//  206 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function HD44780_desligaDisplay
         THUMB
-//  201 void HD44780_desligaDisplay(void){
+//  207 void HD44780_desligaDisplay(void){
 HD44780_desligaDisplay:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  202  
-//  203   controleLcd &= 0xFB;
-        LDR.N    R0,??DataTable9_2
+//  208  
+//  209   controleLcd &= 0xFB;
+        LDR.N    R0,??DataTable10_2
         LDRB     R0,[R0, #+0]
         ANDS     R0,R0,#0xFB
-        LDR.N    R1,??DataTable9_2
+        LDR.N    R1,??DataTable10_2
         STRB     R0,[R1, #+0]
-//  204   HD44780_enviaByte(0,controleLcd);
-        LDR.N    R0,??DataTable9_2
+//  210   HD44780_enviaByte(0,controleLcd);
+        LDR.N    R0,??DataTable10_2
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+0
           CFI FunCall HD44780_enviaByte
         BL       HD44780_enviaByte
-//  205 }
+//  211 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock7
-//  206 /************************************************************************************
-//  207 *     Descrição     :   Liga o cursor
-//  208 *     Parametros    :   nenhum
-//  209 *     Retorno       :   nenhum
-//  210 ***********************************************************************************/
+//  212 /************************************************************************************
+//  213 *     Descrição     :   Liga o cursor
+//  214 *     Parametros    :   nenhum
+//  215 *     Retorno       :   nenhum
+//  216 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock8 Using cfiCommon0
           CFI Function HD44780_ligaCursor
         THUMB
-//  211 void HD44780_ligaCursor(void){
+//  217 void HD44780_ligaCursor(void){
 HD44780_ligaCursor:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  212   
-//  213   controleLcd |= 0x02;
-        LDR.N    R0,??DataTable9_2
+//  218   
+//  219   controleLcd |= 0x02;
+        LDR.N    R0,??DataTable10_2
         LDRB     R0,[R0, #+0]
         ORRS     R0,R0,#0x2
-        LDR.N    R1,??DataTable9_2
+        LDR.N    R1,??DataTable10_2
         STRB     R0,[R1, #+0]
-//  214   HD44780_enviaByte(0,controleLcd);  
-        LDR.N    R0,??DataTable9_2
+//  220   HD44780_enviaByte(0,controleLcd);  
+        LDR.N    R0,??DataTable10_2
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+0
           CFI FunCall HD44780_enviaByte
         BL       HD44780_enviaByte
-//  215 }
+//  221 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock8
-//  216 /***********************************************************************************
-//  217 *     Descrição     :   Desliga o cursor
-//  218 *     Parametros    :   nenhum
-//  219 *     Retorno       :   nenhum
-//  220 ***********************************************************************************/
+//  222 /***********************************************************************************
+//  223 *     Descrição     :   Desliga o cursor
+//  224 *     Parametros    :   nenhum
+//  225 *     Retorno       :   nenhum
+//  226 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock9 Using cfiCommon0
           CFI Function HD44780_desligaCursor
         THUMB
-//  221 void HD44780_desligaCursor(void){
+//  227 void HD44780_desligaCursor(void){
 HD44780_desligaCursor:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  222   
-//  223   controleLcd &= 0xFD;
-        LDR.N    R0,??DataTable9_2
+//  228   
+//  229   controleLcd &= 0xFD;
+        LDR.N    R0,??DataTable10_2
         LDRB     R0,[R0, #+0]
         ANDS     R0,R0,#0xFD
-        LDR.N    R1,??DataTable9_2
+        LDR.N    R1,??DataTable10_2
         STRB     R0,[R1, #+0]
-//  224   HD44780_enviaByte(0,controleLcd);  
-        LDR.N    R0,??DataTable9_2
+//  230   HD44780_enviaByte(0,controleLcd);  
+        LDR.N    R0,??DataTable10_2
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+0
           CFI FunCall HD44780_enviaByte
         BL       HD44780_enviaByte
-//  225 }
+//  231 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock9
-//  226 /***********************************************************************************
-//  227 *     Descrição     :   Liga o cursor piscante
-//  228 *     Parametros    :   nenhum
-//  229 *     Retorno       :   nenhum
-//  230 ***********************************************************************************/
+//  232 /***********************************************************************************
+//  233 *     Descrição     :   Liga o cursor piscante
+//  234 *     Parametros    :   nenhum
+//  235 *     Retorno       :   nenhum
+//  236 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock10 Using cfiCommon0
           CFI Function HD44780_ligaCursorPiscante
         THUMB
-//  231 void HD44780_ligaCursorPiscante(void){
+//  237 void HD44780_ligaCursorPiscante(void){
 HD44780_ligaCursorPiscante:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  232  
-//  233   controleLcd |= 0x01;
-        LDR.N    R0,??DataTable9_2
+//  238  
+//  239   controleLcd |= 0x01;
+        LDR.N    R0,??DataTable10_2
         LDRB     R0,[R0, #+0]
         ORRS     R0,R0,#0x1
-        LDR.N    R1,??DataTable9_2
+        LDR.N    R1,??DataTable10_2
         STRB     R0,[R1, #+0]
-//  234   HD44780_enviaByte(0,controleLcd); 
-        LDR.N    R0,??DataTable9_2
+//  240   HD44780_enviaByte(0,controleLcd); 
+        LDR.N    R0,??DataTable10_2
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+0
           CFI FunCall HD44780_enviaByte
         BL       HD44780_enviaByte
-//  235 }
+//  241 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock10
-//  236 /***********************************************************************************
-//  237 *     Descrição     :   Desliga o cursor piscante
-//  238 *     Parametros    :   nenhum
-//  239 *     Retorno       :   nenhum
-//  240 ***********************************************************************************/
+//  242 /***********************************************************************************
+//  243 *     Descrição     :   Desliga o cursor piscante
+//  244 *     Parametros    :   nenhum
+//  245 *     Retorno       :   nenhum
+//  246 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock11 Using cfiCommon0
           CFI Function HD44780_desligaCursorPiscante
         THUMB
-//  241 void HD44780_desligaCursorPiscante(void){
+//  247 void HD44780_desligaCursorPiscante(void){
 HD44780_desligaCursorPiscante:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  242  
-//  243    controleLcd &= 0xFE;
-        LDR.N    R0,??DataTable9_2
+//  248  
+//  249    controleLcd &= 0xFE;
+        LDR.N    R0,??DataTable10_2
         LDRB     R0,[R0, #+0]
         ANDS     R0,R0,#0xFE
-        LDR.N    R1,??DataTable9_2
+        LDR.N    R1,??DataTable10_2
         STRB     R0,[R1, #+0]
-//  244    HD44780_enviaByte(0,controleLcd);
-        LDR.N    R0,??DataTable9_2
+//  250    HD44780_enviaByte(0,controleLcd);
+        LDR.N    R0,??DataTable10_2
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+0
           CFI FunCall HD44780_enviaByte
         BL       HD44780_enviaByte
-//  245 }                                   
+//  251 }                                   
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock11
-//  246 /***********************************************************************************
-//  247 *		Fim do arquivo
-//  248 ***********************************************************************************/
-//  249 
+//  252 /***********************************************************************************
+//  253 *		Fim do arquivo
+//  254 ***********************************************************************************/
+//  255 
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock12 Using cfiCommon0
           CFI Function teste_lcd
         THUMB
-//  250 void teste_lcd(void){
+//  256 void teste_lcd(void){
 teste_lcd:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  251   
-//  252   HD44780_init(LCD_DISPLAY_8X5 | LCD_2_LINHAS,
-//  253                LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);
+//  257   
+//  258   HD44780_init(LCD_DISPLAY_8X5 | LCD_2_LINHAS,
+//  259                LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);
         MOVS     R1,#+4
         MOVS     R0,#+8
           CFI FunCall HD44780_init
         BL       HD44780_init
-//  254   
-//  255   FIO1DIR |= (0X01)<<14;
-        LDR.N    R0,??DataTable9  ;; 0x2009c020
+//  260   
+//  261   FIO1DIR |= (0X01)<<14;
+        LDR.N    R0,??DataTable10  ;; 0x2009c020
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x4000
-        LDR.N    R1,??DataTable9  ;; 0x2009c020
+        LDR.N    R1,??DataTable10  ;; 0x2009c020
         STR      R0,[R1, #+0]
-//  256   FIO1SET |= (0X01)<<14;
-        LDR.N    R0,??DataTable9_3  ;; 0x2009c038
+//  262   FIO1SET |= (0X01)<<14;
+        LDR.N    R0,??DataTable10_3  ;; 0x2009c038
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x4000
-        LDR.N    R1,??DataTable9_3  ;; 0x2009c038
+        LDR.N    R1,??DataTable10_3  ;; 0x2009c038
         STR      R0,[R1, #+0]
-//  257 
-//  258   HD44780_writeChar('\f');  
+//  263 
+//  264   HD44780_writeChar('\f');  
         MOVS     R0,#+12
           CFI FunCall HD44780_writeChar
         BL       HD44780_writeChar
-//  259 
-//  260   //                   0123456789012345
-//  261   HD44780_writeString("::  Apus REP  ::");
-        LDR.N    R0,??DataTable9_7
+//  265 
+//  266   //                   0123456789012345
+//  267   HD44780_writeString("::  Apus REP  ::");
+        LDR.N    R0,??DataTable10_8
           CFI FunCall HD44780_writeString
         BL       HD44780_writeString
-//  262   HD44780_posicionaTexto(0,1);
+//  268   HD44780_posicionaTexto(0,1);
         MOVS     R1,#+1
         MOVS     R0,#+0
           CFI FunCall HD44780_posicionaTexto
         BL       HD44780_posicionaTexto
-//  263   HD44780_writeString("     v1.0       ");
-        LDR.N    R0,??DataTable9_8
+//  269   HD44780_writeString("     v1.0       ");
+        LDR.N    R0,??DataTable10_9
           CFI FunCall HD44780_writeString
         BL       HD44780_writeString
-//  264   
-//  265 }
+//  270   
+//  271 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock12
         REQUIRE _A_FIO1DIR
@@ -916,55 +934,61 @@ teste_lcd:
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9:
+??DataTable10:
         DC32     0x2009c020
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_1:
+??DataTable10_1:
         DC32     0x2009c000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_2:
+??DataTable10_2:
         DC32     controleLcd
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_3:
+??DataTable10_3:
         DC32     0x2009c038
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_4:
+??DataTable10_4:
         DC32     0x2009c03c
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_5:
+??DataTable10_5:
         DC32     0x2009c018
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_6:
+??DataTable10_6:
         DC32     0x2009c01c
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_7:
+??DataTable10_7:
+        DC32     HD44780_2_tempoRefreshSegundoLCD
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable10_8:
         DC32     `?<Constant "::  Apus REP  ::">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_8:
+??DataTable10_9:
         DC32     `?<Constant "     v1.0       ">`
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
@@ -995,9 +1019,9 @@ teste_lcd:
 //   1 byte  in section .bss
 //  24 bytes in section .noinit (abs)
 //  40 bytes in section .rodata
-// 836 bytes in section .text
+// 862 bytes in section .text
 // 
-// 836 bytes of CODE  memory
+// 862 bytes of CODE  memory
 //  40 bytes of CONST memory
 //   1 byte  of DATA  memory (+ 24 bytes shared)
 //
