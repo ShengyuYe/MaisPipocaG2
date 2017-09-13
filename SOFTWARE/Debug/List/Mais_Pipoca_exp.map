@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ELF Linker V6.50.3.4676/W32 for ARM               13/Sep/2017  18:09:25 #
+# IAR ELF Linker V6.50.3.4676/W32 for ARM               13/Sep/2017  18:10:22 #
 # Copyright 2007-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Output file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Exe\Mais_Pip #
@@ -441,7 +441,7 @@ __SystemLibrary = DLib
   Initializer bytes   ro data  0x0000e8bc   0x29e  <for P2 s0>
                              - 0x0000eb5a  0xe85a
 
-"P5":                                      0x193c
+"P5":                                      0x1930
   .text               ro code  0x00070000    0xb4  strings.o [1]
   .rodata             const    0x000700b4    0x18  strings.o [1]
   .rodata             const    0x000700cc    0x14  strings.o [1]
@@ -732,39 +732,38 @@ __SystemLibrary = DLib
   .rodata             const    0x00071394     0xc  strings.o [1]
   .rodata             const    0x000713a0     0xc  strings.o [1]
   .rodata             const    0x000713ac     0xc  strings.o [1]
-  .rodata             const    0x000713b8     0xc  strings.o [1]
-  .rodata             const    0x000713c4     0x8  strings.o [1]
-  .rodata             const    0x000713cc     0x8  strings.o [1]
-  .rodata             const    0x000713d4     0x8  strings.o [1]
-  .rodata             const    0x000713dc     0x8  strings.o [1]
-  .rodata             const    0x000713e4     0x8  strings.o [1]
-  .rodata             const    0x000713ec     0x8  strings.o [1]
-  .rodata             const    0x000713f4     0x8  strings.o [1]
-  .rodata             const    0x000713fc     0x8  strings.o [1]
-  .rodata             const    0x00071404     0x8  strings.o [1]
-  .rodata             const    0x0007140c     0x8  strings.o [1]
-  .rodata             const    0x00071414     0x8  strings.o [1]
-  .rodata             const    0x0007141c     0x8  strings.o [1]
-  .rodata             const    0x00071424     0x8  strings.o [1]
-  .rodata             const    0x0007142c     0x8  strings.o [1]
-  .rodata             const    0x00071434     0x8  strings.o [1]
-  .rodata             const    0x0007143c     0x8  strings.o [1]
-  .rodata             const    0x00071444     0x8  strings.o [1]
-  .rodata             const    0x0007144c     0x8  strings.o [1]
-  .rodata             const    0x00071454     0x8  strings.o [1]
-  .rodata             const    0x0007145c     0x8  strings.o [1]
-  .rodata             const    0x00071464     0x8  strings.o [1]
+  .rodata             const    0x000713b8     0x8  strings.o [1]
+  .rodata             const    0x000713c0     0x8  strings.o [1]
+  .rodata             const    0x000713c8     0x8  strings.o [1]
+  .rodata             const    0x000713d0     0x8  strings.o [1]
+  .rodata             const    0x000713d8     0x8  strings.o [1]
+  .rodata             const    0x000713e0     0x8  strings.o [1]
+  .rodata             const    0x000713e8     0x8  strings.o [1]
+  .rodata             const    0x000713f0     0x8  strings.o [1]
+  .rodata             const    0x000713f8     0x8  strings.o [1]
+  .rodata             const    0x00071400     0x8  strings.o [1]
+  .rodata             const    0x00071408     0x8  strings.o [1]
+  .rodata             const    0x00071410     0x8  strings.o [1]
+  .rodata             const    0x00071418     0x8  strings.o [1]
+  .rodata             const    0x00071420     0x8  strings.o [1]
+  .rodata             const    0x00071428     0x8  strings.o [1]
+  .rodata             const    0x00071430     0x8  strings.o [1]
+  .rodata             const    0x00071438     0x8  strings.o [1]
+  .rodata             const    0x00071440     0x8  strings.o [1]
+  .rodata             const    0x00071448     0x8  strings.o [1]
+  .rodata             const    0x00071450     0x8  strings.o [1]
+  .rodata             const    0x00071458     0x8  strings.o [1]
+  .rodata             const    0x00071460     0x4  strings.o [1]
+  .rodata             const    0x00071464     0x4  strings.o [1]
+  .rodata             const    0x00071468     0x4  strings.o [1]
   .rodata             const    0x0007146c     0x4  strings.o [1]
   .rodata             const    0x00071470     0x4  strings.o [1]
   .rodata             const    0x00071474     0x4  strings.o [1]
   .rodata             const    0x00071478     0x4  strings.o [1]
   .rodata             const    0x0007147c     0x4  strings.o [1]
-  .rodata             const    0x00071480     0x4  strings.o [1]
-  .rodata             const    0x00071484     0x4  strings.o [1]
-  .rodata             const    0x00071488     0x4  strings.o [1]
-  .rodata             const    0x0007148c     0x2  strings.o [1]
-  Initializer bytes   ro data  0x0007148e   0x4ad  <for P2 s1>
-                             - 0x0007193b  0x193b
+  .rodata             const    0x00071480     0x2  strings.o [1]
+  Initializer bytes   ro data  0x00071482   0x4ab  <for P2 s1>
+                             - 0x0007192d  0x192d
 
 "P2", part 1 of 4:                          0x35c
   P2 s0                        0x10000000   0x35c  <Init block>
@@ -1269,8 +1268,8 @@ Copy/lz77 (__iar_lz77_init3)
           0x10000000   0x35c
 
 Copy/lz77 (__iar_lz77_init3)
-    1 source range, total size 0x4ad (21% of destination):
-          0x0007148e   0x4ad
+    1 source range, total size 0x4ab (21% of destination):
+          0x00071482   0x4ab
     1 destination range, total size 0x1570:
           0x1000035c  0x1570
 
@@ -1342,13 +1341,13 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj: [1]
     serial_mux.o                   140                         12
     spi_wrapper.o                  420                 1       28
     sst25vf016b.o                  696
-    strings.o                      180    6 279    5 488
+    strings.o                      180    6 265    5 488
     supervisao_mdb_cashless.o      436       38        8
     tasks.o                      2 110       28      256
     tela_senha.o                 1 106       84        4
     uart.o                         684                         85
     -------------------------------------------------------------
-    Total:                      44 652   13 996   30 503      311
+    Total:                      44 652   13 982   30 503      311
 
 command line: [2]
     -------------------------------------------------------------
@@ -1411,7 +1410,7 @@ shb_l.a: [6]
     Gaps                            38        2
     Linker created                           72      768
 -----------------------------------------------------------------
-    Grand Total:                51 958   14 179   31 411      311
+    Grand Total:                51 958   14 165   31 411      311
 
 
 *******************************************************************************
@@ -2596,7 +2595,7 @@ xTickCount              0x10007748     0x4  Data  Gb  tasks.o [1]
 [6] = shb_l.a
 
   51 958 bytes of readonly  code memory
-  14 179 bytes of readonly  data memory
+  14 165 bytes of readonly  data memory
   31 411 bytes of readwrite data memory (+ 311 absolute)
 
 Errors: none

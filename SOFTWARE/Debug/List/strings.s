@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     13/Sep/2017  18:09:25 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     13/Sep/2017  18:10:22 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -208,13 +208,13 @@
 // __absolute char const *STRING_splash[7][2]
 STRING_splash:
         DATA
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.14">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.14">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.14">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.14">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.14">`
-        DC32 `?<Constant "POPCORN KING">`, `?<Constant "VER. 1.0.14">`
-        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 2.0.14">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 3.0.0">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 3.0.0">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 3.0.0">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 3.0.0">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 3.0.0">`
+        DC32 `?<Constant "POPCORN KING">`, `?<Constant "VER. 3.0.0">`
+        DC32 `?<Constant "GRUPO ALTECH">`, `?<Constant "VER. 3.0.0">`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
 // __absolute char const *STRING_titulo_menu_configuracao[7]
@@ -1665,20 +1665,16 @@ STRING_write_to_external:
         DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "VER. 2.0.14">`:
+`?<Constant "VER. 3.0.0">`:
         DATA
-        DC8 "VER. 2.0.14"
+        DC8 "VER. 3.0.0"
+        DC8 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "POPCORN KING">`:
         DATA
         DC8 "POPCORN KING"
         DC8 0, 0, 0
-
-        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "VER. 1.0.14">`:
-        DATA
-        DC8 "VER. 1.0.14"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "CONFIGURACOES">`:
@@ -3660,11 +3656,11 @@ STRING_write_to_external:
 //  118 ***********************************************************************************/
 // 
 // 5 684 bytes in section .data
-// 5 334 bytes in section .rodata
+// 5 322 bytes in section .rodata
 //   212 bytes in section .text
 // 
 //   212 bytes of CODE  memory
-// 5 334 bytes of CONST memory
+// 5 322 bytes of CONST memory
 // 5 684 bytes of DATA  memory
 //
 //Errors: none
