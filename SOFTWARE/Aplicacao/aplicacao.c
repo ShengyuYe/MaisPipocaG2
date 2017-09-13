@@ -320,6 +320,10 @@ void APLICACAO_verifica_preparacao(unsigned int valor_pipoca,unsigned char idiom
              // Devolve o troco caso ainda reste valor
              // pago no acumulador de moeda
              if(troco==OPERA_COM_TROCO && PAGAMENTOS_get_valor_acumulado()){               
+               STRING_write_to_external(CLEAR_DISPLAY,NULL,NULL);
+               
+               STRING_write_to_external(CLEAR_DISPLAY,NULL,NULL);
+               
                STRING_write_to_external(CLEAR_DISPLAY,
                                         (char*)STRING_mensagem_retire_troco[idioma][0],
                                         (char*)STRING_mensagem_retire_troco[idioma][1]);
@@ -435,28 +439,37 @@ unsigned char APLICACAO_devolve_troco(void){
     SMDB_release();
     
     if(res==MDB_OK){      
+      //
+      //  Loop para descontar o total do troco
+      //
+      do{
+        SMDB_wait();
+            
+        tentativas = 10;
+        do res = MDBCOIN_get_payout_status(change_coins);
+        while(res!=MDB_OK && --tentativas);      
       
-      SMDB_wait();
+        SMDB_release();      
       
-      
-      tentativas = 10;
-      do res = MDBCOIN_get_payout_status(change_coins);
-      while(res!=MDB_OK && --tentativas);      
-      
-      SMDB_release();      
-      
-      if(res==MDB_OK){                                      
-        unsigned int troco=0;
-        for(unsigned char i=0;i<16;i++)
-          troco+= (change_coins[i]*escala*tubos[i]);
-        
-          // Confirmação de que o troco liberado
-          // corresponde ao valor solicitado
-          // assim pode descontar o montante do módulo
-          // Pagamentos
-          if(troco==valor)
-            PAGAMENTOS_subtrai_valores(valor);  
+        if(res==MDB_OK){                                      
+          unsigned int troco=0;
+          for(unsigned char i=0;i<16;i++)
+            troco+= (change_coins[i]*escala*tubos[i]);
+          
+            // Confirmação de que o troco liberado
+            // corresponde ao valor solicitado
+            // assim pode descontar o montante do módulo
+            // Pagamentos
+            if(troco==valor)
+              PAGAMENTOS_subtrai_valores(valor);  
+            else{
+              PAGAMENTOS_subtrai_valores(troco);  
+              valor-=troco;
+            }
+        }
       }
+      while(PAGAMENTOS_get_valor_acumulado());
+      
     }
   }        
   

@@ -16,7 +16,7 @@
       <file>$PROJ_DIR$\Debug\Obj\Pagamentos.pbi</file>
       <file>$PROJ_DIR$\Aplicacao\menu_faturamento.h</file>
       <file>$PROJ_DIR$\Debug\List\Potencia.lst</file>
-      <file>$PROJ_DIR$\aplicacao\aplicacao.h</file>
+      <file>$PROJ_DIR$\Aplicacao\aplicacao.h</file>
       <file>$PROJ_DIR$\Debug\List\RTC.lst</file>
       <file>$PROJ_DIR$\Debug\List\Protocolo.s</file>
       <file>$PROJ_DIR$\Debug\List\POST.s</file>
@@ -580,10 +580,6 @@
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 290 225 166 108 300 440 264 36 111 351 54 186 213 10 257 310 298 177 165 439 51 136 281 320 172 57 251 337 169 128 254 171 49 422 420 194 187 206 280 149 98 260 118 261 134 268 296 147 295 301 230 327 162 212 369 143 297 287 167 175 294 250 436 125 328 341 219 179 306 190 302</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
           <file> 290 225 166 108 300 440 264 36 111 351 54 186 213 10 257 310 298 177 165 439 51 136 281 320 172 57 251 337 169 128 254 171 49 422 420 194 187 206 280 149 98 260 118 261 134 268 296 147 295 301 230 327 162 212 369 143 297 287 167 175 294 250 436 125 328 341 219 179 306 190 302</file>
         </tool>
       </inputs>

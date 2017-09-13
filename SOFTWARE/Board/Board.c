@@ -102,6 +102,7 @@ extern unsigned int APLICACAO_tempo_desumidificador;
 extern unsigned int SMC_contador;
 extern unsigned int APLICACAO_tempo_mensagem;
 extern unsigned int PREPARACAO_compensador;
+extern unsigned int HD44780_tempoRefreshSegundoLCD;
 
 /***********************************************************************************
 *       Funções locais
@@ -188,6 +189,9 @@ void BOARD_timer_tick(void){
   
   if(APLICACAO_tempo_mensagem)
     APLICACAO_tempo_mensagem--;
+  
+  if(HD44780_tempoRefreshSegundoLCD)
+    HD44780_tempoRefreshSegundoLCD--;
   
   if(!APLICACAO_tempo_compensacao){
     APLICACAO_tempo_compensacao = 3*60*1000;

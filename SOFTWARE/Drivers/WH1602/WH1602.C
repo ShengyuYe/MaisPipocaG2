@@ -44,7 +44,7 @@
 *		Variaveis locais
 ***********************************************************************************/
 unsigned char controleLcd=0x00;
-extern unsigned int HD44780_2_tempoRefreshSegundoLCD;
+extern unsigned int HD44780_tempoRefreshSegundoLCD=30000;
 /***********************************************************************************
 *		Funções locais
 ***********************************************************************************/
@@ -180,7 +180,10 @@ void HD44780_writeChar(char c){
 ***********************************************************************************/
 void HD44780_writeString(char *string){
   
-  if(!HD44780_2_tempoRefreshSegundoLCD){    
+  if(!HD44780_tempoRefreshSegundoLCD){    
+    
+    HD44780_tempoRefreshSegundoLCD = 30000;
+    
     HD44780_init(LCD_DISPLAY_8X5 | LCD_2_LINHAS,
                  LCD_DISPLAY_LIGADO | LCD_CURSOR_DESLIGADO | LCD_CURSOR_FIXO);          
     HD44780_clearText();    
