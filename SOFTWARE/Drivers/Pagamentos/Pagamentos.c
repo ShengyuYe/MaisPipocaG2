@@ -57,6 +57,8 @@ unsigned short int PAGAMENTOS_filtro_uca=0;
 unsigned short int PAGAMENTOS_valor_acumulado_p70=0;
 unsigned short int PAGAMENTOS_filtro_p70=0;
 unsigned int PAGAMENTOS_timeout_pagamento=0; 
+unsigned int PAGAMENTOS_incremento_uca;
+unsigned int PAGAMENTOS_incremento_p70;
 
 int PAGAMENTOS_valor_acumulado_geral=0;
 
@@ -96,6 +98,16 @@ void PAGAMENTOS_ini(void){
   SET_INHIBIT_UCA1(1);
   SET_INHIBIT_P70(1);
   vSemaphoreCreateBinary(PAGAMENTOS_semaforo_pagamentos);
+  
+  PARAMETROS_le(ADR_VALOR_PULSO_MOEDEIRO,(void*)&PAGAMENTOS_incremento_uca);
+  PARAMETROS_le(ADR_VALOR_PULSO_NOTEIRO,(void*)&PAGAMENTOS_incremento_p70);
+
+  if(PAGAMENTOS_incremento_uca>1000)
+    PAGAMENTOS_incremento_uca=1000;
+  
+  if(PAGAMENTOS_incremento_p70>100000)
+  PAGAMENTOS_incremento_p70=100000;
+   
 }
 /***********************************************************************************
 *       Descrição       :       Tick de timer para o módulo pagamentos
@@ -145,7 +157,7 @@ void PAGAMENTOS_irq_uca_1(void){
   // dos pulsos
   if(!PAGAMENTOS_filtro_uca){
     
-    PAGAMENTOS_valor_acumulado_uca+=25;  
+    PAGAMENTOS_valor_acumulado_uca+=PAGAMENTOS_incremento_uca;  
     PAGAMENTOS_filtro_uca = RELOAD_FILTRO_UCA;
   }
   
@@ -191,7 +203,7 @@ void PAGAMENTOS_bloqueia_uca1(unsigned char flag){
 void PAGAMENTOS_irq_p70(void){
   
   if(!PAGAMENTOS_bloqueio_p70 && !PAGAMENTOS_filtro_p70){
-    PAGAMENTOS_valor_acumulado_p70+=100;
+    PAGAMENTOS_valor_acumulado_p70+=PAGAMENTOS_incremento_p70;
     PAGAMENTOS_filtro_p70 = RELOAD_FILTRO_UCA;
   }  
   

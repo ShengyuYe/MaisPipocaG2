@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     13/Sep/2017  17:11:31 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     13/Sep/2017  18:09:15 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -57,6 +57,8 @@
         PUBLIC PAGAMENTOS_get_contagem_uca1
         PUBLIC PAGAMENTOS_get_timeout_pagamento
         PUBLIC PAGAMENTOS_get_valor_acumulado
+        PUBLIC PAGAMENTOS_incremento_p70
+        PUBLIC PAGAMENTOS_incremento_uca
         PUBLIC PAGAMENTOS_ini
         PUBLIC PAGAMENTOS_irq_p70
         PUBLIC PAGAMENTOS_irq_uca_1
@@ -244,148 +246,193 @@ PAGAMENTOS_filtro_p70:
 //   59 unsigned int PAGAMENTOS_timeout_pagamento=0; 
 PAGAMENTOS_timeout_pagamento:
         DS8 4
-//   60 
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
-//   61 int PAGAMENTOS_valor_acumulado_geral=0;
-PAGAMENTOS_valor_acumulado_geral:
+//   60 unsigned int PAGAMENTOS_incremento_uca;
+PAGAMENTOS_incremento_uca:
+        DS8 4
+
+        SECTION `.bss`:DATA:REORDER:NOROOT(2)
+//   61 unsigned int PAGAMENTOS_incremento_p70;
+PAGAMENTOS_incremento_p70:
         DS8 4
 //   62 
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
-//   63 xSemaphoreHandle PAGAMENTOS_semaforo_pagamentos;
+//   63 int PAGAMENTOS_valor_acumulado_geral=0;
+PAGAMENTOS_valor_acumulado_geral:
+        DS8 4
+//   64 
+
+        SECTION `.bss`:DATA:REORDER:NOROOT(2)
+//   65 xSemaphoreHandle PAGAMENTOS_semaforo_pagamentos;
 PAGAMENTOS_semaforo_pagamentos:
         DS8 4
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
-//   64 unsigned PAGAMENTOS_bloqueio_p70=255;
+//   66 unsigned PAGAMENTOS_bloqueio_p70=255;
 PAGAMENTOS_bloqueio_p70:
         DATA
         DC32 255
-//   65 
-//   66 /***********************************************************************************
-//   67 *       Funções - locais
-//   68 ***********************************************************************************/
-//   69 void PAGAMENTOS_irq_uca_1(void);
-//   70 void PAGAMENTOS_irq_p70(void);
-//   71 
-//   72 /***********************************************************************************
-//   73 *       Implementação das funções
-//   74 ***********************************************************************************/
-//   75 
-//   76 /***********************************************************************************
-//   77 *       Descrição       :       Inicializa o módulo
-//   78 *       Parametros      :       nenhum
-//   79 *       Retorno         :       nenhum
-//   80 ***********************************************************************************/
+//   67 
+//   68 /***********************************************************************************
+//   69 *       Funções - locais
+//   70 ***********************************************************************************/
+//   71 void PAGAMENTOS_irq_uca_1(void);
+//   72 void PAGAMENTOS_irq_p70(void);
+//   73 
+//   74 /***********************************************************************************
+//   75 *       Implementação das funções
+//   76 ***********************************************************************************/
+//   77 
+//   78 /***********************************************************************************
+//   79 *       Descrição       :       Inicializa o módulo
+//   80 *       Parametros      :       nenhum
+//   81 *       Retorno         :       nenhum
+//   82 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock0 Using cfiCommon0
           CFI Function PAGAMENTOS_ini
         THUMB
-//   81 void PAGAMENTOS_ini(void){
+//   83 void PAGAMENTOS_ini(void){
 PAGAMENTOS_ini:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//   82   
-//   83   INI_INHIBIT_UCA1();
+//   84   
+//   85   INI_INHIBIT_UCA1();
         LDR.W    R0,??DataTable15  ;; 0x2009c020
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x1000000
         LDR.W    R1,??DataTable15  ;; 0x2009c020
         STR      R0,[R1, #+0]
-//   84   INI_INHIBIT_P70();
+//   86   INI_INHIBIT_P70();
         LDR.W    R0,??DataTable15  ;; 0x2009c020
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x2000000
         LDR.W    R1,??DataTable15  ;; 0x2009c020
         STR      R0,[R1, #+0]
-//   85   
-//   86   PINSEL4_bit.P2_12 = 1;
+//   87   
+//   88   PINSEL4_bit.P2_12 = 1;
         MOVS     R0,#+1
         LDR.W    R1,??DataTable15_1  ;; 0x4002c010
         LDR      R1,[R1, #+0]
         BFI      R1,R0,#+24,#+2
         LDR.W    R0,??DataTable15_1  ;; 0x4002c010
         STR      R1,[R0, #+0]
-//   87   EXTMODE_bit.EXTMODE2 = 1;
+//   89   EXTMODE_bit.EXTMODE2 = 1;
         LDR.W    R0,??DataTable15_2  ;; 0x400fc148
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x4
         LDR.W    R1,??DataTable15_2  ;; 0x400fc148
         STR      R0,[R1, #+0]
-//   88   EXTPOLAR_bit.EXTPOLAR2 = 1;    
+//   90   EXTPOLAR_bit.EXTPOLAR2 = 1;    
         LDR.W    R0,??DataTable15_3  ;; 0x400fc14c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x4
         LDR.W    R1,??DataTable15_3  ;; 0x400fc14c
         STR      R0,[R1, #+0]
-//   89   SETENA0_bit.SETENA20 = 1;   
+//   91   SETENA0_bit.SETENA20 = 1;   
         LDR.W    R0,??DataTable15_4  ;; 0xe000e100
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x100000
         LDR.W    R1,??DataTable15_4  ;; 0xe000e100
         STR      R0,[R1, #+0]
-//   90   
-//   91   PINSEL4_bit.P2_13 = 1;
+//   92   
+//   93   PINSEL4_bit.P2_13 = 1;
         MOVS     R0,#+1
         LDR.W    R1,??DataTable15_1  ;; 0x4002c010
         LDR      R1,[R1, #+0]
         BFI      R1,R0,#+26,#+2
         LDR.W    R0,??DataTable15_1  ;; 0x4002c010
         STR      R1,[R0, #+0]
-//   92   EXTMODE_bit.EXTMODE3 = 1;
+//   94   EXTMODE_bit.EXTMODE3 = 1;
         LDR.W    R0,??DataTable15_2  ;; 0x400fc148
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x8
         LDR.W    R1,??DataTable15_2  ;; 0x400fc148
         STR      R0,[R1, #+0]
-//   93   EXTPOLAR_bit.EXTPOLAR3 = 1;    
+//   95   EXTPOLAR_bit.EXTPOLAR3 = 1;    
         LDR.W    R0,??DataTable15_3  ;; 0x400fc14c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x8
         LDR.W    R1,??DataTable15_3  ;; 0x400fc14c
         STR      R0,[R1, #+0]
-//   94   SETENA0_bit.SETENA21 = 1;    
+//   96   SETENA0_bit.SETENA21 = 1;    
         LDR.W    R0,??DataTable15_4  ;; 0xe000e100
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x200000
         LDR.W    R1,??DataTable15_4  ;; 0xe000e100
         STR      R0,[R1, #+0]
-//   95   
-//   96   SET_INHIBIT_UCA1(1);
+//   97   
+//   98   SET_INHIBIT_UCA1(1);
         LDR.W    R0,??DataTable15_5  ;; 0x2009c038
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x1000000
         LDR.W    R1,??DataTable15_5  ;; 0x2009c038
         STR      R0,[R1, #+0]
-//   97   SET_INHIBIT_P70(1);
+//   99   SET_INHIBIT_P70(1);
         LDR.W    R0,??DataTable15_5  ;; 0x2009c038
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x2000000
-        LDR.N    R1,??DataTable15_5  ;; 0x2009c038
+        LDR.W    R1,??DataTable15_5  ;; 0x2009c038
         STR      R0,[R1, #+0]
-//   98   vSemaphoreCreateBinary(PAGAMENTOS_semaforo_pagamentos);
+//  100   vSemaphoreCreateBinary(PAGAMENTOS_semaforo_pagamentos);
         MOVS     R1,#+0
         MOVS     R0,#+1
           CFI FunCall xQueueCreate
         BL       xQueueCreate
-        LDR.N    R1,??DataTable15_6
+        LDR.W    R1,??DataTable15_6
         STR      R0,[R1, #+0]
-        LDR.N    R0,??DataTable15_6
+        LDR.W    R0,??DataTable15_6
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??PAGAMENTOS_ini_0
         MOVS     R3,#+0
         MOVS     R2,#+0
         MOVS     R1,#+0
-        LDR.N    R0,??DataTable15_6
+        LDR.W    R0,??DataTable15_6
         LDR      R0,[R0, #+0]
           CFI FunCall xQueueGenericSend
         BL       xQueueGenericSend
-//   99 }
+//  101   
+//  102   PARAMETROS_le(ADR_VALOR_PULSO_MOEDEIRO,(void*)&PAGAMENTOS_incremento_uca);
 ??PAGAMENTOS_ini_0:
+        LDR.W    R1,??DataTable15_7
+        MOVS     R0,#+8
+          CFI FunCall PARAMETROS_le
+        BL       PARAMETROS_le
+//  103   PARAMETROS_le(ADR_VALOR_PULSO_NOTEIRO,(void*)&PAGAMENTOS_incremento_p70);
+        LDR.W    R1,??DataTable15_8
+        MOVS     R0,#+9
+          CFI FunCall PARAMETROS_le
+        BL       PARAMETROS_le
+//  104 
+//  105   if(PAGAMENTOS_incremento_uca>1000)
+        LDR.W    R0,??DataTable15_7
+        LDR      R0,[R0, #+0]
+        CMP      R0,#+1000
+        BLS.N    ??PAGAMENTOS_ini_1
+//  106     PAGAMENTOS_incremento_uca=1000;
+        LDR.W    R0,??DataTable15_7
+        MOV      R1,#+1000
+        STR      R1,[R0, #+0]
+//  107   
+//  108   if(PAGAMENTOS_incremento_p70>100000)
+??PAGAMENTOS_ini_1:
+        LDR.N    R0,??DataTable15_8
+        LDR      R0,[R0, #+0]
+        LDR.N    R1,??DataTable15_9  ;; 0x186a1
+        CMP      R0,R1
+        BCC.N    ??PAGAMENTOS_ini_2
+//  109   PAGAMENTOS_incremento_p70=100000;
+        LDR.N    R0,??DataTable15_8
+        LDR.N    R1,??DataTable15_10  ;; 0x186a0
+        STR      R1,[R0, #+0]
+//  110    
+//  111 }
+??PAGAMENTOS_ini_2:
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock0
         REQUIRE _A_FIO1DIR
@@ -394,59 +441,59 @@ PAGAMENTOS_ini:
         REQUIRE _A_EXTPOLAR
         REQUIRE _A_SETENA0
         REQUIRE _A_FIO1SET
-//  100 /***********************************************************************************
-//  101 *       Descrição       :       Tick de timer para o módulo pagamentos
-//  102 *       Parametros      :       nenhum
-//  103 *       Retorno         :       nenhum
-//  104 ***********************************************************************************/
+//  112 /***********************************************************************************
+//  113 *       Descrição       :       Tick de timer para o módulo pagamentos
+//  114 *       Parametros      :       nenhum
+//  115 *       Retorno         :       nenhum
+//  116 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock1 Using cfiCommon0
           CFI Function PAGAMENTOS_timer_tick
           CFI NoCalls
         THUMB
-//  105 void PAGAMENTOS_timer_tick(void){
-//  106   
-//  107   if(PAGAMENTOS_filtro_uca)
+//  117 void PAGAMENTOS_timer_tick(void){
+//  118   
+//  119   if(PAGAMENTOS_filtro_uca)
 PAGAMENTOS_timer_tick:
-        LDR.N    R0,??DataTable15_7
+        LDR.N    R0,??DataTable15_11
         LDRH     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??PAGAMENTOS_timer_tick_0
-//  108     PAGAMENTOS_filtro_uca--;
-        LDR.N    R0,??DataTable15_7
+//  120     PAGAMENTOS_filtro_uca--;
+        LDR.N    R0,??DataTable15_11
         LDRH     R0,[R0, #+0]
         SUBS     R0,R0,#+1
-        LDR.N    R1,??DataTable15_7
+        LDR.N    R1,??DataTable15_11
         STRH     R0,[R1, #+0]
-//  109   
-//  110   if(PAGAMENTOS_filtro_p70)
+//  121   
+//  122   if(PAGAMENTOS_filtro_p70)
 ??PAGAMENTOS_timer_tick_0:
-        LDR.N    R0,??DataTable15_8
+        LDR.N    R0,??DataTable15_12
         LDRH     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??PAGAMENTOS_timer_tick_1
-//  111     PAGAMENTOS_filtro_p70--;
-        LDR.N    R0,??DataTable15_8
+//  123     PAGAMENTOS_filtro_p70--;
+        LDR.N    R0,??DataTable15_12
         LDRH     R0,[R0, #+0]
         SUBS     R0,R0,#+1
-        LDR.N    R1,??DataTable15_8
+        LDR.N    R1,??DataTable15_12
         STRH     R0,[R1, #+0]
-//  112 }
+//  124 }
 ??PAGAMENTOS_timer_tick_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock1
-//  113 /***********************************************************************************
-//  114 *       Descrição       :       Função principal do módulo
-//  115 *       Parametros      :       nenhum
-//  116 *       Retorno         :       nenhum
-//  117 ***********************************************************************************/
+//  125 /***********************************************************************************
+//  126 *       Descrição       :       Função principal do módulo
+//  127 *       Parametros      :       nenhum
+//  128 *       Retorno         :       nenhum
+//  129 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function PAGAMENTOS_main
         THUMB
-//  118 void PAGAMENTOS_main(void*pPar){
+//  130 void PAGAMENTOS_main(void*pPar){
 PAGAMENTOS_main:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -454,176 +501,178 @@ PAGAMENTOS_main:
           CFI R4 Frame(CFA, -12)
           CFI CFA R13+16
         MOVS     R4,R0
-//  119   unsigned int acumulado;
-//  120   
-//  121   SMDB_ini();  
+//  131   unsigned int acumulado;
+//  132   
+//  133   SMDB_ini();  
           CFI FunCall SMDB_ini
         BL       SMDB_ini
-//  122   vTaskDelay(3000);
+//  134   vTaskDelay(3000);
         MOVW     R0,#+3000
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  123   
-//  124   for(;;){    
-//  125     
-//  126     SMDB_tick();    
+//  135   
+//  136   for(;;){    
+//  137     
+//  138     SMDB_tick();    
 ??PAGAMENTOS_main_0:
           CFI FunCall SMDB_tick
         BL       SMDB_tick
-//  127     acumulado = BV20_get_valor_acumulador();
+//  139     acumulado = BV20_get_valor_acumulador();
           CFI FunCall BV20_get_valor_acumulador
         BL       BV20_get_valor_acumulador
         MOVS     R5,R0
-//  128     if(acumulado){
+//  140     if(acumulado){
         CMP      R5,#+0
         BEQ.N    ??PAGAMENTOS_main_1
-//  129       PAGAMENTOS_adiciona_valores(acumulado*100);
+//  141       PAGAMENTOS_adiciona_valores(acumulado*100);
         MOVS     R0,#+100
         MUL      R0,R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall PAGAMENTOS_adiciona_valores
         BL       PAGAMENTOS_adiciona_valores
-//  130       BV20_subtrai_valor_acumulado(acumulado);
+//  142       BV20_subtrai_valor_acumulado(acumulado);
         MOVS     R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall BV20_subtrai_valor_acumulado
         BL       BV20_subtrai_valor_acumulado
-//  131     }
-//  132         
-//  133     vTaskDelay(10);
+//  143     }
+//  144         
+//  145     vTaskDelay(10);
 ??PAGAMENTOS_main_1:
         MOVS     R0,#+10
           CFI FunCall vTaskDelay
         BL       vTaskDelay
         B.N      ??PAGAMENTOS_main_0
           CFI EndBlock cfiBlock2
-//  134   }  
-//  135 }
-//  136 /***********************************************************************************
-//  137 *       Descrição       :       Irq para o moedeiro UCA1
-//  138 *       Parametros      :       nenhum
-//  139 *       Retorno         :       nenhum
-//  140 ***********************************************************************************/
+//  146   }  
+//  147 }
+//  148 /***********************************************************************************
+//  149 *       Descrição       :       Irq para o moedeiro UCA1
+//  150 *       Parametros      :       nenhum
+//  151 *       Retorno         :       nenhum
+//  152 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock3 Using cfiCommon0
           CFI Function PAGAMENTOS_irq_uca_1
           CFI NoCalls
         THUMB
-//  141 void PAGAMENTOS_irq_uca_1(void){
-//  142   
-//  143   // Timer para gerar um
-//  144   // filtro de limita a frequência máxima
-//  145   // dos pulsos
-//  146   if(!PAGAMENTOS_filtro_uca){
+//  153 void PAGAMENTOS_irq_uca_1(void){
+//  154   
+//  155   // Timer para gerar um
+//  156   // filtro de limita a frequência máxima
+//  157   // dos pulsos
+//  158   if(!PAGAMENTOS_filtro_uca){
 PAGAMENTOS_irq_uca_1:
-        LDR.N    R0,??DataTable15_7
+        LDR.N    R0,??DataTable15_11
         LDRH     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??PAGAMENTOS_irq_uca_1_0
-//  147     
-//  148     PAGAMENTOS_valor_acumulado_uca+=25;  
-        LDR.N    R0,??DataTable15_9
+//  159     
+//  160     PAGAMENTOS_valor_acumulado_uca+=PAGAMENTOS_incremento_uca;  
+        LDR.N    R0,??DataTable15_13
         LDRH     R0,[R0, #+0]
-        ADDS     R0,R0,#+25
-        LDR.N    R1,??DataTable15_9
+        LDR.N    R1,??DataTable15_7
+        LDR      R1,[R1, #+0]
+        ADDS     R0,R1,R0
+        LDR.N    R1,??DataTable15_13
         STRH     R0,[R1, #+0]
-//  149     PAGAMENTOS_filtro_uca = RELOAD_FILTRO_UCA;
-        LDR.N    R0,??DataTable15_7
+//  161     PAGAMENTOS_filtro_uca = RELOAD_FILTRO_UCA;
+        LDR.N    R0,??DataTable15_11
         MOVS     R1,#+50
         STRH     R1,[R0, #+0]
-//  150   }
-//  151   
-//  152   EXTINT_bit.EINT2 = 1;
+//  162   }
+//  163   
+//  164   EXTINT_bit.EINT2 = 1;
 ??PAGAMENTOS_irq_uca_1_0:
-        LDR.N    R0,??DataTable15_10  ;; 0x400fc140
+        LDR.N    R0,??DataTable15_14  ;; 0x400fc140
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x4
-        LDR.N    R1,??DataTable15_10  ;; 0x400fc140
+        LDR.N    R1,??DataTable15_14  ;; 0x400fc140
         STR      R0,[R1, #+0]
-//  153   CLRPEND0_bit.CLRPEND20 = 1;  
-        LDR.N    R0,??DataTable15_11  ;; 0xe000e280
+//  165   CLRPEND0_bit.CLRPEND20 = 1;  
+        LDR.N    R0,??DataTable15_15  ;; 0xe000e280
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x100000
-        LDR.N    R1,??DataTable15_11  ;; 0xe000e280
+        LDR.N    R1,??DataTable15_15  ;; 0xe000e280
         STR      R0,[R1, #+0]
-//  154 }
+//  166 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock3
         REQUIRE _A_EXTINT
         REQUIRE _A_CLRPEND0
-//  155 /***********************************************************************************
-//  156 *       Descrição       :       Valor acumulado no totalizado do UCA1
-//  157 *       Parametros      :       nenhum
-//  158 *       Retorno         :       nenhum
-//  159 ***********************************************************************************/
+//  167 /***********************************************************************************
+//  168 *       Descrição       :       Valor acumulado no totalizado do UCA1
+//  169 *       Parametros      :       nenhum
+//  170 *       Retorno         :       nenhum
+//  171 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function PAGAMENTOS_get_contagem_uca1
           CFI NoCalls
         THUMB
-//  160 unsigned short int PAGAMENTOS_get_contagem_uca1(void){
-//  161   
-//  162   return PAGAMENTOS_valor_acumulado_uca;
+//  172 unsigned short int PAGAMENTOS_get_contagem_uca1(void){
+//  173   
+//  174   return PAGAMENTOS_valor_acumulado_uca;
 PAGAMENTOS_get_contagem_uca1:
-        LDR.N    R0,??DataTable15_9
+        LDR.N    R0,??DataTable15_13
         LDRH     R0,[R0, #+0]
         BX       LR               ;; return
           CFI EndBlock cfiBlock4
-//  163 }
-//  164 /***********************************************************************************
-//  165 *       Descrição       :       Subtraí um valor do acumulado no UCA1
-//  166 *       Parametros      :       (unsigned short int) valor que será
-//  167 *                                                    subtraido
-//  168 *       Retorno         :       nenhum
-//  169 ***********************************************************************************/
+//  175 }
+//  176 /***********************************************************************************
+//  177 *       Descrição       :       Subtraí um valor do acumulado no UCA1
+//  178 *       Parametros      :       (unsigned short int) valor que será
+//  179 *                                                    subtraido
+//  180 *       Retorno         :       nenhum
+//  181 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function PAGAMENTOS_subtrai_contagem_uca1
           CFI NoCalls
         THUMB
-//  170 void PAGAMENTOS_subtrai_contagem_uca1(unsigned short int contagem){
-//  171   
-//  172   if(contagem>=PAGAMENTOS_valor_acumulado_uca)
+//  182 void PAGAMENTOS_subtrai_contagem_uca1(unsigned short int contagem){
+//  183   
+//  184   if(contagem>=PAGAMENTOS_valor_acumulado_uca)
 PAGAMENTOS_subtrai_contagem_uca1:
-        LDR.N    R1,??DataTable15_9
+        LDR.N    R1,??DataTable15_13
         LDRH     R1,[R1, #+0]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         CMP      R0,R1
         BCC.N    ??PAGAMENTOS_subtrai_contagem_uca1_0
-//  173     PAGAMENTOS_valor_acumulado_uca-=contagem;
-        LDR.N    R1,??DataTable15_9
+//  185     PAGAMENTOS_valor_acumulado_uca-=contagem;
+        LDR.N    R1,??DataTable15_13
         LDRH     R1,[R1, #+0]
         SUBS     R1,R1,R0
-        LDR.N    R2,??DataTable15_9
+        LDR.N    R2,??DataTable15_13
         STRH     R1,[R2, #+0]
         B.N      ??PAGAMENTOS_subtrai_contagem_uca1_1
-//  174   else
-//  175     PAGAMENTOS_valor_acumulado_uca = 0;
+//  186   else
+//  187     PAGAMENTOS_valor_acumulado_uca = 0;
 ??PAGAMENTOS_subtrai_contagem_uca1_0:
-        LDR.N    R1,??DataTable15_9
+        LDR.N    R1,??DataTable15_13
         MOVS     R2,#+0
         STRH     R2,[R1, #+0]
-//  176 }
+//  188 }
 ??PAGAMENTOS_subtrai_contagem_uca1_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock5
-//  177 /***********************************************************************************
-//  178 *       Descrição       :       Liga o bloqueio do UCA1
-//  179 *       Parametros      :       (unsigned char) flag 
-//  180 *       Retorno         :       nenhum
-//  181 ***********************************************************************************/
+//  189 /***********************************************************************************
+//  190 *       Descrição       :       Liga o bloqueio do UCA1
+//  191 *       Parametros      :       (unsigned char) flag 
+//  192 *       Retorno         :       nenhum
+//  193 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function PAGAMENTOS_bloqueia_uca1
           CFI NoCalls
         THUMB
-//  182 void PAGAMENTOS_bloqueia_uca1(unsigned char flag){
-//  183   
-//  184   SET_INHIBIT_UCA1(flag);
+//  194 void PAGAMENTOS_bloqueia_uca1(unsigned char flag){
+//  195   
+//  196   SET_INHIBIT_UCA1(flag);
 PAGAMENTOS_bloqueia_uca1:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
@@ -635,84 +684,86 @@ PAGAMENTOS_bloqueia_uca1:
         STR      R1,[R2, #+0]
         B.N      ??PAGAMENTOS_bloqueia_uca1_1
 ??PAGAMENTOS_bloqueia_uca1_0:
-        LDR.N    R1,??DataTable15_12  ;; 0x2009c03c
+        LDR.N    R1,??DataTable15_16  ;; 0x2009c03c
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x1000000
-        LDR.N    R2,??DataTable15_12  ;; 0x2009c03c
+        LDR.N    R2,??DataTable15_16  ;; 0x2009c03c
         STR      R1,[R2, #+0]
-//  185 }
+//  197 }
 ??PAGAMENTOS_bloqueia_uca1_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock6
         REQUIRE _A_FIO1SET
         REQUIRE _A_FIO1CLR
-//  186 /***********************************************************************************
-//  187 *       Descrição       :       IRQ do noteiro P70
-//  188 *       Parametros      :       nenhum
-//  189 *       Retorno         :       nenhum
-//  190 ***********************************************************************************/
+//  198 /***********************************************************************************
+//  199 *       Descrição       :       IRQ do noteiro P70
+//  200 *       Parametros      :       nenhum
+//  201 *       Retorno         :       nenhum
+//  202 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function PAGAMENTOS_irq_p70
           CFI NoCalls
         THUMB
-//  191 void PAGAMENTOS_irq_p70(void){
-//  192   
-//  193   if(!PAGAMENTOS_bloqueio_p70 && !PAGAMENTOS_filtro_p70){
+//  203 void PAGAMENTOS_irq_p70(void){
+//  204   
+//  205   if(!PAGAMENTOS_bloqueio_p70 && !PAGAMENTOS_filtro_p70){
 PAGAMENTOS_irq_p70:
-        LDR.N    R0,??DataTable15_13
+        LDR.N    R0,??DataTable15_17
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??PAGAMENTOS_irq_p70_0
-        LDR.N    R0,??DataTable15_8
+        LDR.N    R0,??DataTable15_12
         LDRH     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??PAGAMENTOS_irq_p70_0
-//  194     PAGAMENTOS_valor_acumulado_p70+=100;
-        LDR.N    R0,??DataTable15_14
+//  206     PAGAMENTOS_valor_acumulado_p70+=PAGAMENTOS_incremento_p70;
+        LDR.N    R0,??DataTable15_18
         LDRH     R0,[R0, #+0]
-        ADDS     R0,R0,#+100
-        LDR.N    R1,??DataTable15_14
+        LDR.N    R1,??DataTable15_8
+        LDR      R1,[R1, #+0]
+        ADDS     R0,R1,R0
+        LDR.N    R1,??DataTable15_18
         STRH     R0,[R1, #+0]
-//  195     PAGAMENTOS_filtro_p70 = RELOAD_FILTRO_UCA;
-        LDR.N    R0,??DataTable15_8
+//  207     PAGAMENTOS_filtro_p70 = RELOAD_FILTRO_UCA;
+        LDR.N    R0,??DataTable15_12
         MOVS     R1,#+50
         STRH     R1,[R0, #+0]
-//  196   }  
-//  197   
-//  198   EXTINT_bit.EINT3 = 1;
+//  208   }  
+//  209   
+//  210   EXTINT_bit.EINT3 = 1;
 ??PAGAMENTOS_irq_p70_0:
-        LDR.N    R0,??DataTable15_10  ;; 0x400fc140
+        LDR.N    R0,??DataTable15_14  ;; 0x400fc140
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x8
-        LDR.N    R1,??DataTable15_10  ;; 0x400fc140
+        LDR.N    R1,??DataTable15_14  ;; 0x400fc140
         STR      R0,[R1, #+0]
-//  199   CLRPEND0_bit.CLRPEND21 = 1;  
-        LDR.N    R0,??DataTable15_11  ;; 0xe000e280
+//  211   CLRPEND0_bit.CLRPEND21 = 1;  
+        LDR.N    R0,??DataTable15_15  ;; 0xe000e280
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x200000
-        LDR.N    R1,??DataTable15_11  ;; 0xe000e280
+        LDR.N    R1,??DataTable15_15  ;; 0xe000e280
         STR      R0,[R1, #+0]
-//  200 }
+//  212 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock7
         REQUIRE _A_EXTINT
         REQUIRE _A_CLRPEND0
-//  201 /***********************************************************************************
-//  202 *       Descrição       :       Setter para o inhibit do noteiro P70
-//  203 *       Parametros      :       (unsigned char) inhibit
-//  204 *       Retorno         :       nenhum
-//  205 ***********************************************************************************/
+//  213 /***********************************************************************************
+//  214 *       Descrição       :       Setter para o inhibit do noteiro P70
+//  215 *       Parametros      :       (unsigned char) inhibit
+//  216 *       Retorno         :       nenhum
+//  217 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock8 Using cfiCommon0
           CFI Function PAGAMENTOS_set_inhibit_p70
           CFI NoCalls
         THUMB
-//  206 void PAGAMENTOS_set_inhibit_p70(unsigned char flag){
-//  207   
-//  208   SET_INHIBIT_P70(flag);
+//  218 void PAGAMENTOS_set_inhibit_p70(unsigned char flag){
+//  219   
+//  220   SET_INHIBIT_P70(flag);
 PAGAMENTOS_set_inhibit_p70:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
@@ -724,94 +775,94 @@ PAGAMENTOS_set_inhibit_p70:
         STR      R1,[R2, #+0]
         B.N      ??PAGAMENTOS_set_inhibit_p70_1
 ??PAGAMENTOS_set_inhibit_p70_0:
-        LDR.N    R1,??DataTable15_12  ;; 0x2009c03c
+        LDR.N    R1,??DataTable15_16  ;; 0x2009c03c
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x2000000
-        LDR.N    R2,??DataTable15_12  ;; 0x2009c03c
+        LDR.N    R2,??DataTable15_16  ;; 0x2009c03c
         STR      R1,[R2, #+0]
-//  209 }
+//  221 }
 ??PAGAMENTOS_set_inhibit_p70_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock8
         REQUIRE _A_FIO1SET
         REQUIRE _A_FIO1CLR
-//  210 /***********************************************************************************
-//  211 *       Descrição       :       Getter para a contagem do P70
-//  212 *       Parametros      :       nenhum
-//  213 *       Retorno         :       (unsigned short int) contagem do acumulador
-//  214 *                               de valores do P70
-//  215 ***********************************************************************************/
+//  222 /***********************************************************************************
+//  223 *       Descrição       :       Getter para a contagem do P70
+//  224 *       Parametros      :       nenhum
+//  225 *       Retorno         :       (unsigned short int) contagem do acumulador
+//  226 *                               de valores do P70
+//  227 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock9 Using cfiCommon0
           CFI Function PAGAMENTOS_get_contagem_p70
           CFI NoCalls
         THUMB
-//  216 unsigned short int PAGAMENTOS_get_contagem_p70(void){
-//  217   
-//  218   return PAGAMENTOS_valor_acumulado_p70;
+//  228 unsigned short int PAGAMENTOS_get_contagem_p70(void){
+//  229   
+//  230   return PAGAMENTOS_valor_acumulado_p70;
 PAGAMENTOS_get_contagem_p70:
-        LDR.N    R0,??DataTable15_14
+        LDR.N    R0,??DataTable15_18
         LDRH     R0,[R0, #+0]
         BX       LR               ;; return
           CFI EndBlock cfiBlock9
-//  219 }
-//  220 /***********************************************************************************
-//  221 *       Descrição       :       Subtrai um valor da contagem do P70
-//  222 *       Parametros      :       (unsigned short int) valor
-//  223 *       Retorno         :       nenhum
-//  224 ***********************************************************************************/
+//  231 }
+//  232 /***********************************************************************************
+//  233 *       Descrição       :       Subtrai um valor da contagem do P70
+//  234 *       Parametros      :       (unsigned short int) valor
+//  235 *       Retorno         :       nenhum
+//  236 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock10 Using cfiCommon0
           CFI Function PAGAMENTOS_subtrai_contagem_p70
           CFI NoCalls
         THUMB
-//  225 void PAGAMENTOS_subtrai_contagem_p70(unsigned short int contagem){
-//  226   
-//  227   if(contagem>PAGAMENTOS_valor_acumulado_p70)
+//  237 void PAGAMENTOS_subtrai_contagem_p70(unsigned short int contagem){
+//  238   
+//  239   if(contagem>PAGAMENTOS_valor_acumulado_p70)
 PAGAMENTOS_subtrai_contagem_p70:
-        LDR.N    R1,??DataTable15_14
+        LDR.N    R1,??DataTable15_18
         LDRH     R1,[R1, #+0]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         CMP      R1,R0
         BCS.N    ??PAGAMENTOS_subtrai_contagem_p70_0
-//  228     PAGAMENTOS_valor_acumulado_p70 -= contagem;
-        LDR.N    R1,??DataTable15_14
+//  240     PAGAMENTOS_valor_acumulado_p70 -= contagem;
+        LDR.N    R1,??DataTable15_18
         LDRH     R1,[R1, #+0]
         SUBS     R1,R1,R0
-        LDR.N    R2,??DataTable15_14
+        LDR.N    R2,??DataTable15_18
         STRH     R1,[R2, #+0]
         B.N      ??PAGAMENTOS_subtrai_contagem_p70_1
-//  229   else
-//  230     PAGAMENTOS_valor_acumulado_p70 = 0;    
+//  241   else
+//  242     PAGAMENTOS_valor_acumulado_p70 = 0;    
 ??PAGAMENTOS_subtrai_contagem_p70_0:
-        LDR.N    R1,??DataTable15_14
+        LDR.N    R1,??DataTable15_18
         MOVS     R2,#+0
         STRH     R2,[R1, #+0]
-//  231 }
+//  243 }
 ??PAGAMENTOS_subtrai_contagem_p70_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock10
-//  232 /***********************************************************************************
-//  233 *       Descrição       :       Adiciona valores ao acumulador de dinheiro
-//  234 *       Parametros      :       (unsigned short int) valor
-//  235 *       Retorno         :       nenhum
-//  236 ***********************************************************************************/
+//  244 /***********************************************************************************
+//  245 *       Descrição       :       Adiciona valores ao acumulador de dinheiro
+//  246 *       Parametros      :       (unsigned short int) valor
+//  247 *       Retorno         :       nenhum
+//  248 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock11 Using cfiCommon0
           CFI Function PAGAMENTOS_adiciona_valores
         THUMB
-//  237 void PAGAMENTOS_adiciona_valores(unsigned short int valor){
+//  249 void PAGAMENTOS_adiciona_valores(unsigned short int valor){
 PAGAMENTOS_adiciona_valores:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  238   
-//  239    while(!xSemaphoreTake(PAGAMENTOS_semaforo_pagamentos,portTICK_RATE_MS*1));     
+//  250   
+//  251    while(!xSemaphoreTake(PAGAMENTOS_semaforo_pagamentos,portTICK_RATE_MS*1));     
 ??PAGAMENTOS_adiciona_valores_0:
         MOVS     R3,#+0
         MOVS     R2,#+1
@@ -822,20 +873,20 @@ PAGAMENTOS_adiciona_valores:
         BL       xQueueGenericReceive
         CMP      R0,#+0
         BEQ.N    ??PAGAMENTOS_adiciona_valores_0
-//  240    
-//  241    PAGAMENTOS_valor_acumulado_geral+=valor;
-        LDR.N    R0,??DataTable15_15
+//  252    
+//  253    PAGAMENTOS_valor_acumulado_geral+=valor;
+        LDR.N    R0,??DataTable15_19
         LDR      R0,[R0, #+0]
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         ADDS     R0,R4,R0
-        LDR.N    R1,??DataTable15_15
+        LDR.N    R1,??DataTable15_19
         STR      R0,[R1, #+0]
-//  242    PAGAMENTOS_timeout_pagamento = RELOAD_TIMEOUT_PAGAMENTO;
-        LDR.N    R0,??DataTable15_16
+//  254    PAGAMENTOS_timeout_pagamento = RELOAD_TIMEOUT_PAGAMENTO;
+        LDR.N    R0,??DataTable15_20
         MOVW     R1,#+60000
         STR      R1,[R0, #+0]
-//  243    
-//  244    xSemaphoreGive(PAGAMENTOS_semaforo_pagamentos);   
+//  255    
+//  256    xSemaphoreGive(PAGAMENTOS_semaforo_pagamentos);   
         MOVS     R3,#+0
         MOVS     R2,#+0
         MOVS     R1,#+0
@@ -843,20 +894,20 @@ PAGAMENTOS_adiciona_valores:
         LDR      R0,[R0, #+0]
           CFI FunCall xQueueGenericSend
         BL       xQueueGenericSend
-//  245 }
+//  257 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock11
-//  246 /***********************************************************************************
-//  247 *       Descrição       :       Getter para o acumulador de dinheiro
-//  248 *       Parametros      :       (nenhum)
-//  249 *       Retorno         :       (int) valor acumulado em moeda
-//  250 ***********************************************************************************/
+//  258 /***********************************************************************************
+//  259 *       Descrição       :       Getter para o acumulador de dinheiro
+//  260 *       Parametros      :       (nenhum)
+//  261 *       Retorno         :       (int) valor acumulado em moeda
+//  262 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock12 Using cfiCommon0
           CFI Function PAGAMENTOS_get_valor_acumulado
         THUMB
-//  251 int PAGAMENTOS_get_valor_acumulado(void){
+//  263 int PAGAMENTOS_get_valor_acumulado(void){
 PAGAMENTOS_get_valor_acumulado:
         PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -865,9 +916,9 @@ PAGAMENTOS_get_valor_acumulado:
           CFI CFA R13+12
         SUB      SP,SP,#+12
           CFI CFA R13+24
-//  252    int valor;
-//  253    
-//  254    while(!xSemaphoreTake(PAGAMENTOS_semaforo_pagamentos,portTICK_RATE_MS*1));     
+//  264    int valor;
+//  265    
+//  266    while(!xSemaphoreTake(PAGAMENTOS_semaforo_pagamentos,portTICK_RATE_MS*1));     
 ??PAGAMENTOS_get_valor_acumulado_0:
         MOVS     R3,#+0
         MOVS     R2,#+1
@@ -878,84 +929,84 @@ PAGAMENTOS_get_valor_acumulado:
         BL       xQueueGenericReceive
         CMP      R0,#+0
         BEQ.N    ??PAGAMENTOS_get_valor_acumulado_0
-//  255    
-//  256    //Hoock para ler o UCA1
-//  257    if(PAGAMENTOS_valor_acumulado_p70){
-        LDR.N    R0,??DataTable15_14
+//  267    
+//  268    //Hoock para ler o UCA1
+//  269    if(PAGAMENTOS_valor_acumulado_p70){
+        LDR.N    R0,??DataTable15_18
         LDRH     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??PAGAMENTOS_get_valor_acumulado_1
-//  258      
-//  259      unsigned int fat_cartao_par;     
-//  260      unsigned int fat_cartao_tot;
-//  261      unsigned int temp = PAGAMENTOS_valor_acumulado_p70;
-        LDR.N    R0,??DataTable15_14
+//  270      
+//  271      unsigned int fat_cartao_par;     
+//  272      unsigned int fat_cartao_tot;
+//  273      unsigned int temp = PAGAMENTOS_valor_acumulado_p70;
+        LDR.N    R0,??DataTable15_18
         LDRH     R5,[R0, #+0]
-//  262      
-//  263      PARAMETROS_le(ADR_CARTAO_PARCIAL,(void*)&fat_cartao_par);
+//  274      
+//  275      PARAMETROS_le(ADR_CARTAO_PARCIAL,(void*)&fat_cartao_par);
         ADD      R1,SP,#+4
         MOVS     R0,#+14
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  264      PARAMETROS_le(ADR_CARTAO_TOTAL,(void*)&fat_cartao_tot);
+//  276      PARAMETROS_le(ADR_CARTAO_TOTAL,(void*)&fat_cartao_tot);
         ADD      R1,SP,#+0
         MOVS     R0,#+15
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  265      
-//  266      fat_cartao_par+=temp;
+//  277      
+//  278      fat_cartao_par+=temp;
         LDR      R0,[SP, #+4]
         ADDS     R0,R5,R0
         STR      R0,[SP, #+4]
-//  267      fat_cartao_tot+=temp;
+//  279      fat_cartao_tot+=temp;
         LDR      R0,[SP, #+0]
         ADDS     R0,R5,R0
         STR      R0,[SP, #+0]
-//  268      
-//  269      PARAMETROS_grava(ADR_CARTAO_PARCIAL,(void*)&fat_cartao_par);
+//  280      
+//  281      PARAMETROS_grava(ADR_CARTAO_PARCIAL,(void*)&fat_cartao_par);
         ADD      R1,SP,#+4
         MOVS     R0,#+14
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  270      PARAMETROS_grava(ADR_CARTAO_TOTAL,(void*)&fat_cartao_tot);
+//  282      PARAMETROS_grava(ADR_CARTAO_TOTAL,(void*)&fat_cartao_tot);
         ADD      R1,SP,#+0
         MOVS     R0,#+15
           CFI FunCall PARAMETROS_grava
         BL       PARAMETROS_grava
-//  271      
-//  272      valor+= PAGAMENTOS_valor_acumulado_p70;   
-        LDR.N    R0,??DataTable15_14
+//  283      
+//  284      valor+= PAGAMENTOS_valor_acumulado_p70;   
+        LDR.N    R0,??DataTable15_18
         LDRH     R0,[R0, #+0]
         ADDS     R4,R0,R4
-//  273      PAGAMENTOS_valor_acumulado_geral+=temp;
-        LDR.N    R0,??DataTable15_15
+//  285      PAGAMENTOS_valor_acumulado_geral+=temp;
+        LDR.N    R0,??DataTable15_19
         LDR      R0,[R0, #+0]
         ADDS     R0,R5,R0
-        LDR.N    R1,??DataTable15_15
+        LDR.N    R1,??DataTable15_19
         STR      R0,[R1, #+0]
-//  274      PAGAMENTOS_valor_acumulado_p70 -= temp; // É concorrente!
-        LDR.N    R0,??DataTable15_14
+//  286      PAGAMENTOS_valor_acumulado_p70 -= temp; // É concorrente!
+        LDR.N    R0,??DataTable15_18
         LDRH     R0,[R0, #+0]
         SUBS     R0,R0,R5
-        LDR.N    R1,??DataTable15_14
+        LDR.N    R1,??DataTable15_18
         STRH     R0,[R1, #+0]
-//  275    }
-//  276    
-//  277    valor = PAGAMENTOS_valor_acumulado_geral;   
+//  287    }
+//  288    
+//  289    valor = PAGAMENTOS_valor_acumulado_geral;   
 ??PAGAMENTOS_get_valor_acumulado_1:
-        LDR.N    R0,??DataTable15_15
+        LDR.N    R0,??DataTable15_19
         LDR      R0,[R0, #+0]
         MOVS     R4,R0
-//  278    valor+= PAGAMENTOS_valor_acumulado_uca;   
-        LDR.N    R0,??DataTable15_9
+//  290    valor+= PAGAMENTOS_valor_acumulado_uca;   
+        LDR.N    R0,??DataTable15_13
         LDRH     R0,[R0, #+0]
         ADDS     R4,R0,R4
-//  279    PAGAMENTOS_valor_acumulado_uca = 0;   
-        LDR.N    R0,??DataTable15_9
+//  291    PAGAMENTOS_valor_acumulado_uca = 0;   
+        LDR.N    R0,??DataTable15_13
         MOVS     R1,#+0
         STRH     R1,[R0, #+0]
-//  280    
-//  281    xSemaphoreGive(PAGAMENTOS_semaforo_pagamentos);     
+//  292    
+//  293    xSemaphoreGive(PAGAMENTOS_semaforo_pagamentos);     
         MOVS     R3,#+0
         MOVS     R2,#+0
         MOVS     R1,#+0
@@ -963,31 +1014,31 @@ PAGAMENTOS_get_valor_acumulado:
         LDR      R0,[R0, #+0]
           CFI FunCall xQueueGenericSend
         BL       xQueueGenericSend
-//  282    
-//  283    return valor;  
+//  294    
+//  295    return valor;  
         MOVS     R0,R4
         POP      {R1-R5,PC}       ;; return
           CFI EndBlock cfiBlock12
-//  284 }
-//  285 /***********************************************************************************
-//  286 *       Descrição       :       Subtrai valores do acumulador de moeda
-//  287 *       Parametros      :       (usigned int) valor
-//  288 *       Retorno         :       nenhum
-//  289 ***********************************************************************************/
+//  296 }
+//  297 /***********************************************************************************
+//  298 *       Descrição       :       Subtrai valores do acumulador de moeda
+//  299 *       Parametros      :       (usigned int) valor
+//  300 *       Retorno         :       nenhum
+//  301 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock13 Using cfiCommon0
           CFI Function PAGAMENTOS_subtrai_valores
         THUMB
-//  290 void PAGAMENTOS_subtrai_valores(unsigned int valor){
+//  302 void PAGAMENTOS_subtrai_valores(unsigned int valor){
 PAGAMENTOS_subtrai_valores:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  291   
-//  292    while(!xSemaphoreTake(PAGAMENTOS_semaforo_pagamentos,portTICK_RATE_MS*1));     
+//  303   
+//  304    while(!xSemaphoreTake(PAGAMENTOS_semaforo_pagamentos,portTICK_RATE_MS*1));     
 ??PAGAMENTOS_subtrai_valores_0:
         MOVS     R3,#+0
         MOVS     R2,#+1
@@ -998,38 +1049,38 @@ PAGAMENTOS_subtrai_valores:
         BL       xQueueGenericReceive
         CMP      R0,#+0
         BEQ.N    ??PAGAMENTOS_subtrai_valores_0
-//  293    
-//  294    if(PAGAMENTOS_valor_acumulado_geral>=valor)
-        LDR.N    R0,??DataTable15_15
+//  305    
+//  306    if(PAGAMENTOS_valor_acumulado_geral>=valor)
+        LDR.N    R0,??DataTable15_19
         LDR      R0,[R0, #+0]
         CMP      R0,R4
         BCC.N    ??PAGAMENTOS_subtrai_valores_1
-//  295      PAGAMENTOS_valor_acumulado_geral-=valor;
-        LDR.N    R0,??DataTable15_15
+//  307      PAGAMENTOS_valor_acumulado_geral-=valor;
+        LDR.N    R0,??DataTable15_19
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,R4
-        LDR.N    R1,??DataTable15_15
+        LDR.N    R1,??DataTable15_19
         STR      R0,[R1, #+0]
         B.N      ??PAGAMENTOS_subtrai_valores_2
-//  296    else
-//  297      PAGAMENTOS_valor_acumulado_geral = 0;
+//  308    else
+//  309      PAGAMENTOS_valor_acumulado_geral = 0;
 ??PAGAMENTOS_subtrai_valores_1:
-        LDR.N    R0,??DataTable15_15
+        LDR.N    R0,??DataTable15_19
         MOVS     R1,#+0
         STR      R1,[R0, #+0]
-//  298    
-//  299    if(PAGAMENTOS_valor_acumulado_geral<0)
+//  310    
+//  311    if(PAGAMENTOS_valor_acumulado_geral<0)
 ??PAGAMENTOS_subtrai_valores_2:
-        LDR.N    R0,??DataTable15_15
+        LDR.N    R0,??DataTable15_19
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BPL.N    ??PAGAMENTOS_subtrai_valores_3
-//  300      PAGAMENTOS_valor_acumulado_geral = 0;
-        LDR.N    R0,??DataTable15_15
+//  312      PAGAMENTOS_valor_acumulado_geral = 0;
+        LDR.N    R0,??DataTable15_19
         MOVS     R1,#+0
         STR      R1,[R0, #+0]
-//  301    
-//  302    xSemaphoreGive(PAGAMENTOS_semaforo_pagamentos);      
+//  313    
+//  314    xSemaphoreGive(PAGAMENTOS_semaforo_pagamentos);      
 ??PAGAMENTOS_subtrai_valores_3:
         MOVS     R3,#+0
         MOVS     R2,#+0
@@ -1038,28 +1089,28 @@ PAGAMENTOS_subtrai_valores:
         LDR      R0,[R0, #+0]
           CFI FunCall xQueueGenericSend
         BL       xQueueGenericSend
-//  303 }
+//  315 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock13
-//  304 /***********************************************************************************
-//  305 *       Descrição       :       Setter para o acumulador de dinheiro
-//  306 *       Parametros      :       (int valor)
-//  307 *       Retorno         :       nenhum
-//  308 ***********************************************************************************/
+//  316 /***********************************************************************************
+//  317 *       Descrição       :       Setter para o acumulador de dinheiro
+//  318 *       Parametros      :       (int valor)
+//  319 *       Retorno         :       nenhum
+//  320 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock14 Using cfiCommon0
           CFI Function PAGAMENTOS_set_valores
         THUMB
-//  309 void PAGAMENTOS_set_valores(int valor){
+//  321 void PAGAMENTOS_set_valores(int valor){
 PAGAMENTOS_set_valores:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  310   
-//  311    while(!xSemaphoreTake(PAGAMENTOS_semaforo_pagamentos,portTICK_RATE_MS*1));     
+//  322   
+//  323    while(!xSemaphoreTake(PAGAMENTOS_semaforo_pagamentos,portTICK_RATE_MS*1));     
 ??PAGAMENTOS_set_valores_0:
         MOVS     R3,#+0
         MOVS     R2,#+1
@@ -1070,12 +1121,12 @@ PAGAMENTOS_set_valores:
         BL       xQueueGenericReceive
         CMP      R0,#+0
         BEQ.N    ??PAGAMENTOS_set_valores_0
-//  312    
-//  313    PAGAMENTOS_valor_acumulado_geral = valor;
-        LDR.N    R0,??DataTable15_15
+//  324    
+//  325    PAGAMENTOS_valor_acumulado_geral = valor;
+        LDR.N    R0,??DataTable15_19
         STR      R4,[R0, #+0]
-//  314    
-//  315    xSemaphoreGive(PAGAMENTOS_semaforo_pagamentos);   
+//  326    
+//  327    xSemaphoreGive(PAGAMENTOS_semaforo_pagamentos);   
         MOVS     R3,#+0
         MOVS     R2,#+0
         MOVS     R1,#+0
@@ -1083,82 +1134,82 @@ PAGAMENTOS_set_valores:
         LDR      R0,[R0, #+0]
           CFI FunCall xQueueGenericSend
         BL       xQueueGenericSend
-//  316 }
+//  328 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock14
-//  317 /***********************************************************************************
-//  318 *       Descrição       :       Setter para o bloqueio dos meios de 
-//  319 *                               pagamento
-//  320 *       Parametros      :       (unsigned char) maior do que zero indica
-//  321 *                               que os meios de pagamento serão bloqueados
-//  322 *       Retorno         :       nenhum
-//  323 ***********************************************************************************/
+//  329 /***********************************************************************************
+//  330 *       Descrição       :       Setter para o bloqueio dos meios de 
+//  331 *                               pagamento
+//  332 *       Parametros      :       (unsigned char) maior do que zero indica
+//  333 *                               que os meios de pagamento serão bloqueados
+//  334 *       Retorno         :       nenhum
+//  335 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock15 Using cfiCommon0
           CFI Function PAGAMENTOS_set_bloqueio
         THUMB
-//  324 void PAGAMENTOS_set_bloqueio(unsigned char flag){
+//  336 void PAGAMENTOS_set_bloqueio(unsigned char flag){
 PAGAMENTOS_set_bloqueio:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  325   
-//  326   PAGAMENTOS_bloqueio_p70 = flag;
-        LDR.N    R0,??DataTable15_13
+//  337   
+//  338   PAGAMENTOS_bloqueio_p70 = flag;
+        LDR.N    R0,??DataTable15_17
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         STR      R4,[R0, #+0]
-//  327   PAGAMENTOS_bloqueia_uca1(flag);
+//  339   PAGAMENTOS_bloqueia_uca1(flag);
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall PAGAMENTOS_bloqueia_uca1
         BL       PAGAMENTOS_bloqueia_uca1
-//  328   PAGAMENTOS_set_inhibit_p70(flag);
+//  340   PAGAMENTOS_set_inhibit_p70(flag);
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall PAGAMENTOS_set_inhibit_p70
         BL       PAGAMENTOS_set_inhibit_p70
-//  329   SMDBILL_set_bloqueio(flag);
+//  341   SMDBILL_set_bloqueio(flag);
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         MOVS     R0,R4
           CFI FunCall SMDBILL_set_bloqueio
         BL       SMDBILL_set_bloqueio
-//  330   SMDBCOIN_set_flag_bloqueio(flag);
+//  342   SMDBCOIN_set_flag_bloqueio(flag);
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         MOVS     R0,R4
           CFI FunCall SMDBCOIN_set_flag_bloqueio
         BL       SMDBCOIN_set_flag_bloqueio
-//  331   BV20_setter_bloqueio(flag);
+//  343   BV20_setter_bloqueio(flag);
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall BV20_setter_bloqueio
         BL       BV20_setter_bloqueio
-//  332 }
+//  344 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock15
-//  333 /***********************************************************************************
-//  334 *       Descrição       :       Getter para o contador que indica que
-//  335 *                               não há interação com o meio de pagamento
-//  336 *       Parametros      :       nenhum
-//  337 *       Retorno         :       (unsigned int) contagem do contador
-//  338 ***********************************************************************************/
+//  345 /***********************************************************************************
+//  346 *       Descrição       :       Getter para o contador que indica que
+//  347 *                               não há interação com o meio de pagamento
+//  348 *       Parametros      :       nenhum
+//  349 *       Retorno         :       (unsigned int) contagem do contador
+//  350 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock16 Using cfiCommon0
           CFI Function PAGAMENTOS_get_timeout_pagamento
           CFI NoCalls
         THUMB
-//  339 unsigned int PAGAMENTOS_get_timeout_pagamento(void){
-//  340   
-//  341   return PAGAMENTOS_timeout_pagamento;
+//  351 unsigned int PAGAMENTOS_get_timeout_pagamento(void){
+//  352   
+//  353   return PAGAMENTOS_timeout_pagamento;
 PAGAMENTOS_get_timeout_pagamento:
-        LDR.N    R0,??DataTable15_16
+        LDR.N    R0,??DataTable15_20
         LDR      R0,[R0, #+0]
         BX       LR               ;; return
           CFI EndBlock cfiBlock16
-//  342 }
+//  354 }
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1206,60 +1257,84 @@ PAGAMENTOS_get_timeout_pagamento:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable15_7:
-        DC32     PAGAMENTOS_filtro_uca
+        DC32     PAGAMENTOS_incremento_uca
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable15_8:
-        DC32     PAGAMENTOS_filtro_p70
+        DC32     PAGAMENTOS_incremento_p70
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable15_9:
-        DC32     PAGAMENTOS_valor_acumulado_uca
+        DC32     0x186a1
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable15_10:
-        DC32     0x400fc140
+        DC32     0x186a0
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable15_11:
-        DC32     0xe000e280
+        DC32     PAGAMENTOS_filtro_uca
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable15_12:
-        DC32     0x2009c03c
+        DC32     PAGAMENTOS_filtro_p70
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable15_13:
-        DC32     PAGAMENTOS_bloqueio_p70
+        DC32     PAGAMENTOS_valor_acumulado_uca
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable15_14:
-        DC32     PAGAMENTOS_valor_acumulado_p70
+        DC32     0x400fc140
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable15_15:
-        DC32     PAGAMENTOS_valor_acumulado_geral
+        DC32     0xe000e280
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable15_16:
+        DC32     0x2009c03c
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable15_17:
+        DC32     PAGAMENTOS_bloqueio_p70
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable15_18:
+        DC32     PAGAMENTOS_valor_acumulado_p70
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable15_19:
+        DC32     PAGAMENTOS_valor_acumulado_geral
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable15_20:
         DC32     PAGAMENTOS_timeout_pagamento
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
@@ -1274,17 +1349,17 @@ PAGAMENTOS_get_timeout_pagamento:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  343 /***********************************************************************************
-//  344 *       Fim do arquivo
-//  345 ***********************************************************************************/
+//  355 /***********************************************************************************
+//  356 *       Fim do arquivo
+//  357 ***********************************************************************************/
 // 
-//    20 bytes in section .bss
+//    28 bytes in section .bss
 //     4 bytes in section .data
 //    36 bytes in section .noinit (abs)
-// 1 020 bytes in section .text
+// 1 110 bytes in section .text
 // 
-// 1 020 bytes of CODE memory
-//    24 bytes of DATA memory (+ 36 bytes shared)
+// 1 110 bytes of CODE memory
+//    32 bytes of DATA memory (+ 36 bytes shared)
 //
 //Errors: none
 //Warnings: 3
