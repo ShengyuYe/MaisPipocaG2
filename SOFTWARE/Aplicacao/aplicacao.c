@@ -38,6 +38,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "aplicacao.h"
+#include <intrinsics.h>
 #include "..\includes.h"
 
 /***********************************************************************************
@@ -46,7 +47,7 @@
 #define TEMPO_DESUMIDIFICADOR                   1000*60*30
 #define TEMPO_MENSAGEM_LINHA_INFERIOR           10000
 
-#define _DEBUG_PAGAMENTOS_
+//#define _DEBUG_PAGAMENTOS_
 
 /***********************************************************************************
 *       Enumerações
@@ -152,6 +153,10 @@ void APLICACAO_main(void*pPar){
            APLICACAO_release_lcd();  
            
            STRING_write_to_internal(CLEAR_DISPLAY,NULL,NULL);
+           
+           __disable_interrupt();
+           WATCHDOG_init(0);
+           for(;;);
            break;
       case TECLA_ESC:
            break;
