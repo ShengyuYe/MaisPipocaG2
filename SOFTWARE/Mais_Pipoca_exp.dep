@@ -2,7 +2,7 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>2813451895</fileChecksum>
+  <fileChecksum>1416206485</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
@@ -435,6 +435,7 @@
       <file>$PROJ_DIR$\Aplicacao\tela_senha.c</file>
       <file>$PROJ_DIR$\Aplicacao\menu_info_binaria.c</file>
       <file>$PROJ_DIR$\Drivers\MDB\mdb_bill.c</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_uart.a</file>
       <file>$PROJ_DIR$\Drivers\sst25vf016b\sst25vf016b.c</file>
       <file>$PROJ_DIR$\Drivers\MDB\mdb_coin.c</file>
       <file>$PROJ_DIR$\Drivers\CCTALK\cctalk.c</file>
@@ -448,6 +449,7 @@
       <file>$PROJ_DIR$\Drivers\Protocolo\Protocolo.c</file>
       <file>$PROJ_DIR$\Drivers\PlayerWave\PlayerWave.c</file>
       <file>$PROJ_DIR$\Drivers\RTC\RTC.C</file>
+      <file>$PROJ_DIR$\Debug\Exe\MaisPipoca_G2_3_0_1.HEX</file>
     </outputs>
     <file>
       <name>[ROOT_NODE]</name>
@@ -1181,7 +1183,7 @@
         </tool>
         <tool>
           <name>OBJCOPY</name>
-          <file> 374</file>
+          <file> 374 443</file>
         </tool>
       </outputs>
       <inputs>
