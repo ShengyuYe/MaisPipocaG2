@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ELF Linker V6.50.3.4676/W32 for ARM               13/Sep/2017  18:10:22 #
+# IAR ELF Linker V6.50.3.4676/W32 for ARM               14/Sep/2017  13:24:56 #
 # Copyright 2007-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Output file  =  C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Exe\Mais_Pip #
@@ -123,7 +123,7 @@ __SystemLibrary = DLib
   .rodata             const    0x000000c4     0x0  zero_init3.o [5]
   .rodata             const    0x000000c4     0x0  lz77_init.o [5]
 
-"P1", part 2 of 2:                         0xe85c
+"P1", part 2 of 2:                         0xea2c
   .text               ro code  0x00000300   0xcf6  xprintffull_nomb.o [3]
   .text               ro code  0x00000ff6    0x22  zero_init3.o [5]
   .text               ro code  0x00001018    0x16  strchr.o [5]
@@ -145,301 +145,308 @@ __SystemLibrary = DLib
   .text               ro code  0x000019dc     0x2  I64DivZer.o [5]
   .text               ro code  0x000019e0    0xd4  DblAdd.o [4]
   .rodata             const    0x00001ab4   0xb84  parametros.o [1]
-  .text               ro code  0x00002638   0x9e4  aplicacao.o [1]
-  .text               ro code  0x0000301c   0x144  parametros.o [1]
-  .text               ro code  0x00003160   0x73c  Board.o [1]
-  .text               ro code  0x0000389c   0x458  Pagamentos.o [1]
-  .text               ro code  0x00003cf4   0x1fc  Teclado.o [1]
-  .text               ro code  0x00003ef0    0x9c  menu_configuracao.o [1]
-  .text               ro code  0x00003f8c   0x828  tasks.o [1]
-  .text               ro code  0x000047b4   0x288  WH1602.o [1]
-  .text               ro code  0x00004a3c   0x43c  WH1602_2.o [1]
-  .text               ro code  0x00004e78   0x3ac  queue.o [1]
-  .text               ro code  0x00005224   0x17c  AmostraAnalogica.o [1]
-  .text               ro code  0x000053a0   0x5d0  Potencia.o [1]
-  .text               ro code  0x00005970    0x34  sprintf.o [3]
-  .text               ro code  0x000059a4   0x3d8  mdb.o [1]
-  .text               ro code  0x00005d7c   0x4dc  Preparacao.o [1]
-  .text               ro code  0x00006258    0x94  Supervisao_MDB.o [1]
-  .text               ro code  0x000062ec   0x31e  mdb_coin.o [1]
-  .text               ro code  0x0000660c    0xdc  POST.o [1]
-  .text               ro code  0x000066e8   0x4bc  BV20.o [1]
-  .text               ro code  0x00006ba4    0x6c  ControleTemperatura.o [1]
-  .text               ro code  0x00006c10   0x1d4  memoryWrapper.o [1]
-  .text               ro code  0x00006de4    0x16  tela_senha.o [1]
-  .text               ro code  0x00006dfc   0x390  cctalk.o [1]
-  .text               ro code  0x0000718c    0xc4  leds.o [1]
-  .text               ro code  0x00007250   0x270  PlayerWave.o [1]
-  .text               ro code  0x000074c0    0x8c  serial_mux.o [1]
-  .text               ro code  0x0000754c    0x9c  RTC.o [1]
-  .text               ro code  0x000075e8   0x148  AmostraAnalogica.o [1]
-  .text               ro code  0x00007730   0x544  Supervisao_mdb_bill.o [1]
-  .text               ro code  0x00007c74   0x268  Supervisao_mdb_coin.o [1]
-  .text               ro code  0x00007edc    0xec  menu_rolagem.o [1]
-  .text               ro code  0x00007fc8   0x104  menu_seleciona_lista.o [1]
-  .text               ro code  0x000080cc    0xdc  port.o [1]
-  .text               ro code  0x000081a8    0xa4  list.o [1]
-  CODE                ro code  0x0000824c    0x8c  portasm.o [1]
-  .text               ro code  0x000082d8   0x25a  main.o [1]
-  .text               ro code  0x00008534    0x62  memcmp.o [5]
-  .text               ro code  0x00008598    0x6c  strncpy.o [5]
-  .text               ro code  0x00008604    0x5c  heap_1.o [1]
-  .text               ro code  0x00008660    0x16  tasks.o [1]
-  .text               ro code  0x00008678   0x204  Potencia.o [1]
-  .text               ro code  0x0000887c   0x192  mdb_uart.o [1]
-  .text               ro code  0x00008a0e    0x80  embalagem.o [1]
-  .text               ro code  0x00008a8e   0x102  faturamento.o [1]
-  .text               ro code  0x00008b90   0x1b4  supervisao_mdb_cashless.o [1]
-  .text               ro code  0x00008d44   0x1a4  spi_wrapper.o [1]
-  .text               ro code  0x00008ee8   0x2b8  sst25vf016b.o [1]
-  .text               ro code  0x000091a0   0x2ac  uart.o [1]
-  .text               ro code  0x0000944c   0x260  mdb_bill.o [1]
-  .text               ro code  0x000096ac   0x12c  menu_edita_listagem.o [1]
-  .text               ro code  0x000097d8    0x66  ABImemset.o [5]
-  .text               ro code  0x0000983e   0x3a2  mdb_cashless.o [1]
-  .text               ro code  0x00009be0   0x900  menu_teste_hardware.o [1]
-  .text               ro code  0x0000a4e0    0x20  srand.o [3]
-  .text               ro code  0x0000a500     0x6  ABImemclr4.o [5]
-  .text               ro code  0x0000a508    0x80  impressora.o [1]
-  .text               ro code  0x0000a588     0x2  xtls.o [3]
-  .text               ro code  0x0000a58c    0x32  ABImemset48.o [5]
-  .text               ro code  0x0000a5c0   0x7e8  Protocolo.o [1]
-  .text               ro code  0x0000ada8   0x7b8  menu_operacao.o [1]
-  .text               ro code  0x0000b560    0xb8  fila_troca_preco.o [1]
-  .text               ro code  0x0000b618   0x162  menu_edita_inteiro.o [1]
-  .text               ro code  0x0000b77c    0xdc  menu_edita_flag.o [1]
-  .text               ro code  0x0000b858   0x1b2  flash_queue.o [1]
-  .text               ro code  0x0000ba0c   0x624  Relatorio.o [1]
-  .text               ro code  0x0000c030   0x43c  tela_senha.o [1]
-  .text               ro code  0x0000c46c    0xe0  rand.o [3]
-  .text               ro code  0x0000c54c   0x3a8  menu_avancado.o [1]
-  .text               ro code  0x0000c8f4   0x2c0  InterfaceAjusteRelogio.o [1]
-  .text               ro code  0x0000cbb4   0x2c0  menu_acessorios.o [1]
-  .text               ro code  0x0000ce74   0x296  menu_teste_mdb.o [1]
-  .text               ro code  0x0000d10c   0x1bc  menu_servico.o [1]
-  .text               ro code  0x0000d2c8   0x1ac  menu_faturamento.o [1]
-  .text               ro code  0x0000d474   0x1a4  lz77_init.o [5]
-  .text               ro code  0x0000d618     0x6  abort.o [3]
-  .text               ro code  0x0000d620    0x14  exit.o [6]
-  .rodata             const    0x0000d634   0x168  AmostraAnalogica.o [1]
-  .rodata             const    0x0000d79c   0x168  AmostraAnalogica.o [1]
-  .text               ro code  0x0000d904    0xc8  menu_preparacao.o [1]
-  .rodata             const    0x0000d9cc    0x64  BV20.o [1]
-  .rodata             const    0x0000da30    0x40  menu_teste_hardware.o [1]
-  .rodata             const    0x0000da70    0x30  InterfaceAjusteRelogio.o [1]
-  .rodata             const    0x0000daa0    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dad0    0x30  Relatorio.o [1]
-  .rodata             const    0x0000db00    0x30  Relatorio.o [1]
-  .rodata             const    0x0000db30    0x30  Relatorio.o [1]
-  .rodata             const    0x0000db60    0x30  Relatorio.o [1]
-  .rodata             const    0x0000db90    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dbc0    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dbf0    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dc20    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dc50    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dc80    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dcb0    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dce0    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dd10    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dd40    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dd70    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dda0    0x30  Relatorio.o [1]
-  .rodata             const    0x0000ddd0    0x30  Relatorio.o [1]
-  .rodata             const    0x0000de00    0x30  Relatorio.o [1]
-  .rodata             const    0x0000de30    0x30  Relatorio.o [1]
-  .rodata             const    0x0000de60    0x30  Relatorio.o [1]
-  .rodata             const    0x0000de90    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dec0    0x30  Relatorio.o [1]
-  .rodata             const    0x0000def0    0x30  Relatorio.o [1]
-  .rodata             const    0x0000df20    0x30  Relatorio.o [1]
-  .rodata             const    0x0000df50    0x30  Relatorio.o [1]
-  .rodata             const    0x0000df80    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dfb0    0x30  Relatorio.o [1]
-  .rodata             const    0x0000dfe0    0x2c  Relatorio.o [1]
-  .rodata             const    0x0000e00c    0x28  menu_acessorios.o [1]
-  .rodata             const    0x0000e034    0x28  menu_acessorios.o [1]
-  .rodata             const    0x0000e05c    0x28  menu_configuracao.o [1]
-  .text               ro code  0x0000e084    0x28  data_init.o [5]
-  .rodata             const    0x0000e0ac    0x24  Relatorio.o [1]
-  .rodata             const    0x0000e0d0    0x24  menu_avancado.o [1]
-  .rodata             const    0x0000e0f4    0x24  supervisao_mdb_cashless.o [1]
-  .iar.init_table     const    0x0000e118    0x48  - Linker created -
-  .rodata             const    0x0000e160    0x20  Relatorio.o [1]
-  .rodata             const    0x0000e180    0x20  flash_queue.o [1]
-  .rodata             const    0x0000e1a0    0x20  menu_acessorios.o [1]
-  .rodata             const    0x0000e1c0    0x1c  Supervisao_mdb_bill.o [1]
-  .rodata             const    0x0000e1dc    0x18  Relatorio.o [1]
-  .rodata             const    0x0000e1f4    0x18  menu_faturamento.o [1]
-  .rodata             const    0x0000e20c    0x18  menu_operacao.o [1]
-  .rodata             const    0x0000e224    0x18  menu_servico.o [1]
-  .rodata             const    0x0000e23c    0x18  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e254    0x18  menu_teste_mdb.o [1]
-  .text               ro code  0x0000e26c    0x16  cmain.o [5]
-  .text               ro code  0x0000e282     0x4  low_level_init.o [3]
-  .text               ro code  0x0000e286     0x4  exit.o [3]
-  .text               ro code  0x0000e28c     0xa  cexit.o [5]
-  .rodata             const    0x0000e298    0x14  Relatorio.o [1]
-  .rodata             const    0x0000e2ac    0x14  Supervisao_mdb_coin.o [1]
-  .rodata             const    0x0000e2c0    0x14  aplicacao.o [1]
-  .rodata             const    0x0000e2d4    0x14  aplicacao.o [1]
-  .rodata             const    0x0000e2e8    0x14  menu_avancado.o [1]
-  .rodata             const    0x0000e2fc    0x14  menu_edita_flag.o [1]
-  .rodata             const    0x0000e310    0x14  menu_edita_listagem.o [1]
-  .rodata             const    0x0000e324    0x14  menu_faturamento.o [1]
-  .rodata             const    0x0000e338    0x14  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e34c    0x14  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e360    0x14  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e374    0x14  menu_teste_mdb.o [1]
-  .rodata             const    0x0000e388    0x14  parametros.o [1]
-  .rodata             const    0x0000e39c    0x14  tasks.o [1]
-  .rodata             const    0x0000e3b0    0x14  tela_senha.o [1]
-  .rodata             const    0x0000e3c4    0x10  Preparacao.o [1]
-  .rodata             const    0x0000e3d4    0x10  Preparacao.o [1]
-  .rodata             const    0x0000e3e4    0x10  aplicacao.o [1]
-  .rodata             const    0x0000e3f4    0x10  aplicacao.o [1]
-  .rodata             const    0x0000e404    0x10  aplicacao.o [1]
-  .rodata             const    0x0000e414    0x10  aplicacao.o [1]
-  .rodata             const    0x0000e424    0x10  menu_operacao.o [1]
-  .rodata             const    0x0000e434    0x10  menu_operacao.o [1]
-  .rodata             const    0x0000e444    0x10  menu_operacao.o [1]
-  .rodata             const    0x0000e454    0x10  menu_operacao.o [1]
-  .rodata             const    0x0000e464    0x10  menu_operacao.o [1]
-  .rodata             const    0x0000e474    0x10  menu_operacao.o [1]
-  .rodata             const    0x0000e484    0x10  menu_servico.o [1]
-  .rodata             const    0x0000e494    0x10  menu_servico.o [1]
-  .rodata             const    0x0000e4a4    0x10  menu_servico.o [1]
-  .rodata             const    0x0000e4b4    0x10  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e4c4    0x10  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e4d4    0x10  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e4e4    0x10  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e4f4    0x10  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e504    0x10  menu_teste_mdb.o [1]
-  .rodata             const    0x0000e514     0xc  InterfaceAjusteRelogio.o [1]
-  .rodata             const    0x0000e520     0xc  InterfaceAjusteRelogio.o [1]
-  .rodata             const    0x0000e52c     0xc  Relatorio.o [1]
-  .rodata             const    0x0000e538     0xc  aplicacao.o [1]
-  .rodata             const    0x0000e544     0xc  aplicacao.o [1]
-  .rodata             const    0x0000e550     0xc  aplicacao.o [1]
-  .rodata             const    0x0000e55c     0xc  main.o [1]
-  .rodata             const    0x0000e568     0xc  main.o [1]
-  .rodata             const    0x0000e574     0xc  menu_avancado.o [1]
-  .rodata             const    0x0000e580     0xc  menu_avancado.o [1]
-  .rodata             const    0x0000e58c     0xc  menu_configuracao.o [1]
-  .rodata             const    0x0000e598     0xc  menu_faturamento.o [1]
-  .rodata             const    0x0000e5a4     0xc  menu_faturamento.o [1]
-  .rodata             const    0x0000e5b0     0xc  menu_faturamento.o [1]
-  .rodata             const    0x0000e5bc     0xc  menu_operacao.o [1]
-  .rodata             const    0x0000e5c8     0xc  menu_operacao.o [1]
-  .rodata             const    0x0000e5d4     0xc  menu_operacao.o [1]
-  .rodata             const    0x0000e5e0     0xc  menu_operacao.o [1]
-  .rodata             const    0x0000e5ec     0xc  menu_operacao.o [1]
-  .rodata             const    0x0000e5f8     0xc  menu_operacao.o [1]
-  .rodata             const    0x0000e604     0xc  menu_operacao.o [1]
-  .rodata             const    0x0000e610     0xc  menu_operacao.o [1]
-  .rodata             const    0x0000e61c     0xc  menu_preparacao.o [1]
-  .rodata             const    0x0000e628     0xc  menu_preparacao.o [1]
-  .rodata             const    0x0000e634     0xc  menu_servico.o [1]
-  .rodata             const    0x0000e640     0xc  menu_servico.o [1]
-  .rodata             const    0x0000e64c     0xc  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e658     0xc  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e664     0xc  menu_teste_mdb.o [1]
-  .rodata             const    0x0000e670     0xc  menu_teste_mdb.o [1]
-  .rodata             const    0x0000e67c     0xc  tela_senha.o [1]
-  .rodata             const    0x0000e688     0xc  tela_senha.o [1]
-  .text               ro code  0x0000e694     0xc  cstartup_M.o [5]
-  .rodata             const    0x0000e6a0     0x8  InterfaceAjusteRelogio.o [1]
-  .rodata             const    0x0000e6a8     0x8  InterfaceAjusteRelogio.o [1]
-  .rodata             const    0x0000e6b0     0x8  InterfaceAjusteRelogio.o [1]
-  .rodata             const    0x0000e6b8     0x8  InterfaceAjusteRelogio.o [1]
-  .rodata             const    0x0000e6c0     0x8  main.o [1]
-  .rodata             const    0x0000e6c8     0x8  main.o [1]
-  .rodata             const    0x0000e6d0     0x8  main.o [1]
-  .rodata             const    0x0000e6d8     0x8  menu_acessorios.o [1]
-  .rodata             const    0x0000e6e0     0x8  menu_acessorios.o [1]
-  .rodata             const    0x0000e6e8     0x8  menu_acessorios.o [1]
-  .rodata             const    0x0000e6f0     0x8  menu_acessorios.o [1]
-  .rodata             const    0x0000e6f8     0x8  menu_acessorios.o [1]
-  .rodata             const    0x0000e700     0x8  menu_acessorios.o [1]
-  .rodata             const    0x0000e708     0x8  menu_acessorios.o [1]
-  .rodata             const    0x0000e710     0x8  menu_acessorios.o [1]
-  .rodata             const    0x0000e718     0x8  menu_acessorios.o [1]
-  .rodata             const    0x0000e720     0x8  menu_acessorios.o [1]
-  .rodata             const    0x0000e728     0x8  menu_acessorios.o [1]
-  .rodata             const    0x0000e730     0x8  menu_avancado.o [1]
-  .rodata             const    0x0000e738     0x8  menu_avancado.o [1]
-  .rodata             const    0x0000e740     0x8  menu_edita_flag.o [1]
-  .rodata             const    0x0000e748     0x8  menu_edita_listagem.o [1]
-  .rodata             const    0x0000e750     0x8  menu_faturamento.o [1]
-  .rodata             const    0x0000e758     0x8  menu_faturamento.o [1]
-  .rodata             const    0x0000e760     0x8  menu_faturamento.o [1]
-  .rodata             const    0x0000e768     0x8  menu_faturamento.o [1]
-  .rodata             const    0x0000e770     0x8  menu_operacao.o [1]
-  .rodata             const    0x0000e778     0x8  menu_operacao.o [1]
-  .rodata             const    0x0000e780     0x8  menu_operacao.o [1]
-  .rodata             const    0x0000e788     0x8  menu_preparacao.o [1]
-  .rodata             const    0x0000e790     0x8  menu_servico.o [1]
-  .rodata             const    0x0000e798     0x8  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e7a0     0x8  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e7a8     0x8  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e7b0     0x8  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e7b8     0x8  menu_teste_hardware.o [1]
-  .rodata             const    0x0000e7c0     0x8  menu_teste_mdb.o [1]
-  .rodata             const    0x0000e7c8     0x8  menu_teste_mdb.o [1]
-  .rodata             const    0x0000e7d0     0x8  tasks.o [1]
-  .rodata             const    0x0000e7d8     0x8  tela_senha.o [1]
-  .rodata             const    0x0000e7e0     0x8  tela_senha.o [1]
-  .rodata             const    0x0000e7e8     0x8  tela_senha.o [1]
-  .rodata             const    0x0000e7f0     0x8  tela_senha.o [1]
-  .rodata             const    0x0000e7f8     0x8  tela_senha.o [1]
-  .rodata             const    0x0000e800     0x4  InterfaceAjusteRelogio.o [1]
-  .rodata             const    0x0000e804     0x4  Potencia.o [1]
-  .rodata             const    0x0000e808     0x4  Potencia.o [1]
-  .rodata             const    0x0000e80c     0x4  Potencia.o [1]
-  .rodata             const    0x0000e810     0x4  menu_teste_hardware.o [1]
-  .text               ro code  0x0000e814     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e818     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e81c     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e820     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e824     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e828     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e82c     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e830     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e834     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e838     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e83c     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e840     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e844     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e848     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e84c     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e850     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e854     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e858     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e85c     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e860     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e864     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e868     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e86c     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e870     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e874     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e878     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e87c     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e880     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e884     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e888     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e88c     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e890     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e894     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e898     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e89c     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e8a0     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e8a4     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e8a8     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e8ac     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e8b0     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e8b4     0x4  cstartup_M.o [1]
-  .text               ro code  0x0000e8b8     0x4  cstartup_M.o [1]
-  Initializer bytes   ro data  0x0000e8bc   0x29e  <for P2 s0>
-                             - 0x0000eb5a  0xe85a
+  .text               ro code  0x00002638   0xa90  aplicacao.o [1]
+  .text               ro code  0x000030c8   0x144  parametros.o [1]
+  .text               ro code  0x0000320c   0x828  tasks.o [1]
+  .text               ro code  0x00003a34   0x52c  Preparacao.o [1]
+  .text               ro code  0x00003f60   0x73c  Board.o [1]
+  .text               ro code  0x0000469c   0x458  Pagamentos.o [1]
+  .text               ro code  0x00004af4   0x1fc  Teclado.o [1]
+  .text               ro code  0x00004cf0    0x9c  menu_configuracao.o [1]
+  .text               ro code  0x00004d8c    0x5c  WATCHDOG.o [1]
+  .text               ro code  0x00004de8   0x288  WH1602.o [1]
+  .text               ro code  0x00005070   0x43c  WH1602_2.o [1]
+  .text               ro code  0x000054ac   0x3ac  queue.o [1]
+  .text               ro code  0x00005858   0x17c  AmostraAnalogica.o [1]
+  .text               ro code  0x000059d4   0x5d0  Potencia.o [1]
+  .text               ro code  0x00005fa4    0x34  sprintf.o [3]
+  .text               ro code  0x00005fd8   0x3d8  mdb.o [1]
+  .text               ro code  0x000063b0    0x94  Supervisao_MDB.o [1]
+  .text               ro code  0x00006444   0x31e  mdb_coin.o [1]
+  .text               ro code  0x00006764   0x102  POST.o [1]
+  .text               ro code  0x00006868   0x4bc  BV20.o [1]
+  .text               ro code  0x00006d24    0x6c  ControleTemperatura.o [1]
+  .text               ro code  0x00006d90   0x1d4  memoryWrapper.o [1]
+  .text               ro code  0x00006f64    0x16  tela_senha.o [1]
+  .text               ro code  0x00006f7c   0x390  cctalk.o [1]
+  .text               ro code  0x0000730c    0xdc  port.o [1]
+  .text               ro code  0x000073e8    0xa4  list.o [1]
+  CODE                ro code  0x0000748c    0x8c  portasm.o [1]
+  .text               ro code  0x00007518   0x25a  main.o [1]
+  .text               ro code  0x00007774    0x62  memcmp.o [5]
+  .text               ro code  0x000077d8    0x6c  strncpy.o [5]
+  .text               ro code  0x00007844    0x5c  heap_1.o [1]
+  .text               ro code  0x000078a0    0x16  tasks.o [1]
+  .text               ro code  0x000078b6    0x80  embalagem.o [1]
+  .text               ro code  0x00007938   0x270  PlayerWave.o [1]
+  .text               ro code  0x00007ba8   0x102  faturamento.o [1]
+  .text               ro code  0x00007cac    0xc4  leds.o [1]
+  .text               ro code  0x00007d70    0x8c  serial_mux.o [1]
+  .text               ro code  0x00007dfc    0x9c  RTC.o [1]
+  .text               ro code  0x00007e98   0x148  AmostraAnalogica.o [1]
+  .text               ro code  0x00007fe0   0x544  Supervisao_mdb_bill.o [1]
+  .text               ro code  0x00008524   0x268  Supervisao_mdb_coin.o [1]
+  .text               ro code  0x0000878c    0xec  menu_rolagem.o [1]
+  .text               ro code  0x00008878   0x104  menu_seleciona_lista.o [1]
+  .text               ro code  0x0000897c   0x204  Potencia.o [1]
+  .text               ro code  0x00008b80   0x192  mdb_uart.o [1]
+  .text               ro code  0x00008d14   0x1b4  supervisao_mdb_cashless.o [1]
+  .text               ro code  0x00008ec8   0x1a4  spi_wrapper.o [1]
+  .text               ro code  0x0000906c   0x2b8  sst25vf016b.o [1]
+  .text               ro code  0x00009324   0x2ac  uart.o [1]
+  .text               ro code  0x000095d0    0x66  ABImemset.o [5]
+  .text               ro code  0x00009636   0x260  mdb_bill.o [1]
+  .text               ro code  0x00009898   0x12c  menu_edita_listagem.o [1]
+  .text               ro code  0x000099c4   0x3a2  mdb_cashless.o [1]
+  .text               ro code  0x00009d68   0x900  menu_teste_hardware.o [1]
+  .text               ro code  0x0000a668    0x20  srand.o [3]
+  .text               ro code  0x0000a688     0x6  ABImemclr4.o [5]
+  .text               ro code  0x0000a690    0x80  impressora.o [1]
+  .text               ro code  0x0000a710     0x2  xtls.o [3]
+  .text               ro code  0x0000a714    0x32  ABImemset48.o [5]
+  .text               ro code  0x0000a748   0x7e8  Protocolo.o [1]
+  .text               ro code  0x0000af30   0x7b8  menu_operacao.o [1]
+  .text               ro code  0x0000b6e8    0xb8  fila_troca_preco.o [1]
+  .text               ro code  0x0000b7a0   0x162  menu_edita_inteiro.o [1]
+  .text               ro code  0x0000b904    0xdc  menu_edita_flag.o [1]
+  .text               ro code  0x0000b9e0   0x1b2  flash_queue.o [1]
+  .text               ro code  0x0000bb94   0x624  Relatorio.o [1]
+  .text               ro code  0x0000c1b8   0x43c  tela_senha.o [1]
+  .text               ro code  0x0000c5f4    0xe0  rand.o [3]
+  .text               ro code  0x0000c6d4   0x3a8  menu_avancado.o [1]
+  .text               ro code  0x0000ca7c   0x2c0  InterfaceAjusteRelogio.o [1]
+  .text               ro code  0x0000cd3c   0x2c0  menu_acessorios.o [1]
+  .text               ro code  0x0000cffc   0x296  menu_teste_mdb.o [1]
+  .text               ro code  0x0000d294   0x1bc  menu_servico.o [1]
+  .text               ro code  0x0000d450   0x1ac  menu_faturamento.o [1]
+  .text               ro code  0x0000d5fc   0x1a4  lz77_init.o [5]
+  .text               ro code  0x0000d7a0     0x6  abort.o [3]
+  .text               ro code  0x0000d7a8    0x14  exit.o [6]
+  .rodata             const    0x0000d7bc   0x168  AmostraAnalogica.o [1]
+  .rodata             const    0x0000d924   0x168  AmostraAnalogica.o [1]
+  .text               ro code  0x0000da8c    0xc8  menu_preparacao.o [1]
+  .rodata             const    0x0000db54    0x64  BV20.o [1]
+  .rodata             const    0x0000dbb8    0x40  menu_teste_hardware.o [1]
+  .rodata             const    0x0000dbf8    0x30  InterfaceAjusteRelogio.o [1]
+  .rodata             const    0x0000dc28    0x30  Relatorio.o [1]
+  .rodata             const    0x0000dc58    0x30  Relatorio.o [1]
+  .rodata             const    0x0000dc88    0x30  Relatorio.o [1]
+  .rodata             const    0x0000dcb8    0x30  Relatorio.o [1]
+  .rodata             const    0x0000dce8    0x30  Relatorio.o [1]
+  .rodata             const    0x0000dd18    0x30  Relatorio.o [1]
+  .rodata             const    0x0000dd48    0x30  Relatorio.o [1]
+  .rodata             const    0x0000dd78    0x30  Relatorio.o [1]
+  .rodata             const    0x0000dda8    0x30  Relatorio.o [1]
+  .rodata             const    0x0000ddd8    0x30  Relatorio.o [1]
+  .rodata             const    0x0000de08    0x30  Relatorio.o [1]
+  .rodata             const    0x0000de38    0x30  Relatorio.o [1]
+  .rodata             const    0x0000de68    0x30  Relatorio.o [1]
+  .rodata             const    0x0000de98    0x30  Relatorio.o [1]
+  .rodata             const    0x0000dec8    0x30  Relatorio.o [1]
+  .rodata             const    0x0000def8    0x30  Relatorio.o [1]
+  .rodata             const    0x0000df28    0x30  Relatorio.o [1]
+  .rodata             const    0x0000df58    0x30  Relatorio.o [1]
+  .rodata             const    0x0000df88    0x30  Relatorio.o [1]
+  .rodata             const    0x0000dfb8    0x30  Relatorio.o [1]
+  .rodata             const    0x0000dfe8    0x30  Relatorio.o [1]
+  .rodata             const    0x0000e018    0x30  Relatorio.o [1]
+  .rodata             const    0x0000e048    0x30  Relatorio.o [1]
+  .rodata             const    0x0000e078    0x30  Relatorio.o [1]
+  .rodata             const    0x0000e0a8    0x30  Relatorio.o [1]
+  .rodata             const    0x0000e0d8    0x30  Relatorio.o [1]
+  .rodata             const    0x0000e108    0x30  Relatorio.o [1]
+  .rodata             const    0x0000e138    0x30  Relatorio.o [1]
+  .rodata             const    0x0000e168    0x2c  Relatorio.o [1]
+  .rodata             const    0x0000e194    0x28  menu_acessorios.o [1]
+  .rodata             const    0x0000e1bc    0x28  menu_acessorios.o [1]
+  .rodata             const    0x0000e1e4    0x28  menu_configuracao.o [1]
+  .text               ro code  0x0000e20c    0x28  data_init.o [5]
+  .rodata             const    0x0000e234    0x24  Relatorio.o [1]
+  .rodata             const    0x0000e258    0x24  menu_avancado.o [1]
+  .rodata             const    0x0000e27c    0x24  supervisao_mdb_cashless.o [1]
+  .iar.init_table     const    0x0000e2a0    0x48  - Linker created -
+  .rodata             const    0x0000e2e8    0x20  Relatorio.o [1]
+  .rodata             const    0x0000e308    0x20  flash_queue.o [1]
+  .rodata             const    0x0000e328    0x20  menu_acessorios.o [1]
+  .rodata             const    0x0000e348    0x1c  Supervisao_mdb_bill.o [1]
+  .rodata             const    0x0000e364    0x18  Relatorio.o [1]
+  .rodata             const    0x0000e37c    0x18  menu_faturamento.o [1]
+  .rodata             const    0x0000e394    0x18  menu_operacao.o [1]
+  .rodata             const    0x0000e3ac    0x18  menu_servico.o [1]
+  .rodata             const    0x0000e3c4    0x18  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e3dc    0x18  menu_teste_mdb.o [1]
+  .text               ro code  0x0000e3f4    0x16  cmain.o [5]
+  .text               ro code  0x0000e40a     0x4  low_level_init.o [3]
+  .text               ro code  0x0000e40e     0x4  exit.o [3]
+  .text               ro code  0x0000e414     0xa  cexit.o [5]
+  .rodata             const    0x0000e420    0x14  Relatorio.o [1]
+  .rodata             const    0x0000e434    0x14  Supervisao_mdb_coin.o [1]
+  .rodata             const    0x0000e448    0x14  aplicacao.o [1]
+  .rodata             const    0x0000e45c    0x14  aplicacao.o [1]
+  .rodata             const    0x0000e470    0x14  menu_avancado.o [1]
+  .rodata             const    0x0000e484    0x14  menu_edita_flag.o [1]
+  .rodata             const    0x0000e498    0x14  menu_edita_listagem.o [1]
+  .rodata             const    0x0000e4ac    0x14  menu_faturamento.o [1]
+  .rodata             const    0x0000e4c0    0x14  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e4d4    0x14  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e4e8    0x14  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e4fc    0x14  menu_teste_mdb.o [1]
+  .rodata             const    0x0000e510    0x14  parametros.o [1]
+  .rodata             const    0x0000e524    0x14  tasks.o [1]
+  .rodata             const    0x0000e538    0x14  tela_senha.o [1]
+  .rodata             const    0x0000e54c    0x10  Preparacao.o [1]
+  .rodata             const    0x0000e55c    0x10  Preparacao.o [1]
+  .rodata             const    0x0000e56c    0x10  aplicacao.o [1]
+  .rodata             const    0x0000e57c    0x10  aplicacao.o [1]
+  .rodata             const    0x0000e58c    0x10  aplicacao.o [1]
+  .rodata             const    0x0000e59c    0x10  aplicacao.o [1]
+  .rodata             const    0x0000e5ac    0x10  menu_operacao.o [1]
+  .rodata             const    0x0000e5bc    0x10  menu_operacao.o [1]
+  .rodata             const    0x0000e5cc    0x10  menu_operacao.o [1]
+  .rodata             const    0x0000e5dc    0x10  menu_operacao.o [1]
+  .rodata             const    0x0000e5ec    0x10  menu_operacao.o [1]
+  .rodata             const    0x0000e5fc    0x10  menu_operacao.o [1]
+  .rodata             const    0x0000e60c    0x10  menu_servico.o [1]
+  .rodata             const    0x0000e61c    0x10  menu_servico.o [1]
+  .rodata             const    0x0000e62c    0x10  menu_servico.o [1]
+  .rodata             const    0x0000e63c    0x10  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e64c    0x10  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e65c    0x10  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e66c    0x10  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e67c    0x10  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e68c    0x10  menu_teste_mdb.o [1]
+  .rodata             const    0x0000e69c     0xc  InterfaceAjusteRelogio.o [1]
+  .rodata             const    0x0000e6a8     0xc  InterfaceAjusteRelogio.o [1]
+  .rodata             const    0x0000e6b4     0xc  Relatorio.o [1]
+  .rodata             const    0x0000e6c0     0xc  aplicacao.o [1]
+  .rodata             const    0x0000e6cc     0xc  aplicacao.o [1]
+  .rodata             const    0x0000e6d8     0xc  aplicacao.o [1]
+  .rodata             const    0x0000e6e4     0xc  aplicacao.o [1]
+  .rodata             const    0x0000e6f0     0xc  aplicacao.o [1]
+  .rodata             const    0x0000e6fc     0xc  aplicacao.o [1]
+  .rodata             const    0x0000e708     0xc  aplicacao.o [1]
+  .rodata             const    0x0000e714     0xc  aplicacao.o [1]
+  .rodata             const    0x0000e720     0xc  aplicacao.o [1]
+  .rodata             const    0x0000e72c     0xc  main.o [1]
+  .rodata             const    0x0000e738     0xc  main.o [1]
+  .rodata             const    0x0000e744     0xc  menu_avancado.o [1]
+  .rodata             const    0x0000e750     0xc  menu_avancado.o [1]
+  .rodata             const    0x0000e75c     0xc  menu_configuracao.o [1]
+  .rodata             const    0x0000e768     0xc  menu_faturamento.o [1]
+  .rodata             const    0x0000e774     0xc  menu_faturamento.o [1]
+  .rodata             const    0x0000e780     0xc  menu_faturamento.o [1]
+  .rodata             const    0x0000e78c     0xc  menu_operacao.o [1]
+  .rodata             const    0x0000e798     0xc  menu_operacao.o [1]
+  .rodata             const    0x0000e7a4     0xc  menu_operacao.o [1]
+  .rodata             const    0x0000e7b0     0xc  menu_operacao.o [1]
+  .rodata             const    0x0000e7bc     0xc  menu_operacao.o [1]
+  .rodata             const    0x0000e7c8     0xc  menu_operacao.o [1]
+  .rodata             const    0x0000e7d4     0xc  menu_operacao.o [1]
+  .rodata             const    0x0000e7e0     0xc  menu_operacao.o [1]
+  .rodata             const    0x0000e7ec     0xc  menu_preparacao.o [1]
+  .rodata             const    0x0000e7f8     0xc  menu_preparacao.o [1]
+  .rodata             const    0x0000e804     0xc  menu_servico.o [1]
+  .rodata             const    0x0000e810     0xc  menu_servico.o [1]
+  .rodata             const    0x0000e81c     0xc  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e828     0xc  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e834     0xc  menu_teste_mdb.o [1]
+  .rodata             const    0x0000e840     0xc  menu_teste_mdb.o [1]
+  .rodata             const    0x0000e84c     0xc  tela_senha.o [1]
+  .rodata             const    0x0000e858     0xc  tela_senha.o [1]
+  .text               ro code  0x0000e864     0xc  cstartup_M.o [5]
+  .rodata             const    0x0000e870     0x8  InterfaceAjusteRelogio.o [1]
+  .rodata             const    0x0000e878     0x8  InterfaceAjusteRelogio.o [1]
+  .rodata             const    0x0000e880     0x8  InterfaceAjusteRelogio.o [1]
+  .rodata             const    0x0000e888     0x8  InterfaceAjusteRelogio.o [1]
+  .rodata             const    0x0000e890     0x8  main.o [1]
+  .rodata             const    0x0000e898     0x8  main.o [1]
+  .rodata             const    0x0000e8a0     0x8  main.o [1]
+  .rodata             const    0x0000e8a8     0x8  menu_acessorios.o [1]
+  .rodata             const    0x0000e8b0     0x8  menu_acessorios.o [1]
+  .rodata             const    0x0000e8b8     0x8  menu_acessorios.o [1]
+  .rodata             const    0x0000e8c0     0x8  menu_acessorios.o [1]
+  .rodata             const    0x0000e8c8     0x8  menu_acessorios.o [1]
+  .rodata             const    0x0000e8d0     0x8  menu_acessorios.o [1]
+  .rodata             const    0x0000e8d8     0x8  menu_acessorios.o [1]
+  .rodata             const    0x0000e8e0     0x8  menu_acessorios.o [1]
+  .rodata             const    0x0000e8e8     0x8  menu_acessorios.o [1]
+  .rodata             const    0x0000e8f0     0x8  menu_acessorios.o [1]
+  .rodata             const    0x0000e8f8     0x8  menu_acessorios.o [1]
+  .rodata             const    0x0000e900     0x8  menu_avancado.o [1]
+  .rodata             const    0x0000e908     0x8  menu_avancado.o [1]
+  .rodata             const    0x0000e910     0x8  menu_edita_flag.o [1]
+  .rodata             const    0x0000e918     0x8  menu_edita_listagem.o [1]
+  .rodata             const    0x0000e920     0x8  menu_faturamento.o [1]
+  .rodata             const    0x0000e928     0x8  menu_faturamento.o [1]
+  .rodata             const    0x0000e930     0x8  menu_faturamento.o [1]
+  .rodata             const    0x0000e938     0x8  menu_faturamento.o [1]
+  .rodata             const    0x0000e940     0x8  menu_operacao.o [1]
+  .rodata             const    0x0000e948     0x8  menu_operacao.o [1]
+  .rodata             const    0x0000e950     0x8  menu_operacao.o [1]
+  .rodata             const    0x0000e958     0x8  menu_preparacao.o [1]
+  .rodata             const    0x0000e960     0x8  menu_servico.o [1]
+  .rodata             const    0x0000e968     0x8  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e970     0x8  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e978     0x8  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e980     0x8  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e988     0x8  menu_teste_hardware.o [1]
+  .rodata             const    0x0000e990     0x8  menu_teste_mdb.o [1]
+  .rodata             const    0x0000e998     0x8  menu_teste_mdb.o [1]
+  .rodata             const    0x0000e9a0     0x8  tasks.o [1]
+  .rodata             const    0x0000e9a8     0x8  tela_senha.o [1]
+  .rodata             const    0x0000e9b0     0x8  tela_senha.o [1]
+  .rodata             const    0x0000e9b8     0x8  tela_senha.o [1]
+  .rodata             const    0x0000e9c0     0x8  tela_senha.o [1]
+  .rodata             const    0x0000e9c8     0x8  tela_senha.o [1]
+  .rodata             const    0x0000e9d0     0x4  InterfaceAjusteRelogio.o [1]
+  .rodata             const    0x0000e9d4     0x4  Potencia.o [1]
+  .rodata             const    0x0000e9d8     0x4  Potencia.o [1]
+  .rodata             const    0x0000e9dc     0x4  Potencia.o [1]
+  .rodata             const    0x0000e9e0     0x4  menu_teste_hardware.o [1]
+  .text               ro code  0x0000e9e4     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000e9e8     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000e9ec     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000e9f0     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000e9f4     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000e9f8     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000e9fc     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea00     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea04     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea08     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea0c     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea10     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea14     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea18     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea1c     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea20     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea24     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea28     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea2c     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea30     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea34     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea38     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea3c     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea40     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea44     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea48     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea4c     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea50     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea54     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea58     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea5c     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea60     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea64     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea68     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea6c     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea70     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea74     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea78     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea7c     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea80     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea84     0x4  cstartup_M.o [1]
+  .text               ro code  0x0000ea88     0x4  cstartup_M.o [1]
+  Initializer bytes   ro data  0x0000ea8c   0x29f  <for P2 s0>
+                             - 0x0000ed2b  0xea2b
 
 "P5":                                      0x1930
   .text               ro code  0x00070000    0xb4  strings.o [1]
@@ -1029,136 +1036,146 @@ __SystemLibrary = DLib
     CSTACK            uninit   0x100077b8   0x300  <Block tail>
                              - 0x10007ab8   0x300
 
-Absolute sections, part 1 of 45:              0x4
+Absolute sections, part 1 of 47:              0x4
   .noinit             uninit   0x2009c000     0x4  spi_wrapper.o [1]
                              - 0x2009c004     0x4
 
-Absolute sections, part 2 of 45:             0x10
+Absolute sections, part 2 of 47:             0x10
   .noinit             uninit   0x2009c014     0x4  Board.o [1]
   .noinit             uninit   0x2009c018     0x4  uart.o [1]
   .noinit             uninit   0x2009c01c     0x4  uart.o [1]
   .noinit             uninit   0x2009c020     0x4  serial_mux.o [1]
                              - 0x2009c024    0x10
 
-Absolute sections, part 3 of 45:             0x10
+Absolute sections, part 3 of 47:             0x10
   .noinit             uninit   0x2009c034     0x4  Teclado.o [1]
   .noinit             uninit   0x2009c038     0x4  serial_mux.o [1]
   .noinit             uninit   0x2009c03c     0x4  serial_mux.o [1]
   .noinit             uninit   0x2009c040     0x4  WH1602_2.o [1]
                              - 0x2009c044    0x10
 
-Absolute sections, part 4 of 45:              0x8
+Absolute sections, part 4 of 47:              0x8
   .noinit             uninit   0x2009c058     0x4  WH1602_2.o [1]
   .noinit             uninit   0x2009c05c     0x4  WH1602_2.o [1]
                              - 0x2009c060     0x8
 
-Absolute sections, part 5 of 45:              0x4
+Absolute sections, part 5 of 47:              0x4
   .noinit             uninit   0x2009c074     0x4  Teclado.o [1]
                              - 0x2009c078     0x4
 
-Absolute sections, part 6 of 45:              0x4
+Absolute sections, part 6 of 47:              0x4
   .noinit             uninit   0x2009c080     0x4  Board.o [1]
                              - 0x2009c084     0x4
 
-Absolute sections, part 7 of 45:              0x8
+Absolute sections, part 7 of 47:              0x8
   .noinit             uninit   0x2009c098     0x4  Board.o [1]
   .noinit             uninit   0x2009c09c     0x4  Board.o [1]
                              - 0x2009c0a0     0x8
 
-Absolute sections, part 8 of 45:             0x10
+Absolute sections, part 8 of 47:              0xc
+  .noinit             uninit   0x40000000     0x4  WATCHDOG.o [1]
+  .noinit             uninit   0x40000004     0x4  WATCHDOG.o [1]
+  .noinit             uninit   0x40000008     0x4  WATCHDOG.o [1]
+                             - 0x4000000c     0xc
+
+Absolute sections, part 9 of 47:              0x4
+  .noinit             uninit   0x40000010     0x4  WATCHDOG.o [1]
+                             - 0x40000014     0x4
+
+Absolute sections, part 10 of 47:            0x10
   .noinit             uninit   0x40004000     0x4  PlayerWave.o [1]
   .noinit             uninit   0x40004004     0x4  PlayerWave.o [1]
   .noinit             uninit   0x40004008     0x4  PlayerWave.o [1]
   .noinit             uninit   0x4000400c     0x4  PlayerWave.o [1]
                              - 0x40004010    0x10
 
-Absolute sections, part 9 of 45:              0x8
+Absolute sections, part 11 of 47:             0x8
   .noinit             uninit   0x40004014     0x4  PlayerWave.o [1]
   .noinit             uninit   0x40004018     0x4  PlayerWave.o [1]
                              - 0x4000401c     0x8
 
-Absolute sections, part 10 of 45:             0x4
+Absolute sections, part 12 of 47:             0x4
   .noinit             uninit   0x4000403c     0x4  PlayerWave.o [1]
                              - 0x40004040     0x4
 
-Absolute sections, part 11 of 45:             0x4
+Absolute sections, part 13 of 47:             0x4
   .noinit             uninit   0x40004070     0x4  PlayerWave.o [1]
                              - 0x40004074     0x4
 
-Absolute sections, part 12 of 45:             0x8
+Absolute sections, part 14 of 47:             0x8
   .noinit             uninit   0x40008000     0x4  Potencia.o [1]
   .noinit             uninit   0x40008004     0x4  Potencia.o [1]
                              - 0x40008008     0x8
 
-Absolute sections, part 13 of 45:             0x4
+Absolute sections, part 15 of 47:             0x4
   .noinit             uninit   0x4000800c     0x4  Potencia.o [1]
                              - 0x40008010     0x4
 
-Absolute sections, part 14 of 45:             0x8
+Absolute sections, part 16 of 47:             0x8
   .noinit             uninit   0x40008028     0x4  Potencia.o [1]
   .noinit             uninit   0x4000802c     0x4  Potencia.o [1]
                              - 0x40008030     0x8
 
-Absolute sections, part 15 of 45:             0x4
+Absolute sections, part 17 of 47:             0x4
   .noinit             uninit   0x40008070     0x4  Potencia.o [1]
                              - 0x40008074     0x4
 
-Absolute sections, part 16 of 45:             0x1
+Absolute sections, part 18 of 47:             0x1
   .noinit             uninit   0x4000c000     0x1  uart.o [1]
                              - 0x4000c001     0x1
 
-Absolute sections, part 17 of 45:             0x9
+Absolute sections, part 19 of 47:             0x9
   .noinit             uninit   0x4000c004     0x4  uart.o [1]
   .noinit             uninit   0x4000c008     0x4  uart.o [1]
   .noinit             uninit   0x4000c00c     0x1  uart.o [1]
                              - 0x4000c00d     0x9
 
-Absolute sections, part 18 of 45:             0x1
+Absolute sections, part 20 of 47:             0x1
   .noinit             uninit   0x4000c014     0x1  cctalk.o [1]
                              - 0x4000c015     0x1
 
-Absolute sections, part 19 of 45:             0x1
+Absolute sections, part 21 of 47:             0x1
   .noinit             uninit   0x40010000     0x1  uart.o [1]
                              - 0x40010001     0x1
 
-Absolute sections, part 20 of 45:             0x9
+Absolute sections, part 22 of 47:             0x9
   .noinit             uninit   0x40010004     0x4  uart.o [1]
   .noinit             uninit   0x40010008     0x4  uart.o [1]
   .noinit             uninit   0x4001000c     0x1  uart.o [1]
                              - 0x4001000d     0x9
 
-Absolute sections, part 21 of 45:             0x4
+Absolute sections, part 23 of 47:             0x4
   .noinit             uninit   0x40024008     0x4  RTC.o [1]
                              - 0x4002400c     0x4
 
-Absolute sections, part 22 of 45:            0x10
+Absolute sections, part 24 of 47:            0x10
   .noinit             uninit   0x40024020     0x4  RTC.o [1]
   .noinit             uninit   0x40024024     0x4  RTC.o [1]
   .noinit             uninit   0x40024028     0x4  RTC.o [1]
   .noinit             uninit   0x4002402c     0x4  RTC.o [1]
                              - 0x40024030    0x10
 
-Absolute sections, part 23 of 45:             0x8
+Absolute sections, part 25 of 47:             0x8
   .noinit             uninit   0x40024038     0x4  RTC.o [1]
   .noinit             uninit   0x4002403c     0x4  RTC.o [1]
                              - 0x40024040     0x8
 
-Absolute sections, part 24 of 45:             0x8
+Absolute sections, part 26 of 47:             0x8
   .noinit             uninit   0x4002c000     0x4  uart.o [1]
   .noinit             uninit   0x4002c004     0x4  spi_wrapper.o [1]
                              - 0x4002c008     0x8
 
-Absolute sections, part 25 of 45:             0x8
+Absolute sections, part 27 of 47:             0x8
   .noinit             uninit   0x4002c00c     0x4  Potencia.o [1]
   .noinit             uninit   0x4002c010     0x4  uart.o [1]
                              - 0x4002c014     0x8
 
-Absolute sections, part 26 of 45:             0x8
+Absolute sections, part 28 of 47:             0x8
   .noinit             uninit   0x40034000     0x4  AmostraAnalogica.o [1]
   .noinit             uninit   0x40034004     0x4  AmostraAnalogica.o [1]
                              - 0x40034008     0x8
 
-Absolute sections, part 27 of 45:            0x14
+Absolute sections, part 29 of 47:            0x14
   .noinit             uninit   0x40088000     0x4  spi_wrapper.o [1]
   .noinit             uninit   0x40088004     0x4  spi_wrapper.o [1]
   .noinit             uninit   0x40088008     0x4  spi_wrapper.o [1]
@@ -1166,85 +1183,85 @@ Absolute sections, part 27 of 45:            0x14
   .noinit             uninit   0x40088010     0x4  spi_wrapper.o [1]
                              - 0x40088014    0x14
 
-Absolute sections, part 28 of 45:             0x4
+Absolute sections, part 30 of 47:             0x4
   .noinit             uninit   0x4008c000     0x4  PlayerWave.o [1]
                              - 0x4008c004     0x4
 
-Absolute sections, part 29 of 45:            0x10
+Absolute sections, part 31 of 47:            0x10
   .noinit             uninit   0x40090000     0x4  Potencia.o [1]
   .noinit             uninit   0x40090004     0x4  Potencia.o [1]
   .noinit             uninit   0x40090008     0x4  Potencia.o [1]
   .noinit             uninit   0x4009000c     0x4  Potencia.o [1]
                              - 0x40090010    0x10
 
-Absolute sections, part 30 of 45:             0x8
+Absolute sections, part 32 of 47:             0x8
   .noinit             uninit   0x40090014     0x4  Potencia.o [1]
   .noinit             uninit   0x40090018     0x4  Potencia.o [1]
                              - 0x4009001c     0x8
 
-Absolute sections, part 31 of 45:             0x4
+Absolute sections, part 33 of 47:             0x4
   .noinit             uninit   0x4009003c     0x4  Potencia.o [1]
                              - 0x40090040     0x4
 
-Absolute sections, part 32 of 45:             0x4
+Absolute sections, part 34 of 47:             0x4
   .noinit             uninit   0x40090070     0x4  Potencia.o [1]
                              - 0x40090074     0x4
 
-Absolute sections, part 33 of 45:             0x1
+Absolute sections, part 35 of 47:             0x1
   .noinit             uninit   0x40098000     0x1  uart.o [1]
                              - 0x40098001     0x1
 
-Absolute sections, part 34 of 45:             0x9
+Absolute sections, part 36 of 47:             0x9
   .noinit             uninit   0x40098004     0x4  uart.o [1]
   .noinit             uninit   0x40098008     0x4  uart.o [1]
   .noinit             uninit   0x4009800c     0x1  uart.o [1]
                              - 0x4009800d     0x9
 
-Absolute sections, part 35 of 45:             0x1
+Absolute sections, part 37 of 47:             0x1
   .noinit             uninit   0x40098014     0x1  mdb_uart.o [1]
                              - 0x40098015     0x1
 
-Absolute sections, part 36 of 45:             0x1
+Absolute sections, part 38 of 47:             0x1
   .noinit             uninit   0x4009c000     0x1  uart.o [1]
                              - 0x4009c001     0x1
 
-Absolute sections, part 37 of 45:             0x9
+Absolute sections, part 39 of 47:             0x9
   .noinit             uninit   0x4009c004     0x4  uart.o [1]
   .noinit             uninit   0x4009c008     0x4  uart.o [1]
   .noinit             uninit   0x4009c00c     0x1  uart.o [1]
                              - 0x4009c00d     0x9
 
-Absolute sections, part 38 of 45:             0x1
+Absolute sections, part 40 of 47:             0x1
   .noinit             uninit   0x4009c014     0x1  uart.o [1]
                              - 0x4009c015     0x1
 
-Absolute sections, part 39 of 45:             0x4
+Absolute sections, part 41 of 47:             0x4
   .noinit             uninit   0x400fc0c4     0x4  uart.o [1]
                              - 0x400fc0c8     0x4
 
-Absolute sections, part 40 of 45:             0x4
+Absolute sections, part 42 of 47:             0x4
   .noinit             uninit   0x400fc140     0x4  Potencia.o [1]
                              - 0x400fc144     0x4
 
-Absolute sections, part 41 of 45:             0x8
+Absolute sections, part 43 of 47:             0x8
   .noinit             uninit   0x400fc148     0x4  Potencia.o [1]
   .noinit             uninit   0x400fc14c     0x4  Potencia.o [1]
                              - 0x400fc150     0x8
 
-Absolute sections, part 42 of 45:             0x8
+Absolute sections, part 44 of 47:             0x8
   .noinit             uninit   0x400fc1a8     0x4  uart.o [1]
   .noinit             uninit   0x400fc1ac     0x4  uart.o [1]
                              - 0x400fc1b0     0x8
 
-Absolute sections, part 43 of 45:             0x4
+Absolute sections, part 45 of 47:             0x4
   .noinit             uninit   0xe000e100     0x4  uart.o [1]
                              - 0xe000e104     0x4
 
-Absolute sections, part 44 of 45:             0x4
+Absolute sections, part 46 of 47:             0x4
   .noinit             uninit   0xe000e280     0x4  uart.o [1]
                              - 0xe000e284     0x4
 
-Absolute sections, part 45 of 45:             0xc
+Absolute sections, part 47 of 47:             0xc
   .noinit             uninit   0xe000e400     0x4  Potencia.o [1]
   .noinit             uninit   0xe000e404     0x4  uart.o [1]
   .noinit             uninit   0xe000e408     0x4  uart.o [1]
@@ -1262,8 +1279,8 @@ Zero (__iar_zero_init3)
           0x100018d0  0x5ee7
 
 Copy/lz77 (__iar_lz77_init3)
-    1 source range, total size 0x29e (77% of destination):
-          0x0000e8bc   0x29e
+    1 source range, total size 0x29f (78% of destination):
+          0x0000ea8c   0x29f
     1 destination range, total size 0x35c:
           0x10000000   0x35c
 
@@ -1288,11 +1305,11 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj: [1]
     Board.o                      1 852        4       63       16
     ControleTemperatura.o          108                 1
     InterfaceAjusteRelogio.o       704      127       24
-    POST.o                         220
+    POST.o                         258
     Pagamentos.o                 1 112        3       32
     PlayerWave.o                   624        3       12       36
     Potencia.o                   2 004       15       66       76
-    Preparacao.o                 1 244       32       16
+    Preparacao.o                 1 324       32       16
     Protocolo.o                  2 024               773
     RTC.o                          156                         28
     Relatorio.o                  1 572    1 512
@@ -1300,10 +1317,11 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj: [1]
     Supervisao_mdb_bill.o        1 348       44       65
     Supervisao_mdb_coin.o          616       20       24
     Teclado.o                      508        3       18        8
+    WATCHDOG.o                      92                         16
     WH1602.o                       648        4        5
     WH1602_2.o                   1 084                 5       12
-    aplicacao.o                  2 532      143       13
-    cctalk.o                       912      398      643        1
+    aplicacao.o                  2 704      215       13
+    cctalk.o                       912      399      643        1
     cstartup_M.o                   364
     embalagem.o                    128
     faturamento.o                  258
@@ -1347,7 +1365,7 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Debug\Obj: [1]
     tela_senha.o                 1 106       84        4
     uart.o                         684                         85
     -------------------------------------------------------------
-    Total:                      44 652   13 982   30 503      311
+    Total:                      45 034   14 055   30 503      327
 
 command line: [2]
     -------------------------------------------------------------
@@ -1407,10 +1425,10 @@ shb_l.a: [6]
     -------------------------------------------------------------
     Total:                          20
 
-    Gaps                            38        2
+    Gaps                            48        2
     Linker created                           72      768
 -----------------------------------------------------------------
-    Grand Total:                51 958   14 165   31 411      311
+    Grand Total:                52 350   14 238   31 411      327
 
 
 *******************************************************************************
@@ -1419,8 +1437,8 @@ shb_l.a: [6]
 
 Entry                      Address    Size  Type      Object
 -----                      -------    ----  ----      ------
-?main                   0x0000e26d          Code  Gb  cmain.o [5]
-AA_amostragemAnalogica  0x000075e9   0x148  Code  Gb  AmostraAnalogica.o [1]
+?main                   0x0000e3f5          Code  Gb  cmain.o [5]
+AA_amostragemAnalogica  0x00007e99   0x148  Code  Gb  AmostraAnalogica.o [1]
 AA_amostragemAnalogica::canal
                         0x1000778f     0x1  Data  Gb  AmostraAnalogica.o [1]
 AA_amostragemAnalogica::derivada
@@ -1437,44 +1455,48 @@ AA_bufferEntradasAnalogicas
                         0x1000758c    0x20  Data  Gb  AmostraAnalogica.o [1]
 AA_bufferSensorPapel    0x100075ac    0x20  Data  Gb  AmostraAnalogica.o [1]
 AA_calculaResistorInteiro
-                        0x000052bb    0x38  Code  Gb  AmostraAnalogica.o [1]
-AA_calculaTemperatura   0x000052f3    0x6a  Code  Gb  AmostraAnalogica.o [1]
-AA_ini                  0x00005225    0x78  Code  Gb  AmostraAnalogica.o [1]
-AA_mediaMovel           0x0000529d    0x1e  Code  Gb  AmostraAnalogica.o [1]
-AA_mediaMovelPapel      0x0000535d    0x1e  Code  Gb  AmostraAnalogica.o [1]
-ADC_IRQHandler          0x0000e891          Code  Wk  cstartup_M.o [1]
-APLIACAO_wait_lcd       0x0000280f    0x18  Code  Gb  aplicacao.o [1]
+                        0x000058ef    0x38  Code  Gb  AmostraAnalogica.o [1]
+AA_calculaTemperatura   0x00005927    0x6a  Code  Gb  AmostraAnalogica.o [1]
+AA_ini                  0x00005859    0x78  Code  Gb  AmostraAnalogica.o [1]
+AA_mediaMovel           0x000058d1    0x1e  Code  Gb  AmostraAnalogica.o [1]
+AA_mediaMovelPapel      0x00005991    0x1e  Code  Gb  AmostraAnalogica.o [1]
+ADC_IRQHandler          0x0000ea61          Code  Wk  cstartup_M.o [1]
+APLIACAO_wait_lcd       0x0000282f    0x18  Code  Gb  aplicacao.o [1]
 APLICACACAO_verifica_troco
-                        0x0000297f    0x14  Code  Gb  aplicacao.o [1]
+                        0x0000299f    0x14  Code  Gb  aplicacao.o [1]
 APLICACAO_carrega_idioma
-                        0x0000283b    0x24  Code  Gb  aplicacao.o [1]
+                        0x0000285b    0x24  Code  Gb  aplicacao.o [1]
 APLICACAO_ciclo_desumidificador
-                        0x00002f23    0x92  Code  Gb  aplicacao.o [1]
+                        0x00002fb7    0x92  Code  Gb  aplicacao.o [1]
 APLICACAO_devolve_troco
-                        0x00002b37    0xf2  Code  Gb  aplicacao.o [1]
-APLICACAO_exibe_valor   0x000028c5    0xba  Code  Gb  aplicacao.o [1]
-APLICACAO_ini           0x00002799    0x76  Code  Gb  aplicacao.o [1]
-APLICACAO_main          0x00002639   0x160  Code  Gb  aplicacao.o [1]
-APLICACAO_menu_falha    0x00002add    0x5a  Code  Gb  aplicacao.o [1]
-APLICACAO_release_lcd   0x00002827    0x14  Code  Gb  aplicacao.o [1]
+                        0x00002b57    0xf2  Code  Gb  aplicacao.o [1]
+APLICACAO_exibe_valor   0x000028e5    0xba  Code  Gb  aplicacao.o [1]
+APLICACAO_ini           0x000027b9    0x76  Code  Gb  aplicacao.o [1]
+APLICACAO_loop_falha_ciclica
+                        0x00002f77    0x40  Code  Gb  aplicacao.o [1]
+APLICACAO_main          0x00002639   0x180  Code  Gb  aplicacao.o [1]
+APLICACAO_menu_falha    0x00002afd    0x5a  Code  Gb  aplicacao.o [1]
+APLICACAO_release_lcd   0x00002847    0x14  Code  Gb  aplicacao.o [1]
 APLICACAO_sem_LCD       0x1000771c     0x4  Data  Gb  aplicacao.o [1]
 APLICACAO_tela_descanso
-                        0x0000285f    0x66  Code  Gb  aplicacao.o [1]
+                        0x0000287f    0x66  Code  Gb  aplicacao.o [1]
 APLICACAO_tempo_compensacao
                         0x100076c4     0x4  Data  Gb  Board.o [1]
 APLICACAO_tempo_desumidificador
                         0x1000033c     0x4  Data  Gb  aplicacao.o [1]
 APLICACAO_tempo_mensagem
                         0x10007720     0x4  Data  Gb  aplicacao.o [1]
-APLICACAO_verifica_MDB  0x00002de5    0xa0  Code  Gb  aplicacao.o [1]
+APLICACAO_verifica_MDB  0x00002e05    0xa0  Code  Gb  aplicacao.o [1]
 APLICACAO_verifica_cctalk
-                        0x00002e85    0x9e  Code  Gb  aplicacao.o [1]
+                        0x00002ea5    0x9e  Code  Gb  aplicacao.o [1]
 APLICACAO_verifica_disponibilidade_troco
-                        0x00002cff    0xe6  Code  Gb  aplicacao.o [1]
+                        0x00002d1f    0xe6  Code  Gb  aplicacao.o [1]
 APLICACAO_verifica_post
-                        0x00002c29    0xd6  Code  Gb  aplicacao.o [1]
+                        0x00002c49    0xd6  Code  Gb  aplicacao.o [1]
 APLICACAO_verifica_preparacao
-                        0x00002993   0x14a  Code  Gb  aplicacao.o [1]
+                        0x000029b3   0x14a  Code  Gb  aplicacao.o [1]
+APLICACAO_verificao_ciclica
+                        0x00002f43    0x34  Code  Gb  aplicacao.o [1]
 BOARD_buffer_entradas_digitais
                         0x100075cc    0x20  Data  Gb  Board.o [1]
 BOARD_contador_propaganda
@@ -1482,442 +1504,442 @@ BOARD_contador_propaganda
 BOARD_estado_leds       0x10007690     0x8  Data  Gb  Board.o [1]
 BOARD_general_purpose_counter
                         0x100076b8     0x4  Data  Gb  Board.o [1]
-BOARD_get_sinal         0x00003515    0x36  Code  Gb  Board.o [1]
+BOARD_get_sinal         0x00004315    0x36  Code  Gb  Board.o [1]
 BOARD_getter_general_purpose_counter
-                        0x0000362b     0x6  Code  Gb  Board.o [1]
-BOARD_ini               0x00003161    0x9e  Code  Gb  Board.o [1]
-BOARD_instrucao_leds    0x00003631   0x186  Code  Gb  Board.o [1]
+                        0x0000442b     0x6  Code  Gb  Board.o [1]
+BOARD_ini               0x00003f61    0x9e  Code  Gb  Board.o [1]
+BOARD_instrucao_leds    0x00004431   0x186  Code  Gb  Board.o [1]
 BOARD_intervalo_propaganda
                         0x100076bc     0x4  Data  Gb  Board.o [1]
 BOARD_leds_instrucao    0x10000358     0x1  Data  Gb  Board.o [1]
 BOARD_liga_placa_instrucao
-                        0x000037bf    0x3a  Code  Gb  Board.o [1]
+                        0x000045bf    0x3a  Code  Gb  Board.o [1]
 BOARD_lock_timer        0x100076c0     0x4  Data  Gb  Board.o [1]
-BOARD_main              0x000033f3   0x122  Code  Gb  Board.o [1]
+BOARD_main              0x000041f3   0x122  Code  Gb  Board.o [1]
 BOARD_reset_tempo_propaganda
-                        0x00003813    0x10  Code  Gb  Board.o [1]
-BOARD_set_motor_dose    0x00003571    0xb4  Code  Gb  Board.o [1]
+                        0x00004613    0x10  Code  Gb  Board.o [1]
+BOARD_set_motor_dose    0x00004371    0xb4  Code  Gb  Board.o [1]
 BOARD_set_motor_embalagem
-                        0x0000354b    0x26  Code  Gb  Board.o [1]
+                        0x0000434b    0x26  Code  Gb  Board.o [1]
 BOARD_setter_contador_propaganda
-                        0x000037f9    0x1a  Code  Gb  Board.o [1]
+                        0x000045f9    0x1a  Code  Gb  Board.o [1]
 BOARD_setter_general_purpose_counter
-                        0x00003625     0x6  Code  Gb  Board.o [1]
+                        0x00004425     0x6  Code  Gb  Board.o [1]
 BOARD_setter_led_instrucao
-                        0x000037b7     0x8  Code  Gb  Board.o [1]
-BOARD_timer_tick        0x000031ff   0x1f4  Code  Gb  Board.o [1]
-BOD_IRQHandler          0x0000e895          Code  Wk  cstartup_M.o [1]
+                        0x000045b7     0x8  Code  Gb  Board.o [1]
+BOARD_timer_tick        0x00003fff   0x1f4  Code  Gb  Board.o [1]
+BOD_IRQHandler          0x0000ea65          Code  Wk  cstartup_M.o [1]
 BV20_decodifica_eventos
-                        0x0000693b   0x17c  Code  Gb  BV20.o [1]
-BV20_estado_bloqueio    0x00006b35    0x22  Code  Gb  BV20.o [1]
+                        0x00006abb   0x17c  Code  Gb  BV20.o [1]
+BV20_estado_bloqueio    0x00006cb5    0x22  Code  Gb  BV20.o [1]
 BV20_estado_inicializacao
-                        0x0000681f    0x14  Code  Gb  BV20.o [1]
-BV20_estado_le_evento   0x00006893    0xa8  Code  Gb  BV20.o [1]
-BV20_estado_offline     0x00006833     0x4  Code  Gb  BV20.o [1]
-BV20_estado_supervisao  0x00006837    0x5c  Code  Gb  BV20.o [1]
+                        0x0000699f    0x14  Code  Gb  BV20.o [1]
+BV20_estado_le_evento   0x00006a13    0xa8  Code  Gb  BV20.o [1]
+BV20_estado_offline     0x000069b3     0x4  Code  Gb  BV20.o [1]
+BV20_estado_supervisao  0x000069b7    0x5c  Code  Gb  BV20.o [1]
 BV20_fila_sinais        0x100076b4     0x4  Data  Gb  BV20.o [1]
 BV20_func               0x100002ec    0x18  Data  Gb  BV20.o [1]
-BV20_get_current_state  0x00006b2f     0x6  Code  Gb  BV20.o [1]
-BV20_get_ultimo_evento  0x00006b29     0x6  Code  Gb  BV20.o [1]
+BV20_get_current_state  0x00006caf     0x6  Code  Gb  BV20.o [1]
+BV20_get_ultimo_evento  0x00006ca9     0x6  Code  Gb  BV20.o [1]
 BV20_get_valor_acumulador
-                        0x00006ab7    0x30  Code  Gb  BV20.o [1]
-BV20_ini                0x00006745    0x44  Code  Gb  BV20.o [1]
-BV20_inicializNoteiro   0x00006789    0x96  Code  Gb  BV20.o [1]
-BV20_main               0x000066e9    0x5c  Code  Gb  BV20.o [1]
+                        0x00006c37    0x30  Code  Gb  BV20.o [1]
+BV20_ini                0x000068c5    0x44  Code  Gb  BV20.o [1]
+BV20_inicializNoteiro   0x00006909    0x96  Code  Gb  BV20.o [1]
+BV20_main               0x00006869    0x5c  Code  Gb  BV20.o [1]
 BV20_mensagemExterna    0x10000356     0x1  Data  Gb  BV20.o [1]
 BV20_quantidade_eventos
                         0x10007792     0x1  Data  Gb  BV20.o [1]
 BV20_regiao             0x10007791     0x1  Data  Gb  BV20.o [1]
 BV20_sem_acumulador_dinheiro
                         0x100076b0     0x4  Data  Gb  BV20.o [1]
-BV20_setter_bloqueio    0x00006b57    0x16  Code  Gb  BV20.o [1]
+BV20_setter_bloqueio    0x00006cd7    0x16  Code  Gb  BV20.o [1]
 BV20_subtrai_valor_acumulado
-                        0x00006ae7    0x42  Code  Gb  BV20.o [1]
+                        0x00006c67    0x42  Code  Gb  BV20.o [1]
 BV20_ultima_quantidade_eventos
                         0x10000344     0x2  Data  Gb  BV20.o [1]
 BV20_ultimo_evento      0x10007793     0x1  Data  Gb  BV20.o [1]
 BV20_valor_acumulado    0x10007770     0x2  Data  Gb  BV20.o [1]
-BV20_valor_canais       0x0000d9cc    0x64  Data  Gb  BV20.o [1]
-BusFault_Handler        0x0000e821          Code  Wk  cstartup_M.o [1]
-CAN_IRQHandler          0x0000e89d          Code  Wk  cstartup_M.o [1]
-CASHLESS_adreess        0x0000983f    0x36  Code  Gb  mdb_cashless.o [1]
-CASHLESS_poll_device    0x000099df    0xe6  Code  Gb  mdb_cashless.o [1]
-CASHLESS_reset_device   0x00009875    0x36  Code  Gb  mdb_cashless.o [1]
+BV20_valor_canais       0x0000db54    0x64  Data  Gb  BV20.o [1]
+BusFault_Handler        0x0000e9f1          Code  Wk  cstartup_M.o [1]
+CAN_IRQHandler          0x0000ea6d          Code  Wk  cstartup_M.o [1]
+CASHLESS_adreess        0x000099c5    0x36  Code  Gb  mdb_cashless.o [1]
+CASHLESS_poll_device    0x00009b65    0xe6  Code  Gb  mdb_cashless.o [1]
+CASHLESS_reset_device   0x000099fb    0x36  Code  Gb  mdb_cashless.o [1]
 CASHLESS_set_and_get_setup_from_to_device
-                        0x000098ab    0xce  Code  Gb  mdb_cashless.o [1]
+                        0x00009a31    0xce  Code  Gb  mdb_cashless.o [1]
 CASHLESS_set_min_and_max_price_in_device
-                        0x00009979    0x66  Code  Gb  mdb_cashless.o [1]
+                        0x00009aff    0x66  Code  Gb  mdb_cashless.o [1]
 CCTALK_bufferRxd        0x100074f4    0x40  Data  Gb  cctalk.o [1]
 CCTALK_bufferTxd        0x100074b4    0x40  Data  Gb  cctalk.o [1]
 CCTALK_bytesEnviados    0x100077ae     0x1  Data  Gb  cctalk.o [1]
 CCTALK_bytesParaEnviar  0x100077ad     0x1  Data  Gb  cctalk.o [1]
-CCTALK_calculaCRC       0x00006e13    0x36  Code  Gb  cctalk.o [1]
-CCTALK_enviaPacote      0x00006eeb   0x16c  Code  Gb  cctalk.o [1]
+CCTALK_calculaCRC       0x00006f93    0x36  Code  Gb  cctalk.o [1]
+CCTALK_enviaPacote      0x0000706b   0x16c  Code  Gb  cctalk.o [1]
 CCTALK_enviaPacoteSerial
-                        0x00006ecd    0x1e  Code  Gb  cctalk.o [1]
-CCTALK_ini              0x00006dfd    0x16  Code  Gb  cctalk.o [1]
-CCTALK_irqUart          0x00006e49    0x84  Code  Gb  cctalk.o [1]
-CCTALK_leFilaEventos    0x00007057    0x64  Code  Gb  cctalk.o [1]
+                        0x0000704d    0x1e  Code  Gb  cctalk.o [1]
+CCTALK_ini              0x00006f7d    0x16  Code  Gb  cctalk.o [1]
+CCTALK_irqUart          0x00006fc9    0x84  Code  Gb  cctalk.o [1]
+CCTALK_leFilaEventos    0x000071d7    0x64  Code  Gb  cctalk.o [1]
 CCTALK_recebidos        0x100077af     0x1  Data  Gb  cctalk.o [1]
 CCTALK_rotacionaValidador
-                        0x000070bb    0x34  Code  Gb  cctalk.o [1]
+                        0x0000723b    0x34  Code  Gb  cctalk.o [1]
 CCTALK_setBitsHabilitacaoCanal
-                        0x000070ef    0x40  Code  Gb  cctalk.o [1]
+                        0x0000726f    0x40  Code  Gb  cctalk.o [1]
 CCTALK_setFlagHabilitacaoGeral
-                        0x0000712f    0x36  Code  Gb  cctalk.o [1]
+                        0x000072af    0x36  Code  Gb  cctalk.o [1]
 CSTACK$$Base            0x100077b8           --   Gb  - Linker created -
 CSTACK$$Limit           0x10007ab8           --   Gb  - Linker created -
-CT_ini                  0x00006ba5     0xe  Code  Gb  ControleTemperatura.o [1]
+CT_ini                  0x00006d25     0xe  Code  Gb  ControleTemperatura.o [1]
 CT_preset_temperatura   0x10007797     0x1  Data  Gb  ControleTemperatura.o [1]
-CT_set_temperatura      0x00006bf9     0x6  Code  Gb  ControleTemperatura.o [1]
-CT_timer_tick           0x00006bb3    0x46  Code  Gb  ControleTemperatura.o [1]
-DebugMon_Handler        0x0000e82d          Code  Wk  cstartup_M.o [1]
-EINT0_IRQHandler        0x0000e881          Code  Wk  cstartup_M.o [1]
-EINT1_IRQHandler        0x0000e885          Code  Wk  cstartup_M.o [1]
-EINT2_IRQHandler        0x0000e889          Code  Wk  cstartup_M.o [1]
-EINT3_IRQHandler        0x0000e88d          Code  Wk  cstartup_M.o [1]
+CT_set_temperatura      0x00006d79     0x6  Code  Gb  ControleTemperatura.o [1]
+CT_timer_tick           0x00006d33    0x46  Code  Gb  ControleTemperatura.o [1]
+DebugMon_Handler        0x0000e9fd          Code  Wk  cstartup_M.o [1]
+EINT0_IRQHandler        0x0000ea51          Code  Wk  cstartup_M.o [1]
+EINT1_IRQHandler        0x0000ea55          Code  Wk  cstartup_M.o [1]
+EINT2_IRQHandler        0x0000ea59          Code  Wk  cstartup_M.o [1]
+EINT3_IRQHandler        0x0000ea5d          Code  Wk  cstartup_M.o [1]
 EMBALAGEM_libera_pacote
-                        0x00008a0f    0x6a  Code  Gb  embalagem.o [1]
+                        0x000078b7    0x6a  Code  Gb  embalagem.o [1]
 EMBALAGEM_verifica_estoque
-                        0x00008a79    0x16  Code  Gb  embalagem.o [1]
-Ethernet_IRQHandler     0x0000e8a9          Code  Wk  cstartup_M.o [1]
+                        0x00007921    0x16  Code  Gb  embalagem.o [1]
+Ethernet_IRQHandler     0x0000ea79          Code  Wk  cstartup_M.o [1]
 FATURAMENTO_add_arrecadacao_parcial
-                        0x00008b0d    0x1e  Code  Gb  faturamento.o [1]
+                        0x00007c27    0x1e  Code  Gb  faturamento.o [1]
 FATURAMENTO_add_arrecadacao_total
-                        0x00008b49    0x1e  Code  Gb  faturamento.o [1]
+                        0x00007c63    0x1e  Code  Gb  faturamento.o [1]
 FATURAMENTO_add_contagem_parcial
-                        0x00008aef    0x1e  Code  Gb  faturamento.o [1]
+                        0x00007c09    0x1e  Code  Gb  faturamento.o [1]
 FATURAMENTO_add_contagem_total
-                        0x00008b2b    0x1e  Code  Gb  faturamento.o [1]
+                        0x00007c45    0x1e  Code  Gb  faturamento.o [1]
 FATURAMENTO_inc_contador_pipocas_teste
-                        0x00008b77    0x1a  Code  Gb  faturamento.o [1]
+                        0x00007c91    0x1a  Code  Gb  faturamento.o [1]
 FATURAMENTO_reinicia_pipocas_teste
-                        0x00008b67    0x10  Code  Gb  faturamento.o [1]
+                        0x00007c81    0x10  Code  Gb  faturamento.o [1]
 FATURAMENTO_set_arrecadacao_cartao_parcial
-                        0x00008ab3     0xc  Code  Gb  faturamento.o [1]
+                        0x00007bcd     0xc  Code  Gb  faturamento.o [1]
 FATURAMENTO_set_arrecadacao_cartao_total
-                        0x00008ae3     0xc  Code  Gb  faturamento.o [1]
+                        0x00007bfd     0xc  Code  Gb  faturamento.o [1]
 FATURAMENTO_set_arrecadacao_parcial
-                        0x00008a9b     0xc  Code  Gb  faturamento.o [1]
+                        0x00007bb5     0xc  Code  Gb  faturamento.o [1]
 FATURAMENTO_set_arrecadacao_total
-                        0x00008acb     0xc  Code  Gb  faturamento.o [1]
+                        0x00007be5     0xc  Code  Gb  faturamento.o [1]
 FATURAMENTO_set_contagem_cartao_parcial
-                        0x00008aa7     0xc  Code  Gb  faturamento.o [1]
+                        0x00007bc1     0xc  Code  Gb  faturamento.o [1]
 FATURAMENTO_set_contagem_cartao_total
-                        0x00008ad7     0xc  Code  Gb  faturamento.o [1]
+                        0x00007bf1     0xc  Code  Gb  faturamento.o [1]
 FATURAMENTO_set_contagem_parcial
-                        0x00008a8f     0xc  Code  Gb  faturamento.o [1]
+                        0x00007ba9     0xc  Code  Gb  faturamento.o [1]
 FATURAMENTO_set_contagem_total
-                        0x00008abf     0xc  Code  Gb  faturamento.o [1]
-FLASHQUEUE_append       0x0000b917    0x6e  Code  Gb  flash_queue.o [1]
-FLASHQUEUE_checksum     0x0000b9db    0x22  Code  Gb  flash_queue.o [1]
-FLASHQUEUE_formata      0x0000b9bd    0x1e  Code  Gb  flash_queue.o [1]
-FLASHQUEUE_getSize      0x0000b9fd     0xe  Code  Gb  flash_queue.o [1]
-FLASHQUEUE_loadControl  0x0000b859    0x7a  Code  Gb  flash_queue.o [1]
+                        0x00007bd9     0xc  Code  Gb  faturamento.o [1]
+FLASHQUEUE_append       0x0000ba9f    0x6e  Code  Gb  flash_queue.o [1]
+FLASHQUEUE_checksum     0x0000bb63    0x22  Code  Gb  flash_queue.o [1]
+FLASHQUEUE_formata      0x0000bb45    0x1e  Code  Gb  flash_queue.o [1]
+FLASHQUEUE_getSize      0x0000bb85     0xe  Code  Gb  flash_queue.o [1]
+FLASHQUEUE_loadControl  0x0000b9e1    0x7a  Code  Gb  flash_queue.o [1]
 FLASHQUEUE_readFromLast
-                        0x0000b985    0x38  Code  Gb  flash_queue.o [1]
-FLASHQUEUE_saveControl  0x0000b8d9    0x3e  Code  Gb  flash_queue.o [1]
+                        0x0000bb0d    0x38  Code  Gb  flash_queue.o [1]
+FLASHQUEUE_saveControl  0x0000ba61    0x3e  Code  Gb  flash_queue.o [1]
 FTP_fila_troca_preco    0x100002d0    0x1c  Data  Gb  fila_troca_preco.o [1]
-FTP_formata_fila        0x0000b609     0xa  Code  Gb  fila_troca_preco.o [1]
+FTP_formata_fila        0x0000b791     0xa  Code  Gb  fila_troca_preco.o [1]
 FTP_get_quantidade_novas_trocas
-                        0x0000b597     0xa  Code  Gb  fila_troca_preco.o [1]
-FTP_get_troca           0x0000b5a1    0x68  Code  Gb  fila_troca_preco.o [1]
-FTP_novo_preco          0x0000b561    0x36  Code  Gb  fila_troca_preco.o [1]
-GPDMA_IRQHandler        0x0000e8a1          Code  Wk  cstartup_M.o [1]
-HD44780_2_enviaByte     0x00004d25    0x96  Code  Gb  WH1602_2.o [1]
-HD44780_2_enviaNibble   0x00004b2d   0x1f8  Code  Gb  WH1602_2.o [1]
-HD44780_2_init          0x00004a3d    0xf0  Code  Gb  WH1602_2.o [1]
+                        0x0000b71f     0xa  Code  Gb  fila_troca_preco.o [1]
+FTP_get_troca           0x0000b729    0x68  Code  Gb  fila_troca_preco.o [1]
+FTP_novo_preco          0x0000b6e9    0x36  Code  Gb  fila_troca_preco.o [1]
+GPDMA_IRQHandler        0x0000ea71          Code  Wk  cstartup_M.o [1]
+HD44780_2_enviaByte     0x00005359    0x96  Code  Gb  WH1602_2.o [1]
+HD44780_2_enviaNibble   0x00005161   0x1f8  Code  Gb  WH1602_2.o [1]
+HD44780_2_init          0x00005071    0xf0  Code  Gb  WH1602_2.o [1]
 HD44780_2_posicionaTexto
-                        0x00004dbb    0x3a  Code  Gb  WH1602_2.o [1]
+                        0x000053ef    0x3a  Code  Gb  WH1602_2.o [1]
 HD44780_2_tempoRefreshSegundoLCD
                         0x10007718     0x4  Data  Gb  WH1602_2.o [1]
-HD44780_2_writeChar     0x00004df5    0x3c  Code  Gb  WH1602_2.o [1]
-HD44780_2_writeString   0x00004e31    0x34  Code  Gb  WH1602_2.o [1]
-HD44780_enviaByte       0x00004933    0x3e  Code  Gb  WH1602.o [1]
-HD44780_enviaNibble     0x00004889    0xaa  Code  Gb  WH1602.o [1]
-HD44780_init            0x000047b5    0xd4  Code  Gb  WH1602.o [1]
-HD44780_posicionaTexto  0x00004971    0x3a  Code  Gb  WH1602.o [1]
+HD44780_2_writeChar     0x00005429    0x3c  Code  Gb  WH1602_2.o [1]
+HD44780_2_writeString   0x00005465    0x34  Code  Gb  WH1602_2.o [1]
+HD44780_enviaByte       0x00004f67    0x3e  Code  Gb  WH1602.o [1]
+HD44780_enviaNibble     0x00004ebd    0xaa  Code  Gb  WH1602.o [1]
+HD44780_init            0x00004de9    0xd4  Code  Gb  WH1602.o [1]
+HD44780_posicionaTexto  0x00004fa5    0x3a  Code  Gb  WH1602.o [1]
 HD44780_tempoRefreshSegundoLCD
                         0x10000338     0x4  Data  Gb  WH1602.o [1]
-HD44780_writeChar       0x000049ab    0x3c  Code  Gb  WH1602.o [1]
-HD44780_writeString     0x000049e7    0x34  Code  Gb  WH1602.o [1]
-HardFault_Handler       0x0000e819          Code  Wk  cstartup_M.o [1]
-I2C0_IRQHandler         0x0000e861          Code  Wk  cstartup_M.o [1]
-I2C1_IRQHandler         0x0000e865          Code  Wk  cstartup_M.o [1]
-I2C2_IRQHandler         0x0000e869          Code  Wk  cstartup_M.o [1]
-I2S_IRQHandler          0x0000e8a5          Code  Wk  cstartup_M.o [1]
-IAR_desenhaDados        0x0000cb75    0x24  Code  Gb  InterfaceAjusteRelogio.o [1]
-IAR_entry               0x0000c8f5   0x280  Code  Gb  InterfaceAjusteRelogio.o [1]
-IMPRESSORA_envia_linha  0x0000a509    0x4c  Code  Gb  impressora.o [1]
+HD44780_writeChar       0x00004fdf    0x3c  Code  Gb  WH1602.o [1]
+HD44780_writeString     0x0000501b    0x34  Code  Gb  WH1602.o [1]
+HardFault_Handler       0x0000e9e9          Code  Wk  cstartup_M.o [1]
+I2C0_IRQHandler         0x0000ea31          Code  Wk  cstartup_M.o [1]
+I2C1_IRQHandler         0x0000ea35          Code  Wk  cstartup_M.o [1]
+I2C2_IRQHandler         0x0000ea39          Code  Wk  cstartup_M.o [1]
+I2S_IRQHandler          0x0000ea75          Code  Wk  cstartup_M.o [1]
+IAR_desenhaDados        0x0000ccfd    0x24  Code  Gb  InterfaceAjusteRelogio.o [1]
+IAR_entry               0x0000ca7d   0x280  Code  Gb  InterfaceAjusteRelogio.o [1]
+IMPRESSORA_envia_linha  0x0000a691    0x4c  Code  Gb  impressora.o [1]
 IMPRESSORA_impressora_teste
-                        0x0000a555    0x2e  Code  Gb  impressora.o [1]
-InStream_Read           0x0000d475    0x22  Code  Lc  lz77_init.o [5]
+                        0x0000a6dd    0x2e  Code  Gb  impressora.o [1]
+InStream_Read           0x0000d5fd    0x22  Code  Lc  lz77_init.o [5]
 LCD2_controleLcd        0x100077ab     0x1  Data  Gb  WH1602_2.o [1]
-LEDS_envia_bitstream    0x000071af    0x6c  Code  Gb  leds.o [1]
+LEDS_envia_bitstream    0x00007ccf    0x6c  Code  Gb  leds.o [1]
 LEDS_espelho_leds       0x100077b0     0x1  Data  Gb  leds.o [1]
-LEDS_ini                0x0000718d     0xe  Code  Gb  leds.o [1]
-LEDS_main               0x0000719b    0x14  Code  Gb  leds.o [1]
-LEDS_setter_led         0x0000721b    0x26  Code  Gb  leds.o [1]
+LEDS_ini                0x00007cad     0xe  Code  Gb  leds.o [1]
+LEDS_main               0x00007cbb    0x14  Code  Gb  leds.o [1]
+LEDS_setter_led         0x00007d3b    0x26  Code  Gb  leds.o [1]
 MACESS_configura_baud_impressora
-                        0x0000cbd7   0x10c  Code  Gb  menu_acessorios.o [1]
-MACESS_configura_bv20   0x0000cce3    0x34  Code  Gb  menu_acessorios.o [1]
+                        0x0000cd5f   0x10c  Code  Gb  menu_acessorios.o [1]
+MACESS_configura_bv20   0x0000ce6b    0x34  Code  Gb  menu_acessorios.o [1]
 MACESS_configura_cartao_mdb
-                        0x0000cd7f    0x34  Code  Gb  menu_acessorios.o [1]
+                        0x0000cf07    0x34  Code  Gb  menu_acessorios.o [1]
 MACESS_configura_moedeiro_mdb
-                        0x0000cd4b    0x34  Code  Gb  menu_acessorios.o [1]
+                        0x0000ced3    0x34  Code  Gb  menu_acessorios.o [1]
 MACESS_configura_noteiro_mdb
-                        0x0000cd17    0x34  Code  Gb  menu_acessorios.o [1]
+                        0x0000ce9f    0x34  Code  Gb  menu_acessorios.o [1]
 MACESS_configura_pulso_moeda
-                        0x0000cdb3    0x42  Code  Gb  menu_acessorios.o [1]
+                        0x0000cf3b    0x42  Code  Gb  menu_acessorios.o [1]
 MACESS_configura_pulso_noteiro
-                        0x0000cdf5    0x42  Code  Gb  menu_acessorios.o [1]
-MACESS_entry            0x0000cbb5    0x22  Code  Gb  menu_acessorios.o [1]
-MACESS_func             0x0000e1a0    0x20  Data  Gb  menu_acessorios.o [1]
-MCFG_entry              0x00003ef1    0x24  Code  Gb  menu_configuracao.o [1]
-MCFG_seleciona_idioma   0x00003f15    0x62  Code  Gb  menu_configuracao.o [1]
-MCF_funcoes             0x0000e05c    0x28  Data  Gb  menu_configuracao.o [1]
+                        0x0000cf7d    0x42  Code  Gb  menu_acessorios.o [1]
+MACESS_entry            0x0000cd3d    0x22  Code  Gb  menu_acessorios.o [1]
+MACESS_func             0x0000e328    0x20  Data  Gb  menu_acessorios.o [1]
+MCFG_entry              0x00004cf1    0x24  Code  Gb  menu_configuracao.o [1]
+MCFG_seleciona_idioma   0x00004d15    0x62  Code  Gb  menu_configuracao.o [1]
+MCF_funcoes             0x0000e1e4    0x28  Data  Gb  menu_configuracao.o [1]
 MCS_contadorSemente     0x1000776c     0x4  Data  Gb  tela_senha.o [1]
-MDBAURT_sleep           0x00008a01     0xe  Code  Gb  mdb_uart.o [1]
+MDBAURT_sleep           0x00008d05     0xe  Code  Gb  mdb_uart.o [1]
 MDBCASHLESS_enable_reader
-                        0x00009b73    0x3c  Code  Gb  mdb_cashless.o [1]
-MDBCASHLESS_funcs       0x0000e0f4    0x24  Data  Gb  supervisao_mdb_cashless.o [1]
+                        0x00009cf9    0x3c  Code  Gb  mdb_cashless.o [1]
+MDBCASHLESS_funcs       0x0000e27c    0x24  Data  Gb  supervisao_mdb_cashless.o [1]
 MDBCASHLESS_session_complete
-                        0x00009baf    0x32  Code  Gb  mdb_cashless.o [1]
-MDBCASHLESS_start_vend  0x00009ac5    0x6e  Code  Gb  mdb_cashless.o [1]
+                        0x00009d35    0x32  Code  Gb  mdb_cashless.o [1]
+MDBCASHLESS_start_vend  0x00009c4b    0x6e  Code  Gb  mdb_cashless.o [1]
 MDBCASHLESS_vend_success
-                        0x00009b33    0x40  Code  Gb  mdb_cashless.o [1]
+                        0x00009cb9    0x40  Code  Gb  mdb_cashless.o [1]
 MDBCOIN_alternative_payout
-                        0x00006573    0x52  Code  Gb  mdb_coin.o [1]
-MDBCOIN_coin_dispense   0x0000648f    0x3a  Code  Gb  mdb_coin.o [1]
+                        0x000066cb    0x52  Code  Gb  mdb_coin.o [1]
+MDBCOIN_coin_dispense   0x000065e7    0x3a  Code  Gb  mdb_coin.o [1]
 MDBCOIN_coin_type_setup
-                        0x00006443    0x4c  Code  Gb  mdb_coin.o [1]
-MDBCOIN_get_device      0x000062ed    0x36  Code  Gb  mdb_coin.o [1]
+                        0x0000659b    0x4c  Code  Gb  mdb_coin.o [1]
+MDBCOIN_get_device      0x00006445    0x36  Code  Gb  mdb_coin.o [1]
 MDBCOIN_get_payout_status
-                        0x000065c5    0x46  Code  Gb  mdb_coin.o [1]
+                        0x0000671d    0x46  Code  Gb  mdb_coin.o [1]
 MDBCOIN_get_setup_from_device
-                        0x00006359    0x98  Code  Gb  mdb_coin.o [1]
+                        0x000064b1    0x98  Code  Gb  mdb_coin.o [1]
 MDBCOIN_get_tube_status_from_device
-                        0x000063f1    0x52  Code  Gb  mdb_coin.o [1]
-MDBCOIN_poll            0x000064c9    0xaa  Code  Gb  mdb_coin.o [1]
-MDBCOIN_reset_device    0x00006323    0x36  Code  Gb  mdb_coin.o [1]
-MDBILL_funcs            0x0000e1c0    0x1c  Data  Gb  Supervisao_mdb_bill.o [1]
+                        0x00006549    0x52  Code  Gb  mdb_coin.o [1]
+MDBCOIN_poll            0x00006621    0xaa  Code  Gb  mdb_coin.o [1]
+MDBCOIN_reset_device    0x0000647b    0x36  Code  Gb  mdb_coin.o [1]
+MDBILL_funcs            0x0000e348    0x1c  Data  Gb  Supervisao_mdb_bill.o [1]
 MDBILL_get_poll_from_device
-                        0x00009585    0x90  Code  Gb  mdb_bill.o [1]
+                        0x0000976f    0x90  Code  Gb  mdb_bill.o [1]
 MDBILL_get_setup_from_device
-                        0x000094b9    0xcc  Code  Gb  mdb_bill.o [1]
-MDBILL_reset_device     0x00009483    0x36  Code  Gb  mdb_bill.o [1]
+                        0x000096a3    0xcc  Code  Gb  mdb_bill.o [1]
+MDBILL_reset_device     0x0000966d    0x36  Code  Gb  mdb_bill.o [1]
 MDBILL_send_escrow_command
-                        0x0000966d    0x40  Code  Gb  mdb_bill.o [1]
+                        0x00009857    0x40  Code  Gb  mdb_bill.o [1]
 MDBILL_set_bill_type_on_device
-                        0x00009615    0x58  Code  Gb  mdb_bill.o [1]
+                        0x000097ff    0x58  Code  Gb  mdb_bill.o [1]
 MDBILL_verifica_dispositivo
-                        0x0000944d    0x36  Code  Gb  mdb_bill.o [1]
+                        0x00009637    0x36  Code  Gb  mdb_bill.o [1]
 MDBUART_buffer_in       0x10007534    0x34  Data  Gb  mdb_uart.o [1]
 MDBUART_bytes_recebidos
                         0x100077b2     0x1  Data  Gb  mdb_uart.o [1]
 MDBUART_bytes_to_send   0x100077b1     0x1  Data  Gb  mdb_uart.o [1]
-MDBUART_envia_pacote    0x00008959    0x54  Code  Gb  mdb_uart.o [1]
+MDBUART_envia_pacote    0x00008c5d    0x54  Code  Gb  mdb_uart.o [1]
 MDBUART_get_bytes_recebidos
-                        0x000089c7     0x6  Code  Gb  mdb_uart.o [1]
+                        0x00008ccb     0x6  Code  Gb  mdb_uart.o [1]
 MDBUART_has_new_package
-                        0x000089cd     0x6  Code  Gb  mdb_uart.o [1]
-MDBUART_ini             0x0000887d    0x16  Code  Gb  mdb_uart.o [1]
-MDBUART_irq             0x00008893    0xc6  Code  Gb  mdb_uart.o [1]
-MDBUART_le_pacote       0x000089ad    0x1a  Code  Gb  mdb_uart.o [1]
+                        0x00008cd1     0x6  Code  Gb  mdb_uart.o [1]
+MDBUART_ini             0x00008b81    0x16  Code  Gb  mdb_uart.o [1]
+MDBUART_irq             0x00008b97    0xc6  Code  Gb  mdb_uart.o [1]
+MDBUART_le_pacote       0x00008cb1    0x1a  Code  Gb  mdb_uart.o [1]
 MDBUART_novo_pacote     0x100077b3     0x1  Data  Gb  mdb_uart.o [1]
 MDBUART_pOut            0x10007728     0x4  Data  Gb  mdb_uart.o [1]
 MDBUART_silent_time     0x100077b4     0x1  Data  Gb  mdb_uart.o [1]
 MDB_buffer_stream       0x10007568    0x24  Data  Gb  mdb.o [1]
-MDB_checa_dispositivos  0x00005c67    0x50  Code  Gb  mdb.o [1]
-MDB_checa_troco         0x00005cf9    0x84  Code  Gb  mdb.o [1]
-MDB_checa_valor_moedas  0x00005cb7    0x42  Code  Gb  mdb.o [1]
-MDB_chk_generate        0x000059ad    0x20  Code  Gb  mdb.o [1]
-MDB_coin_check_tubes    0x00005c17    0x50  Code  Gb  mdb.o [1]
-MDB_coin_dispenser      0x00005be5    0x32  Code  Gb  mdb.o [1]
-MDB_ini                 0x000059a5     0x8  Code  Gb  mdb.o [1]
-MDB_send_ack            0x00005bcd    0x14  Code  Gb  mdb.o [1]
-MDB_send_package        0x000059cd   0x100  Code  Gb  mdb.o [1]
-MDB_send_package_long   0x00005acd   0x100  Code  Gb  mdb.o [1]
-MEF_entry               0x0000b77d    0xdc  Code  Gb  menu_edita_flag.o [1]
-MEI_entry               0x0000b619    0xae  Code  Gb  menu_edita_inteiro.o [1]
-MEI_entry_inc           0x0000b6c7    0xb4  Code  Gb  menu_edita_inteiro.o [1]
-MEL_entry               0x000096ad    0xe6  Code  Gb  menu_edita_listagem.o [1]
-MEL_escreve_flag        0x00009793    0x3e  Code  Gb  menu_edita_listagem.o [1]
+MDB_checa_dispositivos  0x0000629b    0x50  Code  Gb  mdb.o [1]
+MDB_checa_troco         0x0000632d    0x84  Code  Gb  mdb.o [1]
+MDB_checa_valor_moedas  0x000062eb    0x42  Code  Gb  mdb.o [1]
+MDB_chk_generate        0x00005fe1    0x20  Code  Gb  mdb.o [1]
+MDB_coin_check_tubes    0x0000624b    0x50  Code  Gb  mdb.o [1]
+MDB_coin_dispenser      0x00006219    0x32  Code  Gb  mdb.o [1]
+MDB_ini                 0x00005fd9     0x8  Code  Gb  mdb.o [1]
+MDB_send_ack            0x00006201    0x14  Code  Gb  mdb.o [1]
+MDB_send_package        0x00006001   0x100  Code  Gb  mdb.o [1]
+MDB_send_package_long   0x00006101   0x100  Code  Gb  mdb.o [1]
+MEF_entry               0x0000b905    0xdc  Code  Gb  menu_edita_flag.o [1]
+MEI_entry               0x0000b7a1    0xae  Code  Gb  menu_edita_inteiro.o [1]
+MEI_entry_inc           0x0000b84f    0xb4  Code  Gb  menu_edita_inteiro.o [1]
+MEL_entry               0x00009899    0xe6  Code  Gb  menu_edita_listagem.o [1]
+MEL_escreve_flag        0x0000997f    0x3e  Code  Gb  menu_edita_listagem.o [1]
 MEMORYWRAPPER_blockReadAuxSST
-                        0x00006d13    0x16  Code  Gb  memoryWrapper.o [1]
+                        0x00006e93    0x16  Code  Gb  memoryWrapper.o [1]
 MEMORYWRAPPER_blockWriteAuxSST
-                        0x00006c81    0x92  Code  Gb  memoryWrapper.o [1]
-MEMORYWRAPPER_init      0x00006c11    0x32  Code  Gb  memoryWrapper.o [1]
+                        0x00006e01    0x92  Code  Gb  memoryWrapper.o [1]
+MEMORYWRAPPER_init      0x00006d91    0x32  Code  Gb  memoryWrapper.o [1]
 MEMORYWRAPPER_localBuffer
                         0x100060d0  0x1000  Data  Gb  memoryWrapper.o [1]
 MEMORYWRAPPER_readBytes
-                        0x00006d61    0x38  Code  Gb  memoryWrapper.o [1]
+                        0x00006ee1    0x38  Code  Gb  memoryWrapper.o [1]
 MEMORYWRAPPER_readSingle
-                        0x00006d99    0x16  Code  Gb  memoryWrapper.o [1]
-MEMORYWRAPPER_release   0x00006dc5    0x12  Code  Gb  memoryWrapper.o [1]
-MEMORYWRAPPER_wait      0x00006daf    0x16  Code  Gb  memoryWrapper.o [1]
+                        0x00006f19    0x16  Code  Gb  memoryWrapper.o [1]
+MEMORYWRAPPER_release   0x00006f45    0x12  Code  Gb  memoryWrapper.o [1]
+MEMORYWRAPPER_wait      0x00006f2f    0x16  Code  Gb  memoryWrapper.o [1]
 MEMORYWRAPPER_writeBufferInSector
-                        0x00006c43    0x3e  Code  Gb  memoryWrapper.o [1]
+                        0x00006dc3    0x3e  Code  Gb  memoryWrapper.o [1]
 MEMORYWRAPPER_writeBytes
-                        0x00006d29    0x38  Code  Gb  memoryWrapper.o [1]
+                        0x00006ea9    0x38  Code  Gb  memoryWrapper.o [1]
 MENUAVANCADO_cadastra_senha_admin
-                        0x0000c687    0x92  Code  Gb  menu_avancado.o [1]
+                        0x0000c80f    0x92  Code  Gb  menu_avancado.o [1]
 MENUAVANCADO_configura_fator_compensavao
-                        0x0000c87d    0x28  Code  Gb  menu_avancado.o [1]
+                        0x0000ca05    0x28  Code  Gb  menu_avancado.o [1]
 MENUAVANCADO_configura_flag_correcao_erro
-                        0x0000c84f    0x2e  Code  Gb  menu_avancado.o [1]
+                        0x0000c9d7    0x2e  Code  Gb  menu_avancado.o [1]
 MENUAVANCADO_configura_hora_data
-                        0x0000c847     0x8  Code  Gb  menu_avancado.o [1]
+                        0x0000c9cf     0x8  Code  Gb  menu_avancado.o [1]
 MENUAVANCADO_configura_numero_serie
-                        0x0000c7d3    0x74  Code  Gb  menu_avancado.o [1]
-MENUAVANCADO_entry      0x0000c54d    0x30  Code  Gb  menu_avancado.o [1]
-MENUAVANCADO_func       0x0000e0d0    0x24  Data  Gb  menu_avancado.o [1]
+                        0x0000c95b    0x74  Code  Gb  menu_avancado.o [1]
+MENUAVANCADO_entry      0x0000c6d5    0x30  Code  Gb  menu_avancado.o [1]
+MENUAVANCADO_func       0x0000e258    0x24  Data  Gb  menu_avancado.o [1]
 MENUAVANCADO_menu_ganhos_PID
-                        0x0000c79f    0x34  Code  Gb  menu_avancado.o [1]
+                        0x0000c927    0x34  Code  Gb  menu_avancado.o [1]
 MENUAVANCADO_padrao_fabrica
-                        0x0000c57d   0x10a  Code  Gb  menu_avancado.o [1]
+                        0x0000c705   0x10a  Code  Gb  menu_avancado.o [1]
 MENUAVANCADO_reset_totalizadores_permanentes
-                        0x0000c719    0x86  Code  Gb  menu_avancado.o [1]
-MENUFAT_entry           0x0000d2c9    0x24  Code  Gb  menu_faturamento.o [1]
+                        0x0000c8a1    0x86  Code  Gb  menu_avancado.o [1]
+MENUFAT_entry           0x0000d451    0x24  Code  Gb  menu_faturamento.o [1]
 MENUFAT_exibe_arrecadacao_cartao
-                        0x0000d3a7    0x1e  Code  Gb  menu_faturamento.o [1]
+                        0x0000d52f    0x1e  Code  Gb  menu_faturamento.o [1]
 MENUFAT_exibe_arrecadacao_moeda
-                        0x0000d389    0x1e  Code  Gb  menu_faturamento.o [1]
-MENUFAT_exibe_contagem  0x0000d361    0x28  Code  Gb  menu_faturamento.o [1]
-MENUFAT_exibe_info_int  0x0000d2ed    0x74  Code  Gb  menu_faturamento.o [1]
+                        0x0000d511    0x1e  Code  Gb  menu_faturamento.o [1]
+MENUFAT_exibe_contagem  0x0000d4e9    0x28  Code  Gb  menu_faturamento.o [1]
+MENUFAT_exibe_info_int  0x0000d475    0x74  Code  Gb  menu_faturamento.o [1]
 MENUFAT_reinicia_parcial
-                        0x0000d413    0x34  Code  Gb  menu_faturamento.o [1]
+                        0x0000d59b    0x34  Code  Gb  menu_faturamento.o [1]
 MENUFAT_reinicia_totalizadores
-                        0x0000d3c5    0x4e  Code  Gb  menu_faturamento.o [1]
+                        0x0000d54d    0x4e  Code  Gb  menu_faturamento.o [1]
 MENUOP_configura_canais_moeda
-                        0x0000b3e3    0xf2  Code  Gb  menu_operacao.o [1]
+                        0x0000b56b    0xf2  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_comissao
-                        0x0000b19d    0x44  Code  Gb  menu_operacao.o [1]
+                        0x0000b325    0x44  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_fita_led
-                        0x0000b131    0x36  Code  Gb  menu_operacao.o [1]
+                        0x0000b2b9    0x36  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_flag_desumidificador
-                        0x0000b271    0x34  Code  Gb  menu_operacao.o [1]
+                        0x0000b3f9    0x34  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_intervalo_propaganda
-                        0x0000b0b3    0x48  Code  Gb  menu_operacao.o [1]
+                        0x0000b23b    0x48  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_mensagem_cliente
-                        0x0000b1e1    0x24  Code  Gb  menu_operacao.o [1]
+                        0x0000b369    0x24  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_mensagem_cliente_02
-                        0x0000b205    0x24  Code  Gb  menu_operacao.o [1]
+                        0x0000b38d    0x24  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_mensagem_cliente_03
-                        0x0000b229    0x24  Code  Gb  menu_operacao.o [1]
+                        0x0000b3b1    0x24  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_mensagem_cliente_04
-                        0x0000b24d    0x24  Code  Gb  menu_operacao.o [1]
+                        0x0000b3d5    0x24  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_modo_free
-                        0x0000b0fb    0x36  Code  Gb  menu_operacao.o [1]
-MENUOP_configura_notas  0x0000aecb    0x8e  Code  Gb  menu_operacao.o [1]
+                        0x0000b283    0x36  Code  Gb  menu_operacao.o [1]
+MENUOP_configura_notas  0x0000b053    0x8e  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_tempo_embalagem
-                        0x0000af73    0xb0  Code  Gb  menu_operacao.o [1]
-MENUOP_configura_troco  0x0000b167    0x36  Code  Gb  menu_operacao.o [1]
-MENUOP_configura_valor  0x0000add3    0xf8  Code  Gb  menu_operacao.o [1]
+                        0x0000b0fb    0xb0  Code  Gb  menu_operacao.o [1]
+MENUOP_configura_troco  0x0000b2ef    0x36  Code  Gb  menu_operacao.o [1]
+MENUOP_configura_valor  0x0000af5b    0xf8  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_volume_locucoes
-                        0x0000b06b    0x48  Code  Gb  menu_operacao.o [1]
+                        0x0000b1f3    0x48  Code  Gb  menu_operacao.o [1]
 MENUOP_configura_volume_musica
-                        0x0000b023    0x48  Code  Gb  menu_operacao.o [1]
-MENUOP_edita_mensagem   0x0000b2ad   0x136  Code  Gb  menu_operacao.o [1]
-MENUOP_entry            0x0000ada9    0x2a  Code  Gb  menu_operacao.o [1]
+                        0x0000b1ab    0x48  Code  Gb  menu_operacao.o [1]
+MENUOP_edita_mensagem   0x0000b435   0x136  Code  Gb  menu_operacao.o [1]
+MENUOP_entry            0x0000af31    0x2a  Code  Gb  menu_operacao.o [1]
 MENUOP_funcs            0x1000028c    0x44  Data  Gb  menu_operacao.o [1]
 MENUOP_testa_liberacao_embalagem
-                        0x0000af59    0x1a  Code  Gb  menu_operacao.o [1]
-MENUROLAGEM_show        0x00007edd    0xec  Code  Gb  menu_rolagem.o [1]
-MFAT_entry              0x0000e1f4    0x18  Data  Gb  menu_faturamento.o [1]
+                        0x0000b0e1    0x1a  Code  Gb  menu_operacao.o [1]
+MENUROLAGEM_show        0x0000878d    0xec  Code  Gb  menu_rolagem.o [1]
+MFAT_entry              0x0000e37c    0x18  Data  Gb  menu_faturamento.o [1]
 MPREP_edita_temperatura
-                        0x0000d929    0x3c  Code  Gb  menu_preparacao.o [1]
-MPREP_edita_velocidade  0x0000d965    0x4c  Code  Gb  menu_preparacao.o [1]
-MPREP_entry             0x0000d905    0x24  Code  Gb  menu_preparacao.o [1]
-MPREP_funcs             0x0000e628     0xc  Data  Gb  menu_preparacao.o [1]
-MSERVICO_dosa_porcao    0x0000d1ab    0x3a  Code  Gb  menu_servico.o [1]
-MSERVICO_entry          0x0000d10d    0x24  Code  Gb  menu_servico.o [1]
-MSERVICO_funcs          0x0000e224    0x18  Data  Gb  menu_servico.o [1]
+                        0x0000dab1    0x3c  Code  Gb  menu_preparacao.o [1]
+MPREP_edita_velocidade  0x0000daed    0x4c  Code  Gb  menu_preparacao.o [1]
+MPREP_entry             0x0000da8d    0x24  Code  Gb  menu_preparacao.o [1]
+MPREP_funcs             0x0000e7f8     0xc  Data  Gb  menu_preparacao.o [1]
+MSERVICO_dosa_porcao    0x0000d333    0x3a  Code  Gb  menu_servico.o [1]
+MSERVICO_entry          0x0000d295    0x24  Code  Gb  menu_servico.o [1]
+MSERVICO_funcs          0x0000e3ac    0x18  Data  Gb  menu_servico.o [1]
 MSERVICO_libera_embalagem
-                        0x0000d165    0x46  Code  Gb  menu_servico.o [1]
-MSERVICO_limpeza        0x0000d131    0x34  Code  Gb  menu_servico.o [1]
-MSERVICO_preparacao     0x0000d1f7    0x9e  Code  Gb  menu_servico.o [1]
-MSERVICO_resfriamento   0x0000d1e5    0x12  Code  Gb  menu_servico.o [1]
-MSL_entry               0x00007fc9   0x104  Code  Gb  menu_seleciona_lista.o [1]
-MTH_entry               0x00009be1    0x2a  Code  Gb  menu_teste_hardware.o [1]
-MTH_funcs               0x0000da30    0x40  Data  Gb  menu_teste_hardware.o [1]
+                        0x0000d2ed    0x46  Code  Gb  menu_servico.o [1]
+MSERVICO_limpeza        0x0000d2b9    0x34  Code  Gb  menu_servico.o [1]
+MSERVICO_preparacao     0x0000d37f    0x9e  Code  Gb  menu_servico.o [1]
+MSERVICO_resfriamento   0x0000d36d    0x12  Code  Gb  menu_servico.o [1]
+MSL_entry               0x00008879   0x104  Code  Gb  menu_seleciona_lista.o [1]
+MTH_entry               0x00009d69    0x2a  Code  Gb  menu_teste_hardware.o [1]
+MTH_funcs               0x0000dbb8    0x40  Data  Gb  menu_teste_hardware.o [1]
 MTH_passo_teste_data_flash
-                        0x00009cb5     0x6  Code  Gb  menu_teste_hardware.o [1]
+                        0x00009e3d     0x6  Code  Gb  menu_teste_hardware.o [1]
 MTH_tela_placa_instrucao
-                        0x0000a1a9    0xb8  Code  Gb  menu_teste_hardware.o [1]
-MTH_tela_teste_cctalk   0x0000a021    0x6e  Code  Gb  menu_teste_hardware.o [1]
+                        0x0000a331    0xb8  Code  Gb  menu_teste_hardware.o [1]
+MTH_tela_teste_cctalk   0x0000a1a9    0x6e  Code  Gb  menu_teste_hardware.o [1]
 MTH_tela_teste_impressora
-                        0x0000a2dd    0x68  Code  Gb  menu_teste_hardware.o [1]
+                        0x0000a465    0x68  Code  Gb  menu_teste_hardware.o [1]
 MTH_tela_teste_lcd_externo
-                        0x0000a261    0x7c  Code  Gb  menu_teste_hardware.o [1]
-MTH_tela_teste_p70      0x0000a11f    0x8a  Code  Gb  menu_teste_hardware.o [1]
-MTH_tela_teste_uca1     0x0000a08f    0x90  Code  Gb  menu_teste_hardware.o [1]
-MTH_teste_data_flash    0x00009cbb    0x68  Code  Gb  menu_teste_hardware.o [1]
+                        0x0000a3e9    0x7c  Code  Gb  menu_teste_hardware.o [1]
+MTH_tela_teste_p70      0x0000a2a7    0x8a  Code  Gb  menu_teste_hardware.o [1]
+MTH_tela_teste_uca1     0x0000a217    0x90  Code  Gb  menu_teste_hardware.o [1]
+MTH_teste_data_flash    0x00009e43    0x68  Code  Gb  menu_teste_hardware.o [1]
 MTH_teste_dispensador_papel
-                        0x00009d23    0xa6  Code  Gb  menu_teste_hardware.o [1]
+                        0x00009eab    0xa6  Code  Gb  menu_teste_hardware.o [1]
 MTH_teste_dosador_milho
-                        0x00009dc9    0x98  Code  Gb  menu_teste_hardware.o [1]
-MTH_teste_locucoes      0x0000a3b1    0xa2  Code  Gb  menu_teste_hardware.o [1]
-MTH_teste_musica        0x0000a345    0x6c  Code  Gb  menu_teste_hardware.o [1]
-MTH_teste_panela        0x00009f73    0xae  Code  Gb  menu_teste_hardware.o [1]
-MTH_teste_rtc           0x00009c0b    0xaa  Code  Gb  menu_teste_hardware.o [1]
-MTH_teste_ventilador    0x00009e61   0x112  Code  Gb  menu_teste_hardware.o [1]
-MTMDB_entry             0x0000ce75    0x24  Code  Gb  menu_teste_mdb.o [1]
-MTMDB_func              0x0000e374    0x14  Data  Gb  menu_teste_mdb.o [1]
-MTMDB_libera_troco      0x0000d055    0x80  Code  Gb  menu_teste_mdb.o [1]
+                        0x00009f51    0x98  Code  Gb  menu_teste_hardware.o [1]
+MTH_teste_locucoes      0x0000a539    0xa2  Code  Gb  menu_teste_hardware.o [1]
+MTH_teste_musica        0x0000a4cd    0x6c  Code  Gb  menu_teste_hardware.o [1]
+MTH_teste_panela        0x0000a0fb    0xae  Code  Gb  menu_teste_hardware.o [1]
+MTH_teste_rtc           0x00009d93    0xaa  Code  Gb  menu_teste_hardware.o [1]
+MTH_teste_ventilador    0x00009fe9   0x112  Code  Gb  menu_teste_hardware.o [1]
+MTMDB_entry             0x0000cffd    0x24  Code  Gb  menu_teste_mdb.o [1]
+MTMDB_func              0x0000e4fc    0x14  Data  Gb  menu_teste_mdb.o [1]
+MTMDB_libera_troco      0x0000d1dd    0x80  Code  Gb  menu_teste_mdb.o [1]
 MTMDB_test_contagem_cartao
-                        0x0000d109     0x2  Code  Gb  menu_teste_mdb.o [1]
+                        0x0000d291     0x2  Code  Gb  menu_teste_mdb.o [1]
 MTMDB_teste_contagem_moedeiro
-                        0x0000cfb1    0xa4  Code  Gb  menu_teste_mdb.o [1]
+                        0x0000d139    0xa4  Code  Gb  menu_teste_mdb.o [1]
 MTMDB_teste_contagem_noteiro
-                        0x0000cf31    0x80  Code  Gb  menu_teste_mdb.o [1]
+                        0x0000d0b9    0x80  Code  Gb  menu_teste_mdb.o [1]
 MTMDB_verifica_dispositivos
-                        0x0000ce99    0x98  Code  Gb  menu_teste_mdb.o [1]
-MemManage_Handler       0x0000e81d          Code  Wk  cstartup_M.o [1]
+                        0x0000d021    0x98  Code  Gb  menu_teste_mdb.o [1]
+MemManage_Handler       0x0000e9ed          Code  Wk  cstartup_M.o [1]
 MotorControlPWM_IRQHandler
-                        0x0000e8b1          Code  Wk  cstartup_M.o [1]
-NMI_Handler             0x0000e815          Code  Wk  cstartup_M.o [1]
-OutStream_Write         0x0000d497    0x40  Code  Lc  lz77_init.o [5]
+                        0x0000ea81          Code  Wk  cstartup_M.o [1]
+NMI_Handler             0x0000e9e5          Code  Wk  cstartup_M.o [1]
+OutStream_Write         0x0000d61f    0x40  Code  Lc  lz77_init.o [5]
 PAGAMENTOS_adiciona_valores
-                        0x00003b27    0x3a  Code  Gb  Pagamentos.o [1]
+                        0x00004927    0x3a  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_bloqueia_uca1
-                        0x00003a81    0x22  Code  Gb  Pagamentos.o [1]
+                        0x00004881    0x22  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_bloqueio_p70
                         0x10000330     0x4  Data  Gb  Pagamentos.o [1]
 PAGAMENTOS_filtro_p70   0x10007778     0x2  Data  Gb  Pagamentos.o [1]
 PAGAMENTOS_filtro_uca   0x10007774     0x2  Data  Gb  Pagamentos.o [1]
 PAGAMENTOS_get_contagem_p70
-                        0x00003b03     0x6  Code  Gb  Pagamentos.o [1]
+                        0x00004903     0x6  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_get_contagem_uca1
-                        0x00003a5d     0x6  Code  Gb  Pagamentos.o [1]
+                        0x0000485d     0x6  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_get_timeout_pagamento
-                        0x00003c99     0x6  Code  Gb  Pagamentos.o [1]
+                        0x00004a99     0x6  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_get_valor_acumulado
-                        0x00003b61    0x8c  Code  Gb  Pagamentos.o [1]
+                        0x00004961    0x8c  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_incremento_p70
                         0x100076d0     0x4  Data  Gb  Pagamentos.o [1]
 PAGAMENTOS_incremento_uca
                         0x100076cc     0x4  Data  Gb  Pagamentos.o [1]
-PAGAMENTOS_ini          0x0000389d   0x12a  Code  Gb  Pagamentos.o [1]
-PAGAMENTOS_irq_p70      0x00003aa3    0x3e  Code  Gb  Pagamentos.o [1]
-PAGAMENTOS_irq_uca_1    0x00003a27    0x36  Code  Gb  Pagamentos.o [1]
-PAGAMENTOS_main         0x000039ed    0x3a  Code  Gb  Pagamentos.o [1]
+PAGAMENTOS_ini          0x0000469d   0x12a  Code  Gb  Pagamentos.o [1]
+PAGAMENTOS_irq_p70      0x000048a3    0x3e  Code  Gb  Pagamentos.o [1]
+PAGAMENTOS_irq_uca_1    0x00004827    0x36  Code  Gb  Pagamentos.o [1]
+PAGAMENTOS_main         0x000047ed    0x3a  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_semaforo_pagamentos
                         0x100076d8     0x4  Data  Gb  Pagamentos.o [1]
 PAGAMENTOS_set_bloqueio
-                        0x00003c65    0x34  Code  Gb  Pagamentos.o [1]
+                        0x00004a65    0x34  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_set_inhibit_p70
-                        0x00003ae1    0x22  Code  Gb  Pagamentos.o [1]
-PAGAMENTOS_set_valores  0x00003c3b    0x2a  Code  Gb  Pagamentos.o [1]
+                        0x000048e1    0x22  Code  Gb  Pagamentos.o [1]
+PAGAMENTOS_set_valores  0x00004a3b    0x2a  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_subtrai_contagem_p70
-                        0x00003b09    0x1e  Code  Gb  Pagamentos.o [1]
+                        0x00004909    0x1e  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_subtrai_contagem_uca1
-                        0x00003a63    0x1e  Code  Gb  Pagamentos.o [1]
+                        0x00004863    0x1e  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_subtrai_valores
-                        0x00003bed    0x4e  Code  Gb  Pagamentos.o [1]
+                        0x000049ed    0x4e  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_timeout_pagamento
                         0x100076c8     0x4  Data  Gb  Pagamentos.o [1]
-PAGAMENTOS_timer_tick   0x000039c7    0x26  Code  Gb  Pagamentos.o [1]
+PAGAMENTOS_timer_tick   0x000047c7    0x26  Code  Gb  Pagamentos.o [1]
 PAGAMENTOS_valor_acumulado_geral
                         0x100076d4     0x4  Data  Gb  Pagamentos.o [1]
 PAGAMENTOS_valor_acumulado_p70
@@ -1925,140 +1947,144 @@ PAGAMENTOS_valor_acumulado_p70
 PAGAMENTOS_valor_acumulado_uca
                         0x10007772     0x2  Data  Gb  Pagamentos.o [1]
 PARAMETROS_buffer       0x100073d0    0x80  Data  Gb  parametros.o [1]
-PARAMETROS_grava        0x00003047    0x68  Code  Gb  parametros.o [1]
-PARAMETROS_ini          0x0000301d     0x8  Code  Gb  parametros.o [1]
-PARAMETROS_le           0x000030af    0xa4  Code  Gb  parametros.o [1]
+PARAMETROS_grava        0x000030f3    0x68  Code  Gb  parametros.o [1]
+PARAMETROS_ini          0x000030c9     0x8  Code  Gb  parametros.o [1]
+PARAMETROS_le           0x0000315b    0xa4  Code  Gb  parametros.o [1]
 PARAMETROS_resolve_endereco
-                        0x00003025    0x22  Code  Gb  parametros.o [1]
-PLAYERWAVE_ini          0x00007251    0xd0  Code  Gb  PlayerWave.o [1]
+                        0x000030d1    0x22  Code  Gb  parametros.o [1]
+PLAYERWAVE_ini          0x00007939    0xd0  Code  Gb  PlayerWave.o [1]
 PLAYERWAVE_iniciaMusica
-                        0x00007321    0x78  Code  Gb  PlayerWave.o [1]
+                        0x00007a09    0x78  Code  Gb  PlayerWave.o [1]
 PLAYERWAVE_verificaToque
-                        0x00007457    0x20  Code  Gb  PlayerWave.o [1]
+                        0x00007b3f    0x20  Code  Gb  PlayerWave.o [1]
 PLAYER_interrompeMusica
-                        0x00007399    0x1a  Code  Gb  PlayerWave.o [1]
-PLAYRWAVE_rti           0x000073b3    0xa4  Code  Gb  PlayerWave.o [1]
-PLL0_IRQHandler         0x0000e879          Code  Wk  cstartup_M.o [1]
-PLL1_IRQHandler         0x0000e8b9          Code  Wk  cstartup_M.o [1]
+                        0x00007a81    0x1a  Code  Gb  PlayerWave.o [1]
+PLAYRWAVE_rti           0x00007a9b    0xa4  Code  Gb  PlayerWave.o [1]
+PLL0_IRQHandler         0x0000ea49          Code  Wk  cstartup_M.o [1]
+PLL1_IRQHandler         0x0000ea89          Code  Wk  cstartup_M.o [1]
 PORTENCIA_correcao_erro
                         0x10007799     0x1  Data  Gb  Potencia.o [1]
-POST_entry              0x0000660d    0xd6  Code  Gb  POST.o [1]
+POST_entry              0x00006765    0xd6  Code  Gb  POST.o [1]
+POST_verificacao_ciclica
+                        0x00006841    0x26  Code  Gb  POST.o [1]
 POTENCIA_bufferRotacao  0x10007698     0x8  Data  Gb  Potencia.o [1]
 POTENCIA_calculaAtrasoGate
-                        0x0000582d    0x56  Code  Gb  Potencia.o [1]
+                        0x00005e61    0x56  Code  Gb  Potencia.o [1]
 POTENCIA_calcula_derivada_erro
-                        0x00005767    0x9e  Code  Gb  Potencia.o [1]
+                        0x00005d9b    0x9e  Code  Gb  Potencia.o [1]
 POTENCIA_calcula_integral_erro
-                        0x0000572d    0x3a  Code  Gb  Potencia.o [1]
+                        0x00005d61    0x3a  Code  Gb  Potencia.o [1]
 POTENCIA_captureInterrupt
-                        0x00005691    0x6e  Code  Gb  Potencia.o [1]
+                        0x00005cc5    0x6e  Code  Gb  Potencia.o [1]
 POTENCIA_ciclos         0x100076e0     0x4  Data  Gb  Potencia.o [1]
 POTENCIA_controleVelocidade
-                        0x00008679   0x204  Code  Gb  Potencia.o [1]
+                        0x0000897d   0x204  Code  Gb  Potencia.o [1]
 POTENCIA_controleVelocidade::ciclos
                         0x1000034a     0x2  Data  Gb  Potencia.o [1]
 POTENCIA_controleVelocidade::referencia_rampa
                         0x1000777e     0x2  Data  Gb  Potencia.o [1]
-POTENCIA_eintInterrupt  0x000055dd    0x54  Code  Gb  Potencia.o [1]
+POTENCIA_eintInterrupt  0x00005c11    0x54  Code  Gb  Potencia.o [1]
 POTENCIA_frequencia     0x100076e4     0x4  Data  Gb  Potencia.o [1]
 POTENCIA_getFrequenciaRede
-                        0x00005689     0x8  Code  Gb  Potencia.o [1]
-POTENCIA_getRPMmedido   0x00005883    0x30  Code  Gb  Potencia.o [1]
-POTENCIA_ini            0x000053a1   0x216  Code  Gb  Potencia.o [1]
+                        0x00005cbd     0x8  Code  Gb  Potencia.o [1]
+POTENCIA_getRPMmedido   0x00005eb7    0x30  Code  Gb  Potencia.o [1]
+POTENCIA_ini            0x000059d5   0x216  Code  Gb  Potencia.o [1]
 POTENCIA_ligaMotor      0x10007798     0x1  Data  Gb  Potencia.o [1]
-POTENCIA_mathTimer2     0x000056ff    0x2e  Code  Gb  Potencia.o [1]
+POTENCIA_mathTimer2     0x00005d33    0x2e  Code  Gb  Potencia.o [1]
 POTENCIA_periodoCapturadoMotor
                         0x100076e8     0x4  Data  Gb  Potencia.o [1]
-POTENCIA_setRPM         0x00005805    0x28  Code  Gb  Potencia.o [1]
-POTENCIA_set_neutro     0x000055b7    0x26  Code  Gb  Potencia.o [1]
+POTENCIA_setRPM         0x00005e39    0x28  Code  Gb  Potencia.o [1]
+POTENCIA_set_neutro     0x00005beb    0x26  Code  Gb  Potencia.o [1]
 POTENCIA_set_point      0x100076f0     0x4  Data  Gb  Potencia.o [1]
 POTENCIA_timeOutCounter
                         0x100076ec     0x4  Data  Gb  Potencia.o [1]
-POTENCIA_timerTick      0x00005631    0x58  Code  Gb  Potencia.o [1]
+POTENCIA_timerTick      0x00005c65    0x58  Code  Gb  Potencia.o [1]
 PREPARACAO_atualiza_info_tempo
-                        0x000060ab    0x48  Code  Gb  Preparacao.o [1]
+                        0x00003d63    0x48  Code  Gb  Preparacao.o [1]
 PREPARACAO_cnt_preparo  0x10007700     0x4  Data  Gb  Preparacao.o [1]
 PREPARACAO_cnt_rampa    0x10007704     0x4  Data  Gb  Preparacao.o [1]
 PREPARACAO_compensador  0x1000770c     0x4  Data  Gb  Preparacao.o [1]
 PREPARACAO_contador_compensacao
                         0x10007708     0x4  Data  Gb  Preparacao.o [1]
 PREPARACAO_dosagem_milho
-                        0x00006145    0x5c  Code  Gb  Preparacao.o [1]
-PREPARACAO_entry        0x00005d7d   0x32e  Code  Gb  Preparacao.o [1]
-PREPARACAO_limpeza      0x000061a1    0x40  Code  Gb  Preparacao.o [1]
+                        0x00003dfd    0x5c  Code  Gb  Preparacao.o [1]
+PREPARACAO_entry        0x00003a35   0x32e  Code  Gb  Preparacao.o [1]
+PREPARACAO_limpeza      0x00003e59    0x40  Code  Gb  Preparacao.o [1]
+PREPARACAO_limpeza_inicial
+                        0x00003ee1    0x48  Code  Gb  Preparacao.o [1]
 PREPARACAO_resfriamento
-                        0x000061e1    0x48  Code  Gb  Preparacao.o [1]
+                        0x00003e99    0x48  Code  Gb  Preparacao.o [1]
 PREPARACAO_tela_interna
-                        0x0000611b    0x2a  Code  Gb  Preparacao.o [1]
+                        0x00003dd3    0x2a  Code  Gb  Preparacao.o [1]
 PREPARACAO_verificaVentilador
-                        0x000060f3    0x28  Code  Gb  Preparacao.o [1]
+                        0x00003dab    0x28  Code  Gb  Preparacao.o [1]
 PROTOCOLO_bufferRx      0x100071d0   0x100  Data  Gb  Protocolo.o [1]
 PROTOCOLO_bufferTmp     0x100072d0   0x100  Data  Gb  Protocolo.o [1]
 PROTOCOLO_bufferTx      0x100070d0   0x100  Data  Gb  Protocolo.o [1]
 PROTOCOLO_bytesEnviados
                         0x1000779c     0x1  Data  Gb  Protocolo.o [1]
 PROTOCOLO_bytesNoBufferTx
-                        0x0000ac93     0x8  Code  Gb  Protocolo.o [1]
+                        0x0000ae1b     0x8  Code  Gb  Protocolo.o [1]
 PROTOCOLO_bytesParaEnviar
                         0x1000779b     0x1  Data  Gb  Protocolo.o [1]
 PROTOCOLO_bytesRecebidos
                         0x1000779a     0x1  Data  Gb  Protocolo.o [1]
-PROTOCOLO_checksum      0x0000a76d    0x22  Code  Gb  Protocolo.o [1]
+PROTOCOLO_checksum      0x0000a8f5    0x22  Code  Gb  Protocolo.o [1]
 PROTOCOLO_decodeEscreveBloco
-                        0x0000aa5b    0x84  Code  Gb  Protocolo.o [1]
+                        0x0000abe3    0x84  Code  Gb  Protocolo.o [1]
 PROTOCOLO_decodeEscreveTabelaMusicas
-                        0x0000ab21    0x9e  Code  Gb  Protocolo.o [1]
+                        0x0000aca9    0x9e  Code  Gb  Protocolo.o [1]
 PROTOCOLO_decodeFormataAudioFlash
-                        0x0000aadf    0x42  Code  Gb  Protocolo.o [1]
+                        0x0000ac67    0x42  Code  Gb  Protocolo.o [1]
 PROTOCOLO_decodeLeBloco
-                        0x0000a9a9    0xb2  Code  Gb  Protocolo.o [1]
+                        0x0000ab31    0xb2  Code  Gb  Protocolo.o [1]
 PROTOCOLO_decodeLeituraTabelaMusicas
-                        0x0000abbf    0xa4  Code  Gb  Protocolo.o [1]
+                        0x0000ad47    0xa4  Code  Gb  Protocolo.o [1]
 PROTOCOLO_decodifica_escrita_valor_parametro
-                        0x0000ada7     0x2  Code  Gb  Protocolo.o [1]
+                        0x0000af2f     0x2  Code  Gb  Protocolo.o [1]
 PROTOCOLO_decodifica_info_sobre_parametro
-                        0x0000accb    0x96  Code  Gb  Protocolo.o [1]
+                        0x0000ae53    0x96  Code  Gb  Protocolo.o [1]
 PROTOCOLO_decodifica_leitura_valor_parametro
-                        0x0000ada5     0x2  Code  Gb  Protocolo.o [1]
+                        0x0000af2d     0x2  Code  Gb  Protocolo.o [1]
 PROTOCOLO_decodifica_tamanho_parametros
-                        0x0000ac9b    0x30  Code  Gb  Protocolo.o [1]
+                        0x0000ae23    0x30  Code  Gb  Protocolo.o [1]
 PROTOCOLO_enviaDadosDireto
-                        0x0000ac63    0x30  Code  Gb  Protocolo.o [1]
-PROTOCOLO_enviaPacote   0x0000a913    0x96  Code  Gb  Protocolo.o [1]
-PROTOCOLO_ini           0x0000a5c1    0x16  Code  Gb  Protocolo.o [1]
-PROTOCOLO_intVect       0x0000a5d7   0x196  Code  Gb  Protocolo.o [1]
-PROTOCOLO_main          0x0000a78f   0x184  Code  Gb  Protocolo.o [1]
+                        0x0000adeb    0x30  Code  Gb  Protocolo.o [1]
+PROTOCOLO_enviaPacote   0x0000aa9b    0x96  Code  Gb  Protocolo.o [1]
+PROTOCOLO_ini           0x0000a749    0x16  Code  Gb  Protocolo.o [1]
+PROTOCOLO_intVect       0x0000a75f   0x196  Code  Gb  Protocolo.o [1]
+PROTOCOLO_main          0x0000a917   0x184  Code  Gb  Protocolo.o [1]
 PROTOCOLO_novoPacote    0x1000779d     0x1  Data  Gb  Protocolo.o [1]
-PWM1_IRQHandler         0x0000e85d          Code  Wk  cstartup_M.o [1]
-PendSV_Handler          0x0000e831          Code  Wk  cstartup_M.o [1]
-QE_IRQHandler           0x0000e8b5          Code  Wk  cstartup_M.o [1]
-RELATORIO_entry         0x0000ba0d   0x4a0  Code  Gb  Relatorio.o [1]
+PWM1_IRQHandler         0x0000ea2d          Code  Wk  cstartup_M.o [1]
+PendSV_Handler          0x0000ea01          Code  Wk  cstartup_M.o [1]
+QE_IRQHandler           0x0000ea85          Code  Wk  cstartup_M.o [1]
+RELATORIO_entry         0x0000bb95   0x4a0  Code  Gb  Relatorio.o [1]
 RELATORIO_eventos_troca_preco
-                        0x0000bead    0xfa  Code  Gb  Relatorio.o [1]
-RIT_IRQHandler          0x0000e8ad          Code  Wk  cstartup_M.o [1]
-RTC_IRQHandler          0x0000e87d          Code  Wk  cstartup_M.o [1]
-RTC_getValue            0x00007599    0x2e  Code  Gb  RTC.o [1]
-RTC_init                0x0000754d    0x20  Code  Gb  RTC.o [1]
-RTC_setValue            0x0000756d    0x2c  Code  Gb  RTC.o [1]
-Region$$Table$$Base     0x0000e118           --   Gb  - Linker created -
-Region$$Table$$Limit    0x0000e160           --   Gb  - Linker created -
-SERIALMUX_ini           0x000074c1    0x1a  Code  Gb  serial_mux.o [1]
-SERIALMUX_seleciona     0x000074db    0x5c  Code  Gb  serial_mux.o [1]
+                        0x0000c035    0xfa  Code  Gb  Relatorio.o [1]
+RIT_IRQHandler          0x0000ea7d          Code  Wk  cstartup_M.o [1]
+RTC_IRQHandler          0x0000ea4d          Code  Wk  cstartup_M.o [1]
+RTC_getValue            0x00007e49    0x2e  Code  Gb  RTC.o [1]
+RTC_init                0x00007dfd    0x20  Code  Gb  RTC.o [1]
+RTC_setValue            0x00007e1d    0x2c  Code  Gb  RTC.o [1]
+Region$$Table$$Base     0x0000e2a0           --   Gb  - Linker created -
+Region$$Table$$Limit    0x0000e2e8           --   Gb  - Linker created -
+SERIALMUX_ini           0x00007d71    0x1a  Code  Gb  serial_mux.o [1]
+SERIALMUX_seleciona     0x00007d8b    0x5c  Code  Gb  serial_mux.o [1]
 SMC_contador            0x10007730     0x4  Data  Gb  supervisao_mdb_cashless.o [1]
-SMC_desabilitado        0x00008ba7    0x26  Code  Gb  supervisao_mdb_cashless.o [1]
+SMC_desabilitado        0x00008d2b    0x26  Code  Gb  supervisao_mdb_cashless.o [1]
 SMC_dispositivo_bloqueado
-                        0x00008cf3    0x34  Code  Gb  supervisao_mdb_cashless.o [1]
+                        0x00008e77    0x34  Code  Gb  supervisao_mdb_cashless.o [1]
 SMC_estado_atual        0x100077b6     0x1  Data  Gb  supervisao_mdb_cashless.o [1]
 SMC_flag_bloqueio       0x1000035b     0x1  Data  Gb  supervisao_mdb_cashless.o [1]
-SMC_ini                 0x00008b91     0x2  Code  Gb  supervisao_mdb_cashless.o [1]
-SMC_inicia_transacao    0x00008d27     0x4  Code  Gb  supervisao_mdb_cashless.o [1]
-SMC_offline_state       0x00008c51    0x12  Code  Gb  supervisao_mdb_cashless.o [1]
-SMC_poll_interface      0x00008c63    0x90  Code  Gb  supervisao_mdb_cashless.o [1]
-SMC_setup               0x00008bcd    0x84  Code  Gb  supervisao_mdb_cashless.o [1]
-SMC_sucesso_transacao   0x00008d2f     0x4  Code  Gb  supervisao_mdb_cashless.o [1]
-SMC_tick                0x00008b93    0x14  Code  Gb  supervisao_mdb_cashless.o [1]
+SMC_ini                 0x00008d15     0x2  Code  Gb  supervisao_mdb_cashless.o [1]
+SMC_inicia_transacao    0x00008eab     0x4  Code  Gb  supervisao_mdb_cashless.o [1]
+SMC_offline_state       0x00008dd5    0x12  Code  Gb  supervisao_mdb_cashless.o [1]
+SMC_poll_interface      0x00008de7    0x90  Code  Gb  supervisao_mdb_cashless.o [1]
+SMC_setup               0x00008d51    0x84  Code  Gb  supervisao_mdb_cashless.o [1]
+SMC_sucesso_transacao   0x00008eb3     0x4  Code  Gb  supervisao_mdb_cashless.o [1]
+SMC_tick                0x00008d17    0x14  Code  Gb  supervisao_mdb_cashless.o [1]
 SMC_time_out            0x10000352     0x2  Data  Gb  supervisao_mdb_cashless.o [1]
-SMC_transacao_aprovada  0x00008d2b     0x4  Code  Gb  supervisao_mdb_cashless.o [1]
+SMC_transacao_aprovada  0x00008eaf     0x4  Code  Gb  supervisao_mdb_cashless.o [1]
 SMDBCOIN_coin_credit    0x10007680    0x10  Data  Gb  Supervisao_mdb_coin.o [1]
 SMDBCOIN_contador_timeout
                         0x1000778a     0x2  Data  Gb  Supervisao_mdb_coin.o [1]
@@ -2066,23 +2092,23 @@ SMDBCOIN_decimal_places
                         0x100077a7     0x1  Data  Gb  Supervisao_mdb_coin.o [1]
 SMDBCOIN_estado_atual   0x100077a5     0x1  Data  Gb  Supervisao_mdb_coin.o [1]
 SMDBCOIN_estado_bloqueado
-                        0x00007d53    0x6c  Code  Gb  Supervisao_mdb_coin.o [1]
+                        0x00008603    0x6c  Code  Gb  Supervisao_mdb_coin.o [1]
 SMDBCOIN_estado_desabilitado
-                        0x00007c93    0x20  Code  Gb  Supervisao_mdb_coin.o [1]
+                        0x00008543    0x20  Code  Gb  Supervisao_mdb_coin.o [1]
 SMDBCOIN_estado_offline
-                        0x00007e81    0x2c  Code  Gb  Supervisao_mdb_coin.o [1]
-SMDBCOIN_estado_reset   0x00007cb3    0xa0  Code  Gb  Supervisao_mdb_coin.o [1]
+                        0x00008731    0x2c  Code  Gb  Supervisao_mdb_coin.o [1]
+SMDBCOIN_estado_reset   0x00008563    0xa0  Code  Gb  Supervisao_mdb_coin.o [1]
 SMDBCOIN_estado_supervisao
-                        0x00007dbf    0xc2  Code  Gb  Supervisao_mdb_coin.o [1]
+                        0x0000866f    0xc2  Code  Gb  Supervisao_mdb_coin.o [1]
 SMDBCOIN_flag_bloqueio  0x100077a4     0x1  Data  Gb  Supervisao_mdb_coin.o [1]
-SMDBCOIN_func_table     0x0000e2ac    0x14  Data  Gb  Supervisao_mdb_coin.o [1]
+SMDBCOIN_func_table     0x0000e434    0x14  Data  Gb  Supervisao_mdb_coin.o [1]
 SMDBCOIN_lock_coin      0x1000778c     0x2  Data  Gb  Supervisao_mdb_coin.o [1]
 SMDBCOIN_scale_factor   0x100077a6     0x1  Data  Gb  Supervisao_mdb_coin.o [1]
 SMDBCOIN_set_flag_bloqueio
-                        0x00007c75     0x6  Code  Gb  Supervisao_mdb_coin.o [1]
-SMDBCOIN_tick           0x00007c7b    0x18  Code  Gb  Supervisao_mdb_coin.o [1]
+                        0x00008525     0x6  Code  Gb  Supervisao_mdb_coin.o [1]
+SMDBCOIN_tick           0x0000852b    0x18  Code  Gb  Supervisao_mdb_coin.o [1]
 SMDBCOIN_verifica_net_status
-                        0x00007ead    0x10  Code  Gb  Supervisao_mdb_coin.o [1]
+                        0x0000875d    0x10  Code  Gb  Supervisao_mdb_coin.o [1]
 SMDBILL_bloqueio        0x10000359     0x1  Data  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_capacidade_stacker
                         0x10007786     0x2  Data  Gb  Supervisao_mdb_bill.o [1]
@@ -2091,51 +2117,51 @@ SMDBILL_country         0x10007784     0x2  Data  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_escala          0x1000034c     0x2  Data  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_estado_atual    0x1000779f     0x1  Data  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_estado_bloqueado
-                        0x00007777    0xbc  Code  Gb  Supervisao_mdb_bill.o [1]
+                        0x00008027    0xbc  Code  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_estado_desabilitado
-                        0x00007759    0x1e  Code  Gb  Supervisao_mdb_bill.o [1]
+                        0x00008009    0x1e  Code  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_estado_falha_dispositivo
-                        0x00007b19     0x6  Code  Gb  Supervisao_mdb_bill.o [1]
+                        0x000083c9     0x6  Code  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_estado_inicializa
-                        0x0000791b   0x136  Code  Gb  Supervisao_mdb_bill.o [1]
-SMDBILL_estado_offline  0x00007ae3    0x36  Code  Gb  Supervisao_mdb_bill.o [1]
-SMDBILL_estado_reset    0x00007833    0xe8  Code  Gb  Supervisao_mdb_bill.o [1]
+                        0x000081cb   0x136  Code  Gb  Supervisao_mdb_bill.o [1]
+SMDBILL_estado_offline  0x00008393    0x36  Code  Gb  Supervisao_mdb_bill.o [1]
+SMDBILL_estado_reset    0x000080e3    0xe8  Code  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_estado_supervisao
-                        0x00007a51    0x92  Code  Gb  Supervisao_mdb_bill.o [1]
+                        0x00008301    0x92  Code  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_eventos         0x100075ec    0x20  Data  Gb  Supervisao_mdb_bill.o [1]
-SMDBILL_get_net_status  0x00007c27    0x10  Code  Gb  Supervisao_mdb_bill.o [1]
+SMDBILL_get_net_status  0x000084d7    0x10  Code  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_nivel_seguranca
                         0x10007788     0x2  Data  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_reset_counter   0x1000035a     0x1  Data  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_scroll_capacide
                         0x100077a1     0x1  Data  Gb  Supervisao_mdb_bill.o [1]
-SMDBILL_set_bloqueio    0x00007731     0x8  Code  Gb  Supervisao_mdb_bill.o [1]
-SMDBILL_tick            0x00007739    0x20  Code  Gb  Supervisao_mdb_bill.o [1]
+SMDBILL_set_bloqueio    0x00007fe1     0x8  Code  Gb  Supervisao_mdb_bill.o [1]
+SMDBILL_tick            0x00007fe9    0x20  Code  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_time_out        0x10007782     0x2  Data  Gb  Supervisao_mdb_bill.o [1]
-SMDBILL_trata_eventos   0x00007b1f   0x108  Code  Gb  Supervisao_mdb_bill.o [1]
+SMDBILL_trata_eventos   0x000083cf   0x108  Code  Gb  Supervisao_mdb_bill.o [1]
 SMDBILL_valor_canais    0x1000031c    0x10  Data  Gb  Supervisao_mdb_bill.o [1]
-SMDB_ini                0x00006259    0x30  Code  Gb  Supervisao_MDB.o [1]
-SMDB_release            0x000062d5    0x12  Code  Gb  Supervisao_MDB.o [1]
+SMDB_ini                0x000063b1    0x30  Code  Gb  Supervisao_MDB.o [1]
+SMDB_release            0x0000642d    0x12  Code  Gb  Supervisao_MDB.o [1]
 SMDB_semaforo_barramento
                         0x10007710     0x4  Data  Gb  Supervisao_MDB.o [1]
-SMDB_tick               0x00006289    0x36  Code  Gb  Supervisao_MDB.o [1]
-SMDB_wait               0x000062bf    0x16  Code  Gb  Supervisao_MDB.o [1]
-SPIWRAPPER_init         0x00008d45   0x120  Code  Gb  spi_wrapper.o [1]
-SPI_IRQHandler          0x0000e86d          Code  Wk  cstartup_M.o [1]
-SPI_getBytes            0x00008e93    0x26  Code  Gb  spi_wrapper.o [1]
-SPI_sendBytes           0x00008e65    0x2e  Code  Gb  spi_wrapper.o [1]
-SSP0_IRQHandler         0x0000e871          Code  Wk  cstartup_M.o [1]
-SSP1_IRQHandler         0x0000e875          Code  Wk  cstartup_M.o [1]
-SST25VF_init            0x00008ee9    0x22  Code  Gb  sst25vf016b.o [1]
-SST25VF_readStatus      0x00008f0b    0x3e  Code  Gb  sst25vf016b.o [1]
-SST25VF_writeStatus     0x00008f5f    0x76  Code  Gb  sst25vf016b.o [1]
-SST_busyWait            0x00008f49    0x16  Code  Gb  sst25vf016b.o [1]
-SST_erase4kbSector      0x00009119    0x7e  Code  Gb  sst25vf016b.o [1]
-SST_highSpeedRead       0x00009029    0x52  Code  Gb  sst25vf016b.o [1]
+SMDB_tick               0x000063e1    0x36  Code  Gb  Supervisao_MDB.o [1]
+SMDB_wait               0x00006417    0x16  Code  Gb  Supervisao_MDB.o [1]
+SPIWRAPPER_init         0x00008ec9   0x120  Code  Gb  spi_wrapper.o [1]
+SPI_IRQHandler          0x0000ea3d          Code  Wk  cstartup_M.o [1]
+SPI_getBytes            0x00009017    0x26  Code  Gb  spi_wrapper.o [1]
+SPI_sendBytes           0x00008fe9    0x2e  Code  Gb  spi_wrapper.o [1]
+SSP0_IRQHandler         0x0000ea41          Code  Wk  cstartup_M.o [1]
+SSP1_IRQHandler         0x0000ea45          Code  Wk  cstartup_M.o [1]
+SST25VF_init            0x0000906d    0x22  Code  Gb  sst25vf016b.o [1]
+SST25VF_readStatus      0x0000908f    0x3e  Code  Gb  sst25vf016b.o [1]
+SST25VF_writeStatus     0x000090e3    0x76  Code  Gb  sst25vf016b.o [1]
+SST_busyWait            0x000090cd    0x16  Code  Gb  sst25vf016b.o [1]
+SST_erase4kbSector      0x0000929d    0x7e  Code  Gb  sst25vf016b.o [1]
+SST_highSpeedRead       0x000091ad    0x52  Code  Gb  sst25vf016b.o [1]
 SST_writeAutoAddressInc
-                        0x0000907b    0x9e  Code  Gb  sst25vf016b.o [1]
-SST_writeDisable        0x00008fff    0x2a  Code  Gb  sst25vf016b.o [1]
-SST_writeEnable         0x00008fd5    0x2a  Code  Gb  sst25vf016b.o [1]
+                        0x000091ff    0x9e  Code  Gb  sst25vf016b.o [1]
+SST_writeDisable        0x00009183    0x2a  Code  Gb  sst25vf016b.o [1]
+SST_writeEnable         0x00009159    0x2a  Code  Gb  sst25vf016b.o [1]
 STRING_impressao_teste  0x10000d34    0x70  Data  Gb  strings.o [1]
 STRING_liberando_troco  0x100018b0    0x1c  Data  Gb  strings.o [1]
 STRING_mensagem_cadastro_senha
@@ -2303,8 +2329,8 @@ STRING_write_to_external
                         0x0007005b    0x5a  Code  Gb  strings.o [1]
 STRING_write_to_internal
                         0x00070001    0x5a  Code  Gb  strings.o [1]
-SVC_Handler             0x0000e829          Code  Wk  cstartup_M.o [1]
-SysTick_Handler         0x0000e835          Code  Wk  cstartup_M.o [1]
+SVC_Handler             0x0000e9f9          Code  Wk  cstartup_M.o [1]
+SysTick_Handler         0x0000ea05          Code  Wk  cstartup_M.o [1]
 T0MR0                   0x40004018     0x4  Data  Gb  PlayerWave.o [1]
 T0PR                    0x4000400c     0x4  Data  Gb  PlayerWave.o [1]
 T0TC                    0x40004008     0x4  Data  Gb  PlayerWave.o [1]
@@ -2313,8 +2339,8 @@ T1PR                    0x4000800c     0x4  Data  Gb  Potencia.o [1]
 T2MR0                   0x40090018     0x4  Data  Gb  Potencia.o [1]
 T2PR                    0x4009000c     0x4  Data  Gb  Potencia.o [1]
 T2TC                    0x40090008     0x4  Data  Gb  Potencia.o [1]
-TABTERM_curva_maximo    0x0000d79c   0x168  Data  Gb  AmostraAnalogica.o [1]
-TABTERM_curva_minimo    0x0000d634   0x168  Data  Gb  AmostraAnalogica.o [1]
+TABTERM_curva_maximo    0x0000d924   0x168  Data  Gb  AmostraAnalogica.o [1]
+TABTERM_curva_minimo    0x0000d7bc   0x168  Data  Gb  AmostraAnalogica.o [1]
 TECLADO_bufferAmostragem
                         0x100076a0     0x8  Data  Gb  Teclado.o [1]
 TECLADO_contadorRepeticao
@@ -2322,29 +2348,31 @@ TECLADO_contadorRepeticao
 TECLADO_contadorTimeout
                         0x10007714     0x4  Data  Gb  Teclado.o [1]
 TECLADO_getContadorInatividade
-                        0x00003ec9     0x6  Code  Gb  Teclado.o [1]
-TECLADO_getch           0x00003df7    0xd2  Code  Gb  Teclado.o [1]
-TECLADO_timerTick       0x00003cf5   0x102  Code  Gb  Teclado.o [1]
+                        0x00004cc9     0x6  Code  Gb  Teclado.o [1]
+TECLADO_getch           0x00004bf7    0xd2  Code  Gb  Teclado.o [1]
+TECLADO_timerTick       0x00004af5   0x102  Code  Gb  Teclado.o [1]
 TELASENHA_checa_contrasenha
-                        0x0000c2b3   0x18e  Code  Gb  tela_senha.o [1]
-TELASENHA_get_senha     0x0000c18d   0x126  Code  Gb  tela_senha.o [1]
-TELASENHA_telaSenha     0x0000c031   0x15c  Code  Gb  tela_senha.o [1]
-TMR0_IRQHandler         0x0000e83d          Code  Wk  cstartup_M.o [1]
-TMR1_IRQHandler         0x0000e841          Code  Wk  cstartup_M.o [1]
-TMR2_IRQHandler         0x0000e845          Code  Wk  cstartup_M.o [1]
-TMR3_IRQHandler         0x0000e849          Code  Wk  cstartup_M.o [1]
+                        0x0000c43b   0x18e  Code  Gb  tela_senha.o [1]
+TELASENHA_get_senha     0x0000c315   0x126  Code  Gb  tela_senha.o [1]
+TELASENHA_telaSenha     0x0000c1b9   0x15c  Code  Gb  tela_senha.o [1]
+TMR0_IRQHandler         0x0000ea0d          Code  Wk  cstartup_M.o [1]
+TMR1_IRQHandler         0x0000ea11          Code  Wk  cstartup_M.o [1]
+TMR2_IRQHandler         0x0000ea15          Code  Wk  cstartup_M.o [1]
+TMR3_IRQHandler         0x0000ea19          Code  Wk  cstartup_M.o [1]
 U0RBRTHR                0x4000c000     0x1  Data  Gb  uart.o [1]
 U1RBRTHR                0x40010000     0x1  Data  Gb  uart.o [1]
 U2RBRTHR                0x40098000     0x1  Data  Gb  uart.o [1]
 U3RBRTHR                0x4009c000     0x1  Data  Gb  uart.o [1]
-UART0_IRQHandler        0x0000e84d          Code  Wk  cstartup_M.o [1]
-UART1_IRQHandler        0x0000e851          Code  Wk  cstartup_M.o [1]
-UART2_IRQHandler        0x0000e855          Code  Wk  cstartup_M.o [1]
-UART3_IRQHandler        0x0000e859          Code  Wk  cstartup_M.o [1]
-UART_init               0x000091a1   0x248  Code  Gb  uart.o [1]
-USB_IRQHandler          0x0000e899          Code  Wk  cstartup_M.o [1]
-UsageFault_Handler      0x0000e825          Code  Wk  cstartup_M.o [1]
-WDT_IRQHandler          0x0000e839          Code  Wk  cstartup_M.o [1]
+UART0_IRQHandler        0x0000ea1d          Code  Wk  cstartup_M.o [1]
+UART1_IRQHandler        0x0000ea21          Code  Wk  cstartup_M.o [1]
+UART2_IRQHandler        0x0000ea25          Code  Wk  cstartup_M.o [1]
+UART3_IRQHandler        0x0000ea29          Code  Wk  cstartup_M.o [1]
+UART_init               0x00009325   0x248  Code  Gb  uart.o [1]
+USB_IRQHandler          0x0000ea69          Code  Wk  cstartup_M.o [1]
+UsageFault_Handler      0x0000e9f5          Code  Wk  cstartup_M.o [1]
+WATCHDOG_init           0x00004d8d    0x5c  Code  Gb  WATCHDOG.o [1]
+WDTC                    0x40000004     0x4  Data  Gb  WATCHDOG.o [1]
+WDT_IRQHandler          0x0000ea09          Code  Wk  cstartup_M.o [1]
 _A_AD0CR                0x40034000     0x4  Data  Gb  AmostraAnalogica.o [1]
 _A_AD0GDR               0x40034004     0x4  Data  Gb  AmostraAnalogica.o [1]
 _A_CLRPEND0             0xe000e280     0x4  Data  Gb  uart.o [1]
@@ -2419,6 +2447,9 @@ _A_U3FCR                0x4009c008     0x4  Data  Gb  uart.o [1]
 _A_U3IER                0x4009c004     0x4  Data  Gb  uart.o [1]
 _A_U3LCR                0x4009c00c     0x1  Data  Gb  uart.o [1]
 _A_U3LSR                0x4009c014     0x1  Data  Gb  uart.o [1]
+_A_WDCLKSEL             0x40000010     0x4  Data  Gb  WATCHDOG.o [1]
+_A_WDFEED               0x40000008     0x4  Data  Gb  WATCHDOG.o [1]
+_A_WDMOD                0x40000000     0x4  Data  Gb  WATCHDOG.o [1]
 _GenldFullNoMb          0x00000d4d   0x260  Code  Lc  xprintffull_nomb.o [3]
 _LdtobFullNoMb          0x0000095d   0x3ea  Code  Lc  xprintffull_nomb.o [3]
 _LitobFullNoMb          0x0000084b   0x10c  Code  Lc  xprintffull_nomb.o [3]
@@ -2438,41 +2469,41 @@ __aeabi_dmul            0x000015e5          Code  Gb  DblMul.o [4]
 __aeabi_dsub            0x00001465          Code  Gb  DblSub.o [4]
 __aeabi_i2d             0x00001435          Code  Gb  I32ToDbl.o [4]
 __aeabi_ldiv0           0x000019dd          Code  Gb  I64DivZer.o [5]
-__aeabi_memclr4         0x0000a501          Code  Gb  ABImemclr4.o [5]
+__aeabi_memclr4         0x0000a689          Code  Gb  ABImemclr4.o [5]
 __aeabi_memcpy          0x000011b9          Code  Gb  ABImemcpy.o [5]
 __aeabi_memcpy4         0x000011d9          Code  Gb  ABImemcpy.o [5]
 __aeabi_memcpy8         0x000011d9          Code  Gb  ABImemcpy.o [5]
-__aeabi_memset          0x000097d9          Code  Gb  ABImemset.o [5]
+__aeabi_memset          0x000095d1          Code  Gb  ABImemset.o [5]
 __aeabi_ui2d            0x00001449          Code  Gb  I32ToDbl.o [4]
 __aeabi_uldivmod        0x000010c9          Code  Gb  I64DivMod.o [5]
-__cmain                 0x0000e26d          Code  Gb  cmain.o [5]
-__exit                  0x0000d621    0x14  Code  Gb  exit.o [6]
+__cmain                 0x0000e3f5          Code  Gb  cmain.o [5]
+__exit                  0x0000d7a9    0x14  Code  Gb  exit.o [6]
 __iar_Dnorm             0x0000122f    0x42  Code  Gb  xdnorm.o [4]
 __iar_Dscale            0x000012d1   0x10c  Code  Gb  xdscale.o [4]
 __iar_Memchr            0x00001071          Code  Gb  memchr.o [5]
-__iar_Memset            0x000097d9          Code  Gb  ABImemset.o [5]
-__iar_Memset4_word      0x0000a58d          Code  Gb  ABImemset48.o [5]
-__iar_Memset8_word      0x0000a58d          Code  Gb  ABImemset48.o [5]
-__iar_Memset_word       0x000097e1          Code  Gb  ABImemset.o [5]
+__iar_Memset            0x000095d1          Code  Gb  ABImemset.o [5]
+__iar_Memset4_word      0x0000a715          Code  Gb  ABImemset48.o [5]
+__iar_Memset8_word      0x0000a715          Code  Gb  ABImemset48.o [5]
+__iar_Memset_word       0x000095d9          Code  Gb  ABImemset.o [5]
 __iar_Strchr            0x00001019          Code  Gb  strchr.o [5]
 __iar_d2uiz             0x00001415          Code  Gb  DblToI32.o [4]
 __iar_dadd              0x000019e1          Code  Gb  DblAdd.o [4]
-__iar_data_init3        0x0000e085    0x28  Code  Gb  data_init.o [5]
+__iar_data_init3        0x0000e20d    0x28  Code  Gb  data_init.o [5]
 __iar_dlib_perthread_access
-                        0x0000a589     0x2  Code  Gb  xtls.o [3]
+                        0x0000a711     0x2  Code  Gb  xtls.o [3]
 __iar_dsub              0x00001479          Code  Gb  DblSub.o [4]
 __iar_dsubStart         0x0000148b          Code  Gb  DblSub.o [4]
-__iar_lz77_init3        0x0000d4d7   0x142  Code  Gb  lz77_init.o [5]
-__iar_program_start     0x0000e695          Code  Gb  cstartup_M.o [5]
+__iar_lz77_init3        0x0000d65f   0x142  Code  Gb  lz77_init.o [5]
+__iar_program_start     0x0000e865          Code  Gb  cstartup_M.o [5]
 __iar_ui2d              0x0000144d          Code  Gb  I32ToDbl.o [4]
 __iar_zero_init3        0x00000ff7    0x22  Code  Gb  zero_init3.o [5]
-__low_level_init        0x0000e283     0x4  Code  Gb  low_level_init.o [3]
+__low_level_init        0x0000e40b     0x4  Code  Gb  low_level_init.o [3]
 __vector_table          0x00000000          Data  Gb  cstartup_M.o [1]
 __vector_table_0x1c     0x0000001c          Data  Gb  cstartup_M.o [1]
-_call_main              0x0000e279          Code  Gb  cmain.o [5]
-_exit                   0x0000e28d          Code  Gb  cexit.o [5]
-_main                   0x0000e27f          Code  Gb  cmain.o [5]
-abort                   0x0000d619     0x6  Code  Gb  abort.o [3]
+_call_main              0x0000e401          Code  Gb  cmain.o [5]
+_exit                   0x0000e415          Code  Gb  cexit.o [5]
+_main                   0x0000e407          Code  Gb  cmain.o [5]
+abort                   0x0000d7a1     0x6  Code  Gb  abort.o [3]
 controleLcd             0x100077aa     0x1  Data  Gb  WH1602.o [1]
 crc_ccitt_lockup        0x10000000   0x200  Data  Gb  cctalk.o [1]
 dadoMusica              0x1000777c     0x2  Data  Gb  PlayerWave.o [1]
@@ -2480,48 +2511,48 @@ div                     0x000019cf     0xe  Code  Gb  div.o [3]
 dummy                   0x100077b5     0x1  Data  Gb  spi_wrapper.o [1]
 enderecoInicialMusica   0x10000334     0x4  Data  Gb  PlayerWave.o [1]
 estado_atual            0x10000355     0x1  Data  Gb  BV20.o [1]
-exit                    0x0000e287     0x4  Code  Gb  exit.o [3]
-kd_const                0x0000e808     0x4  Data  Gb  Potencia.o [1]
-ki_const                0x0000e80c     0x4  Data  Gb  Potencia.o [1]
-kp_const                0x0000e804     0x4  Data  Gb  Potencia.o [1]
-limites                 0x0000da70    0x30  Data  Gb  InterfaceAjusteRelogio.o [1]
-lowLevelInit            0x00008395   0x128  Code  Gb  main.o [1]
-main                    0x000082d9    0xbc  Code  Gb  main.o [1]
+exit                    0x0000e40f     0x4  Code  Gb  exit.o [3]
+kd_const                0x0000e9d8     0x4  Data  Gb  Potencia.o [1]
+ki_const                0x0000e9dc     0x4  Data  Gb  Potencia.o [1]
+kp_const                0x0000e9d4     0x4  Data  Gb  Potencia.o [1]
+limites                 0x0000dbf8    0x30  Data  Gb  InterfaceAjusteRelogio.o [1]
+lowLevelInit            0x000075d5   0x128  Code  Gb  main.o [1]
+main                    0x00007519    0xbc  Code  Gb  main.o [1]
 memchr                  0x00001071          Code  Gb  memchr.o [5]
-memcmp                  0x00008535          Code  Gb  memcmp.o [5]
-memcpy                  0x00006de5    0x16  Code  Gb  tela_senha.o [1]
-memset                  0x00008661    0x16  Code  Gb  tasks.o [1]
-prvAllocateTCBAndStack  0x0000464d    0x46  Code  Lc  tasks.o [1]
+memcmp                  0x00007775          Code  Gb  memcmp.o [5]
+memcpy                  0x00006f65    0x16  Code  Gb  tela_senha.o [1]
+memset                  0x000078a1    0x16  Code  Gb  tasks.o [1]
+prvAllocateTCBAndStack  0x000038cd    0x46  Code  Lc  tasks.o [1]
 prvCheckTasksWaitingTermination
-                        0x000045eb    0x62  Code  Lc  tasks.o [1]
-prvCopyDataFromQueue    0x00005151    0x2c  Code  Lc  queue.o [1]
-prvCopyDataToQueue      0x000050df    0x72  Code  Lc  queue.o [1]
-prvDeleteTCB            0x00004693    0x12  Code  Lc  tasks.o [1]
-prvIdleTask             0x00004559     0xa  Code  Lc  tasks.o [1]
+                        0x0000386b    0x62  Code  Lc  tasks.o [1]
+prvCopyDataFromQueue    0x00005785    0x2c  Code  Lc  queue.o [1]
+prvCopyDataToQueue      0x00005713    0x72  Code  Lc  queue.o [1]
+prvDeleteTCB            0x00003913    0x12  Code  Lc  tasks.o [1]
+prvIdleTask             0x000037d9     0xa  Code  Lc  tasks.o [1]
 prvInitialiseTCBVariables
-                        0x00004563    0x42  Code  Lc  tasks.o [1]
-prvInitialiseTaskLists  0x000045a5    0x46  Code  Lc  tasks.o [1]
-prvIsQueueEmpty         0x000051e7    0x1e  Code  Lc  queue.o [1]
-prvIsQueueFull          0x00005205    0x20  Code  Lc  queue.o [1]
-prvSetupTimerInterrupt  0x0000817b     0xe  Code  Lc  port.o [1]
-prvUnlockQueue          0x0000517d    0x6a  Code  Lc  queue.o [1]
-pvPortMalloc            0x00008605    0x50  Code  Gb  heap_1.o [1]
+                        0x000037e3    0x42  Code  Lc  tasks.o [1]
+prvInitialiseTaskLists  0x00003825    0x46  Code  Lc  tasks.o [1]
+prvIsQueueEmpty         0x0000581b    0x1e  Code  Lc  queue.o [1]
+prvIsQueueFull          0x00005839    0x20  Code  Lc  queue.o [1]
+prvSetupTimerInterrupt  0x000073bb     0xe  Code  Lc  port.o [1]
+prvUnlockQueue          0x000057b1    0x6a  Code  Lc  queue.o [1]
+pvPortMalloc            0x00007845    0x50  Code  Gb  heap_1.o [1]
 pxCurrentTCB            0x10007734     0x4  Data  Gb  tasks.o [1]
 pxDelayedTaskList       0x10007738     0x4  Data  Gb  tasks.o [1]
 pxOverflowDelayedTaskList
                         0x1000773c     0x4  Data  Gb  tasks.o [1]
-pxPortInitialiseStack   0x000080cd    0x1a  Code  Gb  port.o [1]
+pxPortInitialiseStack   0x0000730d    0x1a  Code  Gb  port.o [1]
 pxReadyTasksLists       0x10007450    0x64  Data  Gb  tasks.o [1]
-rand                    0x0000c46d    0xe0  Code  Gb  rand.o [3]
+rand                    0x0000c5f5    0xe0  Code  Gb  rand.o [3]
 semDataFlash            0x1000772c     0x4  Data  Gb  memoryWrapper.o [1]
-sprintf                 0x00005971    0x34  Code  Gb  sprintf.o [3]
-srand                   0x0000a4e1    0x20  Code  Gb  srand.o [3]
+sprintf                 0x00005fa5    0x34  Code  Gb  sprintf.o [3]
+srand                   0x0000a669    0x20  Code  Gb  srand.o [3]
 strchr                  0x00001019          Code  Gb  strchr.o [5]
 strlen                  0x00001039          Code  Gb  strlen.o [5]
-strncpy                 0x00008599          Code  Gb  strncpy.o [5]
+strncpy                 0x000077d9          Code  Gb  strncpy.o [5]
 tabela_parametros       0x00001ab4   0xb84  Data  Gb  parametros.o [1]
 tamanhoMusica           0x100076dc     0x4  Data  Gb  PlayerWave.o [1]
-tamanhos                0x0000e6b8     0x8  Data  Gb  InterfaceAjusteRelogio.o [1]
+tamanhos                0x0000e888     0x8  Data  Gb  InterfaceAjusteRelogio.o [1]
 tracos                  0x10000304    0x18  Data  Gb  InterfaceAjusteRelogio.o [1]
 uxCriticalNesting       0x10000340     0x4  Data  Gb  port.o [1]
 uxCurrentNumberOfTasks  0x10007744     0x4  Data  Gb  tasks.o [1]
@@ -2532,33 +2563,33 @@ uxTasksDeleted          0x10007740     0x4  Data  Gb  tasks.o [1]
 uxTopReadyPriority      0x10007750     0x4  Data  Gb  tasks.o [1]
 uxTopUsedPriority       0x1000774c     0x4  Data  Gb  tasks.o [1]
 vApplicationStackOverflowHook
-                        0x00008531     0x2  Code  Gb  main.o [1]
-vListInitialise         0x000081a9    0x1e  Code  Gb  list.o [1]
-vListInitialiseItem     0x000081c7     0x6  Code  Gb  list.o [1]
-vListInsert             0x000081eb    0x3c  Code  Gb  list.o [1]
-vListInsertEnd          0x000081cd    0x1e  Code  Gb  list.o [1]
-vListRemove             0x00008227    0x26  Code  Gb  list.o [1]
+                        0x00007771     0x2  Code  Gb  main.o [1]
+vListInitialise         0x000073e9    0x1e  Code  Gb  list.o [1]
+vListInitialiseItem     0x00007407     0x6  Code  Gb  list.o [1]
+vListInsert             0x0000742b    0x3c  Code  Gb  list.o [1]
+vListInsertEnd          0x0000740d    0x1e  Code  Gb  list.o [1]
+vListRemove             0x00007467    0x26  Code  Gb  list.o [1]
 vPortClearInterruptMask
-                        0x00008297          Code  Gb  portasm.o [1]
-vPortEnterCritical      0x0000811d    0x12  Code  Gb  port.o [1]
-vPortExitCritical       0x0000812f    0x1a  Code  Gb  port.o [1]
-vPortFree               0x00008655     0x2  Code  Gb  heap_1.o [1]
-vPortSVCHandler         0x000082a5          Code  Gb  portasm.o [1]
-vPortSetInterruptMask   0x00008289          Code  Gb  portasm.o [1]
-vPortStartFirstTask     0x000082c1          Code  Gb  portasm.o [1]
-vPortYieldFromISR       0x00008113     0xa  Code  Gb  port.o [1]
-vSetMSP                 0x0000824d          Code  Gb  portasm.o [1]
-vTaskDelay              0x000040cb    0x6c  Code  Gb  tasks.o [1]
-vTaskIncrementTick      0x00004269    0xc2  Code  Gb  tasks.o [1]
-vTaskMissedYield        0x0000454f     0x8  Code  Gb  tasks.o [1]
-vTaskPlaceOnEventList   0x000043ed    0x7e  Code  Gb  tasks.o [1]
+                        0x000074d7          Code  Gb  portasm.o [1]
+vPortEnterCritical      0x0000735d    0x12  Code  Gb  port.o [1]
+vPortExitCritical       0x0000736f    0x1a  Code  Gb  port.o [1]
+vPortFree               0x00007895     0x2  Code  Gb  heap_1.o [1]
+vPortSVCHandler         0x000074e5          Code  Gb  portasm.o [1]
+vPortSetInterruptMask   0x000074c9          Code  Gb  portasm.o [1]
+vPortStartFirstTask     0x00007501          Code  Gb  portasm.o [1]
+vPortYieldFromISR       0x00007353     0xa  Code  Gb  port.o [1]
+vSetMSP                 0x0000748d          Code  Gb  portasm.o [1]
+vTaskDelay              0x0000334b    0x6c  Code  Gb  tasks.o [1]
+vTaskIncrementTick      0x000034e9    0xc2  Code  Gb  tasks.o [1]
+vTaskMissedYield        0x000037cf     0x8  Code  Gb  tasks.o [1]
+vTaskPlaceOnEventList   0x0000366d    0x7e  Code  Gb  tasks.o [1]
 vTaskPriorityDisinherit
-                        0x00004719    0x46  Code  Gb  tasks.o [1]
-vTaskPriorityInherit    0x000046ad    0x68  Code  Gb  tasks.o [1]
-vTaskSetTimeOutState    0x000044db     0xe  Code  Gb  tasks.o [1]
-vTaskStartScheduler     0x00004137    0x42  Code  Gb  tasks.o [1]
-vTaskSuspendAll         0x00004179    0x10  Code  Gb  tasks.o [1]
-vTaskSwitchContext      0x0000432b    0xc2  Code  Gb  tasks.o [1]
+                        0x00003999    0x46  Code  Gb  tasks.o [1]
+vTaskPriorityInherit    0x0000392d    0x68  Code  Gb  tasks.o [1]
+vTaskSetTimeOutState    0x0000375b     0xe  Code  Gb  tasks.o [1]
+vTaskStartScheduler     0x000033b7    0x42  Code  Gb  tasks.o [1]
+vTaskSuspendAll         0x000033f9    0x10  Code  Gb  tasks.o [1]
+vTaskSwitchContext      0x000035ab    0xc2  Code  Gb  tasks.o [1]
 volume                  0x1000777a     0x2  Data  Gb  PlayerWave.o [1]
 xDelayedTaskList1       0x1000760c    0x14  Data  Gb  tasks.o [1]
 xDelayedTaskList2       0x10007620    0x14  Data  Gb  tasks.o [1]
@@ -2567,21 +2598,21 @@ xMissedYield            0x10007760     0x4  Data  Gb  tasks.o [1]
 xNextFreeByte           0x10007724     0x4  Data  Lc  heap_1.o [1]
 xNumOfOverflows         0x10007764     0x4  Data  Gb  tasks.o [1]
 xPendingReadyList       0x10007634    0x14  Data  Gb  tasks.o [1]
-xPortPendSVHandler      0x00008253          Code  Gb  portasm.o [1]
-xPortStartScheduler     0x000080e7    0x2c  Code  Gb  port.o [1]
-xPortSysTickHandler     0x00008149    0x32  Code  Gb  port.o [1]
-xQueueCreate            0x00004e79    0x74  Code  Gb  queue.o [1]
-xQueueGenericReceive    0x00004fbf   0x120  Code  Gb  queue.o [1]
-xQueueGenericSend       0x00004eed    0xd2  Code  Gb  queue.o [1]
+xPortPendSVHandler      0x00007493          Code  Gb  portasm.o [1]
+xPortStartScheduler     0x00007327    0x2c  Code  Gb  port.o [1]
+xPortSysTickHandler     0x00007389    0x32  Code  Gb  port.o [1]
+xQueueCreate            0x000054ad    0x74  Code  Gb  queue.o [1]
+xQueueGenericReceive    0x000055f3   0x120  Code  Gb  queue.o [1]
+xQueueGenericSend       0x00005521    0xd2  Code  Gb  queue.o [1]
 xSchedulerRunning       0x10007754     0x4  Data  Gb  tasks.o [1]
 xSuspendedTaskList      0x1000765c    0x14  Data  Gb  tasks.o [1]
-xTaskCheckForTimeOut    0x000044e9    0x66  Code  Gb  tasks.o [1]
-xTaskGenericCreate      0x00003f8d   0x13e  Code  Gb  tasks.o [1]
+xTaskCheckForTimeOut    0x00003769    0x66  Code  Gb  tasks.o [1]
+xTaskGenericCreate      0x0000320d   0x13e  Code  Gb  tasks.o [1]
 xTaskGetCurrentTaskHandle
-                        0x000046a5     0x8  Code  Gb  tasks.o [1]
+                        0x00003925     0x8  Code  Gb  tasks.o [1]
 xTaskRemoveFromEventList
-                        0x0000446b    0x70  Code  Gb  tasks.o [1]
-xTaskResumeAll          0x00004189    0xe0  Code  Gb  tasks.o [1]
+                        0x000036eb    0x70  Code  Gb  tasks.o [1]
+xTaskResumeAll          0x00003409    0xe0  Code  Gb  tasks.o [1]
 xTasksWaitingTermination
                         0x10007648    0x14  Data  Gb  tasks.o [1]
 xTickCount              0x10007748     0x4  Data  Gb  tasks.o [1]
@@ -2594,9 +2625,9 @@ xTickCount              0x10007748     0x4  Data  Gb  tasks.o [1]
 [5] = rt7M_tl.a
 [6] = shb_l.a
 
-  51 958 bytes of readonly  code memory
-  14 165 bytes of readonly  data memory
-  31 411 bytes of readwrite data memory (+ 311 absolute)
+  52 350 bytes of readonly  code memory
+  14 238 bytes of readonly  data memory
+  31 411 bytes of readwrite data memory (+ 327 absolute)
 
 Errors: none
 Warnings: none

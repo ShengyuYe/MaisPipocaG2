@@ -78,7 +78,7 @@
 *   Retorno       :   nenhum
 ***********************************************************************************/
 void WATCHDOG_init(unsigned int intervalo){
-/*
+
   WDMOD_bit.WDEN = 1;  // Habilita o periférico    
   WDMOD_bit.WDRESET = 1; // Reset do chip quando houver estouro da contagem
   
@@ -87,7 +87,6 @@ void WATCHDOG_init(unsigned int intervalo){
   
   WDTC = 2048*2000;
   FEEDS_THE_DOG();  
-  */
 }
 /***********************************************************************************
 *   Fim do arquivo

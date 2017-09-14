@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     13/Sep/2017  18:09:09 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     14/Sep/2017  13:22:46 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -33,6 +33,10 @@
         #define SHT_PROGBITS 0x1
 
         PUBLIC WATCHDOG_init
+        PUBLIC WDTC
+        PUBLIC _A_WDCLKSEL
+        PUBLIC _A_WDFEED
+        PUBLIC _A_WDMOD
         
           CFI Names cfiNames0
           CFI StackFrame CFA R13 DATA
@@ -94,6 +98,30 @@
 //   30 *   Includes
 //   31 ***********************************************************************************/
 //   32 #include <nxp\iolpc1768.h>
+
+        ASEGN `.noinit`:DATA:NOROOT,040000000H
+        SECTION_GROUP _A_WDMOD
+// __absolute union <unnamed> volatile _A_WDMOD
+_A_WDMOD:
+        DS8 4
+
+        ASEGN `.noinit`:DATA:NOROOT,040000004H
+        SECTION_GROUP WDTC
+// __absolute unsigned long volatile WDTC
+WDTC:
+        DS8 4
+
+        ASEGN `.noinit`:DATA:NOROOT,040000008H
+        SECTION_GROUP _A_WDFEED
+// __absolute union <unnamed> volatile _A_WDFEED
+_A_WDFEED:
+        DS8 4
+
+        ASEGN `.noinit`:DATA:NOROOT,040000010H
+        SECTION_GROUP _A_WDCLKSEL
+// __absolute union <unnamed> volatile _A_WDCLKSEL
+_A_WDCLKSEL:
+        DS8 4
 //   33 #include "watchdog.h"
 //   34 
 //   35 
@@ -142,26 +170,65 @@
 //   78 *   Retorno       :   nenhum
 //   79 ***********************************************************************************/
 
-        SECTION `.text`:CODE:NOROOT(1)
+        SECTION `.text`:CODE:NOROOT(2)
           CFI Block cfiBlock0 Using cfiCommon0
           CFI Function WATCHDOG_init
           CFI NoCalls
         THUMB
 //   80 void WATCHDOG_init(unsigned int intervalo){
-//   81 /*
+//   81 
 //   82   WDMOD_bit.WDEN = 1;  // Habilita o periférico    
+WATCHDOG_init:
+        MOVS     R1,#+1073741824
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x1
+        MOVS     R2,#+1073741824
+        STR      R1,[R2, #+0]
 //   83   WDMOD_bit.WDRESET = 1; // Reset do chip quando houver estouro da contagem
+        MOVS     R1,#+1073741824
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x2
+        MOVS     R2,#+1073741824
+        STR      R1,[R2, #+0]
 //   84   
 //   85   WDCLKSEL_bit.WDSEL =   0x00; // Oscilador RC
+        LDR.N    R1,??WATCHDOG_init_0  ;; 0x40000010
+        LDR      R1,[R1, #+0]
+        LSRS     R1,R1,#+2
+        LSLS     R1,R1,#+2
+        LDR.N    R2,??WATCHDOG_init_0  ;; 0x40000010
+        STR      R1,[R2, #+0]
 //   86   WDCLKSEL_bit.WDLOCK = 0x01; // Bloqueio o acesso ao registrador
+        LDR.N    R1,??WATCHDOG_init_0  ;; 0x40000010
+        LDR      R1,[R1, #+0]
+        ORRS     R1,R1,#0x80000000
+        LDR.N    R2,??WATCHDOG_init_0  ;; 0x40000010
+        STR      R1,[R2, #+0]
 //   87   
 //   88   WDTC = 2048*2000;
+        LDR.N    R1,??WATCHDOG_init_0+0x4  ;; 0x40000004
+        MOVS     R2,#+4096000
+        STR      R2,[R1, #+0]
 //   89   FEEDS_THE_DOG();  
-//   90   */
-//   91 }
-WATCHDOG_init:
+        LDR.N    R1,??WATCHDOG_init_0+0x8  ;; 0x40000008
+        MOVS     R2,#+170
+        STR      R2,[R1, #+0]
+        LDR.N    R1,??WATCHDOG_init_0+0x8  ;; 0x40000008
+        MOVS     R2,#+85
+        STR      R2,[R1, #+0]
+//   90 }
         BX       LR               ;; return
+        Nop      
+        DATA
+??WATCHDOG_init_0:
+        DC32     0x40000010
+        DC32     0x40000004
+        DC32     0x40000008
           CFI EndBlock cfiBlock0
+        REQUIRE _A_WDMOD
+        REQUIRE _A_WDCLKSEL
+        REQUIRE WDTC
+        REQUIRE _A_WDFEED
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -169,13 +236,15 @@ WATCHDOG_init:
         DC32 0
 
         END
-//   92 /***********************************************************************************
-//   93 *   Fim do arquivo
-//   94 ***********************************************************************************/
+//   91 /***********************************************************************************
+//   92 *   Fim do arquivo
+//   93 ***********************************************************************************/
 // 
-// 2 bytes in section .text
+// 16 bytes in section .noinit (abs)
+// 92 bytes in section .text
 // 
-// 2 bytes of CODE memory
+// 92 bytes of CODE memory
+//  0 bytes of DATA memory (+ 16 bytes shared)
 //
 //Errors: none
 //Warnings: none

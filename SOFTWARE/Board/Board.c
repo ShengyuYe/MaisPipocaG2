@@ -122,7 +122,7 @@ void BOARD_ini(void){
   INI_MOTOR_EMBALAGEM_PIN();
     
   CCTALK_ini();
-  PAGAMENTOS_ini();
+  //PAGAMENTOS_ini();
   PAGAMENTOS_set_bloqueio(1);
   BOARD_set_motor_dose(PARADO);
   INI_EMBALAGEM_PINS();
@@ -140,6 +140,7 @@ void BOARD_ini(void){
   // Deixa a porta serial RS232
   // habilitada direto
   SERIALMUX_seleciona(SERIALMUX_USB);
+  PAGAMENTOS_ini();  
 }
 /***********************************************************************************
 *       Descrição       :       Tick de timer para o módulo board
