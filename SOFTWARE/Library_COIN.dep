@@ -6,89 +6,89 @@
   <configuration>
     <name>Debug</name>
     <outputs>
-      <file>$PROJ_DIR$\Kernel\queue.h</file>
-      <file>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_coin.h</file>
-      <file>$PROJ_DIR$\Drivers\AmostragemAnalogica\AmostraAnalogica.h</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb_bill.h</file>
-      <file>$PROJ_DIR$\Drivers\Teclado\teclado.h</file>
-      <file>$PROJ_DIR$\aplicacao\embalagem.h</file>
-      <file>$PROJ_DIR$\Drivers\playerwave\playerwave.h</file>
-      <file>$PROJ_DIR$\aplicacao\parametros_fabrica.h</file>
-      <file>$PROJ_DIR$\parametros\parametros.h</file>
-      <file>$PROJ_DIR$\includes.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
-      <file>$PROJ_DIR$\aplicacao\faturamento.h</file>
-      <file>$PROJ_DIR$\Kernel\portmacro.h</file>
-      <file>$PROJ_DIR$\aplicacao\preparacao.h</file>
-      <file>$PROJ_DIR$\Drivers\CCTALK\cctalk.h</file>
-      <file>$PROJ_DIR$\DebugL2\Exe\Library_COIN.a</file>
-      <file>$PROJ_DIR$\aplicacao\POST.h</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\sst25vf016b.h</file>
-      <file>$PROJ_DIR$\Drivers\WH1602_2\WH1602_2.H</file>
-      <file>$PROJ_DIR$\Drivers\RTC\RTC.H</file>
-      <file>$PROJ_DIR$\Kernel\task.h</file>
-      <file>$PROJ_DIR$\Drivers\Pagamentos\Pagamentos.h</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb.h</file>
-      <file>$PROJ_DIR$\Strings\strings.h</file>
       <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
-      <file>$PROJ_DIR$\Drivers\pagamentos\supervisao_mdb.h</file>
+      <file>$PROJ_DIR$\Kernel\portable.h</file>
+      <file>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_mdb_coin.c</file>
+      <file>$PROJ_DIR$\aplicacao\menu_preparacao.h</file>
+      <file>$PROJ_DIR$\aplicacao\parametros_fabrica.h</file>
+      <file>$PROJ_DIR$\Kernel\task.h</file>
+      <file>$PROJ_DIR$\Strings\strings.h</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\sst25vf016b.h</file>
+      <file>$PROJ_DIR$\Kernel\queue.h</file>
+      <file>$PROJ_DIR$\Drivers\playerwave\playerwave.h</file>
+      <file>$PROJ_DIR$\parametros\parametros.h</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_bill.h</file>
+      <file>$PROJ_DIR$\includes.h</file>
+      <file>$PROJ_DIR$\Drivers\AmostragemAnalogica\AmostraAnalogica.h</file>
+      <file>$PROJ_DIR$\Drivers\CCTALK\cctalk.h</file>
+      <file>$PROJ_DIR$\aplicacao\preparacao.h</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+      <file>$PROJ_DIR$\Drivers\Pagamentos\supervisao_mdb_coin.h</file>
+      <file>$PROJ_DIR$\aplicacao\embalagem.h</file>
+      <file>$PROJ_DIR$\Drivers\Teclado\teclado.h</file>
+      <file>$PROJ_DIR$\Kernel\semphr.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
+      <file>$PROJ_DIR$\Drivers\Pagamentos\Pagamentos.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\mapa_memoria.h</file>
+      <file>$PROJ_DIR$\DebugL2\Obj\Supervisao_mdb_coin.o</file>
+      <file>$PROJ_DIR$\aplicacao\tela_senha.h</file>
+      <file>$PROJ_DIR$\Kernel\portmacro.h</file>
+      <file>$PROJ_DIR$\Potencia\controleTemperatura.h</file>
+      <file>$PROJ_DIR$\Drivers\WH1602_2\WH1602_2.H</file>
+      <file>$PROJ_DIR$\Strings\mensagens.H</file>
+      <file>$PROJ_DIR$\aplicacao\faturamento.h</file>
+      <file>$PROJ_DIR$\aplicacao\POST.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+      <file>$PROJ_DIR$\Drivers\serial_mux\serial_mux.h</file>
+      <file>$PROJ_DIR$\DebugL2\Obj\Supervisao_mdb_coin.pbi</file>
+      <file>$PROJ_DIR$\Drivers\RTC\RTC.H</file>
       <file>$PROJ_DIR$\Board\board.h</file>
+      <file>$PROJ_DIR$\DebugL2\Exe\Library_COIN.a</file>
+      <file>$PROJ_DIR$\Drivers\pagamentos\supervisao_mdb.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
       <file>$PROJ_DIR$\aplicacao\menu_configuracao.h</file>
       <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-      <file>$PROJ_DIR$\Kernel\semphr.h</file>
-      <file>$PROJ_DIR$\Drivers\serial_mux\serial_mux.h</file>
-      <file>$PROJ_DIR$\mapa_memoria.h</file>
-      <file>$PROJ_DIR$\DebugL2\Obj\Supervisao_mdb_coin.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
-      <file>$PROJ_DIR$\aplicacao\senhas.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
-      <file>$PROJ_DIR$\aplicacao\aplicacao.h</file>
-      <file>$PROJ_DIR$\aplicacao\tela_senha.h</file>
-      <file>$PROJ_DIR$\Potencia\controleTemperatura.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-      <file>$PROJ_DIR$\Drivers\impressora\impressora.h</file>
-      <file>$PROJ_DIR$\Drivers\protocolo\protocolo.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-      <file>$PROJ_DIR$\DebugL2\Obj\Supervisao_mdb_coin.o</file>
-      <file>$PROJ_DIR$\aplicacao\menu_operacao.h</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb_cashless.h</file>
       <file>$PROJ_DIR$\historico_precos\fila_troca_preco.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-      <file>$PROJ_DIR$\Kernel\mpu_wrappers.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
-      <file>$PROJ_DIR$\Strings\mensagens.H</file>
-      <file>$PROJ_DIR$\Drivers\sst25vf016b\memoryWrapper.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
-      <file>$PROJ_DIR$\Drivers\WH1602\WH1602.H</file>
-      <file>$PROJ_DIR$\IU\leds.h</file>
       <file>$PROJ_DIR$\Drivers\MDB\mdb_uart.h</file>
-      <file>$PROJ_DIR$\Drivers\Pagamentos\Supervisao_mdb_coin.c</file>
-      <file>$PROJ_DIR$\Kernel\core_cm3.h</file>
-      <file>$PROJ_DIR$\Kernel\projdefs.h</file>
-      <file>$PROJ_DIR$\Drivers\MDB\mdb_coin.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
+      <file>$PROJ_DIR$\Kernel\mpu_wrappers.h</file>
+      <file>$PROJ_DIR$\aplicacao\aplicacao.h</file>
+      <file>$PROJ_DIR$\aplicacao\menu_operacao.h</file>
+      <file>$PROJ_DIR$\Drivers\impressora\impressora.h</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_cashless.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
       <file>$PROJ_DIR$\Drivers\pagamentos\BV20.h</file>
-      <file>$PROJ_DIR$\Kernel\system_LPC17xx.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
-      <file>$PROJ_DIR$\Kernel\list.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
-      <file>$PROJ_DIR$\Kernel\freertosconfig.h</file>
+      <file>$PROJ_DIR$\aplicacao\senhas.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+      <file>$PROJ_DIR$\Drivers\sst25vf016b\memoryWrapper.h</file>
+      <file>$PROJ_DIR$\Drivers\protocolo\protocolo.h</file>
+      <file>$PROJ_DIR$\Drivers\UARTS\uart.h</file>
       <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
       <file>$TOOLKIT_DIR$\inc\c\string.h</file>
-      <file>$PROJ_DIR$\Kernel\LPC17xx.h</file>
-      <file>$PROJ_DIR$\Kernel\portable.h</file>
-      <file>$PROJ_DIR$\aplicacao\menu_preparacao.h</file>
-      <file>$PROJ_DIR$\Potencia\Potencia.h</file>
+      <file>$PROJ_DIR$\Kernel\freertosconfig.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
+      <file>$PROJ_DIR$\Kernel\system_LPC17xx.h</file>
       <file>$PROJ_DIR$\Kernel\FreeRTOS.h</file>
-      <file>$PROJ_DIR$\Drivers\UARTS\uart.h</file>
+      <file>$PROJ_DIR$\Kernel\LPC17xx.h</file>
+      <file>$PROJ_DIR$\Drivers\WH1602\WH1602.H</file>
+      <file>$PROJ_DIR$\Potencia\Potencia.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\Kernel\projdefs.h</file>
+      <file>$PROJ_DIR$\IU\leds.h</file>
+      <file>$PROJ_DIR$\Kernel\core_cm3.h</file>
+      <file>$PROJ_DIR$\Drivers\MDB\mdb_coin.h</file>
+      <file>$PROJ_DIR$\Kernel\list.h</file>
     </outputs>
     <file>
       <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
           <name>IARCHIVE</name>
-          <file> 16</file>
+          <file> 39</file>
         </tool>
       </outputs>
     </file>
@@ -97,21 +97,21 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 33</file>
+          <file> 36</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 44</file>
+          <file> 26</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 36 29 40 48 66 64 68 53 43 50 25 69 10 9 67 70 58 34 61 63 74 11 59 71 13 49 65 21 30 0 32 27 24 51 15 54 19 4 20 52 18 2 75 22 62 26 23 3 60 46 56 42 41 6 31 37 28 45 72 14 5 17 8 12 38 35 7 73 39 55 47 1</file>
+          <file> 52 43 56 24 69 70 60 51 34 53 0 61 17 12 62 66 73 41 63 64 65 22 71 1 28 46 75 5 21 8 25 38 6 31 14 67 30 20 37 57 7 13 59 23 54 40 16 11 74 50 45 58 49 9 35 47 42 48 3 15 19 33 10 32 27 55 4 68 29 72 44 18</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 36 29 40 48 66 64 68 53 43 50 25 69 10 9 67 70 58 34 61 63 74 11 59 71 13 49 65 21 30 0 32 27 24 51 15 54 19 4 20 52 18 2 75 22 62 26 23 3 60 46 56 42 41 6 31 37 28 45 72 14 5 17 8 12 38 35 7 73 39 55 47 1</file>
+          <file> 52 43 56 24 69 70 60 51 34 53 0 61 17 12 62 66 73 41 63 64 65 22 71 1 28 46 75 5 21 8 25 38 6 31 14 67 30 20 37 57 7 13 59 23 54 40 16 11 74 50 45 58 49 9 35 47 42 48 3 15 19 33 10 32 27 55 4 68 29 72 44 18</file>
         </tool>
       </inputs>
     </file>

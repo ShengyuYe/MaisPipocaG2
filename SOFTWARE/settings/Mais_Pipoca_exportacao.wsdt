@@ -12,7 +12,7 @@
           
           
           
-        <Column0>254</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+        <Column0>271</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
       <PreferedWindows><Position>1</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></Workspace>
       <Build>
         <PreferedWindows>
@@ -45,20 +45,20 @@
     <Windows>
       
       
-    <Wnd2><Tabs><Tab><Identity>TabID-17477-2556</Identity><TabName>Workspace</TabName><Factory>Workspace</Factory><Session><NodeDict><ExpandedNode>Library</ExpandedNode><ExpandedNode>Library_COIN</ExpandedNode><ExpandedNode>Mais_Pipoca_exp</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/DRIVERS</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/KERNEL</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/KERNEL/BOARD</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/KERNEL/RTOS</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/PAGAMENTOS</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/POTENCIA</ExpandedNode></NodeDict></Session></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd2><Wnd3><Tabs><Tab><Identity>TabID-12508-4339</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd3></Windows>
+    <Wnd2><Tabs><Tab><Identity>TabID-17477-2556</Identity><TabName>Workspace</TabName><Factory>Workspace</Factory><Session><NodeDict><ExpandedNode>Library</ExpandedNode><ExpandedNode>Library_COIN</ExpandedNode><ExpandedNode>Mais_Pipoca_exp</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/DRIVERS</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/PAGAMENTOS</ExpandedNode><ExpandedNode>Mais_Pipoca_exp/POTENCIA</ExpandedNode></NodeDict></Session></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd2></Windows>
     <Editor>
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\Pagamentos\Pagamentos.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>90</YPos2><SelStart2>4302</SelStart2><SelEnd2>4302</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Board\Board.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>117</YPos2><SelStart2>5991</SelStart2><SelEnd2>5991</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Kernel\portasm.s</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>99</YPos2><SelStart2>3084</SelStart2><SelEnd2>3084</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>48</YPos2><SelStart2>2263</SelStart2><SelEnd2>2263</SelEnd2></Tab><ActiveTab>3</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\Pagamentos\Pagamentos.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>90</YPos2><SelStart2>4302</SelStart2><SelEnd2>4302</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Board\Board.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>117</YPos2><SelStart2>5991</SelStart2><SelEnd2>5991</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Kernel\portasm.s</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>98</YPos2><SelStart2>3084</SelStart2><SelEnd2>3084</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>63</YPos2><SelStart2>2263</SelStart2><SelEnd2>2263</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Drivers\Pagamentos\supervisao_mdb_cashless.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>186</YPos2><SelStart2>7739</SelStart2><SelEnd2>7739</SelEnd2></Tab><ActiveTab>4</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-03102fd8><key>iaridepm.enu1</key></Toolbar-03102fd8></Sizes></Row0></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>540</Bottom><Right>345</Right><x>-2</x><y>-2</y><xscreen>262</xscreen><yscreen>277</yscreen><sizeHorzCX>170573</sizeHorzCX><sizeHorzCY>353768</sizeHorzCY><sizeVertCX>225911</sizeVertCX><sizeVertCY>692209</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>198</Bottom><Right>1538</Right><x>-2</x><y>-2</y><xscreen>1540</xscreen><yscreen>200</yscreen><sizeHorzCX>1002604</sizeHorzCX><sizeHorzCY>255428</sizeHorzCY><sizeVertCX>130208</sizeVertCX><sizeVertCY>255428</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-03194a38><key>iaridepm.enu1</key></Toolbar-03194a38></Sizes></Row0></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>738</Bottom><Right>345</Right><x>-2</x><y>-2</y><xscreen>262</xscreen><yscreen>277</yscreen><sizeHorzCX>170573</sizeHorzCX><sizeHorzCY>353768</sizeHorzCY><sizeVertCX>225911</sizeVertCX><sizeVertCY>945083</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes/></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 
