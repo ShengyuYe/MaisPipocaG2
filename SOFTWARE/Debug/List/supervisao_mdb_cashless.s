@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     14/Sep/2017  13:23:04 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jan/2018  13:45:22 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -51,6 +51,7 @@
         PUBLIC MDBCASHLESS_funcs
         PUBLIC SMC_ciclos
         PUBLIC SMC_contador
+        PUBLIC SMC_contador_atividade_cartao
         PUBLIC SMC_desabilitado
         PUBLIC SMC_dispositivo_bloqueado
         PUBLIC SMC_estado_atual
@@ -139,118 +140,125 @@
 //   42 #define TEMPO_INICILIZACAO_CASHLESS                     60000
 //   43 #define TENTATIVAS_CASHLESS                             10
 //   44 #define TEMPO_BUSCA_OFFLINE                             30000
-//   45 
-//   46 /***********************************************************************************
-//   47 *       Constantes locais
-//   48 ***********************************************************************************/
-//   49 
+//   45 #define CICLOS_ATIVIDADE_CARTAO                         3
+//   46 
+//   47 /***********************************************************************************
+//   48 *       Constantes locais
+//   49 ***********************************************************************************/
 //   50 
-//   51 /***********************************************************************************
-//   52 *       Variaveis locais
-//   53 ***********************************************************************************/
+//   51 
+//   52 /***********************************************************************************
+//   53 *       Variaveis locais
+//   54 ***********************************************************************************/
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
-//   54 unsigned int SMC_contador;
+//   55 unsigned int SMC_contador;
 SMC_contador:
         DS8 4
 
         SECTION `.bss`:DATA:REORDER:NOROOT(0)
-//   55 unsigned char SMC_ciclos;
+//   56 unsigned char SMC_ciclos;
 SMC_ciclos:
         DS8 1
 
         SECTION `.bss`:DATA:REORDER:NOROOT(0)
-//   56 eCASHLESS_state SMC_estado_atual = CASHLESS_STATE_DESABILITADO;
+//   57 eCASHLESS_state SMC_estado_atual = CASHLESS_STATE_DESABILITADO;
 SMC_estado_atual:
         DS8 1
 
         SECTION `.data`:DATA:REORDER:NOROOT(1)
-//   57 unsigned short int SMC_time_out=TEMPO_BUSCA_OFFLINE;
+//   58 unsigned short int SMC_time_out=TEMPO_BUSCA_OFFLINE;
 SMC_time_out:
         DATA
         DC16 30000
 
         SECTION `.data`:DATA:REORDER:NOROOT(0)
-//   58 unsigned char SMC_flag_bloqueio=1;
+//   59 unsigned char SMC_flag_bloqueio=1;
 SMC_flag_bloqueio:
         DATA
         DC8 1
-//   59 
-//   60 /***********************************************************************************
-//   61 *       Funções locais
-//   62 ***********************************************************************************/
-//   63 eCASHLESS_state SMC_desabilitado(void);
-//   64 eCASHLESS_state SMC_setup(void);
-//   65 eCASHLESS_state SMC_offline_state(void);
-//   66 eCASHLESS_state SMC_poll_interface(void);
-//   67 eCASHLESS_state SMC_dispositivo_bloqueado(void);
-//   68 eCASHLESS_state SMC_inicia_transacao(void);
-//   69 eCASHLESS_state SMC_transacao_aprovada(void);
-//   70 eCASHLESS_state SMC_sucesso_transacao(void);
-//   71 
-//   72 /***********************************************************************************
-//   73 *       Tabela de funções
-//   74 ***********************************************************************************/
+
+        SECTION `.data`:DATA:REORDER:NOROOT(2)
+//   60 unsigned int SMC_contador_atividade_cartao=CICLOS_ATIVIDADE_CARTAO;
+SMC_contador_atividade_cartao:
+        DATA
+        DC32 3
+//   61 
+//   62 /***********************************************************************************
+//   63 *       Funções locais
+//   64 ***********************************************************************************/
+//   65 eCASHLESS_state SMC_desabilitado(void);
+//   66 eCASHLESS_state SMC_setup(void);
+//   67 eCASHLESS_state SMC_offline_state(void);
+//   68 eCASHLESS_state SMC_poll_interface(void);
+//   69 eCASHLESS_state SMC_dispositivo_bloqueado(void);
+//   70 eCASHLESS_state SMC_inicia_transacao(void);
+//   71 eCASHLESS_state SMC_transacao_aprovada(void);
+//   72 eCASHLESS_state SMC_sucesso_transacao(void);
+//   73 
+//   74 /***********************************************************************************
+//   75 *       Tabela de funções
+//   76 ***********************************************************************************/
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-//   75 eCASHLESS_state(*const MDBCASHLESS_funcs[])(void)={
+//   77 eCASHLESS_state(*const MDBCASHLESS_funcs[])(void)={
 MDBCASHLESS_funcs:
         DATA
         DC32 SMC_desabilitado, SMC_setup, SMC_offline_state, SMC_poll_interface
         DC32 SMC_dispositivo_bloqueado, SMC_inicia_transacao
         DC32 SMC_transacao_aprovada, SMC_sucesso_transacao, 0H
-//   76   [CASHLESS_STATE_DESABILITADO]    = SMC_desabilitado,
-//   77   [CASHLESS_STATE_SETUP]           = SMC_setup,
-//   78   [CASHLESS_STATE_OFFLINE]         = SMC_offline_state,
-//   79   [CASHLESS_STATE_POLL]            = SMC_poll_interface,
-//   80   [CASHLESS_STATE_LOCKED]          = SMC_dispositivo_bloqueado,
-//   81   [CASHLESS_STATE_INIT_VEND]       = SMC_inicia_transacao,
-//   82   [CASHLESS_STATE_VEND_APPROVED]   = SMC_transacao_aprovada,
-//   83   [CASHLESS_STATE_VEND_SUCCESS]    = SMC_sucesso_transacao,
-//   84   [CASHLESS_STATE_SESSION_COMPLET] = NULL
-//   85 };
-//   86   
-//   87 /***********************************************************************************
-//   88 *       Implementação das funções
-//   89 ***********************************************************************************/
-//   90 
-//   91 /***********************************************************************************
-//   92 *       Descrição       :       Inicialização do módulo
-//   93 *       Parametros      :       nenhum
-//   94 *       Retorno         :       nenhum
-//   95 ***********************************************************************************/
+//   78   [CASHLESS_STATE_DESABILITADO]    = SMC_desabilitado,
+//   79   [CASHLESS_STATE_SETUP]           = SMC_setup,
+//   80   [CASHLESS_STATE_OFFLINE]         = SMC_offline_state,
+//   81   [CASHLESS_STATE_POLL]            = SMC_poll_interface,
+//   82   [CASHLESS_STATE_LOCKED]          = SMC_dispositivo_bloqueado,
+//   83   [CASHLESS_STATE_INIT_VEND]       = SMC_inicia_transacao,
+//   84   [CASHLESS_STATE_VEND_APPROVED]   = SMC_transacao_aprovada,
+//   85   [CASHLESS_STATE_VEND_SUCCESS]    = SMC_sucesso_transacao,
+//   86   [CASHLESS_STATE_SESSION_COMPLET] = NULL
+//   87 };
+//   88   
+//   89 /***********************************************************************************
+//   90 *       Implementação das funções
+//   91 ***********************************************************************************/
+//   92 
+//   93 /***********************************************************************************
+//   94 *       Descrição       :       Inicialização do módulo
+//   95 *       Parametros      :       nenhum
+//   96 *       Retorno         :       nenhum
+//   97 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock0 Using cfiCommon0
           CFI Function SMC_ini
           CFI NoCalls
         THUMB
-//   96 void SMC_ini(void){
-//   97   
-//   98   
+//   98 void SMC_ini(void){
 //   99   
-//  100 }
+//  100   
+//  101   
+//  102 }
 SMC_ini:
         BX       LR               ;; return
           CFI EndBlock cfiBlock0
-//  101 /***********************************************************************************
-//  102 *       Descrição       :       Tick da máquina de estados de supervisão
-//  103 *                               do cashless MDB
-//  104 *       Parametros      :       nenhum
-//  105 *       Retorno         :       nenhum
-//  106 ***********************************************************************************/
+//  103 /***********************************************************************************
+//  104 *       Descrição       :       Tick da máquina de estados de supervisão
+//  105 *                               do cashless MDB
+//  106 *       Parametros      :       nenhum
+//  107 *       Retorno         :       nenhum
+//  108 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock1 Using cfiCommon0
           CFI Function SMC_tick
         THUMB
-//  107 void SMC_tick(void){
+//  109 void SMC_tick(void){
 SMC_tick:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  108 
-//  109   SMC_estado_atual = MDBCASHLESS_funcs[SMC_estado_atual]();        
+//  110 
+//  111   SMC_estado_atual = MDBCASHLESS_funcs[SMC_estado_atual]();        
         LDR.N    R0,??DataTable5
         LDRB     R0,[R0, #+0]
         LDR.N    R1,??DataTable5_1
@@ -259,91 +267,91 @@ SMC_tick:
         BLX      R0
         LDR.N    R1,??DataTable5
         STRB     R0,[R1, #+0]
-//  110 }
+//  112 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock1
-//  111 /***********************************************************************************
-//  112 *       Descrição       :       Estado onde o cashless está desabilitado
-//  113 *       Parametros      :       nenhum
-//  114 *       Retorno         :       eCASHLESS_state
-//  115 ***********************************************************************************/
+//  113 /***********************************************************************************
+//  114 *       Descrição       :       Estado onde o cashless está desabilitado
+//  115 *       Parametros      :       nenhum
+//  116 *       Retorno         :       eCASHLESS_state
+//  117 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function SMC_desabilitado
         THUMB
-//  116 eCASHLESS_state SMC_desabilitado(void){
+//  118 eCASHLESS_state SMC_desabilitado(void){
 SMC_desabilitado:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  117   unsigned char flag;
-//  118   
-//  119   PARAMETROS_le(ADR_FLAG_MDB_CASHLESS,(void*)&flag);    
+//  119   unsigned char flag;
+//  120   
+//  121   PARAMETROS_le(ADR_FLAG_MDB_CASHLESS,(void*)&flag);    
         ADD      R1,SP,#+0
         MOVS     R0,#+6
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  120   if(!flag)
+//  122   if(!flag)
         LDRB     R0,[SP, #+0]
         CMP      R0,#+0
         BNE.N    ??SMC_desabilitado_0
-//  121     return CASHLESS_STATE_DESABILITADO;           
+//  123     return CASHLESS_STATE_DESABILITADO;           
         MOVS     R0,#+0
         B.N      ??SMC_desabilitado_1
-//  122   
-//  123   if(SMC_flag_bloqueio)
+//  124   
+//  125   if(SMC_flag_bloqueio)
 ??SMC_desabilitado_0:
         LDR.N    R0,??DataTable5_2
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??SMC_desabilitado_2
-//  124     return CASHLESS_STATE_LOCKED;
+//  126     return CASHLESS_STATE_LOCKED;
         MOVS     R0,#+4
         B.N      ??SMC_desabilitado_1
-//  125   
-//  126    
-//  127   return CASHLESS_STATE_SETUP;
+//  127   
+//  128    
+//  129   return CASHLESS_STATE_SETUP;
 ??SMC_desabilitado_2:
         MOVS     R0,#+1
 ??SMC_desabilitado_1:
         POP      {R1,PC}          ;; return
           CFI EndBlock cfiBlock2
-//  128 }
-//  129 /***********************************************************************************
-//  130 *       Descrição       :       Estado em que realiza a configuração da
-//  131 *                               interface de cartão
-//  132 *       Parametros      :       nenhum
-//  133 *       Retorno         :       eCASHLESS_state
-//  134 ***********************************************************************************/
+//  130 }
+//  131 /***********************************************************************************
+//  132 *       Descrição       :       Estado em que realiza a configuração da
+//  133 *                               interface de cartão
+//  134 *       Parametros      :       nenhum
+//  135 *       Retorno         :       eCASHLESS_state
+//  136 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock3 Using cfiCommon0
           CFI Function SMC_setup
         THUMB
-//  135 eCASHLESS_state SMC_setup(void){  
+//  137 eCASHLESS_state SMC_setup(void){  
 SMC_setup:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+36
           CFI CFA R13+40
-//  136   unsigned char nivel_configurado;
-//  137   unsigned short int pais;
-//  138   unsigned char escala;
-//  139   unsigned char casas_decimais;
-//  140   unsigned char tempo_maximo_transacao;
-//  141   unsigned char opcoes_gerais;
-//  142   
-//  143   CASHLESS_reset_device();
+//  138   unsigned char nivel_configurado;
+//  139   unsigned short int pais;
+//  140   unsigned char escala;
+//  141   unsigned char casas_decimais;
+//  142   unsigned char tempo_maximo_transacao;
+//  143   unsigned char opcoes_gerais;
+//  144   
+//  145   CASHLESS_reset_device();
           CFI FunCall CASHLESS_reset_device
         BL       CASHLESS_reset_device
-//  144   vTaskDelay(20);
+//  146   vTaskDelay(20);
         MOVS     R0,#+20
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  145   
-//  146   if(CASHLESS_set_and_get_setup_from_to_device(1,2,16,ASCII,&nivel_configurado,&pais,&escala,&casas_decimais,&tempo_maximo_transacao,&opcoes_gerais)==MDB_OK){
+//  147   
+//  148   if(CASHLESS_set_and_get_setup_from_to_device(1,2,16,ASCII,&nivel_configurado,&pais,&escala,&casas_decimais,&tempo_maximo_transacao,&opcoes_gerais)==MDB_OK){
         ADD      R0,SP,#+24
         STR      R0,[SP, #+20]
         ADD      R0,SP,#+25
@@ -364,53 +372,53 @@ SMC_setup:
         BL       CASHLESS_set_and_get_setup_from_to_device
         CMP      R0,#+0
         BNE.N    ??SMC_setup_0
-//  147     vTaskDelay(50);
+//  149     vTaskDelay(50);
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  148     if(CASHLESS_set_min_and_max_price_in_device(1,100)==MDB_OK){
+//  150     if(CASHLESS_set_min_and_max_price_in_device(1,100)==MDB_OK){
         MOVS     R1,#+100
         MOVS     R0,#+1
           CFI FunCall CASHLESS_set_min_and_max_price_in_device
         BL       CASHLESS_set_min_and_max_price_in_device
         CMP      R0,#+0
         BNE.N    ??SMC_setup_1
-//  149       vTaskDelay(50);
+//  151       vTaskDelay(50);
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  150       if(MDBCASHLESS_enable_reader(1)==MDB_OK){
+//  152       if(MDBCASHLESS_enable_reader(1)==MDB_OK){
         MOVS     R0,#+1
           CFI FunCall MDBCASHLESS_enable_reader
         BL       MDBCASHLESS_enable_reader
         CMP      R0,#+0
         BNE.N    ??SMC_setup_1
-//  151         vTaskDelay(50);
+//  153         vTaskDelay(50);
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  152         SMC_time_out=TEMPO_BUSCA_OFFLINE;     
+//  154         SMC_time_out=TEMPO_BUSCA_OFFLINE;     
         LDR.N    R0,??DataTable5_3
         MOVW     R1,#+30000
         STRH     R1,[R0, #+0]
-//  153         return CASHLESS_STATE_POLL;           
+//  155         return CASHLESS_STATE_POLL;           
         MOVS     R0,#+3
         B.N      ??SMC_setup_2
-//  154       }
-//  155     }
-//  156   }
-//  157   else
-//  158     if(!SMC_time_out)
+//  156       }
+//  157     }
+//  158   }
+//  159   else
+//  160     if(!SMC_time_out)
 ??SMC_setup_0:
         LDR.N    R0,??DataTable5_3
         LDRH     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??SMC_setup_1
-//  159       return CASHLESS_STATE_OFFLINE;    
+//  161       return CASHLESS_STATE_OFFLINE;    
         MOVS     R0,#+2
         B.N      ??SMC_setup_2
-//  160   
-//  161   return CASHLESS_STATE_SETUP;  
+//  162   
+//  163   return CASHLESS_STATE_SETUP;  
 ??SMC_setup_1:
         MOVS     R0,#+1
 ??SMC_setup_2:
@@ -418,71 +426,71 @@ SMC_setup:
           CFI CFA R13+4
         POP      {PC}             ;; return
           CFI EndBlock cfiBlock3
-//  162 }
-//  163 /***********************************************************************************
-//  164 *       Descrição       :       Estado em que a interface está offline
-//  165 *       Parametros      :       nenhum
-//  166 *       Retorno         :       eCASHLESS_state
-//  167 ***********************************************************************************/
+//  164 }
+//  165 /***********************************************************************************
+//  166 *       Descrição       :       Estado em que a interface está offline
+//  167 *       Parametros      :       nenhum
+//  168 *       Retorno         :       eCASHLESS_state
+//  169 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function SMC_offline_state
         THUMB
-//  168 eCASHLESS_state SMC_offline_state(void){
+//  170 eCASHLESS_state SMC_offline_state(void){
 SMC_offline_state:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  169 
-//  170   if(CASHLESS_adreess()==MDB_OK)
+//  171 
+//  172   if(CASHLESS_adreess()==MDB_OK)
           CFI FunCall CASHLESS_adreess
         BL       CASHLESS_adreess
         CMP      R0,#+0
         BNE.N    ??SMC_offline_state_0
-//  171     return CASHLESS_STATE_DESABILITADO;
+//  173     return CASHLESS_STATE_DESABILITADO;
         MOVS     R0,#+0
         B.N      ??SMC_offline_state_1
-//  172      
-//  173   return CASHLESS_STATE_OFFLINE;
+//  174      
+//  175   return CASHLESS_STATE_OFFLINE;
 ??SMC_offline_state_0:
         MOVS     R0,#+2
 ??SMC_offline_state_1:
         POP      {R1,PC}          ;; return
           CFI EndBlock cfiBlock4
-//  174 }
-//  175 /***********************************************************************************
-//  176 *       Descrição       :       Estado em que é realizado o poll do
-//  177 *                               dispositivo
-//  178 *       Parametros      :       nenhum
-//  179 *       Retorno         :       eCASHLESS_state
-//  180 ***********************************************************************************/
+//  176 }
+//  177 /***********************************************************************************
+//  178 *       Descrição       :       Estado em que é realizado o poll do
+//  179 *                               dispositivo
+//  180 *       Parametros      :       nenhum
+//  181 *       Retorno         :       eCASHLESS_state
+//  182 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function SMC_poll_interface
         THUMB
-//  181 eCASHLESS_state SMC_poll_interface(void){
+//  183 eCASHLESS_state SMC_poll_interface(void){
 SMC_poll_interface:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+20
           CFI CFA R13+24
-//  182   eMDB_POLL_HEADER header;
-//  183   unsigned char args[4];
-//  184   eCASHLESS_VEND_RESULT resultado;
-//  185   unsigned short int pago;
-//  186   
-//  187   if(CASHLESS_poll_device(&header,args)==MDB_OK){
+//  184   eMDB_POLL_HEADER header;
+//  185   unsigned char args[4];
+//  186   eCASHLESS_VEND_RESULT resultado;
+//  187   unsigned short int pago;
+//  188   
+//  189   if(CASHLESS_poll_device(&header,args)==MDB_OK){
         ADD      R1,SP,#+12
         ADD      R0,SP,#+0
           CFI FunCall CASHLESS_poll_device
         BL       CASHLESS_poll_device
         CMP      R0,#+0
         BNE.N    ??SMC_poll_interface_0
-//  188     
-//  189     switch(header){
+//  190     
+//  191     switch(header){
         LDRB     R0,[SP, #+0]
         CMP      R0,#+2
         BEQ.N    ??SMC_poll_interface_1
@@ -497,20 +505,20 @@ SMC_poll_interface:
         BEQ.N    ??SMC_poll_interface_7
         BCC.N    ??SMC_poll_interface_8
         B.N      ??SMC_poll_interface_2
-//  190       case CASHLESS_POOL_DISPLAY_REQUEST:
-//  191            break;
+//  192       case CASHLESS_POOL_DISPLAY_REQUEST:
+//  193            break;
 ??SMC_poll_interface_1:
         B.N      ??SMC_poll_interface_2
-//  192       case CASHLESS_POOL_BEGIN_SESSION:
-//  193            {
-//  194              unsigned int valorPipoca;
-//  195              PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);
+//  194       case CASHLESS_POOL_BEGIN_SESSION:
+//  195            {
+//  196              unsigned int valorPipoca;
+//  197              PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);                          
 ??SMC_poll_interface_4:
         ADD      R1,SP,#+8
         MOVS     R0,#+3
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  196              if(MDBCASHLESS_start_vend(&resultado,&pago,valorPipoca,1)==MDB_OK){
+//  198              if(MDBCASHLESS_start_vend(&resultado,&pago,valorPipoca,1)==MDB_OK){
         MOVS     R3,#+1
         LDR      R2,[SP, #+8]
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
@@ -518,241 +526,253 @@ SMC_poll_interface:
         ADD      R0,SP,#+1
           CFI FunCall MDBCASHLESS_start_vend
         BL       MDBCASHLESS_start_vend
-//  197                       
-//  198              }
-//  199            }
-//  200            break;
+//  199                       
+//  200              }
+//  201            }
+//  202            break;
         B.N      ??SMC_poll_interface_2
-//  201       case CASHLESS_POOL_SESSION_CANCEL_REQUEST:
-//  202             MDBCASHLESS_session_complete();
+//  203       case CASHLESS_POOL_SESSION_CANCEL_REQUEST:
+//  204             MDBCASHLESS_session_complete();
 ??SMC_poll_interface_3:
           CFI FunCall MDBCASHLESS_session_complete
         BL       MDBCASHLESS_session_complete
-//  203            break;
+//  205            break;
         B.N      ??SMC_poll_interface_2
-//  204       case CASHLESS_POOL_VEND_APPROVED: 
-//  205            if(MDBCASHLESS_vend_success(1)==MDB_OK){
+//  206       case CASHLESS_POOL_VEND_APPROVED: 
+//  207            if(MDBCASHLESS_vend_success(1)==MDB_OK){
 ??SMC_poll_interface_6:
         MOVS     R0,#+1
           CFI FunCall MDBCASHLESS_vend_success
         BL       MDBCASHLESS_vend_success
         CMP      R0,#+0
         BNE.N    ??SMC_poll_interface_9
-//  206              unsigned int valorPipoca;
-//  207              PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);
+//  208              unsigned int valorPipoca;
+//  209              PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);
         ADD      R1,SP,#+4
         MOVS     R0,#+3
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  208              PAGAMENTOS_adiciona_valores(valorPipoca);                            
+//  210              
+//  211              if(!SMC_contador_atividade_cartao)
+        LDR.N    R0,??DataTable5_4
+        LDR      R0,[R0, #+0]
+        CMP      R0,#+0
+        BNE.N    ??SMC_poll_interface_10
+//  212                PAGAMENTOS_adiciona_valores(valorPipoca);  
         LDR      R0,[SP, #+4]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall PAGAMENTOS_adiciona_valores
         BL       PAGAMENTOS_adiciona_valores
-//  209              if(MDBCASHLESS_session_complete()==MDB_OK){
+//  213              SMC_contador_atividade_cartao=CICLOS_ATIVIDADE_CARTAO;          
+??SMC_poll_interface_10:
+        LDR.N    R0,??DataTable5_4
+        MOVS     R1,#+3
+        STR      R1,[R0, #+0]
+//  214              
+//  215              if(MDBCASHLESS_session_complete()==MDB_OK){
           CFI FunCall MDBCASHLESS_session_complete
         BL       MDBCASHLESS_session_complete
-//  210              }
-//  211            }
-//  212            break;
+//  216              }
+//  217            }
+//  218            break;
 ??SMC_poll_interface_9:
         B.N      ??SMC_poll_interface_2
-//  213       case CASHLESS_POOL_VEND_DENIED:
-//  214            MDBCASHLESS_session_complete();
+//  219       case CASHLESS_POOL_VEND_DENIED:
+//  220            MDBCASHLESS_session_complete();
 ??SMC_poll_interface_5:
           CFI FunCall MDBCASHLESS_session_complete
         BL       MDBCASHLESS_session_complete
-//  215            break;
+//  221            break;
         B.N      ??SMC_poll_interface_2
-//  216       case CASHLESS_POOL_END_SESSION:
-//  217            MDBCASHLESS_session_complete();
+//  222       case CASHLESS_POOL_END_SESSION:
+//  223            MDBCASHLESS_session_complete();
 ??SMC_poll_interface_8:
           CFI FunCall MDBCASHLESS_session_complete
         BL       MDBCASHLESS_session_complete
-//  218            break;
+//  224            break;
         B.N      ??SMC_poll_interface_2
-//  219       case CASHLESS_POOL_CANCELLED:
-//  220            MDBCASHLESS_session_complete();
+//  225       case CASHLESS_POOL_CANCELLED:
+//  226            MDBCASHLESS_session_complete();
 ??SMC_poll_interface_7:
           CFI FunCall MDBCASHLESS_session_complete
         BL       MDBCASHLESS_session_complete
-//  221            break;
-//  222     }
-//  223     
-//  224     SMC_time_out=TEMPO_BUSCA_OFFLINE;    
+//  227            break;
+//  228     }
+//  229     
+//  230     SMC_time_out=TEMPO_BUSCA_OFFLINE;    
 ??SMC_poll_interface_2:
         LDR.N    R0,??DataTable5_3
         MOVW     R1,#+30000
         STRH     R1,[R0, #+0]
-//  225   }
-//  226   
-//  227   return  CASHLESS_STATE_POLL;
+//  231   }
+//  232   
+//  233   return  CASHLESS_STATE_POLL;
 ??SMC_poll_interface_0:
         MOVS     R0,#+3
         ADD      SP,SP,#+20
           CFI CFA R13+4
         POP      {PC}             ;; return
           CFI EndBlock cfiBlock5
-//  228 }
-//  229 /***********************************************************************************
-//  230 *       Descrição       :       Estado no qual o dispositivo está bloqueado
-//  231 *       Parametros      :       nenhum
-//  232 *       Retorno         :       eCASHLESS_state
-//  233 ***********************************************************************************/
+//  234 }
+//  235 /***********************************************************************************
+//  236 *       Descrição       :       Estado no qual o dispositivo está bloqueado
+//  237 *       Parametros      :       nenhum
+//  238 *       Retorno         :       eCASHLESS_state
+//  239 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function SMC_dispositivo_bloqueado
         THUMB
-//  234 eCASHLESS_state SMC_dispositivo_bloqueado(void){
+//  240 eCASHLESS_state SMC_dispositivo_bloqueado(void){
 SMC_dispositivo_bloqueado:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  235 
-//  236   if(!SMC_flag_bloqueio)
+//  241 
+//  242   if(!SMC_flag_bloqueio)
         LDR.N    R0,??DataTable5_2
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??SMC_dispositivo_bloqueado_0
-//  237     return CASHLESS_STATE_DESABILITADO;
+//  243     return CASHLESS_STATE_DESABILITADO;
         MOVS     R0,#+0
         B.N      ??SMC_dispositivo_bloqueado_1
-//  238   
-//  239   if(MDBCASHLESS_enable_reader(0)==MDB_OK){
+//  244   
+//  245   if(MDBCASHLESS_enable_reader(0)==MDB_OK){
 ??SMC_dispositivo_bloqueado_0:
         MOVS     R0,#+0
           CFI FunCall MDBCASHLESS_enable_reader
         BL       MDBCASHLESS_enable_reader
         CMP      R0,#+0
         BNE.N    ??SMC_dispositivo_bloqueado_2
-//  240     SMC_time_out=TEMPO_BUSCA_OFFLINE;     
+//  246     SMC_time_out=TEMPO_BUSCA_OFFLINE;     
         LDR.N    R0,??DataTable5_3
         MOVW     R1,#+30000
         STRH     R1,[R0, #+0]
-//  241     return CASHLESS_STATE_LOCKED;  
+//  247     return CASHLESS_STATE_LOCKED;  
         MOVS     R0,#+4
         B.N      ??SMC_dispositivo_bloqueado_1
-//  242   }
-//  243   else
-//  244     if(!SMC_time_out)
+//  248   }
+//  249   else
+//  250     if(!SMC_time_out)
 ??SMC_dispositivo_bloqueado_2:
         LDR.N    R0,??DataTable5_3
         LDRH     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??SMC_dispositivo_bloqueado_3
-//  245       return CASHLESS_STATE_OFFLINE;
+//  251       return CASHLESS_STATE_OFFLINE;
         MOVS     R0,#+2
         B.N      ??SMC_dispositivo_bloqueado_1
-//  246         
-//  247   return  CASHLESS_STATE_LOCKED;
+//  252         
+//  253   return  CASHLESS_STATE_LOCKED;
 ??SMC_dispositivo_bloqueado_3:
         MOVS     R0,#+4
 ??SMC_dispositivo_bloqueado_1:
         POP      {R1,PC}          ;; return
           CFI EndBlock cfiBlock6
-//  248 }
-//  249 /***********************************************************************************
-//  250 *       Descrição       :       Estado em que é iniciada a transação
-//  251 *                               de venda
-//  252 *       Parametros      :       nenhum
-//  253 *       Retorno         :       eCASHLESS_state
-//  254 ***********************************************************************************/
+//  254 }
+//  255 /***********************************************************************************
+//  256 *       Descrição       :       Estado em que é iniciada a transação
+//  257 *                               de venda
+//  258 *       Parametros      :       nenhum
+//  259 *       Retorno         :       eCASHLESS_state
+//  260 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function SMC_inicia_transacao
           CFI NoCalls
         THUMB
-//  255 eCASHLESS_state SMC_inicia_transacao(void){
-//  256 
-//  257   
-//  258   return CASHLESS_STATE_INIT_VEND;
+//  261 eCASHLESS_state SMC_inicia_transacao(void){
+//  262 
+//  263   
+//  264   return CASHLESS_STATE_INIT_VEND;
 SMC_inicia_transacao:
         MOVS     R0,#+5
         BX       LR               ;; return
           CFI EndBlock cfiBlock7
-//  259 }
-//  260 /***********************************************************************************
-//  261 *       Descrição       :       Estado no qual a venda foi aprovada
-//  262 *       Parametros      :       nenhum
-//  263 *       Retorno         :       eCASHLESS_state
-//  264 ***********************************************************************************/
+//  265 }
+//  266 /***********************************************************************************
+//  267 *       Descrição       :       Estado no qual a venda foi aprovada
+//  268 *       Parametros      :       nenhum
+//  269 *       Retorno         :       eCASHLESS_state
+//  270 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock8 Using cfiCommon0
           CFI Function SMC_transacao_aprovada
           CFI NoCalls
         THUMB
-//  265 eCASHLESS_state SMC_transacao_aprovada(void){
-//  266 
-//  267    
-//  268   return CASHLESS_STATE_VEND_APPROVED;
+//  271 eCASHLESS_state SMC_transacao_aprovada(void){
+//  272 
+//  273    
+//  274   return CASHLESS_STATE_VEND_APPROVED;
 SMC_transacao_aprovada:
         MOVS     R0,#+6
         BX       LR               ;; return
           CFI EndBlock cfiBlock8
-//  269 }
-//  270 /***********************************************************************************
-//  271 *       Descrição       :       Estado no qual recebeu a configuração
-//  272 *                               do crédit
-//  273 *       Parametros      :       nenhum
-//  274 *       Retorno         :       eCASHLESS_state 
-//  275 ***********************************************************************************/
+//  275 }
+//  276 /***********************************************************************************
+//  277 *       Descrição       :       Estado no qual recebeu a configuração
+//  278 *                               do crédit
+//  279 *       Parametros      :       nenhum
+//  280 *       Retorno         :       eCASHLESS_state 
+//  281 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock9 Using cfiCommon0
           CFI Function SMC_sucesso_transacao
           CFI NoCalls
         THUMB
-//  276 eCASHLESS_state SMC_sucesso_transacao(void){
-//  277   
-//  278   
-//  279   return CASHLESS_STATE_VEND_SUCCESS;
+//  282 eCASHLESS_state SMC_sucesso_transacao(void){
+//  283   
+//  284   
+//  285   return CASHLESS_STATE_VEND_SUCCESS;
 SMC_sucesso_transacao:
         MOVS     R0,#+7
         BX       LR               ;; return
           CFI EndBlock cfiBlock9
-//  280 }
-//  281 /***********************************************************************************
-//  282 *       Descrição       :       Estado no qual a transação foi completada
-//  283 *       Parametros      :       nenhum
-//  284 *       Retorno         :       eCASHLESS_state
-//  285 ***********************************************************************************/
+//  286 }
+//  287 /***********************************************************************************
+//  288 *       Descrição       :       Estado no qual a transação foi completada
+//  289 *       Parametros      :       nenhum
+//  290 *       Retorno         :       eCASHLESS_state
+//  291 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock10 Using cfiCommon0
           CFI Function SMC_transacao_completada
           CFI NoCalls
         THUMB
-//  286 eCASHLESS_state SMC_transacao_completada(void){
-//  287   
-//  288   
-//  289   return CASHLESS_STATE_SESSION_COMPLET;
+//  292 eCASHLESS_state SMC_transacao_completada(void){
+//  293   
+//  294   
+//  295   return CASHLESS_STATE_SESSION_COMPLET;
 SMC_transacao_completada:
         MOVS     R0,#+8
         BX       LR               ;; return
           CFI EndBlock cfiBlock10
-//  290 }
-//  291 /***********************************************************************************
-//  292 *       Descrição       :       Setter para o flag de bloqueio do cashless
-//  293 *                               device
-//  294 *       Parametros      :       (unsigned char) flag
-//  295 *       Retorno         :       nenhum
-//  296 ***********************************************************************************/
+//  296 }
+//  297 /***********************************************************************************
+//  298 *       Descrição       :       Setter para o flag de bloqueio do cashless
+//  299 *                               device
+//  300 *       Parametros      :       (unsigned char) flag
+//  301 *       Retorno         :       nenhum
+//  302 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock11 Using cfiCommon0
           CFI Function SMC_setter_bloqueio
           CFI NoCalls
         THUMB
-//  297 void SMC_setter_bloqueio(unsigned char flag){
-//  298   
-//  299   SMC_flag_bloqueio = flag;
+//  303 void SMC_setter_bloqueio(unsigned char flag){
+//  304   
+//  305   SMC_flag_bloqueio = flag;
 SMC_setter_bloqueio:
         LDR.N    R1,??DataTable5_2
         STRB     R0,[R1, #+0]
-//  300 }
+//  306 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock11
 
@@ -780,6 +800,12 @@ SMC_setter_bloqueio:
 ??DataTable5_3:
         DC32     SMC_time_out
 
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable5_4:
+        DC32     SMC_contador_atividade_cartao
+
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
@@ -792,18 +818,18 @@ SMC_setter_bloqueio:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  301 /***********************************************************************************
-//  302 *       Fim do arquivo
-//  303 ***********************************************************************************/
+//  307 /***********************************************************************************
+//  308 *       Fim do arquivo
+//  309 ***********************************************************************************/
 // 
 //   6 bytes in section .bss
-//   3 bytes in section .data
+//   7 bytes in section .data
 //  36 bytes in section .rodata
-// 444 bytes in section .text
+// 462 bytes in section .text
 // 
-// 444 bytes of CODE  memory
+// 462 bytes of CODE  memory
 //  36 bytes of CONST memory
-//   9 bytes of DATA  memory
+//  13 bytes of DATA  memory
 //
 //Errors: none
 //Warnings: none

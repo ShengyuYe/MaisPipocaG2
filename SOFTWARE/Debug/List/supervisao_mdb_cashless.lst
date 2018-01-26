@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      14/Sep/2017  13:23:04 #
+# IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM      26/Jan/2018  13:45:22 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -71,59 +71,65 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\supervisao_mdb_cashless
      42          #define TEMPO_INICILIZACAO_CASHLESS                     60000
      43          #define TENTATIVAS_CASHLESS                             10
      44          #define TEMPO_BUSCA_OFFLINE                             30000
-     45          
-     46          /***********************************************************************************
-     47          *       Constantes locais
-     48          ***********************************************************************************/
-     49          
+     45          #define CICLOS_ATIVIDADE_CARTAO                         3
+     46          
+     47          /***********************************************************************************
+     48          *       Constantes locais
+     49          ***********************************************************************************/
      50          
-     51          /***********************************************************************************
-     52          *       Variaveis locais
-     53          ***********************************************************************************/
+     51          
+     52          /***********************************************************************************
+     53          *       Variaveis locais
+     54          ***********************************************************************************/
 
    \                                 In section .bss, align 4
-     54          unsigned int SMC_contador;
+     55          unsigned int SMC_contador;
    \                     SMC_contador:
    \   00000000                      DS8 4
 
    \                                 In section .bss, align 1
-     55          unsigned char SMC_ciclos;
+     56          unsigned char SMC_ciclos;
    \                     SMC_ciclos:
    \   00000000                      DS8 1
 
    \                                 In section .bss, align 1
-     56          eCASHLESS_state SMC_estado_atual = CASHLESS_STATE_DESABILITADO;
+     57          eCASHLESS_state SMC_estado_atual = CASHLESS_STATE_DESABILITADO;
    \                     SMC_estado_atual:
    \   00000000                      DS8 1
 
    \                                 In section .data, align 2
-     57          unsigned short int SMC_time_out=TEMPO_BUSCA_OFFLINE;
+     58          unsigned short int SMC_time_out=TEMPO_BUSCA_OFFLINE;
    \                     SMC_time_out:
    \   00000000   0x7530             DC16 30000
 
    \                                 In section .data, align 1
-     58          unsigned char SMC_flag_bloqueio=1;
+     59          unsigned char SMC_flag_bloqueio=1;
    \                     SMC_flag_bloqueio:
    \   00000000   0x01               DC8 1
-     59          
-     60          /***********************************************************************************
-     61          *       Funções locais
-     62          ***********************************************************************************/
-     63          eCASHLESS_state SMC_desabilitado(void);
-     64          eCASHLESS_state SMC_setup(void);
-     65          eCASHLESS_state SMC_offline_state(void);
-     66          eCASHLESS_state SMC_poll_interface(void);
-     67          eCASHLESS_state SMC_dispositivo_bloqueado(void);
-     68          eCASHLESS_state SMC_inicia_transacao(void);
-     69          eCASHLESS_state SMC_transacao_aprovada(void);
-     70          eCASHLESS_state SMC_sucesso_transacao(void);
-     71          
-     72          /***********************************************************************************
-     73          *       Tabela de funções
-     74          ***********************************************************************************/
+
+   \                                 In section .data, align 4
+     60          unsigned int SMC_contador_atividade_cartao=CICLOS_ATIVIDADE_CARTAO;
+   \                     SMC_contador_atividade_cartao:
+   \   00000000   0x00000003         DC32 3
+     61          
+     62          /***********************************************************************************
+     63          *       Funções locais
+     64          ***********************************************************************************/
+     65          eCASHLESS_state SMC_desabilitado(void);
+     66          eCASHLESS_state SMC_setup(void);
+     67          eCASHLESS_state SMC_offline_state(void);
+     68          eCASHLESS_state SMC_poll_interface(void);
+     69          eCASHLESS_state SMC_dispositivo_bloqueado(void);
+     70          eCASHLESS_state SMC_inicia_transacao(void);
+     71          eCASHLESS_state SMC_transacao_aprovada(void);
+     72          eCASHLESS_state SMC_sucesso_transacao(void);
+     73          
+     74          /***********************************************************************************
+     75          *       Tabela de funções
+     76          ***********************************************************************************/
 
    \                                 In section .rodata, align 4
-     75          eCASHLESS_state(*const MDBCASHLESS_funcs[])(void)={
+     77          eCASHLESS_state(*const MDBCASHLESS_funcs[])(void)={
    \                     MDBCASHLESS_funcs:
    \   00000000   0x........         DC32 SMC_desabilitado, SMC_setup, SMC_offline_state, SMC_poll_interface
    \              0x........   
@@ -134,48 +140,48 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\supervisao_mdb_cashless
    \   00000018   0x........         DC32 SMC_transacao_aprovada, SMC_sucesso_transacao, 0H
    \              0x........   
    \              0x00000000   
-     76            [CASHLESS_STATE_DESABILITADO]    = SMC_desabilitado,
-     77            [CASHLESS_STATE_SETUP]           = SMC_setup,
-     78            [CASHLESS_STATE_OFFLINE]         = SMC_offline_state,
-     79            [CASHLESS_STATE_POLL]            = SMC_poll_interface,
-     80            [CASHLESS_STATE_LOCKED]          = SMC_dispositivo_bloqueado,
-     81            [CASHLESS_STATE_INIT_VEND]       = SMC_inicia_transacao,
-     82            [CASHLESS_STATE_VEND_APPROVED]   = SMC_transacao_aprovada,
-     83            [CASHLESS_STATE_VEND_SUCCESS]    = SMC_sucesso_transacao,
-     84            [CASHLESS_STATE_SESSION_COMPLET] = NULL
-     85          };
-     86            
-     87          /***********************************************************************************
-     88          *       Implementação das funções
-     89          ***********************************************************************************/
-     90          
-     91          /***********************************************************************************
-     92          *       Descrição       :       Inicialização do módulo
-     93          *       Parametros      :       nenhum
-     94          *       Retorno         :       nenhum
-     95          ***********************************************************************************/
+     78            [CASHLESS_STATE_DESABILITADO]    = SMC_desabilitado,
+     79            [CASHLESS_STATE_SETUP]           = SMC_setup,
+     80            [CASHLESS_STATE_OFFLINE]         = SMC_offline_state,
+     81            [CASHLESS_STATE_POLL]            = SMC_poll_interface,
+     82            [CASHLESS_STATE_LOCKED]          = SMC_dispositivo_bloqueado,
+     83            [CASHLESS_STATE_INIT_VEND]       = SMC_inicia_transacao,
+     84            [CASHLESS_STATE_VEND_APPROVED]   = SMC_transacao_aprovada,
+     85            [CASHLESS_STATE_VEND_SUCCESS]    = SMC_sucesso_transacao,
+     86            [CASHLESS_STATE_SESSION_COMPLET] = NULL
+     87          };
+     88            
+     89          /***********************************************************************************
+     90          *       Implementação das funções
+     91          ***********************************************************************************/
+     92          
+     93          /***********************************************************************************
+     94          *       Descrição       :       Inicialização do módulo
+     95          *       Parametros      :       nenhum
+     96          *       Retorno         :       nenhum
+     97          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-     96          void SMC_ini(void){
-     97            
-     98            
+     98          void SMC_ini(void){
      99            
-    100          }
+    100            
+    101            
+    102          }
    \                     SMC_ini:
    \   00000000   0x4770             BX       LR               ;; return
-    101          /***********************************************************************************
-    102          *       Descrição       :       Tick da máquina de estados de supervisão
-    103          *                               do cashless MDB
-    104          *       Parametros      :       nenhum
-    105          *       Retorno         :       nenhum
-    106          ***********************************************************************************/
+    103          /***********************************************************************************
+    104          *       Descrição       :       Tick da máquina de estados de supervisão
+    105          *                               do cashless MDB
+    106          *       Parametros      :       nenhum
+    107          *       Retorno         :       nenhum
+    108          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    107          void SMC_tick(void){
+    109          void SMC_tick(void){
    \                     SMC_tick:
    \   00000000   0xB580             PUSH     {R7,LR}
-    108          
-    109            SMC_estado_atual = MDBCASHLESS_funcs[SMC_estado_atual]();        
+    110          
+    111            SMC_estado_atual = MDBCASHLESS_funcs[SMC_estado_atual]();        
    \   00000002   0x....             LDR.N    R0,??DataTable5
    \   00000004   0x7800             LDRB     R0,[R0, #+0]
    \   00000006   0x....             LDR.N    R1,??DataTable5_1
@@ -183,75 +189,75 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\supervisao_mdb_cashless
    \   0000000C   0x4780             BLX      R0
    \   0000000E   0x....             LDR.N    R1,??DataTable5
    \   00000010   0x7008             STRB     R0,[R1, #+0]
-    110          }
+    112          }
    \   00000012   0xBD01             POP      {R0,PC}          ;; return
-    111          /***********************************************************************************
-    112          *       Descrição       :       Estado onde o cashless está desabilitado
-    113          *       Parametros      :       nenhum
-    114          *       Retorno         :       eCASHLESS_state
-    115          ***********************************************************************************/
+    113          /***********************************************************************************
+    114          *       Descrição       :       Estado onde o cashless está desabilitado
+    115          *       Parametros      :       nenhum
+    116          *       Retorno         :       eCASHLESS_state
+    117          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    116          eCASHLESS_state SMC_desabilitado(void){
+    118          eCASHLESS_state SMC_desabilitado(void){
    \                     SMC_desabilitado:
    \   00000000   0xB580             PUSH     {R7,LR}
-    117            unsigned char flag;
-    118            
-    119            PARAMETROS_le(ADR_FLAG_MDB_CASHLESS,(void*)&flag);    
+    119            unsigned char flag;
+    120            
+    121            PARAMETROS_le(ADR_FLAG_MDB_CASHLESS,(void*)&flag);    
    \   00000002   0xA900             ADD      R1,SP,#+0
    \   00000004   0x2006             MOVS     R0,#+6
    \   00000006   0x.... 0x....      BL       PARAMETROS_le
-    120            if(!flag)
+    122            if(!flag)
    \   0000000A   0xF89D 0x0000      LDRB     R0,[SP, #+0]
    \   0000000E   0x2800             CMP      R0,#+0
    \   00000010   0xD101             BNE.N    ??SMC_desabilitado_0
-    121              return CASHLESS_STATE_DESABILITADO;           
+    123              return CASHLESS_STATE_DESABILITADO;           
    \   00000012   0x2000             MOVS     R0,#+0
    \   00000014   0xE006             B.N      ??SMC_desabilitado_1
-    122            
-    123            if(SMC_flag_bloqueio)
+    124            
+    125            if(SMC_flag_bloqueio)
    \                     ??SMC_desabilitado_0:
    \   00000016   0x....             LDR.N    R0,??DataTable5_2
    \   00000018   0x7800             LDRB     R0,[R0, #+0]
    \   0000001A   0x2800             CMP      R0,#+0
    \   0000001C   0xD001             BEQ.N    ??SMC_desabilitado_2
-    124              return CASHLESS_STATE_LOCKED;
+    126              return CASHLESS_STATE_LOCKED;
    \   0000001E   0x2004             MOVS     R0,#+4
    \   00000020   0xE000             B.N      ??SMC_desabilitado_1
-    125            
-    126             
-    127            return CASHLESS_STATE_SETUP;
+    127            
+    128             
+    129            return CASHLESS_STATE_SETUP;
    \                     ??SMC_desabilitado_2:
    \   00000022   0x2001             MOVS     R0,#+1
    \                     ??SMC_desabilitado_1:
    \   00000024   0xBD02             POP      {R1,PC}          ;; return
-    128          }
-    129          /***********************************************************************************
-    130          *       Descrição       :       Estado em que realiza a configuração da
-    131          *                               interface de cartão
-    132          *       Parametros      :       nenhum
-    133          *       Retorno         :       eCASHLESS_state
-    134          ***********************************************************************************/
+    130          }
+    131          /***********************************************************************************
+    132          *       Descrição       :       Estado em que realiza a configuração da
+    133          *                               interface de cartão
+    134          *       Parametros      :       nenhum
+    135          *       Retorno         :       eCASHLESS_state
+    136          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    135          eCASHLESS_state SMC_setup(void){  
+    137          eCASHLESS_state SMC_setup(void){  
    \                     SMC_setup:
    \   00000000   0xB500             PUSH     {LR}
    \   00000002   0xB089             SUB      SP,SP,#+36
-    136            unsigned char nivel_configurado;
-    137            unsigned short int pais;
-    138            unsigned char escala;
-    139            unsigned char casas_decimais;
-    140            unsigned char tempo_maximo_transacao;
-    141            unsigned char opcoes_gerais;
-    142            
-    143            CASHLESS_reset_device();
+    138            unsigned char nivel_configurado;
+    139            unsigned short int pais;
+    140            unsigned char escala;
+    141            unsigned char casas_decimais;
+    142            unsigned char tempo_maximo_transacao;
+    143            unsigned char opcoes_gerais;
+    144            
+    145            CASHLESS_reset_device();
    \   00000004   0x.... 0x....      BL       CASHLESS_reset_device
-    144            vTaskDelay(20);
+    146            vTaskDelay(20);
    \   00000008   0x2014             MOVS     R0,#+20
    \   0000000A   0x.... 0x....      BL       vTaskDelay
-    145            
-    146            if(CASHLESS_set_and_get_setup_from_to_device(1,2,16,ASCII,&nivel_configurado,&pais,&escala,&casas_decimais,&tempo_maximo_transacao,&opcoes_gerais)==MDB_OK){
+    147            
+    148            if(CASHLESS_set_and_get_setup_from_to_device(1,2,16,ASCII,&nivel_configurado,&pais,&escala,&casas_decimais,&tempo_maximo_transacao,&opcoes_gerais)==MDB_OK){
    \   0000000E   0xA806             ADD      R0,SP,#+24
    \   00000010   0x9005             STR      R0,[SP, #+20]
    \   00000012   0xF10D 0x0019      ADD      R0,SP,#+25
@@ -271,331 +277,343 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\supervisao_mdb_cashless
    \   00000036   0x.... 0x....      BL       CASHLESS_set_and_get_setup_from_to_device
    \   0000003A   0x2800             CMP      R0,#+0
    \   0000003C   0xD119             BNE.N    ??SMC_setup_0
-    147              vTaskDelay(50);
+    149              vTaskDelay(50);
    \   0000003E   0x2032             MOVS     R0,#+50
    \   00000040   0x.... 0x....      BL       vTaskDelay
-    148              if(CASHLESS_set_min_and_max_price_in_device(1,100)==MDB_OK){
+    150              if(CASHLESS_set_min_and_max_price_in_device(1,100)==MDB_OK){
    \   00000044   0x2164             MOVS     R1,#+100
    \   00000046   0x2001             MOVS     R0,#+1
    \   00000048   0x.... 0x....      BL       CASHLESS_set_min_and_max_price_in_device
    \   0000004C   0x2800             CMP      R0,#+0
    \   0000004E   0xD116             BNE.N    ??SMC_setup_1
-    149                vTaskDelay(50);
+    151                vTaskDelay(50);
    \   00000050   0x2032             MOVS     R0,#+50
    \   00000052   0x.... 0x....      BL       vTaskDelay
-    150                if(MDBCASHLESS_enable_reader(1)==MDB_OK){
+    152                if(MDBCASHLESS_enable_reader(1)==MDB_OK){
    \   00000056   0x2001             MOVS     R0,#+1
    \   00000058   0x.... 0x....      BL       MDBCASHLESS_enable_reader
    \   0000005C   0x2800             CMP      R0,#+0
    \   0000005E   0xD10E             BNE.N    ??SMC_setup_1
-    151                  vTaskDelay(50);
+    153                  vTaskDelay(50);
    \   00000060   0x2032             MOVS     R0,#+50
    \   00000062   0x.... 0x....      BL       vTaskDelay
-    152                  SMC_time_out=TEMPO_BUSCA_OFFLINE;     
+    154                  SMC_time_out=TEMPO_BUSCA_OFFLINE;     
    \   00000066   0x....             LDR.N    R0,??DataTable5_3
    \   00000068   0xF247 0x5130      MOVW     R1,#+30000
    \   0000006C   0x8001             STRH     R1,[R0, #+0]
-    153                  return CASHLESS_STATE_POLL;           
+    155                  return CASHLESS_STATE_POLL;           
    \   0000006E   0x2003             MOVS     R0,#+3
    \   00000070   0xE006             B.N      ??SMC_setup_2
-    154                }
-    155              }
-    156            }
-    157            else
-    158              if(!SMC_time_out)
+    156                }
+    157              }
+    158            }
+    159            else
+    160              if(!SMC_time_out)
    \                     ??SMC_setup_0:
    \   00000072   0x....             LDR.N    R0,??DataTable5_3
    \   00000074   0x8800             LDRH     R0,[R0, #+0]
    \   00000076   0x2800             CMP      R0,#+0
    \   00000078   0xD101             BNE.N    ??SMC_setup_1
-    159                return CASHLESS_STATE_OFFLINE;    
+    161                return CASHLESS_STATE_OFFLINE;    
    \   0000007A   0x2002             MOVS     R0,#+2
    \   0000007C   0xE000             B.N      ??SMC_setup_2
-    160            
-    161            return CASHLESS_STATE_SETUP;  
+    162            
+    163            return CASHLESS_STATE_SETUP;  
    \                     ??SMC_setup_1:
    \   0000007E   0x2001             MOVS     R0,#+1
    \                     ??SMC_setup_2:
    \   00000080   0xB009             ADD      SP,SP,#+36
    \   00000082   0xBD00             POP      {PC}             ;; return
-    162          }
-    163          /***********************************************************************************
-    164          *       Descrição       :       Estado em que a interface está offline
-    165          *       Parametros      :       nenhum
-    166          *       Retorno         :       eCASHLESS_state
-    167          ***********************************************************************************/
+    164          }
+    165          /***********************************************************************************
+    166          *       Descrição       :       Estado em que a interface está offline
+    167          *       Parametros      :       nenhum
+    168          *       Retorno         :       eCASHLESS_state
+    169          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    168          eCASHLESS_state SMC_offline_state(void){
+    170          eCASHLESS_state SMC_offline_state(void){
    \                     SMC_offline_state:
    \   00000000   0xB580             PUSH     {R7,LR}
-    169          
-    170            if(CASHLESS_adreess()==MDB_OK)
+    171          
+    172            if(CASHLESS_adreess()==MDB_OK)
    \   00000002   0x.... 0x....      BL       CASHLESS_adreess
    \   00000006   0x2800             CMP      R0,#+0
    \   00000008   0xD101             BNE.N    ??SMC_offline_state_0
-    171              return CASHLESS_STATE_DESABILITADO;
+    173              return CASHLESS_STATE_DESABILITADO;
    \   0000000A   0x2000             MOVS     R0,#+0
    \   0000000C   0xE000             B.N      ??SMC_offline_state_1
-    172               
-    173            return CASHLESS_STATE_OFFLINE;
+    174               
+    175            return CASHLESS_STATE_OFFLINE;
    \                     ??SMC_offline_state_0:
    \   0000000E   0x2002             MOVS     R0,#+2
    \                     ??SMC_offline_state_1:
    \   00000010   0xBD02             POP      {R1,PC}          ;; return
-    174          }
-    175          /***********************************************************************************
-    176          *       Descrição       :       Estado em que é realizado o poll do
-    177          *                               dispositivo
-    178          *       Parametros      :       nenhum
-    179          *       Retorno         :       eCASHLESS_state
-    180          ***********************************************************************************/
+    176          }
+    177          /***********************************************************************************
+    178          *       Descrição       :       Estado em que é realizado o poll do
+    179          *                               dispositivo
+    180          *       Parametros      :       nenhum
+    181          *       Retorno         :       eCASHLESS_state
+    182          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    181          eCASHLESS_state SMC_poll_interface(void){
+    183          eCASHLESS_state SMC_poll_interface(void){
    \                     SMC_poll_interface:
    \   00000000   0xB500             PUSH     {LR}
    \   00000002   0xB085             SUB      SP,SP,#+20
-    182            eMDB_POLL_HEADER header;
-    183            unsigned char args[4];
-    184            eCASHLESS_VEND_RESULT resultado;
-    185            unsigned short int pago;
-    186            
-    187            if(CASHLESS_poll_device(&header,args)==MDB_OK){
+    184            eMDB_POLL_HEADER header;
+    185            unsigned char args[4];
+    186            eCASHLESS_VEND_RESULT resultado;
+    187            unsigned short int pago;
+    188            
+    189            if(CASHLESS_poll_device(&header,args)==MDB_OK){
    \   00000004   0xA903             ADD      R1,SP,#+12
    \   00000006   0xA800             ADD      R0,SP,#+0
    \   00000008   0x.... 0x....      BL       CASHLESS_poll_device
    \   0000000C   0x2800             CMP      R0,#+0
-   \   0000000E   0xD13C             BNE.N    ??SMC_poll_interface_0
-    188              
-    189              switch(header){
+   \   0000000E   0xD143             BNE.N    ??SMC_poll_interface_0
+    190              
+    191              switch(header){
    \   00000010   0xF89D 0x0000      LDRB     R0,[SP, #+0]
    \   00000014   0x2802             CMP      R0,#+2
    \   00000016   0xD00A             BEQ.N    ??SMC_poll_interface_1
-   \   00000018   0xD333             BCC.N    ??SMC_poll_interface_2
+   \   00000018   0xD33A             BCC.N    ??SMC_poll_interface_2
    \   0000001A   0x2804             CMP      R0,#+4
    \   0000001C   0xD016             BEQ.N    ??SMC_poll_interface_3
    \   0000001E   0xD307             BCC.N    ??SMC_poll_interface_4
    \   00000020   0x2806             CMP      R0,#+6
-   \   00000022   0xD026             BEQ.N    ??SMC_poll_interface_5
+   \   00000022   0xD02D             BEQ.N    ??SMC_poll_interface_5
    \   00000024   0xD315             BCC.N    ??SMC_poll_interface_6
    \   00000026   0x2808             CMP      R0,#+8
-   \   00000028   0xD029             BEQ.N    ??SMC_poll_interface_7
-   \   0000002A   0xD325             BCC.N    ??SMC_poll_interface_8
-   \   0000002C   0xE029             B.N      ??SMC_poll_interface_2
-    190                case CASHLESS_POOL_DISPLAY_REQUEST:
-    191                     break;
+   \   00000028   0xD030             BEQ.N    ??SMC_poll_interface_7
+   \   0000002A   0xD32C             BCC.N    ??SMC_poll_interface_8
+   \   0000002C   0xE030             B.N      ??SMC_poll_interface_2
+    192                case CASHLESS_POOL_DISPLAY_REQUEST:
+    193                     break;
    \                     ??SMC_poll_interface_1:
-   \   0000002E   0xE028             B.N      ??SMC_poll_interface_2
-    192                case CASHLESS_POOL_BEGIN_SESSION:
-    193                     {
-    194                       unsigned int valorPipoca;
-    195                       PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);
+   \   0000002E   0xE02F             B.N      ??SMC_poll_interface_2
+    194                case CASHLESS_POOL_BEGIN_SESSION:
+    195                     {
+    196                       unsigned int valorPipoca;
+    197                       PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);                          
    \                     ??SMC_poll_interface_4:
    \   00000030   0xA902             ADD      R1,SP,#+8
    \   00000032   0x2003             MOVS     R0,#+3
    \   00000034   0x.... 0x....      BL       PARAMETROS_le
-    196                       if(MDBCASHLESS_start_vend(&resultado,&pago,valorPipoca,1)==MDB_OK){
+    198                       if(MDBCASHLESS_start_vend(&resultado,&pago,valorPipoca,1)==MDB_OK){
    \   00000038   0x2301             MOVS     R3,#+1
    \   0000003A   0x9A02             LDR      R2,[SP, #+8]
    \   0000003C   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
    \   0000003E   0xF10D 0x0102      ADD      R1,SP,#+2
    \   00000042   0xF10D 0x0001      ADD      R0,SP,#+1
    \   00000046   0x.... 0x....      BL       MDBCASHLESS_start_vend
-    197                                
-    198                       }
-    199                     }
-    200                     break;
-   \   0000004A   0xE01A             B.N      ??SMC_poll_interface_2
-    201                case CASHLESS_POOL_SESSION_CANCEL_REQUEST:
-    202                      MDBCASHLESS_session_complete();
+    199                                
+    200                       }
+    201                     }
+    202                     break;
+   \   0000004A   0xE021             B.N      ??SMC_poll_interface_2
+    203                case CASHLESS_POOL_SESSION_CANCEL_REQUEST:
+    204                      MDBCASHLESS_session_complete();
    \                     ??SMC_poll_interface_3:
    \   0000004C   0x.... 0x....      BL       MDBCASHLESS_session_complete
-    203                     break;
-   \   00000050   0xE017             B.N      ??SMC_poll_interface_2
-    204                case CASHLESS_POOL_VEND_APPROVED: 
-    205                     if(MDBCASHLESS_vend_success(1)==MDB_OK){
+    205                     break;
+   \   00000050   0xE01E             B.N      ??SMC_poll_interface_2
+    206                case CASHLESS_POOL_VEND_APPROVED: 
+    207                     if(MDBCASHLESS_vend_success(1)==MDB_OK){
    \                     ??SMC_poll_interface_6:
    \   00000052   0x2001             MOVS     R0,#+1
    \   00000054   0x.... 0x....      BL       MDBCASHLESS_vend_success
    \   00000058   0x2800             CMP      R0,#+0
-   \   0000005A   0xD109             BNE.N    ??SMC_poll_interface_9
-    206                       unsigned int valorPipoca;
-    207                       PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);
+   \   0000005A   0xD110             BNE.N    ??SMC_poll_interface_9
+    208                       unsigned int valorPipoca;
+    209                       PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);
    \   0000005C   0xA901             ADD      R1,SP,#+4
    \   0000005E   0x2003             MOVS     R0,#+3
    \   00000060   0x.... 0x....      BL       PARAMETROS_le
-    208                       PAGAMENTOS_adiciona_valores(valorPipoca);                            
-   \   00000064   0x9801             LDR      R0,[SP, #+4]
-   \   00000066   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-   \   00000068   0x.... 0x....      BL       PAGAMENTOS_adiciona_valores
-    209                       if(MDBCASHLESS_session_complete()==MDB_OK){
-   \   0000006C   0x.... 0x....      BL       MDBCASHLESS_session_complete
-    210                       }
-    211                     }
-    212                     break;
-   \                     ??SMC_poll_interface_9:
-   \   00000070   0xE007             B.N      ??SMC_poll_interface_2
-    213                case CASHLESS_POOL_VEND_DENIED:
-    214                     MDBCASHLESS_session_complete();
-   \                     ??SMC_poll_interface_5:
-   \   00000072   0x.... 0x....      BL       MDBCASHLESS_session_complete
-    215                     break;
-   \   00000076   0xE004             B.N      ??SMC_poll_interface_2
-    216                case CASHLESS_POOL_END_SESSION:
-    217                     MDBCASHLESS_session_complete();
-   \                     ??SMC_poll_interface_8:
-   \   00000078   0x.... 0x....      BL       MDBCASHLESS_session_complete
+    210                       
+    211                       if(!SMC_contador_atividade_cartao)
+   \   00000064   0x....             LDR.N    R0,??DataTable5_4
+   \   00000066   0x6800             LDR      R0,[R0, #+0]
+   \   00000068   0x2800             CMP      R0,#+0
+   \   0000006A   0xD103             BNE.N    ??SMC_poll_interface_10
+    212                         PAGAMENTOS_adiciona_valores(valorPipoca);  
+   \   0000006C   0x9801             LDR      R0,[SP, #+4]
+   \   0000006E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000070   0x.... 0x....      BL       PAGAMENTOS_adiciona_valores
+    213                       SMC_contador_atividade_cartao=CICLOS_ATIVIDADE_CARTAO;          
+   \                     ??SMC_poll_interface_10:
+   \   00000074   0x....             LDR.N    R0,??DataTable5_4
+   \   00000076   0x2103             MOVS     R1,#+3
+   \   00000078   0x6001             STR      R1,[R0, #+0]
+    214                       
+    215                       if(MDBCASHLESS_session_complete()==MDB_OK){
+   \   0000007A   0x.... 0x....      BL       MDBCASHLESS_session_complete
+    216                       }
+    217                     }
     218                     break;
-   \   0000007C   0xE001             B.N      ??SMC_poll_interface_2
-    219                case CASHLESS_POOL_CANCELLED:
+   \                     ??SMC_poll_interface_9:
+   \   0000007E   0xE007             B.N      ??SMC_poll_interface_2
+    219                case CASHLESS_POOL_VEND_DENIED:
     220                     MDBCASHLESS_session_complete();
-   \                     ??SMC_poll_interface_7:
-   \   0000007E   0x.... 0x....      BL       MDBCASHLESS_session_complete
+   \                     ??SMC_poll_interface_5:
+   \   00000080   0x.... 0x....      BL       MDBCASHLESS_session_complete
     221                     break;
-    222              }
-    223              
-    224              SMC_time_out=TEMPO_BUSCA_OFFLINE;    
+   \   00000084   0xE004             B.N      ??SMC_poll_interface_2
+    222                case CASHLESS_POOL_END_SESSION:
+    223                     MDBCASHLESS_session_complete();
+   \                     ??SMC_poll_interface_8:
+   \   00000086   0x.... 0x....      BL       MDBCASHLESS_session_complete
+    224                     break;
+   \   0000008A   0xE001             B.N      ??SMC_poll_interface_2
+    225                case CASHLESS_POOL_CANCELLED:
+    226                     MDBCASHLESS_session_complete();
+   \                     ??SMC_poll_interface_7:
+   \   0000008C   0x.... 0x....      BL       MDBCASHLESS_session_complete
+    227                     break;
+    228              }
+    229              
+    230              SMC_time_out=TEMPO_BUSCA_OFFLINE;    
    \                     ??SMC_poll_interface_2:
-   \   00000082   0x....             LDR.N    R0,??DataTable5_3
-   \   00000084   0xF247 0x5130      MOVW     R1,#+30000
-   \   00000088   0x8001             STRH     R1,[R0, #+0]
-    225            }
-    226            
-    227            return  CASHLESS_STATE_POLL;
+   \   00000090   0x....             LDR.N    R0,??DataTable5_3
+   \   00000092   0xF247 0x5130      MOVW     R1,#+30000
+   \   00000096   0x8001             STRH     R1,[R0, #+0]
+    231            }
+    232            
+    233            return  CASHLESS_STATE_POLL;
    \                     ??SMC_poll_interface_0:
-   \   0000008A   0x2003             MOVS     R0,#+3
-   \   0000008C   0xB005             ADD      SP,SP,#+20
-   \   0000008E   0xBD00             POP      {PC}             ;; return
-    228          }
-    229          /***********************************************************************************
-    230          *       Descrição       :       Estado no qual o dispositivo está bloqueado
-    231          *       Parametros      :       nenhum
-    232          *       Retorno         :       eCASHLESS_state
-    233          ***********************************************************************************/
+   \   00000098   0x2003             MOVS     R0,#+3
+   \   0000009A   0xB005             ADD      SP,SP,#+20
+   \   0000009C   0xBD00             POP      {PC}             ;; return
+    234          }
+    235          /***********************************************************************************
+    236          *       Descrição       :       Estado no qual o dispositivo está bloqueado
+    237          *       Parametros      :       nenhum
+    238          *       Retorno         :       eCASHLESS_state
+    239          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    234          eCASHLESS_state SMC_dispositivo_bloqueado(void){
+    240          eCASHLESS_state SMC_dispositivo_bloqueado(void){
    \                     SMC_dispositivo_bloqueado:
    \   00000000   0xB580             PUSH     {R7,LR}
-    235          
-    236            if(!SMC_flag_bloqueio)
+    241          
+    242            if(!SMC_flag_bloqueio)
    \   00000002   0x....             LDR.N    R0,??DataTable5_2
    \   00000004   0x7800             LDRB     R0,[R0, #+0]
    \   00000006   0x2800             CMP      R0,#+0
    \   00000008   0xD101             BNE.N    ??SMC_dispositivo_bloqueado_0
-    237              return CASHLESS_STATE_DESABILITADO;
+    243              return CASHLESS_STATE_DESABILITADO;
    \   0000000A   0x2000             MOVS     R0,#+0
    \   0000000C   0xE011             B.N      ??SMC_dispositivo_bloqueado_1
-    238            
-    239            if(MDBCASHLESS_enable_reader(0)==MDB_OK){
+    244            
+    245            if(MDBCASHLESS_enable_reader(0)==MDB_OK){
    \                     ??SMC_dispositivo_bloqueado_0:
    \   0000000E   0x2000             MOVS     R0,#+0
    \   00000010   0x.... 0x....      BL       MDBCASHLESS_enable_reader
    \   00000014   0x2800             CMP      R0,#+0
    \   00000016   0xD105             BNE.N    ??SMC_dispositivo_bloqueado_2
-    240              SMC_time_out=TEMPO_BUSCA_OFFLINE;     
+    246              SMC_time_out=TEMPO_BUSCA_OFFLINE;     
    \   00000018   0x....             LDR.N    R0,??DataTable5_3
    \   0000001A   0xF247 0x5130      MOVW     R1,#+30000
    \   0000001E   0x8001             STRH     R1,[R0, #+0]
-    241              return CASHLESS_STATE_LOCKED;  
+    247              return CASHLESS_STATE_LOCKED;  
    \   00000020   0x2004             MOVS     R0,#+4
    \   00000022   0xE006             B.N      ??SMC_dispositivo_bloqueado_1
-    242            }
-    243            else
-    244              if(!SMC_time_out)
+    248            }
+    249            else
+    250              if(!SMC_time_out)
    \                     ??SMC_dispositivo_bloqueado_2:
    \   00000024   0x....             LDR.N    R0,??DataTable5_3
    \   00000026   0x8800             LDRH     R0,[R0, #+0]
    \   00000028   0x2800             CMP      R0,#+0
    \   0000002A   0xD101             BNE.N    ??SMC_dispositivo_bloqueado_3
-    245                return CASHLESS_STATE_OFFLINE;
+    251                return CASHLESS_STATE_OFFLINE;
    \   0000002C   0x2002             MOVS     R0,#+2
    \   0000002E   0xE000             B.N      ??SMC_dispositivo_bloqueado_1
-    246                  
-    247            return  CASHLESS_STATE_LOCKED;
+    252                  
+    253            return  CASHLESS_STATE_LOCKED;
    \                     ??SMC_dispositivo_bloqueado_3:
    \   00000030   0x2004             MOVS     R0,#+4
    \                     ??SMC_dispositivo_bloqueado_1:
    \   00000032   0xBD02             POP      {R1,PC}          ;; return
-    248          }
-    249          /***********************************************************************************
-    250          *       Descrição       :       Estado em que é iniciada a transação
-    251          *                               de venda
-    252          *       Parametros      :       nenhum
-    253          *       Retorno         :       eCASHLESS_state
-    254          ***********************************************************************************/
+    254          }
+    255          /***********************************************************************************
+    256          *       Descrição       :       Estado em que é iniciada a transação
+    257          *                               de venda
+    258          *       Parametros      :       nenhum
+    259          *       Retorno         :       eCASHLESS_state
+    260          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    255          eCASHLESS_state SMC_inicia_transacao(void){
-    256          
-    257            
-    258            return CASHLESS_STATE_INIT_VEND;
+    261          eCASHLESS_state SMC_inicia_transacao(void){
+    262          
+    263            
+    264            return CASHLESS_STATE_INIT_VEND;
    \                     SMC_inicia_transacao:
    \   00000000   0x2005             MOVS     R0,#+5
    \   00000002   0x4770             BX       LR               ;; return
-    259          }
-    260          /***********************************************************************************
-    261          *       Descrição       :       Estado no qual a venda foi aprovada
-    262          *       Parametros      :       nenhum
-    263          *       Retorno         :       eCASHLESS_state
-    264          ***********************************************************************************/
+    265          }
+    266          /***********************************************************************************
+    267          *       Descrição       :       Estado no qual a venda foi aprovada
+    268          *       Parametros      :       nenhum
+    269          *       Retorno         :       eCASHLESS_state
+    270          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    265          eCASHLESS_state SMC_transacao_aprovada(void){
-    266          
-    267             
-    268            return CASHLESS_STATE_VEND_APPROVED;
+    271          eCASHLESS_state SMC_transacao_aprovada(void){
+    272          
+    273             
+    274            return CASHLESS_STATE_VEND_APPROVED;
    \                     SMC_transacao_aprovada:
    \   00000000   0x2006             MOVS     R0,#+6
    \   00000002   0x4770             BX       LR               ;; return
-    269          }
-    270          /***********************************************************************************
-    271          *       Descrição       :       Estado no qual recebeu a configuração
-    272          *                               do crédit
-    273          *       Parametros      :       nenhum
-    274          *       Retorno         :       eCASHLESS_state 
-    275          ***********************************************************************************/
+    275          }
+    276          /***********************************************************************************
+    277          *       Descrição       :       Estado no qual recebeu a configuração
+    278          *                               do crédit
+    279          *       Parametros      :       nenhum
+    280          *       Retorno         :       eCASHLESS_state 
+    281          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    276          eCASHLESS_state SMC_sucesso_transacao(void){
-    277            
-    278            
-    279            return CASHLESS_STATE_VEND_SUCCESS;
+    282          eCASHLESS_state SMC_sucesso_transacao(void){
+    283            
+    284            
+    285            return CASHLESS_STATE_VEND_SUCCESS;
    \                     SMC_sucesso_transacao:
    \   00000000   0x2007             MOVS     R0,#+7
    \   00000002   0x4770             BX       LR               ;; return
-    280          }
-    281          /***********************************************************************************
-    282          *       Descrição       :       Estado no qual a transação foi completada
-    283          *       Parametros      :       nenhum
-    284          *       Retorno         :       eCASHLESS_state
-    285          ***********************************************************************************/
+    286          }
+    287          /***********************************************************************************
+    288          *       Descrição       :       Estado no qual a transação foi completada
+    289          *       Parametros      :       nenhum
+    290          *       Retorno         :       eCASHLESS_state
+    291          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    286          eCASHLESS_state SMC_transacao_completada(void){
-    287            
-    288            
-    289            return CASHLESS_STATE_SESSION_COMPLET;
+    292          eCASHLESS_state SMC_transacao_completada(void){
+    293            
+    294            
+    295            return CASHLESS_STATE_SESSION_COMPLET;
    \                     SMC_transacao_completada:
    \   00000000   0x2008             MOVS     R0,#+8
    \   00000002   0x4770             BX       LR               ;; return
-    290          }
-    291          /***********************************************************************************
-    292          *       Descrição       :       Setter para o flag de bloqueio do cashless
-    293          *                               device
-    294          *       Parametros      :       (unsigned char) flag
-    295          *       Retorno         :       nenhum
-    296          ***********************************************************************************/
+    296          }
+    297          /***********************************************************************************
+    298          *       Descrição       :       Setter para o flag de bloqueio do cashless
+    299          *                               device
+    300          *       Parametros      :       (unsigned char) flag
+    301          *       Retorno         :       nenhum
+    302          ***********************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    297          void SMC_setter_bloqueio(unsigned char flag){
-    298            
-    299            SMC_flag_bloqueio = flag;
+    303          void SMC_setter_bloqueio(unsigned char flag){
+    304            
+    305            SMC_flag_bloqueio = flag;
    \                     SMC_setter_bloqueio:
    \   00000000   0x....             LDR.N    R1,??DataTable5_2
    \   00000002   0x7008             STRB     R0,[R1, #+0]
-    300          }
+    306          }
    \   00000004   0x4770             BX       LR               ;; return
 
    \                                 In section .text, align 4, keep-with-next
@@ -613,9 +631,13 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\supervisao_mdb_cashless
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable5_3:
    \   00000000   0x........         DC32     SMC_time_out
-    301          /***********************************************************************************
-    302          *       Fim do arquivo
-    303          ***********************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_4:
+   \   00000000   0x........         DC32     SMC_contador_atividade_cartao
+    307          /***********************************************************************************
+    308          *       Fim do arquivo
+    309          ***********************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -658,9 +680,11 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\supervisao_mdb_cashless
        4  ??DataTable5_1
        4  ??DataTable5_2
        4  ??DataTable5_3
+       4  ??DataTable5_4
       36  MDBCASHLESS_funcs
        1  SMC_ciclos
        4  SMC_contador
+       4  SMC_contador_atividade_cartao
       38  SMC_desabilitado
       52  SMC_dispositivo_bloqueado
        1  SMC_estado_atual
@@ -668,7 +692,7 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\supervisao_mdb_cashless
        2  SMC_ini
        4  SMC_inicia_transacao
       18  SMC_offline_state
-     144  SMC_poll_interface
+     158  SMC_poll_interface
        6  SMC_setter_bloqueio
      132  SMC_setup
        4  SMC_sucesso_transacao
@@ -679,13 +703,13 @@ C:\repositorios\MaisPipocaG2\SOFTWARE\Drivers\Pagamentos\supervisao_mdb_cashless
 
  
    6 bytes in section .bss
-   3 bytes in section .data
+   7 bytes in section .data
   36 bytes in section .rodata
- 444 bytes in section .text
+ 462 bytes in section .text
  
- 444 bytes of CODE  memory
+ 462 bytes of CODE  memory
   36 bytes of CONST memory
-   9 bytes of DATA  memory
+  13 bytes of DATA  memory
 
 Errors: none
 Warnings: none

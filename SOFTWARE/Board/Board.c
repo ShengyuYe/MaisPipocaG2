@@ -103,6 +103,7 @@ extern unsigned int SMC_contador;
 extern unsigned int APLICACAO_tempo_mensagem;
 extern unsigned int PREPARACAO_compensador;
 extern unsigned int HD44780_tempoRefreshSegundoLCD;
+extern unsigned int SMC_contador_atividade_cartao;
 
 /***********************************************************************************
 *       Funções locais
@@ -201,6 +202,9 @@ void BOARD_timer_tick(void){
   }
   else
     APLICACAO_tempo_compensacao--;
+  
+  if(SMC_contador_atividade_cartao)
+    SMC_contador_atividade_cartao--;
   
   MCS_contadorSemente++;
   

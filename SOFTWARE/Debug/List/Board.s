@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     14/Sep/2017  13:24:44 /
+// IAR ANSI C/C++ Compiler V6.50.3.4676/W32 for ARM     26/Jan/2018  13:45:11 /
 // Copyright 1999-2013 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -64,6 +64,7 @@
         EXTERN SERIALMUX_ini
         EXTERN SERIALMUX_seleciona
         EXTERN SMC_contador
+        EXTERN SMC_contador_atividade_cartao
         EXTERN TECLADO_timerTick
         EXTERN vTaskDelay
 
@@ -312,51 +313,52 @@ APLICACAO_tempo_compensacao:
 //  103 extern unsigned int APLICACAO_tempo_mensagem;
 //  104 extern unsigned int PREPARACAO_compensador;
 //  105 extern unsigned int HD44780_tempoRefreshSegundoLCD;
-//  106 
-//  107 /***********************************************************************************
-//  108 *       Funções locais
-//  109 ***********************************************************************************/
-//  110 void BOARD_instrucao_leds(void);
-//  111 
-//  112 /***********************************************************************************
-//  113 *       Implementação das funções
-//  114 ***********************************************************************************/
-//  115 
-//  116 /***********************************************************************************
-//  117 *       Descrição       :       Inicialização da camada board
-//  118 *       Parametros      :       nenhum
-//  119 *       Retorno         :       nenhum
-//  120 ***********************************************************************************/
+//  106 extern unsigned int SMC_contador_atividade_cartao;
+//  107 
+//  108 /***********************************************************************************
+//  109 *       Funções locais
+//  110 ***********************************************************************************/
+//  111 void BOARD_instrucao_leds(void);
+//  112 
+//  113 /***********************************************************************************
+//  114 *       Implementação das funções
+//  115 ***********************************************************************************/
+//  116 
+//  117 /***********************************************************************************
+//  118 *       Descrição       :       Inicialização da camada board
+//  119 *       Parametros      :       nenhum
+//  120 *       Retorno         :       nenhum
+//  121 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock0 Using cfiCommon0
           CFI Function BOARD_ini
         THUMB
-//  121 void BOARD_ini(void){  
+//  122 void BOARD_ini(void){  
 BOARD_ini:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  122   INI_MOTOR_EMBALAGEM_PIN();
+//  123   INI_MOTOR_EMBALAGEM_PIN();
         LDR.W    R0,??DataTable12  ;; 0x2009c020
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x1
         LDR.W    R1,??DataTable12  ;; 0x2009c020
         STR      R0,[R1, #+0]
-//  123     
-//  124   CCTALK_ini();
+//  124     
+//  125   CCTALK_ini();
           CFI FunCall CCTALK_ini
         BL       CCTALK_ini
-//  125   //PAGAMENTOS_ini();
-//  126   PAGAMENTOS_set_bloqueio(1);
+//  126   //PAGAMENTOS_ini();
+//  127   PAGAMENTOS_set_bloqueio(1);
         MOVS     R0,#+1
           CFI FunCall PAGAMENTOS_set_bloqueio
         BL       PAGAMENTOS_set_bloqueio
-//  127   BOARD_set_motor_dose(PARADO);
+//  128   BOARD_set_motor_dose(PARADO);
         MOVS     R0,#+0
           CFI FunCall BOARD_set_motor_dose
         BL       BOARD_set_motor_dose
-//  128   INI_EMBALAGEM_PINS();
+//  129   INI_EMBALAGEM_PINS();
         LDR.W    R0,??DataTable12  ;; 0x2009c020
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0xF0000000
@@ -367,348 +369,361 @@ BOARD_ini:
         ORRS     R0,R0,#0xF0000000
         LDR.W    R1,??DataTable12_1  ;; 0x2009c03c
         STR      R0,[R1, #+0]
-//  129   INI_MOTOR_EMBALAGEM_PIN();
+//  130   INI_MOTOR_EMBALAGEM_PIN();
         LDR.W    R0,??DataTable12  ;; 0x2009c020
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x1
         LDR.W    R1,??DataTable12  ;; 0x2009c020
         STR      R0,[R1, #+0]
-//  130   INI_LED_PINS();    
+//  131   INI_LED_PINS();    
         LDR.W    R0,??DataTable12  ;; 0x2009c020
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000
         LDR.W    R1,??DataTable12  ;; 0x2009c020
         STR      R0,[R1, #+0]
-//  131   PARAMETROS_ini();
+//  132   PARAMETROS_ini();
           CFI FunCall PARAMETROS_ini
         BL       PARAMETROS_ini
-//  132   AA_ini();
+//  133   AA_ini();
           CFI FunCall AA_ini
         BL       AA_ini
-//  133   POTENCIA_ini();
+//  134   POTENCIA_ini();
           CFI FunCall POTENCIA_ini
         BL       POTENCIA_ini
-//  134   CT_ini();
+//  135   CT_ini();
           CFI FunCall CT_ini
         BL       CT_ini
-//  135   LEDS_ini();
+//  136   LEDS_ini();
           CFI FunCall LEDS_ini
         BL       LEDS_ini
-//  136   MDB_ini();
+//  137   MDB_ini();
           CFI FunCall MDB_ini
         BL       MDB_ini
-//  137   FITA_LED_INI();
+//  138   FITA_LED_INI();
         LDR.W    R0,??DataTable12_2  ;; 0x2009c080
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x30000000
         LDR.W    R1,??DataTable12_2  ;; 0x2009c080
         STR      R0,[R1, #+0]
-//  138   PLAYERWAVE_ini();
+//  139   PLAYERWAVE_ini();
           CFI FunCall PLAYERWAVE_ini
         BL       PLAYERWAVE_ini
-//  139   SERIALMUX_ini();
+//  140   SERIALMUX_ini();
           CFI FunCall SERIALMUX_ini
         BL       SERIALMUX_ini
-//  140   // Deixa a porta serial RS232
-//  141   // habilitada direto
-//  142   SERIALMUX_seleciona(SERIALMUX_USB);
+//  141   // Deixa a porta serial RS232
+//  142   // habilitada direto
+//  143   SERIALMUX_seleciona(SERIALMUX_USB);
         MOVS     R0,#+2
           CFI FunCall SERIALMUX_seleciona
         BL       SERIALMUX_seleciona
-//  143   PAGAMENTOS_ini();  
+//  144   PAGAMENTOS_ini();  
           CFI FunCall PAGAMENTOS_ini
         BL       PAGAMENTOS_ini
-//  144 }
+//  145 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock0
         REQUIRE _A_FIO1DIR
         REQUIRE _A_FIO1CLR
         REQUIRE _A_FIO4DIR
-//  145 /***********************************************************************************
-//  146 *       Descrição       :       Tick de timer para o módulo board
-//  147 *       Parametros      :       nenhum
-//  148 *       Retorno         :       nenhum
-//  149 ***********************************************************************************/
+//  146 /***********************************************************************************
+//  147 *       Descrição       :       Tick de timer para o módulo board
+//  148 *       Parametros      :       nenhum
+//  149 *       Retorno         :       nenhum
+//  150 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock1 Using cfiCommon0
           CFI Function BOARD_timer_tick
         THUMB
-//  150 void BOARD_timer_tick(void){
+//  151 void BOARD_timer_tick(void){
 BOARD_timer_tick:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
-//  151   static unsigned char indice=0;  
-//  152   unsigned short int temp=0;
+//  152   static unsigned char indice=0;  
+//  153   unsigned short int temp=0;
         MOVS     R4,#+0
-//  153   
-//  154   POTENCIA_timerTick();
+//  154   
+//  155   POTENCIA_timerTick();
           CFI FunCall POTENCIA_timerTick
         BL       POTENCIA_timerTick
-//  155   TECLADO_timerTick();  
+//  156   TECLADO_timerTick();  
           CFI FunCall TECLADO_timerTick
         BL       TECLADO_timerTick
-//  156   RTC_init();
+//  157   RTC_init();
           CFI FunCall RTC_init
         BL       RTC_init
-//  157   AA_amostragemAnalogica();
+//  158   AA_amostragemAnalogica();
           CFI FunCall AA_amostragemAnalogica
         BL       AA_amostragemAnalogica
-//  158   CT_timer_tick();
+//  159   CT_timer_tick();
           CFI FunCall CT_timer_tick
         BL       CT_timer_tick
-//  159   PAGAMENTOS_timer_tick();
+//  160   PAGAMENTOS_timer_tick();
           CFI FunCall PAGAMENTOS_timer_tick
         BL       PAGAMENTOS_timer_tick
-//  160   
-//  161   if(BOARD_general_purpose_counter)
+//  161   
+//  162   if(BOARD_general_purpose_counter)
         LDR.W    R0,??DataTable12_3
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_0
-//  162     BOARD_general_purpose_counter--;
+//  163     BOARD_general_purpose_counter--;
         LDR.W    R0,??DataTable12_3
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_3
         STR      R0,[R1, #+0]
-//  163   
-//  164   if(PREPARACAO_cnt_preparo)
+//  164   
+//  165   if(PREPARACAO_cnt_preparo)
 ??BOARD_timer_tick_0:
         LDR.W    R0,??DataTable12_4
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_1
-//  165     PREPARACAO_cnt_preparo--;
+//  166     PREPARACAO_cnt_preparo--;
         LDR.W    R0,??DataTable12_4
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_4
         STR      R0,[R1, #+0]
-//  166   
-//  167   if(PREPARACAO_cnt_rampa)
+//  167   
+//  168   if(PREPARACAO_cnt_rampa)
 ??BOARD_timer_tick_1:
         LDR.W    R0,??DataTable12_5
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_2
-//  168     PREPARACAO_cnt_rampa--;
+//  169     PREPARACAO_cnt_rampa--;
         LDR.W    R0,??DataTable12_5
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_5
         STR      R0,[R1, #+0]
-//  169   
-//  170   if(PAGAMENTOS_timeout_pagamento)
+//  170   
+//  171   if(PAGAMENTOS_timeout_pagamento)
 ??BOARD_timer_tick_2:
         LDR.W    R0,??DataTable12_6
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_3
-//  171     PAGAMENTOS_timeout_pagamento--;
+//  172     PAGAMENTOS_timeout_pagamento--;
         LDR.W    R0,??DataTable12_6
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_6
         STR      R0,[R1, #+0]
-//  172   
-//  173   if(BOARD_contador_propaganda)
+//  173   
+//  174   if(BOARD_contador_propaganda)
 ??BOARD_timer_tick_3:
         LDR.W    R0,??DataTable12_7
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_4
-//  174     BOARD_contador_propaganda--;
+//  175     BOARD_contador_propaganda--;
         LDR.W    R0,??DataTable12_7
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_7
         STR      R0,[R1, #+0]
-//  175   
-//  176   if(BOARD_lock_timer)
+//  176   
+//  177   if(BOARD_lock_timer)
 ??BOARD_timer_tick_4:
         LDR.W    R0,??DataTable12_8
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_5
-//  177     BOARD_lock_timer--;
+//  178     BOARD_lock_timer--;
         LDR.W    R0,??DataTable12_8
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_8
         STR      R0,[R1, #+0]
-//  178   
-//  179   if(HD44780_2_tempoRefreshSegundoLCD)
+//  179   
+//  180   if(HD44780_2_tempoRefreshSegundoLCD)
 ??BOARD_timer_tick_5:
         LDR.W    R0,??DataTable12_9
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_6
-//  180     HD44780_2_tempoRefreshSegundoLCD--;
+//  181     HD44780_2_tempoRefreshSegundoLCD--;
         LDR.W    R0,??DataTable12_9
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_9
         STR      R0,[R1, #+0]
-//  181   
-//  182   if(PREPARACAO_contador_compensacao)
+//  182   
+//  183   if(PREPARACAO_contador_compensacao)
 ??BOARD_timer_tick_6:
         LDR.W    R0,??DataTable12_10
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_7
-//  183     PREPARACAO_contador_compensacao--;
+//  184     PREPARACAO_contador_compensacao--;
         LDR.W    R0,??DataTable12_10
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_10
         STR      R0,[R1, #+0]
-//  184   
-//  185   if(APLICACAO_tempo_desumidificador)
+//  185   
+//  186   if(APLICACAO_tempo_desumidificador)
 ??BOARD_timer_tick_7:
         LDR.W    R0,??DataTable12_11
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_8
-//  186     APLICACAO_tempo_desumidificador--;
+//  187     APLICACAO_tempo_desumidificador--;
         LDR.W    R0,??DataTable12_11
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_11
         STR      R0,[R1, #+0]
-//  187   
-//  188   if(SMC_contador)
+//  188   
+//  189   if(SMC_contador)
 ??BOARD_timer_tick_8:
         LDR.W    R0,??DataTable12_12
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_9
-//  189     SMC_contador--;
+//  190     SMC_contador--;
         LDR.W    R0,??DataTable12_12
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_12
         STR      R0,[R1, #+0]
-//  190   
-//  191   if(APLICACAO_tempo_mensagem)
+//  191   
+//  192   if(APLICACAO_tempo_mensagem)
 ??BOARD_timer_tick_9:
         LDR.W    R0,??DataTable12_13
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_10
-//  192     APLICACAO_tempo_mensagem--;
+//  193     APLICACAO_tempo_mensagem--;
         LDR.W    R0,??DataTable12_13
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_13
         STR      R0,[R1, #+0]
-//  193   
-//  194   if(HD44780_tempoRefreshSegundoLCD)
+//  194   
+//  195   if(HD44780_tempoRefreshSegundoLCD)
 ??BOARD_timer_tick_10:
         LDR.W    R0,??DataTable12_14
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_11
-//  195     HD44780_tempoRefreshSegundoLCD--;
+//  196     HD44780_tempoRefreshSegundoLCD--;
         LDR.W    R0,??DataTable12_14
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_14
         STR      R0,[R1, #+0]
-//  196   
-//  197   if(!APLICACAO_tempo_compensacao){
+//  197   
+//  198   if(!APLICACAO_tempo_compensacao){
 ??BOARD_timer_tick_11:
         LDR.W    R0,??DataTable12_15
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??BOARD_timer_tick_12
-//  198     APLICACAO_tempo_compensacao = 3*60*1000;
+//  199     APLICACAO_tempo_compensacao = 3*60*1000;
         LDR.W    R0,??DataTable12_15
         LDR.W    R1,??DataTable12_16  ;; 0x2bf20
         STR      R1,[R0, #+0]
-//  199     if(PREPARACAO_compensador)
+//  200     if(PREPARACAO_compensador)
         LDR.W    R0,??DataTable12_17
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_timer_tick_13
-//  200       PREPARACAO_compensador--;
+//  201       PREPARACAO_compensador--;
         LDR.W    R0,??DataTable12_17
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_17
         STR      R0,[R1, #+0]
         B.N      ??BOARD_timer_tick_13
-//  201   }
-//  202   else
-//  203     APLICACAO_tempo_compensacao--;
+//  202   }
+//  203   else
+//  204     APLICACAO_tempo_compensacao--;
 ??BOARD_timer_tick_12:
         LDR.W    R0,??DataTable12_15
         LDR      R0,[R0, #+0]
         SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_15
         STR      R0,[R1, #+0]
-//  204   
-//  205   MCS_contadorSemente++;
+//  205   
+//  206   if(SMC_contador_atividade_cartao)
 ??BOARD_timer_tick_13:
         LDR.W    R0,??DataTable12_18
         LDR      R0,[R0, #+0]
-        ADDS     R0,R0,#+1
+        CMP      R0,#+0
+        BEQ.N    ??BOARD_timer_tick_14
+//  207     SMC_contador_atividade_cartao--;
+        LDR.W    R0,??DataTable12_18
+        LDR      R0,[R0, #+0]
+        SUBS     R0,R0,#+1
         LDR.W    R1,??DataTable12_18
         STR      R0,[R1, #+0]
-//  206   
-//  207   // Reedswitch que detecta
-//  208   // a posição da dosador do milho
-//  209   temp |= GET_SENSOR_DOSE_PIN();
-        LDR.W    R0,??DataTable12_19  ;; 0x2009c034
+//  208   
+//  209   MCS_contadorSemente++;
+??BOARD_timer_tick_14:
+        LDR.W    R0,??DataTable12_19
+        LDR      R0,[R0, #+0]
+        ADDS     R0,R0,#+1
+        LDR.W    R1,??DataTable12_19
+        STR      R0,[R1, #+0]
+//  210   
+//  211   // Reedswitch que detecta
+//  212   // a posição da dosador do milho
+//  213   temp |= GET_SENSOR_DOSE_PIN();
+        LDR.W    R0,??DataTable12_20  ;; 0x2009c034
         LDR      R0,[R0, #+0]
         UBFX     R0,R0,#+15,#+1
         ANDS     R0,R0,#0x1
         EORS     R0,R0,#0x1
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         ORRS     R4,R0,R4
-//  210   temp<<=1;
+//  214   temp<<=1;
         LSLS     R4,R4,#+1
-//  211   
-//  212   // Sensor da chave de fim de curso
-//  213   // que indica a reserva do papel
-//  214   temp |= GET_SENSOR_FIM_PAPEL_PIN();
-        LDR.W    R0,??DataTable12_19  ;; 0x2009c034
+//  215   
+//  216   // Sensor da chave de fim de curso
+//  217   // que indica a reserva do papel
+//  218   temp |= GET_SENSOR_FIM_PAPEL_PIN();
+        LDR.W    R0,??DataTable12_20  ;; 0x2009c034
         LDR      R0,[R0, #+0]
         UBFX     R0,R0,#+1,#+1
         ANDS     R0,R0,#0x1
         EORS     R0,R0,#0x1
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         ORRS     R4,R0,R4
-//  215   temp<<=1;
+//  219   temp<<=1;
         LSLS     R4,R4,#+1
-//  216   
-//  217   // Sensor da barreira óptica
-//  218   temp |= GET_BARREIRA_SAIDA_PAPEL_PIN();  
-        LDR.W    R0,??DataTable12_20  ;; 0x2009c014
+//  220   
+//  221   // Sensor da barreira óptica
+//  222   temp |= GET_BARREIRA_SAIDA_PAPEL_PIN();  
+        LDR.W    R0,??DataTable12_21  ;; 0x2009c014
         LDR      R0,[R0, #+0]
         UBFX     R0,R0,#+25,#+1
         ANDS     R0,R0,#0x1
         EORS     R0,R0,#0x1
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         ORRS     R4,R0,R4
-//  219   
-//  220   BOARD_buffer_entradas_digitais[indice] = temp;
-        LDR.W    R0,??DataTable12_21
+//  223   
+//  224   BOARD_buffer_entradas_digitais[indice] = temp;
+        LDR.W    R0,??DataTable12_22
         LDRB     R0,[R0, #+0]
-        LDR.W    R1,??DataTable12_22
+        LDR.W    R1,??DataTable12_23
         STRH     R4,[R1, R0, LSL #+1]
-//  221   indice = (indice+1) % TAM_BUFFER_SENSORES;
-        LDR.W    R0,??DataTable12_21
+//  225   indice = (indice+1) % TAM_BUFFER_SENSORES;
+        LDR.W    R0,??DataTable12_22
         LDRB     R0,[R0, #+0]
         ADDS     R0,R0,#+1
         MOVS     R1,#+16
         SDIV     R2,R0,R1
         MLS      R2,R2,R1,R0
-        LDR.W    R0,??DataTable12_21
+        LDR.W    R0,??DataTable12_22
         STRB     R2,[R0, #+0]
-//  222 }
+//  226 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock1
         REQUIRE _A_FIO1PIN
@@ -717,17 +732,17 @@ BOARD_timer_tick:
         SECTION `.bss`:DATA:REORDER:NOROOT(0)
 ??indice:
         DS8 1
-//  223 /***********************************************************************************
-//  224 *       Descrição       :       Função principal da thread board
-//  225 *       Parametros      :       nenhum
-//  226 *       Retorno         :       nenhum
-//  227 ***********************************************************************************/
+//  227 /***********************************************************************************
+//  228 *       Descrição       :       Função principal da thread board
+//  229 *       Parametros      :       nenhum
+//  230 *       Retorno         :       nenhum
+//  231 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function BOARD_main
         THUMB
-//  228 void BOARD_main(void*pPar){
+//  232 void BOARD_main(void*pPar){
 BOARD_main:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -735,111 +750,111 @@ BOARD_main:
           CFI R4 Frame(CFA, -12)
           CFI CFA R13+16
         MOVS     R4,R0
-//  229   unsigned char toggle=0;
+//  233   unsigned char toggle=0;
         MOVS     R5,#+0
-//  230   unsigned char flag;
-//  231   
-//  232   PARAMETROS_le(ADR_INTERVALO_TEMPO_PROP,(void*)&BOARD_intervalo_propaganda);
-        LDR.W    R1,??DataTable12_23
+//  234   unsigned char flag;
+//  235   
+//  236   PARAMETROS_le(ADR_INTERVALO_TEMPO_PROP,(void*)&BOARD_intervalo_propaganda);
+        LDR.W    R1,??DataTable12_24
         MOVS     R0,#+31
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  233   if(BOARD_intervalo_propaganda>60)
-        LDR.W    R0,??DataTable12_23
+//  237   if(BOARD_intervalo_propaganda>60)
+        LDR.W    R0,??DataTable12_24
         LDR      R0,[R0, #+0]
         CMP      R0,#+61
         BCC.N    ??BOARD_main_0
-//  234     BOARD_intervalo_propaganda = 60;
-        LDR.W    R0,??DataTable12_23
+//  238     BOARD_intervalo_propaganda = 60;
+        LDR.W    R0,??DataTable12_24
         MOVS     R1,#+60
         STR      R1,[R0, #+0]
-//  235   
-//  236   PARAMETROS_le(ADR_FLAG_FITA_LED,(void*)&flag);
+//  239   
+//  240   PARAMETROS_le(ADR_FLAG_FITA_LED,(void*)&flag);
 ??BOARD_main_0:
         ADD      R1,SP,#+0
         MOVS     R0,#+33
           CFI FunCall PARAMETROS_le
         BL       PARAMETROS_le
-//  237   
-//  238   for(;;){
-//  239   
-//  240     toggle ^= 255;
+//  241   
+//  242   for(;;){
+//  243   
+//  244     toggle ^= 255;
 ??BOARD_main_1:
         EORS     R5,R5,#0xFF
-//  241     
-//  242     if(flag){
+//  245     
+//  246     if(flag){
         LDRB     R0,[SP, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_main_2
-//  243       if(toggle){
+//  247       if(toggle){
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+0
         BEQ.N    ??BOARD_main_3
-//  244         SET_LED_STATUS(1);
-        LDR.W    R0,??DataTable12_24  ;; 0x2009c038
+//  248         SET_LED_STATUS(1);
+        LDR.W    R0,??DataTable12_25  ;; 0x2009c038
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000
-        LDR.W    R1,??DataTable12_24  ;; 0x2009c038
+        LDR.W    R1,??DataTable12_25  ;; 0x2009c038
         STR      R0,[R1, #+0]
-//  245         SET_FITA_LED_01(1);
-        LDR.W    R0,??DataTable12_25  ;; 0x2009c098
+//  249         SET_FITA_LED_01(1);
+        LDR.W    R0,??DataTable12_26  ;; 0x2009c098
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000000
-        LDR.W    R1,??DataTable12_25  ;; 0x2009c098
+        LDR.W    R1,??DataTable12_26  ;; 0x2009c098
         STR      R0,[R1, #+0]
-//  246         SET_FITA_LED_02(0);
-        LDR.W    R0,??DataTable12_26  ;; 0x2009c09c
+//  250         SET_FITA_LED_02(0);
+        LDR.W    R0,??DataTable12_27  ;; 0x2009c09c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x20000000
-        LDR.W    R1,??DataTable12_26  ;; 0x2009c09c
+        LDR.W    R1,??DataTable12_27  ;; 0x2009c09c
         STR      R0,[R1, #+0]
         B.N      ??BOARD_main_4
-//  247       }
-//  248       else{           
-//  249         SET_LED_STATUS(0);
+//  251       }
+//  252       else{           
+//  253         SET_LED_STATUS(0);
 ??BOARD_main_3:
         LDR.W    R0,??DataTable12_1  ;; 0x2009c03c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000
         LDR.W    R1,??DataTable12_1  ;; 0x2009c03c
         STR      R0,[R1, #+0]
-//  250         SET_FITA_LED_01(0);
-        LDR.W    R0,??DataTable12_26  ;; 0x2009c09c
+//  254         SET_FITA_LED_01(0);
+        LDR.W    R0,??DataTable12_27  ;; 0x2009c09c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000000
-        LDR.W    R1,??DataTable12_26  ;; 0x2009c09c
+        LDR.W    R1,??DataTable12_27  ;; 0x2009c09c
         STR      R0,[R1, #+0]
-//  251         SET_FITA_LED_02(1);      
-        LDR.W    R0,??DataTable12_25  ;; 0x2009c098
+//  255         SET_FITA_LED_02(1);      
+        LDR.W    R0,??DataTable12_26  ;; 0x2009c098
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x20000000
-        LDR.W    R1,??DataTable12_25  ;; 0x2009c098
+        LDR.W    R1,??DataTable12_26  ;; 0x2009c098
         STR      R0,[R1, #+0]
         B.N      ??BOARD_main_4
-//  252       }
-//  253     }
-//  254     else{
-//  255       SET_FITA_LED_01(0);      
+//  256       }
+//  257     }
+//  258     else{
+//  259       SET_FITA_LED_01(0);      
 ??BOARD_main_2:
-        LDR.W    R0,??DataTable12_26  ;; 0x2009c09c
+        LDR.W    R0,??DataTable12_27  ;; 0x2009c09c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000000
-        LDR.W    R1,??DataTable12_26  ;; 0x2009c09c
+        LDR.W    R1,??DataTable12_27  ;; 0x2009c09c
         STR      R0,[R1, #+0]
-//  256       SET_FITA_LED_02(0);
-        LDR.W    R0,??DataTable12_26  ;; 0x2009c09c
+//  260       SET_FITA_LED_02(0);
+        LDR.W    R0,??DataTable12_27  ;; 0x2009c09c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x20000000
-        LDR.W    R1,??DataTable12_26  ;; 0x2009c09c
+        LDR.W    R1,??DataTable12_27  ;; 0x2009c09c
         STR      R0,[R1, #+0]
-//  257       SET_LED_STATUS(toggle);
+//  261       SET_LED_STATUS(toggle);
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+0
         BEQ.N    ??BOARD_main_5
-        LDR.W    R0,??DataTable12_24  ;; 0x2009c038
+        LDR.W    R0,??DataTable12_25  ;; 0x2009c038
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000
-        LDR.W    R1,??DataTable12_24  ;; 0x2009c038
+        LDR.W    R1,??DataTable12_25  ;; 0x2009c038
         STR      R0,[R1, #+0]
         B.N      ??BOARD_main_4
 ??BOARD_main_5:
@@ -848,39 +863,39 @@ BOARD_main:
         ORRS     R0,R0,#0x10000
         LDR.W    R1,??DataTable12_1  ;; 0x2009c03c
         STR      R0,[R1, #+0]
-//  258     }
-//  259     
-//  260     vTaskDelay(250);       
+//  262     }
+//  263     
+//  264     vTaskDelay(250);       
 ??BOARD_main_4:
         MOVS     R0,#+250
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  261       
-//  262     BOARD_instrucao_leds();
+//  265       
+//  266     BOARD_instrucao_leds();
           CFI FunCall BOARD_instrucao_leds
         BL       BOARD_instrucao_leds
-//  263     
-//  264     // Roda a propaganda no intervalo
-//  265     // de tempo programaddo
-//  266     if(!BOARD_contador_propaganda){      
+//  267     
+//  268     // Roda a propaganda no intervalo
+//  269     // de tempo programaddo
+//  270     if(!BOARD_contador_propaganda){      
         LDR.W    R0,??DataTable12_7
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??BOARD_main_1
-//  267       if(BOARD_intervalo_propaganda){
-        LDR.W    R0,??DataTable12_23
+//  271       if(BOARD_intervalo_propaganda){
+        LDR.W    R0,??DataTable12_24
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_main_6
-//  268         PLAYERWAVE_iniciaMusica(AUDIO_PROPAGANDA,0);        
+//  272         PLAYERWAVE_iniciaMusica(AUDIO_PROPAGANDA,0);        
         MOVS     R1,#+0
         MOVS     R0,#+3
           CFI FunCall PLAYERWAVE_iniciaMusica
         BL       PLAYERWAVE_iniciaMusica
-//  269       }
-//  270       BOARD_contador_propaganda = BOARD_intervalo_propaganda*60000;
+//  273       }
+//  274       BOARD_contador_propaganda = BOARD_intervalo_propaganda*60000;
 ??BOARD_main_6:
-        LDR.W    R0,??DataTable12_23
+        LDR.W    R0,??DataTable12_24
         LDR      R0,[R0, #+0]
         MOVW     R1,#+60000
         MULS     R0,R1,R0
@@ -892,61 +907,61 @@ BOARD_main:
         REQUIRE _A_FIO4SET
         REQUIRE _A_FIO4CLR
         REQUIRE _A_FIO1CLR
-//  271     }
-//  272     
-//  273   }// Fim for(;;)
-//  274 }
-//  275 /***********************************************************************************
-//  276 *       Descrição       :       Verifica se um dos sinais está ativo
-//  277 *       Parametros      :       (unsigned char) bit
-//  278 *       Retorno         :       (unsigned char) maior do que zero
-//  279 *                               se a entrada estiver acionada
-//  280 ***********************************************************************************/
+//  275     }
+//  276     
+//  277   }// Fim for(;;)
+//  278 }
+//  279 /***********************************************************************************
+//  280 *       Descrição       :       Verifica se um dos sinais está ativo
+//  281 *       Parametros      :       (unsigned char) bit
+//  282 *       Retorno         :       (unsigned char) maior do que zero
+//  283 *                               se a entrada estiver acionada
+//  284 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock3 Using cfiCommon0
           CFI Function BOARD_get_sinal
           CFI NoCalls
         THUMB
-//  281 unsigned char BOARD_get_sinal(eSINAL sinal){
+//  285 unsigned char BOARD_get_sinal(eSINAL sinal){
 BOARD_get_sinal:
         PUSH     {R4}
           CFI R4 Frame(CFA, -4)
           CFI CFA R13+4
         MOVS     R1,R0
-//  282   unsigned char contador=0;  
+//  286   unsigned char contador=0;  
         MOVS     R2,#+0
-//  283   
-//  284   for(unsigned char i=0;i<TAM_BUFFER_SENSORES;i++)
+//  287   
+//  288   for(unsigned char i=0;i<TAM_BUFFER_SENSORES;i++)
         MOVS     R0,#+0
 ??BOARD_get_sinal_0:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+16
         BGE.N    ??BOARD_get_sinal_1
-//  285     if(BOARD_buffer_entradas_digitais[i]&(0x01<<sinal))
+//  289     if(BOARD_buffer_entradas_digitais[i]&(0x01<<sinal))
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R3,??DataTable12_22
+        LDR.W    R3,??DataTable12_23
         LDRH     R3,[R3, R0, LSL #+1]
         MOVS     R4,#+1
         LSLS     R4,R4,R1
         TST      R3,R4
         BEQ.N    ??BOARD_get_sinal_2
-//  286       contador++;
+//  290       contador++;
         ADDS     R2,R2,#+1
 ??BOARD_get_sinal_2:
         ADDS     R0,R0,#+1
         B.N      ??BOARD_get_sinal_0
-//  287   
-//  288   if(contador>(TAM_BUFFER_SENSORES>>1))
+//  291   
+//  292   if(contador>(TAM_BUFFER_SENSORES>>1))
 ??BOARD_get_sinal_1:
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         CMP      R2,#+9
         BLT.N    ??BOARD_get_sinal_3
-//  289     return 1;
+//  293     return 1;
         MOVS     R0,#+1
         B.N      ??BOARD_get_sinal_4
-//  290   
-//  291   return 0;
+//  294   
+//  295   return 0;
 ??BOARD_get_sinal_3:
         MOVS     R0,#+0
 ??BOARD_get_sinal_4:
@@ -955,29 +970,29 @@ BOARD_get_sinal:
           CFI CFA R13+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock3
-//  292 }
-//  293 /***********************************************************************************
-//  294 *       Descrição       :       Liga o mosfet da saída de embalagem
-//  295 *       Parametros      :       (unsigned char) valor
-//  296 *       Retorno         :       nenhum
-//  297 ***********************************************************************************/
+//  296 }
+//  297 /***********************************************************************************
+//  298 *       Descrição       :       Liga o mosfet da saída de embalagem
+//  299 *       Parametros      :       (unsigned char) valor
+//  300 *       Retorno         :       nenhum
+//  301 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function BOARD_set_motor_embalagem
           CFI NoCalls
         THUMB
-//  298 void BOARD_set_motor_embalagem(unsigned char flag){
-//  299   
-//  300   SET_MOTOR_EMBALAGEM_PIN(flag);
+//  302 void BOARD_set_motor_embalagem(unsigned char flag){
+//  303   
+//  304   SET_MOTOR_EMBALAGEM_PIN(flag);
 BOARD_set_motor_embalagem:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BEQ.N    ??BOARD_set_motor_embalagem_0
-        LDR.W    R1,??DataTable12_24  ;; 0x2009c038
+        LDR.W    R1,??DataTable12_25  ;; 0x2009c038
         LDR      R1,[R1, #+0]
         ORRS     R1,R1,#0x1
-        LDR.W    R2,??DataTable12_24  ;; 0x2009c038
+        LDR.W    R2,??DataTable12_25  ;; 0x2009c038
         STR      R1,[R2, #+0]
         B.N      ??BOARD_set_motor_embalagem_1
 ??BOARD_set_motor_embalagem_0:
@@ -986,31 +1001,31 @@ BOARD_set_motor_embalagem:
         ORRS     R1,R1,#0x1
         LDR.N    R2,??DataTable12_1  ;; 0x2009c03c
         STR      R1,[R2, #+0]
-//  301 }
+//  305 }
 ??BOARD_set_motor_embalagem_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock4
         REQUIRE _A_FIO1SET
         REQUIRE _A_FIO1CLR
-//  302 /***********************************************************************************
-//  303 *       Descrição       :       Setter para o controle do motor da embalagem
-//  304 *       Parametros      :       (eMOTOR_DOSE) estado do motor
-//  305 *       Retorno         :       nenhum
-//  306 ***********************************************************************************/
+//  306 /***********************************************************************************
+//  307 *       Descrição       :       Setter para o controle do motor da embalagem
+//  308 *       Parametros      :       (eMOTOR_DOSE) estado do motor
+//  309 *       Retorno         :       nenhum
+//  310 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function BOARD_set_motor_dose
         THUMB
-//  307 void BOARD_set_motor_dose(eMOTOR_DOSE sentido){
+//  311 void BOARD_set_motor_dose(eMOTOR_DOSE sentido){
 BOARD_set_motor_dose:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  308   
-//  309   switch(sentido){
+//  312   
+//  313   switch(sentido){
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+0
         BEQ.N    ??BOARD_set_motor_dose_0
@@ -1018,447 +1033,447 @@ BOARD_set_motor_dose:
         BEQ.N    ??BOARD_set_motor_dose_1
         BCC.N    ??BOARD_set_motor_dose_2
         B.N      ??BOARD_set_motor_dose_3
-//  310     case PARADO:  
-//  311          SET_HIGH_SIDE_ESQUERDA(0);
+//  314     case PARADO:  
+//  315          SET_HIGH_SIDE_ESQUERDA(0);
 ??BOARD_set_motor_dose_0:
         LDR.N    R0,??DataTable12_1  ;; 0x2009c03c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000000
         LDR.N    R1,??DataTable12_1  ;; 0x2009c03c
         STR      R0,[R1, #+0]
-//  312          SET_LOW_SIDE_ESQUERDA(0);
+//  316          SET_LOW_SIDE_ESQUERDA(0);
         LDR.N    R0,??DataTable12_1  ;; 0x2009c03c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x20000000
         LDR.N    R1,??DataTable12_1  ;; 0x2009c03c
         STR      R0,[R1, #+0]
-//  313          SET_HIGH_SIDE_DIREITA(0);
+//  317          SET_HIGH_SIDE_DIREITA(0);
         LDR.N    R0,??DataTable12_1  ;; 0x2009c03c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x40000000
         LDR.N    R1,??DataTable12_1  ;; 0x2009c03c
         STR      R0,[R1, #+0]
-//  314          SET_LOW_SIDE_DIREITA(0);
+//  318          SET_LOW_SIDE_DIREITA(0);
         LDR.N    R0,??DataTable12_1  ;; 0x2009c03c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x80000000
         LDR.N    R1,??DataTable12_1  ;; 0x2009c03c
         STR      R0,[R1, #+0]
-//  315          break;
+//  319          break;
         B.N      ??BOARD_set_motor_dose_3
-//  316     case DOSAR:
-//  317          SET_HIGH_SIDE_DIREITA(0);
+//  320     case DOSAR:
+//  321          SET_HIGH_SIDE_DIREITA(0);
 ??BOARD_set_motor_dose_2:
         LDR.N    R0,??DataTable12_1  ;; 0x2009c03c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x40000000
         LDR.N    R1,??DataTable12_1  ;; 0x2009c03c
         STR      R0,[R1, #+0]
-//  318          SET_LOW_SIDE_ESQUERDA(0);
+//  322          SET_LOW_SIDE_ESQUERDA(0);
         LDR.N    R0,??DataTable12_1  ;; 0x2009c03c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x20000000
         LDR.N    R1,??DataTable12_1  ;; 0x2009c03c
         STR      R0,[R1, #+0]
-//  319          vTaskDelay(50);
+//  323          vTaskDelay(50);
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  320          SET_HIGH_SIDE_ESQUERDA(1);
-        LDR.N    R0,??DataTable12_24  ;; 0x2009c038
+//  324          SET_HIGH_SIDE_ESQUERDA(1);
+        LDR.N    R0,??DataTable12_25  ;; 0x2009c038
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000000
-        LDR.N    R1,??DataTable12_24  ;; 0x2009c038
+        LDR.N    R1,??DataTable12_25  ;; 0x2009c038
         STR      R0,[R1, #+0]
-//  321          SET_LOW_SIDE_DIREITA(1);
-        LDR.N    R0,??DataTable12_24  ;; 0x2009c038
+//  325          SET_LOW_SIDE_DIREITA(1);
+        LDR.N    R0,??DataTable12_25  ;; 0x2009c038
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x80000000
-        LDR.N    R1,??DataTable12_24  ;; 0x2009c038
+        LDR.N    R1,??DataTable12_25  ;; 0x2009c038
         STR      R0,[R1, #+0]
-//  322          break;
+//  326          break;
         B.N      ??BOARD_set_motor_dose_3
-//  323     case REVERTER:
-//  324          SET_HIGH_SIDE_ESQUERDA(0);
+//  327     case REVERTER:
+//  328          SET_HIGH_SIDE_ESQUERDA(0);
 ??BOARD_set_motor_dose_1:
         LDR.N    R0,??DataTable12_1  ;; 0x2009c03c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x10000000
         LDR.N    R1,??DataTable12_1  ;; 0x2009c03c
         STR      R0,[R1, #+0]
-//  325          SET_LOW_SIDE_DIREITA(0);     
+//  329          SET_LOW_SIDE_DIREITA(0);     
         LDR.N    R0,??DataTable12_1  ;; 0x2009c03c
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x80000000
         LDR.N    R1,??DataTable12_1  ;; 0x2009c03c
         STR      R0,[R1, #+0]
-//  326          vTaskDelay(50);         
+//  330          vTaskDelay(50);         
         MOVS     R0,#+50
           CFI FunCall vTaskDelay
         BL       vTaskDelay
-//  327          SET_HIGH_SIDE_DIREITA(1);
-        LDR.N    R0,??DataTable12_24  ;; 0x2009c038
+//  331          SET_HIGH_SIDE_DIREITA(1);
+        LDR.N    R0,??DataTable12_25  ;; 0x2009c038
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x40000000
-        LDR.N    R1,??DataTable12_24  ;; 0x2009c038
+        LDR.N    R1,??DataTable12_25  ;; 0x2009c038
         STR      R0,[R1, #+0]
-//  328          SET_LOW_SIDE_ESQUERDA(1);         
-        LDR.N    R0,??DataTable12_24  ;; 0x2009c038
+//  332          SET_LOW_SIDE_ESQUERDA(1);         
+        LDR.N    R0,??DataTable12_25  ;; 0x2009c038
         LDR      R0,[R0, #+0]
         ORRS     R0,R0,#0x20000000
-        LDR.N    R1,??DataTable12_24  ;; 0x2009c038
+        LDR.N    R1,??DataTable12_25  ;; 0x2009c038
         STR      R0,[R1, #+0]
-//  329          break;
-//  330   }
-//  331 }
+//  333          break;
+//  334   }
+//  335 }
 ??BOARD_set_motor_dose_3:
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock5
         REQUIRE _A_FIO1CLR
         REQUIRE _A_FIO1SET
-//  332 /***********************************************************************************
-//  333 *       Descrição       :       Setter para o contador de uso geral
-//  334 *       Parametros      :       (unsigned int) valor de preset
-//  335 *       Retorno         :       nenhum
-//  336 ***********************************************************************************/
+//  336 /***********************************************************************************
+//  337 *       Descrição       :       Setter para o contador de uso geral
+//  338 *       Parametros      :       (unsigned int) valor de preset
+//  339 *       Retorno         :       nenhum
+//  340 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function BOARD_setter_general_purpose_counter
           CFI NoCalls
         THUMB
-//  337 void BOARD_setter_general_purpose_counter(unsigned int preset){
-//  338   
-//  339   BOARD_general_purpose_counter = preset;
+//  341 void BOARD_setter_general_purpose_counter(unsigned int preset){
+//  342   
+//  343   BOARD_general_purpose_counter = preset;
 BOARD_setter_general_purpose_counter:
         LDR.N    R1,??DataTable12_3
         STR      R0,[R1, #+0]
-//  340 }
+//  344 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock6
-//  341 /***********************************************************************************
-//  342 *       Descrição       :       Getter para o contador de uso geral
-//  343 *       Parametros      :       (nenhum)
-//  344 *       Retorno         :       (unsigned int) valor da contagem
-//  345 ***********************************************************************************/
+//  345 /***********************************************************************************
+//  346 *       Descrição       :       Getter para o contador de uso geral
+//  347 *       Parametros      :       (nenhum)
+//  348 *       Retorno         :       (unsigned int) valor da contagem
+//  349 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function BOARD_getter_general_purpose_counter
           CFI NoCalls
         THUMB
-//  346 unsigned int BOARD_getter_general_purpose_counter(void){
-//  347   
-//  348   return BOARD_general_purpose_counter;
+//  350 unsigned int BOARD_getter_general_purpose_counter(void){
+//  351   
+//  352   return BOARD_general_purpose_counter;
 BOARD_getter_general_purpose_counter:
         LDR.N    R0,??DataTable12_3
         LDR      R0,[R0, #+0]
         BX       LR               ;; return
           CFI EndBlock cfiBlock7
-//  349 }
-//  350 /***********************************************************************************
-//  351 *       Descrição       :       Controla a piscada dos leds da placa de 
-//  352 *                               instrução
-//  353 *       Parametros      :       nenhum
-//  354 *       Retorno         :       nenhum
-//  355 ***********************************************************************************/
+//  353 }
+//  354 /***********************************************************************************
+//  355 *       Descrição       :       Controla a piscada dos leds da placa de 
+//  356 *                               instrução
+//  357 *       Parametros      :       nenhum
+//  358 *       Retorno         :       nenhum
+//  359 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock8 Using cfiCommon0
           CFI Function BOARD_instrucao_leds
         THUMB
-//  356 void BOARD_instrucao_leds(void){
+//  360 void BOARD_instrucao_leds(void){
 BOARD_instrucao_leds:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  357   static unsigned char toggle=0;
-//  358   
-//  359   if(!BOARD_leds_instrucao)
-        LDR.N    R0,??DataTable12_27
+//  361   static unsigned char toggle=0;
+//  362   
+//  363   if(!BOARD_leds_instrucao)
+        LDR.N    R0,??DataTable12_28
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.W    ??BOARD_instrucao_leds_0
-//  360     return;
-//  361   
-//  362   toggle ^= 255;
+//  364     return;
+//  365   
+//  366   toggle ^= 255;
 ??BOARD_instrucao_leds_1:
-        LDR.N    R0,??DataTable12_28
+        LDR.N    R0,??DataTable12_29
         LDRB     R0,[R0, #+0]
         EORS     R0,R0,#0xFF
-        LDR.N    R1,??DataTable12_28
+        LDR.N    R1,??DataTable12_29
         STRB     R0,[R1, #+0]
-//  363   //---------------------------------------------------
-//  364   if(BOARD_estado_leds[LED_INSIRA_DINHEIRO] == APAGADO)
-        LDR.N    R0,??DataTable12_29
+//  367   //---------------------------------------------------
+//  368   if(BOARD_estado_leds[LED_INSIRA_DINHEIRO] == APAGADO)
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+2]
         CMP      R0,#+0
         BNE.N    ??BOARD_instrucao_leds_2
-//  365     LEDS_setter_led(LED_INSIRA_DINHEIRO,0);
+//  369     LEDS_setter_led(LED_INSIRA_DINHEIRO,0);
         MOVS     R1,#+0
         MOVS     R0,#+2
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_3
-//  366   else
-//  367     if(BOARD_estado_leds[LED_INSIRA_DINHEIRO] == ACESO)
+//  370   else
+//  371     if(BOARD_estado_leds[LED_INSIRA_DINHEIRO] == ACESO)
 ??BOARD_instrucao_leds_2:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+2]
         CMP      R0,#+1
         BNE.N    ??BOARD_instrucao_leds_4
-//  368       LEDS_setter_led(LED_INSIRA_DINHEIRO,1);
+//  372       LEDS_setter_led(LED_INSIRA_DINHEIRO,1);
         MOVS     R1,#+1
         MOVS     R0,#+2
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_3
-//  369     else
-//  370       LEDS_setter_led(LED_INSIRA_DINHEIRO,toggle);
+//  373     else
+//  374       LEDS_setter_led(LED_INSIRA_DINHEIRO,toggle);
 ??BOARD_instrucao_leds_4:
-        LDR.N    R0,??DataTable12_28
+        LDR.N    R0,??DataTable12_29
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+2
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
-//  371   //---------------------------------------------------
-//  372   if(BOARD_estado_leds[LED_PEGUE_PACOTE] == APAGADO)
+//  375   //---------------------------------------------------
+//  376   if(BOARD_estado_leds[LED_PEGUE_PACOTE] == APAGADO)
 ??BOARD_instrucao_leds_3:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+3]
         CMP      R0,#+0
         BNE.N    ??BOARD_instrucao_leds_5
-//  373     LEDS_setter_led(LED_PEGUE_PACOTE,0);
+//  377     LEDS_setter_led(LED_PEGUE_PACOTE,0);
         MOVS     R1,#+0
         MOVS     R0,#+3
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_6
-//  374   else
-//  375     if(BOARD_estado_leds[LED_PEGUE_PACOTE] == ACESO)
+//  378   else
+//  379     if(BOARD_estado_leds[LED_PEGUE_PACOTE] == ACESO)
 ??BOARD_instrucao_leds_5:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+3]
         CMP      R0,#+1
         BNE.N    ??BOARD_instrucao_leds_7
-//  376       LEDS_setter_led(LED_PEGUE_PACOTE,1);
+//  380       LEDS_setter_led(LED_PEGUE_PACOTE,1);
         MOVS     R1,#+1
         MOVS     R0,#+3
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_6
-//  377     else
-//  378       LEDS_setter_led(LED_PEGUE_PACOTE,toggle);  
+//  381     else
+//  382       LEDS_setter_led(LED_PEGUE_PACOTE,toggle);  
 ??BOARD_instrucao_leds_7:
-        LDR.N    R0,??DataTable12_28
+        LDR.N    R0,??DataTable12_29
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+3
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
-//  379   //---------------------------------------------------
-//  380   if(BOARD_estado_leds[LED_MONTE_PACOTE] == APAGADO)
+//  383   //---------------------------------------------------
+//  384   if(BOARD_estado_leds[LED_MONTE_PACOTE] == APAGADO)
 ??BOARD_instrucao_leds_6:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+4]
         CMP      R0,#+0
         BNE.N    ??BOARD_instrucao_leds_8
-//  381     LEDS_setter_led(LED_MONTE_PACOTE,0);
+//  385     LEDS_setter_led(LED_MONTE_PACOTE,0);
         MOVS     R1,#+0
         MOVS     R0,#+4
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_9
-//  382   else
-//  383     if(BOARD_estado_leds[LED_MONTE_PACOTE] == ACESO)
+//  386   else
+//  387     if(BOARD_estado_leds[LED_MONTE_PACOTE] == ACESO)
 ??BOARD_instrucao_leds_8:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+4]
         CMP      R0,#+1
         BNE.N    ??BOARD_instrucao_leds_10
-//  384       LEDS_setter_led(LED_MONTE_PACOTE,1);
+//  388       LEDS_setter_led(LED_MONTE_PACOTE,1);
         MOVS     R1,#+1
         MOVS     R0,#+4
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_9
-//  385     else
-//  386       LEDS_setter_led(LED_MONTE_PACOTE,toggle);      
+//  389     else
+//  390       LEDS_setter_led(LED_MONTE_PACOTE,toggle);      
 ??BOARD_instrucao_leds_10:
-        LDR.N    R0,??DataTable12_28
+        LDR.N    R0,??DataTable12_29
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+4
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
-//  387   //---------------------------------------------------
-//  388   if(BOARD_estado_leds[LED_INSIRA_PACOTE] == APAGADO)
+//  391   //---------------------------------------------------
+//  392   if(BOARD_estado_leds[LED_INSIRA_PACOTE] == APAGADO)
 ??BOARD_instrucao_leds_9:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+5]
         CMP      R0,#+0
         BNE.N    ??BOARD_instrucao_leds_11
-//  389     LEDS_setter_led(LED_INSIRA_PACOTE,0);
+//  393     LEDS_setter_led(LED_INSIRA_PACOTE,0);
         MOVS     R1,#+0
         MOVS     R0,#+5
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_12
-//  390   else
-//  391     if(BOARD_estado_leds[LED_INSIRA_PACOTE] == ACESO)
+//  394   else
+//  395     if(BOARD_estado_leds[LED_INSIRA_PACOTE] == ACESO)
 ??BOARD_instrucao_leds_11:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+5]
         CMP      R0,#+1
         BNE.N    ??BOARD_instrucao_leds_13
-//  392       LEDS_setter_led(LED_INSIRA_PACOTE,1);
+//  396       LEDS_setter_led(LED_INSIRA_PACOTE,1);
         MOVS     R1,#+1
         MOVS     R0,#+5
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_12
-//  393     else
-//  394       LEDS_setter_led(LED_INSIRA_PACOTE,toggle);   
+//  397     else
+//  398       LEDS_setter_led(LED_INSIRA_PACOTE,toggle);   
 ??BOARD_instrucao_leds_13:
-        LDR.N    R0,??DataTable12_28
+        LDR.N    R0,??DataTable12_29
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+5
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
-//  395   //---------------------------------------------------
-//  396   if(BOARD_estado_leds[LED_FORA_SERVICO] == APAGADO)
+//  399   //---------------------------------------------------
+//  400   if(BOARD_estado_leds[LED_FORA_SERVICO] == APAGADO)
 ??BOARD_instrucao_leds_12:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+6]
         CMP      R0,#+0
         BNE.N    ??BOARD_instrucao_leds_14
-//  397     LEDS_setter_led(LED_FORA_SERVICO,0);
+//  401     LEDS_setter_led(LED_FORA_SERVICO,0);
         MOVS     R1,#+0
         MOVS     R0,#+6
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_15
-//  398   else
-//  399     if(BOARD_estado_leds[LED_FORA_SERVICO] == ACESO)
+//  402   else
+//  403     if(BOARD_estado_leds[LED_FORA_SERVICO] == ACESO)
 ??BOARD_instrucao_leds_14:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+6]
         CMP      R0,#+1
         BNE.N    ??BOARD_instrucao_leds_16
-//  400       LEDS_setter_led(LED_FORA_SERVICO,1);
+//  404       LEDS_setter_led(LED_FORA_SERVICO,1);
         MOVS     R1,#+1
         MOVS     R0,#+6
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_15
-//  401     else
-//  402       LEDS_setter_led(LED_FORA_SERVICO,toggle);        
+//  405     else
+//  406       LEDS_setter_led(LED_FORA_SERVICO,toggle);        
 ??BOARD_instrucao_leds_16:
-        LDR.N    R0,??DataTable12_28
+        LDR.N    R0,??DataTable12_29
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+6
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
-//  403    //--------------------------------------------------
-//  404    if(BOARD_estado_leds[LED_VERMELHO_GRELHA] == APAGADO)
+//  407    //--------------------------------------------------
+//  408    if(BOARD_estado_leds[LED_VERMELHO_GRELHA] == APAGADO)
 ??BOARD_instrucao_leds_15:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+1]
         CMP      R0,#+0
         BNE.N    ??BOARD_instrucao_leds_17
-//  405      LEDS_setter_led(LED_VERMELHO_GRELHA,0);
+//  409      LEDS_setter_led(LED_VERMELHO_GRELHA,0);
         MOVS     R1,#+0
         MOVS     R0,#+1
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_18
-//  406    else
-//  407      if(BOARD_estado_leds[LED_VERMELHO_GRELHA] == ACESO)
+//  410    else
+//  411      if(BOARD_estado_leds[LED_VERMELHO_GRELHA] == ACESO)
 ??BOARD_instrucao_leds_17:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+1]
         CMP      R0,#+1
         BNE.N    ??BOARD_instrucao_leds_19
-//  408        LEDS_setter_led(LED_VERMELHO_GRELHA,1);
+//  412        LEDS_setter_led(LED_VERMELHO_GRELHA,1);
         MOVS     R1,#+1
         MOVS     R0,#+1
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_18
-//  409      else
-//  410        LEDS_setter_led(LED_VERMELHO_GRELHA,toggle);
+//  413      else
+//  414        LEDS_setter_led(LED_VERMELHO_GRELHA,toggle);
 ??BOARD_instrucao_leds_19:
-        LDR.N    R0,??DataTable12_28
+        LDR.N    R0,??DataTable12_29
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+1
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
-//  411    //--------------------------------------------------
-//  412    if(BOARD_estado_leds[LED_VERDE_GRELHA] == APAGADO)
+//  415    //--------------------------------------------------
+//  416    if(BOARD_estado_leds[LED_VERDE_GRELHA] == APAGADO)
 ??BOARD_instrucao_leds_18:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??BOARD_instrucao_leds_20
-//  413      LEDS_setter_led(LED_VERDE_GRELHA,0);
+//  417      LEDS_setter_led(LED_VERDE_GRELHA,0);
         MOVS     R1,#+0
         MOVS     R0,#+0
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_21
-//  414    else
-//  415      if(BOARD_estado_leds[LED_VERDE_GRELHA] == ACESO)
+//  418    else
+//  419      if(BOARD_estado_leds[LED_VERDE_GRELHA] == ACESO)
 ??BOARD_instrucao_leds_20:
-        LDR.N    R0,??DataTable12_29
+        LDR.N    R0,??DataTable12_30
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BNE.N    ??BOARD_instrucao_leds_22
-//  416        LEDS_setter_led(LED_VERDE_GRELHA,1);
+//  420        LEDS_setter_led(LED_VERDE_GRELHA,1);
         MOVS     R1,#+1
         MOVS     R0,#+0
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_21
-//  417      else
-//  418        LEDS_setter_led(LED_VERDE_GRELHA,toggle);
+//  421      else
+//  422        LEDS_setter_led(LED_VERDE_GRELHA,toggle);
 ??BOARD_instrucao_leds_22:
-        LDR.N    R0,??DataTable12_28
+        LDR.N    R0,??DataTable12_29
         LDRB     R1,[R0, #+0]
         MOVS     R0,#+0
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
-//  419    //--------------------------------------------------
-//  420      
-//  421    if(toggle){
+//  423    //--------------------------------------------------
+//  424      
+//  425    if(toggle){
 ??BOARD_instrucao_leds_21:
-        LDR.N    R0,??DataTable12_28
+        LDR.N    R0,??DataTable12_29
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??BOARD_instrucao_leds_23
-//  422      LEDS_setter_led(LED_VERMELHO_GRELHA,1);
+//  426      LEDS_setter_led(LED_VERMELHO_GRELHA,1);
         MOVS     R1,#+1
         MOVS     R0,#+1
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
-//  423      LEDS_setter_led(LED_VERDE_GRELHA,0);
+//  427      LEDS_setter_led(LED_VERDE_GRELHA,0);
         MOVS     R1,#+0
         MOVS     R0,#+0
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
         B.N      ??BOARD_instrucao_leds_24
-//  424    }
-//  425    else{
-//  426      LEDS_setter_led(LED_VERMELHO_GRELHA,0);
+//  428    }
+//  429    else{
+//  430      LEDS_setter_led(LED_VERMELHO_GRELHA,0);
 ??BOARD_instrucao_leds_23:
         MOVS     R1,#+0
         MOVS     R0,#+1
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
-//  427      LEDS_setter_led(LED_VERDE_GRELHA,1);     
+//  431      LEDS_setter_led(LED_VERDE_GRELHA,1);     
         MOVS     R1,#+1
         MOVS     R0,#+0
           CFI FunCall LEDS_setter_led
         BL       LEDS_setter_led
-//  428    }
-//  429 }
+//  432    }
+//  433 }
 ??BOARD_instrucao_leds_24:
 ??BOARD_instrucao_leds_0:
         POP      {R0,PC}          ;; return
@@ -1467,41 +1482,41 @@ BOARD_instrucao_leds:
         SECTION `.bss`:DATA:REORDER:NOROOT(0)
 ??toggle:
         DS8 1
-//  430 /***********************************************************************************
-//  431 *       Descrição       :       Setter para a variavel que guarda o estado
-//  432 *                               dos leds da placa de instrução
-//  433 *       Parametros      :       (unsigned char) led
-//  434 *                               (eLED_STATE) estado do led
-//  435 *       Retorno         :       nenhum
-//  436 ***********************************************************************************/
+//  434 /***********************************************************************************
+//  435 *       Descrição       :       Setter para a variavel que guarda o estado
+//  436 *                               dos leds da placa de instrução
+//  437 *       Parametros      :       (unsigned char) led
+//  438 *                               (eLED_STATE) estado do led
+//  439 *       Retorno         :       nenhum
+//  440 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock9 Using cfiCommon0
           CFI Function BOARD_setter_led_instrucao
           CFI NoCalls
         THUMB
-//  437 void BOARD_setter_led_instrucao(unsigned char led,eLED_STATE estado){
-//  438   
-//  439   BOARD_estado_leds[led] = estado;    
+//  441 void BOARD_setter_led_instrucao(unsigned char led,eLED_STATE estado){
+//  442   
+//  443   BOARD_estado_leds[led] = estado;    
 BOARD_setter_led_instrucao:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R2,??DataTable12_29
+        LDR.N    R2,??DataTable12_30
         STRB     R1,[R0, R2]
-//  440 }
+//  444 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock9
-//  441 /***********************************************************************************
-//  442 *       Descrição       :       Setter ara a variavel que controla a placa
-//  443 *                               de instrução
-//  444 *       Parametros      :       (unsigned char) estado
-//  445 *       Retorno         :       nenhum
-//  446 ***********************************************************************************/
+//  445 /***********************************************************************************
+//  446 *       Descrição       :       Setter ara a variavel que controla a placa
+//  447 *                               de instrução
+//  448 *       Parametros      :       (unsigned char) estado
+//  449 *       Retorno         :       nenhum
+//  450 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock10 Using cfiCommon0
           CFI Function BOARD_liga_placa_instrucao
         THUMB
-//  447 void BOARD_liga_placa_instrucao(unsigned char flag){
+//  451 void BOARD_liga_placa_instrucao(unsigned char flag){
 BOARD_liga_placa_instrucao:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -1509,14 +1524,14 @@ BOARD_liga_placa_instrucao:
           CFI R4 Frame(CFA, -12)
           CFI CFA R13+16
         MOVS     R4,R0
-//  448   
-//  449   for(unsigned char i=0;i<8;i++)
+//  452   
+//  453   for(unsigned char i=0;i<8;i++)
         MOVS     R5,#+0
 ??BOARD_liga_placa_instrucao_0:
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+8
         BGE.N    ??BOARD_liga_placa_instrucao_1
-//  450     LEDS_setter_led(i,0);
+//  454     LEDS_setter_led(i,0);
         MOVS     R1,#+0
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
@@ -1524,89 +1539,89 @@ BOARD_liga_placa_instrucao:
         BL       LEDS_setter_led
         ADDS     R5,R5,#+1
         B.N      ??BOARD_liga_placa_instrucao_0
-//  451   
-//  452   if(!flag)
+//  455   
+//  456   if(!flag)
 ??BOARD_liga_placa_instrucao_1:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+0
         BNE.N    ??BOARD_liga_placa_instrucao_2
-//  453     for(unsigned char i=0;i<8;i++)
+//  457     for(unsigned char i=0;i<8;i++)
         MOVS     R0,#+0
 ??BOARD_liga_placa_instrucao_3:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+8
         BGE.N    ??BOARD_liga_placa_instrucao_2
-//  454       BOARD_estado_leds[i] = APAGADO;
+//  458       BOARD_estado_leds[i] = APAGADO;
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R1,??DataTable12_29
+        LDR.N    R1,??DataTable12_30
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         ADDS     R0,R0,#+1
         B.N      ??BOARD_liga_placa_instrucao_3
-//  455   
-//  456   BOARD_leds_instrucao = flag;
+//  459   
+//  460   BOARD_leds_instrucao = flag;
 ??BOARD_liga_placa_instrucao_2:
-        LDR.N    R0,??DataTable12_27
+        LDR.N    R0,??DataTable12_28
         STRB     R4,[R0, #+0]
-//  457 }
+//  461 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock10
-//  458 /***********************************************************************************
-//  459 *       Descrição       :       Setter para o contador de propaganda
-//  460 *       Parametros      :       nenhum
-//  461 *       Retorno         :       nenhum
-//  462 ***********************************************************************************/
+//  462 /***********************************************************************************
+//  463 *       Descrição       :       Setter para o contador de propaganda
+//  464 *       Parametros      :       nenhum
+//  465 *       Retorno         :       nenhum
+//  466 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock11 Using cfiCommon0
           CFI Function BOARD_setter_contador_propaganda
           CFI NoCalls
         THUMB
-//  463 void BOARD_setter_contador_propaganda(unsigned int contagem){
-//  464   
-//  465   if(!contagem)
+//  467 void BOARD_setter_contador_propaganda(unsigned int contagem){
+//  468   
+//  469   if(!contagem)
 BOARD_setter_contador_propaganda:
         CMP      R0,#+0
         BNE.N    ??BOARD_setter_contador_propaganda_0
-//  466     BOARD_contador_propaganda = 60000*BOARD_intervalo_propaganda;
-        LDR.N    R1,??DataTable12_23
+//  470     BOARD_contador_propaganda = 60000*BOARD_intervalo_propaganda;
+        LDR.N    R1,??DataTable12_24
         LDR      R1,[R1, #+0]
         MOVW     R2,#+60000
         MULS     R1,R2,R1
         LDR.N    R2,??DataTable12_7
         STR      R1,[R2, #+0]
         B.N      ??BOARD_setter_contador_propaganda_1
-//  467   else
-//  468     BOARD_contador_propaganda = contagem;
+//  471   else
+//  472     BOARD_contador_propaganda = contagem;
 ??BOARD_setter_contador_propaganda_0:
         LDR.N    R1,??DataTable12_7
         STR      R0,[R1, #+0]
-//  469 }
+//  473 }
 ??BOARD_setter_contador_propaganda_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock11
-//  470 /***********************************************************************************
-//  471 *       Descrição       :       Setter para o tempo da propaganda
-//  472 *       Parametros      :       nenhum
-//  473 *       Retorno         :       nenhum
-//  474 ***********************************************************************************/
+//  474 /***********************************************************************************
+//  475 *       Descrição       :       Setter para o tempo da propaganda
+//  476 *       Parametros      :       nenhum
+//  477 *       Retorno         :       nenhum
+//  478 ***********************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock12 Using cfiCommon0
           CFI Function BOARD_reset_tempo_propaganda
           CFI NoCalls
         THUMB
-//  475 void BOARD_reset_tempo_propaganda(void){
-//  476   
-//  477   BOARD_contador_propaganda = BOARD_intervalo_propaganda*60000;
+//  479 void BOARD_reset_tempo_propaganda(void){
+//  480   
+//  481   BOARD_contador_propaganda = BOARD_intervalo_propaganda*60000;
 BOARD_reset_tempo_propaganda:
-        LDR.N    R0,??DataTable12_23
+        LDR.N    R0,??DataTable12_24
         LDR      R0,[R0, #+0]
         MOVW     R1,#+60000
         MULS     R0,R1,R0
         LDR.N    R1,??DataTable12_7
         STR      R0,[R1, #+0]
-//  478 }
+//  482 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock12
 
@@ -1722,72 +1737,78 @@ BOARD_reset_tempo_propaganda:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_18:
-        DC32     MCS_contadorSemente
+        DC32     SMC_contador_atividade_cartao
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_19:
-        DC32     0x2009c034
+        DC32     MCS_contadorSemente
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_20:
-        DC32     0x2009c014
+        DC32     0x2009c034
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_21:
-        DC32     ??indice
+        DC32     0x2009c014
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_22:
-        DC32     BOARD_buffer_entradas_digitais
+        DC32     ??indice
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_23:
-        DC32     BOARD_intervalo_propaganda
+        DC32     BOARD_buffer_entradas_digitais
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_24:
-        DC32     0x2009c038
+        DC32     BOARD_intervalo_propaganda
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_25:
-        DC32     0x2009c098
+        DC32     0x2009c038
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_26:
-        DC32     0x2009c09c
+        DC32     0x2009c098
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_27:
-        DC32     BOARD_leds_instrucao
+        DC32     0x2009c09c
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_28:
-        DC32     ??toggle
+        DC32     BOARD_leds_instrucao
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12_29:
+        DC32     ??toggle
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable12_30:
         DC32     BOARD_estado_leds
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
@@ -1802,16 +1823,16 @@ BOARD_reset_tempo_propaganda:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  479 /***********************************************************************************
-//  480 *       Fim do arquivo
-//  481 ***********************************************************************************/
+//  483 /***********************************************************************************
+//  484 *       Fim do arquivo
+//  485 ***********************************************************************************/
 // 
 //    58 bytes in section .bss
 //     5 bytes in section .data
 //    32 bytes in section .noinit (abs)
-// 1 850 bytes in section .text
+// 1 878 bytes in section .text
 // 
-// 1 850 bytes of CODE memory
+// 1 878 bytes of CODE memory
 //    63 bytes of DATA memory (+ 32 bytes shared)
 //
 //Errors: none

@@ -42,6 +42,7 @@
 #define TEMPO_INICILIZACAO_CASHLESS                     60000
 #define TENTATIVAS_CASHLESS                             10
 #define TEMPO_BUSCA_OFFLINE                             30000
+#define CICLOS_ATIVIDADE_CARTAO                         3
 
 /***********************************************************************************
 *       Constantes locais
@@ -56,6 +57,7 @@ unsigned char SMC_ciclos;
 eCASHLESS_state SMC_estado_atual = CASHLESS_STATE_DESABILITADO;
 unsigned short int SMC_time_out=TEMPO_BUSCA_OFFLINE;
 unsigned char SMC_flag_bloqueio=1;
+unsigned int SMC_contador_atividade_cartao=CICLOS_ATIVIDADE_CARTAO;
 
 /***********************************************************************************
 *       Funções locais
@@ -192,7 +194,7 @@ eCASHLESS_state SMC_poll_interface(void){
       case CASHLESS_POOL_BEGIN_SESSION:
            {
              unsigned int valorPipoca;
-             PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);
+             PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);                          
              if(MDBCASHLESS_start_vend(&resultado,&pago,valorPipoca,1)==MDB_OK){
                       
              }
@@ -205,7 +207,11 @@ eCASHLESS_state SMC_poll_interface(void){
            if(MDBCASHLESS_vend_success(1)==MDB_OK){
              unsigned int valorPipoca;
              PARAMETROS_le(ADR_VALOR_PIPOCA,(void*)&valorPipoca);
-             PAGAMENTOS_adiciona_valores(valorPipoca);                            
+             
+             if(!SMC_contador_atividade_cartao)
+               PAGAMENTOS_adiciona_valores(valorPipoca);  
+             SMC_contador_atividade_cartao=CICLOS_ATIVIDADE_CARTAO;          
+             
              if(MDBCASHLESS_session_complete()==MDB_OK){
              }
            }
